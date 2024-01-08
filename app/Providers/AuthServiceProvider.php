@@ -7,6 +7,9 @@ use App\Models\Animalia;
 use App\Models\AnnulusPosition;
 use App\Models\CapContextFleshTexture;
 use App\Models\Country;
+use App\Models\Monera;
+use App\Models\Plantae;
+use App\Models\Protista;
 use App\Models\Specimen;
 use App\Models\SpecimenCluster;
 use App\Models\SpecimenGroup;
@@ -15,6 +18,9 @@ use App\Policies\AnimaliaPolicy;
 use App\Policies\AnnulusPositionPolicy;
 use App\Policies\CapContextFleshTexturePolicy;
 use App\Policies\CountryPolicy;
+use App\Policies\MoneraPolicy;
+use App\Policies\PlantaePolicy;
+use App\Policies\ProtistaPolicy;
 use App\Policies\SpecimenClusterPolicy;
 use App\Policies\SpecimenGroupPolicy;
 use App\Policies\SpecimenPolicy;
@@ -38,6 +44,9 @@ class AuthServiceProvider extends ServiceProvider
         State::class => StatePolicy::class,
         SpecimenCluster::class => SpecimenClusterPolicy::class,
         SpecimenGroup::class => SpecimenGroupPolicy::class,
+        Monera::class => MoneraPolicy::class,
+        Plantae::class => PlantaePolicy::class,
+        Protista::class => ProtistaPolicy::class,
     ];
 
     /**
