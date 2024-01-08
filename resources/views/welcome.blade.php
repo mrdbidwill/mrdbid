@@ -566,6 +566,16 @@
             color: rgb(107 114 128 / var(--tw-text-opacity))
         }
 
+        .text-green-900 {
+            --tw-text-opacity: 1;
+            color: rgb(20 83 45 / var(--tw-text-opacity))
+        }
+
+        .text-orange-900 {
+            --tw-text-opacity: 1;
+            color: rgb(124 45 18 / var(--tw-text-opacity))
+        }
+
         .underline {
             -webkit-text-decoration-line: underline;
             text-decoration-line: underline
@@ -802,25 +812,95 @@
     @endif
 
     <div class="max-w-7xl mx-auto p-6 lg:p-8">
+        <div class="mt-4">
+            <div class="grid grid-cols-1 gap-6 lg:gap-8">
+                <div class="flex justify-left">
+                    <a href="/"><b class="text-green-900 text-3xl">MRDBID</b>
+                        <b class='text-orange-900 text-xl'>M</b>ush<b class='text-orange-900 text-xl'>R</b>oom <b
+                            class='text-orange-900 text-xl'>D</b>ata<b class='text-orange-900 text-xl'>B</b>ase <b
+                            class='text-orange-900 text-xl'>ID</b>entification</a>
+                </div>
 
-        <div class="mt-16">
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
+                <div class="mt-2">
+                    <p class="mt-4 text-black dark:text-white text-lg">This website is a tool
+                        for storing and organizing <u>data</u> for mushrooms that you observed and/or collected.
+                        Hopefully, it will provide a process that simplifies storing and retrieving <u>your</u> mushroom
+                        specimen <b>data</b> in order to compare it to other mushrooms that you and others have
+                        observed. Once your initial information is stored in the database, you can edit it as needed and
+                        add more character details as you discover them.</p>
 
+                    <p class="mt-4 text-black dark:text-white text-lg">The fact you observed a mushroom means you have
+                        some visual, time and location data. That is enough to start. You name this specimen "something"
+                        that is meaningful to <b>you,</b> like "myinitials_1" or "myinitials_2", etc. with comment
+                        "brown mushroom - backyard". There you go. A beginning. Any clear photo is a plus.</p>
 
-                <div
-                    class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                    <div>
+                    <p class="mt-4 text-black dark:text-white text-lg">If you did not retrieve a specimen, when you get
+                        to the option of selecting where a specimen is currently located, you can select "Observation
+                        Only - No specimen collected". </p>
 
-                        <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">H2 Heading</h2>
+                    <p class="mt-4 text-black dark:text-white text-lg">If nothing more, now you know when and where you
+                        saw "it". This time next year, you may see it again, same place?</p>
 
-                        <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                            Paragraph
-                        </p>
-                    </div>
+                    <p class="mt-4 text-black dark:text-white text-lg">This is not a "key" identification process, like
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                           href="https://www.mushroomexpert.com">https://www.mushroomexpert.com</a>. You can use
+                        MushroomExpert.Com and/or other identification experts to match up <b>your</b> specimen
+                        <u>data</u> that is stored here. In the future, perhaps enough positive identifications will
+                        result in a match within the mrdbid.com <b>database.</b></p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">Again, a specimen need not be collected to be
+                        entered here. These entries will be recorded as an "observation", not a "specimen".</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">Register or login, then go to <b>Dashboard</b> to
+                        get started. The process will take it from there, hopefully. <u>The link to Dashboard will NOT
+                            appear until you register and log in.</u></p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">PS The "Trees" link began from photographs of the
+                        informational signs at Blakely State Park, Baldwin County, Alabama. It is the beginning of a
+                        tool for identifying the trees associated with mushrooms.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg"><b>About Images:</b> I am not a photographer, an
+                        artist, or a scientist. My goal in observing or collecting specimens is to provide documentation
+                        of its facts that can be preserved for any future study. Good photographs make that possible.
+                    </p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">This website's upload process will reduce some
+                        pictures in size, if needed. Otherwise, any editing, cropping, etc. should be done before
+                        uploading.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">As part of the specimen collection process, my
+                        intention is to take the best picture I can <u>from the beginning</u> following a plan like
+                        outlined in the "Citizen Science How To Take Scientifically Useful Observations" link below.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">The most useful pictures will clearly document
+                        mushroom characters and measurements, along with surroundings (trees, etc.). If this is
+                        successfully done, anyone looking at the collection of pictures can confirm the data at any
+                        future date.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">This website is <b>not</b> a "field guide". You
+                        need to collect pictures and information where mushrooms are found, then transfer the data one
+                        time here for your records.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">Where to begin?</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">If you do not know where to start, click on this
+                        link: <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                 href="https://alabamamushroomsociety.org/Citizen-Science">Citizen Science How To Take
+                            Scientifically Useful Observations</a></p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">Use this form. You can get it at link above.</p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg"><img id="field_data_sheet"
+                                                                            src="images/AMS_Field_Data_Sheet_400x298.png"
+                                                                            alt="AMS Field Data Sheet"></p>
+
+                    <p class="mt-4 text-black dark:text-white text-lg">After completing the form <u>in the field</u>,
+                        take a picture of it. Then, once home and when you get around to it, add the data and the
+                        pictures you took of the specimen, including this form, to your specimen list. You then have it
+                        to refer to online wherever you are, and update as needed while you identify your specimen.</p>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 </body>
