@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('common_name');
             $table->tinyInteger('date_month_found');
             $table->tinyInteger('date_day_found');
-            $table->tinyInteger('date_year_found');
+            $table->mediumInteger('date_year_found');
             $table->string('location_found_county');
             $table->string('location_found_city')->nullable();
             $table->smallInteger('state');

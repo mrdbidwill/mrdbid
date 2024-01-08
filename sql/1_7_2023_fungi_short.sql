@@ -229,10 +229,10 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `specimens`
+-- Table structure for table `specimen`
 --
 
-CREATE TABLE `specimens` (
+CREATE TABLE `specimen` (
   `id` bigint UNSIGNED NOT NULL,
   `specimen_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `specimen_owner` int NOT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE `specimens` (
   `location_found_city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` int NOT NULL,
   `country` int NOT NULL,
-  `annulus_positions` int NOT NULL,
+  `annulus_position` int NOT NULL,
   `cap_context_flesh_texture` int NOT NULL,
   `entered_by` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -256,7 +256,7 @@ CREATE TABLE `specimens` (
 -- Dumping data for table `specimens`
 --
 
-INSERT INTO `specimens` (`id`, `specimen_name`, `specimen_owner`, `comments`, `common_name`, `date_month_found`, `date_day_found`, `date_year_found`, `location_found_county`, `location_found_city`, `state`, `country`, `annulus_positions`, `cap_context_flesh_texture`, `entered_by`, `created_at`, `updated_at`) VALUES
+INSERT INTO `specimens` (`id`, `specimen_name`, `specimen_owner`, `comments`, `common_name`, `date_month_found`, `date_day_found`, `date_year_found`, `location_found_county`, `location_found_city`, `state`, `country`, `annulus_position`, `cap_context_flesh_texture`, `entered_by`, `created_at`, `updated_at`) VALUES
 (1, 'Special Specimen', 1, 'Thanks for asking...', 'Otherworldly', 12, 30, 2023, 'Baldwin', 'Fairhope', 1, 1, 3, 4, 1, '2023-12-31 13:18:24', '2023-12-31 13:18:24'),
 (2, 'Super duper', 1, 'wait for it...', 'This or that', 12, 30, 2023, 'Baldwin', 'Daphne', 1, 1, 3, 4, 1, '2023-12-31 13:19:19', '2023-12-31 13:19:19');
 
