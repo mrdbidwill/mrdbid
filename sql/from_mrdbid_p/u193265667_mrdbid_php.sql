@@ -2082,7 +2082,7 @@ INSERT INTO `synonyms` (`id`, `name`, `synonym_with`, `comments`, `source`, `ent
 (1, 'epigeous', 'above-ground ', '', 'https://en.wikipedia.org/wiki/Basidiocarp', 2, '2024-05-08 06:00:00'),
 (2, 'hypogeous', 'underground', '', 'https://en.wikipedia.org/wiki/Basidiocarp', 2, '2024-05-08 06:00:00'),
 (3, 'mushroom', 'fruiting body of a fungus', '', 'Page 7 How to Identify Mushrooms To Genus I - David L Largent', 2, '2024-05-08 06:00:00'),
-(4, 'basidiocarp', 'fruiting body', '', 'https://en.wikipedia.org/wiki/Basidiocarp', 2, '2024-05-08 06:00:00'),
+(4, 'basidiocarp', 'fruiting body', '', 25, 1, '2024-05-08 06:00:00'),
 (5, 'thallus', 'soma', 'entire body of fungus', 'P 27 Introductory Mycology Alexopoulos', 2, '2024-05-08 06:00:00'),
 (6, 'sporocarp', 'fruiting body', '', 'P 1 How to Know the Non-Gilled Fleshy Fungi Smith & Smith', 2, '2024-05-08 06:00:00'),
 (7, 'pileus', 'cap', '', 'P 7 How to Know the Non-Gilled Fleshy Fungi Smith & Smith', 2, '2024-05-08 06:00:00'),

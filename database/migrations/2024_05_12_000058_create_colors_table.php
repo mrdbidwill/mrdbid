@@ -1,77 +1,60 @@
 
              <?php
 
-             
-
              use Illuminate\Database\Migrations\Migration;
-
              use Illuminate\Database\Schema\Blueprint;
-
              use Illuminate\Support\Facades\Schema;
 
-             
-
              return new class extends Migration
-
              {
+                 /**
+                  * Run the migrations.
+                  */
+                 public function up(): void
+                 {
 
-                /**
-                * Run the migrations.
-                */
-                
+                     Schema::create('colors', function (Blueprint $table) {
 
-                public function up(): void
+                         $table->id();
 
-                {
+                         $table->string('latin_name', length: 240);
 
-                    Schema::create('colors', function (Blueprint $table)
+                         $table->string('common_name', length: 240);
 
-                    {
+                         $table->integer('color_group');
 
-                        $table->id();
+                         $table->string('hex');
 
-                        $table->string('latin_name', length: 240);
+                         $table->integer('sequence');
 
-                        $table->string('common_name', length: 240);
+                         $table->integer('r_val');
 
-                        $table->integer('color_group');
+                         $table->integer('g_val');
 
-                        $table->string('hex');
+                         $table->integer('b_val');
 
-                        $table->integer('sequence');
+                         $table->string('closest_websafe_color');
 
-                        $table->integer('r_val');
+                         $table->integer('cwc_r');
 
-                        $table->integer('g_val');
- 
-                        $table->integer('b_val');
-  
-                        $table->string('closest_websafe_color');
-  
-                        $table->integer('cwc_r');
+                         $table->integer('cwc_g');
 
-                        $table->integer('cwc_g');
- 
-                        $table->integer('cwc_b');
-                   
-                        $table->string('image_file', length: 240);
+                         $table->integer('cwc_b');
 
-                        $table->integer('entered_by');
+                         $table->string('image_file', length: 240);
 
-                        $table->timestamps();
+                         $table->integer('entered_by');
 
-                    });
+                         $table->timestamps();
 
-             }
+                     });
 
-             
+                 }
 
-             public function down(): void
+                 public function down(): void
+                 {
 
-             {
+                     Schema::dropIfExists('colors');
 
-                Schema::dropIfExists('colors');
-
-             }
-
-            };
+                 }
+             };

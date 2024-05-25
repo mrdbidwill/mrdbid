@@ -1,6 +1,13 @@
+<!-- @formatter:off  -->
 <a href="/">
-    <svg class="w-16 h-16" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.395 44.428C4.557 40.198 0 32.632 0 24 0 10.745 10.745 0 24 0a23.891 23.891 0 0113.997 4.502c-.2 17.907-11.097 33.245-26.602 39.926z" fill="#6875F5"/>
-        <path d="M14.134 45.885A23.914 23.914 0 0024 48c13.255 0 24-10.745 24-24 0-3.516-.756-6.856-2.115-9.866-4.659 15.143-16.608 27.092-31.75 31.751z" fill="#6875F5"/>
-    </svg>
+    <b class="text-red-800 text-3xl">M</b>
+    <b class="text-orange-800 text-3xl">R</b>
+    <b class="text-yellow-500 text-3xl">D</b>
+    <b class="text-green-500 text-3xl">B</b>
+    <b class="text-blue-600 text-3xl">I</b>
+    <b class="text-indigo-400 text-3xl">D</b>
+    <b class='text-orange-900 text-xl'>M</b>ush<b
+        class='text-orange-900 text-xl'>R</b>oom <b class='text-orange-900 text-xl'>D</b>ata<b
+        class='text-orange-900 text-xl'>B</b>ase <b class='text-orange-900 text-xl'>ID</b>entification
 </a>
+<!-- @formatter:on  -->
