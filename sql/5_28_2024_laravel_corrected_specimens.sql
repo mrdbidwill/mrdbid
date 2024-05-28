@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 27, 2024 at 06:43 AM
+-- Generation Time: May 28, 2024 at 09:41 AM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.1.28
 
@@ -1433,7 +1433,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (68, '2024_05_12_000058_create_specimen_clusters_table', 1),
 (69, '2024_05_12_000058_create_specimen_groups_table', 1),
 (70, '2024_05_12_000058_create_synonyms_table', 1),
-(71, '2024_05_12_000058_create_veils_table', 1);
+(71, '2024_05_12_000058_create_veils_table', 1),
+(72, '2024_05_12_000059_create_specimens_table', 2);
 
 -- --------------------------------------------------------
 
@@ -1823,10 +1824,21 @@ INSERT INTO `species` (`id`, `name`, `description`, `comments`, `source`, `enter
 
 CREATE TABLE `specimens` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `comments` text COLLATE utf8mb4_unicode_ci,
-  `source` int NOT NULL,
+  `user_id` int NOT NULL,
+  `specimen_name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `common_name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `specimen_location_now` int NOT NULL,
+  `location_found_city` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location_found_county` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` int NOT NULL,
+  `country` int NOT NULL,
+  `location_public_y_n` int NOT NULL,
+  `month_found` int NOT NULL,
+  `day_found` int NOT NULL,
+  `year_found` int NOT NULL,
+  `fungus_type` int NOT NULL,
   `entered_by` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3233,7 +3245,7 @@ ALTER TABLE `member_types`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `odors`
