@@ -1,8 +1,8 @@
 <x-layout>
     <div>
         <section class="space-y-4 pb-8">
-            <p>Note: A big part of this project is to allow a procedure for standardizing the nomenclature used for
-                fungi identification. Knowledgeable users can add new characters to the proper table with a source so
+            <p>Note: A big part of this project is a procedure for standardizing the nomenclature used for
+                fungi identification. Knowledgeable users can add new characters from a credible source so
                 that other users can determine to use it or not. Future use of characters should reveal what the reality
                 should be.</p>
 

@@ -1,6 +1,7 @@
 
              <?php
 
+             use App\Models\User;
              use Illuminate\Database\Migrations\Migration;
              use Illuminate\Database\Schema\Blueprint;
              use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@
                      Schema::create('specimens', function (Blueprint $table) {
 
                          $table->id();
-                         $table->integer('user_id');
+                         $table->foreignIdFor(User::class);
                          $table->string('specimen_name', length: 240);
                          $table->string('common_name', length: 240);
                          $table->text('description');
