@@ -2,7 +2,7 @@
     <x-application-logo class="block h-12 w-auto"/>
 
     <h1 class="mt-8 text-2xl font-medium text-gray-900">
-        Dashboard - components/welcome.blade.php
+        resources/views/components/welcome.blade.php
     </h1>
 
     <p class="mt-4 text-black text-lg leading-relaxed">

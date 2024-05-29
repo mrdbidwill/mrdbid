@@ -1,6 +1,8 @@
 <x-layout>
     <div>
         <section class="space-y-4 pb-8">
+            <p>resources/views/home.blade.php</p>
+
             <p>Note: A big part of this project is a procedure for standardizing the nomenclature used for
                 fungi identification. Knowledgeable users can add new characters from a credible source so
                 that other users can determine to use it or not. Future use of characters should reveal what the reality
