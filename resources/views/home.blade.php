@@ -135,7 +135,8 @@
                             src="{{ asset( '/storage/specimen_images/AMS_Field_Data_Sheet_400x298.png') }}"
                             alt="AMS Field Data Sheet"></p>
 
-                    echo asset('storage/app/specimen_images/AMS_Field_Data_Sheet_400x298.png');
+                    <!-- /storage/app/public/specimen_images/AMS_Field_Data_Sheet_400x298.png does not work -->
+                    
                     <p>After completing the form <u>in the field</u>, take a picture of it. Then, once home and when
                         you get around to it, add the data and the pictures you took of the specimen, including this
                         form, to your specimen list. You then have it to refer to online wherever you are, and

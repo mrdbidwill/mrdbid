@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\Factory as Queue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ImageCreated implements \Illuminate\Contracts\Mail\Mailable
+class ImagesSpecimenCreated implements \Illuminate\Contracts\Mail\Mailable
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

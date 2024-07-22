@@ -1,11 +1,11 @@
 <x-layout>
-    <x-slot:heading>
-        Create Image
-    </x-slot:heading>
-    <p>This is views/images/create.blade.php</p>
+    <div class="mt-6 flex items-center justify-between gap-x-6"></div>
 
-    <form method="POST" action="/images">
+    <p>This is views/images_specimen/edit.blade.php</p>
+
+    <form method="POST" action="/images/{{ $image['id'] }}">
         @csrf
+        @method('PATCH')
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
@@ -22,7 +22,7 @@
                                     id="parts"
                                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="What part of specimen?"
-                                    value=""
+                                    value="{{ $image['parts'] }}"
                                     required>
                             </div>
 
@@ -45,7 +45,7 @@
                                     id="description"
                                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="Description"
-                                    value="">
+                                    value="{{ $image['description'] }}">
                             </div>
 
                             @error('description')
@@ -55,14 +55,31 @@
                     </div>
 
 
-                    <div>
-                        <button type="submit"
-                                class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            Enter
-                        </button>
-
-                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between gap-x-6">
+            <div class="flex items-center">
+                <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
+            </div>
+
+            <div class="flex items-center gap-x-6">
+                <a href="/images/{{ $image['id'] }}"
+                   class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+
+                <div>
+                    <button type="submit"
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="/images/{{ $image['id'] }}" id="delete-form" class="hidden">
+        @csrf
+        @method('DELETE')
     </form>
 </x-layout>

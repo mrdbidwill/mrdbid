@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Events\ImageCreated;
+use App\Events\ImagesSpecimenCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Image extends Model
+class ImagesSpecimen extends Model
 {
     use HasFactory;
 
@@ -59,9 +59,11 @@ class Image extends Model
     ];
 
     protected $dispatchesEvents = [
-        'created' => ImageCreated::class,
+        'created' => ImagesSpecimenCreated::class,
 
     ];
+
+    public static function create(array $array) {}
 
     public function user(): BelongsTo
     {

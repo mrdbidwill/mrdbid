@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ImagesSpecimenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecimenController;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('specimens', SpecimenController::class);
     Route::resource('characters', CharacterController::class);
-    Route::resource('images', ImageController::class);
+    Route::resource('images_specimen', ImagesSpecimenController::class);
 });
 
 Route::get('phpmyinfo', function () {

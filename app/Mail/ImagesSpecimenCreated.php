@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ImageCreated extends Mailable
+class ImagesSpecimenCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,7 +27,7 @@ class ImageCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Image Created',
+            subject: 'ImagesSpecimen Created',
         );
     }
 

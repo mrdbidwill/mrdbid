@@ -1,11 +1,9 @@
-import './bootstrap';
+import "./bootstrap";
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
 Alpine.start();
 
-import.meta.glob([
-    '../images/**',
-]);
+import.meta.glob(["../images_specimen/**", "../../storage/app/public/**"]);

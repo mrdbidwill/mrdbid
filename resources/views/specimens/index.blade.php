@@ -9,7 +9,7 @@
     </div>
 
     <div class="space-y-4">
-        <p>This is views/specimens/index.blade.php</p>
+        <p>This is views/specimens/index.blade.php.</p>
 
         @foreach ($specimens as $specimen)
             <!--  add edit buttons  -->
@@ -18,10 +18,26 @@
                    class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
             </div>
 
-            <!--  add image upload button  -->
+
             <div class="flex justify-middle">
-                <a href="{{ route('images.create') }}"
+                <a href="/images_specimen/create"
                    class="px-4 py-2 bg-blue-500 text-white rounded-lg">Upload Image</a>
+            </div>
+
+
+            <div class="flex justify-middle">
+
+                <form method="GET" action="/images_specimen/create" id="upload-image">
+                    @csrf
+                    <!-- add hidden field specimen_id -->
+                    <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
+                    <div>
+                        <button type="submit"
+                                class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Upload Image for <b>this</b> specimen.
+                        </button>
+                    </div>
+                </form>
             </div>
 
             @php
