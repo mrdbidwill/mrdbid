@@ -27,46 +27,54 @@ class ImagesSpecimenController extends Controller
         return view('images_specimen.show', ['image' => $image, 'images_specimen' => $images]);
     }
 
+    public function store(Request $request)
+    {
+        //dd($request->all());
+        //dd($request->file('file_name')->getClientOriginalName());
+
+        $request->validate([
+            'parts' => 'required',
+            'description' => 'required',
+            'file_name' => 'required|image|mimes:jpg,jpeg,png',
+        ]);
+
+        //dd($request->all());
+        $specimen_id = request('specimen_id');
+        $file_name = request('file_name')->getClientOriginalName();
+        //dd($file_name);
+        $file_address = $specimen_id.'_'.$file_name.'_'.time().'.'.$request->file_name->extension();
+
+        //dd($file_address);
+
+        // save request to database
+        $image = ImagesSpecimen::create([
+            'specimen_id' => request('specimen_id'),
+            'parts' => request('parts'),
+            'description' => request('description'),
+            'file_address' => $file_address,
+            'image_width' => 0,
+            'image_height' => 0,
+            'camera_make' => 0,
+            'camera_model' => 'generic_camera_model',
+            'lens' => 'generic_lens',
+            'exposure' => 'generic_exposure',
+            'aperture' => 'generic_aperture',
+            'iso' => 'generic_iso',
+            'date_taken' => '2024-06-02 00:05:27',
+            'entered_by' => 1]);
+
+        $request->file_name->move(public_path('storage/uploaded_images'), $file_address);
+
+        //dd($image);
+
+        return redirect('/images_specimen');
+    }
+
     public function create()
     {
         // get the specimen id from the request
 
         return view('/images_specimen/create')->with('specimen_id', request('specimen_id'));
-    }
-
-    public function store(Request $request)
-    {
-        //dd($request->all());
-
-        $request->validate([
-            'parts' => 'required',
-            'description' => 'required',
-            'photos' => 'required|file|max:5000',
-        ]);
-
-        $imagePath = $request->file('photos')->store('images', 'public');
-
-        $exif_data = $this->image_return_exif_data($imagePath);
-
-        $image = new ImagesSpecimen();
-        $image->parts = $request->parts;
-        $image->description = $request->description;
-        $image->source_remote = 'generic_source_remote';
-        $image->source_local = 'generic_source_local';
-        $image->image_width = 0;
-        $image->image_height = 0;
-        $image->camera_make = $exif_data['make'];
-        $image->camera_model = $exif_data['model'];
-        $image->lens = 'generic_lens';
-        $image->exposure = $exif_data['exposure'];
-        $image->aperture = $exif_data['aperture'];
-        $image->iso = $exif_data['iso'];
-        $image->date_taken = $exif_data['date'];
-        $image->entered_by = 0;
-        $image->specimen_id = $request->specimen_id;
-        $image->save();
-
-        return redirect('/images_specimen');
     }
 
     /*

@@ -20,12 +20,6 @@
 
 
             <div class="flex justify-middle">
-                <a href="/images_specimen/create"
-                   class="px-4 py-2 bg-blue-500 text-white rounded-lg">Upload Image</a>
-            </div>
-
-
-            <div class="flex justify-middle">
 
                 <form method="GET" action="/images_specimen/create" id="upload-image">
                     @csrf

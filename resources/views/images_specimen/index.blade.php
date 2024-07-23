@@ -4,11 +4,6 @@
         Image Listings
     </x-slot:heading>
 
-    <div class="flex justify-end">
-
-        <a href="/images/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Image</a>
-        <a href="/specimens/{{ $images_specimen['specimen_id'] }}/edit"></a>
-    </div>
 
     <div class="space-y-4">
         <p>This is views/images_specimen/index.blade.php</p>

@@ -17,9 +17,7 @@ class ImagesSpecimen extends Model
 
     public string $description;
 
-    public string $source_remote;
-
-    public string $source_local;
+    public string $file_address;
 
     public int $image_width;
 
@@ -45,8 +43,7 @@ class ImagesSpecimen extends Model
         'specimen_id',
         'parts',
         'description',
-        'source_remote',
-        'source_local',
+        'file_address',
         'image_width',
         'image_height',
         'camera_make',
@@ -62,8 +59,6 @@ class ImagesSpecimen extends Model
         'created' => ImagesSpecimenCreated::class,
 
     ];
-
-    public static function create(array $array) {}
 
     public function user(): BelongsTo
     {

@@ -23,27 +23,25 @@
 
                          $table->text('description');
 
-                         $table->string('source_remote', length: 240);
+                         $table->string('file_address', length: 240);
 
-                         $table->string('source_local', length: 240);
+                         $table->integer('image_width')->nullable();
 
-                         $table->integer('image_width');
+                         $table->integer('image_height')->nullable();
 
-                         $table->integer('image_height');
+                         $table->string('camera_make')->nullable();
 
-                         $table->string('camera_make');
+                         $table->string('camera_model')->nullable();
 
-                         $table->string('camera_model');
+                         $table->string('lens', length: 64)->nullable();
 
-                         $table->string('lens', length: 64);
+                         $table->string('exposure', length: 64)->nullable();
 
-                         $table->string('exposure', length: 64);
+                         $table->string('aperture', length: 16)->nullable();
 
-                         $table->string('aperture', length: 16);
+                         $table->string('iso', length: 16)->nullable();
 
-                         $table->string('iso', length: 16);
-
-                         $table->datetime('date_taken');
+                         $table->datetime('date_taken')->nullable();
 
                          $table->integer('entered_by');
 
