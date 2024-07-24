@@ -79,7 +79,6 @@ class Specimen extends Model
         return $this->hasMany(Character::class);
     }
 
-
     public function images_specimen(): HasMany
     {
         return $this->hasMany(Specimen::class);
