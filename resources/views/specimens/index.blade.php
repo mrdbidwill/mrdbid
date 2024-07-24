@@ -13,7 +13,7 @@
         <p>This is views/specimens/index.blade.php.</p>
 
         @foreach ($specimens as $specimen)
-            <div class="border border-gray-200 rounded-lg border-4">
+            <div class="border-gray-200 rounded-lg">
                 <!--  add edit buttons  -->
                 <div class="m-4 px-4 py-4">
                     <a href="/specimens/{{ $specimen['id'] }}/edit"
