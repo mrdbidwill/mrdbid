@@ -12,7 +12,7 @@
     </p>
     @php
         // get all images_specimen for this specimen_id
-        $images_specimen = App\Models\ImagesSpecimen::where('specimen_id', $specimen->id)->first();
+        $images_specimens = App\Models\ImagesSpecimen::where('specimen_id', $specimen->id)->get();
         // dd($images_specimen);
         // dd($images_specimen->image);
         // dd($images_specimen->name);
@@ -24,11 +24,10 @@
         // dd($images_specimen->image);
 
         // display image for this specimen
-
-
-
-
-           <!--   // <img src="{{ asset($images_specimen->image) }}" alt="{{ $images_specimen->name }}">  -->
+        foreach ($images_specimens as $images_specimen) {
+            echo "<img src='" . asset($images_specimen->image) . "' alt='" . $images_specimen->name . "'>";
+            echo "<p>Part: " . $images_specimen->parts . "</p>";
+        }
 
     @endphp
     <p class="mt-6">

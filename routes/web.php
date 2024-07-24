@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ImagesSpecimenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecimenController;
@@ -17,6 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('specimens', SpecimenController::class);
     Route::resource('characters', CharacterController::class);
     Route::resource('images_specimen', ImagesSpecimenController::class);
+
+    Route::get('upload/image-upload', [ImageController::class, 'index'])->name('image.index');
+    Route::post('upload/image-upload', [ImageController::class, 'store'])->name('image.store');
 });
 
 Route::get('phpmyinfo', function () {

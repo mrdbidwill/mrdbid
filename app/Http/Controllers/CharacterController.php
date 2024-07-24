@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
+use Illuminate\Support\Facades\DB;
 
 class CharacterController extends Controller
 {
     public function index()
     {
-        $characters = Character::latest()->simplePaginate(3);
+        $characters = DB::table('characters')->simplePaginate(8);
 
         return view('characters.index', [
             'characters' => $characters,

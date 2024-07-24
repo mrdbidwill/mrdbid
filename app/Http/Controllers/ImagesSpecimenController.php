@@ -72,8 +72,7 @@ class ImagesSpecimenController extends Controller
 
     public function create()
     {
-        // get the specimen id from the request
-
+        // get the specimen id from the request and pass it to the view
         return view('/images_specimen/create')->with('specimen_id', request('specimen_id'));
     }
 
