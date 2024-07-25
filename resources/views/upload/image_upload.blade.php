@@ -31,16 +31,22 @@
                 {{ $value }}
             </div>
 
+            @php
+                //dd(Session::get('imageName'));
+              $image_name = Session::get('imageName');
+            @endphp
+
             <div class="row">
                 <div class="col-md-4">
                     <strong>Original Image:</strong>
                     <br/>
-                    <img src="/images/{{ Session::get('imageName') }}" width="300px"/>
+                    <img src="{{ url('storage/images/'.$image_name) }}" alt="" title="">
                 </div>
                 <div class="col-md-4">
                     <strong>Thumbnail Image:</strong>
                     <br/>
-                    <img src="/images/thumbnail/{{ Session::get('imageName') }}"/>
+
+                    <img src="{{ url('storage/images/thumbnail/'.$image_name) }}" alt="" title="">
                 </div>
             </div>
             @endsession

@@ -30,7 +30,7 @@ class ImageController extends Controller
 
         //$this->validate($request, [
 
-        request()->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
+        request()->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
         ]);
 
         $image = Image::read($request->file('image'));
