@@ -9,6 +9,9 @@ class CharacterController extends Controller
 {
     public function index()
     {
+
+        // get all characters with ability to select what is set for this specimen id
+
         $characters = DB::table('characters')->simplePaginate(8);
 
         return view('characters.index', [
@@ -16,9 +19,9 @@ class CharacterController extends Controller
         ]);
     }
 
-    public function show(Character $Character)
+    public function show(Character $character)
     {
-        return view('characters.show', ['Character' => $Character]);
+        return view('characters.show', ['Character' => $character]);
     }
 
     public function store()

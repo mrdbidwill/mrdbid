@@ -2,6 +2,7 @@
     <x-slot:heading>
         Character
     </x-slot:heading>
+    
 
     <h2 class="font-bold text-lg">{{ $character->name }}</h2>
 

@@ -4,10 +4,13 @@
         Character Listings
     </x-slot:heading>
 
+
     <div class="space-y-4">
         @foreach ($characters as $character)
 
             @php
+
+
                 $display = DB::table('display_options')
                 ->where('id', '=', $character->display_options)
                 ->first();

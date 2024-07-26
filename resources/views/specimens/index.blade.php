@@ -19,13 +19,13 @@
                     <a href="/specimens/{{ $specimen['id'] }}/edit"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
 
-                    <a href="/characters"
+                    <a href="/characters/{{ $specimen['id'] }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Character</a>
 
-                    <a href="/characters"
+                    <a href="/groups/{{ $specimen['id'] }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Groups</a>
 
-                    <a href="/characters"
+                    <a href="/clusters/{{ $specimen['id'] }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Clusters</a>
                 </div>
 
