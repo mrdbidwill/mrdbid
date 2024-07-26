@@ -1,14 +1,38 @@
+@php use Illuminate\Support\Facades\DB; @endphp
 <x-layout>
-
-
-    <!-- add button for image upload  -->
-
-
     <div class="mt-6 flex items-center justify-between gap-x-6"></div>
-
     <p>This is views/specimens/edit.blade.php</p>
 
-    <form method="POST" action="/specimens/{{ $specimen['id'] }}">
+    <div class="columns-8 flex items-center space-x-4">
+        @php
+            // get the passed in id
+            $specimen_id = $specimen['id'];
+            //dd($specimen_id);
+
+            $images_specimens = DB::table('images_specimens')->simplePaginate(8)
+            ->where('specimen_id', '=', $specimen_id);
+            // dd($images_specimens);
+
+            foreach ($images_specimens as $images_specimen) {
+                $image_address = url('storage/uploaded_images/thumbnail/'.$images_specimen->file_address);
+                $parts = DB::table('parts')
+                        ->where('id', '=', $images_specimen->parts)
+                        ->first();
+                        // dd($parts);
+
+                echo "<div class=\"p-6  rounded-xl shadow-lg \">
+                          <div class=\"shrink-0\">
+                              <img class=\"h-100 w-100\" src=$image_address alt=\"$image_address\">
+                          </div>
+                          <div>
+                             <!--  <div class=\"text-xl font-medium text-black\">$parts->name:  $images_specimen->description</div>
+                              <div class=\"text-xl font-medium text-black\">$parts->name</div>
+                              <div class=\"text-xl font-medium text-black\">$images_specimen->description</div>   -->
+                          </div>
+                      </div>";}
+        @endphp
+    </div>
+    <form method="POST" action="/specimens/{{ $specimen_id }}">
         @csrf
         @method('PATCH')
 

@@ -1,35 +1,24 @@
+@php use Illuminate\Support\Facades\DB; @endphp
 <x-layout>
     <x-slot:heading>
         Specimen Show - views/specimens/show.blade.php
     </x-slot:heading>
 
-    <h2 class="font-bold text-lg">{{ $specimen['specimen_name'] }}</h2>
-
-    <p>This is views/specimens/show.blade.php</p>
-
-    <p>
-        Common Name: {{ $specimen['common_name'] }}.
-    </p>
     @php
-        // get all images_specimen for this specimen_id
-        $images_specimens = App\Models\ImagesSpecimen::where('specimen_id', $specimen->id)->get();
-        // dd($images_specimen);
-        // dd($images_specimen->image);
-        // dd($images_specimen->name);
-        // dd($images_specimen->id);
-        // dd($images_specimen->specimen_id);
-        // dd($images_specimen->parts);
-        // dd($images_specimen->created_at);
-        // dd($images_specimen->updated_at);
-        // dd($images_specimen->image);
+        $specimen_id = $specimen->id;
+        dd($specimen_id);
+
+        $images_specimens = DB::table('images_specimens')
+        ->where('specimen_id', '=', $specimen['specimen_id'])
+        ->first();
 
         // display image for this specimen
         foreach ($images_specimens as $images_specimen) {
-            echo "<img src='" . asset($images_specimen->image) . "' alt='" . $images_specimen->name . "'>";
-            echo "<p>Part: " . $images_specimen->parts . "</p>";
+        echo "<img src='" . asset($images_specimen->file_address) . "' alt='" . $images_specimen->name . "'>";
+        echo "<p>Part: " . $images_specimen->parts . "</p>";
         }
-
     @endphp
+
     <p class="mt-6">
         <x-button href="/specimens/{{ $specimen->id }}/edit">Edit Specimen</x-button>
     </p>
