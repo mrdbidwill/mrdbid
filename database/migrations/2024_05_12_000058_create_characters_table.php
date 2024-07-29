@@ -23,7 +23,7 @@
 
                          $table->boolean('look_up_y_n');
 
-                         $table->integer('part');
+                         $table->integer('parts');
 
                          $table->integer('source');
 
