@@ -1,61 +1,44 @@
 
              <?php
 
-             
-
              use Illuminate\Database\Migrations\Migration;
-
              use Illuminate\Database\Schema\Blueprint;
-
              use Illuminate\Support\Facades\Schema;
 
-             
-
              return new class extends Migration
-
              {
+                 /**
+                  * Run the migrations.
+                  */
+                 public function up(): void
+                 {
 
-                /**
-                 * Run the migrations.
-                */
+                     Schema::create('characters', function (Blueprint $table) {
 
+                         $table->id();
 
-                public function up(): void
+                         $table->string('name', length: 240);
 
-                {
+                         $table->integer('display_options');
 
-                    Schema::create('characters', function (Blueprint $table)
+                         $table->boolean('look_up_y_n');
 
-                    {
+                         $table->integer('part');
 
-                        $table->id();
+                         $table->integer('source');
 
-                        $table->string('name', length: 240);
+                         $table->integer('entered_by');
 
-                        $table->integer('display_options');
+                         $table->timestamps();
 
-                        $table->boolean('look_up_y_n');
+                     });
 
-                        $table->integer('part');
+                 }
 
-                        $table->integer('source');
+                 public function down(): void
+                 {
 
-                        $table->integer('entered_by');
+                     Schema::dropIfExists('characters');
 
-                        $table->timestamps();
-
-                    });
-
-             }
-
-             
-
-             public function down(): void
-
-             {
-
-                Schema::dropIfExists('characters');
-
-             }
-
-            };
+                 }
+             };
