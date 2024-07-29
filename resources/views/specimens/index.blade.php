@@ -19,7 +19,7 @@
                     <a href="/specimens/{{ $specimen['id'] }}/edit"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
 
-                    <a href="/characters/{{ $specimen['id'] }}"
+                    <a href="/characters/"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Character</a>
 
                     <a href="/groups/{{ $specimen['id'] }}"

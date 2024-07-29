@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\group;
+use App\Models\SpecimenGroup;
 
 class groupController extends Controller
 {
     public function index()
     {
-        $groups = group::latest()->simplePaginate(3);
+        $groups = SpecimenGroup::latest()->simplePaginate(3);
 
         return view('groups.index', [
             'groups' => $groups,
         ]);
     }
 
-    public function show(group $group)
+    public function show(SpecimenGroup $group)
     {
         return view('groups.show', ['group' => $group]);
     }
@@ -31,7 +31,7 @@ class groupController extends Controller
             'entered_by' => ['required'],
         ]);
 
-        group::create([
+        SpecimenGroup::create([
             'name' => request('name'),
             'display_options' => request('display_options'),
             'look_up_y_n' => request('look_up_y_n'),
@@ -49,13 +49,13 @@ class groupController extends Controller
         return view('groups.create');
     }
 
-    public function edit(group $group)
+    public function edit(SpecimenGroup $group)
     {
         return view('groups.edit', ['group' => $group]);
 
     }
 
-    public function update(group $group)
+    public function update(SpecimenGroup $group)
     {
         // authorize (On hold...)
 
@@ -81,7 +81,7 @@ class groupController extends Controller
         return redirect('/groups/'.$group->id);
     }
 
-    public function destroy(group $group)
+    public function destroy(SpecimenGroup $group)
     {
         // authorize (On hold...)
 

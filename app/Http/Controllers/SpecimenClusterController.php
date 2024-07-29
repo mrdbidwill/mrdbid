@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cluster;
+use App\Models\SpecimenCluster;
 
-class ClusterController extends Controller
+class SpecimenClusterController extends Controller
 {
     public function index()
     {
-        $clusters = Cluster::latest()->simplePaginate(3);
+        $clusters = SpecimenCluster::latest()->simplePaginate(3);
 
         return view('clusters.index', [
             'clusters' => $clusters,
         ]);
     }
 
-    public function show(Cluster $Cluster)
+    public function show(SpecimenCluster $Cluster)
     {
-        return view('clusters.show', ['Cluster' => $Cluster]);
+        return view('clusters.show', ['SpecimenCluster' => $Cluster]);
     }
 
     public function store()
@@ -31,7 +31,7 @@ class ClusterController extends Controller
             'entered_by' => ['required'],
         ]);
 
-        Cluster::create([
+        SpecimenCluster::create([
             'name' => request('name'),
             'display_options' => request('display_options'),
             'look_up_y_n' => request('look_up_y_n'),
@@ -49,13 +49,13 @@ class ClusterController extends Controller
         return view('clusters.create');
     }
 
-    public function edit(Cluster $Cluster)
+    public function edit(SpecimenCluster $Cluster)
     {
-        return view('clusters.edit', ['Cluster' => $Cluster]);
+        return view('clusters.edit', ['SpecimenCluster' => $Cluster]);
 
     }
 
-    public function update(Cluster $cluster)
+    public function update(SpecimenCluster $cluster)
     {
         // authorize (On hold...)
 
@@ -81,7 +81,7 @@ class ClusterController extends Controller
         return redirect('/clusters/'.$cluster->id);
     }
 
-    public function destroy(Cluster $cluster)
+    public function destroy(SpecimenCluster $cluster)
     {
         // authorize (On hold...)
 
