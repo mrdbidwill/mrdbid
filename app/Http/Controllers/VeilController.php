@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class VeilController extends Controller
 {
-    public function index() {}
+    public function index(): View
+    {
+        return view('specimens.look_up_tables.state');
+    }
 
     public function create() {}
 

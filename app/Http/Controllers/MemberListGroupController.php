@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class MemberListGroupController extends Controller
 {
-    public function index() {}
+    public function index(): View
+    {
+        return view('specimens.look_up_tables.member_list_group');
+    }
 
     public function create() {}
 

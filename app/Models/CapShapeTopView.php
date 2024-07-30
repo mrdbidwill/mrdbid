@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GillContextFleshLatexAbundance extends Model
+class CapShapeTopView extends Model
 {
     public string $name;
 

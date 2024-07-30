@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class PartialInnerVeilAnnulusRingPositionController extends Controller
+class GillConFleshLatexAbunController extends Controller
 {
-    public function index() {}
+    public function index(): View
+    {
+        return view('specimens.look_up_tables.gill_context_flesh_latex_abundance');
+    }
 
     public function create() {}
 

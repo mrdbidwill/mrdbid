@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class CapShapeTopController extends Controller
+class CapShapeTopViewController extends Controller
 {
-    public function index() {}
+    public function index(): View
+    {
+        return view('specimens.look_up_tables.cap_shape_top_view');
+    }
 
     public function create() {}
 

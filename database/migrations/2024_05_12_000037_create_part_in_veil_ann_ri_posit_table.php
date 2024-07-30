@@ -13,7 +13,7 @@
             public function up(): void
             {
 
-                Schema::create('partial_inner_veil_appearances', function (Blueprint $table) {
+                Schema::create('part_in_veil_ann_ri_posit', function (Blueprint $table) {
 
                     $table->id();
 
@@ -36,7 +36,7 @@
             public function down(): void
             {
 
-                Schema::dropIfExists('partial_inner_veil_appearances');
+                Schema::dropIfExists('part_in_veil_ann_ri_posit');
 
             }
         };

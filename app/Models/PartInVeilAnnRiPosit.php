@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PartialInnerVeilAnnulusRingPosition extends Model
+class PartInVeilAnnRiPosit extends Model
 {
     public string $name;
 

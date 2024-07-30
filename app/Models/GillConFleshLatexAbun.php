@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CapShapeTop extends Model
+class GillConFleshLatexAbun extends Model
 {
     public string $name;
 
