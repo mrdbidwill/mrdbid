@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DataSourceDataTypesController extends Controller
+class DataSourceDataTypeController extends Controller
 {
     public function index() {}
 
