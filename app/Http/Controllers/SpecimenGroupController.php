@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SpecimenGroup;
 
-class groupController extends Controller
+class SpecimenGroupController extends Controller
 {
     public function index()
     {

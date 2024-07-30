@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SoilType extends Model
+class GillAttachment extends Model
 {
     public string $name;
 

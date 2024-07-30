@@ -13,6 +13,7 @@
                         <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                         <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
                         <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
+                        <x-nav-link href="/books" :active="request()->is('about')">Books</x-nav-link>
 
                         @auth
                             <x-nav-link href="/specimens" :active="request()->is('specimens')">Specimens

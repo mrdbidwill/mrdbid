@@ -42,6 +42,28 @@ class Specimen extends Model
 
     public int $fungus_type;
 
+    public int $entered_by;
+
+    protected $fillable = [
+        'user_id',
+        'specimen_name',
+        'common_name',
+        'description',
+        'comment',
+        'specimen_location_now',
+        'location_found_city',
+        'location_found_county',
+        'state',
+        'country',
+        'location_public_y_n',
+        'share_data_y_n',
+        'month_found',
+        'day_found',
+        'year_found',
+        'fungus_type',
+        'entered_by',
+    ];
+
     public function getSpecimenName(): string
     {
         return $this->specimen_name;
@@ -201,28 +223,6 @@ class Specimen extends Model
     {
         $this->entered_by = $entered_by;
     }
-
-    public int $entered_by;
-
-    protected $fillable = [
-        'user_id',
-        'specimen_name',
-        'common_name',
-        'description',
-        'comment',
-        'specimen_location_now',
-        'location_found_city',
-        'location_found_county',
-        'state',
-        'country',
-        'location_public_y_n',
-        'share_data_y_n',
-        'month_found',
-        'day_found',
-        'year_found',
-        'fungus_type',
-        'entered_by',
-    ];
 
     protected $dispatchesEvents = [
         'created' => SpecimenCreated::class,
