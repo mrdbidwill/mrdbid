@@ -40,6 +40,7 @@ use App\Http\Controllers\PartController;
 use App\Http\Controllers\PartialInnerVeilAppearanceController;
 use App\Http\Controllers\PartialInnerVeilFateController;
 use App\Http\Controllers\PartialInnerVeilTextureController;
+use App\Http\Controllers\PartInVeilAnnRiPositController;
 use App\Http\Controllers\PlantAssociationController;
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PossibleMatchController;

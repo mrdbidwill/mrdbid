@@ -9,7 +9,7 @@ class MemberListGroupController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.member_list_group');
+        return view('specimens.look_up_tables.state'); // correct this
     }
 
     public function create() {}

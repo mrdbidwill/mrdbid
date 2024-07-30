@@ -9,7 +9,7 @@ class ImageSpecimenThumbnailController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.image_specimen_thumbnail');
+        return view('specimens.look_up_tables.state');  // correct this
     }
 
     public function create() {}
