@@ -5,18 +5,24 @@
     </x-slot:heading>
 
     @php
-        $specimen_id = $specimen->id;
-        dd($specimen_id);
+        //dd($specimen);
+        foreach ($specimen as $specimen) {
 
-        $images_specimens = DB::table('images_specimens')
-        ->where('specimen_id', '=', $specimen['specimen_id'])
-        ->first();
+            //$images_specimens = DB::table('images')
+              //  ->where('specimen_id', '=', $specimen['id'])
+                //->first()
+               // ->get();
 
-        // display image for this specimen
-        foreach ($images_specimens as $images_specimen) {
-        echo "<img src='" . asset($images_specimen->file_address) . "' alt='" . $images_specimen->name . "'>";
-        echo "<p>Part: " . $images_specimen->parts . "</p>";
-        }
+            $images_specimens = \App\Models\ImageSpecimen::where('specimen_id', '=', $specimen['id'])->get();
+
+            //dd($images_specimens);
+
+            // display image for this specimen
+                foreach ($images_specimens as $images_specimen) {
+                echo "<img src='" . asset($images_specimen->file_address) . "' alt='" . $images_specimen->name . "'>";
+                echo "<p>Part: " . $images_specimen->parts . "</p>";
+                }  // end foreach images_specimens
+            } // end foreach specimen
     @endphp
 
     <p class="mt-6">

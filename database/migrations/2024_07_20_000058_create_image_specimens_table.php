@@ -13,7 +13,7 @@
                  public function up(): void
                  {
 
-                     Schema::create('images_specimens', function (Blueprint $table) {
+                     Schema::create('image_specimens', function (Blueprint $table) {
 
                          $table->id();
 
@@ -54,7 +54,7 @@
                  public function down(): void
                  {
 
-                     Schema::dropIfExists('images_specimens');
+                     Schema::dropIfExists('image_specimens');
 
                  }
              };

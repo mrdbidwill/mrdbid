@@ -9,7 +9,7 @@
             $specimen_id = $specimen['id'];
             //dd($specimen_id);
 
-            $images_specimens = DB::table('images_specimens')->simplePaginate(8)
+            $images_specimens = DB::table('image_specimens')->simplePaginate(8)
             ->where('specimen_id', '=', $specimen_id);
             // dd($images_specimens);
 

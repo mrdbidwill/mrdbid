@@ -21,6 +21,7 @@ class SpecimenController extends Controller
         //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
         $specimen = Specimen::where('user_id', auth()->id())->get();
+        //dd($specimen);
 
         return view('specimens.show', ['specimen' => $specimen]);
     }
@@ -117,7 +118,7 @@ class SpecimenController extends Controller
 
         ]);
 
-        return redirect('/specimens/'.$specimen['id']);
+        return redirect('/specimens/'.$specimen['id'].'/edit');
     }
 
     public function destroy(Specimen $specimen)
