@@ -4,10 +4,10 @@
 
 <p>Qualified users can add characters with reference documentation.</p>
 
-<p>At some point an "accepted" list of characters will be resolved. Existing characters, or terms representing characters will exclude themselves ove time as users migrate to the more descriptive and accurate characters.</p>
+<p>At some point an "accepted" list of characters will be resolved. Existing characters, or terms representing characters will exclude themselves over time as users migrate to the more descriptive and accurate characters.</p>
 
 <p>Not necessarily a newer character.</p>
 
-<p>Comparison of specimens using database tables will allow for some standardization of comparison methods. </p>
+<p>Comparison of specimens using database tables will allow for some standardization of comparison methods.</p>
 
 <p>That is the goal anyway. </p>
