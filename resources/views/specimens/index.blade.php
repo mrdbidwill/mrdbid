@@ -1,4 +1,6 @@
-@php use Illuminate\Support\Facades\DB;@endphp
+@php
+    use Illuminate\Support\Facades\DB
+    ;@endphp
 <x-layout>
     <x-slot:heading>
         Specimen Listings
@@ -32,14 +34,14 @@
 
                 <div class="m-4 px-4 py-4">
 
-                    <form method="GET" action="/images_specimen/create" id="upload-image">
+                    <form method="GET" action="/image_specimen/{{ $specimen['id'] }}" id="upload-image">
                         @csrf
                         <!-- add hidden field specimen_id -->
                         <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
                         <div>
                             <button type="submit"
                                     class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                Upload Image for this specimen.
+                                Upload Image for this specimen. ({{$specimen['num_images'] }}) images uploaded.
                             </button>
                         </div>
                     </form>

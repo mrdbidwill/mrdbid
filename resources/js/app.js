@@ -6,4 +6,4 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-import.meta.glob(["../images_specimen/**", "../../storage/app/public/**"]);
+import.meta.glob(["../image_specimen/**", "../../storage/app/public/**"]);

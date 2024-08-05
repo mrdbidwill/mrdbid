@@ -48,7 +48,7 @@
                         </div>
                         @endsession
 
-                        <form action="{{ route('images_specimen.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('image_specimen.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="mb-3">
