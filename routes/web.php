@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\AbundanceController;
+use App\Http\Controllers\Admin\AdminCharacterController;
+use App\Http\Controllers\Admin\AdminLookUpTableController;
+use App\Http\Controllers\Admin\AdminSpecimenController;
 use App\Http\Controllers\AnnulusPositionController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\BulbTypeController;
 use App\Http\Controllers\CapContextFleshController;
 use App\Http\Controllers\CapMarginShapeController;
@@ -72,7 +76,8 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
-Route::view('/books', 'books')->name('books');
+//Route::view('/books', 'books')->name('books');
+Route::resource('book', BookController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -80,6 +85,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('specimens', SpecimenController::class);
     Route::resource('characters', CharacterController::class);
+
+    Route::resource('admin_character_table', AdminCharacterController::class);
+    Route::resource('admin_look_up_table', AdminLookUpTableController::class);
+    Route::resource('admin_specimen_table', AdminSpecimenController::class);
 
     Route::resource('abundance', AbundanceController::class);
     Route::resource('annulus_position', AnnulusPositionController::class);

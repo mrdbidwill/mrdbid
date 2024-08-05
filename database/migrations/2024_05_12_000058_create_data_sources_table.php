@@ -27,6 +27,10 @@
 
                          $table->text('comment');
 
+                         $table->integer('my_rating')->nullable();
+
+                         $table->string('my_comment')->nullable();
+
                          $table->integer('entered_by');
 
                          $table->timestamps();

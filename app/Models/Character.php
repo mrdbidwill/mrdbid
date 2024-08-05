@@ -10,6 +10,8 @@ class Character extends Model
 {
     use HasFactory;
 
+    public int $id;
+
     public string $name;
 
     public int $display_options;
@@ -23,6 +25,7 @@ class Character extends Model
     public int $entered_by;
 
     protected $fillable = [
+        'id',
         'name',
         'display_options',
         'look_up_y_n',
@@ -30,6 +33,16 @@ class Character extends Model
         'source',
         'entered_by',
     ];
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id): void
+    {
+        $this->name = $id;
+    }
 
     public function getName(): string
     {

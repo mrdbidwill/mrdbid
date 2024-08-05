@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->id === $specimen->user_id;
         });
 
+        Gate::define('delete-specimen', function (User $user, Specimen $specimen) {
+            return $user->id === $specimen->user_id;
+        });
+
         Model::preventsLazyLoading();
 
     }
