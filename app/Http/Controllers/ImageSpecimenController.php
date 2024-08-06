@@ -17,12 +17,12 @@ class ImageSpecimenController extends Controller
 
     public function show($id)
     {
+        // dd($id);  // id is good here
         // get all image_specimens for this specimen_id
-        $image_specimen = ImageSpecimen::where('specimen_id', $id)
-            ->get();
+        $image_specimens = ImageSpecimen::where('specimen_id', $id)->get();
         //dd($image_specimen);
 
-        return view('image_specimen.show', ['image_specimen' => $image_specimen]);
+        return view('image_specimen.show', ['image_specimens' => $image_specimens]);
     }
 
     public function edit($id) {}

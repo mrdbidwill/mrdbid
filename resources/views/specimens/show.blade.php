@@ -1,8 +1,6 @@
 @php use Illuminate\Support\Facades\DB; @endphp
 <x-layout>
-    <x-slot:heading>
-        Specimen Show - views/specimens/show.blade.php
-    </x-slot:heading>
+    <h1>specimens.show.blade.php</h1>
 
     @php
         //dd($specimen);
@@ -13,14 +11,20 @@
                 //->first()
                // ->get();
 
-            $images_specimens = \App\Models\ImageSpecimen::where('specimen_id', '=', $specimen['id'])->get();
+            $images_specimens = \App\Models\ImageSpecimen::where('specimen_id', '=', $specimen->id)->get();
 
             //dd($images_specimens);
 
             // display image for this specimen
                 foreach ($images_specimens as $images_specimen) {
-                echo "<img src='" . asset($images_specimen->file_address) . "' alt='" . $images_specimen->name . "'>";
-                echo "<p>Part: " . $images_specimen->parts . "</p>";
+                    $file_address = $images_specimen['file_address'];
+
+                // $image_address = url('storage/uploaded_images/'.$file_address);
+                $image_address = url('storage/uploaded_images/thumbnail/'.$file_address);
+                echo "<img src='$image_address' alt='Image for specimen'>";
+
+
+                echo "<p>Part: " . $images_specimen['parts'] . "</p>";
                 }  // end foreach images_specimens
             } // end foreach specimen
     @endphp

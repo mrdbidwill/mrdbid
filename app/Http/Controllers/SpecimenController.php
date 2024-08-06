@@ -11,16 +11,14 @@ class SpecimenController extends Controller
     {
         $specimens = Specimen::where('user_id', auth()->id())->latest()->simplePaginate(6);
 
-        return view('specimens.index', [
-            'specimens' => $specimens,
-        ]);
+        return view('specimens.index', ['specimens' => $specimens]);
     }
 
-    public function show(Specimen $specimen)
+    public function show($id)
     {
         //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
-        $specimen = Specimen::where('user_id', auth()->id())->get();
+        $specimen = Specimen::where('id', $id)->get();
         //dd($specimen);
 
         return view('specimens.show', ['specimen' => $specimen]);
