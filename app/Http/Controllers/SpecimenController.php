@@ -18,10 +18,10 @@ class SpecimenController extends Controller
     {
         //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
-        $specimen = Specimen::where('id', $id)->get();
+        $specimens = Specimen::where('id', $id)->get();
         //dd($specimen);
 
-        return view('specimens.show', ['specimen' => $specimen]);
+        return view('specimens.show', ['specimens' => $specimens]);
     }
 
     public function store()

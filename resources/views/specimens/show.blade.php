@@ -4,7 +4,7 @@
 
     @php
         //dd($specimen);
-        foreach ($specimen as $specimen) {
+        foreach ($specimens as $specimen) {
 
             //$images_specimens = DB::table('images')
               //  ->where('specimen_id', '=', $specimen['id'])
