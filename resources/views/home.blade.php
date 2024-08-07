@@ -135,7 +135,7 @@
 
                     <!-- sez it can not resolve - but it works -->
                     <p class="mt-4 text-black dark:text-white text-lg"><img
-                            src="{{ asset( '/storage/ams_images/AMS_Field_Data_Sheet_400x298.png') }}"
+                            src="{{ asset( '/storage/images/AMS_Field_Data_Sheet_400x298.png') }}"
                             alt="AMS Field Data Sheet"></p>
 
                     <!-- /storage/app/public/specimen_images/AMS_Field_Data_Sheet_400x298.png does not work -->

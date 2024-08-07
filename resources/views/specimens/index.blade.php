@@ -1,5 +1,5 @@
 @php
-    use Illuminate\Support\Facades\DB
+    use App\Models\ImageSpecimen;use Illuminate\Support\Facades\DB
     ;@endphp
 <x-layout>
     <x-slot:heading>
@@ -24,28 +24,33 @@
                     <a href="/characters/"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Character</a>
 
+                    <div class="m-4 px-4 py-4">
+
+                        <form method="GET" action="/image_specimen/create" id="upload-image">
+                            @csrf
+                            <!-- add hidden field specimen_id -->
+                            <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
+                            @php
+
+                                $image_count = ImageSpecimen::where('specimen_id', $specimen['id'])->count();
+                            @endphp
+                            <div>
+                                <button type="submit"
+                                        class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    Upload Image for this specimen. ({{$image_count }}) images uploaded.
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <a href="/groups/{{ $specimen['id'] }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Groups</a>
 
                     <a href="/clusters/{{ $specimen['id'] }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Clusters</a>
+
                 </div>
 
-
-                <div class="m-4 px-4 py-4">
-
-                    <form method="GET" action="/image_specimen/{{ $specimen['id'] }}" id="upload-image">
-                        @csrf
-                        <!-- add hidden field specimen_id -->
-                        <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
-                        <div>
-                            <button type="submit"
-                                    class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                Upload Image for this specimen. ({{$specimen['num_images'] }}) images uploaded.
-                            </button>
-                        </div>
-                    </form>
-                </div>
 
                 @php
 
