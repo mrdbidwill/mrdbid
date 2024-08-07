@@ -28,6 +28,11 @@
         ->first();
 
     @endphp
+    <div class="bg-amber-600 text-white p-4 rounded-lg">
+        <h2 class="text-2xl font-bold">Edit Character Table (admin_character_table/edit.blade.php)</h2>
+        <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin!
+            Admin!</h2>
+    </div>
 
 
     <form method="POST"

@@ -15,6 +15,36 @@
         <p>This is views/specimens/index.blade.php.</p>
 
         @foreach ($specimens as $specimen)
+            <div class="columns-8 flex items-center space-x-4">
+                @php
+                    // get the passed in id
+                    $specimen_id = $specimen['id'];
+                    //dd($specimen_id);
+
+                    $images_specimens = DB::table('image_specimens')->simplePaginate(8)
+                    ->where('specimen_id', '=', $specimen_id);
+                    // dd($images_specimens);
+
+                    foreach ($images_specimens as $images_specimen) {
+                        $image_address = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
+                        $parts = DB::table('parts')
+                                ->where('id', '=', $images_specimen->parts)
+                                ->first();
+                                // dd($parts);
+
+                        echo "<div class=\"p-6  rounded-xl shadow-lg \">
+                                  <div class=\"shrink-0\">
+                                      <img class=\"h-100 w-100\" src=$image_address alt=\"$image_address\">
+                                  </div>
+                                  <div>
+                                     <!--  <div class=\"text-xl font-medium text-black\">$parts->name:  $images_specimen->description</div>
+                                      <div class=\"text-xl font-medium text-black\">$parts->name</div>
+                                      <div class=\"text-xl font-medium text-black\">$images_specimen->description</div>   -->
+                                  </div>
+                              </div>";}
+                @endphp
+            </div>
+
             <div class="border-gray-200 rounded-lg">
                 <!--  add edit buttons  -->
                 <div class="m-4 px-4 py-4">

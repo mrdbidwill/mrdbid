@@ -14,7 +14,7 @@
             // dd($images_specimens);
 
             foreach ($images_specimens as $images_specimen) {
-                $image_address = url('storage/uploaded_images/thumbnail/'.$images_specimen->file_address);
+                $image_address = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
                 $parts = DB::table('parts')
                         ->where('id', '=', $images_specimen->parts)
                         ->first();

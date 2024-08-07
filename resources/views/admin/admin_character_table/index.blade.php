@@ -3,20 +3,63 @@
         Admin: Character Table Listings
     </x-slot:heading>
 
-    <div class="bg-gray-900">
+    <div class="bg-gray-100">
         <div class="mx-auto max-w-7xl">
-            <div class="bg-gray-900 py-10">
+            <div class="bg-gray-100 py-8">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-white">Characters</h1>
-                            <p class="mt-2 text-sm text-gray-300">Add the characters you know.</p>
+                            <h1 class="text-base font-semibold leading-6 text-black">Edit Character Table:
+                                (admin_character_table/index.blade.php)</h1>
+                            <h2 class="text-sm font-semibold leading-5 text-red-600">Admin! Admin! Admin! Admin!
+                                Admin!</h2>
+                            <p class="text-black">These are the characters in the "characters" table down below. They
+                                are
+                                currently available to be added as a specimen's character list. None are required. Use
+                                as needed. Add new ones
+                                with a verifiable source. If a look up table is needed, a list will be needed to create
+                                it.</p>
+
+                            <p class="text-black">Helpful characters should be added. Less helpful characters won't
+                                be used, so the list will eventually police itself.</p>
+
+                            <p class="text-black">For example, the following SQL code was used to create the
+                                "annulus_positions"
+                                <b>look up </b>table. Many lookup tables use an identical format. Others have special
+                                needs and are different.</p>
+
+                            <p class="text-black">
+                            <pre class="black">
+                                CREATE TABLE `annulus_positions` (
+                                `id` bigint UNSIGNED NOT NULL,
+                                `name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                `description` text COLLATE utf8mb4_unicode_ci,
+                                `comments` text COLLATE utf8mb4_unicode_ci,
+                                `source` int NOT NULL,
+                                `entered_by` int NOT NULL,
+                                `created_at` timestamp NULL DEFAULT NULL,
+                                `updated_at` timestamp NULL DEFAULT NULL
+                                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                                </pre>
+                            </p>
+
+                            <p class="text-black">
+                            <pre class="text-black">INSERT INTO `annulus_positions` (`id`, `name`, `description`,
+                                `comments`, `source`, `entered_by`, `created_at`, `updated_at`) VALUES
+                                (1, 'Not Entered', '', '', 23, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+                                (2, 'Superior', 'Near the cap', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+                                (3, 'Apical', 'upper half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+                                (4, 'Median', 'in the middle', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+                                (5, 'Inferior', 'Lower half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+                                (6, 'Basal', 'Near the base', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02
+                                00:05:27');</pre>
+                            </p>
+
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <button type="button"
-                                    class="block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                                Add user
-                            </button>
+                            <a href="/admin_character_table/create/"
+                               class="px-4 py-2 bg-blue-500 text-black rounded-lg">Add New Character to Character
+                                Table</a>
                         </div>
                     </div>
                     <div class="mt-8 flow-root">
@@ -51,19 +94,21 @@
                                     </thead>
                                     <tbody class="divide-y divide-gray-800">
 
-
+                                    @php
+                                        //dd($character_tables);
+                                    @endphp
                                     @foreach ($character_tables as $character_table)
                                         <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{{ $character_table['id'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['name'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['display_options'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['look_up_y_n'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['parts'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['source'] }}</td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-0">{{ $character_table['id'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['name'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['display_options'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['look_up_y_n'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['parts'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['source'] }}</td>
 
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                                 <a href="{{ $character_table['id'] }}/edit"
-                                                   class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
+                                                   class="px-4 py-2 bg-blue-500 text-black rounded-lg">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach

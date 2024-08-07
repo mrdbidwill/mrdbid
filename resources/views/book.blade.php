@@ -12,7 +12,8 @@
     <p>I recommend you buy all of these books, and more, if you are serious about learning about, well, just
         learning.</p>
 
-    <p>I like libraries, but like to have my books available. Do what suits you best. (This list of books is more than
+    <p>I like libraries, but like to have my books available. Do what suits you best. (This list of books is more
+        mushroom related books than
         my local library has.)</p>
 
     @foreach($books as $book)

@@ -71,14 +71,14 @@ class ImageSpecimenController extends Controller
         $img = Image::read($image_path);
         $img->resize(200, 200, function ($constraint) {
             $constraint->aspectRatio();
-        })->save($destinationPathThumbnail.'/'.$file_address);
+        })->save($destinationPathThumbnail.'/thumb_'.$file_address);
 
         $destinationPath = public_path('storage/uploaded_images/thumbnail');
         //$image->move($destinationPath, $file_address);
 
         $thumbnail_image = ImageSpecimenThumbnail::create([
             'specimen_id' => request('specimen_id'),
-            'thumbnail_file_address' => $file_address,
+            'thumbnail_file_address' => 'thumb_'.$file_address,
             'image_width' => 0,
             'image_height' => 0,
             'entered_by' => 1]);
