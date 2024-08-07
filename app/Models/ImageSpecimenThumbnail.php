@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class ImageSpecimenThumbnail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'specimen_id',
+        'thumbnail_file_address',
+        'image_width',
+        'image_height',
+        'entered_by',
+    ];
 }

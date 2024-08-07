@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image_specime_thumbnails', function (Blueprint $table) {
+        Schema::create('image_specimen_thumbnails', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('specimen_id')->constrained()->onDelete('cascade');
+            $table->string('thumbnail_file_address');
+            $table->integer('image_width');
+            $table->integer('image_height');
+            $table->integer('entered_by');
             $table->timestamps();
         });
     }
