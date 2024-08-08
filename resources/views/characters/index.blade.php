@@ -40,34 +40,29 @@
                                     // start form here
                                     <form method="POST" action="/characters.update/">
                                         @csrf
-                                        <div class="mt-10 grid>
-                                        <div class=" mt-2
-                                        ">
-                                        <x-form-input name="name" id="name" placeholder="Full Moon Behavior"/>
-                                        <x-form-error name="name"/>
+
+
+                                        <tbody class="divide-y divide-gray-800">
+
+
+                                        @foreach ($characters as $character)
+                                            <tr>
+                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-0">{{ $character['id'] }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character['name'] }}</td>
+                                            </tr>
+                                        @endforeach
+
+
+                                        </tbody>
+
+                                    </form>
+                                </table>
                             </div>
-                            </x-form-field>
-
-                            <tbody class="divide-y divide-gray-800">
-
-
-                            @foreach ($characters as $character)
-                                <tr>
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-0">{{ $character['id'] }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character['name'] }}</td>
-                                </tr>
-                            @endforeach
-
-
-                            </tbody>
-                            </form>
-                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 
