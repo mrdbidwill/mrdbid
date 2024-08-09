@@ -67,9 +67,9 @@ use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TasteController;
 use App\Http\Controllers\ToxicController;
 use App\Http\Controllers\TreeController;
-use App\Http\Controllers\UniversalOuterVeilAppearanceController;
-use App\Http\Controllers\UniversalOuterVeilFateController;
-use App\Http\Controllers\UniversalOuterVeilTextureController;
+use App\Http\Controllers\UnivOutVeilAppearController;
+use App\Http\Controllers\UnivOutVeilFateController;
+use App\Http\Controllers\UnivOutVeilTextureController;
 use App\Http\Controllers\VeilController;
 use Illuminate\Support\Facades\Route;
 
@@ -150,9 +150,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('taste', TasteController::class);
     Route::resource('toxic', ToxicController::class);
     Route::resource('tree', TreeController::class);
-    Route::resource('universal_outer_veil_appearance', UniversalOuterVeilAppearanceController::class);
-    Route::resource('universal_outer_veil_fate', UniversalOuterVeilFateController::class);
-    Route::resource('universal_outer_veil_texture', UniversalOuterVeilTextureController::class);
+    Route::resource('universal_outer_veil_appearance', UnivOutVeilAppearController::class);
+    Route::resource('universal_outer_veil_fate', UnivOutVeilFateController::class);
+    Route::resource('universal_outer_veil_texture', UnivOutVeilTextureController::class);
     Route::resource('veil', VeilController::class);
 
 });

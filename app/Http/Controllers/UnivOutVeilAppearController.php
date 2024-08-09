@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class UniversalOuterVeilAppearanceController extends Controller
+class UnivOutVeilAppearController extends Controller
 {
     public function index(): View
     {
