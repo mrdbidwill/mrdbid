@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partial_inner_veil_annulus_ring_positions', function (Blueprint $table) {
+        Schema::create('univ_out_veil_textures', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('partial_inner_veil_annulus_ring_positions');
+        Schema::dropIfExists('univ_out_veil_textures');
     }
 };

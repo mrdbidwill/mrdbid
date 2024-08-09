@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UniversalOuterVeilFate extends Model
+class Project extends Model
 {
     public string $name;
 

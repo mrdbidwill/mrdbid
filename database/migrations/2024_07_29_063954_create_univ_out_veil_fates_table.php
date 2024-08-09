@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('universal_outer_veil_textures', function (Blueprint $table) {
+        Schema::create('univ_out_veil_fates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('universal_outer_veil_textures');
+        Schema::dropIfExists('univ_out_veil_fates');
     }
 };

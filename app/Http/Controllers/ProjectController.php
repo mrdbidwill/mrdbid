@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PartInVeilAnnRiPositController extends Controller
+class ProjectController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.part_in_veil_ann_ri_posit.index');
+        return view('specimens.look_up_tables.project');
     }
 
     public function create() {}

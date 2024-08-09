@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('universal_outer_veil_fates', function (Blueprint $table) {
+        Schema::create('part_in_veil_ann_ri_posits', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('universal_outer_veil_fates');
+        Schema::dropIfExists('part_in_veil_ann_ri_posits');
     }
 };
