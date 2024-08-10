@@ -44,6 +44,8 @@
                                         @foreach ($characters as $character)
                                             <tr>
                                                 <td>
+                                                    <!-- display all of the switch cases as a grid  -->
+
 
                                                     @switch($character['display_options'])
                                                         @case(1)
@@ -126,7 +128,21 @@
                                                             <p>{{$character['name']}}: color</p>
                                                             @php
                                                                 $data = DB::table( 'colors' )->get();
+                                                                //dd($data);
                                                             @endphp
+                                                            @foreach($data as $item)
+                                                                <!-- print as grid and display banner-50x50/banner-50x50 -->
+
+                                                                <img
+                                                                    src="{{url('storage/images/AMS_colors/banner_50x50/banner_'.$item->id.'.jpg ')}}"
+                                                                    alt="{{$item->latin_name}}">
+                                                                <input type="radio" id="{{$item->id}}"
+                                                                       name="{{$character['name']}}"
+                                                                       value="{{$item->id}}">
+                                                                <label for="{{$item->id}}">{{$item->latin_name}}</label>
+                                                                <br>
+
+                                                            @endforeach
 
                                                             @break
 
@@ -166,7 +182,9 @@
                                                                 <input type="radio" id="{{$item->id}}"
                                                                        name="{{$character['name']}}"
                                                                        value="{{$item->id}}">
-                                                                <label for="{{$item->id}}">{{$item->name}}</label><br>
+                                                                <label
+                                                                    for="{{$item->id}}">{{$item->name}}</label>
+                                                                <br>
 
                                                             @endforeach
 
