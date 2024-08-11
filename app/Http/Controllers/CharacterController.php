@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CharacterController extends Controller
@@ -15,38 +14,27 @@ class CharacterController extends Controller
         // Not paginating here so will show all in a one-page grid
         $characters = Character::get();
 
-        $viewData = [];
+        /*
+                foreach ($characters as $character) {
 
-        foreach ($characters as $character) {
+                    $display = DB::table('display_options')
+                        ->where('id', '=', $character['display_options'])
+                        ->first();
 
-            $display = DB::table('display_options')
-                ->where('id', '=', $character['display_options'])
-                ->first();
+                    $parts = DB::table('parts')
+                        ->where('id', '=', $character['parts'])
+                        ->first();
 
-            $viewData['display_options'] = $character['display_options'];
+                    $source = DB::table('data_sources')
+                        ->where('id', '=', $character['source'])
+                        ->first();
 
-            if ($character['look_up_y_n'] == 1) {
-
-                $viewData['look_up_y_n'] = 'IS  Lookup';
-            } else {
-                $viewData['look_up_y_n'] = 'No - NOT Lookup';
-            }
-
-            $parts = DB::table('parts')
-                ->where('id', '=', $character['parts'])
-                ->first();
-
-            $source = DB::table('data_sources')
-                ->where('id', '=', $character['source'])
-                ->first();
-
-            $by = DB::table('users')
-                ->where('id', '=', $character['entered_by'])
-                ->first();
-        }
-
-        return view('characters.index', ['characters' => $characters, 'viewData' => $viewData,
-        ]);
+                    $by = DB::table('users')
+                        ->where('id', '=', $character['entered_by'])
+                        ->first();
+                }
+        */
+        return view('characters.index', ['characters' => $characters]);
     }
 
     public function show(Character $character)
