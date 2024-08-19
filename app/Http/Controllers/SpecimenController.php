@@ -27,24 +27,26 @@ class SpecimenController extends Controller
     public function store()
     {
         request()->validate([
-            'specimen_name' => ['required', 'min:3'],
-            'common_name' => ['required'],
-            'specimen_location_now' => ['required'],
-            'location_found_city' => ['required', 'min:3'],
-            'location_found_county' => ['required', 'min:3'],
-            'state' => ['required'],
-            'country' => ['required'],
-            'location_public_y_n' => ['required'],
-            'share_data_y_n' => ['required'],
-            'month_found' => ['required'],
-            'day_found' => ['required'],
-            'year_found' => ['required'],
-            'fungus_type' => ['required'],
-            'entered_by' => ['required'],
+            'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
+            'common_name' => 'required|string|min:3|max:255',
+            'specimen_location_now' => 'required|integer',
+            'location_found_city' => 'required|string|min:3|max:255',
+            'location_found_county' => 'required|string|min:3|max:255',
+            'state' => 'required|integer',
+            'country' => 'required|integer',
+            'location_public_y_n' => 'required',
+            'share_data_y_n' => 'required',
+            'month_found' => 'required|integer|min:1|max:12',
+            'day_found' => 'required|integer|min:1|max:31',
+            'year_found' => 'required|integer|min:1954|max:2025',
+            'fungus_type' => 'required|integer',
+            'entered_by' => 'required|integer',
         ]);
 
-        $specimen = Specimen::create([
-            'user_id' => auth()->id(),
+        // dd(request()->all());
+        // dd(auth()->user()->id);
+        Specimen::create([
+            'user_id' => auth()->user()->id,
             'specimen_name' => request('specimen_name'),
             'common_name' => request('common_name'),
             'description' => request('description'),
@@ -84,16 +86,20 @@ class SpecimenController extends Controller
         Gate::authorize('edit-specimen', $specimen);
 
         request()->validate([
-            'specimen_name' => ['required', 'min:3'],
-            'specimen_location_now' => 'required',
-            'location_found_city' => 'required',
-            'location_found_county' => 'required',
-            'state' => 'required',
-            'month_found' => 'required',
-            'day_found' => 'required',
-            'year_found' => 'required',
-            'fungus_type' => 'required',
-            'entered_by' => 'required',
+            'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->id(),
+            'common_name' => 'required|string|min:3|max:255',
+            'specimen_location_now' => 'required|integer',
+            'location_found_city' => 'required|string|min:3|max:255',
+            'location_found_county' => 'required|string|min:3|max:255',
+            'state' => 'required|integer',
+            'country' => 'required|integer',
+            'location_public_y_n' => 'required',
+            'share_data_y_n' => 'required',
+            'month_found' => 'required|integer|min:1|max:12',
+            'day_found' => 'required|integer|min:1|max:31',
+            'year_found' => 'required|integer|min:1954|max:2025',
+            'fungus_type' => 'required|integer',
+            'entered_by' => 'required|integer',
         ]);
 
         $specimen->update([

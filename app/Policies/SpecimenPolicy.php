@@ -42,17 +42,17 @@ class SpecimenPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Specimen $specimen): void
+    public function update(User $user, Specimen $specimen): bool
     {
-        //
+        return $specimen->user_id === $user->id;   // Only the user who created the specimen can update it
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Specimen $specimen): void
+    public function delete(User $user, Specimen $specimen): bool
     {
-        //
+        return $specimen->user_id === $user->id;   // Only the user who created the specimen can delete it
     }
 
     /**

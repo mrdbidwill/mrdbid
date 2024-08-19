@@ -53,6 +53,8 @@
                                     placeholder="Specimen Name"
                                     value="{{ $specimen['specimen_name'] }}"
                                     required>
+
+
                             </div>
 
                             @error('specimen_name')

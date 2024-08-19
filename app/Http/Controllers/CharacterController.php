@@ -111,4 +111,13 @@ class CharacterController extends Controller
 
         return redirect('/characters');
     }
+
+    public function display_characters($specimen_id)
+    {
+        //dd($specimen_id);
+        //dd($characters);
+
+        return Character::get();
+
+    }
 }

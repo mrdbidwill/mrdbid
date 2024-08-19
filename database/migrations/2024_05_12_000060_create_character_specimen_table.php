@@ -13,7 +13,7 @@
                  public function up(): void
                  {
 
-                     Schema::create('character_specimen', function (Blueprint $table) {
+                     Schema::create('character_specimens', function (Blueprint $table) {
 
                          $table->id();
 
@@ -22,8 +22,6 @@
                          $table->foreignIdFor(\App\Models\Specimen::class)->constrained()->cascadeOnDelete();
 
                          $table->string('character_value', length: 240);
-
-                         $table->integer('display_options');
 
                          $table->integer('entered_by');
 
@@ -36,7 +34,7 @@
                  public function down(): void
                  {
 
-                     Schema::dropIfExists('character_specimen');
+                     Schema::dropIfExists('character_specimens');
 
                  }
              };

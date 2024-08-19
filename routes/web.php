@@ -15,6 +15,7 @@ use App\Http\Controllers\CapShapeTopViewController;
 use App\Http\Controllers\CapSurfaceDrynessController;
 use App\Http\Controllers\CapSurfaceTextureController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\CharacterSpecimenController;
 use App\Http\Controllers\ChemReactionController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DataImageSourceController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PossibleMatchController;
 use App\Http\Controllers\PreservationMethodController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectBelongToController;
 use App\Http\Controllers\SoilTypeController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\SpecimenAgeController;
@@ -76,8 +78,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
-//Route::view('/books', 'books')->name('books');
-Route::resource('book', BookController::class);
+Route::resource('books', BookController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -85,6 +86,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('specimens', SpecimenController::class);
     Route::resource('characters', CharacterController::class);
+    Route::resource('character_specimens', CharacterSpecimenController::class);
 
     Route::resource('admin_character_table', AdminCharacterController::class);
     Route::resource('admin_look_up_table', AdminLookUpTableController::class);
@@ -134,6 +136,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('plant', PlantController::class);
     Route::resource('possible_match', PossibleMatchController::class);
     Route::resource('preservation_method', PreservationMethodController::class);
+    Route::resource('project_belongs_to', ProjectBelongToController::class);
     Route::resource('soil_type', SoilTypeController::class);
     Route::resource('species', SpeciesController::class);
     Route::resource('specimen_age', SpecimenAgeController::class);

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ProjectController extends Controller
+class ProjectBelongToController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.project');
+        return view('specimens.look_up_tables.project_belong_to');
     }
 
     public function create() {}

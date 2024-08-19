@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Character extends Model
 {
@@ -104,8 +103,8 @@ class Character extends Model
         $this->entered_by = $entered_by;
     }
 
-    public function specimens(): BelongsTo
+    public function specimens(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(Specimen::class);
+        return $this->belongsToMany(Specimen::class);
     }
 }

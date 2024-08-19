@@ -1,88 +1,41 @@
 @php
-    use App\Models\ImageSpecimen;use Illuminate\Support\Facades\DB
-    ;@endphp
+    use App\Models\ImageSpecimen;  use Illuminate\Support\Facades\DB ;
+@endphp
 <x-layout>
     <x-slot:heading>
         Specimen Listings
     </x-slot:heading>
 
+    <p>This is views/specimens/index.blade.php.</p>
+
+    <div class="m-auto p-6">
+        <!-- if no specimens are found, display message -->
+        @if ($specimens->count() == 0)
+            <p class="text-red-500">No specimens found.</p>
+        @endif
+    </div>
+
     <div class="flex justify-end">
         <a href="/specimens/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Specimen</a>
     </div>
 
-
     <div class="space-y-4">
-        <p>This is views/specimens/index.blade.php.</p>
-
-        @foreach ($specimens as $specimen)
-            <div class="columns-8 flex items-center space-x-4">
-                @php
-                    // get the passed in id
-                    $specimen_id = $specimen['id'];
-                    //dd($specimen_id);
-
-                    $images_specimens = DB::table('image_specimens')->simplePaginate(8)
-                    ->where('specimen_id', '=', $specimen_id);
-                    // dd($images_specimens);
-
-                    foreach ($images_specimens as $images_specimen) {
-                        $image_address = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
-                        $parts = DB::table('parts')
-                                ->where('id', '=', $images_specimen->parts)
-                                ->first();
-                                // dd($parts);
-
-                        echo "<div class=\"p-6  rounded-xl shadow-lg \">
-                                  <div class=\"shrink-0\">
-                                      <img class=\"h-100 w-100\" src=$image_address alt=\"$image_address\">
-                                  </div>
-                                  <div>
-                                     <!--  <div class=\"text-xl font-medium text-black\">$parts->name:  $images_specimen->description</div>
-                                      <div class=\"text-xl font-medium text-black\">$parts->name</div>
-                                      <div class=\"text-xl font-medium text-black\">$images_specimen->description</div>   -->
-                                  </div>
-                              </div>";}
-                @endphp
-            </div>
-
-            <div class="border-gray-200 rounded-lg">
-                <!--  add edit buttons  -->
-                <div class="m-4 px-4 py-4">
-                    <a href="/specimens/{{ $specimen['id'] }}/edit"
-                       class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
-
-                    <a href="/characters/"
-                       class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Character</a>
-
-                    <div class="m-4 px-4 py-4">
-
-                        <form method="GET" action="/image_specimen/create" id="upload-image">
-                            @csrf
-                            <!-- add hidden field specimen_id -->
-                            <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
-                            @php
-
-                                $image_count = ImageSpecimen::where('specimen_id', $specimen['id'])->count();
-                            @endphp
-                            <div>
-                                <button type="submit"
-                                        class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Upload Image for this specimen. ({{$image_count }}) images uploaded.
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <a href="/groups/{{ $specimen['id'] }}"
-                       class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Groups</a>
-
-                    <a href="/clusters/{{ $specimen['id'] }}"
-                       class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add this specimen to one of your Clusters</a>
-
-                </div>
+        <div class="flex items-center space-x-4">
 
 
-                @php
+            <table
+                class="table-auto size-full  bg-indigo-100 border-separate border border-slate-900 border-4-rounded rounded-lg outline-slate-100 outline-4">
+
+                @foreach ($specimens as $specimen)
+
+                    @php
+                        // get the passed in id
+                        $specimen_id = $specimen['id'];
+                        //dd($specimen_id);
+
+                        $images_specimens = DB::table('image_specimens')->simplePaginate(8)
+                        ->where('specimen_id', '=', $specimen_id);
+                        // dd($images_specimens);
 
                     $state = DB::table('states')
                     ->where('id', '=', $specimen['state'])
@@ -113,33 +66,119 @@
                     ->where('id', '=', $specimen['fungus_type'])
                     ->first();
                     // dd($fungus_type);
-                @endphp
+                    @endphp
 
-                <a href="/specimens/{{ $specimen['id'] }}" class="block px-4 py-6 border border-gray-200 rounded-lg">
-                    <div class="font-bold text-blue-500 text-sm">{{ $specimen['specimen_name'] }}</div>
+                    @foreach ($images_specimens as $images_specimen)
+                        @php
+                            $image_address = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
+                            $parts = DB::table('parts')
+                            ->where('id', '=', $images_specimen->parts)
+                            ->first();
+                            // dd($parts);
+                        @endphp
 
-                    <div>
-                        <strong>{{ $specimen['common_name'] }}:</strong>
-                        {{ $specimen['description'] }}
-                        {{ $specimen['comment'] }}
+                        <tr>
+                            <td colspan="3" class="border border-slate-400 p-2">
+                                <img class="h-100 w-100" src="{{$image_address}}"
+                                     alt="{{$image_address}}"><br>{{$parts->name}}: {{$images_specimen->description}}
+                            </td>
+                        </tr>
+                    @endforeach
 
-                        {{ $specimen['location_found_city'] }}
-                        {{ $specimen['location_found_county'] }}
-                        {{ $state->name }}
-                        {{ $country->name }}
-                        {{ $location_public }}
-                        {{ $share_data }}
-                        {{ $specimen['month_found'] }}  {{ $specimen['day_found'] }} {{ $specimen['year_found'] }} {{ $fungus_type->name }}
-                    </div>
-                </a>
+                    <tr>
+                        <td class="border border-slate-400 p-2">
+                            <div class="m-4 px-4 py-4">
+                                <a href="/specimens/{{ $specimen['id'] }}/edit"
+                                   class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">Edit
+                                    Basic Specimen Info</a>
+                            </div>
+                        </td>
+
+                        <td class="border border-slate-400 p-2">
+                            <form method="GET" action="/image_specimen/create" id="upload-image">
+                                @csrf
+                                <!-- add hidden field specimen_id -->
+                                <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
+                                @php
+
+                                    $image_count = ImageSpecimen::where('specimen_id', $specimen['id'])->count();
+                                @endphp
+                                <div>
+                                    <button type="submit"
+                                            class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">
+                                        Upload Image for this specimen. ({{$image_count }}) image(s) uploaded.
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+
+                        <td class="border border-slate-400 p-2">
+                            <form method="GET" action="/character_specimens/{{$specimen['id']}}/edit"
+                                  id="add_character">
+                                @csrf
+                                <!-- add hidden field specimen_id -->
+                                <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
+                                <div>
+                                    <button type="submit"
+                                            class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">
+                                        Manage characters for this specimen
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="border border-slate-400 p-2">Specimen ID: {{ $specimen['id'] }}</td>
+                        <td class="border border-slate-400 p-2">Specimen Name: {{ $specimen['specimen_name'] }}</td>
+                        <td class="border border-slate-400 p-2">Common Name: {{ $specimen['common_name'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="border border-slate-400 p-2">
+                            Description: {{ $specimen['description'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="border border-slate-400 p-2">Comment: {{ $specimen['comment'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="border border-slate-400 p-2">{{ $specimen['location_found_city'] }}
+                            , {{ $state->name }} {{$country->name}} on Date
+                            Found: {{ $specimen['month_found'] }} / {{ $specimen['day_found'] }}
+                            / {{ $specimen['year_found'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border border-slate-400 p-2">Make Location Public? {{ $location_public }}</td>
+                        <td class="border border-slate-400 p-2">Share Data? {{ $share_data }}</td>
+                        <td class="border border-slate-400 p-2">Fungus Type: {{ $fungus_type->name }}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border border-slate-400 p-2"><a
+                                class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white"
+                                href="/groups/{{ $specimen['id'] }}">Add
+                                this specimen to one of your Groups</a>
+                        </td>
+
+                        <td class="border border-slate-400 p-2"><br></td>
+
+                        <td>
+                            <a class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white"
+                               href="/clusters/{{ $specimen['id'] }}">Add
+                                this specimen to
+                                one of your Clusters</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="bg-blue-400 border border-slate-800 p-2"></td>
+                    </tr>
+
                 @endforeach
-
-            </div>
-
-    </div>
-
-
-    <div class="flex bg-amber-600 border-gray-100">
-        {{ $specimens->links() }}
+            </table>
+        </div>
     </div>
 </x-layout>

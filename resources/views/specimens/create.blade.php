@@ -69,7 +69,6 @@
                                     placeholder="Description"
                                     value="">
                             </div>
-
                             @error('description')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
@@ -99,18 +98,37 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="specimen_location_now" class="block text-sm font-medium leading-6 text-gray-900">Specimen
-                            Location Now</label>
+                        Specimen Location Now: (todo: list of herbariums)
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="specimen_location_now"
-                                    id="specimen_location_now"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+
+                                @php
+                                    $specimen_data = DB::table( 'specimen_locations_now' )->get();
+                                    // dd($specimen_data);
+                                @endphp
+                                <table>
+                                    @foreach($specimen_data as $item)
+
+                                        <tr>
+                                            <td>
+                                                @if( $item->id == 1)
+                                                    <input type="radio" id="specimen_location_now"
+                                                           name="specimen_location_now"
+                                                           value="{{$item->id}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="specimen_location_now"
+                                                           name="specimen_location_now"
+                                                           value="{{$item->id}}"
+                                                           required>
+                                                @endif
+                                                <label for="specimen_location_now">{{$item->name}}</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
 
                             @error('specimen_location_now')
@@ -172,13 +190,32 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="state"
-                                    id="state"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+                                @php
+                                    $specimen_data = DB::table( 'states' )->get();
+                                    //dd($specimen_data);
+                                @endphp
+                                <table>
+                                    @foreach($specimen_data as $item)
+
+                                        <tr>
+                                            <td>
+                                                @if( $item->id == 98)
+                                                    <input type="radio" id="state"
+                                                           name="state"
+                                                           value="{{$item->id}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="state"
+                                                           name="state"
+                                                           value="{{$item->id}}"
+                                                           required>
+                                                @endif
+                                                <label for="parts">{{$item->id}}. {{$item->name}}</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
 
                             @error('state')
@@ -194,13 +231,32 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="country"
-                                    id="country"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+                                @php
+                                    $specimen_data = DB::table( 'countries' )->get();
+                                    //dd($specimen_data);
+                                @endphp
+                                <table>
+                                    @foreach($specimen_data as $item)
+
+                                        <tr>
+                                            <td>
+                                                @if( $item->id == 1)
+                                                    <input type="radio" id="country"
+                                                           name="country"
+                                                           value="{{$item->id}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="country"
+                                                           name="country"
+                                                           value="{{$item->id}}"
+                                                           required>
+                                                @endif
+                                                <label for="{{$item->id}}">{{$item->name}}</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
 
                             @error('country')
@@ -217,12 +273,18 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="location_public_y_n"
-                                    id="location_public_y_n"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value="">
+                                <input type="radio" id="location_public_y_n"
+                                       name="location_public_y_n"
+                                       value="1"
+                                       required
+                                       checked>
+                                <label for="{{$item->id}}">Yes</label>
+
+                                <input type="radio" id="location_public_y_n"
+                                       name="location_public_y_n"
+                                       value="0"
+                                       required>
+                                <label for="location_public_y_n">No</label>
                             </div>
 
                             @error('location_public_y_n')
@@ -239,12 +301,18 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="share_data_y_n"
-                                    id="share_data_y_n"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value="">
+                                <input type="radio" id="share_data_y_n"
+                                       name="share_data_y_n"
+                                       value="1"
+                                       required
+                                       checked>
+                                <label for="{{$item->id}}">Yes</label>
+
+                                <input type="radio" id="share_data_y_n"
+                                       name="share_data_y_n"
+                                       value="0"
+                                       required>
+                                <label for="share_data_y_n">No</label>
                             </div>
 
                             @error('share_data_y_n')
@@ -255,18 +323,46 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="month_found"
-                               class="block text-sm font-medium leading-6 text-gray-900">Month Found</label>
+
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="month_found"
-                                    id="month_found"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+                                <!-- radio list of months -->
+                                @php
+                                    $month_array = array( array("01" , "January"), array("02" , "February"), array("03" ,
+                                    "March"), array("04" , "April"), array("05" , "May"), array("06" , "June"), array("07" ,
+                                    "July"), array("08" , "August"), array("09" , "September"), array("10" , "October"),
+                                    array("11" , "November"), array("12" , "December") );
+                                    //dd($month_array);
+                                @endphp
+
+                                <table>
+                                    @foreach($month_array as $month )
+                                        @php
+                                            //dd($item);
+                                        @endphp
+                                        <tr>
+                                            <td>
+                                                <label for="month_found"
+                                                       class="text-sm font-medium leading-6 text-gray-900">{{$month[1]}}</label>
+                                                @if( $month[0][1] == "01")
+                                                    <input type="radio" id="month_found"
+                                                           name="month_found"
+                                                           value="{{$month[0][1]}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="month_found"
+                                                           name="month_found"
+                                                           value="{{$month[0][1]}}"
+                                                           required>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+
                             </div>
 
                             @error('month_found')
@@ -282,13 +378,13 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="day_found"
-                                    id="day_found"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+
+                                <!-- drop down from 1 to 31 -->
+                                <select name="day_found" id="day_found" required>
+                                    @for ($i = 1; $i <= 31; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
                             </div>
 
                             @error('day_found')
@@ -300,19 +396,18 @@
 
                     <div class="sm:col-span-4">
                         <label for="year_found"
-                               class="block text-sm font-medium leading-6 text-gray-900">Year Found</label>
+                               class="block text-sm font-medium leading-6 text-gray-900">Year Found (todo: year range
+                            1900 to 2024?)</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="year_found"
-                                    id="year_found"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+                                <!-- drop down for years subject to change -->
+                                <select name="year_found" id="year_found" required>
+                                    @for ($i = 2020; $i <= 2024; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
                             </div>
-
                             @error('year_found')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
@@ -326,13 +421,32 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="fungus_type"
-                                    id="fungus_type"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
+                                @php
+                                    $specimen_data = DB::table( 'fungus_types' )->get();
+                                    //dd($specimen_data);
+                                @endphp
+                                <table>
+                                    @foreach($specimen_data as $item)
+
+                                        <tr>
+                                            <td>
+                                                @if( $item->id == 1)
+                                                    <input type="radio" id="fungus_type"
+                                                           name="fungus_type"
+                                                           value="{{$item->id}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="fungus_type"
+                                                           name="fungus_type"
+                                                           value="{{$item->id}}"
+                                                           required>
+                                                @endif
+                                                <label for="fungus_type">{{$item->id }}. {{$item->name }}</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
 
                             @error('fungus_type')
@@ -340,35 +454,20 @@
                             @enderror
                         </div>
                     </div>
-
-
-                    <div class="sm:col-span-4">
-                        <label for="entered_by"
-                               class="block text-sm font-medium leading-6 text-gray-900">Entered By:</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="number"
-                                    name="entered_by"
-                                    id="entered_by"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    value=""
-                                    required>
-                            </div>
-
-                            @error('entered_by')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
                 </div>
 
+
                 <div>
-                    <button type="submit"
-                            class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Enter
-                    </button>
+                    <input
+                        type="hidden"
+                        name="entered_by"
+                        id="entered_by"
+                        value="{{auth()->user()->id}}">
+
+                    <div class="mx-auto mt-6">
+                        <x-primary-button>Submit</x-primary-button>
+                    </div>
+
 
                 </div>
             </div>

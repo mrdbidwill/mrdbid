@@ -1,6 +1,11 @@
+@php
+    use App\Models\CharacterSpecimen;
+    $specimen_id = $request->specimen_id;
+    //dd($specimen_id);
+@endphp
 <x-layout>
     <x-slot:heading>
-        Character Listings
+        Add a character to this specimen:
     </x-slot:heading>
 
 
@@ -11,7 +16,16 @@
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
                             <h1 class="text-base font-semibold leading-6 text-black">Characters
-                                (characters/index.blade.php)</h1>
+                                (character_specimens/create.blade.php)</h1>
+                            @if ($errors->any())
+                                <div class="text-red-600 text-3xl">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
                         </div>
                     </div>
@@ -41,13 +55,10 @@
                                     @foreach ($characters as $character)
                                         <tr>
                                             <td>
-                                                <!-- display all of the switch cases as a grid  -->
-
 
                                                 @switch($character['display_options'])
                                                     @case(1)
                                                         <!--  Do not display  -->
-                                                        <!-- <p>{{$character['name']}}: Do not display</p> -->
                                                         @break
 
                                                     @case(2)
@@ -160,13 +171,15 @@
                                                         @php
                                                             if( ( $character['name'] ==  'cap_surface_dryness')  || ( $character['name'] ==  'genus' ) || ( $character['name'] ==  'gill_thickness' )|| ( $character['name'] ==  'species' ) || ( $character['name'] ==  'veil_annulus' ) )
                                                             {
-                                                            $data = DB::table( $character['name'] )->get();
+                                                            $data = DB::table( $character['name'] )->get();  // ALL from character lookup table
                                                             }
                                                             else
                                                             {
                                                             $data = DB::table( $character['name'].'s' )->get();
                                                             //dd($data);
                                                             }
+
+
                                                         @endphp
 
                                                         <p>Character Name: {{$character['name']}}</p>
@@ -178,11 +191,26 @@
                                                             @csrf
 
                                                             @foreach($data as $item)
-                                                                <input type="hidden" name="character_id"
-                                                                       value="{{$character['id']}}">
+
+                                                                @php
+                                                                    //dd($data);  // all data
+                                                                    //dd($item);    // one item
+                                                                       $select = CharacterSpecimen::where('character_id', $character['id'])->first();
+
+                                                                       //dd($select);
+                                                                //dd($request->session()->all());
+                                                                @endphp
 
                                                                 <input type="radio" id="{{$item->id}}"
-                                                                       name="{{$character['name']}}"
+                                                                       name="character_value"
+
+                                                                       @if( isset($select->character_value)  &&   (  $item->id == $select->character_value))
+                                                                           checked
+                                                                       @elseif( isset($select->character_value)  &&   (  $select->character_value == 'Not Entered'))
+                                                                           checked
+                                                                       @elseif( !isset($select->character_value)  &&   (  $item->name == 'Not Entered'))
+                                                                           checked
+                                                                       @endif
                                                                        value="{{$item->id}}">
                                                                 <label
                                                                     for="{{$item->id}}">{{$item->name}}
@@ -190,10 +218,34 @@
                                                                 <br>
 
                                                             @endforeach
-                                                            <input type="submit" value="Submit">
+
+                                                            <input type="hidden" name="character_id"
+                                                                   value="{{$character['id']}}">
+
+                                                            <input type="hidden" name="specimen_id"
+                                                                   value="{{ $specimen_id }}">
+
+                                                            <input type="hidden" name="entered_by"
+                                                                   value="{{ auth()->id()}}">
+
+                                                            @php //dd($select); @endphp
+
+                                                            @if(   isset($select->value)  &&   (  $select->value == '1'))
+                                                                <button
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                                    type="submit">
+                                                                    Add Character
+                                                                </button>
+                                                            @else
+                                                                <button
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                                    type="submit">
+                                                                    Update Character
+                                                                </button>
+                                                            @endif
+
+
                                                         </form>
-
-
 
 
                                                         @break

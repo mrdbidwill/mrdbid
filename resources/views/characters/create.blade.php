@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:heading>
-        Admin: Character Table?
+        views/characters/create.blade.php
     </x-slot:heading>
 
     <form method="POST" action="/character_table">

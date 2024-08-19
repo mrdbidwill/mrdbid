@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MRDBID</title>
+    <title>MRDBID Home Page</title>
 
 
     <!-- Fonts -->
@@ -37,7 +37,7 @@
                     <a href="{{ route('contact') }}"
                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-blue-700/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-blue-500">Contact</a>
 
-                    <a href="{{ route('book.index') }}"
+                    <a href="{{ route('books.index') }}"
                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-blue-700/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-blue-500">Books</a>
 
 
