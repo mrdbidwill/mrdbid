@@ -18,17 +18,10 @@ class CharacterSpecimenController extends Controller
 
     public function edit($specimen_id)
     {
-        $characters = Character::orderBy('parts')->get();
-
-        // get the character_id only for this specimen_id
-        $characterIds = CharacterSpecimen::where('specimen_id', $specimen_id)->pluck('character_id');
         //dd($specimen_id);
-        //dd($characters);
-
         $specimenId = $specimen_id;
-        // return specimen_id also
 
-        return view('character_specimens.edit', ['characters' => $characters], ['characterIds' => $characterIds])->with('specimenId', $specimenId);
+        return view('character_specimens.edit')->with('specimenId', $specimenId);
 
     }
 

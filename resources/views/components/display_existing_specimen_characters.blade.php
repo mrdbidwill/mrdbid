@@ -1,53 +1,69 @@
 @php
+
     use App\Models\CharacterSpecimen;
+    use App\Models\Character;
+    use Illuminate\Support\Facades\DB;
+
+    // Retrieve CharacterSpecimens for the given specimen ID
+    $characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenID)->get();
+
+    echo "Specimen ID: ".e($specimenID);
 @endphp
 
-<table>
+@foreach ($characterSpecimens as $characterSpecimen)
 
-    <tr>
-        <td>These characters are set for this specimen.</td>
-    </tr>
-
-    @foreach ($characterIds as $characterId)
-        <tr>
-            <td>
-                @php
-                    //dd($characterIds[0]);   // is an integer for character_value of character_specimens table
-                    //dd($characters);       // all characters in characters table
-
-                    $character = $characters->where('id', $characterId)->first();
-                    //dd($characterId);   // integer for character_id in character_specimens table
-                    //dd($specimenID);    // integer for specimen_id in character_specimens table
-                    //dd($character);     // character object
+    @php
+        $character = Character::find($characterSpecimen['character_id']);
+        $tableName = getTableName($character['name']);
+        $data = DB::table($tableName)->get();
+        $displayCharacterName = formatCharacterName($character['name']);
 
 
+        foreach ($data as $item):
+            $value = DB::table($tableName)->find($characterSpecimen['character_value']);
+            //echo e($displayCharacterName);   // e is same as HTML::entities($displayCharacterName
+        endforeach;
 
-                        if( ( $character['name'] ==  'cap_surface_dryness')  || ( $character['name'] ==  'genus' ) || ( $character['name'] ==  'gill_thickness' )
-                        || ( $character['name'] ==  'species' ) || ( $character['name'] ==  'veil_annulus' ) )
-                        {
-                        $data = DB::table( $character['name'] )->get();
-                        }
-                        else
-                        {
-                        $data = DB::table( $character['name'].'s' )->get();
-                        }
-                        // dd($data);  // loop through this to get the values for the radio buttons
-                @endphp
-                <p>character name:{{ $character['name'] }}</p>
-                @foreach( $data as $item )
+        $source = DB::table('data_sources')->where('id', $value->source)->first();
+        //dd($source);
+    @endphp
 
-                    <input type="radio" id="{{ $item->id }}"
-                           name="{{ $character['name'] }}"
-                           value="{{ $item->id }}">
-                    <label
-                        for="{{ $item->id }}">{{ $item->name }} {{ $item->description }}</label>
-                    <br>
-                @endforeach
-                @error('$character->name')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+    <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
+        <b>{{$displayCharacterName}}: {{$value->name}}</b> {{$value->description}}<br>
+        @if( !empty($value->comments))
+            {{$value->comments}}<br>
+            <div class="text-sm">Source: <i>{{$source->title}}</i> {{$source->author}}</div>
+        @else
+            <div class="text-sm">Source: <i>{{$source->title}}</i> {{$source->author}}</div>
+        @endif
+    </div>
 
-            </td>
-        </tr>
-    @endforeach
-</table>
+@endforeach
+
+@php
+
+    /**
+     * Generate table name based on character name
+     *
+     * @param  string  $characterName
+     * @return string
+     */
+    function getTableName(string $characterName): string
+    {
+        $specialCases = ['cap_surface_dryness', 'genus', 'gill_thickness', 'species', 'veil_annulus'];
+
+        return in_array($characterName, $specialCases) ? $characterName : $characterName.'s';
+    }
+
+    /**
+     * Format character name for display
+     *
+     * @param  string  $characterName
+     * @return string
+     */
+    function formatCharacterName(string $characterName): string
+    {
+        return ucwords(str_replace('_', ' ', $characterName));
+    }
+@endphp
+
