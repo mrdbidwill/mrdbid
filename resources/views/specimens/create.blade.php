@@ -139,45 +139,40 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="location_found_city"
-                               class="block text-sm font-medium leading-6 text-gray-900">Nearest city or town</label>
+                        <label for="country"
+                               class="block text-sm font-medium leading-6 text-gray-900">Country</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="location_found_city"
-                                    id="location_found_city"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="City or town where found"
-                                    value=""
-                                    required>
+                                @php
+                                    $specimen_data = DB::table( 'countries' )->get();
+                                    //dd($specimen_data);
+                                @endphp
+                                <table>
+                                    @foreach($specimen_data as $item)
+
+                                        <tr>
+                                            <td>
+                                                @if( $item->id == 1)
+                                                    <input type="radio" id="country"
+                                                           name="country"
+                                                           value="{{$item->id}}"
+                                                           required
+                                                           checked>
+                                                @else
+                                                    <input type="radio" id="country"
+                                                           name="country"
+                                                           value="{{$item->id}}"
+                                                           required>
+                                                @endif
+                                                <label for="{{$item->id}}">{{$item->name}}</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
 
-                            @error('location_found_city')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-
-                    <div class="sm:col-span-4">
-                        <label for="location_found_county"
-                               class="block text-sm font-medium leading-6 text-gray-900">County</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="location_found_county"
-                                    id="location_found_county"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="County where found"
-                                    value=""
-                                    required>
-                            </div>
-
-                            @error('location_found_county')
+                            @error('country')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -226,40 +221,45 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="country"
-                               class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+                        <label for="location_found_city"
+                               class="block text-sm font-medium leading-6 text-gray-900">Nearest city or town</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                @php
-                                    $specimen_data = DB::table( 'countries' )->get();
-                                    //dd($specimen_data);
-                                @endphp
-                                <table>
-                                    @foreach($specimen_data as $item)
-
-                                        <tr>
-                                            <td>
-                                                @if( $item->id == 1)
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
-                                                @else
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required>
-                                                @endif
-                                                <label for="{{$item->id}}">{{$item->name}}</label>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                <input
+                                    type="text"
+                                    name="location_found_city"
+                                    id="location_found_city"
+                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    placeholder="City or town where found"
+                                    value=""
+                                    required>
                             </div>
 
-                            @error('country')
+                            @error('location_found_city')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                    <div class="sm:col-span-4">
+                        <label for="location_found_county"
+                               class="block text-sm font-medium leading-6 text-gray-900">County</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input
+                                    type="text"
+                                    name="location_found_county"
+                                    id="location_found_county"
+                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    placeholder="County where found"
+                                    value=""
+                                    required>
+                            </div>
+
+                            @error('location_found_county')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>

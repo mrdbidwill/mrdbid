@@ -1,26 +1,26 @@
 @php
 
-    use App\Models\CharacterSpecimen;
+    use App\Models\Specimen;
     use App\Models\Character;
     use Illuminate\Support\Facades\DB;
 
-    // Retrieve CharacterSpecimens for the given specimen ID
-    $characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenID)->get();
+    // Retrieve Specimens for the given specimen ID
+    $specimens = Specimen::where('specimen_id', $specimenID)->get();
 
     echo "Specimen ID: ".e($specimenID);
 @endphp
 
-@foreach ($characterSpecimens as $characterSpecimen)
+@foreach ($specimens as $specimen)
 
     @php
-        $character = Character::find($characterSpecimen['character_id']);
+        $character = Character::find($specimen['character_id']);
         $tableName = getTableName($character['name']);
         $data = DB::table($tableName)->get();
         $displayCharacterName = formatCharacterName($character['name']);
 
 
         foreach ($data as $item):
-            $value = DB::table($tableName)->find($characterSpecimen['character_value']);
+            $value = DB::table($tableName)->find($specimen['character_value']);
             //echo e($displayCharacterName);   // e is same as HTML::entities($displayCharacterName
         endforeach;
 

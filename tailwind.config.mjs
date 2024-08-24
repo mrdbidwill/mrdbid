@@ -1,15 +1,19 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.mjs
 export default {
-    content: [
-        "./resources/**/*.blade.php",
-        "./resources/**/*.js",
-        "./resources/**/*.vue",
+    content: [                        //  https://tailwindcss.com/docs/upgrade-guide#configure-content-sources
+
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.vue',
     ],
     theme: {
         extend: {},
     },
+    variants: {
+        extend: {},
+    },
     plugins: [],
-}
+};
 
 
 
