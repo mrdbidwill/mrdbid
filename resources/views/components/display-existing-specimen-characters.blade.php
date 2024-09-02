@@ -5,14 +5,15 @@
     use Illuminate\Support\Facades\DB;
 
     // Retrieve CharacterSpecimens for the given specimen ID
-    $characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenID)->get();
-
-    echo "Specimen ID: ".e($specimenID);
+    $characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenId)->get();
+    dd($characterSpecimens);
+    echo "Specimen ID: ".e($specimenId)." from component display_existing_specimen_characters.blade.php";
 @endphp
 
 @foreach ($characterSpecimens as $characterSpecimen)
 
     @php
+
         $character = Character::find($characterSpecimen['character_id']);
         $tableName = getTableName($character['name']);
         $data = DB::table($tableName)->get();
