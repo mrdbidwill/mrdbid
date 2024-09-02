@@ -29,6 +29,6 @@ class GetCharacterSpecimenValueFromLookup extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.get_character_specimen_value_from_lookup');
+        return view('components.get-character-specimen-value-from-lookup');
     }
 }

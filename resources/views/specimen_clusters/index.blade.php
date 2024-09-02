@@ -1,22 +1,21 @@
 <x-layout>
     <x-slot:heading>
-        Character Listings
+        Specimen Clusters
     </x-slot:heading>
+    <p>This is views/specimen_clusters/index.blade.php.</p>
 
     <div class="space-y-4">
-        @foreach ($characters as $character)
+        @foreach ($specimen_clusters as $specimen_clusters)
             <a href="/characters/{{ $character['id'] }}" class="block px-4 py-6 border border-gray-200 rounded-lg">
-                <div class="font-bold text-blue-500 text-sm">{{ $character['name'] }}</div>
+                <div class="font-bold text-blue-500 text-sm">{{ $specimen_clusters['name'] }}</div>
             </a>
             <div>
-                {{ $character['display_options'] }} - {{ $character['look_up_y_n'] }} - {{ $character['part'] }}
-                - {{ $character['source'] }} - {{ $character['entered_by'] }}
-
+                {{ $specimen_clusters['description'] }} - {{ $specimen_clusters['comments'] }}
             </div>
         @endforeach
 
         <div>
-            {{ $characters->links() }}
+            {{ $specimen_clusters->links() }}
         </div>
     </div>
 </x-layout>

@@ -23,6 +23,8 @@
 
                          $table->text('description');
 
+                         $table->string('image_name', length: 240);
+
                          $table->string('file_address', length: 240);
 
                          $table->integer('image_width')->nullable();
@@ -46,6 +48,8 @@
                          $table->integer('entered_by');
 
                          $table->timestamps();
+
+                         $table->unique(['specimen_id', 'file_address']);
 
                      });
 

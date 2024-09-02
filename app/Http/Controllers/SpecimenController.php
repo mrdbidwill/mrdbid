@@ -10,6 +10,7 @@ class SpecimenController extends Controller
     public function index()
     {
         $specimens = Specimen::where('user_id', auth()->id())->latest()->simplePaginate(6);
+        //dd($specimens);
 
         return view('specimens.index', ['specimens' => $specimens]);
     }
@@ -122,7 +123,7 @@ class SpecimenController extends Controller
 
         ]);
 
-        return redirect('/specimens/'.$specimen['id'].'/edit');
+        return redirect('/specimens/'.$specimen['id'].'/edit')->with('message', 'Specimen updated successfully');
     }
 
     public function destroy(Specimen $specimen)

@@ -1,13 +1,23 @@
-@php use Illuminate\Support\Facades\DB; @endphp
+@php
+    use Illuminate\Support\Facades\DB;
+    // get the passed in id
+    $specimen_id = $specimen['id'];
+    //dd($specimen_id);
+@endphp
 <x-layout>
     <div class="mt-6 flex items-center justify-between gap-x-6"></div>
+    <h2>Specimen ID: {{$specimen_id}}</h2>
     <p>This is views/specimens/edit.blade.php</p>
 
     <div class="columns-8 flex items-center space-x-4">
+
+        @if (Session::has('message'))
+            <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+        @endif
+
+        
         @php
-            // get the passed in id
-            $specimen_id = $specimen['id'];
-            //dd($specimen_id);
+
 
             $images_specimens = DB::table('image_specimens')->simplePaginate(8)
             ->where('specimen_id', '=', $specimen_id);
@@ -32,7 +42,7 @@
                       </div>";}
         @endphp
     </div>
-    
+
     <form method="POST" action="/specimens/{{ $specimen_id }}">
         @csrf
         @method('PATCH')

@@ -1,5 +1,6 @@
 @php
     use App\Models\ImageSpecimen;  use Illuminate\Support\Facades\DB ;
+    //dd($specimens);
 @endphp
 <x-layout>
     <x-slot:heading>
@@ -10,6 +11,7 @@
 
     <div class="m-auto p-6">
         <!-- if no specimens are found, display message -->
+
         @if ($specimens->count() == 0)
             <p class="text-red-500">No specimens found.</p>
         @endif
@@ -22,9 +24,9 @@
     <div class="space-y-4">
         <div class="flex items-center space-x-4">
 
-
             <table
                 class="table-auto size-full  bg-indigo-100 border-separate border border-slate-900 border-4-rounded rounded-lg outline-slate-100 outline-4">
+                <!-- $specimens = Specimen::where('user_id', auth()->id())->latest()->simplePaginate(6);  -->
 
                 @foreach ($specimens as $specimen)
 
@@ -68,25 +70,44 @@
                     // dd($fungus_type);
                     @endphp
 
+                    <tr>
+                        <td colspan="3" class="border border-slate-400 p-2 text-fuchsia-700 text-center">
+                            Click on thumbnail to view larger image. Click again to return to thumbnail.
+                        </td>
+                    </tr>
+
                     @foreach ($images_specimens as $images_specimen)
                         @php
-                            $image_address = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
+                            $image_address_thumbnail = url('storage/uploaded_images/thumbnail/thumb_'.$images_specimen->file_address);
                             $parts = DB::table('parts')
                             ->where('id', '=', $images_specimen->parts)
                             ->first();
                             // dd($parts);
+                            $image_address_full_size = url('storage/uploaded_images/'.$images_specimen->file_address);
                         @endphp
 
                         <tr>
                             <td colspan="3" class="border border-slate-400 p-2">
-                                <img class="h-100 w-100" src="{{$image_address}}"
-                                     alt="{{$image_address}}"><br>{{$parts->name}}: {{$images_specimen->description}}
+                                <!--   <img class="h-100 w-100" src="{{$image_address_thumbnail}}"
+                                     alt="{{$image_address_thumbnail}}"><br>{{$parts->name}}
+                                : {{$images_specimen->description}}  -->
+
+                                <img
+                                    class="h-100 w-100"
+                                    src="{{ $image_address_thumbnail }}"
+                                    alt="{{ $image_address_thumbnail }}"
+                                    data-thumbnail="{{ $image_address_thumbnail }}"
+                                    data-fullsize="{{ $image_address_full_size }}"
+                                    onclick="toggleImage(this)"
+                                >
+                                <br>
+                                {{ $parts->name }}: {{ $images_specimen->description }}
                             </td>
                         </tr>
                     @endforeach
 
                     <tr>
-                        <td class="border border-slate-400 p-2">
+                        <td class="p-2">
                             <div class="m-4 px-4 py-4">
                                 <a href="/specimens/{{ $specimen['id'] }}/edit"
                                    class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">Edit
@@ -94,7 +115,7 @@
                             </div>
                         </td>
 
-                        <td class="border border-slate-400 p-2">
+                        <td class="p-2">
                             <form method="GET" action="/image_specimen/create" id="upload-image">
                                 @csrf
                                 <!-- add hidden field specimen_id -->
@@ -112,7 +133,8 @@
                             </form>
                         </td>
 
-                        <td class="border border-slate-400 p-2">
+
+                        <td class="p-2">
                             <form method="GET" action="/character_specimens/{{$specimen['id']}}/edit"
                                   id="add_character">
                                 @csrf
@@ -127,39 +149,51 @@
                             </form>
                         </td>
                     </tr>
-
+                    <!-- Begin Basic Characters -->
                     <tr>
-                        <td class="border border-slate-400 p-2">Specimen ID: {{ $specimen['id'] }}</td>
-                        <td class="border border-slate-400 p-2">Specimen Name: {{ $specimen['specimen_name'] }}</td>
-                        <td class="border border-slate-400 p-2">Common Name: {{ $specimen['common_name'] }}</td>
+                        <td colspan="3" class="border-4 border-black p-2 text-fuchsia-700 text-center">
+                            These are the basic characters that every specimen should have:
+                        </td>
                     </tr>
 
                     <tr>
-                        <td colspan="3" class="border border-slate-400 p-2">
+                        <td class="border-4 border-black p-2">Specimen ID: {{ $specimen['id'] }}</td>
+                        <td class="border-4 border-black p-2">Specimen Name: {{ $specimen['specimen_name'] }}</td>
+                        <td class="border-4 border-black p-2">Common Name: {{ $specimen['common_name'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="border-4 border-black p-2">
                             Description: {{ $specimen['description'] }}</td>
                     </tr>
 
                     <tr>
-                        <td colspan="3" class="border border-slate-400 p-2">Comment: {{ $specimen['comment'] }}</td>
+                        <td colspan="3" class="border-4 border-black p-2">Comment: {{ $specimen['comment'] }}</td>
                     </tr>
 
                     <tr>
-                        <td colspan="3" class="border border-slate-400 p-2">{{ $specimen['location_found_city'] }}
+                        <td colspan="3" class="border-4 border-black p-2">{{ $specimen['location_found_city'] }}
                             , {{ $state->name }} {{$country->name}} on Date
                             Found: {{ $specimen['month_found'] }} / {{ $specimen['day_found'] }}
                             / {{ $specimen['year_found'] }}</td>
                     </tr>
 
                     <tr>
-                        <td class="border border-slate-400 p-2">Make Location Public? {{ $location_public }}</td>
-                        <td class="border border-slate-400 p-2">Share Data? {{ $share_data }}</td>
-                        <td class="border border-slate-400 p-2">Fungus Type: {{ $fungus_type->name }}</td>
+                        <td class="border-4 border-black p-2">Make Location Public? {{ $location_public }}</td>
+                        <td class="border-4 border-black p-2">Share Data? {{ $share_data }}</td>
+                        <td class="border-4 border-black p-2">Fungus Type: {{ $fungus_type->name }}</td>
                     </tr>
 
                     <tr>
+                        <td colspan="3" class="border-4 border-black p-2 text-fuchsia-700 text-center">
+                            End basic characters.
+                        </td>
+                    </tr>
+                    <!-- end basic characters -->
+                    <tr>
                         <td class="border border-slate-400 p-2"><a
                                 class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white"
-                                href="/groups/{{ $specimen['id'] }}">Add
+                                href="/specimen_group">Add
                                 this specimen to one of your Groups</a>
                         </td>
 
@@ -167,7 +201,7 @@
 
                         <td>
                             <a class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white"
-                               href="/clusters/{{ $specimen['id'] }}">Add
+                               href="/specimen_cluster">Add
                                 this specimen to
                                 one of your Clusters</a>
                         </td>

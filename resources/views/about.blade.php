@@ -75,7 +75,7 @@
         <h2 class="text-5xl font-normal leading-normal mt-0 mb-2 text-pink-800">What exactly are the "accepted" and/or
             "standardized" and/or "scientific" character names, anyway?</h2>
 
-        <p>That is a great question. Glad you asked. <u>Please answer it.</u></p>
+        <p>That is a great question. Hopefully, the process will find or create the answer.</p>
 
         <p>I started with Scates 1982 chart and went from there. I have read of group (s)? that are or have been working
             on this, but have not found the currently accepted list yet.</p>

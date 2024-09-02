@@ -15,6 +15,8 @@ class ImageSpecimen extends Model
 
     public string $description;
 
+    public string $image_name;
+
     public string $file_address;
 
     public int $image_width;
@@ -41,6 +43,7 @@ class ImageSpecimen extends Model
         'specimen_id',
         'parts',
         'description',
+        'image_name',
         'file_address',
         'image_width',
         'image_height',
@@ -82,6 +85,16 @@ class ImageSpecimen extends Model
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getImageName(): string
+    {
+        return $this->image_name;
+    }
+
+    public function setImageName(string $image_name): void
+    {
+        $this->image_name = $image_name;
     }
 
     public function getFileAddress(): string

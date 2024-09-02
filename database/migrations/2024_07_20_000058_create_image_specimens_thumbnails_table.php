@@ -29,6 +29,8 @@
 
                          $table->timestamps();
 
+                         $table->unique(['specimen_id', 'source_remote']);
+
                      });
 
                  }

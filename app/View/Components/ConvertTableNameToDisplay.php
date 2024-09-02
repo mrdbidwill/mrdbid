@@ -24,6 +24,6 @@ class ConvertTableNameToDisplay extends Component
      */
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|View
     {
-        return view('components.convert_table_name_to_display');
+        return view('components.convert-table-name-to-display');
     }
 }

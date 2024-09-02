@@ -204,13 +204,12 @@
                                                                 <input type="radio" id="{{$item->id}}"
                                                                        name="character_value"
 
-                                                                       @if( isset($select->character_value)  &&   (  $item->id == $select->character_value))
-                                                                           checked
-                                                                       @elseif( isset($select->character_value)  &&   (  $select->character_value == 'Not Entered'))
-                                                                           checked
-                                                                       @elseif( !isset($select->character_value)  &&   (  $item->name == 'Not Entered'))
+                                                                       @if((isset($select->character_value) && ($item->id == $select->character_value)) ||
+                                                                           (isset($select->character_value) && ($select->character_value == 'Not Entered')) ||
+                                                                           (!isset($select->character_value) && ($item->name == 'Not Entered')))
                                                                            checked
                                                                        @endif
+                                                                           
                                                                        value="{{$item->id}}">
                                                                 <label
                                                                     for="{{$item->id}}">{{$item->name}}

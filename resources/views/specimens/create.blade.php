@@ -4,7 +4,7 @@
     </x-slot:heading>
     <p>This is views/specimens/create.blade.php</p>
 
-    <form method="POST" action="/specimens">
+    <form method="POST" action="{{ route('specimens.store') }}">
         @csrf
 
         <div class="space-y-12">

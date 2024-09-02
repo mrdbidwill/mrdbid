@@ -8,9 +8,9 @@ use Illuminate\View\View;
 
 class CharacterSpecimen extends Model
 {
-    use HasFactory;
-
     public int $id;
+
+    use HasFactory;
 
     public int $character_id;
 
@@ -19,6 +19,8 @@ class CharacterSpecimen extends Model
     public string $character_value;
 
     public int $entered_by;
+
+    protected $table = 'character_specimens';
 
     protected $fillable = [
         'id',
@@ -33,7 +35,7 @@ class CharacterSpecimen extends Model
 
         $character_specimen = CharacterSpecimen::get();
 
-        return view('character_specimen.index', ['character_specimens' => $character_specimen]);
+        return view('character_specimens.index', ['character_specimens' => $character_specimen]);
     }
 
     public function getId(): int

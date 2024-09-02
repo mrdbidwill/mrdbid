@@ -8,10 +8,10 @@ class SpecimenGroupController extends Controller
 {
     public function index()
     {
-        $groups = SpecimenGroup::latest()->simplePaginate(3);
+        $groups = SpecimenGroup::latest()->simplePaginate(12);
 
-        return view('groups.index', [
-            'groups' => $groups,
+        return view('specimen_groups.index', [
+            'specimen_groups' => $groups,
         ]);
     }
 
@@ -41,7 +41,7 @@ class SpecimenGroupController extends Controller
 
         ]);
 
-        return redirect('/groups');
+        return redirect('/specimen_groups');
     }
 
     public function create()
@@ -78,7 +78,7 @@ class SpecimenGroupController extends Controller
 
         ]);
 
-        return redirect('/groups/'.$group->id);
+        return redirect('/specimen_groups/'.$group->id);
     }
 
     public function destroy(SpecimenGroup $group)
@@ -87,6 +87,6 @@ class SpecimenGroupController extends Controller
 
         $group->delete();
 
-        return redirect('/groups');
+        return redirect('/specimen_groups');
     }
 }

@@ -88,11 +88,16 @@
                 <p>The fact you observed a mushroom means you have some visual, time and location
                     data. That is
                     enough to start. You name this specimen "something" that is meaningful to <b>you,</b> like
-                    "myinitials_1" or "myinitials_2", etc. with comment "brown mushroom - backyard". There you
-                    go. A beginning. Any clear photo is a plus.</p>
+                    "myinitials_1" or "myinitials_2", etc. with comment "brown mushroom - backyard". Or include the
+                    date, whatever works for you. </p>
+
+                <p>There you
+                    go. A beginning. Any clear photo <b class="text-orange-700">with measurements</b> is a plus.</p>
+
 
                 <p>If you did not retrieve a specimen, when you get to the option of selecting where a specimen
-                    is currently located, you can select "Observation Only - No specimen collected". </p>
+                    is currently located (preserved and stored), you can select "Observation Only - No specimen
+                    collected". </p>
 
                 <p>If nothing more, now you know when and where you saw "it". This time next year, you may see
                     it again, same place?</p>
@@ -112,7 +117,8 @@
 
                 <p><b>About Images:</b> I am not a photographer, an artist, or a scientist. My goal in observing
                     or collecting specimens is to provide documentation of its facts that can be preserved for
-                    any future study. Good photographs make that possible.</p>
+                    any future study. Good photographs <b class="text-orange-700">with measurements</b> make that
+                    possible.</p>
 
                 <p>This website's upload process will reduce some pictures in size, if needed. Otherwise, any
                     editing, cropping, etc. should be done before uploading.</p>
@@ -121,7 +127,8 @@
                     <u>from the beginning</u> following a plan like outlined in the "Citizen Science How To Take
                     Scientifically Useful Observations" link below.</p>
 
-                <p>The most useful pictures will clearly document mushroom characters and measurements, along
+                <p>The most useful pictures will clearly document mushroom characters and <b class="text-orange-700">measurements</b>,
+                    along
                     with surroundings (trees, etc.). If this is successfully done, anyone looking at the
                     collection of pictures can confirm the data at any future date.</p>
 
@@ -141,10 +148,16 @@
 
                 <!-- /storage/app/public/specimen_images/AMS_Field_Data_Sheet_400x298.png does not work -->
 
-                <p>After completing the form <u>in the field</u>, take a picture of it. Then, once home and when
+                <p>After completing the form <u>in the field</u>, take a picture of it with your specimen. Notice the <b
+                        class="text-orange-700">measurements</b> on the form. Then, once home and when
                     you get around to it, add the data and the pictures you took of the specimen, including this
                     form, to your specimen list. You then have it to refer to online wherever you are, and
                     update as needed while you identify your specimen.</p>
+
+                <p>You will get better with practice. Yes, a microscope helps and is not that difficult to learn to use,
+                    along with various chemicals to test reactions.</p>
+
+                <p>Live and learn. <b class="text-orange-700">And measure.</b></p>
             </main>
 
             <footer class="py-16 text-center text-sm text-black dark:text-white/70">

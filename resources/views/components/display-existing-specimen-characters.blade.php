@@ -5,23 +5,36 @@
     use Illuminate\Support\Facades\DB;
 
     // Retrieve CharacterSpecimens for the given specimen ID
-    $characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenId)->get();
-    dd($characterSpecimens);
-    echo "Specimen ID: ".e($specimenId)." from component display_existing_specimen_characters.blade.php";
+    $characterSpecimens = DB::table('character_specimens')->where('specimen_id', '=', $specimenId )->get();
+
+    //dd($characterSpecimens);
+    echo "Specimen ID: ".e($specimenId)." from component display-existing-specimen-characters.blade.php line 11";
+
 @endphp
 
 @foreach ($characterSpecimens as $characterSpecimen)
+    @php //dd($characterSpecimen); @endphp
+    <div>
+        <!-- Display character specimen details here -->
+        Value: {{ $characterSpecimen->character_value }} from component display-existing-specimen-characters.blade.php
+        line 19
+    </div>
 
     @php
 
-        $character = Character::find($characterSpecimen['character_id']);
+        $character = Character::find($characterSpecimen->character_id);
+        //dd($character);
+
         $tableName = getTableName($character['name']);
+        //dd($tableName);
+        //$data = DB::table($tableName)->get()->dd();
         $data = DB::table($tableName)->get();
+        //dd($data);
         $displayCharacterName = formatCharacterName($character['name']);
 
 
         foreach ($data as $item):
-            $value = DB::table($tableName)->find($characterSpecimen['character_value']);
+            $value = DB::table($tableName)->find($characterSpecimen->character_value);
             //echo e($displayCharacterName);   // e is same as HTML::entities($displayCharacterName
         endforeach;
 

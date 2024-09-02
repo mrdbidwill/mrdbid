@@ -8,16 +8,16 @@ class SpecimenClusterController extends Controller
 {
     public function index()
     {
-        $clusters = SpecimenCluster::latest()->simplePaginate(3);
+        $specimen_clusters = SpecimenCluster::latest()->simplePaginate(3);
 
-        return view('clusters.index', [
-            'clusters' => $clusters,
+        return view('specimen_clusters.index', [
+            'specimen_clusters' => $specimen_clusters,
         ]);
     }
 
-    public function show(SpecimenCluster $Cluster)
+    public function show(SpecimenCluster $specimen_cluster)
     {
-        return view('clusters.show', ['SpecimenCluster' => $Cluster]);
+        return view('specimen_clusters.show', ['specimen_cluster' => $specimen_cluster]);
     }
 
     public function store()
@@ -41,21 +41,21 @@ class SpecimenClusterController extends Controller
 
         ]);
 
-        return redirect('/clusters');
+        return redirect('/specimen_clusters');
     }
 
     public function create()
     {
-        return view('clusters.create');
+        return view('specimen_clusters.create');
     }
 
-    public function edit(SpecimenCluster $Cluster)
+    public function edit(SpecimenCluster $specimen_cluster)
     {
-        return view('clusters.edit', ['SpecimenCluster' => $Cluster]);
+        return view('specimen_clusters.edit', ['SpecimenCluster' => $specimen_cluster]);
 
     }
 
-    public function update(SpecimenCluster $cluster)
+    public function update(SpecimenCluster $specimen_cluster)
     {
         // authorize (On hold...)
 
@@ -68,7 +68,7 @@ class SpecimenClusterController extends Controller
             'entered_by' => 'required',
         ]);
 
-        $cluster->update([
+        $specimen_cluster->update([
             'name' => request('name'),
             'display_options' => request('display_options'),
             'look_up_y_n' => request('look_up_y_n'),
@@ -78,15 +78,15 @@ class SpecimenClusterController extends Controller
 
         ]);
 
-        return redirect('/clusters/'.$cluster->id);
+        return redirect('/specimen_clusters/'.$specimen_cluster->id);
     }
 
-    public function destroy(SpecimenCluster $cluster)
+    public function destroy(SpecimenCluster $specimen_cluster)
     {
         // authorize (On hold...)
 
-        $cluster->delete();
+        $specimen_cluster->delete();
 
-        return redirect('/clusters');
+        return redirect('/specimen_clusters');
     }
 }

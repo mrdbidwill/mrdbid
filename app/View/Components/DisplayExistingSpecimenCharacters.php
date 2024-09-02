@@ -2,28 +2,23 @@
 
 namespace App\View\Components;
 
+use App\Models\CharacterSpecimen;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 class DisplayExistingSpecimenCharacters extends Component
 {
-    public int $specimenID;
+    public $specimenId;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($specimenID)
+    public $characterSpecimens;
+
+    public function __construct($specimenId)
     {
-        $this->specimenID = $specimenID;
+        $this->specimenId = $specimenId;
+        $this->characterSpecimens = CharacterSpecimen::where('specimen_id', $specimenId)->get();
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|View
+    public function render()
     {
-        return view('components.display_existing_specimen_characters');
+        return view('components.display-existing-specimen-characters');
     }
 }

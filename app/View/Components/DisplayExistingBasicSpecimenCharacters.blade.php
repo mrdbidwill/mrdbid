@@ -26,6 +26,6 @@ class DisplayExistingBasicSpecimenCharacters extends Component
     public function render(
     ): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|View
     {
-        return view('components.display_existing_basic_specimen_characters');
+        return view('components.display-existing-basic-specimen-characters');
     }
 }

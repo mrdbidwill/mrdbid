@@ -19,7 +19,7 @@ class SpecimenGroup extends Model
         'entered_by',
     ];
 
-    public function specimens(): BelongsTo
+    public function specimen_groups(): BelongsTo
     {
         return $this->belongsTo(Specimen::class);
     }

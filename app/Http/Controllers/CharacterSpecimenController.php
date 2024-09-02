@@ -6,6 +6,8 @@ use App\Models\Character;
 use App\Models\CharacterSpecimen;
 use App\Models\Specimen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class CharacterSpecimenController extends Controller
 {
@@ -39,27 +41,39 @@ class CharacterSpecimenController extends Controller
     public function store(Request $request)
     {
         //dd(request()->all());
+        //dd($request['color']);
 
-        $s_id = request('specimen_id');
-        $c_id = request('character_id');
+        //$character_id = request('character');
+        $specimen_id = request('specimen_id');
+        $entered_by = Auth::user();
+
+        //dd($request->all());
+
+        if (isset($request['color'])) {
+            $character_value = request('color');
+        } else {
+            $character_value = request('character_value');
+        }
 
         // below won't work because it will allow the same character_value for the same specimen_id and character_id WITH A DIFFERENT character_value
         // 'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.$s_id.',character_id,'.$c_id,
-
-        request()->validate([
-            'character_id' => 'required|integer',
-            'specimen_id' => 'required|integer',
-            'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.$s_id,
-        ]);
-
+        /*
+                request()->validate([
+                    'character_id' => 'required|integer',
+                    'specimen_id' => 'required|integer',
+                    'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.request('specimen_id'),
+                ]);
+        */
         CharacterSpecimen::create([
             'character_id' => request('character_id'),
             'specimen_id' => request('specimen_id'),
-            'character_value' => request('character_value'),
-            'entered_by' => request('entered_by'),
+            'character_value' => $character_value,
+            'entered_by' => $entered_by['id'],
         ]);
 
-        return redirect('character_specimens/edit')->with('message', 'Character Specimen created successfully');
+        // return redirect('character_specimens/edit')->with('message', 'Character Specimen created successfully');
+        //return redirect()->route('/character_specimens/'.$specimen_id.'/edit')->with('message', 'Character Specimen created successfully.');
+        return Redirect::back()->with('message', 'Character Specimen created successfully.');
     }
 
     public function create(Request $request)

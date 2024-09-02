@@ -14,7 +14,7 @@
         <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
     </div>
 
-    <h2 class="font-bold text-lg">{{ $specimens->name }}</h2>
+    <h2 class="font-bold text-lg">{{ $specimens->specimen_name }}</h2>
 
     <p>
         This character pays {{ $specimens->display_option }} per year.
