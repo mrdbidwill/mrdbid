@@ -11,7 +11,7 @@
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
                             <h1 class="text-base font-semibold leading-6 text-black">Characters
-                                (characters/index.blade.php)</h1>
+                                (character_specimens/index.blade.php)</h1>
                             <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                                         @break
 
                                                     @case(2)
-                                                        <!--  text box number mm is measure  NO lookup table -->
+                                                        <!--  text box number mm is measure  NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -68,7 +68,7 @@
                                                         @break
 
                                                     @case(3)
-                                                        <!--  text box number um is measure   NO lookup table -->
+                                                        <!--  text box number um is measure   NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -85,7 +85,7 @@
                                                         @break
 
                                                     @case(4)
-                                                        <!--  text box string   NO lookup table -->
+                                                        <!--  text box string   NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -102,7 +102,7 @@
                                                         @break
 
                                                     @case(5)
-                                                        <!--  text box number general format for temperatures ph  etc    NO lookup table -->
+                                                        <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
 
                                                         <label for="{{$character['id']}}">{{$character['name']}}

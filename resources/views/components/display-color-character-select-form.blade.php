@@ -1,17 +1,15 @@
 @php
 
-    use App\Models\CharacterSpecimen;
-    use App\Models\Character;
     use Illuminate\Support\Facades\DB;
 
     $color_character_names = DB::table('characters')->where( 'display_options', '==',  6 )->get();
     $colors     = DB::table('colors')->get();
 @endphp
 
-<table>
+<table>        <!-- display-color-character-select-form.blade.php  L11-->
     <thead>
     <tr>
-        <th colspan="10">Colors from AMS Color Chart</th>
+        <th colspan="10">Colors from AMS Color Chart Line 14</th>
     </tr>
     </thead>
     <tbody>
@@ -33,15 +31,16 @@
         </td>
     @endforeach
     </tbody>
-</table>
+</table>          <!-- display-color-character-select-form.blade.php  L 36 -->
 
 
-<table class="min-w-full divide-y divide-gray-700">
+<table
+    class="min-w-full divide-y divide-gray-700">          <!-- display-color-character-select-form.blade.php  L 40  -->
     <thead>
     <tr>
         <th scope="col" colspan="10"
             class="px-3 py-3.5 text-left text-sm font-semibold text-black">
-            Color Character Names
+            Color Character Names (display-color-character-select-form.blade.php)
         </th>
     </tr>
     </thead>
@@ -59,4 +58,4 @@
     </tr>
     @endif
     </tbody>
-</table>
+</table>        <!-- display-color-character-select-form.blade.php Line 63 -->

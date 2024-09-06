@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
 
 class CharacterSpecimen extends Model
 {
@@ -30,6 +29,7 @@ class CharacterSpecimen extends Model
         'entered_by',
     ];
 
+    /*
     public function index(): View
     {
 
@@ -37,7 +37,7 @@ class CharacterSpecimen extends Model
 
         return view('character_specimens.index', ['character_specimens' => $character_specimen]);
     }
-
+*/
     public function getId(): int
     {
         return $this->id;

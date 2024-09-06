@@ -2,39 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Character;
+use App\Models\Lookup\Character;
+use App\Services\Lookup\CharacterService;
 use Illuminate\View\View;
 
 class CharacterController extends Controller
 {
+    protected CharacterService $characterService;
+
+    public function __construct(CharacterService $characterService)
+    {
+        $this->characterService = $characterService;
+    }
+
     public function index(): View
     {
+        $characters = $this->characterService->getAllcharacters();
 
-        // get all available characters
-        // Not paginating here so will show all in a one-page grid
-        $characters = Character::get();
+        return view('characters.index', compact('characters'));
 
-        /*
-                foreach ($characters as $character) {
-
-                    $display = DB::table('display_options')
-                        ->where('id', '=', $character['display_options'])
-                        ->first();
-
-                    $parts = DB::table('parts')
-                        ->where('id', '=', $character['parts'])
-                        ->first();
-
-                    $source = DB::table('data_sources')
-                        ->where('id', '=', $character['source'])
-                        ->first();
-
-                    $by = DB::table('users')
-                        ->where('id', '=', $character['entered_by'])
-                        ->first();
-                }
-        */
-        return view('characters.index', ['characters' => $characters]);
+        //return view('characters.index', ['characters' => $characters]);
     }
 
     public function show(Character $character)

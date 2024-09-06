@@ -1,4 +1,4 @@
-<table class="min-w-full divide-y divide-gray-700">
+<table class="min-w-full divide-y divide-gray-700">    <!-- begin display-switch.blade.php -->
     <thead>
     <tr>
         <th scope="col"
@@ -13,8 +13,7 @@
     </thead>
 
     @php
-        use App\Models\Character;
-        use App\Models\CharacterSpecimen;
+        use App\Models\CharacterSpecimen;use App\Models\Lookup\Character;
         $characters = Character::get();
         $color_character_names = array();
     @endphp
@@ -32,7 +31,7 @@
                         @break
 
                     @case(2)
-                        <!--  text box number mm is measure  NO lookup table -->
+                        <!--  text box number mm is measure  NO Lookup table -->
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
@@ -49,7 +48,7 @@
                         @break
 
                     @case(3)
-                        <!--  text box number um is measure   NO lookup table -->
+                        <!--  text box number um is measure   NO Lookup table -->
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
@@ -66,7 +65,7 @@
                         @break
 
                     @case(4)
-                        <!--  text box string   NO lookup table -->
+                        <!--  text box string   NO Lookup table -->
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
@@ -83,7 +82,7 @@
                         @break
 
                     @case(5)
-                        <!--  text box number general format for temperatures ph  etc    NO lookup table -->
+                        <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
 
                         <label for="{{$character['id']}}">{{$character['name']}}
@@ -141,7 +140,7 @@
                         @php
                             if( ( $character['name'] ==  'cap_surface_dryness')  || ( $character['name'] ==  'genus' ) || ( $character['name'] ==  'gill_thickness' )|| ( $character['name'] ==  'species' ) || ( $character['name'] ==  'veil_annulus' ) )
                             {
-                            $data = DB::table( $character['name'] )->get();  // ALL from character lookup table
+                            $data = DB::table( $character['name'] )->get();  // ALL from character Lookup table
                             }
                             else
                             {
@@ -265,4 +264,4 @@
 
     </tbody>
 
-</table>
+</table>     <!-- end display-switch.blade.php -->

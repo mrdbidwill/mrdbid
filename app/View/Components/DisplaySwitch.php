@@ -2,8 +2,8 @@
 
 namespace App\View\Components;
 
-use App\Models\Character;
 use App\Models\CharacterSpecimen;
+use App\Models\Lookup\Character;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

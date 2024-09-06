@@ -62,7 +62,7 @@
                                                         @break
 
                                                     @case(2)
-                                                        <!--  text box number mm is measure  NO lookup table -->
+                                                        <!--  text box number mm is measure  NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -79,7 +79,7 @@
                                                         @break
 
                                                     @case(3)
-                                                        <!--  text box number um is measure   NO lookup table -->
+                                                        <!--  text box number um is measure   NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -96,7 +96,7 @@
                                                         @break
 
                                                     @case(4)
-                                                        <!--  text box string   NO lookup table -->
+                                                        <!--  text box string   NO Lookup table -->
                                                         <label for="{{$character['id']}}">{{$character['name']}}
                                                             : </label>
 
@@ -113,7 +113,7 @@
                                                         @break
 
                                                     @case(5)
-                                                        <!--  text box number general format for temperatures ph  etc    NO lookup table -->
+                                                        <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
 
                                                         <label for="{{$character['id']}}">{{$character['name']}}
@@ -171,7 +171,7 @@
                                                         @php
                                                             if( ( $character['name'] ==  'cap_surface_dryness')  || ( $character['name'] ==  'genus' ) || ( $character['name'] ==  'gill_thickness' )|| ( $character['name'] ==  'species' ) || ( $character['name'] ==  'veil_annulus' ) )
                                                             {
-                                                            $data = DB::table( $character['name'] )->get();  // ALL from character lookup table
+                                                            $data = DB::table( $character['name'] )->get();  // ALL from character Lookup table
                                                             }
                                                             else
                                                             {
@@ -209,7 +209,7 @@
                                                                            (!isset($select->character_value) && ($item->name == 'Not Entered')))
                                                                            checked
                                                                        @endif
-                                                                           
+
                                                                        value="{{$item->id}}">
                                                                 <label
                                                                     for="{{$item->id}}">{{$item->name}}

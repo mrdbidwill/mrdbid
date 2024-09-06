@@ -23,7 +23,7 @@
                     @break
 
                 @case(2)
-                    <!--  text box number mm is measure  NO lookup table -->
+                    <!--  text box number mm is measure  NO Lookup table -->
                     <!--  <p>{{$display_character_name}}: text box number mm - line 18 component
                         edit-characters-switch.blade.php</p>  -->
 
@@ -43,7 +43,7 @@
                     @break
 
                 @case(3)
-                    <!--  text box number um is measure   NO lookup table -->
+                    <!--  text box number um is measure   NO Lookup table -->
                     <p>{{$display_character_name}}: text box number um - line 37</p>
 
                     <label for="{{$character['id']}}">{{$display_character_name}}
@@ -62,7 +62,7 @@
                     @break
 
                 @case(4)
-                    <!--  text box string   NO lookup table -->
+                    <!--  text box string   NO Lookup table -->
                     <p>{{$character_name}}: text box string - line 56</p>
 
                     <label for="{{$character['id']}}">{{$character_name}}
@@ -81,7 +81,7 @@
                     @break
 
                 @case(5)
-                    <!--  text box number general format for temperatures ph  etc    NO lookup table -->
+                    <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
                     <p>{{$character['name']}}: text box number general format - line
                         77</p>

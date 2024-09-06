@@ -17,7 +17,7 @@
 
                          $table->id();
 
-                         $table->foreignIdFor(\App\Models\Character::class)->constrained()->cascadeOnDelete();
+                         $table->foreignIdFor(\App\Models\Lookup\Character::class)->constrained()->cascadeOnDelete();
 
                          $table->foreignIdFor(\App\Models\Specimen::class)->constrained()->cascadeOnDelete();
 

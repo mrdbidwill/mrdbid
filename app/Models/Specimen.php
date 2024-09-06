@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\SpecimenCreated;
+use App\Models\Lookup\Character;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -62,6 +63,11 @@ class Specimen extends Model
         'year_found',
         'fungus_type',
         'entered_by',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => SpecimenCreated::class,
+
     ];
 
     public function getSpecimenName(): string
@@ -223,11 +229,6 @@ class Specimen extends Model
     {
         $this->entered_by = $entered_by;
     }
-
-    protected $dispatchesEvents = [
-        'created' => SpecimenCreated::class,
-
-    ];
 
     public function user(): BelongsTo
     {

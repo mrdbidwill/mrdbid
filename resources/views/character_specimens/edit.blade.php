@@ -1,8 +1,7 @@
-@php use App\Models\Character; @endphp
+@php
+    use App\Models\Lookup\Character;use App\Repositories\Lookup\CharacterRepository;
+@endphp
 <x-layout>
-    <x-slot:heading>
-        Character Listings
-    </x-slot:heading>
 
     @php
         // dd($specimenId);
@@ -16,8 +15,8 @@
             <div class="sm:flex-auto">    <!-- 3 -->
                 <h1 class="text-base font-semibold leading-6 text-black">Specimen ID: {{$specimenId}}</h1>
                 <h3 class="text-base font-semibold leading-6 text-black">Character Specimens
-                    (character_specimens/edit.blade.php)</h3>
-                <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
+                    (character_specimens/edit.blade.php) L19</h3>
+                <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen. L20</p>
             </div>                                                                             <!-- 2 -->
         </div>                                                                                 <!-- 1 -->
 
@@ -33,14 +32,18 @@
 
                     @php $colors = DB::table('colors')->get(); @endphp
                     <form method="POST" action="/character_specimens" id="color_character">
+                        <!-- character_specimens/edit.blade.php Line  33  -->
                         @csrf
-                        <table>
+                        <table>      <!-- character_specimens/edit.blade.php Line 35 -->
                             <thead>
                             <tr>
-                                <th colspan="10">Colors from AMS Color Chart</th>
-                                <th colspan="10">Select which color for which character.</th>
+                                <th colspan="10">Colors from AMS Color Chart L38</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="10">Select which color for which character. L43</td>
+                            </tr>
                             <tr>
                                 @foreach($colors as $index => $color)
                                     @if($index % 10 == 0)
@@ -74,7 +77,7 @@
                                 @endforeach
                             </tr>
                             </tbody>
-                        </table>
+                        </table> <!-- character_specimens/edit.blade.php Line  78  -->
 
                         @php
                             //$color_character_names = DB::table('characters')->where( 'display_options', '==',  6 )->get();
@@ -83,11 +86,12 @@
                         @endphp
 
                         <table class="min-w-full divide-y divide-gray-700">
+                            <!-- character_specimens/edit.blade.php Line  87 -->
                             <thead>
                             <tr>
                                 <th scope="col" colspan="10"
                                     class="px-3 py-3.5 text-left text-sm font-semibold text-black">
-                                    Color Character Names
+                                    Color Character Names - character_specimens/edit.blade.php line 92
                                 </th>
                             </tr>
                             </thead>
@@ -95,27 +99,32 @@
                             @foreach($color_character_names as $index => $name)
                                 @if($index % 3 == 0)
                                     @if($index != 0)
-                                        </tr>
-                            @endif
-                            <tr>
+                                        {{--  </tr> --}}
+                                    @endif
+                                    <tr>
+                                        @endif
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-black">
+                                            @php
+                                                //dd($index);
+                                                //dd($name);
+
+                                            $characterRepository = new CharacterRepository();
+
+                                            $display_name = $characterRepository->formatString( $name['name'] );
+                                            @endphp
+
+                                            <input type="radio" id="character"
+                                                   name="character"
+                                                   value="{{ $name['id'] }}">
+                                            <label
+                                                for="{{$name['name']}}">{{ $display_name }}</label>
+                                        </td>
+                                        @endforeach
+                                        @if(count($color_character_names) % 3 != 0)
+                                    </tr>
                                 @endif
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-black">
-                                    @php
-                                        //dd($index);
-                                        //dd($name);
-                                    @endphp
-                                    <label
-                                        for="character">{{$name['name']}}</label>
-                                    <input type="radio" id="character"
-                                           name="character"
-                                           value="{{ $name['id'] }}"><br>
-                                </td>
-                                @endforeach
-                                @if(count($color_character_names) % 3 != 0)
-                            </tr>
-                            @endif
                             </tbody>
-                        </table>
+                        </table> <!-- character_specimens/edit.blade.php Line  121 -->
 
                         <input type="hidden" name="specimen_id" value="{{ $specimenId }}">
 
@@ -127,7 +136,7 @@
                             </button>
                         </div>   <!-- 4 -->
 
-                    </form>
+                    </form> <!-- character_specimens/edit.blade.php Line 133  -->
                 </div>      <!-- 3 -->
             </div>    <!-- 2 -->
         </div>                  <!-- 1 -->

@@ -1,14 +1,12 @@
 @php
 
-    use App\Models\CharacterSpecimen;
-    use App\Models\Character;
-    use Illuminate\Support\Facades\DB;
+    use App\Models\Lookup\Character;use Illuminate\Support\Facades\DB;
 
     // Retrieve CharacterSpecimens for the given specimen ID
     $characterSpecimens = DB::table('character_specimens')->where('specimen_id', '=', $specimenId )->get();
 
     //dd($characterSpecimens);
-    echo "Specimen ID: ".e($specimenId)." from component display-existing-specimen-characters.blade.php line 11";
+    echo "Specimen ID: ".e($specimenId)." from component display-existing-specimen-characters.blade.php line ".__LINE__."";
 
 @endphp
 
@@ -17,7 +15,7 @@
     <div>
         <!-- Display character specimen details here -->
         Value: {{ $characterSpecimen->character_value }} from component display-existing-specimen-characters.blade.php
-        line 19
+        line <?php echo __LINE__; ?>
     </div>
 
     @php

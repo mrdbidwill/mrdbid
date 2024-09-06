@@ -1,13 +1,11 @@
 @php
 
-    use App\Models\Specimen;
-    use App\Models\Character;
-    use Illuminate\Support\Facades\DB;
+    use App\Models\Lookup\Character;use App\Models\Specimen;use Illuminate\Support\Facades\DB;
 
     // Retrieve Specimens for the given specimen ID
     $specimens = Specimen::where('specimen_id', $specimenID)->get();
 
-    echo "Specimen ID: ".e($specimenID);
+    echo "Specimen ID: ".e($specimenID)."  <!-- from display-existing-basic-specimen-characters.blade.php -->";
 @endphp
 
 @foreach ($specimens as $specimen)
@@ -29,6 +27,7 @@
     @endphp
 
     <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
+        <!-- begin from display-existing-basic-specimen-characters.blade.php -->
         <b>{{$displayCharacterName}}: {{$value->name}}</b> {{$value->description}}<br>
         @if( !empty($value->comments))
             {{$value->comments}}<br>
@@ -36,7 +35,7 @@
         @else
             <div class="text-sm">Source: <i>{{$source->title}}</i> {{$source->author}}</div>
         @endif
-    </div>
+    </div>         <!-- end from display-existing-basic-specimen-characters.blade.php -->
 
 @endforeach
 

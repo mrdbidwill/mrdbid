@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Character;
+use App\Models\Lookup\Character;
 use Illuminate\Http\Request;
 
 class AdminCharacterController extends Controller

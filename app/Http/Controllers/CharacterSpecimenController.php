@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Character;
 use App\Models\CharacterSpecimen;
+use App\Models\Lookup\Character;
 use App\Models\Specimen;
+use App\Services\Lookup\CharacterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class CharacterSpecimenController extends Controller
 {
+    protected CharacterService $characterService;
+
+    public function __construct(CharacterService $characterService)
+    {
+        $this->characterService = $characterService;
+    }
+
     public function index(Specimen $specimen_id)
     {
         $characters = Character::get();

@@ -57,7 +57,7 @@
                                                             @break
 
                                                         @case(2)
-                                                            <!--  text box number mm is measure  NO lookup table -->
+                                                            <!--  text box number mm is measure  NO Lookup table -->
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
@@ -74,7 +74,7 @@
                                                             @break
 
                                                         @case(3)
-                                                            <!--  text box number um is measure   NO lookup table -->
+                                                            <!--  text box number um is measure   NO Lookup table -->
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
@@ -91,7 +91,7 @@
                                                             @break
 
                                                         @case(4)
-                                                            <!--  text box string   NO lookup table -->
+                                                            <!--  text box string   NO Lookup table -->
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
@@ -108,7 +108,7 @@
                                                             @break
 
                                                         @case(5)
-                                                            <!--  text box number general format for temperatures ph  etc    NO lookup table -->
+                                                            <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
 
                                                             <label for="{{$character['id']}}">{{$character['name']}}
