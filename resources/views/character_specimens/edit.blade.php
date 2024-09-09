@@ -1,5 +1,5 @@
 @php
-    use App\Models\Lookup\Character;use App\Repositories\Lookup\CharacterRepository;
+    use App\Models\Lookup\Character;use App\Repositories\Lookup\CharacterRepository; use \App\Utils\StringUtils; ;
 @endphp
 <x-layout>
 
@@ -110,7 +110,7 @@
 
                                             $characterRepository = new CharacterRepository();
 
-                                            $display_name = $characterRepository->formatString( $name['name'] );
+                                            $display_name =  StringUtils::convert_table_name_for_display( $name['name'] );
                                             @endphp
 
                                             <input type="radio" id="character"

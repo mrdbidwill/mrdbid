@@ -95,6 +95,47 @@
                     go. A beginning. Any clear photo <b class="text-orange-700">with measurements</b> is a plus.</p>
 
 
+                <div class="bg-gray-200">
+                    <h3 class="text-xl text-orange-700">About Measurements:</h3>
+
+                    <p class="text-orange-700">Richard W. Kerrigan's <i><b>AGARICUS</b> of NORTH AMERICA</i>, middle of
+                        page
+                        22, "To estimate the
+                        size of
+                        specimens in the field, or to preserve scale information in photographs, it is useful to know
+                        the
+                        sizes of ordinary coins issued by the relevant nation. In the United States:"</p>
+
+                    <div class="flex items-center space-x-4 text-orange-700">
+                        <table class="table-auto size-full">
+                            <tr class="border-t-2 border-b-2 border-orange-700">
+                                <th class="text-center">Coin</th>
+                                <th class="text-center">Value</th>
+                                <th class="text-center">Diameter</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Penny</td>
+                                <td class="text-center">$0.01</td>
+                                <td class="text-center">19.1 mm</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Nickel</td>
+                                <td class="text-center">$0.05</td>
+                                <td class="text-center">21.2 mm</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Dime</td>
+                                <td class="text-center">$0.10</td>
+                                <td class="text-center">17.9 mm</td>
+                            </tr>
+                            <tr class="border-b-2 border-orange-700">
+                                <td class="text-center">Quarter</td>
+                                <td class="text-center">$0.25</td>
+                                <td class="text-center">24.3 mm</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <p>If you did not retrieve a specimen, when you get to the option of selecting where a specimen
                     is currently located (preserved and stored), you can select "Observation Only - No specimen
                     collected". </p>

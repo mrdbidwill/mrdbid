@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('character_specimens', CharacterSpecimenController::class);
 
     Route::resource('admin_character_table', AdminCharacterController::class);
-    Route::resource('admin_look_up_table', AdminLookUpTableController::class);
+    Route::resource('admin_lookup_table', AdminLookUpTableController::class);
     Route::resource('admin_specimen_table', AdminSpecimenController::class);
 
     Route::resource('abundance', AbundanceController::class);

@@ -27,6 +27,8 @@
 
                          $table->timestamps();
 
+                         $table->unique(['character_id', 'specimen_id']);
+
                      });
 
                  }

@@ -1,3 +1,6 @@
+@php
+    use \App\Utils\DatabaseUtils;
+@endphp
 <x-layout>
     <x-slot:heading>
         Admin: Character Table Listings
@@ -19,6 +22,12 @@
                                 as needed. Add new ones
                                 with a verifiable source. If a look up table is needed, a list will be needed to create
                                 it.</p>
+
+                            <p>Call EXPORT Database here:</p>
+                            @php
+                                $export = new DatabaseUtils;
+                                $export->exportDatabase('mrdbid');
+                            @endphp
 
                             <p class="text-black">Helpful characters should be added. Less helpful characters won't
                                 be used, so the list will eventually police itself.</p>

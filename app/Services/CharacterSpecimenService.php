@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Lookup;
+namespace App\Services;
 
 use App\Repositories\Lookup\CharacterRepository;
 
-class CharacterService
+class CharacterSpecimenService
 {
     protected CharacterRepository $characterRepository;
 

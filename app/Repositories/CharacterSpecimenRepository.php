@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\Lookup;
+namespace App\Repositories;
 
-class CharacterRepository
+class CharacterSpecimenRepository
 {
     protected string $character;
 
