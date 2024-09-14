@@ -9,7 +9,7 @@ class SpecimenController extends Controller
 {
     public function index()
     {
-        $specimens = Specimen::where('user_id', auth()->id())->latest()->simplePaginate(6);
+        $specimens = Specimen::where('user_id', auth()->id())->orderBy('id', 'asc')->get();
         //dd($specimens);
 
         return view('specimens.index', ['specimens' => $specimens]);
@@ -22,7 +22,7 @@ class SpecimenController extends Controller
         $specimens = Specimen::where('id', $id)->get();
         //dd($specimen);
 
-        return view('specimens.show', ['specimens' => $specimens]);
+        return view('specimens.show', compact('specimens'));
     }
 
     public function store()

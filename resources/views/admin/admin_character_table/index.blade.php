@@ -1,5 +1,5 @@
 @php
-    use \App\Utils\DatabaseUtils;
+    use App\Utils\DatabaseUtils;
 @endphp
 <x-layout>
     <x-slot:heading>
@@ -24,10 +24,10 @@
                                 it.</p>
 
                             <p>Call EXPORT Database here:</p>
-                            @php
+                            {{--@php
                                 $export = new DatabaseUtils;
                                 $export->exportDatabase('mrdbid');
-                            @endphp
+                                @endphp  --}}
 
                             <p class="text-black">Helpful characters should be added. Less helpful characters won't
                                 be used, so the list will eventually police itself.</p>
@@ -37,32 +37,29 @@
                                 <b>look up </b>table. Many lookup tables use an identical format. Others have special
                                 needs and are different.</p>
 
-                            <p class="text-black">
                             <pre class="black">
-                                CREATE TABLE `annulus_positions` (
-                                `id` bigint UNSIGNED NOT NULL,
-                                `name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
-                                `description` text COLLATE utf8mb4_unicode_ci,
-                                `comments` text COLLATE utf8mb4_unicode_ci,
-                                `source` int NOT NULL,
-                                `entered_by` int NOT NULL,
-                                `created_at` timestamp NULL DEFAULT NULL,
-                                `updated_at` timestamp NULL DEFAULT NULL
-                                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-                                </pre>
-                            </p>
+    CREATE TABLE `annulus_positions` (
+    `id` bigint UNSIGNED NOT NULL,
+    `name` varchar(240) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `description` text COLLATE utf8mb4_unicode_ci,
+    `comments` text COLLATE utf8mb4_unicode_ci,
+    `source` int NOT NULL,
+    `entered_by` int NOT NULL,
+    `created_at` timestamp NULL DEFAULT NULL,
+    `updated_at` timestamp NULL DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    </pre>
 
-                            <p class="text-black">
                             <pre class="text-black">INSERT INTO `annulus_positions` (`id`, `name`, `description`,
-                                `comments`, `source`, `entered_by`, `created_at`, `updated_at`) VALUES
-                                (1, 'Not Entered', '', '', 23, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
-                                (2, 'Superior', 'Near the cap', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
-                                (3, 'Apical', 'upper half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
-                                (4, 'Median', 'in the middle', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
-                                (5, 'Inferior', 'Lower half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
-                                (6, 'Basal', 'Near the base', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02
-                                00:05:27');</pre>
-                            </p>
+    `comments`, `source`, `entered_by`, `created_at`, `updated_at`) VALUES
+    (1, 'Not Entered', '', '', 23, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+    (2, 'Superior', 'Near the cap', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+    (3, 'Apical', 'upper half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+    (4, 'Median', 'in the middle', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+    (5, 'Inferior', 'Lower half', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02 00:05:27'),
+    (6, 'Basal', 'Near the base', '', 7, 1, '2024-06-02 00:05:27', '2024-06-02
+    00:05:27');</pre>
+
 
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">

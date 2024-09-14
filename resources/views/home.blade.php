@@ -51,7 +51,7 @@
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-nav-link href="route('logout')"
+                            <x-nav-link href="{{ route('logout') }}"
                                         onclick="event.preventDefault();  this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-nav-link>
@@ -92,13 +92,14 @@
                     date, whatever works for you. </p>
 
                 <p>There you
-                    go. A beginning. Any clear photo <b class="text-orange-700">with measurements</b> is a plus.</p>
+                    go. A beginning. Any clear photo with <b class="text-orange-700">measurements</b> is a plus. <u>If a
+                        ruler is not handy, use coins</u>.</p>
 
 
-                <div class="bg-gray-200">
-                    <h3 class="text-xl text-orange-700">About Measurements:</h3>
+                <div class="bg-gray-200 p-4">
+                    <h3 class="text-xl text-orange-700">Measurements:</h3>
 
-                    <p class="text-orange-700">Richard W. Kerrigan's <i><b>AGARICUS</b> of NORTH AMERICA</i>, middle of
+                    <p class="text-sm">Richard W. Kerrigan's <i><b>AGARICUS</b> of NORTH AMERICA</i>, middle of
                         page
                         22, "To estimate the
                         size of
@@ -106,9 +107,9 @@
                         the
                         sizes of ordinary coins issued by the relevant nation. In the United States:"</p>
 
-                    <div class="flex items-center space-x-4 text-orange-700">
+                    <div class="flex items-center space-x-4 space-y-2">
                         <table class="table-auto size-full">
-                            <tr class="border-t-2 border-b-2 border-orange-700">
+                            <tr class="border-t-2 border-b-2 border-black">
                                 <th class="text-center">Coin</th>
                                 <th class="text-center">Value</th>
                                 <th class="text-center">Diameter</th>
@@ -128,7 +129,7 @@
                                 <td class="text-center">$0.10</td>
                                 <td class="text-center">17.9 mm</td>
                             </tr>
-                            <tr class="border-b-2 border-orange-700">
+                            <tr class="border-b-2 border-black">
                                 <td class="text-center">Quarter</td>
                                 <td class="text-center">$0.25</td>
                                 <td class="text-center">24.3 mm</td>
@@ -158,7 +159,7 @@
 
                 <p><b>About Images:</b> I am not a photographer, an artist, or a scientist. My goal in observing
                     or collecting specimens is to provide documentation of its facts that can be preserved for
-                    any future study. Good photographs <b class="text-orange-700">with measurements</b> make that
+                    any future study. Good photographs with <b class="text-orange-700">measurements</b> make that
                     possible.</p>
 
                 <p>This website's upload process will reduce some pictures in size, if needed. Otherwise, any

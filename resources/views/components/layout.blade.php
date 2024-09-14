@@ -40,14 +40,34 @@
         }
     </script>
 
+    <style>
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .w-1of5 {
+            width: 20%; /* This makes each image take up 20% of a row, so up to 5 images per row */
+        }
+
+        .p-1 {
+            padding: 0.25rem; /* Adjust the padding as needed */
+        }
+
+        .h-100 {
+            height: 100px; /* Adjust height as needed */
+        }
+    </style>
+
     @vite('resources/css/app.css')
 </head>
 
-<body class="h-full">
-<div class="min-h-full">
+<body class="h-full">          <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
+<div class="min-h-full">         <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
     <x-site-nav-bar></x-site-nav-bar>
     <main>
-        <div class=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        <div
+            class=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">   <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
             {{ $slot }}
         </div>
     </main>

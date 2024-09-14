@@ -10,7 +10,7 @@ class DatabaseUtils
         return $someName;
     }
 
-    public function exportDatabase(string $dbName): void
+    public function exportDatabase(string $dbName): string
     {
         // Database credentials
         $user = 'root';
@@ -36,7 +36,7 @@ class DatabaseUtils
         }
 
         // Backup path
-        $backupPath = 'storage/app/export/mrdbid_'.date('Y-m-d').'/';
+        $backupPath = 'storage/export/mrdbid_'.date('Y-m-d').'/';
 
         if (! file_exists($backupPath)) {
             mkdir($backupPath, 0777, true);
@@ -47,10 +47,33 @@ class DatabaseUtils
         $command = "mysqldump --user=$user --password=$password --host=$host $ignoreTables $dbName > $backupFile";
         exec($command, $output, $result);
 
+        $this->downloadExportFile($backupFile);
+
         if ($result === 0) {
-            echo "Database export successful!\n";
+            return 'Database export successful!';
         } else {
-            echo "Database export failed!\n";
+            return "Database export failed! Error code: $result";
         }
+    }
+
+    public function downloadExportFile($filename)
+    {
+        //$file_path = storage_path('app/public/'.$filename);
+        $file_path = $filename;
+
+        if (file_exists($file_path)) {
+            return response()->download($file_path);
+        } else {
+            abort(404, 'File not found.');
+        }
+    }
+
+    public function processExportFileDataOnly($filename): string
+    {
+        // use regex to remove all but data that can be inserted into table
+        $dataOnly = preg_replace('/^.*INSERT INTO/', 'INSERT INTO', $filename);
+
+        return preg_replace('/;.*$/', ';', $dataOnly);
+
     }
 }
