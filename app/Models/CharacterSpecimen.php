@@ -38,6 +38,12 @@ class CharacterSpecimen extends Model
         return view('character_specimens.index', ['character_specimens' => $character_specimen]);
     }
 */
+
+    public static function getSetCharactersBySpecimenId($specimen_id)
+    {
+        return self::where('specimen_id', $specimen_id)->get();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -82,6 +88,8 @@ class CharacterSpecimen extends Model
     {
         return $this->entered_by;
     }
+
+    // Method to get character_specimens by specimen_id
 
     public function setEnteredBy(int $entered_by): void
     {

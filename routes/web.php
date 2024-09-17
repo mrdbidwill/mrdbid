@@ -70,11 +70,20 @@ use App\Http\Controllers\PossibleMatchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectBelongToController;
 use App\Http\Controllers\SpecimenClusterController;
+use App\Http\Controllers\SpecimenCompareController;
 use App\Http\Controllers\SpecimenController;
 use App\Http\Controllers\SpecimenGroupController;
 use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TreeController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->name('specimens.dashboard');
+
+Route::get('/admin/admin_export_database', [AdminExportDatabaseController::class, 'index'])->name('admin.exportDatabase.index')->middleware('auth');
+
+Route::get('/admin/exportDatabase', [AdminExportDatabaseController::class, 'exportDatabase'])->name('admin.exportDatabase')->middleware('auth');
+
+Route::get('/admin/saveDatabaseToLocalFile', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin.saveDatabaseToLocalFile')->middleware('auth');
 
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
@@ -142,6 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('species', SpeciesController::class);
     Route::resource('specimen_age', SpecimenAgeController::class);
     Route::resource('specimen_cluster', SpecimenClusterController::class);
+    Route::resource('specimen_compare', SpecimenCompareController::class);
     Route::resource('specimen_group', SpecimenGroupController::class);
     Route::resource('specimen_location_now', SpecimenLocationNowController::class);
     Route::resource('state', StateController::class);
@@ -160,12 +170,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('veil', VeilController::class);
 
 });
-
-Route::get('/admin/admin_export_database', [AdminExportDatabaseController::class, 'index'])->name('admin.exportDatabase.index')->middleware('auth');
-
-Route::get('/admin/exportDatabase', [AdminExportDatabaseController::class, 'exportDatabase'])->name('admin.exportDatabase')->middleware('auth');
-
-Route::get('/admin/saveDatabaseToLocalFile', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin.saveDatabaseToLocalFile')->middleware('auth');
 
 Route::get('phpmyinfo', function () {
     phpinfo();

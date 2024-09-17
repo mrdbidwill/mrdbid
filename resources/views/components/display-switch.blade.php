@@ -13,7 +13,7 @@
     </thead>
 
     @php
-        use App\Models\CharacterSpecimen;use App\Models\Lookup\Character;
+        use App\Models\CharacterSpecimen;use App\Models\Lookup\Character;use App\Utils\StringUtils;
         $characters = Character::get();
         $color_character_names = array();
     @endphp
@@ -210,8 +210,7 @@
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit">
                                     Update Character:
-                                    <x-convert-table-name-to-display
-                                        :characterName="$character['name']"></x-convert-table-name-to-display>
+                                    @php StringUtils::convert_table_name_for_display($character['name']); @endphp
                                 </button>
                             @endif
 
@@ -262,6 +261,8 @@
         </tr>
     @endforeach
 
+
     </tbody>
 
 </table>     <!-- end display-switch.blade.php -->
+<?php

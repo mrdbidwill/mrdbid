@@ -13,19 +13,19 @@ class Specimen extends Model
 {
     use HasFactory;
 
-    public string $specimen_name;
+    public string $specimen_name = '';  // Default initialization;
 
-    public string $common_name;
+    public string $common_name = '';
 
-    public string $description;
+    public string $description = '';
 
-    public string $comment;
+    public string $comment = '';
 
     public int $specimen_location_now;
 
-    public string $location_found_city;
+    public string $location_found_city = '';
 
-    public string $location_found_county;
+    public string $location_found_county = '';
 
     public int $state;
 

@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Specimen;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class SpecimenController extends Controller
 {
+    public function dashboard(Request $request)
+    {
+        $user = $request->user();
+        $specimens = Specimen::where('user_id', $user->id)->get();
+        //dd($specimens);
+
+        return view('specimens.dashboard', compact('specimens'));
+        //return view('specimens.dashboard');
+    }
+
     public function index()
     {
         $specimens = Specimen::where('user_id', auth()->id())->orderBy('id', 'asc')->get();
@@ -25,7 +36,7 @@ class SpecimenController extends Controller
         return view('specimens.show', compact('specimens'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
@@ -67,7 +78,7 @@ class SpecimenController extends Controller
 
         // Mail::to($specimen['user'])->queue(new SpecimenCreated($specimen));
 
-        return redirect('/specimens');
+        return redirect('/specimens/');
         //return view('specimens.show', ['specimen' => $specimen]);
     }
 

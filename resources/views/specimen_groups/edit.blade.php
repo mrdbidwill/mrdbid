@@ -1,9 +1,9 @@
 <x-layout>
     <x-slot:heading>
-        Edit Character: {{ $character->title }}
+        Edit Character: {{ $specimenGroup->name }}
     </x-slot:heading>
 
-    <form method="POST" action="/characters/{{ $character->id }}">
+    <form method="POST" action="/characters/{{ $specimenGroup->id }}">
         @csrf
         @method('PATCH')
 
@@ -11,7 +11,8 @@
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <label for="character_name" class="block text-sm font-medium leading-6 text-gray-900">Character
+                        <label for="specimen_group_name" class="block text-sm font-medium leading-6 text-gray-900">Specimen
+                            Group
                             Name</label>
                         <div class="mt-2">
                             <div
@@ -22,18 +23,19 @@
                                     id="character_name"
                                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="Shift Leader"
-                                    value="{{ $character->name }}"
+                                    value="{{ $specimenGroup->name }}"
                                     required>
                             </div>
 
-                            @error('character_name')
+                            @error('specimen_group_name')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="sm:col-span-4">
-                        <label for="salary" class="block text-sm font-medium leading-6 text-gray-900">Common
+                        <label for="specimen_group_description"
+                               class="block text-sm font-medium leading-6 text-gray-900">Common
                             Name</label>
                         <div class="mt-2">
                             <div
@@ -45,7 +47,7 @@
                                     id="common_name"
                                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="Little Brown Mushroom - Front Yard"
-                                    value="{{ $character->common_name }}"
+                                    value="{{ $specimenGroup->common_name }}"
                                     required>
                             </div>
 
@@ -64,7 +66,7 @@
             </div>
 
             <div class="flex items-center gap-x-6">
-                <a href="/characters/{{ $character->id }}"
+                <a href="/characters/{{ $specimenGroup->id }}"
                    class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
 
                 <div>
@@ -77,7 +79,7 @@
         </div>
     </form>
 
-    <form method="POST" action="/characters/{{ $character->id }}" id="delete-form" class="hidden">
+    <form method="POST" action="/characters/{{ $specimenGroup->id }}" id="delete-form" class="hidden">
         @csrf
         @method('DELETE')
     </form>

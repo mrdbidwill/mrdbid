@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SpecimenGroup;
+use Illuminate\Http\Request;
 
 class SpecimenGroupController extends Controller
 {
@@ -17,7 +18,7 @@ class SpecimenGroupController extends Controller
 
     public function show(SpecimenGroup $group)
     {
-        return view('groups.show', ['group' => $group]);
+        return view('specimen_groups.show', ['group' => $group]);
     }
 
     public function store()
@@ -46,16 +47,16 @@ class SpecimenGroupController extends Controller
 
     public function create()
     {
-        return view('groups.create');
+        return view('specimen_clusters.create');
     }
 
-    public function edit(SpecimenGroup $group)
+    public function edit(SpecimenGroup $specimenGroup)
     {
-        return view('groups.edit', ['group' => $group]);
+        return view('specimen_groups.edit', ['specimenGroup' => $specimenGroup]);
 
     }
 
-    public function update(SpecimenGroup $group)
+    public function update(Request $request)
     {
         // authorize (On hold...)
 
@@ -68,7 +69,7 @@ class SpecimenGroupController extends Controller
             'entered_by' => 'required',
         ]);
 
-        $group->update([
+        update([
             'name' => request('name'),
             'display_options' => request('display_options'),
             'look_up_y_n' => request('look_up_y_n'),

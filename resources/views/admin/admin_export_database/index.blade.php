@@ -42,7 +42,7 @@
         </div>
     </form>
 
-    <form action="{{ route('admin.saveDatabaseToLocalFile') }}" method="GET">
+    <form action="{{ route('admin.exportDatabase') }}" method="GET">
         @csrf
 
         <div class="space-y-12">

@@ -30,8 +30,9 @@ class CharacterSpecimenController extends Controller
     {
         //dd($specimen_id);
         $specimenId = $specimen_id;
+        $set_specimens = CharacterSpecimen::getSetCharactersBySpecimenId($specimen_id);
 
-        return view('character_specimens.edit')->with('specimenId', $specimenId);
+        return view('character_specimens.edit', compact('set_specimens', 'specimenId'));
 
     }
 

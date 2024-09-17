@@ -12,9 +12,11 @@ class StringUtils
         return ucwords($display_string);
     }
 
-    public static function anotherStringMethod(string $input): string
+    public static function get_table_name_special_cases(string $characterName): string
     {
-        // Another string-related logic
-        return $input;
+        // Laravel convention? will make plural names that end in letter s gets confusing sometimes
+        $specialCases = ['cap_surface_dryness', 'genus', 'gill_thickness', 'species', 'veil_annulus'];  // table names already ending in letter s
+
+        return in_array($characterName, $specialCases) ? $characterName : $characterName.'s';
     }
 }

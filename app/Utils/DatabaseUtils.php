@@ -4,12 +4,6 @@ namespace App\Utils;
 
 class DatabaseUtils
 {
-    public static function anotherDatabaseMethod(string $someName): string
-    {
-        // Another database-related logic
-        return $someName;
-    }
-
     public function exportDatabase(string $dbName): string
     {
         // Database credentials
@@ -70,7 +64,7 @@ class DatabaseUtils
 
     public function processExportFileDataOnly($filename): string
     {
-        // use regex to remove all but data that can be inserted into table
+        // use regex to remove all except data that can be inserted into table
         $dataOnly = preg_replace('/^.*INSERT INTO/', 'INSERT INTO', $filename);
 
         return preg_replace('/;.*$/', ';', $dataOnly);
