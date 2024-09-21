@@ -10,7 +10,8 @@
         </x-dashboard-nav-link>
     @endif
 
-    <x-dashboard-nav-link href="{{ route('specimens.create') }}" :active="request()->routeIs('specimens.create')">
+    <x-dashboard-nav-link href="{{ route('specimens.create') }}"
+                          :active="request()->routeIs('specimens.create')">
         Add Specimen
     </x-dashboard-nav-link>
 
@@ -21,7 +22,7 @@
 
     <x-dashboard-nav-link href="{{ route('specimen_group.index') }}"
                           :active="request()->routeIs('specimens_group.index')">
-        Manage Clusters
+        Manage Groups
     </x-dashboard-nav-link>
 
     <!-- Add more links as needed -->

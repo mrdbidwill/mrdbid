@@ -143,6 +143,7 @@ class SpecimenController extends Controller
 
         $specimen->delete();
 
-        return redirect('/specimens');
+        // specimens.dashboard is the intended route after delete a specimen
+        return redirect()->intended(route('specimens.dashboard', absolute: false));
     }
 }

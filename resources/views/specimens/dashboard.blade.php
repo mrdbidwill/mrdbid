@@ -7,17 +7,12 @@
         </div>
 
         <h2 class="text-red-500 text-2xl">Your Specimens:</h2>
-        <form>
-            @php //dd($specimens); @endphp
-            @foreach($specimens as $key => $specimen)
-                <div class="flex h-full">
-                    <label for="specimen-{{ $specimen->id }}"
-                           class="cursor-pointer flex w-full h-full p-4 border rounded-lg {{ $key % 2 === 0 ? 'bg-gray-200' : 'bg-white' }}">
-                        <input type="radio" id="specimen-{{ $specimen->id }}" name="specimen"
-                               value="{{ $specimen->id }}" class="hidden">
-                        {{ $specimen['specimen_name'] }} {{ $specimen['comment'] }}</label>
-                </div>
-            @endforeach
-        </form>
+        @php //dd($specimens); @endphp
+        @foreach($specimens as $key => $specimen)
+            <div class="flex h-full">
+                <a href="{{ url('specimens/'.$specimen['id'].'/edit') }}"
+                   class="cursor-pointer flex w-full h-full p-4 border rounded-lg">{{ $specimen['specimen_name'] }} {{ $specimen['comment'] }}</a>
+            </div>
+        @endforeach
     </div>
 </x-layout>
