@@ -1,22 +1,21 @@
 <x-layout>
     <div class="container">
-        <h1>Specimen Dashboard</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ route('specimens.create') }}">Add Specimen</a></li>
-                <li><a href="{{ route('specimen_cluster.index') }}">Manage Clusters</a></li>
-                <li><a href="{{ route('specimen_group.index') }}">Manage Groups</a></li>
-                <li><a href="{{ route('specimen_compare.index') }}">Compare Specimens</a></li>
-            </ul>
-        </nav>
-        <h2>Your Specimens</h2>
+        <x-dashboard-nav-bar></x-dashboard-nav-bar>
+
+        <div class="flex justify-center items-center h-full">
+            <h1 class="text-green-500 text-4xl">Specimen Dashboard</h1>
+        </div>
+
+        <h2 class="text-red-500 text-2xl">Your Specimens:</h2>
         <form>
             @php //dd($specimens); @endphp
-            @foreach($specimens as $specimen)
-                <div>
-                    <input type="radio" id="specimen-{{ $specimen->id }}" name="specimen" value="{{ $specimen->id }}">
-                    <label
-                        for="specimen-{{ $specimen->id }}">{{ $specimen['specimen_name'] }} {{ $specimen['comment'] }}</label>
+            @foreach($specimens as $key => $specimen)
+                <div class="flex h-full">
+                    <label for="specimen-{{ $specimen->id }}"
+                           class="cursor-pointer flex w-full h-full p-4 border rounded-lg {{ $key % 2 === 0 ? 'bg-gray-200' : 'bg-white' }}">
+                        <input type="radio" id="specimen-{{ $specimen->id }}" name="specimen"
+                               value="{{ $specimen->id }}" class="hidden">
+                        {{ $specimen['specimen_name'] }} {{ $specimen['comment'] }}</label>
                 </div>
             @endforeach
         </form>

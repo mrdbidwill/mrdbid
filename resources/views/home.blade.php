@@ -46,7 +46,7 @@
                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-blue-700/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-blue-500">Specimens</a>
 
                         <x-nav-link href="{{ route('profile.edit') }}"
-                                    :active="request()->is('profile.edit')">{{auth()->user()->name}}
+                                    :active="request()->is('profile.edit')">{{auth()->user()->name}} - Account
                         </x-nav-link>
 
                         <form method="POST" action="{{ route('logout') }}">

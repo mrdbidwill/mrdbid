@@ -6,7 +6,8 @@
 
     <div class="space-y-4">
         @foreach ($specimen_clusters as $specimen_cluster)
-            <a href="/characters/{{ $character['id'] }}" class="block px-4 py-6 border border-gray-200 rounded-lg">
+            <a href="/{{ route('specimen_cluster.edit') }}/{{ $specimen_cluster['id'] }}"
+               class="block px-4 py-6 border border-gray-200 rounded-lg">
                 <div class="font-bold text-blue-500 text-sm">{{ $specimen_cluster['name'] }}</div>
             </a>
             <div>
@@ -15,7 +16,7 @@
         @endforeach
 
         <div>
-            {{ $specimen_cluster->links() }}
+            {{ $specimen_clusters->links() }}
         </div>
     </div>
 </x-layout>

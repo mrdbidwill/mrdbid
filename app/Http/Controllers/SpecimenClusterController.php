@@ -8,7 +8,7 @@ class SpecimenClusterController extends Controller
 {
     public function index()
     {
-        $specimen_clusters = SpecimenCluster::latest()->simplePaginate(3);
+        $specimen_clusters = SpecimenCluster::latest()->simplePaginate(6);
 
         return view('specimen_clusters.index', [
             'specimen_clusters' => $specimen_clusters,
