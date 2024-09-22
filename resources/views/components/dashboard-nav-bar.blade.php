@@ -1,3 +1,4 @@
+@props(['active' => false])
 @php
     $isDashboard = request()->routeIs('specimens.dashboard');
 @endphp

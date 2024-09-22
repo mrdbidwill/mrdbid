@@ -28,8 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // home is always the intended route after login
-        return redirect()->intended(route('home', absolute: false));
+        // go to your specimens once logged in - dashboard
+        return redirect()->intended(route('specimens.dashboard', absolute: false));
     }
 
     /**

@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="sm:col-span-4">
-                        <label for="salary" class="block text-sm font-medium leading-6 text-gray-900">Common
+                        <label for="common_name" class="block text-sm font-medium leading-6 text-gray-900">Common
                             Name</label>
                         <div class="mt-2">
                             <div
