@@ -3,6 +3,7 @@
 namespace App\Models\Lookup;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class State extends Model
 {
@@ -14,6 +15,8 @@ class State extends Model
 
     public int $source;
 
+    public int $country_id;
+
     public int $entered_by;
 
     protected $fillable = [
@@ -21,8 +24,14 @@ class State extends Model
         'description',
         'comments',
         'source',
+        'country_id',
         'entered_by',
     ];
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 
     public function getName(): string
     {

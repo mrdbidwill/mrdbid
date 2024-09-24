@@ -1,6 +1,6 @@
 @php
 
-    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\DB;use App\Utils\StringUtils;
 
     $color_character_names = DB::table('characters')->where( 'display_options', '==',  6 )->get();
     $colors     = DB::table('colors')->get();

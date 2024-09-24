@@ -1,59 +1,44 @@
 
         <?php
 
-
-
         use Illuminate\Database\Migrations\Migration;
-
         use Illuminate\Database\Schema\Blueprint;
-
         use Illuminate\Support\Facades\Schema;
 
-
-
         return new class extends Migration
-
-         {
-
+        {
             /**
-            * Run the migrations.
-            */
+             * Run the migrations.
+             */
+            public function up(): void
+            {
 
+                Schema::create('states', function (Blueprint $table) {
 
-        public function up(): void
+                    $table->id();
 
-        {
+                    $table->string('name', length: 240);
 
-            Schema::create('states', function (Blueprint $table)
+                    $table->text('description')->nullable();
 
-             {
+                    $table->text('comments')->nullable();
 
-                $table->id();
+                    $table->integer('source');
 
-                $table->string('name', length: 240);
+                    $table->foreignId('country_id')->constrained()->onDelete('cascade');
 
-                $table->text('description')->nullable();
+                    $table->integer('entered_by');
 
-                $table->text('comments')->nullable();
+                    $table->timestamps();
 
-                $table->integer('source');
+                });
 
-                $table->integer('entered_by');
+            }
 
-                $table->timestamps();
+            public function down(): void
+            {
 
-            });
+                Schema::dropIfExists('states');
 
-        }
-
-
-
-        public function down(): void
-
-        {
-
-            Schema::dropIfExists('states');
-
-        }
-
+            }
         };

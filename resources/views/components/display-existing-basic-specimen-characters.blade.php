@@ -1,6 +1,6 @@
 @php
 
-    use App\Models\Lookup\Character;use App\Models\Specimen;use Illuminate\Support\Facades\DB;
+    use App\Models\Lookup\Character;use App\Models\Specimen;use Illuminate\Support\Facades\DB;use App\Utils\StringUtils;
 
     // Retrieve Specimens for the given specimen ID
     $specimens = Specimen::where('specimen_id', $specimenID)->get();

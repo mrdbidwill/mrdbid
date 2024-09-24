@@ -113,6 +113,7 @@
                                         <tr>
                                             <td>
                                                 @if( $item->id == 1)
+                                                    {{-- For standard lookup tables 1 is Not Entered --}}
                                                     <input type="radio" id="specimen_location_now"
                                                            name="specimen_location_now"
                                                            value="{{$item->id}}"
@@ -138,86 +139,7 @@
                     </div>
 
 
-                    <div class="sm:col-span-4">
-                        <label for="country"
-                               class="block text-sm font-medium leading-6 text-gray-900">Country</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                @php
-                                    $specimen_data = DB::table( 'countries' )->get();
-                                    //dd($specimen_data);
-                                @endphp
-                                <table>
-                                    @foreach($specimen_data as $item)
-
-                                        <tr>
-                                            <td>
-                                                @if( $item->id == 1)
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
-                                                @else
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required>
-                                                @endif
-                                                <label for="{{$item->id}}">{{$item->name}}</label>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-
-                            @error('country')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-
-                    <div class="sm:col-span-4">
-                        <label for="state"
-                               class="block text-sm font-medium leading-6 text-gray-900">State</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                @php
-                                    $specimen_data = DB::table( 'states' )->get();
-                                    //dd($specimen_data);
-                                @endphp
-                                <table>
-                                    @foreach($specimen_data as $item)
-
-                                        <tr>
-                                            <td>
-                                                @if( $item->id == 98)
-                                                    <input type="radio" id="state"
-                                                           name="state"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
-                                                @else
-                                                    <input type="radio" id="state"
-                                                           name="state"
-                                                           value="{{$item->id}}"
-                                                           required>
-                                                @endif
-                                                <label for="parts">{{$item->id}}. {{$item->name}}</label>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-
-                            @error('state')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
+                    <x-display-state-country-dropdown :countries="$countries"/>
 
 
                     <div class="sm:col-span-4">

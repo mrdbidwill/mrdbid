@@ -16,6 +16,12 @@
         Add Specimen
     </x-dashboard-nav-link>
 
+    <x-dashboard-nav-link href="{{ route('character_specimens.index') }}"
+                          :active="request()->routeIs('character_specimens.index')">
+        Characters
+    </x-dashboard-nav-link>
+
+
     <x-dashboard-nav-link href="{{ route('specimen_cluster.index') }}"
                           :active="request()->routeIs('specimens_cluster.index')">
         Manage Clusters

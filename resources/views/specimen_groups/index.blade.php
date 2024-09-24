@@ -5,6 +5,9 @@
 
     <p>This is views/specimen_groups/index.blade.php.</p>
 
+    <p class="mt-2 text-xl text-black">These are your groups. Some are created automatically when a specimen is
+        created. </p>
+
     <div class="space-y-4">
         @foreach ($specimen_groups as $specimen_group)
             <a href="/specimen_group/{{ $specimen_group['id'] }}/edit"

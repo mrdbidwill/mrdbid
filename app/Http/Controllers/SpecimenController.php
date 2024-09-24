@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lookup\Country;
+use App\Models\Lookup\State;
 use App\Models\Specimen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -84,12 +86,16 @@ class SpecimenController extends Controller
 
     public function create()
     {
-        return view('specimens.create');
+        $countries = Country::all();
+
+        return view('specimens.create', compact('countries'));
     }
 
     public function edit(Specimen $specimen)
     {
-        return view('specimens.edit', ['specimen' => $specimen]);
+        $countries = Country::all();
+
+        return view('specimens.edit', compact('countries'));
 
     }
 
@@ -98,7 +104,9 @@ class SpecimenController extends Controller
         Gate::authorize('edit-specimen', $specimen);
 
         request()->validate([
-            'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->id(),
+            // Exclude the current specimen's ID from the unique check
+            // Allow same specimen_name if it is NOT being changed
+            'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,'.$specimen->id.',id,user_id,'.auth()->id(),
             'common_name' => 'required|string|min:3|max:255',
             'specimen_location_now' => 'required|integer',
             'location_found_city' => 'required|string|min:3|max:255',
@@ -145,5 +153,14 @@ class SpecimenController extends Controller
 
         // specimens.dashboard is the intended route after delete a specimen
         return redirect()->intended(route('specimens.dashboard', absolute: false));
+    }
+
+    public function getStates(Request $request)
+    {
+        $countryId = $request->get('country_id');
+
+        $states = State::where('country_id', $countryId)->get();
+
+        return response()->json($states);
     }
 }

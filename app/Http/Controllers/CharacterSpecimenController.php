@@ -23,7 +23,7 @@ class CharacterSpecimenController extends Controller
     {
         $characters = Character::get();
 
-        return view('specimens.index', ['characters' => $characters]);
+        return view('character_specimens.index', ['characters' => $characters]);
     }
 
     public function edit($specimen_id)

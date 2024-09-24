@@ -169,6 +169,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('universal_outer_veil_texture', UnivOutVeilTextureController::class);
     Route::resource('veil', VeilController::class);
 
+    Route::get('get-states', [SpecimenController::class, 'getStates'])->name('getStates');
+
 });
 
 Route::get('phpmyinfo', function () {
