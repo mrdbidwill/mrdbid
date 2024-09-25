@@ -1,7 +1,4 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Create Character Table
-    </x-slot:heading>
 
     <form method="POST" action="/admin_character_table/">
         @csrf
@@ -12,6 +9,9 @@
                     Table?</h2>
                 <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin!
                     Admin!</h2>
+
+                <p>This is resources/views/admin/admin_character_table/create.blade.php</p>
+
                 <p class="mt-1 text-sm leading-6 text-gray-600">All fields are required.</p>
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

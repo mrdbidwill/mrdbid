@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Show Character Table
-    </x-slot:heading>
+    <p>This is resources/views/admin/admin_character_table/show.blade.php</p>
 
 
     <h2 class="font-bold text-lg">{{ $character_table->name }}</h2>

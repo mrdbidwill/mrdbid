@@ -1,5 +1,6 @@
 @php use Illuminate\Support\Facades\DB; @endphp
 <x-layout>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
     <h1>specimens.show.blade.php</h1>
 
     @php

@@ -8,7 +8,7 @@
 
     <h2>Specimen ID: {{ $specimen_id  }}</h2>
     <p>This is views/specimens/edit.blade.php</p>
-
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>

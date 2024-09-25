@@ -2,7 +2,7 @@
     use App\Models\Lookup\Character;use App\Repositories\Lookup\CharacterRepository; use \App\Utils\StringUtils; ;
 @endphp
 <x-layout>
-
+    <x-specimens-nav-bar></x-specimens-nav-bar>
     @php
         // dd($specimenId);
     @endphp

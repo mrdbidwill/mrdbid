@@ -4,9 +4,7 @@
     //dd($specimen_id);
 @endphp
 <x-layout>
-    <x-slot:heading>
-        Add a character to this specimen:
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
 
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
@@ -15,7 +13,7 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Characters
+                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens
                                 (character_specimens/create.blade.php)</h1>
                             @if ($errors->any())
                                 <div class="text-red-600 text-3xl">

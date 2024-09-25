@@ -36,13 +36,15 @@
                          $table->integer('entered_by');
                          $table->timestamps();
 
+                         // Add the index
+                         $table->index('user_id', 'idx_user_id');
+
                      });
 
                  }
 
                  public function down(): void
                  {
-
                      Schema::dropIfExists('specimens');
 
                  }

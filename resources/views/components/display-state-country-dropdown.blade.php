@@ -1,38 +1,44 @@
 @props([
     /** @var \Illuminate\Database\Eloquent\Collection */
     'countries',
-    'states'
 ])
 
-<!-- display-state-country-dropdown.blade.php -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#country').on('change', function () {
-            var countryId = $(this).val();
-            if (countryId) {
-                $.ajax({
-                    url: '{{ route("getStates") }}',
-                    type: 'GET',
-                    data: {country_id: countryId},
-                    success: function (data) {
-                        $('#state').empty();
-                        $('#state').append('<option value="">Select State</option>');
-                        $.each(data, function (key, state) {
-                            $('#state').append('<option value="' + state.id + '">' + state.name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#state').empty();
-                $('#state').append('<option value="">Select State</option>');
+    // JavaScript to handle the state loading
+    document.addEventListener('DOMContentLoaded', function () {
+        const countryElement = document.getElementById('country');
+        const stateElement = document.getElementById('state');
+
+        function loadStates(countryCode) {
+            if (!countryCode) {
+                stateElement.innerHTML = '<option value="" disabled selected>Please select a country first</option>';
+                return;
             }
+
+            fetch(`/api/states/${countryCode}`)
+                .then(response => response.json())
+                .then(states => {
+                    stateElement.innerHTML = '<option value="" disabled selected>Please select a state</option>';
+                    states.forEach(state => {
+                        const option = document.createElement('option');
+                        option.value = state.code;
+                        option.textContent = state.name;
+                        stateElement.appendChild(option);
+                    });
+                });
+        }
+
+        countryElement.addEventListener('change', function () {
+            loadStates(this.value);
         });
+
+        // Check if a country is selected on page load and load the states
+        const initialCountryCode = countryElement.value;
+        if (initialCountryCode) {
+            loadStates(initialCountryCode);
+        }
     });
 </script>
-
-
-@php // dd($countries); // countries good here @endphp
 
 <div class="sm:col-span-4">
     <label for="country"
@@ -40,27 +46,14 @@
     <div class="mt-2">
         <div
             class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            @php
-                // $specimen_data = DB::table( 'countries' )->get();
-                 //dd($specimen_data);
-            // dd($countries);
-            @endphp
-            <table>
-                {{--    @foreach($specimen_data as $item) --}}
-
-                <tr>
-                    <td>
-                        <label for="country">
-                            <select class="form-control" id="country" name="country">
-                                @foreach ($countries as $country)
-                                    <option
-                                        value="{{ $country->id }}">{{ $country['name'] }}</option>
-                                @endforeach
-                            </select></label>
-                    </td>
-                </tr>
-                {{--       @endforeach   --}}
-            </table>
+            <select id="country" name="country">
+                <option value="" disabled selected>Please select a country</option>
+                @foreach ($countries as $country)
+                    @unless($country->name === 'default_name')
+                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                    @endunless
+                @endforeach
+            </select>
         </div>
 
         @error('country')
@@ -69,32 +62,16 @@
     </div>
 </div>
 
-
 <div class="sm:col-span-4">
     <label for="state"
            class="block text-sm font-medium leading-6 text-gray-900">State</label>
     <div class="mt-2">
         <div
             class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            @php
-                //$specimen_data = DB::table( 'states' )->get();
-                //dd($specimen_data);
-            @endphp
-            <table>
-                {{--     @foreach($specimen_data as $item)  --}}
-
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label for="state">
-                                <select class="form-control" id="state" name="state">
-                                    <option value="">Select State</option>
-                                </select></label>
-                        </div>
-                    </td>
-                </tr>
-                {{--    @endforeach  --}}
-            </table>
+            <select id="state" name="state">
+                <option value="" disabled selected>Please select a state</option>
+                <!-- Options will be dynamically loaded based on selected country -->
+            </select>
         </div>
 
         @error('state')

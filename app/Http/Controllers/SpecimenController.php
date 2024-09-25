@@ -157,11 +157,10 @@ class SpecimenController extends Controller
         return redirect()->intended(route('specimens.dashboard', absolute: false));
     }
 
-    public function getStates(Request $request)
+    public function getStatesByCountry($countryCode)
     {
-        $countryId = $request->get('country_id');
-
-        $states = State::where('country_id', $countryId)->get();
+        // Fetch states from your database or other source
+        $states = State::where('country_code', $countryCode)->get();
 
         return response()->json($states);
     }

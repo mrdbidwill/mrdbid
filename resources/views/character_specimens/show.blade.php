@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Character
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
     <div class="sm:flex-auto">
         <h1 class="text-base font-semibold leading-6 text-black">Characters
             (character_specimens/show.blade.php)</h1>

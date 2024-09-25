@@ -1,11 +1,12 @@
 <x-layout>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
         <div class="mx-auto max-w-7xl">
             <div class="bg-gray-300 py-10"> <!-- bg-gray-300 works-->
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Characters
+                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens
                                 (character_specimens/index.blade.php)</h1>
 
                             <p class="mt-2 text-xl text-black">When you created this specimen, you entered the <b>required</b>
@@ -41,8 +42,17 @@
                                 helpful
                                 characters that knowledgeable people want to add as useful identification tools.</p>
 
-                            <p class="mt-2 text-xl text-black">Use this list to add (currently existing) characters to
-                                your specimen. </p>
+                            <p class="mt-2 text-xl text-black">Below is a list of characters. Due to the (ongoing)
+                                design of this website and the desire to streamline the process of managing specimens,
+                                additions to each specimen are now done when you are looking at the specimen data. Below
+                                is just informational. However, the list below should remain up to date.</p>
+
+                            <p class="mt-2 text-xl text-black">Also note how many characters have a prefilled list of
+                                possible options. These options are stored in what I call "lookup tables". If you
+                                propose a new character and it has these type options particular to that table, please
+                                include them with any correspondence proposing new character(s). A csv format would be
+                                great. If you don't know what that is, send what you got and I will try to work with
+                                it.</p>
 
                         </div>
                     </div>
@@ -221,49 +231,49 @@
                                                                 <br>
 
                                                             @endforeach
-                                                            <input type="submit" value="Submit">
-                                                        </form>
+                                                            <!-- <input type="submit" value="Submit">
+                                                        </form> -->
 
 
 
 
-                                                        @break
+                                                            @break
 
-                                                    @case(10)
-                                                        <!--  dropdown -->
-                                                        <p>{{$character['name']}}: dropdown</p>
-                                                        @break
+                                                            @case(10)
+                                                                <!--  dropdown -->
+                                                                <p>{{$character['name']}}: dropdown</p>
+                                                                @break
 
-                                                    @case(11)
-                                                        <!--  state -->
-                                                        <p>{{$character['name']}}: state</p>
-                                                        @break
+                                                            @case(11)
+                                                                <!--  state -->
+                                                                <p>{{$character['name']}}: state</p>
+                                                                @break
 
-                                                    @case(12)
-                                                        <!-- country -->
-                                                        <p>{{$character['name']}}: country</p>
-                                                        @break
+                                                            @case(12)
+                                                                <!-- country -->
+                                                                <p>{{$character['name']}}: country</p>
+                                                                @break
 
-                                                    @case(13)
-                                                        <!--  texture -->
-                                                        <p>{{$character['name']}}: texture</p>
-                                                        @break
-                                                    @case(14)
-                                                        <!-- yes_no  -->
-                                                        <p>{{$character['name']}}: yes_no</p>
-                                                        @break
-                                                    @case(15)
-                                                        <!--  abundance -->
-                                                        <p>{{$character['name']}}: abundance</p>
-                                                        @break
-                                                    @case(16)
-                                                        <!--  text box number grams measurement -->
-                                                        <p>{{$character['name']}}: text box number grams
-                                                            measurement</p>
-                                                        @break
-                                                    @default
-                                                        <!--       Default case... -->
-                                                        <p>{{$character['name']}}: Default case</p>
+                                                            @case(13)
+                                                                <!--  texture -->
+                                                                <p>{{$character['name']}}: texture</p>
+                                                                @break
+                                                            @case(14)
+                                                                <!-- yes_no  -->
+                                                                <p>{{$character['name']}}: yes_no</p>
+                                                                @break
+                                                            @case(15)
+                                                                <!--  abundance -->
+                                                                <p>{{$character['name']}}: abundance</p>
+                                                                @break
+                                                            @case(16)
+                                                                <!--  text box number grams measurement -->
+                                                                <p>{{$character['name']}}: text box number grams
+                                                                    measurement</p>
+                                                                @break
+                                                            @default
+                                                                <!--       Default case... -->
+                                                                <p>{{$character['name']}}: Default case</p>
                                                 @endswitch
 
                                             </td>

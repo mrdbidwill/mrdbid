@@ -34,8 +34,9 @@ class Country extends Model
     {
         parent::__construct($attributes);
 
-        // Ensure property initialization
-        $this->name = $attributes['name'] ?? 'default_name';
+        // Avoid setting to 'default_name' unless necessary; otherwise, ensure valid initialization
+        // $this->name = $attributes['name'] ?? 'default_name';
+        $this->name = $attributes['name'] ?? '';
     }
 
     public function states(): HasMany

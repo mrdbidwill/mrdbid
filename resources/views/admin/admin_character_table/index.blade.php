@@ -2,10 +2,6 @@
     use App\Utils\DatabaseUtils;
 @endphp
 <x-layout>
-    <x-slot:heading>
-        Admin: Character Table Listings
-    </x-slot:heading>
-
     <div class="bg-gray-100">
         <div class="mx-auto max-w-7xl">
             <div class="bg-gray-100 py-8">

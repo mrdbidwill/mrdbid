@@ -10,6 +10,7 @@ class AdminCharacterController extends Controller
 {
     public function index()
     {
+
         $character_tables = Character::get();
 
         return view('admin.admin_character_table.index', [
@@ -19,9 +20,16 @@ class AdminCharacterController extends Controller
 
     public function store(Request $request)
     {
-
         //dd($request->all());
 
+        request()->validate([
+            'name' => 'required|unique:characters,name|min:3',
+            'display_options' => 'required',
+            'look_up_y_n' => 'required',
+            'parts' => 'required',
+            'source' => 'required',
+            'entered_by' => 'required',
+        ]);
         $character = Character::create([
             'name' => request('name'),
             'display_options' => request('display_options'),
@@ -62,16 +70,23 @@ class AdminCharacterController extends Controller
     public function update(Request $request)
     {
         //Gate::authorize('edit-character', $character);
-
         //dd($request->all());
+        $request->validate([
+            'name' => 'required|min:3|unique:characters,name,'.$request->id,
+            'display_options' => 'required',
+            'look_up_y_n' => 'required',
+            'parts' => 'required',
+            'source' => 'required',
+            'entered_by' => 'required',
+        ]);
 
-        $one_character = Character::where('id', '=', request('id'))->first();
+        $one_character = Character::where('id', '=', $request->id)->first();
         $one_character->update([
-            'name' => request('name'),
-            'display_options' => request('display_options'),
-            'look_up_y_n' => request('look_up_y_n'),
-            'parts' => request('parts'),
-            'source' => request('source'),
+            'name' => $request->input('name'),
+            'display_options' => $request->input('display_options'),
+            'look_up_y_n' => $request->input('look_up_y_n'),
+            'parts' => $request->input('parts'),
+            'source' => $request->input('source'),
             'entered_by' => auth()->user()->id,
         ]);
 

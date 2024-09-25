@@ -3,7 +3,7 @@
     //dd($specimens);
 @endphp
 <x-layout>
-    <x-dashboard-nav-bar></x-dashboard-nav-bar>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimens/index.blade.php.</p>
 
     @if (Session::has('message'))
