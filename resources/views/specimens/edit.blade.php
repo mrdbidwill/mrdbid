@@ -1,12 +1,12 @@
 @php
     use App\Repositories\ImageRepository;use App\Repositories\Lookup\CharacterRepository;use App\Utils\ImageUtils;use App\Utils\StringUtils;use Illuminate\Support\Facades\DB;
     // get the passed in id
-    $specimen_id = $specimen['id'];
+     $specimen_id = $specimen['id'];
     //dd($specimen_id);
 @endphp
 <x-layout>
 
-    <h2>Specimen ID: {{$specimen_id}}</h2>
+    <h2>Specimen ID: {{ $specimen_id  }}</h2>
     <p>This is views/specimens/edit.blade.php</p>
 
 

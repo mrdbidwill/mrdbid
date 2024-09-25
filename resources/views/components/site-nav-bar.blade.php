@@ -17,9 +17,9 @@
                         <x-nav-link href="/books" :active="request()->is('books')">Books</x-nav-link>
 
                         @auth
-                            <x-nav-link href="{{ route('specimens.dashboard') }}"
-                                        :active="request()->is('specimens.dashboard')">
-                                Dashboard
+                            <x-nav-link href="{{ route('specimens.index') }}"
+                                        :active="request()->is('specimens.index')">
+                                Specimens
                             </x-nav-link>
 
                             <x-nav-link href="{{ route('profile.edit') }}"

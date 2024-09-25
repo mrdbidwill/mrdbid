@@ -32,6 +32,7 @@
 
                     @case(2)
                         <!--  text box number mm is measure  NO Lookup table -->
+
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
@@ -45,6 +46,15 @@
                         @error('$character->name')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+                        @php
+                            // dd($character['name']);
+                            //dd( old($character['name']));
+                        @endphp
+                        <button
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">
+                            Add Character
+                        </button>
                         @break
 
                     @case(3)
@@ -125,6 +135,21 @@
                                 for="{{$item->id}}">{{$item->name}}</label>
                             <br>
                         @endforeach
+                        <input type="hidden" name="character_id"
+                               value="{{$character['id']}}">
+
+                        <input type="hidden" name="specimen_id"
+                               value="{{ $specimenId }}">
+
+                        <input type="hidden" name="entered_by"
+                               value="{{ auth()->id()}}">
+
+                        <button
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">
+                            Add Character
+                        </button>
+
                         @break
 
                     @case(8)
@@ -199,7 +224,7 @@
 
                             @php //dd($select); @endphp
 
-                            @if(   isset($select->value)  &&   (  $select->value == '1'))
+                            @if(   (isset($select->value)  &&   ( $select->value == '1')) || (!isset($select->value)) )
                                 <button
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit">

@@ -95,7 +95,9 @@ class SpecimenController extends Controller
     {
         $countries = Country::all();
 
-        return view('specimens.edit', compact('countries'));
+        //dd($specimen);
+
+        return view('specimens.edit', [compact('countries'), 'specimen' => $specimen]);
 
     }
 

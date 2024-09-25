@@ -3,7 +3,7 @@
     //dd($specimens);
 @endphp
 <x-layout>
-
+    <x-dashboard-nav-bar></x-dashboard-nav-bar>
     <p>This is views/specimens/index.blade.php.</p>
 
     @if (Session::has('message'))
@@ -16,7 +16,7 @@
     @endif
 
 
-    <a href="/specimens/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Specimen</a>
+    <!--   <a href="/specimens/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Specimen</a>  -->
 
 
     @foreach ($specimens as $specimen)
