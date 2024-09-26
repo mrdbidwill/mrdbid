@@ -2,14 +2,14 @@
     /** @var \Illuminate\Database\Eloquent\Collection */
     'countries',
 ])
-
+@php // dd($countries); @endphp
 <script type="text/javascript">
     // JavaScript to handle the state loading
-    document.addEventListener('DOMContentLoaded', function () {
-        const countryElement = document.getElementById('country');
+    document.addEventListener('DOMContentLoaded', function () {   // DOM Content Loaded Event:  The script waits until the DOM content is fully loaded before executing
+        const countryElement = document.getElementById('country');  //Element References: It gets the references to the dropdown elements for countries (countryElement) and states (stateElement).
         const stateElement = document.getElementById('state');
 
-        function loadStates(countryCode) {
+        function loadStates(countryCode) {   // Load States Function: This function fetches the states for a given country code via an API call. This populates the states dropdown based on the selected country.
             if (!countryCode) {
                 stateElement.innerHTML = '<option value="" disabled selected>Please select a country first</option>';
                 return;
@@ -28,12 +28,12 @@
                 });
         }
 
-        countryElement.addEventListener('change', function () {
+        countryElement.addEventListener('change', function () {  //Event Listener for Country Change: Adds an event listener to the country dropdown. When the country changes, it calls the loadStates function with the selected country code.
             loadStates(this.value);
         });
 
         // Check if a country is selected on page load and load the states
-        const initialCountryCode = countryElement.value;
+        const initialCountryCode = countryElement.value;  // Initial Load of States: Checks if a country is already selected when the page loads and immediately loads the states for that country.
         if (initialCountryCode) {
             loadStates(initialCountryCode);
         }

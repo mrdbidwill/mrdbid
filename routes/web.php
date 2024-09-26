@@ -90,6 +90,8 @@ Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
 Route::resource('books', BookController::class);
 
+Route::get('/get-states/{countryId}', [SpecimenController::class, 'getStates']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

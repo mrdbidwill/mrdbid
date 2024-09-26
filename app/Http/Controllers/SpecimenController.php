@@ -86,7 +86,7 @@ class SpecimenController extends Controller
 
     public function create()
     {
-        $countries = Country::all();
+        $countries = Country::all(); // Fetch all countries
 
         return view('specimens.create', compact('countries'));
     }
@@ -157,10 +157,9 @@ class SpecimenController extends Controller
         return redirect()->intended(route('specimens.dashboard', absolute: false));
     }
 
-    public function getStatesByCountry($countryCode)
+    public function getStates($countryId)
     {
-        // Fetch states from your database or other source
-        $states = State::where('country_code', $countryCode)->get();
+        $states = State::where('country_id', $countryId)->pluck('name', 'id');
 
         return response()->json($states);
     }

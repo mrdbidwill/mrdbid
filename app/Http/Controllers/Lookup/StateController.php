@@ -30,7 +30,7 @@ class StateController extends Controller
     {
         // Fetch states from your database or other source
         $states = State::where('country_code', $countryCode)->get();
-        dd($states);
+        //dd($states);
 
         return response()->json($states);
     }

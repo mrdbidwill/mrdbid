@@ -33,10 +33,6 @@ class Country extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-
-        // Avoid setting to 'default_name' unless necessary; otherwise, ensure valid initialization
-        // $this->name = $attributes['name'] ?? 'default_name';
-        $this->name = $attributes['name'] ?? '';
     }
 
     public function states(): HasMany
