@@ -33,7 +33,7 @@
                                 seem to say the same thing, but are 3 different rows in a database to attempt to match
                                 up.</p>
 
-                            <p class="mt-2 text-xl text-black">I did add a cap_color_2 and cap_color_3 because I can
+                            <p class="mt-2 text-xl text-black">I added a cap_color_2 and cap_color_3 because I can
                                 see
                                 that may be helpful for that <u>one</u> main "cap color" character. It will get unwieldy
                                 quickly if I did that to many characters.</p>

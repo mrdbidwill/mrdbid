@@ -1,9 +1,11 @@
+@php
+    //dd($specimen_cluster);
+    $specimen_cluster_id = $specimen_cluster['id'];
+@endphp
 <x-layout>
-    <x-slot:heading>
-        Edit Character: {{ $character->title }}
-    </x-slot:heading>
-
-    <form method="POST" action="/characters/{{ $character->id }}">
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+    <p>This is views/specimen_clusters/edit.blade.php</p>
+    <form method="POST" action="/specimen_cluster/{{ $specimen_cluster->id }}">
         @csrf
         @method('PATCH')
 
@@ -11,45 +13,51 @@
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <label for="character_name" class="block text-sm font-medium leading-6 text-gray-900">Character
-                            Name</label>
+                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Cluster Name</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="character_name"
-                                    id="character_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Shift Leader"
-                                    value="{{ $character->name }}"
-                                    required>
+                                <input type="text" name="name" id="name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="" value="{{ $specimen_cluster->name }}" required>
                             </div>
 
-                            @error('character_name')
+                            @error('name')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="sm:col-span-4">
-                        <label for="common_name" class="block text-sm font-medium leading-6 text-gray-900">Common
-                            Name</label>
+                        <label for="description"
+                               class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                         <div class="mt-2">
                             <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                            >
-                                <input
-                                    type="text"
-                                    name="common_name"
-                                    id="common_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Little Brown Mushroom - Front Yard"
-                                    value="{{ $character->common_name }}"
-                                    required>
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard"
+                                       value="{{ $specimen_cluster->description }} " required>
                             </div>
 
-                            @error('common_name')
+                            @error('description')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-4">
+                        <label for="comments" class="block text-sm font-medium leading-6 text-gray-900">Comments</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="comments" id="comments"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard"
+                                       value="{{ $specimen_cluster->comments }}">
+                            </div>
+
+                            @error('comments')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -63,11 +71,13 @@
                 <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
             </div>
 
+            <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
+
             <div class="flex items-center gap-x-6">
-                <a href="/characters/{{ $character->id }}"
-                   class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                <a href="/{{ route('specimen_cluster.index') }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
 
                 <div>
+
                     <button type="submit"
                             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Update
@@ -77,7 +87,7 @@
         </div>
     </form>
 
-    <form method="POST" action="/characters/{{ $character->id }}" id="delete-form" class="hidden">
+    <form method="POST" action="/specimen_clusters/{{ $specimen_cluster->id }}" id="delete-form" class="hidden">
         @csrf
         @method('DELETE')
     </form>

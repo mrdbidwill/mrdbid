@@ -244,4 +244,14 @@ class Specimen extends Model
     {
         return $this->hasMany(Specimen::class);
     }
+
+    public function specimen_clusters(): HasMany
+    {
+        return $this->hasMany(SpecimenCluster::class);
+    }
+
+    public function specimen_groups(): HasMany
+    {
+        return $this->hasMany(SpecimenGroup::class);
+    }
 }

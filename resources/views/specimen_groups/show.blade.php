@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Character
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <h2 class="font-bold text-lg">{{ $character->name }}</h2>
 

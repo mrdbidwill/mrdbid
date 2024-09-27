@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Create Character
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <form method="POST" action="/{{ route('specimen_group.create') }}">
         @csrf

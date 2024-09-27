@@ -1,14 +1,13 @@
+@php use Illuminate\Support\Facades\DB; @endphp
 <x-layout>
-    <x-slot:heading>
-        Character
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+    <h1>specimen_clusters.show.blade.php</h1>
+    
+    //dd($specimen_clusters);
+    @foreach ($specimen_clusters as $specimen_cluster)
 
-    <h2 class="font-bold text-lg">{{ $character->name }}</h2>
+        <p>Cluster: {{$specimen_cluster['name']}} Description: {{$specimen_cluster['description']}}
+            Comments: {{$specimen_cluster['comments']}}</p>
 
-    <p>
-        This character pays {{ $character->display_option }} per year.
-    </p>
-    <p class="mt-6">
-        <x-button href="/characters/{{ $character->id }}/edit">Edit Character</x-button>
-    </p>
+    @endforeach
 </x-layout>

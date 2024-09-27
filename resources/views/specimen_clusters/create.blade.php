@@ -1,44 +1,73 @@
 <x-layout>
-    <x-slot:heading>
-        Create Character
-    </x-slot:heading>
-
-    <form method="POST" action="/characters">
+    <p>This is views/specimen_clusters/create.blade.php</p>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+    <form method="POST" action="{{ route('specimen_cluster.store') }}">
         @csrf
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Create a New Character</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">We just need a handful of details from you.</p>
-
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <x-form-field>
-                        <x-form-label for="title">Character Name</x-form-label>
 
+                    <div class="sm:col-span-4">
+                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                         <div class="mt-2">
-                            <x-form-input name="character_name" id="character_name" placeholder="wrj_2_20_2024_1"/>
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="name" id="name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Example:  Little Brown Mushrooms - Front Yard" value="" required>
+                            </div>
 
-                            <x-form-error name="character_name"/>
+                            @error('name')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
-                    </x-form-field>
+                    </div>
 
-                    <x-form-field>
-                        <x-form-label for="common_name">Common Name</x-form-label>
-
+                    <div class="sm:col-span-4">
+                        <label for="description"
+                               class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                         <div class="mt-2">
-                            <x-form-input name="common_name" id="common_name"
-                                          placeholder="Little brown mushroom - front yard"/>
-
-                            <x-form-error name="common_name"/>
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Description" value="A cluster needs a description to be helpful.">
+                            </div>
+                            @error('description')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
-                    </x-form-field>
+                    </div>
+
+
+                    <div class="sm:col-span-4">
+                        <label for="comments" class="block text-sm font-medium leading-6 text-gray-900">Comments</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="comments" id="comments"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Comments" value="Your comments here.">
+                            </div>
+
+                            @error('comments')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
+
+                        <div class="mx-auto mt-6">
+                            <x-primary-button>Submit</x-primary-button>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-            <x-form-button>Save</x-form-button>
-        </div>
     </form>
+
 </x-layout>

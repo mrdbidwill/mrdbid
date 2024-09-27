@@ -25,19 +25,15 @@ class SpecimenGroupController extends Controller
     {
         request()->validate([
             'name' => ['required', 'min:3'],
-            'display_options' => ['required'],
-            'look_up_y_n' => ['required'],
-            'part' => ['required'],
-            'source' => ['required'],
+            'description' => ['required'],
+            'comments' => ['required'],
             'entered_by' => ['required'],
         ]);
 
         SpecimenGroup::create([
             'name' => request('name'),
-            'display_options' => request('display_options'),
-            'look_up_y_n' => request('look_up_y_n'),
-            'part' => request('part'),
-            'source' => request('group_location_now'),
+            'description' => request('description'),
+            'comments' => request('comments'),
             'entered_by' => request('entered_by'),
 
         ]);
@@ -62,19 +58,15 @@ class SpecimenGroupController extends Controller
 
         request()->validate([
             'name' => ['required', 'min:3'],
-            'display_options' => ['required'],
-            'look_up_y_n' => 'required',
-            'part' => 'required',
-            'source' => 'required',
-            'entered_by' => 'required',
+            'description' => ['required'],
+            'comments' => ['required'],
+            'entered_by' => ['required'],
         ]);
 
         update([
             'name' => request('name'),
-            'display_options' => request('display_options'),
-            'look_up_y_n' => request('look_up_y_n'),
-            'part' => request('part'),
-            'source' => request('source'),
+            'description' => request('description'),
+            'comments' => request('comments'),
             'entered_by' => request('entered_by'),
 
         ]);

@@ -3,45 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\SpecimenCluster;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SpecimenClusterController extends Controller
 {
     public function index()
     {
-        $specimen_clusters = SpecimenCluster::latest()->simplePaginate(6);
+        $specimen_clusters = SpecimenCluster::where('member_id', auth()->id())->orderBY('name', 'asc')->latest()->simplePaginate(6);
 
-        return view('specimen_clusters.index', [
-            'specimen_clusters' => $specimen_clusters,
-        ]);
+        return view('specimen_clusters.index', compact('specimen_clusters'));
     }
 
-    public function show(SpecimenCluster $specimen_cluster)
+    public function show($id)
     {
-        return view('specimen_clusters.show', ['specimen_cluster' => $specimen_cluster]);
+        $specimen_clusters = SpecimenCluster::where('id', $id)->get();
+
+        return view('specimen_clusters.show', compact('specimen_clusters'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'name' => ['required', 'min:3'],
-            'display_options' => ['required'],
-            'look_up_y_n' => ['required'],
-            'part' => ['required'],
-            'source' => ['required'],
-            'entered_by' => ['required'],
         ]);
 
+        $member_id = $entered_by = request('entered_by');  // member_id should be same as entered_by right here
         SpecimenCluster::create([
+            'member_id' => $member_id,
             'name' => request('name'),
-            'display_options' => request('display_options'),
-            'look_up_y_n' => request('look_up_y_n'),
-            'part' => request('part'),
-            'source' => request('Cluster_location_now'),
-            'entered_by' => request('entered_by'),
-
+            'description' => request('description'),
+            'comments' => request('comments'),
+            'entered_by' => $entered_by,
         ]);
 
-        return redirect('/specimen_clusters');
+        return redirect('/specimen_clusters/');
     }
 
     public function create()
@@ -49,44 +45,42 @@ class SpecimenClusterController extends Controller
         return view('specimen_clusters.create');
     }
 
-    public function edit(SpecimenCluster $specimen_cluster)
+    public function edit($id)
     {
-        return view('specimen_clusters.edit', ['SpecimenCluster' => $specimen_cluster]);
+        $specimen_cluster = SpecimenCluster::findOrFail($id);
+
+        return view('specimen_clusters.edit', compact('specimen_cluster'));
 
     }
 
     public function update(SpecimenCluster $specimen_cluster)
     {
-        // authorize (On hold...)
 
         request()->validate([
             'name' => ['required', 'min:3'],
-            'display_options' => ['required'],
-            'look_up_y_n' => 'required',
-            'part' => 'required',
-            'source' => 'required',
-            'entered_by' => 'required',
         ]);
+
+        $member_id = $entered_by = $specimen_cluster['entered_by'];  // member_id should be same as entered_by right here
 
         $specimen_cluster->update([
+            'member_id' => $member_id,
             'name' => request('name'),
-            'display_options' => request('display_options'),
-            'look_up_y_n' => request('look_up_y_n'),
-            'part' => request('part'),
-            'source' => request('source'),
-            'entered_by' => request('entered_by'),
+            'description' => request('description'),
+            'comments' => request('comments'),
+            'entered_by' => $entered_by,
 
         ]);
 
-        return redirect('/specimen_clusters/'.$specimen_cluster->id);
+         return redirect('/specimen_clusters/'.$specimen_cluster['id'].'/edit')->with('message', 'Specimen Cluster updated successfully');
+        //return redirect('/specimen_cluster.index');
     }
 
     public function destroy(SpecimenCluster $specimen_cluster)
     {
-        // authorize (On hold...)
+        Gate::authorize('edit-specimen', $specimen_cluster);
 
         $specimen_cluster->delete();
 
-        return redirect('/specimen_clusters');
+        return redirect()->intended(route('specimen_clusters', absolute: false));
     }
 }

@@ -1,9 +1,12 @@
+@php
+    // get the passed in id
+     $specimen_group_id = $specimen_group_id['id'];
+    //dd($specimen_group_id);
+@endphp
 <x-layout>
-    <x-slot:heading>
-        Edit Character: {{ $specimenGroup->name }}
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <form method="POST" action="/characters/{{ $specimenGroup->id }}">
+    <form method="POST" action="/specimen_groups/{{  $specimen_group_id }}">
         @csrf
         @method('PATCH')
 
@@ -11,47 +14,51 @@
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <label for="specimen_group_name" class="block text-sm font-medium leading-6 text-gray-900">Specimen
-                            Group
-                            Name</label>
+                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Group Name</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="character_name"
-                                    id="character_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Shift Leader"
-                                    value="{{ $specimenGroup->name }}"
-                                    required>
+                                <input type="text" name="name" id="name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="" value="{{ $SpecimenGroup->name }}" required>
                             </div>
 
-                            @error('specimen_group_name')
+                            @error('name')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="sm:col-span-4">
-                        <label for="specimen_group_description"
-                               class="block text-sm font-medium leading-6 text-gray-900">Common
-                            Name</label>
+                        <label for="description"
+                               class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                         <div class="mt-2">
                             <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                            >
-                                <input
-                                    type="text"
-                                    name="common_name"
-                                    id="common_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Little Brown Mushroom - Front Yard"
-                                    value="{{ $specimenGroup->common_name }}"
-                                    required>
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard"
+                                       value="{{ $SpecimenGroup->description }}" required>
                             </div>
 
-                            @error('common_name')
+                            @error('description')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-4">
+                        <label for="comment" class="block text-sm font-medium leading-6 text-gray-900">Comment</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="comment" id="comment"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard"
+                                       value="{{ $SpecimenGroup->comment }}" required>
+                            </div>
+
+                            @error('comment')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -66,7 +73,7 @@
             </div>
 
             <div class="flex items-center gap-x-6">
-                <a href="/characters/{{ $specimenGroup->id }}"
+                <a href="/specimen_group/{{ $specimenGroup->id }}"
                    class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
 
                 <div>
