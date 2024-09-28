@@ -10,7 +10,7 @@ class AdminLookUpTableController extends Controller
 {
     public function index(): View
     {
-        return view('admin.admin_look_up_table.index');
+        return view('admin.admin_lookup_table.index');
     }
 
     public function create() {}

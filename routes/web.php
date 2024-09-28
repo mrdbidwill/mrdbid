@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\AdminCharacterController;
 use App\Http\Controllers\Admin\AdminExportDatabaseController;
 use App\Http\Controllers\Admin\AdminLookUpTableController;
 use App\Http\Controllers\Admin\AdminSpecimenController;
-use App\Http\Controllers\BookController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
 use App\Http\Controllers\DataImageSourceController;
@@ -77,7 +76,9 @@ use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TreeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->name('specimens.dashboard');
+Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->name('specimens.dashboard')->middleware('auth');
+
+Route::view('admin/dashboard', 'admin.dashboard')->name('admin_dashboard')->middleware('auth');
 
 Route::get('/admin/admin_export_database', [AdminExportDatabaseController::class, 'index'])->name('admin.exportDatabase.index')->middleware('auth');
 
@@ -88,7 +89,6 @@ Route::get('/admin/saveDatabaseToLocalFile', [AdminExportDatabaseController::cla
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
-Route::resource('books', BookController::class);
 
 Route::get('/get-states/{countryId}', [SpecimenController::class, 'getStates']);
 

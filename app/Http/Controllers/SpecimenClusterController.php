@@ -37,7 +37,8 @@ class SpecimenClusterController extends Controller
             'entered_by' => $entered_by,
         ]);
 
-        return redirect('/specimen_clusters/');
+        //return redirect('/specimen_cluster/');
+        return redirect('/specimen_cluster/')->with('message', 'Specimen Cluster created successfully');
     }
 
     public function create()
@@ -71,8 +72,8 @@ class SpecimenClusterController extends Controller
 
         ]);
 
-         return redirect('/specimen_clusters/'.$specimen_cluster['id'].'/edit')->with('message', 'Specimen Cluster updated successfully');
-        //return redirect('/specimen_cluster.index');
+        //return redirect('/specimen_clusters/'.$specimen_cluster['id'].'/edit')->with('message', 'Specimen Cluster updated successfully');
+        return redirect('/specimen_cluster/')->with('message', 'Specimen Cluster updated successfully');
     }
 
     public function destroy(SpecimenCluster $specimen_cluster)

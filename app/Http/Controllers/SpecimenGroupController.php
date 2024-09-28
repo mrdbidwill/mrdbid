@@ -21,24 +21,22 @@ class SpecimenGroupController extends Controller
         return view('specimen_groups.show', ['group' => $group]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'name' => ['required', 'min:3'],
-            'description' => ['required'],
-            'comments' => ['required'],
-            'entered_by' => ['required'],
         ]);
 
+        $member_id = $entered_by = request('entered_by');  // member_id should be same as entered_by right here
         SpecimenGroup::create([
+            'member_id' => $member_id,
             'name' => request('name'),
             'description' => request('description'),
             'comments' => request('comments'),
-            'entered_by' => request('entered_by'),
-
+            'entered_by' => $entered_by,
         ]);
 
-        return redirect('/specimen_groups');
+        return redirect('/specimen_group/')->with('message', 'Specimen Group created successfully');
     }
 
     public function create()
@@ -52,26 +50,25 @@ class SpecimenGroupController extends Controller
 
     }
 
-    public function update(Request $request)
+    public function update(SpecimenGroup $specimen_group)
     {
-        // authorize (On hold...)
 
         request()->validate([
             'name' => ['required', 'min:3'],
-            'description' => ['required'],
-            'comments' => ['required'],
-            'entered_by' => ['required'],
         ]);
 
-        update([
+        $member_id = $entered_by = $specimen_group['entered_by'];  // member_id should be same as entered_by right here
+
+        $specimen_group->update([
+            'member_id' => $member_id,
             'name' => request('name'),
             'description' => request('description'),
             'comments' => request('comments'),
-            'entered_by' => request('entered_by'),
+            'entered_by' => $entered_by,
 
         ]);
 
-        return redirect('/specimen_groups/'.$group->id);
+        return redirect('/specimen_group/')->with('message', 'Specimen Group updated successfully');
     }
 
     public function destroy(SpecimenGroup $group)

@@ -1,8 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Look Up Table Listings
-    </x-slot:heading>
-
+    <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
     <div class="bg-gray-900">
         <div class="mx-auto max-w-7xl">
@@ -10,6 +7,10 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
+                            <p>
+                                <resources/>
+                                views/admin/admin_lookup_table/index.blade.php>
+                            </p>
                             <h1 class="text-base font-semibold leading-6 text-white">Characters</h1>
                             <p class="mt-2 text-sm text-gray-300">Add the characters you know.</p>
                         </div>
@@ -53,20 +54,9 @@
                                     <tbody class="divide-y divide-gray-800">
 
 
-                                    @foreach ($character_tables as $character_table)
-                                        <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{{ $character_table['id'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['name'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['display_options'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['look_up_y_n'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['parts'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['source'] }}</td>
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                <a href="#" class="text-indigo-400 hover:text-indigo-300">Edit<span
-                                                        class="sr-only">, {{ $character_table['name'] }}</span></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    <tr>
+                                        <td>Nothing here yet?</td>
+                                    </tr>
 
 
                                     </tbody>

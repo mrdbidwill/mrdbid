@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Create Look Up Table?
-    </x-slot:heading>
+    <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
     <form method="POST" action="/admin_look_up_table">
         @csrf

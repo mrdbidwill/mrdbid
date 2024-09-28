@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Specimen Table Listings
-    </x-slot:heading>
+    <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
 
     <div class="bg-gray-900">
@@ -53,20 +51,11 @@
                                     <tbody class="divide-y divide-gray-800">
 
 
-                                    @foreach ($character_tables as $character_table)
-                                        <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{{ $character_table['id'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['name'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['display_options'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['look_up_y_n'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['parts'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $character_table['source'] }}</td>
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                <a href="#" class="text-indigo-400 hover:text-indigo-300">Edit<span
-                                                        class="sr-only">, {{ $character_table['name'] }}</span></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    <tr>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                            Nothing here yet?
+                                        </td>
+                                    </tr>
 
 
                                     </tbody>

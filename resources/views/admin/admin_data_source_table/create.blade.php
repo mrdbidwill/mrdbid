@@ -1,21 +1,21 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <form method="POST" action="/admin_character_table/">
+    <form method="POST" action="/admin_data_source_table/">
         @csrf
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Add a new character to the "characters"
+                <h2 class="text-base font-semibold leading-7 text-gray-900">Add a new data_source to the "data_sources"
                     Table?</h2>
                 <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin! Admin!</h2>
 
-                <p>This is resources/views/admin/admin_character_table/create.blade.php</p>
+                <p>This is resources/views/admin/admin_data_source_table/create.blade.php</p>
 
                 <p class="mt-1 text-sm leading-6 text-gray-600">All fields are required.</p>
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <x-form-field>
-                        <x-form-label for="name">Character Name</x-form-label>
+                        <x-form-label for="name">data_source Name</x-form-label>
 
                         <div class="mt-2">
                             <x-form-input name="name" id="name" placeholder="Full Moon Behavior"/>
@@ -29,7 +29,7 @@
 
 
                     <x-form-field>
-                        <x-form-label for="display_options">How should this character be displayed in a form?
+                        <x-form-label for="display_options">How should this data_source be displayed in a form?
                         </x-form-label>
                         @foreach($display_options as $display_option)
                             <div class="mt-2">
@@ -42,7 +42,7 @@
 
 
                     <x-form-field>
-                        <x-form-label for="look_up_y_n">Does this character need a lookup table?</x-form-label>
+                        <x-form-label for="look_up_y_n">Does this data_source need a lookup table?</x-form-label>
 
                         <fieldset>
                             <label>Yes<input type="radio" name="look_up_y_n" value="0"></label> <label>No<input
@@ -76,7 +76,7 @@
 
 
                     <x-form-field>
-                        <x-form-label for="source">What is the verifiable source for this character?</x-form-label>
+                        <x-form-label for="source">What is the verifiable source for this data_source?</x-form-label>
 
                         <div class="mt-2">
                             @foreach($data_sources as $data_source)

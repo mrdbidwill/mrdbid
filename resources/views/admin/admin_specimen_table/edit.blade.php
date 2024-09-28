@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:heading>
-        Admin: Edit Specimen Table?: {{ $character->title }}
-    </x-slot:heading>
+    <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
     <form method="POST" action="/specimen_table/{{ $character->id }}">
         @csrf
@@ -16,14 +14,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="character_name"
-                                    id="character_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Shift Leader"
-                                    value="{{ $character->name }}"
-                                    required>
+                                <input type="text" name="character_name" id="character_name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Shift Leader" value="{{ $character->name }}" required>
                             </div>
 
                             @error('character_name')
@@ -37,16 +30,11 @@
                             Name</label>
                         <div class="mt-2">
                             <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                            >
-                                <input
-                                    type="text"
-                                    name="common_name"
-                                    id="common_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Little Brown Mushroom - Front Yard"
-                                    value="{{ $character->common_name }}"
-                                    required>
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="common_name" id="common_name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard"
+                                       value="{{ $character->common_name }}" required>
                             </div>
 
                             @error('common_name')
