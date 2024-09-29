@@ -10,9 +10,9 @@ class Character extends Model
 {
     use HasFactory;
 
-    public int $id;
+    public int $id = 0;
 
-    public string $name;
+    public string $name = '';
 
     public int $display_options;
 

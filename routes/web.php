@@ -82,6 +82,8 @@ Route::view('admin/dashboard', 'admin.dashboard')->name('admin_dashboard')->midd
 
 Route::get('/admin/admin_export_database', [AdminExportDatabaseController::class, 'index'])->name('admin.exportDatabase.index')->middleware('auth');
 
+Route::get('/admin_lookup_table/{id}/edit', [AdminLookUpTableController::class, 'edit'])->name('admin.lookup.table.edit')->middleware('auth');
+
 Route::get('/admin/exportDatabase', [AdminExportDatabaseController::class, 'exportDatabase'])->name('admin.exportDatabase')->middleware('auth');
 
 Route::get('/admin/saveDatabaseToLocalFile', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin.saveDatabaseToLocalFile')->middleware('auth');

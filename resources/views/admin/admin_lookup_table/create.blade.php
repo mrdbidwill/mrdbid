@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-
+    <p>(resources/views/admin/admin_lookup_table/create.blade.php)</p>
     <form method="POST" action="/admin_look_up_table">
         @csrf
 
