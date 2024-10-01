@@ -22,6 +22,16 @@
                                 Specimens
                             </x-nav-link>
 
+                            @php
+                                $member_type = \App\Utils\MemberUtils::get_member_type();
+                            @endphp
+                            @if($member_type < 4)
+                                <x-nav-link href="{{ route('admin_dashboard') }}" style="color: red; font-weight: bold;"
+                                            :active="request()->is('admin_dashboard')">
+                                    Admin
+                                </x-nav-link>
+                            @endif
+
                             <x-nav-link href="{{ route('profile.edit') }}"
                                         :active="request()->is('profile.edit')"> {{  Auth::user()->name }}
                             </x-nav-link>

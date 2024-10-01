@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-
+    <p>resources/views/admin/admin_specimen/index.blade.php</p>
 
     <div class="bg-gray-900">
         <div class="mx-auto max-w-7xl">

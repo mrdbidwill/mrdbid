@@ -4,7 +4,7 @@ namespace App\Utils;
 
 class DatabaseUtils
 {
-    public function exportDatabase(string $dbName): string
+    public function admin_export_database(string $dbName): string
     {
         // Database credentials
         $user = 'root';

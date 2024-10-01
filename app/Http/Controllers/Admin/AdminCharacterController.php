@@ -13,7 +13,7 @@ class AdminCharacterController extends Controller
 
         $character_tables = Character::get();
 
-        return view('admin.admin_character_table.index', [
+        return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
         ]);
     }
@@ -44,14 +44,14 @@ class AdminCharacterController extends Controller
 
         //dd($character_table);
 
-        return view('admin.admin_character_table.index', [
+        return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
         ]);
     }
 
     public function create()
     {
-        return view('admin.admin_character_table.create');
+        return view('admin.admin_character.create');
     }
 
     public function show($id) {}
@@ -64,7 +64,7 @@ class AdminCharacterController extends Controller
         $character_table = Character::where('id', '=', $character_id)->get();
         //dd($character_table);
 
-        return view('admin.admin_character_table.edit', ['character_table' => $character_table]);
+        return view('admin.admin_character.edit', ['character_table' => $character_table]);
     }
 
     public function update(Request $request)
@@ -95,7 +95,7 @@ class AdminCharacterController extends Controller
 
         //dd($character_table);
 
-        return view('admin.admin_character_table.index', [
+        return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
         ]);
     }

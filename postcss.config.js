@@ -1,10 +1,12 @@
 // postcss.config.js
+
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 module.exports = {
-    plugins: {
-        tailwindcss: async () => {
-            const tailwindConfig = await import('./tailwind.config.mjs');
-            return tailwindConfig.default;
-        },
+    plugins: [
+    tailwindcss('./tailwind.config.mjs'),
+    autoprefixer,
+],
         autoprefixer: {},
     },
 };

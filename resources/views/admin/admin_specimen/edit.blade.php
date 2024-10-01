@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-
+    <p>resources/views/admin/admin_specimen/edit.blade.php</p>
     <form method="POST" action="/specimen_table/{{ $character->id }}">
         @csrf
         @method('PATCH')

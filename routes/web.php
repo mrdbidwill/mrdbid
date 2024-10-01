@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminCharacterController;
+use App\Http\Controllers\Admin\AdminDataSourceController;
 use App\Http\Controllers\Admin\AdminExportDatabaseController;
-use App\Http\Controllers\Admin\AdminLookUpTableController;
+use App\Http\Controllers\Admin\AdminLookUpController;
 use App\Http\Controllers\Admin\AdminSpecimenController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
@@ -80,14 +81,6 @@ Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->nam
 
 Route::view('admin/dashboard', 'admin.dashboard')->name('admin_dashboard')->middleware('auth');
 
-Route::get('/admin/admin_export_database', [AdminExportDatabaseController::class, 'index'])->name('admin.exportDatabase.index')->middleware('auth');
-
-Route::get('/admin_lookup_table/{id}/edit', [AdminLookUpTableController::class, 'edit'])->name('admin.lookup.table.edit')->middleware('auth');
-
-Route::get('/admin/exportDatabase', [AdminExportDatabaseController::class, 'exportDatabase'])->name('admin.exportDatabase')->middleware('auth');
-
-Route::get('/admin/saveDatabaseToLocalFile', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin.saveDatabaseToLocalFile')->middleware('auth');
-
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
@@ -102,9 +95,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('characters', CharacterController::class);
     Route::resource('character_specimens', CharacterSpecimenController::class);
 
-    Route::resource('admin_character_table', AdminCharacterController::class);
-    Route::resource('admin_lookup_table', AdminLookUpTableController::class);
-    Route::resource('admin_specimen_table', AdminSpecimenController::class);
+    Route::resource('admin_character', AdminCharacterController::class);
+    Route::resource('admin_data_source', AdminDataSourceController::class);
+    Route::resource('admin_export_database', AdminExportDatabaseController::class);
+    Route::resource('admin_lookup', AdminLookUpController::class);
+    Route::resource('admin_specimen', AdminSpecimenController::class);
 
     Route::resource('abundance', AbundanceController::class);
     Route::resource('annulus_position', AnnulusPositionController::class);

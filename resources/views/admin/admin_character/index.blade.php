@@ -9,23 +9,23 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Edit data_source Table:
-                                (admin_data_source_table/index.blade.php)</h1>
+                            <h1 class="text-base font-semibold leading-6 text-black">Edit Character Table:
+                                (admin_character/index.blade.php)</h1>
                             <h2 class="text-sm font-semibold leading-5 text-red-600">Admin! Admin! Admin! Admin!
                                 Admin!</h2>
-                            <p class="text-black">These are the data_sources in the "data_sources" table down below.
-                                They are currently available to be added as a specimen's data_source list. None are
-                                required. Use as needed. Add new ones with a verifiable source. If a look up table is
-                                needed, a list will be needed to create it.</p>
+                            <p class="text-black">These are the characters in the "characters" table down below. They
+                                are currently available to be added as a specimen's character list. None are required.
+                                Use as needed. Add new ones with a verifiable source. If a look up table is needed, a
+                                list will be needed to create it.</p>
 
                             <p>Call EXPORT Database here:</p>
                             {{--@php
                                 $export = new DatabaseUtils;
-                                $export->exportDatabase('mrdbid');
+                                $export->admin_export_database('mrdbid');
                                 @endphp  --}}
 
-                            <p class="text-black">Helpful data_sources should be added. Less helpful data_sources won't
-                                be used, so the list will eventually police itself.</p>
+                            <p class="text-black">Helpful characters should be added. Less helpful characters won't be
+                                used, so the list will eventually police itself.</p>
 
                             <p class="text-black">For example, the following SQL code was used to create the
                                 "annulus_positions" <b>look up </b>table. Many lookup tables use an identical format.
@@ -57,9 +57,8 @@
 
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a href="/admin_data_source_table/create/"
-                               class="px-4 py-2 bg-blue-500 text-black rounded-lg">Add New data_source to data_source
-                                Table</a>
+                            <a href="/admin_character/create/" class="px-4 py-2 bg-blue-500 text-black rounded-lg">Add
+                                New Character to Character Table</a>
                         </div>
                     </div>
                     <div class="mt-8 flow-root">
@@ -95,19 +94,19 @@
                                     <tbody class="divide-y divide-gray-800">
 
                                     @php
-                                        //dd($data_source_tables);
+                                        //dd($character_tables);
                                     @endphp
-                                    @foreach ($data_source_tables as $data_source_table)
+                                    @foreach ($character_tables as $character_table)
                                         <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-0">{{ $data_source_table['id'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $data_source_table['name'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $data_source_table['display_options'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $data_source_table['look_up_y_n'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $data_source_table['parts'] }}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $data_source_table['source'] }}</td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-0">{{ $character_table['id'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['name'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['display_options'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['look_up_y_n'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['parts'] }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['source'] }}</td>
 
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                <a href="{{ $data_source_table['id'] }}/edit"
+                                                <a href="{{ $character_table['id'] }}/edit"
                                                    class="px-4 py-2 bg-blue-500 text-black rounded-lg">Edit</a>
                                             </td>
                                         </tr>

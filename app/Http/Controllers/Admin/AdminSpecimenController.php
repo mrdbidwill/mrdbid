@@ -10,7 +10,7 @@ class AdminSpecimenController extends Controller
 {
     public function index(): View
     {
-        return view('admin.admin_specimen_table.index');
+        return view('admin.admin_specimen.index');
     }
 
     public function create() {}

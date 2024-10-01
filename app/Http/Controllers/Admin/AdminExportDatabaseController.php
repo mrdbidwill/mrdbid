@@ -15,13 +15,13 @@ class AdminExportDatabaseController extends Controller
     }
 
     // Method to handle the AJAX request for exporting the database
-    public function exportDatabase(Request $request)
+    public function admin_export_database(Request $request)
     {
         $dbName = $request->input('database_name');
         $dbUtils = new DatabaseUtils;
 
         try {
-            $message = $dbUtils->exportDatabase($dbName);
+            $message = $dbUtils->admin_export_database($dbName);
 
             return back()->with('success', $message);
         } catch (\Exception $e) {
@@ -42,4 +42,16 @@ class AdminExportDatabaseController extends Controller
             return back()->with('error', 'An error occurred: '.$e->getMessage());
         }
     }
+
+    public function create() {}
+
+    public function store(Request $request) {}
+
+    public function show($id) {}
+
+    public function edit($id) {}
+
+    public function update(Request $request, $id) {}
+
+    public function destroy($id) {}
 }

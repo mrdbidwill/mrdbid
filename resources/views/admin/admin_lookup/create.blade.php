@@ -1,7 +1,10 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>(resources/views/admin/admin_lookup_table/create.blade.php)</p>
-    <form method="POST" action="/admin_look_up_table">
+    @if (Session::has('message'))
+        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+    @endif
+    <p>(resources/views/admin/admin_lookup/create.blade.php)</p>
+    <form method="POST" action="/admin_look_up">
         @csrf
 
         <div class="space-y-12">

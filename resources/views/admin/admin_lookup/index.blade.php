@@ -1,6 +1,10 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>(resources/views/admin/admin_lookup_table/index.blade.php)</p>
+
+    @if (Session::has('message'))
+        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+    @endif
+    <p>(resources/views/admin/admin_lookup/index.blade.php)</p>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -29,7 +33,7 @@
                                  // @endphp
                                 <tr>
                                     <td>
-                                        <form method="GET" action="/admin_lookup_table/{{ $lookup_list['id'] }}/edit">
+                                        <form method="GET" action="/admin_lookup/{{ $lookup_list['id'] }}/edit">
 
                                             @php //dd($lookup_list); @endphp
                                             <input type="radio" id="id" name="id" checked

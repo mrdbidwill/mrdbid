@@ -58,12 +58,14 @@
             height: 100px; /* Adjust height as needed */
         }
     </style>
-
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet"/>
     @vite('resources/css/app.css')
+    @fluxStyles
 </head>
 
-<body class="h-full">          <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
-<div class="min-h-full">         <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
+<body>          <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
+<div>         <!-- <?php echo "views/components/layout.blade.php line " . __LINE__ . "."; ?> -->
     <x-site-nav-bar></x-site-nav-bar>
     <main>
         <div
@@ -72,5 +74,6 @@
         </div>
     </main>
 </div>
+@fluxScripts
 </body>
 </html>

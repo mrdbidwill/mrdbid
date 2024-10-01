@@ -1,7 +1,8 @@
 <x-layout>
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
+    <p>This is resources/views/admin/admin_character/show.blade.php</p>
 
-    <p>(resources/views/admin/admin_lookup_table/show.blade.php)</p>
+
     <h2 class="font-bold text-lg">{{ $character_table->name }}</h2>
 
     <p>
