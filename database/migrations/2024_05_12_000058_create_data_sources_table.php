@@ -21,9 +21,7 @@
 
                          $table->string('author', length: 240);
 
-                         $table->string('page', length: 240);
-
-                         $table->string('type');
+                         $table->integer('type');
 
                          $table->text('comment');
 

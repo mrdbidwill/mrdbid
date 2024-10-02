@@ -56,6 +56,12 @@ return [
             'throw' => false,
         ],
 
+        // Add support_articles disk configuration here  - wrj 10-1-2024
+        'support_articles' => [
+            'driver' => 'local',
+            'root' => storage_path('app/support-articles'),
+        ],
+
     ],
 
     /*

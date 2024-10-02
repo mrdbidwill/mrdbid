@@ -1,12 +1,10 @@
 <table class="min-w-full divide-y divide-gray-700">    <!-- begin display-switch.blade.php -->
     <thead>
     <tr>
-        <th scope="col"
-            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
+        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
             ID
         </th>
-        <th scope="col"
-            class="px-3 py-3.5 text-left text-sm font-semibold text-black">
+        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-black">
             Name
         </th>
     </tr>
@@ -37,9 +35,7 @@
                             : </label>
 
 
-                        <input id="{{ $character['id'] }}"
-                               type="text"
-                               value="{{ old($character['name']) }}"
+                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -62,9 +58,7 @@
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
-                        <input id="{{ $character['id'] }}"
-                               type="text"
-                               value="{{ old($character['name']) }}"
+                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -79,9 +73,7 @@
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
-                        <input id="{{ $character['id'] }}"
-                               type="text"
-                               value="{{ old($character['name']) }}"
+                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -93,14 +85,10 @@
 
                     @case(5)
                         <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
-
-
                         <label for="{{$character['id']}}">{{$character['name']}}
                             : </label>
 
-                        <input id="{{ $character['id'] }}"
-                               type="text"
-                               value="{{ old($character['name']) }}"
+                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -128,21 +116,15 @@
                             $data = DB::table( 'tastes' )->get();
                         @endphp
                         @foreach($data as $item)
-                            <input type="radio" id="{{$item->id}}"
-                                   name="{{$character['name']}}"
-                                   value="{{$item->id}}">
-                            <label
-                                for="{{$item->id}}">{{$item->name}}</label>
+                            <input type="radio" id="{{$item->id}}" name="{{$character['name']}}" value="{{$item->id}}">
+                            <label for="{{$item->id}}">{{$item->name}}</label>
                             <br>
                         @endforeach
-                        <input type="hidden" name="character_id"
-                               value="{{$character['id']}}">
+                        <input type="hidden" name="character_id" value="{{$character['id']}}">
 
-                        <input type="hidden" name="specimen_id"
-                               value="{{ $specimenId }}">
+                        <input type="hidden" name="specimen_id" value="{{ $specimenId }}">
 
-                        <input type="hidden" name="entered_by"
-                               value="{{ auth()->id()}}">
+                        <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
 
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -180,8 +162,7 @@
 
 
 
-                        <form method="POST"
-                              action="{{ route('character_specimens.store') }}">
+                        <form method="POST" action="{{ route('character_specimens.store') }}">
                             @csrf
 
                             @foreach($data as $item)
@@ -196,31 +177,25 @@
 
                                 @endphp
 
-                                <input type="radio" id="{{$item->id}}"
-                                       name="character_value"
+                                <input type="radio" id="{{$item->id}}" name="character_value"
 
                                        @if((isset($select->character_value) && ($item->id == $select->character_value)) ||
                                            (isset($select->character_value) && ($select->character_value == 'Not Entered')) ||
                                            (!isset($select->character_value) && ($item->name == 'Not Entered')))
-                                           checked
-                                       @endif
+                                           checked @endif
 
                                        value="{{$item->id}}">
-                                <label
-                                    for="{{$item->id}}">{{$item->name}}
+                                <label for="{{$item->id}}">{{$item->name}}
                                     - {{$item->description}}</label>
                                 <br>
 
                             @endforeach
 
-                            <input type="hidden" name="character_id"
-                                   value="{{$character['id']}}">
+                            <input type="hidden" name="character_id" value="{{$character['id']}}">
 
-                            <input type="hidden" name="specimen_id"
-                                   value="{{ $specimenId }}">
+                            <input type="hidden" name="specimen_id" value="{{ $specimenId }}">
 
-                            <input type="hidden" name="entered_by"
-                                   value="{{ auth()->id()}}">
+                            <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
 
                             @php //dd($select); @endphp
 
@@ -274,8 +249,7 @@
                         @break
                     @case(16)
                         <!--  text box number grams measurement -->
-                        <p>{{$character['name']}}: text box number grams
-                            measurement</p>
+                        <p>{{$character['name']}}: text box number grams measurement</p>
                         @break
                     @default
                         <!--       Default case... -->
@@ -289,5 +263,4 @@
 
     </tbody>
 
-</table>     <!-- end display-switch.blade.php -->
-<?php
+</table>     <!-- end display-switch.blade.php --><?php

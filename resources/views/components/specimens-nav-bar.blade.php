@@ -1,18 +1,15 @@
-@props(['active' => false])
-@php
+@props(['active' => false])@php
     $isSpecimens = request()->routeIs('specimens.index');
 @endphp
 
 <nav>
     @if (!$isSpecimens)
-        <x-specimens-nav-link href="{{ route('specimens.index') }}"
-                              :active="request()->routeIs('specimens.index')">
+        <x-specimens-nav-link href="{{ route('specimens.index') }}" :active="request()->routeIs('specimens.index')">
             Back to Specimens
         </x-specimens-nav-link>
     @endif
 
-    <x-specimens-nav-link href="{{ route('specimens.create') }}"
-                          :active="request()->routeIs('specimens.create')">
+    <x-specimens-nav-link href="{{ route('specimens.create') }}" :active="request()->routeIs('specimens.create')">
         Add Specimen
     </x-specimens-nav-link>
 
@@ -21,6 +18,9 @@
         Characters
     </x-specimens-nav-link>
 
+    <x-specimens-nav-link href="{{ route('data_source.index') }}" :active="request()->routeIs('data_source.index')">
+        Add Data Source
+    </x-specimens-nav-link>
 
     <x-specimens-nav-link href="{{ route('specimen_cluster.index') }}"
                           :active="request()->routeIs('specimens_cluster.index')">

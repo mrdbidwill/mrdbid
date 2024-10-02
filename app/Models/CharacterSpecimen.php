@@ -7,17 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CharacterSpecimen extends Model
 {
-    public int $id;
-
     use HasFactory;
-
-    public int $character_id;
-
-    public int $specimen_id;
-
-    public string $character_value;
-
-    public int $entered_by;
 
     protected $table = 'character_specimens';
 

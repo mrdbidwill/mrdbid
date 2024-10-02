@@ -40,7 +40,7 @@
                                                    value="{{ $lookup_list['id'] }}" required> <label
                                                 for="{{ $lookup_list['id'] }}">{{ $lookup_list['name'] }}
                                             </label>
-                                            <button type="submit">Edit</button>
+                                            <x-button type="submit">Edit</x-button>
 
                                             @error('id')
                                             <div class="alert alert-danger mt-3">

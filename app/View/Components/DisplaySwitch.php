@@ -10,7 +10,7 @@ use Illuminate\View\Component;
 
 class DisplaySwitch extends Component
 {
-    public $specimenId;
+    public int $specimenId;
 
     public $characterSpecimens;
 

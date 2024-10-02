@@ -8,6 +8,7 @@ use App\Models\Specimen;
 use App\Services\Lookup\CharacterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class CharacterSpecimenController extends Controller
@@ -113,5 +114,31 @@ class CharacterSpecimenController extends Controller
         ]);
 
         return redirect('/character_specimens/'.$s_id.'/edit');
+    }
+
+    public function autocompleteGenus(Request $request)
+    {
+        $query = $request->get('query');
+        $results = DB::table('MBList')
+            ->where('Rank_', 'gen')
+            ->where('Taxon_name', 'like', '%'.$query.'%')
+            ->select('Taxon_name')
+            ->distinct()
+            ->get();
+
+        return response()->json($results);
+    }
+
+    public function autocompleteSpecies(Request $request)
+    {
+        $query = $request->get('query');
+        $results = DB::table('MBList')
+            ->where('Rank_', 'sp')
+            ->where('Taxon_name', 'like', '%'.$query.'%')
+            ->select('Taxon_name')
+            ->distinct()
+            ->get();
+
+        return response()->json($results);
     }
 }

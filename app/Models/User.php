@@ -11,8 +11,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public int $type;  // who can add and edit characters
-
     /**
      * The attributes that are mass assignable.
      *

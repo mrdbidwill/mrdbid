@@ -73,6 +73,7 @@ use App\Http\Controllers\SpecimenClusterController;
 use App\Http\Controllers\SpecimenCompareController;
 use App\Http\Controllers\SpecimenController;
 use App\Http\Controllers\SpecimenGroupController;
+use App\Http\Controllers\SupportArticleController;
 use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TreeController;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +88,9 @@ Route::view('/about', 'about')->name('about');
 
 Route::get('/get-states/{countryId}', [SpecimenController::class, 'getStates']);
 
+Route::get('/api/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus'])->name('autocomplete.genus');
+Route::get('/api/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies'])->name('autocomplete.species');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -100,6 +104,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin_export_database', AdminExportDatabaseController::class);
     Route::resource('admin_lookup', AdminLookUpController::class);
     Route::resource('admin_specimen', AdminSpecimenController::class);
+
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/support-articles/{path?}', [SupportArticleController::class, 'show'])
+            ->where('path', '.*')
+            ->name('support-articles.show');
+    });
 
     Route::resource('abundance', AbundanceController::class);
     Route::resource('annulus_position', AnnulusPositionController::class);
