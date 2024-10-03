@@ -3,6 +3,7 @@
 @endphp
 <x-layout>
     <x-specimens-nav-bar></x-specimens-nav-bar>
+    <p>resources/views/character_specimens/edit.blade.php</p>
     @php
         // dd($specimenId);
     @endphp
@@ -65,21 +66,12 @@
                                     $image_address_big    =  url('storage/images/AMS_colors/color_big/color_big_'.($index + 1).'.jpg');
                                 @endphp
                                 <td>
-                                    {{ $index + 1 }}.
-                                    <label for="color">{{ $color->latin_name }}</label><br>
-                                    <input type="radio" id="color"
-                                           name="color"
-                                           value="{{ $index + 1 }}"><br>
-                                    <input type="hidden" id="color"
-                                           name="color"
-                                           value="{{ $index + 1 }}">
-                                    <img
-                                        class="h-100 w-100"
-                                        src="{{ $image_address_banner }}"
-                                        alt="{{ $image_address_banner }}"
-                                        data-banner="{{ $image_address_banner }}"
-                                        data-big="{{ $image_address_big }}"
-                                        onclick="toggleColorImage(this)">
+                                    {{ $index + 1 }}. <label for="color">{{ $color->latin_name }}</label><br> <input
+                                        type="radio" id="color" name="color" value="{{ $index + 1 }}"><br> <input
+                                        type="hidden" id="color" name="color" value="{{ $index + 1 }}"> <img
+                                        class="h-100 w-100" src="{{ $image_address_banner }}"
+                                        alt="{{ $image_address_banner }}" data-banner="{{ $image_address_banner }}"
+                                        data-big="{{ $image_address_big }}" onclick="toggleColorImage(this)">
 
                                 </td>
                                 @endforeach
@@ -121,10 +113,8 @@
                                     @endphp
 
                                     {{$key}}
-                                    <input type="radio" id="character"
-                                           name="character"
-                                           value="{{ $color_character_name['id'] }}">
-                                    <label
+                                    <input type="radio" id="character" name="character"
+                                           value="{{ $color_character_name['id'] }}"> <label
                                         for="{{$color_character_name['name']}}">{{ $display_name }}</label>
                                 </td>
 

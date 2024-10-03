@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminSpecimenController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DataImageSourceController;
 use App\Http\Controllers\DataSourceController;
 use App\Http\Controllers\DataSourceDataTypeController;
@@ -93,6 +94,23 @@ Route::get('/get-states/{countryId}', [SpecimenController::class, 'getStates']);
 
 Route::get('/api/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus'])->name('autocomplete.genus');
 Route::get('/api/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies'])->name('autocomplete.species');
+
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+
+Route::get('/test-email', function () {
+    $data = [
+        'name' => 'Test User',
+        'message' => 'This is a test message.',
+    ];
+
+    Mail::raw('This is a test email.', function ($message) {
+        $message->to('test@example.com')
+            ->subject('Test Email');
+    });
+
+    return 'Email sent!';
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

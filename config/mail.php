@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
-
+    /*  'default' => env('MAIL_MAILER', 'log'),  */
+    'default' => env('MAIL_MAILER', 'smtp'),
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations
@@ -36,12 +36,10 @@ return [
     */
 
     'mailers' => [
-
         'smtp' => [
             'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', '127.0.0.1'),
-            'port' => env('MAIL_PORT', 2525),
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
@@ -49,52 +47,81 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
-        'ses' => [
-            'transport' => 'ses',
+        // Additional mail configurations
+        'contact' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME_CONTACT'),
+            'password' => env('MAIL_PASSWORD_CONTACT'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
-        'postmark' => [
-            'transport' => 'postmark',
-            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
+        'webmaster' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME_WEBMASTER'),
+            'password' => env('MAIL_PASSWORD_WEBMASTER'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
-        'resend' => [
-            'transport' => 'resend',
+        'will' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME_WILL'),
+            'password' => env('MAIL_PASSWORD_WILL'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
+    ],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+    'ses' => [
+        'transport' => 'ses',
+    ],
+
+    'postmark' => [
+        'transport' => 'postmark',
+    ],
+
+    'resend' => [
+        'transport' => 'resend',
+    ],
+
+    'sendmail' => [
+        'transport' => 'sendmail',
+        'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+    ],
+
+    'log' => [
+        'transport' => 'log',
+        'channel' => env('MAIL_LOG_CHANNEL'),
+    ],
+
+    'array' => [
+        'transport' => 'array',
+    ],
+
+    'failover' => [
+        'transport' => 'failover',
+        'mailers' => [
+            'smtp',
+            'log',
         ],
+    ],
 
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+    'roundrobin' => [
+        'transport' => 'roundrobin',
+        'mailers' => [
+            'ses',
+            'postmark',
         ],
-
-        'array' => [
-            'transport' => 'array',
-        ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
-        ],
-
-        'roundrobin' => [
-            'transport' => 'roundrobin',
-            'mailers' => [
-                'ses',
-                'postmark',
-            ],
-        ],
-
     ],
 
     /*

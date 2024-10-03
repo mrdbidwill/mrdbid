@@ -4,12 +4,12 @@
             @php
                 $characterName = $character['name'];
             @endphp
-            <x-convert-table-name-to-display :characterName="$characterName"></x-convert-table-name-to-display>
-            <!-- display all of the switch cases as a grid  -->
+
+                <!-- display all of the switch cases as a grid  -->
             @php
                 //dd($characters);    // list of ALL characters in characters table
                 //dd($characterSpecimens);  // list of EXISTING characters in character_specimens table
-
+            $display_name =  StringUtils::convert_table_name_for_display( $characterName );
 
 
                 //$character_name = str_replace('_', ' ', $character['name']);
@@ -31,9 +31,7 @@
                         : </label>
 
 
-                    <input id="{{ $character['id'] }}"
-                           type="text"
-                           value="{{ old($character['name']) }}"
+                    <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                            class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -49,9 +47,7 @@
                     <label for="{{$character['id']}}">{{$display_character_name}}
                         : </label>
 
-                    <input id="{{ $character['id'] }}"
-                           type="text"
-                           value="{{ old($character['name']) }}"
+                    <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                            class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -68,9 +64,7 @@
                     <label for="{{$character['id']}}">{{$character_name}}
                         : </label>
 
-                    <input id="{{ $character['id'] }}"
-                           type="text"
-                           value="{{ old($character['name']) }}"
+                    <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                            class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -83,15 +77,12 @@
                 @case(5)
                     <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
-                    <p>{{$character['name']}}: text box number general format - line
-                        77</p>
+                    <p>{{$character['name']}}: text box number general format - line 77</p>
 
                     <label for="{{$character['id']}}">{{$character_name}}
                         : </label>
 
-                    <input id="{{ $character['id'] }}"
-                           type="text"
-                           value="{{ old($character['name']) }}"
+                    <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
                            class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -119,11 +110,8 @@
                         $data = DB::table( 'tastes' )->get();
                     @endphp
                     @foreach($data as $item)
-                        <input type="radio" id="{{$item->id}}"
-                               name="{{$character['name']}}"
-                               value="{{$item->id}}">
-                        <label
-                            for="{{$item->id}}">{{$item->name}}</label>
+                        <input type="radio" id="{{$item->id}}" name="{{$character['name']}}" value="{{$item->id}}">
+                        <label for="{{$item->id}}">{{$item->name}}</label>
                         <br>
                     @endforeach
                     @break
@@ -201,8 +189,7 @@
                     @break
                 @case(16)
                     <!--  text box number grams measurement -->
-                    <p>{{$character_name}}: text box number grams
-                        measurement - line 195</p>
+                    <p>{{$character_name}}: text box number grams measurement - line 195</p>
                     @break
                 @default
                     <!--       Default case... -->

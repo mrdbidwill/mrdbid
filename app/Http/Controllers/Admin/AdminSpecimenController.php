@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Specimen;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class AdminSpecimenController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('admin.admin_specimen.index');
+        //DB::enableQueryLog();
+        $specimen_lists = Specimen::query()->simplePaginate(25);
+        // Debug the log
+        //dd(DB::getQueryLog());
+        //dd($specimen_lists);
+
+        return view('admin.admin_specimen.index', compact('specimen_lists'));
     }
 
     public function create() {}

@@ -49,13 +49,32 @@
                                     </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-800">
-
-
-                                    <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
-                                            Nothing here yet?
-                                        </td>
-                                    </tr>
+                                    @php //dd($specimen_lists); @endphp
+                                    @foreach($specimen_lists as $specimen_list)
+                                        <tr>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->id}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->specimen_name}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->common_name}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->description}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->comment}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                {{$specimen_list->source}}
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                Button
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
 
                                     </tbody>
