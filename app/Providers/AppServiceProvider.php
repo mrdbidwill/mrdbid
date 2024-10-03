@@ -2,18 +2,24 @@
 
 namespace App\Providers;
 
+use App\Models\DataSource;
 use App\Models\Specimen;
 use App\Models\User;
+use App\Policies\BookPolicy;
 use App\Repositories\Lookup\CharacterRepository;
 use App\Services\Lookup\CharacterService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected string $namespace = 'App\Http\Controllers';
+
+    protected $policies = [
+        DataSource::class => BookPolicy::class,
+    ];
 
     /**
      * Register any application services.
@@ -31,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerPolicies();
+
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(function () {

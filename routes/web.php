@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDataSourceController;
 use App\Http\Controllers\Admin\AdminExportDatabaseController;
 use App\Http\Controllers\Admin\AdminLookUpController;
 use App\Http\Controllers\Admin\AdminSpecimenController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
 use App\Http\Controllers\DataImageSourceController;
@@ -77,6 +78,8 @@ use App\Http\Controllers\SupportArticleController;
 use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TreeController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
 Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->name('specimens.dashboard')->middleware('auth');
 

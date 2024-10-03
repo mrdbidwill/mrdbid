@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\DataSource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DataSourceController extends Controller
 {
     public function index()
     {
         $data_sources = DataSource::all();
+        // Get the current user's member type
+        $memberType = Auth::user()->type;
 
         //dd($data_sources);
-        return view('data_sources.index', compact('data_sources'));
+        return view('data_sources.index', compact('data_sources', 'memberType'));
     }
 
     public function store(Request $request)

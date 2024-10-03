@@ -6,17 +6,19 @@
     <a href="{{ route('data_source.create') }}">Create New Data Source</a>
     <ul>
         @foreach ($data_sources as $data_source)
-            <li>
+            <li class="overflow-hidden rounded-md bg-white px-6 py-4 shadow">
                 @php //dd($data_source->title); @endphp
                 {{ $data_source->title ?? 'N/A' }}
                 <a href="{{ route('data_source.show', $data_source->id) }}">View</a> <a
                     href="{{ route('data_source.edit', $data_source->id) }}">Edit</a>
-                <form action="{{ route('data_source.destroy', $data_source->id) }}" method="POST"
-                      style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Delete</button>
-                </form>
+                @if ($memberType <= 2)
+                    <form action="{{ route('data_source.destroy', $data_source->id) }}" method="POST"
+                          style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                @endif
             </li>
         @endforeach
     </ul>
