@@ -39,25 +39,7 @@
             }
         }
     </script>
-
-    <style>
-        .flex-wrap {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .w-1of5 {
-            width: 20%; /* This makes each image take up 20% of a row, so up to 5 images per row */
-        }
-
-        .p-1 {
-            padding: 0.25rem; /* Adjust the padding as needed */
-        }
-
-        .h-100 {
-            height: 100px; /* Adjust height as needed */
-        }
-    </style>
+    
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet"/>
     @vite('resources/css/app.css')

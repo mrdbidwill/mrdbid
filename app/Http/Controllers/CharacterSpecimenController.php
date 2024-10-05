@@ -27,6 +27,7 @@ class CharacterSpecimenController extends Controller
         return view('character_specimens.index', ['characters' => $characters]);
     }
 
+    /*
     public function edit($specimen_id)
     {
         //dd($specimen_id);
@@ -35,6 +36,20 @@ class CharacterSpecimenController extends Controller
 
         return view('character_specimens.edit', compact('set_specimens', 'specimenId'));
 
+    }
+    */
+
+    // Controller Method
+    public function edit($id)
+    {
+        //dd($id);
+        $specimen_id = $id;
+        //dd($specimen_id);
+        $list_of_set_characters = CharacterSpecimen::getSetCharactersBySpecimenId($specimen_id);
+        $colors = DB::table('colors')->get();
+        $color_character_names = Character::where('display_options', 6)->get();
+
+        return view('character_specimens.edit', compact('colors', 'color_character_names', 'list_of_set_characters', 'specimen_id'));
     }
 
     public function show(Specimen $specimen_id)
@@ -53,7 +68,7 @@ class CharacterSpecimenController extends Controller
         //dd(request()->all());
         //dd($request['color']);
 
-        //$character_id = request('character');
+        $character_id = request('character');
         $specimen_id = request('specimen_id');
         $entered_by = Auth::user();
 
@@ -68,14 +83,18 @@ class CharacterSpecimenController extends Controller
         // below won't work because it will allow the same character_value for the same specimen_id and character_id WITH A DIFFERENT character_value
         // 'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.$s_id.',character_id,'.$c_id,
         /*
-                request()->validate([
-                    'character_id' => 'required|integer',
-                    'specimen_id' => 'required|integer',
-                    'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.request('specimen_id'),
-                ]);
-        */
+                        request()->validate([
+                            'character_id' => 'required|integer',
+                            'specimen_id' => 'required|integer',
+                            'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.request('specimen_id'),
+                        ]);
+                        */
+
+        //dd($character_value);  // OK
+        //dd($character_id);
+
         CharacterSpecimen::create([
-            'character_id' => request('character_id'),
+            'character_id' => request('character'),
             'specimen_id' => request('specimen_id'),
             'character_value' => $character_value,
             'entered_by' => $entered_by['id'],

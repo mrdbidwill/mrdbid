@@ -23,7 +23,7 @@
         <tr>
             <td>
 
-                @switch($character['display_options'])
+                @switch($character->display_options)
                     @case(1)
                         <!--  Do not display  -->
                         @break
@@ -31,11 +31,11 @@
                     @case(2)
                         <!--  text box number mm is measure  NO Lookup table -->
 
-                        <label for="{{$character['id']}}">{{$character['name']}}
+                        <label for="{{ $character->id }}">{{$character->name}}
                             : </label>
 
 
-                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
+                        <input id="{{ $character->id }}" type="text" value="{{ old($character->name) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -43,8 +43,8 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         @php
-                            // dd($character['name']);
-                            //dd( old($character['name']));
+                            // dd($character->name']);
+                            //dd( old($character->name']));
                         @endphp
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -55,10 +55,10 @@
 
                     @case(3)
                         <!--  text box number um is measure   NO Lookup table -->
-                        <label for="{{$character['id']}}">{{$character['name']}}
+                        <label for="{{ $character->id }}">{{ $character->name }}
                             : </label>
 
-                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
+                        <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -70,10 +70,10 @@
 
                     @case(4)
                         <!--  text box string   NO Lookup table -->
-                        <label for="{{$character['id']}}">{{$character['name']}}
+                        <label for="{{ $character->id }}">{{$character->name }}
                             : </label>
 
-                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
+                        <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -85,10 +85,10 @@
 
                     @case(5)
                         <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
-                        <label for="{{$character['id']}}">{{$character['name']}}
+                        <label for="{{ $character->id }}">{{ $character->name }}
                             : </label>
 
-                        <input id="{{ $character['id'] }}" type="text" value="{{ old($character['name']) }}"
+                        <input id="{{ $character->id  }}" type="text" value="{{ old($character->name ) }}"
                                class="@error('{{ $character->id }}') is-invalid @enderror">
 
 
@@ -102,25 +102,26 @@
                         <!--  color  ALL color characters use the colors table-->
                         <!-- <p>Color Table: I'm working here!</p> -->
                         <!-- print all colors one time BELOW with color character names -->
-                        <!-- <p>{{$character['name']}}: color</p>  -->
+                        <!-- <p>{{ $character->name }}: color</p>  -->
                         @php
                             //    $color_character_names = array();  // declared above
-                                $color_character_names[] = $character['name'];
+                                $color_character_names[] = $character->name;
                         @endphp
                         @break
 
                     @case(7)
                         <!--  taste ALL taste characters use the tastes table-->
-                        <p>{{$character['name']}}: taste</p>
+                        <p>{{ $character->name }}: taste</p>
                         @php
                             $data = DB::table( 'tastes' )->get();
                         @endphp
                         @foreach($data as $item)
-                            <input type="radio" id="{{$item->id}}" name="{{$character['name']}}" value="{{$item->id}}">
-                            <label for="{{$item->id}}">{{$item->name}}</label>
+                            <input type="radio" id="{{ $item->id }}" name="{{ $character->name }}"
+                                   value="{{ $item->id }}">
+                            <label for="{{ $item->id }}">{{ $item->name }}</label>
                             <br>
                         @endforeach
-                        <input type="hidden" name="character_id" value="{{$character['id']}}">
+                        <input type="hidden" name="character_id" value="{{ $character->id }}">
 
                         <input type="hidden" name="specimen_id" value="{{ $specimenId }}">
 
@@ -136,7 +137,7 @@
 
                     @case(8)
                         <!-- odor ALL odor characters use the odors table-->
-                        <p>{{$character['name']}}: odor</p>
+                        <p>{{ $character->name }}: odor</p>
                         @php
                             $data = DB::table( 'odors' )->get();
                         @endphp
@@ -145,20 +146,20 @@
                     @case(9)
                         <!--  radio USE LOOKUP TABLE -->
                         @php
-                            if( ( $character['name'] ==  'cap_surface_dryness')  || ( $character['name'] ==  'genus' ) || ( $character['name'] ==  'gill_thickness' )|| ( $character['name'] ==  'species' ) || ( $character['name'] ==  'veil_annulus' ) )
+                            if( ( $character->name ==  'cap_surface_dryness')  || ( $character->name ==  'genus' ) || ( $character->name ==  'gill_thickness' )|| ( $character->name ==  'species' ) || ( $character->name ==  'veil_annulus' ) )
                             {
-                            $data = DB::table( $character['name'] )->get();  // ALL from character Lookup table
+                            $data = DB::table( $character->name )->get();  // ALL from character Lookup table
                             }
                             else
                             {
-                            $data = DB::table( $character['name'].'s' )->get();
+                            $data = DB::table( $character->name.'s' )->get();
                             //dd($data);
                             }
 
 
                         @endphp
 
-                        <p>Character Name: {{$character['name']}}</p>
+                        <p>Character Name: {{$character->name }}</p>
 
 
 
@@ -170,14 +171,14 @@
                                 @php
                                     //dd($data);  // all data
                                     //dd($item);    // one item
-                                       $select = CharacterSpecimen::where('character_id', $character['id'])->first();
+                                       $select = CharacterSpecimen::where('character_id', $character->id )->first();
 
                                        //dd($select);
                                 //dd($request->session()->all());
 
                                 @endphp
 
-                                <input type="radio" id="{{$item->id}}" name="character_value"
+                                <input type="radio" id="{{ $item->id }}" name="character_value"
 
                                        @if((isset($select->character_value) && ($item->id == $select->character_value)) ||
                                            (isset($select->character_value) && ($select->character_value == 'Not Entered')) ||
@@ -191,11 +192,11 @@
 
                             @endforeach
 
-                            <input type="hidden" name="character_id" value="{{$character['id']}}">
+                            <input type="hidden" name="character_id" value="{{ $character->id }}">
 
-                            <input type="hidden" name="specimen_id" value="{{ $specimenId }}">
+                            <input type="hidden" name="specimen_id" value="{{ $specimenId }} ">
 
-                            <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+                            <input type="hidden" name="entered_by" value="{{ auth()->id() }}">
 
                             @php //dd($select); @endphp
 
@@ -210,7 +211,7 @@
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit">
                                     Update Character:
-                                    @php StringUtils::convert_table_name_for_display($character['name']); @endphp
+                                    @php StringUtils::convert_table_name_for_display($character->name); @endphp
                                 </button>
                             @endif
 
@@ -222,38 +223,51 @@
 
                     @case(10)
                         <!--  dropdown -->
-                        <p>{{$character['name']}}: dropdown</p>
+                        <p>{{ $character->name }}: dropdown</p>
                         @break
 
                     @case(11)
                         <!--  state -->
-                        <p>{{$character['name']}}: state</p>
+                        <p>{{ $character->name }}: state</p>
                         @break
 
                     @case(12)
                         <!-- country -->
-                        <p>{{$character['name']}}: country</p>
+                        <p>{{ $character->name }}: country</p>
                         @break
 
                     @case(13)
                         <!--  texture -->
-                        <p>{{$character['name']}}: texture</p>
+                        <p>{{ $character->name }}: texture</p>
                         @break
                     @case(14)
                         <!-- yes_no  -->
-                        <p>{{$character['name']}}: yes_no</p>
+                        <p>{{ $character->name }}: yes_no</p>
                         @break
                     @case(15)
                         <!--  abundance -->
-                        <p>{{$character['name']}}: abundance</p>
+                        <p>{{ $character->name }}: abundance</p>
                         @break
                     @case(16)
                         <!--  text box number grams measurement -->
-                        <p>{{$character['name']}}: text box number grams measurement</p>
+                        <p>{{ $character->name }}: text box number grams measurement</p>
+                        @break
+                    @case(17)
+                        <!--  genus and species autocomplete -->
+                        <p>{{ $character->name }}: on line 257 of display-switch.blade.php </p>
+
+                        <!-- resources/views/character_specimens/display-switch.blade.php -->
+                        @if ($character->name === 'genus' && $character->display_option == 17)
+                            @component('components.autocomplete', ['type' => 'genus', 'value' => $current_value])
+                            @endcomponent
+                        @elseif ($character->name === 'species' && $character->display_option == 17)
+                            @component('components.autocomplete', ['type' => 'species', 'value' => $current_value])
+                            @endcomponent
+                        @endif
                         @break
                     @default
                         <!--       Default case... -->
-                        <p>{{$character['name']}}: Default case</p>
+                        <p>{{ $character->name }}: Default case</p>
                 @endswitch
 
             </td>
