@@ -109,11 +109,12 @@ class CharacterSpecimenController extends Controller
 
     public function autocompleteGenus(Request $request)
     {
+        //dd($request);
         $query = $request->get('query');
         Log::info('Query for Genus: '.$query); // Log the query
 
         $results = DB::connection('MBList')->table('list')
-            ->where('Rank_', 'gen')
+            ->where('Rank_', 'gen.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('Taxon_name')
             ->distinct()
@@ -130,7 +131,7 @@ class CharacterSpecimenController extends Controller
         Log::info('Query for Species: '.$query); // Log the query
 
         $results = DB::connection('MBList')->table('list')
-            ->where('Rank_', 'sp')
+            ->where('Rank_', 'sp.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('Taxon_name')
             ->distinct()

@@ -420,28 +420,17 @@
                 @break
             @case(17)
                 @php //dd($character);
-                            $current_value = 0;
+                    $current_value = '';
                 @endphp
 
-                {{--
-                    <!-- Debugging Output -->
-                <p>Character Name: {{$character->name}} (Type: {{ gettype($character->name) }})</p>
-                <p>Display Option: {{$character->display_options}}
-                    (Type: {{ gettype($character->display_options) }})</p>
-
-
-
-                <p> {{$character->name}}  {{ $character->display_options }}should have input field for genus and
-                    species</p>
-                    --}}
-                <!--  genus and species autocomplete -->
+                    <!--  genus and species autocomplete -->
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag  -->
-                            @if ($character->name === 'genus' && $character->display_options == 17)
+                        <div id="character_{{ $character->id  }}">  <!-- div for tag  -->Genus! Species!
+                            @if ($character->name === 'genus')
                                 @component('components.autocomplete', ['type' => 'genus', 'value' => $current_value])
                                 @endcomponent
-                            @elseif ($character->name === 'species' && $character->display_options == 17)
+                            @elseif ($character->name === 'species')
                                 @component('components.autocomplete', ['type' => 'species', 'value' => $current_value])
                                 @endcomponent
                             @else
