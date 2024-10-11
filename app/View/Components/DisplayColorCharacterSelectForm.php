@@ -21,6 +21,6 @@ class DisplayColorCharacterSelectForm extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.display-color-character-select-form');
+        return view('components.display-color-character-select-table');
     }
 }

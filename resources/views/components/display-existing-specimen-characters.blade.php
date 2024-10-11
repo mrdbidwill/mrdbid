@@ -13,8 +13,11 @@
 @foreach ($characterSpecimens as $characterSpecimen)
     @php //dd($characterSpecimen);
          // for each character that has been set - get the table information
-         $characterRecord = DB::table('characters')->where('id', '=', $characterSpecimen->character_id )->first();
-         //dd($characterTableName);
+         $characterRecord = DB::table('characters')
+         ->where('id', '=', $characterSpecimen->character_id )
+         ->orderBy('name')
+         ->first();
+         //dd($characterRecord);
 
         // Check if the character record exists before accessing its name property
     if($characterRecord)
@@ -68,6 +71,18 @@
         else
         {
 
+            if( $characterRecord->look_up_y_n == 0 )  // if not a lookup table - just display data
+            {
+                $display_table_name = StringUtils::convert_table_name_for_display($character_table_name);
+    @endphp
+    <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
+        <b>{{ $display_table_name }}:</b> {{ $characterSpecimen->character_value }}
+    </div>
+
+    @php
+        }
+        else
+        {
             $character = Character::find($characterSpecimen->character_id);
             if($character)
             {
@@ -85,7 +100,7 @@
                     //echo e($displayCharacterName);   // e is same as HTML::entities($displayCharacterName
 
                     if ($value && property_exists($value, 'source'))
-                   {
+                    {
                        $source = DB::table('data_sources')->where('id', $value->source)->first();
 
                        $description = $value->description;
@@ -94,27 +109,26 @@
                        $title  = $source->title;
                        $author = $source->author;
                        break;
-                   }
+                    }
                 }
             }
         }
     }
+}
 
 
-    if( $character_table_name == 'color')
-    {
+if( $character_table_name == 'color')
+{
     @endphp
     <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
         @if (isset($value) && property_exists($value, 'name'))
             <b>{{$displayColorCharacterName}}: Latin Name: {{$latin_name}}</b> Common Name:  {{$common_name}}<br>
             @if( !empty($cwc))
                 Closest Websafe Color: {{$cwc}}<br>
-                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names"
-                    chart
+                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names" chart
                 </div>
             @else
-                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names"
-                    chart
+                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names" chart
                 </div>
             @endif
         @endif

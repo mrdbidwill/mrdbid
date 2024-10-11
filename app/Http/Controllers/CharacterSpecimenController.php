@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\CharacterSpecimen;
 use App\Models\Lookup\Character;
+use App\Models\Lookup\Color;
 use App\Models\Specimen;
 use App\Services\Lookup\CharacterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class CharacterSpecimenController extends Controller
@@ -20,42 +22,28 @@ class CharacterSpecimenController extends Controller
         $this->characterService = $characterService;
     }
 
-    public function index(Specimen $specimen_id)
+    public function index()
     {
+        //dd($specimen_id);
         $characters = Character::get();
 
         return view('character_specimens.index', ['characters' => $characters]);
     }
 
-    /*
-    public function edit($specimen_id)
-    {
-        //dd($specimen_id);
-        $specimenId = $specimen_id;
-        $set_specimens = CharacterSpecimen::getSetCharactersBySpecimenId($specimen_id);
-
-        return view('character_specimens.edit', compact('set_specimens', 'specimenId'));
-
-    }
-    */
-
-    // Controller Method
     public function edit($id)
     {
-        //dd($id);
         $specimen_id = $id;
-        //dd($specimen_id);
-        $list_of_set_characters = CharacterSpecimen::getSetCharactersBySpecimenId($specimen_id);
-        $colors = DB::table('colors')->get();
-        $color_character_names = Character::where('display_options', 6)->get();
+        $colors = Color::get();
+        $color_character_names = Character::where('display_options', '6')->orderBy('name')->get();
+        $list_of_set_characters = CharacterSpecimen::getSetCharactersBySpecimenId($id);
+        // Fetch characters that are NOT set in the character_specimen table for the given specimen_id
+        $unset_characters = CharacterSpecimen::getUnSetCharactersBySpecimenId($id);
 
-        return view('character_specimens.edit', compact('colors', 'color_character_names', 'list_of_set_characters', 'specimen_id'));
+        return view('character_specimens.edit', compact('colors', 'color_character_names', 'list_of_set_characters', 'unset_characters', 'specimen_id'));
     }
 
     public function show(Specimen $specimen_id)
     {
-        //dd($specimen_id);
-        //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
         $specimens = Specimen::where('id', $specimen_id)->get();
         //dd($specimens);
@@ -65,43 +53,27 @@ class CharacterSpecimenController extends Controller
 
     public function store(Request $request)
     {
-        //dd(request()->all());
-        //dd($request['color']);
-
-        $character_id = request('character');
+        $character_id = request('character_id');
         $specimen_id = request('specimen_id');
+        $character_value = request('character_value');
         $entered_by = Auth::user();
 
         //dd($request->all());
+        //dd($entered_by);
 
-        if (isset($request['color'])) {
-            $character_value = request('color');
-        } else {
-            $character_value = request('character_value');
-        }
-
-        // below won't work because it will allow the same character_value for the same specimen_id and character_id WITH A DIFFERENT character_value
-        // 'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.$s_id.',character_id,'.$c_id,
-        /*
-                        request()->validate([
-                            'character_id' => 'required|integer',
-                            'specimen_id' => 'required|integer',
-                            'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.request('specimen_id'),
-                        ]);
-                        */
-
-        //dd($character_value);  // OK
-        //dd($character_id);
+        //     if (isset($request['color'])) {
+        //        $character_value = request('color');
+        //     } else {
+        //         $character_value = request('character_value');
+        //     }
 
         CharacterSpecimen::create([
-            'character_id' => request('character'),
-            'specimen_id' => request('specimen_id'),
+            'character_id' => $character_id,
+            'specimen_id' => $specimen_id,
             'character_value' => $character_value,
-            'entered_by' => $entered_by['id'],
+            'entered_by' => $entered_by->id,
         ]);
 
-        // return redirect('character_specimens/edit')->with('message', 'Character Specimen created successfully');
-        //return redirect()->route('/character_specimens/'.$specimen_id.'/edit')->with('message', 'Character Specimen created successfully.');
         return Redirect::back()->with('message', 'Character Specimen created successfully.');
     }
 
@@ -138,12 +110,16 @@ class CharacterSpecimenController extends Controller
     public function autocompleteGenus(Request $request)
     {
         $query = $request->get('query');
-        $results = DB::table('MBList')
+        Log::info('Query for Genus: '.$query); // Log the query
+
+        $results = DB::connection('MBList')->table('list')
             ->where('Rank_', 'gen')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('Taxon_name')
             ->distinct()
             ->get();
+
+        Log::info('Results for Genus: '.json_encode($results)); // Log the results
 
         return response()->json($results);
     }
@@ -151,12 +127,16 @@ class CharacterSpecimenController extends Controller
     public function autocompleteSpecies(Request $request)
     {
         $query = $request->get('query');
-        $results = DB::table('MBList')
+        Log::info('Query for Species: '.$query); // Log the query
+
+        $results = DB::connection('MBList')->table('list')
             ->where('Rank_', 'sp')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('Taxon_name')
             ->distinct()
             ->get();
+
+        Log::info('Results for Species: '.json_encode($results)); // Log the results
 
         return response()->json($results);
     }

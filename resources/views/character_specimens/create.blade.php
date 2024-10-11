@@ -49,7 +49,7 @@
                                     <tbody class="divide-y divide-gray-800">
 
 
-                                    <x-display-switch :specimenId="$specimenId"/>
+                                    <x-display-character-by-display-option-switch :specimenId="$specimenId"/>
 
                                     </tbody>
 

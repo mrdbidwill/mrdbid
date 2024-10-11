@@ -21,6 +21,6 @@ class CharacterSpecimenForm extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.character-specimen-form');
+        return view('components.display-character-specimens-form');
     }
 }

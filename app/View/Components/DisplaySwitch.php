@@ -29,6 +29,6 @@ class DisplaySwitch extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.display-switch');
+        return view('components.display-character-by-display-option-switch');
     }
 }

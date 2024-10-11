@@ -1,41 +1,66 @@
-<!-- resources/views/components/autocomplete.blade.php -->
+<div>
+    <label for="autocomplete_{{ $type }}">{{ ucfirst($type) }}</label> <input type="text" id="autocomplete_{{ $type }}"
+                                                                              name="{{ $type }}" value="{{ $value }}"
+                                                                              placeholder="Start typing {{ $type }}..."/>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <ul id="autocomplete_{{ $type }}_list" class="autocomplete-suggestions"></ul>
+</div>
 
 <script>
-    $(document).ready(function () {
-        function setupAutocomplete(elementId, route) {
-            $('#' + elementId).autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: route,
-                        data: {query: request.term},
-                        success: function (data) {
-                            response(data.map(item => item.Taxon_name));
-                        }
-                    });
-                }
-            });
-        }
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('Autocomplete component loaded for type: {{ $type }}'); // Add this for debugging
 
-        setupAutocomplete('genus', "{{ route('autocomplete.genus') }}");
-        setupAutocomplete('species', "{{ route('autocomplete.species') }}");
+        const input = document.getElementById('autocomplete_{{ $type }}');
+        const suggestionList = document.getElementById('autocomplete_{{ $type }}_list');
+
+
+        input.addEventListener('input', function () {
+            const query = input.value;
+            if (query.length >= 2) { // Start searching after 2 characters
+                fetch(`/api/autocomplete/{{ $type }}?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionList.innerHTML = ''; // Clear previous suggestions
+                        data.forEach(item => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = item.Taxon_name;
+                            suggestionList.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching autocomplete data:', error);
+                    });
+            } else {
+                suggestionList.innerHTML = ''; // Clear suggestions if query length is less than 2
+            }
+        });
+
+        // Optionally, you can handle click on suggestion items to fill the input
+        suggestionList.addEventListener('click', function (event) {
+            if (event.target.tagName === 'LI') {
+                input.value = event.target.textContent;
+                suggestionList.innerHTML = ''; // Clear suggestions after selection
+            }
+        });
     });
 </script>
 
-<!-- Autocomplete input fields -->
-@if ($type === 'genus')
-    <div class="form-group">
-        <label for="genus">Genus:</label> <input type="text" id="genus" name="genus" class="form-control"
-                                                 value="{{ $value ?? '' }}">
-    </div>
-@endif
+<style>
+    .autocomplete-suggestions {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+    }
 
-@if ($type === 'species')
-    <div class="form-group">
-        <label for="species">Species:</label> <input type="text" id="species" name="species" class="form-control"
-                                                     value="{{ $value ?? '' }}">
-    </div>
-@endif
+    .autocomplete-suggestions li {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .autocomplete-suggestions li:hover {
+        background-color: #ddd;
+    }
+</style>

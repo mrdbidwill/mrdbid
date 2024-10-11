@@ -98,20 +98,6 @@ Route::get('/api/autocomplete/species', [CharacterSpecimenController::class, 'au
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 
-Route::get('/test-email', function () {
-    $data = [
-        'name' => 'Test User',
-        'message' => 'This is a test message.',
-    ];
-
-    Mail::raw('This is a test email.', function ($message) {
-        $message->to('test@example.com')
-            ->subject('Test Email');
-    });
-
-    return 'Email sent!';
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -17,7 +17,7 @@
 
                          $table->id();
 
-                         $table->string('name', length: 240)->unique()->change();
+                         $table->string('name', length: 240)->unique();
 
                          $table->integer('display_options');
 

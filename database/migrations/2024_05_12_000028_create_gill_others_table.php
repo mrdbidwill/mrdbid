@@ -13,7 +13,7 @@
             public function up(): void
             {
 
-                Schema::create('states', function (Blueprint $table) {
+                Schema::create('gill_others', function (Blueprint $table) {
 
                     $table->id();
 
@@ -24,8 +24,6 @@
                     $table->text('comments')->nullable();
 
                     $table->integer('source');
-
-                    $table->foreignId('country_id')->constrained();
 
                     $table->integer('entered_by');
 
@@ -38,7 +36,7 @@
             public function down(): void
             {
 
-                Schema::dropIfExists('states');
+                Schema::dropIfExists('gill_others');
 
             }
         };
