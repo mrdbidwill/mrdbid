@@ -1,59 +1,42 @@
 
              <?php
 
-             
-
              use Illuminate\Database\Migrations\Migration;
-
              use Illuminate\Database\Schema\Blueprint;
-
              use Illuminate\Support\Facades\Schema;
 
-             
-
              return new class extends Migration
-
              {
+                 /**
+                  * Run the migrations.
+                  */
+                 public function up(): void
+                 {
 
-                /**
-                * Run the migrations.
-                */
+                     Schema::create('specimen_groups', function (Blueprint $table) {
 
+                         $table->id();
 
-                public function up(): void
+                         $table->integer('member_id');
 
-                {
+                         $table->string('name', length: 128);
 
-                    Schema::create('specimen_groups', function (Blueprint $table)
+                         $table->text('description')->nullable();
 
-                    {
+                         $table->text('comments')->nullable();
 
-                        $table->id();
+                         $table->integer('entered_by');
 
-                        $table->integer('member_id');
+                         $table->timestamps();
 
-                        $table->string('name', length: 128);
+                     });
 
-                        $table->text('description');
+                 }
 
-                        $table->text('comments');
+                 public function down(): void
+                 {
 
-                        $table->integer('entered_by');
+                     Schema::dropIfExists('specimen_groups');
 
-                        $table->timestamps();
-
-                    });
-
-             }
-
-             
-
-             public function down(): void
-
-             {
-
-                Schema::dropIfExists('specimen_groups');
-
-             }
-
-            };
+                 }
+             };

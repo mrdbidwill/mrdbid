@@ -21,9 +21,11 @@
                             @php
                                 $display_name = \App\Utils\StringUtils::convert_table_name_for_display($color_character_name['name']);
                             @endphp
-                            <input type="radio" id="character_id" name="character_id"
-                                   value="{{ $color_character_name['id'] }}"> <label
-                                for="character_{{ $color_character_name['name'] }}">{{ $display_name }}</label>
+                            <div id="character_{{ $color_character_name['id']  }}">   <!-- div for tag -->
+                                <input type="radio" id="character_id" name="character_id"
+                                       value="{{ $color_character_name['id'] }}"> <label
+                                    for="character_{{ $color_character_name['name'] }}">{{ $display_name }}</label>
+                            </div>  <!-- end div for tag -->
                         </td>
                     @endif
                 @endforeach

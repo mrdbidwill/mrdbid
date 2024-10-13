@@ -1,4 +1,9 @@
 <x-layout>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+
+    @if (Session::has('message'))
+        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+    @endif
     <div class="mt-6 flex items-center justify-between gap-x-6"></div>
 
     <p>This is views/images_specimen/edit.blade.php</p>
@@ -16,14 +21,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="parts"
-                                    id="parts"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="What part of specimen?"
-                                    value="{{ $image['parts'] }}"
-                                    required>
+                                <input type="text" name="parts" id="parts"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="What part of specimen?" value="{{ $image['parts'] }}" required>
                             </div>
 
                             @error('parts')
@@ -39,13 +39,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="description"
-                                    id="description"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Description"
-                                    value="{{ $image['description'] }}">
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Description" value="{{ $image['description'] }}">
                             </div>
 
                             @error('description')
@@ -65,8 +61,7 @@
             </div>
 
             <div class="flex items-center gap-x-6">
-                <a href="/images/{{ $image['id'] }}"
-                   class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                <a href="/images/{{ $image['id'] }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
 
                 <div>
                     <button type="submit"

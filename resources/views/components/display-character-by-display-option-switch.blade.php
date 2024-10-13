@@ -8,16 +8,7 @@
 @php //dd($unset_characters); @endphp
 <table class="min-w-full hover:table-fixed border-collapse border border-blue-700 p-4">
     <!-- begin display-character-by-display-option-switch.blade.php -->
-    <thead>
-    <tr>
-        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
-            ID
-        </th>
-        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-black">
-            Name
-        </th>
-    </tr>
-    </thead>
+
 
     @php
         $characters = $unset_characters->sortBy('name');
@@ -44,10 +35,10 @@
 
                             <form method="POST" action="{{ route('character_specimens.store') }}">
                                 @csrf
-
-                                <label for="character_value">{{ $character->name }}: text box number mm is measure NO
-                                    Lookup table </label> <input type="number" id="character_value"
-                                                                 name="character_value" value="">
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <label for="character_value"><b>{{ $display_name }}</b> (text box number mm is measure
+                                    NO Lookup table)</label> <input type="number" id="character_value"
+                                                                    name="character_value" value="">
 
                                 @php //dd($character->id); @endphp
                                 <input type="hidden" name="character_value" value="48"> <input type="hidden"
@@ -91,8 +82,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            <label for="{{ $character->id }}">{{ $character->name }} text box number um is measure
-                                : </label>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <label for="{{ $character->id }}"><b>{{ $display_name }}</b> (text box number um is measure)</label>
 
                             <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
                                    class="@error('{{ $character->id }}') is-invalid @enderror">
@@ -117,8 +108,9 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            <label for="{{ $character->id }}">{{$character->name }} text box string NO Lookup table
-                                : </label>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <label for="{{ $character->id }}"><b>{{$display_name }}</b> (text box string NO Lookup
+                                table) : </label>
 
                             <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
                                    class="@error('{{ $character->id }}') is-invalid @enderror">
@@ -142,8 +134,9 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            <label for="{{ $character->id }}">{{ $character->name }} text box number general format for
-                                temperatures ph etc NO Lookup table : </label>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <label for="{{ $character->id }}"><b>{{ $display_name }}</b> (text box number general format
+                                for temperatures ph etc NO Lookup table)</label>
 
                             <input id="{{ $character->id  }}" type="text" value="{{ old($character->name ) }}"
                                    class="@error('{{ $character->id }}') is-invalid @enderror">
@@ -174,7 +167,8 @@
                 <!--  taste ALL taste characters use the tastes table-->
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
-                        <p>{{ $character->name }}: taste</p>
+                        @php $display_taste = StringUtils::convert_table_name_for_display($character->name); @endphp
+                        <p><b>{{ $display_taste }}</b> (taste table)</p>
                         @php
                             $data = DB::table( 'tastes' )->get();
                         @endphp
@@ -182,8 +176,8 @@
                             <div id="character_{{ $character->id  }}">  <!-- div for tag -->
                                 <input type="radio" id="{{ $item->id }}" name="{{ $character->name }}"
                                        value="{{ $item->id }}">
-
-                                <label for="{{ $item->id }}">{{ $item->name }}</label>
+                                @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                <label for="{{ $item->id }}">{{ $display_name }}</label>
                             </div>  <!-- end div for tag -->
                             <br>
                         @endforeach
@@ -208,7 +202,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            <p>{{ $character->name }}: odor</p></div>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (odor table)</p></div>
                         @php
                             $data = DB::table( 'odors' )->get();
                         @endphp
@@ -239,7 +234,8 @@
                         @endphp
 
                         <div id="character_{{ $character->id  }}">  <!-- div for tag  -->
-                            <p>Character Name: {{$character->name }}</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{$display_name }}</b></p>
                         </div>   <!-- end div for tag -->
 
                         <form method="POST" action="{{ route('character_specimens.store') }}">
@@ -265,8 +261,8 @@
                                            checked @endif
 
                                        value="{{$item->id}}">
-
-                                <label for="{{$item->id}}">{{$item->name}}
+                                @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                <label for="{{$item->id}}">{{$display_name}}
                                     - {{$item->description}}</label>
 
                                 <br>
@@ -308,7 +304,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            <p>{{ $character->name }}: dropdown</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (dropdown)</p>
                         </div>  <!-- end div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -325,7 +322,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p>{{ $character->name }}: state</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (state table)</p>
                         </div>  <!-- end div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -342,7 +340,7 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p>{{ $character->name }}: country</p>
+                            <p><b>{{ $character->name }}</b> (country table)</p>
                         </div>     <!-- end div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -359,7 +357,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">    <!-- div for tag -->
-                            <p>{{ $character->name }}: texture</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (texture table)</p>
                         </div>   <!-- end div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -375,7 +374,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p>{{ $character->name }}: yes_no</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (yes_no)</p>
                         </div>   <!-- end div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -391,7 +391,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p>{{ $character->name }}: abundance</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (abundance table)</p>
                         </div>    <!-- div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -407,7 +408,8 @@
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
                         <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p>{{ $character->name }}: text box number grams measurement</p>
+                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                            <p><b>{{ $display_name }}</b> (text box number grams measurement)</p>
                         </div>   <!-- div for tag -->
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -450,7 +452,7 @@
                 <!--       Default case... -->
                 <tr>
                     <td class="border border-collapse border-gray-400 p-4">
-                        <p>{{ $character->name }}: Default case</p>
+                        <p><b>{{ $character->name }} Default case</b></p>
                     </td>
                 </tr>
         @endswitch

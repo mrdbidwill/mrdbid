@@ -14,11 +14,13 @@
         <tr>
             @foreach ($chunk as $unset_character)
                 @if ($unset_character->name != 'id')
-                    <td class="font-bold"><a
-                            href="#character_{{ $unset_character->id }}">{{ $unset_character->name }}</a></td>
+                    @php $display_name = StringUtils::convert_table_name_for_display($unset_character->name); @endphp
+                    <td class="font-bold"><a href="#character_{{ $unset_character->id }}">{{ $display_name }}</a></td>
                 @endif
             @endforeach
         </tr>
     @endforeach
 </table>
+
+
 

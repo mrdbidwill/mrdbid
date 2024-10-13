@@ -1,13 +1,10 @@
 <x-layout>
-    <x-slot:heading>
-        Create Image
-    </x-slot:heading>
-    <p>This is views/image_specimen/create.blade.php and specimen_id is {{$specimen_id}}.</p>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
-
+    <p>This is views/image_specimen/create.blade.php and specimen_id is {{$specimen_id}}.</p>
 
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -15,19 +12,14 @@
                 <form method="POST" action="{{ route('image_specimen.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <label for="image_name" class="block text-sm font-medium leading-6 text-gray-900">Select
-                            image
-                            for
-                            this specimen:</label>
+                        <label for="image_name" class="block text-sm font-medium leading-6 text-gray-900">Select image
+                            for this specimen:</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="file"
-                                       name="image_name"
-                                       id="image_name"
+                                <input type="file" name="image_name" id="image_name"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value=""
-                                       required>
+                                       value="" required>
                             </div>
 
 
@@ -51,15 +43,10 @@
                                     <tr>
                                         <td>
                                             @if( $item->id == 1)
-                                                <input type="radio" id="parts"
-                                                       name="parts"
-                                                       value="{{$item->id}}"
-                                                       required
-                                                       checked>
+                                                <input type="radio" id="parts" name="parts" value="{{$item->id}}"
+                                                       required checked>
                                             @else
-                                                <input type="radio" id="parts"
-                                                       name="parts"
-                                                       value="{{$item->id}}"
+                                                <input type="radio" id="parts" name="parts" value="{{$item->id}}"
                                                        required>
                                             @endif
                                             <label for="parts">{{$item->id}}. {{$item->name}}</label>
@@ -81,14 +68,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="description"
-                                    id="description"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Short description of the image:"
-                                    value=""
-                                    required>
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Short description of the image:" value="" required>
                             </div>
 
                             @error('description')

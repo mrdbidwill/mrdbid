@@ -1,18 +1,17 @@
 @php use Illuminate\Support\Facades\DB;@endphp
 <x-layout>
-    <x-slot:heading>
-        Image Listings
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
-
+    @if (Session::has('message'))
+        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+    @endif
     <div class="space-y-4">
         <p>This is views/images_specimen/index.blade.php</p>
 
         @foreach ($images_specimen as $image)
             <!--  add edit and upload buttons  -->
             <div class="flex justify-middle">
-                <a href="/images/{{ $images_specimen['id'] }}/edit"
-                   class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
+                <a href="/images/{{ $images_specimen['id'] }}/edit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</a>
             </div>
 
 
