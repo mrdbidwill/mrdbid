@@ -6,6 +6,7 @@ class DatabaseUtils
 {
     public function admin_export_database(string $dbName): string
     {
+        //dd($dbName);
         // Database credentials
         $user = 'root';
         $password = 'moon1Dog';
@@ -42,6 +43,13 @@ class DatabaseUtils
         exec($command, $output, $result);
 
         $this->downloadExportFile($backupFile);
+        //dd($backupFile);
+
+        $insert_only_string = $this->processExportFileDataOnly($backupFile);
+        //dd($insert_only_string);
+        $insert_only_path = $backupPath.$dbName.'_INSERT_INTO.sql';
+
+        file_put_contents($insert_only_path, $insert_only_string);
 
         if ($result === 0) {
             return 'Database export successful!';
@@ -62,12 +70,21 @@ class DatabaseUtils
         }
     }
 
-    public function processExportFileDataOnly($filename): string
+    public function processExportFileDataOnly($file_name): string
     {
-        // use regex to remove all except data that can be inserted into table
-        $dataOnly = preg_replace('/^.*INSERT INTO/', 'INSERT INTO', $filename);
+        // Define the regular expression pattern to match lines that do not start with INSERT INTO
+        $pattern = '/^(?!INSERT INTO\b).*$/m';
 
-        return preg_replace('/;.*$/', ';', $dataOnly);
+        // Read the file content
+        $file_content = file_get_contents($file_name);
+
+        // Remove the unwanted parts using preg_replace
+        $filtered_content = preg_replace($pattern, '', $file_content);
+
+        // Remove extra newlines
+        $result = preg_replace('/\n+/', "\n", $filtered_content);
+
+        return $result;
 
     }
 }

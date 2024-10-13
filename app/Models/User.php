@@ -34,6 +34,11 @@ class User extends Authenticatable
         'type',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->type < 4;
+    }
+
     /**
      * Get the attributes that should be cast.
      *

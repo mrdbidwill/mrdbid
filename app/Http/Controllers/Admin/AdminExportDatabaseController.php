@@ -43,6 +43,12 @@ class AdminExportDatabaseController extends Controller
         }
     }
 
+    public function remove_create_table_code_leave_only_insert_into(string $file_name)
+    {
+        $dbUtils = new DatabaseUtils;
+        $insert_only_code = $dbUtils->processExportFileDataOnly($file_name);
+    }
+
     public function create() {}
 
     public function store(Request $request) {}

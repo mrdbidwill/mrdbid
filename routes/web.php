@@ -86,6 +86,17 @@ Route::get('specimens/dashboard', [SpecimenController::class, 'dashboard'])->nam
 
 Route::view('admin/dashboard', 'admin.dashboard')->name('admin_dashboard')->middleware('auth');
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin_')->group(function () {});
+
+Route::get('/admin/export-database', [AdminExportDatabaseController::class, 'index'])->name('admin_export_database.index');
+Route::post('/admin-export-database', [AdminExportDatabaseController::class, 'admin_export_database'])->name('admin_export_database.export');
+Route::post('/admin-export-database/save', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin_export_database.save');
+
+Route::resource('admin_character', AdminCharacterController::class);
+Route::resource('admin_data_source', AdminDataSourceController::class);
+Route::resource('admin_lookup', AdminLookUpController::class);
+Route::resource('admin_specimen', AdminSpecimenController::class);
+
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about', 'about')->name('about');
@@ -105,12 +116,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('specimens', SpecimenController::class);
     Route::resource('characters', CharacterController::class);
     Route::resource('character_specimens', CharacterSpecimenController::class);
-
-    Route::resource('admin_character', AdminCharacterController::class);
-    Route::resource('admin_data_source', AdminDataSourceController::class);
-    Route::resource('admin_export_database', AdminExportDatabaseController::class);
-    Route::resource('admin_lookup', AdminLookUpController::class);
-    Route::resource('admin_specimen', AdminSpecimenController::class);
 
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/support-articles/{path?}', [SupportArticleController::class, 'show'])
