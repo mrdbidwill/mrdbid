@@ -13,6 +13,4 @@ class CapMarginType extends Model
         'source',
         'entered_by',
     ];
-
-
 }

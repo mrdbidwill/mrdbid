@@ -13,6 +13,4 @@ class Species extends Model
         'source',
         'entered_by',
     ];
-
-
 }

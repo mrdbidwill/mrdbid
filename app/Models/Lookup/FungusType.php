@@ -13,6 +13,4 @@ class FungusType extends Model
         'source',
         'entered_by',
     ];
-
-
 }

@@ -13,6 +13,4 @@ class CapMarginShape extends Model
         'source',
         'entered_by',
     ];
-
-
 }

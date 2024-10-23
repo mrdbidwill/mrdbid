@@ -13,6 +13,4 @@ class PreservationMethod extends Model
         'source',
         'entered_by',
     ];
-
-
 }

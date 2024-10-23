@@ -13,6 +13,4 @@ class PartialInnerVeilAppearance extends Model
         'source',
         'entered_by',
     ];
-
-
 }

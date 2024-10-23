@@ -13,6 +13,4 @@ class StemShape extends Model
         'source',
         'entered_by',
     ];
-
-
 }

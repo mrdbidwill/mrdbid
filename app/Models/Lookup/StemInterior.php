@@ -13,6 +13,4 @@ class StemInterior extends Model
         'source',
         'entered_by',
     ];
-
-
 }

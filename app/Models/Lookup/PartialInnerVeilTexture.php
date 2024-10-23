@@ -13,6 +13,4 @@ class PartialInnerVeilTexture extends Model
         'source',
         'entered_by',
     ];
-
-
 }
