@@ -1,12 +1,7 @@
-@php
-    // get the passed in id
-     $specimen_group_id = $specimen_group_id['id'];
-    //dd($specimen_group_id);
-@endphp
 <x-layout>
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <form method="POST" action="/specimen_groups/{{  $specimen_group_id }}">
+    <form method="POST" action="/specimen_groups/{{  $specimenGroup->id }}">
         @csrf
         @method('PATCH')
 
@@ -20,7 +15,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="name" id="name"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="" value="{{ $SpecimenGroup->name }}" required>
+                                       placeholder="" value="{{ $specimenGroup->name }}" required>
                             </div>
 
                             @error('name')
@@ -38,7 +33,7 @@
                                 <input type="text" name="description" id="description"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                        placeholder="Little Brown Mushroom - Front Yard"
-                                       value="{{ $SpecimenGroup->description }}" required>
+                                       value="{{ $specimenGroup->description }}" required>
                             </div>
 
                             @error('description')
@@ -55,7 +50,7 @@
                                 <input type="text" name="comment" id="comment"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                        placeholder="Little Brown Mushroom - Front Yard"
-                                       value="{{ $SpecimenGroup->comment }}" required>
+                                       value="{{ $specimenGroup->comment }}" required>
                             </div>
 
                             @error('comment')

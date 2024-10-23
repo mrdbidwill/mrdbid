@@ -2,25 +2,24 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearLog;
 use App\Console\Commands\FluxActivate;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
         FluxActivate::class,
+        ClearLog::class,
     ];
 
-    protected $commands = [
-        FluxActivate::class,
-    ];
-
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        // Schedule defined commands, if any
+        //$schedule->command('log:clear')->daily();
     }
 
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
         require base_path('routes/console.php');
