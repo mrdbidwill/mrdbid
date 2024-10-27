@@ -1,4 +1,3 @@
-// tailwind.config.mjs
 export default {
     content: [
         //  https://tailwindcss.com/docs/upgrade-guide#configure-content-sources
@@ -10,11 +9,9 @@ export default {
         "./vendor/livewire/flux/stubs/**/*.blade.php",
     ],
     theme: {
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ["Inter", "sans-serif"],
-                },
+        extend: {
+            fontFamily: {
+                sans: ["Inter", "sans-serif"],
             },
         },
     },

@@ -59,7 +59,7 @@
             where a specimen is currently located (preserved and stored), you can select "Observation Only - No specimen
             collected". </p>
 
-        <p class="mt-2 text-xl text-black">If nothing more, now you know when and where you saw "it". This time next
+        <p class="mt-2 text-xl text-black">If nothing more, now you know when and where you saw "it." This time next
             year, you may see it again, same place?</p>
 
         <p class="mt-2 text-xl text-black">This is not a "key" identification process, like <a
