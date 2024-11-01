@@ -1,6 +1,0 @@
-[21-Oct-2024 23:58:02] NOTICE: error log file re-opened
-[22-Oct-2024 01:55:30] NOTICE: Terminating ...
-[22-Oct-2024 01:55:30] NOTICE: exiting, bye-bye!
-[22-Oct-2024 01:55:32] NOTICE: fpm is running, pid 12345
-[22-Oct-2024 01:55:32] NOTICE: ready to handle connections
-[22-Oct-2024 01:55:32] NOTICE: systemd monitor interval set to 10000ms

@@ -6,7 +6,6 @@ use App\Models\Lookup\Character;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use LaravelIdea\Helper\App\Models\_IH_CharacterSpecimen_C;
 use LaravelIdea\Helper\App\Models\Lookup\_IH_Character_C;
 
 class CharacterSpecimen extends Model
@@ -45,18 +44,22 @@ class CharacterSpecimen extends Model
 
     public static function getSetCharactersBySpecimenId($specimen_id)
     {
-        return self::where('specimen_id', $specimen_id)->pluck('character_id')->all();
+        //return self::where('specimen_id', $specimen_id)->pluck('character_id')->all();
+
+        return self::where('specimen_id', $specimen_id)
+            ->pluck('character_id')
+            ->all();
     }
 
     public function getAllCharacters(): Collection|array|_IH_Character_C
     {
-        // Method that should return a collection of all character
+        // Method that should return a collection of all characters - characters table
         return Character::all(); // For example
     }
 
-    public function getSetCharacters(): _IH_CharacterSpecimen_C|array
+    public function getSetCharacters($specimen_id)
     {
-        // Method that should return a collection of set characters
-        return CharacterSpecimen::where('specimen_id=$specimen_id', true)->get(); // Example
+        // Method that should return a collection of set characters  - character_specimens table
+        return CharacterSpecimen::where('specimen_id', $specimen_id)->get();
     }
 }

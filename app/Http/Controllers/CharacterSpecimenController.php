@@ -32,6 +32,7 @@ class CharacterSpecimenController extends Controller
 
     public function edit($id)
     {
+        //dd($id);
         $specimen_id = $id;
         $colors = Color::get();
         $color_character_names = Character::where('display_options', '6')->orderBy('name')->get();
@@ -53,20 +54,19 @@ class CharacterSpecimenController extends Controller
 
     public function store(Request $request)
     {
-        $character_id = request('character_id');
-        $specimen_id = request('specimen_id');
-        $character_value = request('character_value');
+        //dd($request);
+        $character_id = $request->input('character_id');
+        $specimen_id = $request->input('specimen_id');
+        $character_value = $request->input('character_value'); // This should now be the ID
         $entered_by = Auth::user();
 
-        //dd($request->all());
-        //dd($entered_by);
+        request()->validate([
+            'character_id' => 'required|integer',
+            'specimen_id' => 'required|integer',
+            'character_value' => 'required',
+        ]);
 
-        //     if (isset($request['color'])) {
-        //        $character_value = request('color');
-        //     } else {
-        //         $character_value = request('character_value');
-        //     }
-
+        //  'character_value' => 'required|unique:character_specimens,character_value,NULL,id,specimen_id,'.$specimen_id,
         CharacterSpecimen::create([
             'character_id' => $character_id,
             'specimen_id' => $specimen_id,
@@ -116,7 +116,7 @@ class CharacterSpecimenController extends Controller
         $results = DB::connection('MBList')->table('list')
             ->where('Rank_', 'gen.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
-            ->select('Taxon_name')
+            ->select('id', 'Taxon_name')  // Select the id and Taxon_name
             ->distinct()
             ->get();
 
@@ -133,7 +133,7 @@ class CharacterSpecimenController extends Controller
         $results = DB::connection('MBList')->table('list')
             ->where('Rank_', 'sp.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
-            ->select('Taxon_name')
+            ->select('id', 'Taxon_name')  // Select the id and Taxon_name
             ->distinct()
             ->get();
 

@@ -8,6 +8,7 @@
 .env
 .env.backup
 .env.example
+.env.hostinger
 .env.local
 .env.prod
 .phpactor.json

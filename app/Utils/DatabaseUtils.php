@@ -19,6 +19,7 @@ class DatabaseUtils
             'failed_jobs',
             'jobs',
             'job_batches',
+            'migrations',
             'password_reset_tokens',
             'sessions',
             'users',  // Add other tables as needed

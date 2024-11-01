@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'php_errors'),
 
     /*
     |--------------------------------------------------------------------------
@@ -125,6 +125,14 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        // Other channels... added by wrj 10-28-2024
+
+        'php_errors' => [
+            'driver' => 'single',
+            'path' => '/var/www/mrdbid/public/php_errors.log',
+            'level' => 'debug',
         ],
 
     ],

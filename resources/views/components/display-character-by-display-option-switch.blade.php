@@ -1,11 +1,16 @@
 @php
     use App\Models\CharacterSpecimen;use App\Models\Lookup\Character;use App\Utils\StringUtils;
-@endphp@props([
-    'specimen_id',
-    'unset_characters',
+@endphp
+
+@props([
+   'specimen_id',
+   'unset_characters',
 ])
 
+@php  //dd($specimen_id); @endphp
+
 @php //dd($unset_characters); @endphp
+
 <table class="min-w-full hover:table-fixed border-collapse border border-blue-700 p-4">
     <!-- begin display-character-by-display-option-switch.blade.php -->
 
@@ -21,6 +26,13 @@
     @foreach ($characters as $character)
         @php //dd($character->name); @endphp
 
+        @if( $character->display_options != 6 )
+            <tr>
+                <td class="border border-collapse border-gray-400 p-4">
+                    <form method="POST" action="{{ route('character_specimens.store') }}">
+                        @csrf
+        @endif
+
         @switch($character->display_options)
             @case(1)
                 <!-- ID - Do not display  -->
@@ -29,198 +41,176 @@
 
             @case(2)
                 <!--  text box number mm is measure  NO Lookup table -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
 
-                            <form method="POST" action="{{ route('character_specimens.store') }}">
-                                @csrf
-                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                                <label for="character_value"><b>{{ $display_name }}</b> (text box number mm is measure
-                                    NO Lookup table)</label> <input type="number" id="character_value"
-                                                                    name="character_value" value="">
+                 @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                 <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                 <label for="character_value"><b>{{ $display_name }}</b></label>
 
-                                @php //dd($character->id); @endphp
-                                <input type="hidden" name="character_value" value="48"> <input type="hidden"
-                                                                                               name="character_id"
-                                                                                               value="{{ $character->id }}">
-                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }} ">
+                 <input type="number"
+                         id="character_value"
+                         name="character_value"
+                         value="">
+                 </div>   <!-- end div for tag -->
+                         @error('$character->name')
+                         <div class="alert alert-danger">{{ $message }}</div>
+                         @enderror
+                         <input type="hidden" name="character_id" value="{{ $character->id }}">
 
-                                @if(   (isset($select->value)  &&   ( $select->value == '1')) || (!isset($select->value)) )
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="submit">
-                                        Add Character
-                                    </button>
-                                @else
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="submit">
-                                        Update
-                                        Character: @php StringUtils::convert_table_name_for_display($character->name); @endphp
-                                    </button>
-                                @endif
-                            </form>
-                        </div>  <!-- end div for tag -->
+                         <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
 
-                        @error('$character->name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        @php
-                            // dd($character->name']);
-                            //dd( old($character->name']));
-                        @endphp
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                         <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
 
             @case(3)
 
                 <!--  text box number um is measure   NO Lookup table -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <label for="{{ $character->id }}"><b>{{ $display_name }}</b> (text box number um is measure)</label>
+                @php
+                    //dd($character->name);
+                @endphp
+                text box number um is measure   NO Lookup table
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                 <input type="number"
+                                                    id="character_value"
+                                                    name="character_value"
+                                                    value="">
+                                 </div>   <!-- end div for tag -->
 
-                            <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
-                                   class="@error('{{ $character->id }}') is-invalid @enderror">
-                        </div>  <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
 
-                        @error('$character->name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
             @case(4)
 
                 <!--  text box string   NO Lookup table -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <label for="{{ $character->id }}"><b>{{$display_name }}</b> (text box string NO Lookup
-                                table) : </label>
 
-                            <input id="{{ $character->id }}" type="text" value="{{ old($character->name ) }}"
-                                   class="@error('{{ $character->id }}') is-invalid @enderror">
-                        </div>  <!-- end div for tag -->
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+text box string   NO Lookup table
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label> <input type="text"
+                                                                                                       id="character_value"
+                                                                                                       name="character_value"
+                                                                                                       value="">
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
-                        @error('$character->name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
             @case(5)
                 <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <label for="{{ $character->id }}"><b>{{ $display_name }}</b> (text box number general format
-                                for temperatures ph etc NO Lookup table)</label>
+text box number general format for temperatures ph  etc    NO Lookup tabl
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label> <input type="number"
+                                                                                                       id="character_value"
+                                                                                                       name="character_value"
+                                                                                                       value="">
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
-                            <input id="{{ $character->id  }}" type="text" value="{{ old($character->name ) }}"
-                                   class="@error('{{ $character->id }}') is-invalid @enderror">
-                        </div>  <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
 
-                        @error('$character->name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
                 @break
 
             @case(6)
+            colors
                 @php
-                    $color_character_names[] = $character->name;
 
+                    $color_character_names[] = $character->name;
                 @endphp
 
                 @break
 
             @case(7)
                 <!--  taste ALL taste characters use the tastes table-->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
                         @php $display_taste = StringUtils::convert_table_name_for_display($character->name); @endphp
-                        <p><b>{{ $display_taste }}</b> (taste table)</p>
-                        @php
-                            $data = DB::table( 'tastes' )->get();
-                        @endphp
-                        @foreach($data as $item)
-                            <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                                <input type="radio" id="{{ $item->id }}" name="{{ $character->name }}"
-                                       value="{{ $item->id }}">
-                                @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
-                                <label for="{{ $item->id }}">{{ $display_name }}</label>
-                            </div>  <!-- end div for tag -->
-                            <br>
-                        @endforeach
-                        <input type="hidden" name="character_id" value="{{ $character->id }}">
+                                <p><b>{{ $display_taste }}</b> (taste table)</p>
+                                @php
+                                    $data = DB::table( 'tastes' )->get();
+                                @endphp
+                                <div id="character_{{ $character->id  }}">   <!-- div for tag -->
+                                @foreach($data as $item)
+                                <input type="radio" name="character_value" id="character_value" value="{{ $item->id }}">
+                                <label for="character_value">{{$item->name}}</label><br>
+                                </div>   <!-- end div for tag -->
+                               @endforeach
 
-                        <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
 
-                        <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
 
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
             @case(8)
                 <!-- odor ALL odor characters use the odors table-->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (odor table)</p></div>
-                        @php
-                            $data = DB::table( 'odors' )->get();
-                        @endphp
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+
+                                <p><b>{{ $display_odor }}</b> (odor table)</p>
+                                @php
+                                    $data = DB::table( 'odors' )->get();
+                                @endphp
+                                @foreach($data as $item)
+                                    @php
+                                        // dd($item);
+                                    @endphp
+                                    <input type="radio" id="character_value" name="character_value"
+                                           value="{{ $item->id }}">
+                                    @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                    <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                    <label for="character_value">{{ $display_name }}</label>
+                                </div>   <!-- end div for tag -->
+                                    <br>
+                                @endforeach
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
                 @break
 
             @case(9)
                 <!--  radio USE LOOKUP TABLE -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
+                @php
+                    //dd($character->name );
+                @endphp
+
                         @php
                             if( ( $character->name ==  'cap_surface_dryness')  || ( $character->name ==  'genus' ) || ( $character->name ==  'gill_edges' )|| ( $character->name ==  'gill_thickness' )|| ( $character->name ==  'species' ) || ( $character->name ==  'veil_annulus' ) )
                             {
@@ -234,12 +224,21 @@
                         @endphp
 
                         <div id="character_{{ $character->id  }}">  <!-- div for tag  -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{$display_name }}</b></p>
+                            @php
+                                if( $character->name ==  'part_in_veil_ann_ri_posit' )
+                                {
+                                    $display_name = 'Partial Inner Veil Annulus Ring Position';
+                                }
+                                else
+                                {
+                                     $display_name = StringUtils::convert_table_name_for_display($character->name);
+                                }
+                            @endphp
+                            <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                            <label for="character_value"><b>{{ $display_name }}</b></label>
                         </div>   <!-- end div for tag -->
 
-                        <form method="POST" action="{{ route('character_specimens.store') }}">
-                            @csrf
+
 
                             @foreach($data as $item)
 
@@ -274,190 +273,210 @@
                             <input type="hidden" name="specimen_id" value="{{ $specimen_id }} ">
 
 
-                            @php //dd($select); @endphp
+                            @error('$character->name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
 
-                            @if(   (isset($select->value)  &&   ( $select->value == '1')) || (!isset($select->value)) )
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit">
-                                    Add Character
-                                </button>
-                            @else
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit">
-                                    Update Character:
-                                    @php StringUtils::convert_table_name_for_display($character->name); @endphp
-                                </button>
-                            @endif
-
-
-                        </form>
-
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
                 @break
 
             @case(10)
                 <!--  dropdown -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (dropdown)</p>
-                        </div>  <!-- end div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
             @case(11)
                 <!--  state -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (state table)</p>
-                        </div>  <!-- end div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
                 @break
 
             @case(12)
                 <!-- country -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            <p><b>{{ $character->name }}</b> (country table)</p>
-                        </div>     <!-- end div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for {{$character->name}}><p><b>{{ $character->name }}</b> (country table)</p>
+                                </label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
 
             @case(13)
                 <!--  texture -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">    <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (texture table)</p>
-                        </div>   <!-- end div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                        @php $display_abundance = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_abundance }}</b> (texture table)</p>
+                                @php
+                                    $data = DB::table( 'textures' )->get();
+                                @endphp
+                                @foreach($data as $item)
+                                    @php
+                                        // dd($item);
+                                    @endphp
+                                    <input type="radio" id="character_value" name="character_value"
+                                           value="{{ $item->id }}">
+                                    @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                    <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                    <label for="character_value">{{ $display_name }}</label>
+                                </div>   <!-- end div for tag -->
+                                    <br>
+                                @endforeach
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
                 @break
             @case(14)
                 <!-- yes_no  -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (yes_no)</p>
-                        </div>   <!-- end div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_name }}</b> (yes_no)</p>
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="yes_no"><b>Yes or No</b></label><br> <input type="radio" id="yes"
+                                                                                        name="yes_no" value="yes">
+                                <label for="yes">Yes</label><br> <input type="radio" id="no" name="yes_no" value="no">
+                                <label for="no">No</label><br>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
             @case(15)
                 <!--  abundance -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (abundance table)</p>
-                        </div>    <!-- div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+
+                                @php
+                                    $display_name = StringUtils::convert_table_name_for_display($character->name);
+                                    $data = DB::table( 'abundances' )->get();
+                                @endphp
+
+                                <div id="character_{{ $character->id  }}">   <!-- div for tag -->
+                                <b>{{ $display_name }}</b><br>
+                                @foreach($data as $item)
+                                <input type="radio" name="character_value" id="character_value" value="{{ $item->id }}">
+                                <label for="character_value">{{$item->name}}</label><br>
+                                </div>   <!-- end div for tag -->
+                               @endforeach
+
+
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
             @case(16)
                 <!--  text box number grams measurement -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">   <!-- div for tag -->
-                            @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                            <p><b>{{ $display_name }}</b> (text box number grams measurement)</p>
-                        </div>   <!-- div for tag -->
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Add Character
-                        </button>
-                        <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                    </td>
-                </tr>
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
             @case(17)
-                @php //dd($character);
-                    $current_value = '';
-                @endphp
+                <!--  genus and species autocomplete -->
 
-                    <!--  genus and species autocomplete -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <div id="character_{{ $character->id  }}">  <!-- div for tag  -->Genus! Species!
-                            @if ($character->name === 'genus')
-                                @component('components.autocomplete', ['type' => 'genus', 'value' => $current_value])
-                                @endcomponent
-                            @elseif ($character->name === 'species')
-                                @component('components.autocomplete', ['type' => 'species', 'value' => $current_value])
-                                @endcomponent
-                            @else
-                                Invalid Input!
-                            @endif
-                            <button
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                type="submit">
-                                Add Character
-                            </button>
-                            <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
-                        </div>   <!-- div for tag  -->
-                    </td>
-                </tr>
+                                @php //dd($character);
+                                    $current_value = '';
+                                @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                @if ($character->name === 'genus')
+                                    @component('components.autocomplete', ['type' => 'genus', 'value' => $current_value])
+                                    @endcomponent
+                                @elseif ($character->name === 'species')
+                                    @component('components.autocomplete', ['type' => 'species', 'value' => $current_value])
+                                    @endcomponent
+                                @else
+                                    Invalid Input!
+                                @endif
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
                 @break
             @default
                 <!--       Default case... -->
-                <tr>
-                    <td class="border border-collapse border-gray-400 p-4">
-                        <p><b>{{ $character->name }} Default case</b></p>
-                    </td>
-                </tr>
-        @endswitch
 
-    @endforeach
+                        <p><b>{{ $character->name }} Default case</b></p>
+
+        @endswitch
+        @if( $character->display_options != 6 )
+           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+               Add Character
+            </button>
+</div>
+            </form>
+
+    <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+        </td>
+            </tr>
+        @endif
+ @endforeach
 
 
     </tbody>

@@ -1,156 +1,198 @@
 @php
-    use App\Models\Lookup\Character;use App\Utils\StringUtils;use Illuminate\Support\Facades\DB;
-    // The number of possible characters is over 100 in the characters table right now, certain to increase
-    // A specimen needs some characters to be useful but all are optional - there is limit of one character_id to specimen_id
-    // for each character - for example there can not be two cap_margin_type
-    // Retrieve CharacterSpecimens for the given specimen ID if any have been entered
-    $characterSpecimens = DB::table('character_specimens')->where('specimen_id', '=', $specimenId )->get();
-    //dd($characterSpecimens);
-    //echo "Specimen ID: ".e($specimenId)." from component display-existing-specimen-characters.blade.php line ".__LINE__."";
+    use Illuminate\Support\Facades\DB;
+    use App\Utils\StringUtils;
+    use App\Models\Lookup\Character;
+    use App\Models\CharacterSpecimen;
+    use Illuminate\Http\Request;
+
+       $specimen_id = request()->input('specimen_id');
+
+        // Store the default connection
+        $defaultConnection = DB::getDefaultConnection();
+               // Instantiate the model
+        $characterSpecimen = new CharacterSpecimen();
+        $set_characters = $characterSpecimen->getSetCharacters($specimen_id);
+
+        //dd($set_characters);
+
+        /*
+         * At this point this is all I have - but need final
+         * sorting by characters table name alphabetically
+         "id" => 12
+        "character_id" => 99
+        "specimen_id" => 2
+        "character_value" => "56581"
+        "entered_by" => 1
+        "created_at" => "2024-10-29 10:53:42"
+        "updated_at" => "2024-10-29 10:53:42"
+        */
+
+        // Fetch all characters whose IDs are present in $set_characters
+        $character_ids = $set_characters->pluck('character_id')->all();
+        $characters = Character::whereIn('id', $character_ids)->get()->keyBy('id');
+
+        // Sort the set_characters by the name of characters
+        $set_characters = $set_characters->sortBy(function($set_character) use ($characters) {
+        return $characters[$set_character->character_id]->name ?? '';
+        })->values();
 @endphp
+<table class="table-auto w-full">
+    @foreach ($set_characters as $set_character)
+        @php
+            $character_id = $set_character->character_id;
+            $character = $characters[$character_id] ?? null;
+            $display_option = $character ? $character->display_options : '';
+            $processed_table_name = StringUtils::get_table_name_special_cases($character->name);
+            $display_name = StringUtils::convert_table_name_for_display($character->name);
+        @endphp
 
+        <tr class="{{ $loop->odd ? 'bg-amber-100' : 'bg-green-100' }}">
+            <td class="border border-collapse border-gray-400 p-2">
+                @switch($display_option)
+                    @case(1)
+                        <!-- ID - Do not display  -->
+                        @break
+                    @case(2)
+                        <!--  text box number mm is measure  NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}} mm
+                        @break
+                    @case(3)
+                        <!--  text box number um is measure   NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}} &#181; (micron)
+                        @break
+                    @case(4)
+                        <!--  text box string   NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}}
+                        @break
+                    @case(5)
+                        <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}}
+                        @break
+                    @case(6)
+                        <!-- colors -->
+                        @php
+                            $data = DB::table('colors')->where('id', $set_character->character_value)->first();
+                            $imagePath = asset('storage/images/AMS_colors/banner_50x50/banner_' . $set_character->character_value . '.jpg');
+                        @endphp
+                        {{ $display_name }}:
+                        <small>Latin Name:</small> <b>{{ $data->latin_name }}</b>
+                        <small>Common Name:</small> <b>{{ $data->common_name }}</b>
+                        <small>Closest Websafe Color:</small> <b>{{ $data->closest_websafe_color }}</b>
+                        <small>Source: Alabama Mushroom Society</small>
+                        <img src="{{$imagePath}}" alt="{{ $data->latin_name }}" width="50" height="50"
+                             class="inline-block mt-2">
+                        @break
+                    @case(7)
+                        <!--  taste ALL taste characters use the tastes table-->
+                        @php
+                            $table_name = 'tastes';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(8)
+                        <!-- odor ALL odor characters use the odors table-->
+                        @php
+                            $table_name = 'odors';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(9)
+                        <!--  radio USE LOOKUP TABLE -->
+                        @php
+                            $data = DB::table($processed_table_name)->where('id', $set_character->character_value)->first();
+                            $data_source = DB::table('data_sources')->where('id', $data->source)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }}
+                        <span class="text-xs font-bold">Source: {{$data_source->title}}</span>
+                        @break
+                    @case(10)
+                        <!--  dropdown -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(11)
+                        <!--  state -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(12)
+                        <!-- country -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(13)
+                        <!--  texture -->
+                        @php
+                            $table_name = 'textures';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(14)
+                        <!-- yes_no  -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(15)
+                        <!--  abundance -->
+                        @php
+                            $table_name = 'abundances';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(16)
+                        <!--  text box number grams measurement -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(17)
+                        <!--  genus and species autocomplete -->
+                        @php
+                            $result = DB::connection('MBList')->table('list')
+                                ->where('id', $set_character->character_value)
+                                ->select( 'Taxon_name', 'Authors__abbreviated_', 'Year_of_effective_publication', 'Name_status')
+                                ->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{ $result->Taxon_name }} {{ $result->Authors__abbreviated_ }} {{ $result->Year_of_effective_publication }} {{ $result->Name_status }}
+                        @break
+                    @default
+                        <!--  default -->
+                        <p><b>{{ $processed_table_name }} Default case</b></p>
+                @endswitch
 
-@foreach ($characterSpecimens as $characterSpecimen)
-    @php //dd($characterSpecimen);
-         // for each character that has been set - get the table information
-         $characterRecord = DB::table('characters')
-         ->where('id', '=', $characterSpecimen->character_id )
-         ->orderBy('name')
-         ->first();
-         //dd($characterRecord);
-
-        // Check if the character record exists before accessing its name property
-    if($characterRecord)
-    {
-        // below get_table_name_special_cases will add plural s where needed
-        if( str_contains( $characterRecord->name, 'color'))
-        {
-            // maintain original name for display at bottom
-            $color_character_name = $characterRecord->name;
-            $character_table_name = 'color';
-        }
-        elseif( str_contains( $characterRecord->name, 'odor'))
-        {
-            $character_table_name = 'odor';
-        }
-        elseif( str_contains( $characterRecord->name, 'taste'))
-        {
-            $character_table_name = 'taste';
-        }
-        elseif( str_contains( $characterRecord->name, 'texture'))
-        {
-            $character_table_name = 'texture';
-        }
-        elseif( str_contains( $characterRecord->name, 'abun'))
-        {
-            $character_table_name = 'abundance';
-        }
-        else
-        {
-            $character_table_name = $characterRecord->name;
-        }
-
-        if( $character_table_name == 'color')
-        {
-
-            $character = DB::table('colors')->where('id', '=', $characterSpecimen->character_value )->first();
-            //dd($character->latin_name);
-            if($character)
-            {
-                $tableName = StringUtils::get_table_name_special_cases($character_table_name);
-                $displayCharacterName = StringUtils::convert_table_name_for_display($tableName);
-                $displayColorCharacterName = StringUtils::convert_table_name_for_display($color_character_name);
-                $latin_name  = $character->latin_name;
-                $common_name = $character->common_name;
-                $color_group = $character->color_group;
-                $hex         = $character->hex;
-                $cwc         = $character->closest_websafe_color;
-
-            }
-        }
-        else
-        {
-
-            if( $characterRecord->look_up_y_n == 0 )  // if not a lookup table - just display data
-            {
-                $display_table_name = StringUtils::convert_table_name_for_display($character_table_name);
-    @endphp
-    <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
-        <b>{{ $display_table_name }}:</b> {{ $characterSpecimen->character_value }}
-    </div>
-
-    @php
-        }
-        else
-        {
-            $character = Character::find($characterSpecimen->character_id);
-            if($character)
-            {
-                //dd($character);
-                $tableName = StringUtils::get_table_name_special_cases($character_table_name);
-                //dd($tableName);
-                //$data = DB::table($tableName)->get()->dd();
-                $data = DB::table($tableName)->get();
-                //dd($data);
-                $displayCharacterName = StringUtils::convert_table_name_for_display($tableName);
-
-                foreach ($data as $item)
-                {
-                    $value = DB::table($tableName)->find($characterSpecimen->character_value);
-                    //echo e($displayCharacterName);   // e is same as HTML::entities($displayCharacterName
-
-                    if ($value && property_exists($value, 'source'))
-                    {
-                       $source = DB::table('data_sources')->where('id', $value->source)->first();
-
-                       $description = $value->description;
-                       $valueName = $value->name;
-                       $comments = $value->comments;
-                       $title  = $source->title;
-                       $author = $source->author;
-                       break;
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-if( $character_table_name == 'color')
-{
-    @endphp
-    <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
-        @if (isset($value) && property_exists($value, 'name'))
-            <b>{{$displayColorCharacterName}}: Latin Name: {{$latin_name}}</b> Common Name:  {{$common_name}}<br>
-            @if( !empty($cwc))
-                Closest Websafe Color: {{$cwc}}<br>
-                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names" chart
-                </div>
-            @else
-                <div class="text-sm">Source: Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names" chart
-                </div>
-            @endif
-        @endif
-    </div>
-    @php
-        }
-        else
-        {
-    @endphp
-    <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2">
-        @if (isset($value) && property_exists($value, 'name'))
-            <b>{{$displayCharacterName}}: {{$valueName}}</b> {{$description}}<br>
-            @if( !empty($comments))
-                {{$comments}}<br>
-                <div class="text-sm">Source: <i>{{$title}}</i> {{$author}}</div>
-            @else
-                <div class="text-sm">Source: <i>{{$title}}</i> {{$author}}</div>
-            @endif
-        @endif
-    </div>
-    @php
-        }
-    @endphp
-@endforeach
-
+                @if($loop->iteration % 5 === 0)
+                    <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</table>

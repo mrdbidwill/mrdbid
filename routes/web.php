@@ -194,8 +194,4 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::get('phpmyinfo', function () {
-    phpinfo();
-})->name('phpmyinfo');
-
 require __DIR__.'/auth.php';

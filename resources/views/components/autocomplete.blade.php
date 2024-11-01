@@ -3,6 +3,10 @@
                                                                               name="{{ $type }}" value="{{ $value }}"
                                                                               placeholder="Start typing {{ $type }}..."/>
     <ul id="autocomplete_{{ $type }}_list" class="autocomplete-suggestions"></ul>
+    <input type="hidden" id="character_value_{{ $type }}" name="character_value" value=""> <input type="hidden"
+                                                                                                  id="character_id_{{ $type }}"
+                                                                                                  name="character_id"
+                                                                                                  value="">
 </div>
 
 <script>
@@ -11,6 +15,8 @@
 
         const input = document.getElementById('autocomplete_{{ $type }}');
         const suggestionList = document.getElementById('autocomplete_{{ $type }}_list');
+        const hiddenValueInput = document.getElementById('character_value_{{ $type }}');
+        const hiddenIdInput = document.getElementById('character_id_{{ $type }}');
 
         // Event listener for input changes
         input.addEventListener('input', function () {
@@ -26,6 +32,7 @@
                         data.forEach(item => {
                             const listItem = document.createElement('li');
                             listItem.textContent = item.Taxon_name;
+                            listItem.dataset.id = item.id; // Store the ID in a data attribute
                             suggestionList.appendChild(listItem);
                         });
                     })
@@ -37,10 +44,12 @@
             }
         });
 
-        // Optionally handle click on suggestion items to fill the input
+        // Handle click on suggestion items to fill the input and hidden input
         suggestionList.addEventListener('click', function (event) {
             if (event.target.tagName === 'LI') {
                 input.value = event.target.textContent;
+                hiddenValueInput.value = event.target.dataset.id; // Set the hidden input to the ID
+                hiddenIdInput.value = event.target.dataset.id; // Set the hidden input to the ID
                 suggestionList.innerHTML = ''; // Clear suggestions after selection
             }
         });
