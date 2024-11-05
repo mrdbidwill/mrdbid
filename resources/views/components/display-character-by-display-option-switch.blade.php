@@ -337,8 +337,8 @@ text box number general format for temperatures ph  etc    NO Lookup tabl
 
             @case(13)
                 <!--  texture -->
-                        @php $display_abundance = StringUtils::convert_table_name_for_display($character->name); @endphp
-                                <p><b>{{ $display_abundance }}</b> (texture table)</p>
+                        @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_name }}</b> (texture table)</p>
                                 @php
                                     $data = DB::table( 'textures' )->get();
                                 @endphp
