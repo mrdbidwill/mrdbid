@@ -2,12 +2,12 @@ auth.json
 composer.lock
 /coverage/   # coverage reports
 .DS_Store   # system file
-.env
-.env.backup
-.env.example
-.env.hostinger
-.env.local
-.env.prod
+/.env
+/.env.backup
+/.env.example
+/.env.hostinger
+/.env.local
+/.env.prod
 /.fleet
 Homestead.json
 Homestead.yaml
