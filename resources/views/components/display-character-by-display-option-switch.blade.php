@@ -175,7 +175,7 @@ text box number general format for temperatures ph  etc    NO Lookup tabl
 
             @case(8)
                 <!-- odor ALL odor characters use the odors table-->
-
+                @php $display_odor = StringUtils::convert_table_name_for_display($character->name); @endphp
                                 <p><b>{{ $display_odor }}</b> (odor table)</p>
                                 @php
                                     $data = DB::table( 'odors' )->get();
