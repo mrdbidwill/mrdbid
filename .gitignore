@@ -1,24 +1,33 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
+auth.json
+composer.lock
+/coverage/   # coverage reports
+.DS_Store   # system file
 .env
 .env.backup
 .env.example
 .env.hostinger
 .env.local
 .env.prod
-.phpactor.json
-.phpunit.result.cache
+/.fleet
 Homestead.json
 Homestead.yaml
-auth.json
+/hostinger   # my file
+/.idea       #   Specific IDEs/editors
+/node_modules
 npm-debug.log
+.phpactor.json
+/.phpunit.cache
+.phpunit.result.cache
+/.project    # Specific IDEs/editors
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+Thumbs.db   # system file
+/vendor
+/.vscode     # Specific IDEs/editors
 yarn-error.log
-/.fleet
-/.idea
-/.vscode
-/hostinger
+*.log
+*.swp       # temporary files
+*~          # backup files
+
