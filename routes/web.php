@@ -121,7 +121,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/support-articles/{path?}', [SupportArticleController::class, 'show'])
             ->where('path', '.*')
             ->name('support-articles.show');
+
+        Route::put('/specimens/{id}/update-field/{field}', [SpecimenController::class, 'updateField'])->name('specimens.updateField');
+
+        Route::get('/specimens', [SpecimenController::class, 'index'])->name('specimens.index');
+        Route::put('/specimens/{specimen}', [SpecimenController::class, 'update'])->name('specimens.update');
+        Route::get('/specimens/{id}', [SpecimenController::class, 'show'])->name('specimens.show');
+        Route::get('get-states/{countryId}', [SpecimenController::class, 'getStates']);
     });
+
+    Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
 
     Route::resource('abundance', AbundanceController::class);
     Route::resource('annulus_position', AnnulusPositionController::class);

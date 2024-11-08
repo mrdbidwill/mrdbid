@@ -39,6 +39,8 @@
                          // Add the index
                          $table->index('user_id', 'idx_user_id');
 
+                         // Foreign key constraint
+                         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                      });
 
                  }
@@ -46,6 +48,5 @@
                  public function down(): void
                  {
                      Schema::dropIfExists('specimens');
-
                  }
              };

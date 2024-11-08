@@ -26,11 +26,9 @@ class StateController extends Controller
 
     public function destroy($id) {}
 
-    public function getStatesByCountry($countryCode)
+    public function getStates($countryId)
     {
-        // Fetch states from your database or other source
-        $states = State::where('country_code', $countryCode)->get();
-        //dd($states);
+        $states = State::where('country_id', $countryId)->pluck('name', 'id');
 
         return response()->json($states);
     }

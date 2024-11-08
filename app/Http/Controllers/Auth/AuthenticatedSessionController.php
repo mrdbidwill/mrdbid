@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // go to your specimens once logged in - dashboard
-        return redirect()->intended(route('specimens.dashboard', absolute: false));
+        return redirect()->intended(route('specimens.index', absolute: false));
     }
 
     /**
