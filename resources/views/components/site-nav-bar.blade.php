@@ -53,7 +53,7 @@
         <!-- End Standard navigation links -->
 
         <!-- Mobile navigation links -->
-        <div id="site-menu" class="hidden md:hidden">
+        <div id="site-menu" class="block md:hidden">
 
             <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
             <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>

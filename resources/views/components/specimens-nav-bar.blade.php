@@ -39,10 +39,11 @@
             </x-specimens-nav-link>
         </div>
         <!-- End Standard navigation links -->
+
         <!-- Hamburger menu for mobile -->
         <div class="md:hidden">
             <button type="button" class="text-gray-300 hover:text-white focus:outline-none"
-                    onclick="toggleMenu('specimens-menu')">
+                    aria-label="Toggle navigation menu" onclick="toggleMenu('specimens-menu')">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -50,8 +51,9 @@
                 </svg>
             </button>
         </div>
+        <!-- End Hamburger menu for mobile -->
 
-        <!-- End Mobile Navigation links -->
+        <!-- Mobile navigation links -->
         <div id="specimens-menu" class="hidden md:hidden">
             @if (!$isSpecimens)
                 <x-specimens-nav-link href="{{ route('specimens.index') }}"
@@ -91,7 +93,11 @@
 
 <script>
     function toggleMenu(menuId) {
-        var element = document.getElementById(menuId);
-        element.classList.toggle("hidden");
+        const menu = document.getElementById(menuId);
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+        }
     }
 </script>
