@@ -1,4 +1,7 @@
-<x-layout> <!-- was x-app-layout  -->
+@extends('layouts.app')
+
+@section('content')
+    <!-- was x-app-layout  -->
     <x-slot name="heading"> <!-- was header -->
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
@@ -26,4 +29,6 @@
             </div>
         </div>
     </div>
-</x-layout>
+@endsection
+
+

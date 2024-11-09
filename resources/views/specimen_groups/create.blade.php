@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <form method="POST" action="/{{ route('specimen_group.create') }}">
@@ -39,4 +42,6 @@
             <x-form-button>Save</x-form-button>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

@@ -3,8 +3,9 @@
     // get the passed in id
      $specimen_id = $specimen['id'];
     //dd($specimen_id);
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
 
     <h2>Specimen ID: {{ $specimen_id  }}</h2>
     <p>This is views/specimens/edit.blade.php</p>
@@ -236,4 +237,6 @@
         @csrf
         @method('DELETE')
     </form>
-</x-layout>
+@endsection
+
+

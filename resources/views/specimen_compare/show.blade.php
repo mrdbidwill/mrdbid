@@ -1,5 +1,7 @@
-@php use Illuminate\Support\Facades\DB; @endphp
-<x-layout>
+@php use Illuminate\Support\Facades\DB; @endphp@extends('layouts.app')
+
+@section('content')
+
     <h1>specimens.show.blade.php</h1>
 
     @php
@@ -32,4 +34,6 @@
     <p class="mt-6">
         <x-button href="/specimens/{{ $specimen->id }}/edit">Edit Specimen Compare</x-button>
     </p>
-</x-layout>
+@endsection
+
+

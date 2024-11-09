@@ -1,7 +1,9 @@
 @php
     use App\Utils\DatabaseUtils;
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     <div class="bg-gray-100">
         <div class="mx-auto max-w-7xl">
@@ -122,5 +124,6 @@
         </div>
     </div>
 
+@endsection
 
-</x-layout>
+

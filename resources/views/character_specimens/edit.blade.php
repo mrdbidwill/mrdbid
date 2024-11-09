@@ -13,7 +13,10 @@
 
 @endphp
 
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar/>
     <x-notification message="{{ Session::get('message') }}"/>
     <!--  <p>resources/views/character_specimens/edit.blade.php</p>  -->
@@ -45,7 +48,7 @@
                     @php //dd($specimen_id); @endphp
 
                     <x-display-existing-specimen-characters :specimen_id="$specimen_id"/>
-                    
+
                     <x-display-unset-characters :unset_characters="$unset_characters"/>
 
                     <x-display-character-by-display-option-switch :specimen_id="$specimen_id"
@@ -61,4 +64,6 @@
             </div>
         </div>
     </div>
-</x-layout>
+@endsection
+
+

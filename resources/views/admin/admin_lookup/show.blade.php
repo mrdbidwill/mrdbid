@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
     @if (Session::has('message'))
@@ -13,4 +16,6 @@
     <p class="mt-6">
         <x-button href="/characters/{{ $character_table->id }}/edit">Edit Character</x-button>
     </p>
-</x-layout>
+@endsection
+
+

@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     @php
         //dd($data_source_table);
@@ -155,4 +158,6 @@
         @csrf
         @method('DELETE')
     </form>
-</x-layout>
+@endsection
+
+

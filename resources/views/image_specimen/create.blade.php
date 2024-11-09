@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))
@@ -92,4 +95,6 @@
         </div>
     </div>
 
-</x-layout>
+@endsection
+
+

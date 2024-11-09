@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <div class="container">
         <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
         <p class="mt-2 text-xl text-black">(resources/views/admin/dashboard.blade.php)</p>
@@ -28,4 +31,6 @@
         <p class="mt-2 text-xl text-black">The Admin options available are all in the menu buttons above.</p>
 
     </div>
-</x-layout>
+@endsection
+
+

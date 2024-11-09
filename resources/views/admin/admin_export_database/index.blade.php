@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     <p>This is views/admin/admin_export_database/index.blade.php.</p>
     <h1 class="text-red-700 text-2xl">Export Database Page</h1>
@@ -70,4 +73,6 @@
             </div>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

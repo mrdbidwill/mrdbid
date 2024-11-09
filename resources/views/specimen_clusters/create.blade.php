@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <p>This is views/specimen_clusters/create.blade.php</p>
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <form method="POST" action="{{ route('specimen_cluster.store') }}">
@@ -70,4 +73,6 @@
             </div>
     </form>
 
-</x-layout>
+@endsection
+
+

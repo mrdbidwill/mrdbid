@@ -1,5 +1,7 @@
-@php use Illuminate\Support\Facades\DB;@endphp
-<x-layout>
+@php use Illuminate\Support\Facades\DB;@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))
@@ -42,4 +44,6 @@
     <div class="flex bg-amber-600 border-gray-100">
         {{ $images_specimen->links() }}
     </div>
-</x-layout>
+@endsection
+
+

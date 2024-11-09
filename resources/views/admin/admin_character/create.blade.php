@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     <form method="POST" action="/admin_character/">
         @csrf
@@ -96,4 +99,6 @@
             <x-form-button>Save</x-form-button>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

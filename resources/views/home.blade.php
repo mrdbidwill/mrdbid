@@ -1,4 +1,6 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
     <p class="py-16 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
             tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
             media associations, or marketing tracking addons. Fees may be received from links to book sales.</b></p>
@@ -121,4 +123,5 @@
     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
     </footer>
-</x-layout>
+    </
+@endsection

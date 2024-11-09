@@ -1,8 +1,10 @@
 @php
     use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
     //dd($specimens);
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimens/show.blade.php.</p>
 
@@ -84,7 +86,8 @@
 
     @endphp
 
-    <table class="w-full table-auto bg-indigo-100 border-separate border border-slate-900 border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-slate-900 border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
         <tr>
             <td class="p-2">
@@ -196,7 +199,8 @@
                     @method('PUT')
                     <select name="country" class="form-select">
                         @foreach($countries as $country)
-                            <option value="{{ $country->id }}" {{ $selected_country == $country->id ? 'selected' : '' }}>
+                            <option
+                                value="{{ $country->id }}" {{ $selected_country == $country->id ? 'selected' : '' }}>
                                 {{ $country->name }}
                             </option>
                         @endforeach
@@ -229,8 +233,9 @@
 
         <tr>
             <td class="border-4 border-black p-2" colspan="2">
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_city']) }}"
-                      method="POST">
+                <form
+                    action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_city']) }}"
+                    method="POST">
                     @csrf
                     @method('PUT')
                     Location Found City: <input type="text" name="location_found_city"
@@ -243,8 +248,9 @@
 
         <tr>
             <td class="border-4 border-black p-2" colspan="2">
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_county']) }}"
-                      method="POST">
+                <form
+                    action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_county']) }}"
+                    method="POST">
                     @csrf
                     @method('PUT')
                     Location Found County: <input type="text" name="location_found_county"
@@ -294,15 +300,18 @@
 
         <tr>
             <td class="border-4 border-black p-2" colspan="2">
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_public_y_n']) }}"
-                      method="POST">
+                <form
+                    action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_public_y_n']) }}"
+                    method="POST">
                     @csrf
                     @method('PUT')
                     Make Location Public? <select name="location_public_y_n">
-                        <option value="0" {{ old('location_public_y_n', $specimen->location_public_y_n) == 0 ? 'selected' : '' }}>
+                        <option
+                            value="0" {{ old('location_public_y_n', $specimen->location_public_y_n) == 0 ? 'selected' : '' }}>
                             Yes
                         </option>
-                        <option value="1" {{ old('location_public_y_n', $specimen->location_public_y_n) == 1 ? 'selected' : '' }}>
+                        <option
+                            value="1" {{ old('location_public_y_n', $specimen->location_public_y_n) == 1 ? 'selected' : '' }}>
                             No
                         </option>
                     </select> <br>
@@ -313,8 +322,9 @@
 
         <tr>
             <td class="border-4 border-black p-2" colspan="2">
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'share_data_y_n']) }}"
-                      method="POST">
+                <form
+                    action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'share_data_y_n']) }}"
+                    method="POST">
                     @csrf
                     @method('PUT')
                     Share Data? <select name="share_data_y_n">
@@ -338,7 +348,8 @@
                     @method('PUT')
                     Fungus Type: <select name="fungus_type">
                         @foreach($fungus_types as $type)
-                            <option value="{{ $type->id }}" {{ old('fungus_type', $specimen->fungus_type) == $type->id ? 'selected' : '' }}>
+                            <option
+                                value="{{ $type->id }}" {{ old('fungus_type', $specimen->fungus_type) == $type->id ? 'selected' : '' }}>
                                 {{ $type->name }}
                             </option>
                         @endforeach
@@ -354,4 +365,6 @@
             </td>
         </tr> <!-- end basic specimen table line 180 of specimens/index.blade.php -->
     </table>
-</x-layout>
+@endsection
+
+

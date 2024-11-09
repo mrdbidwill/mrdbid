@@ -1,5 +1,7 @@
-@php use App\Utils\StringUtils;   @endphp
-<x-layout>
+@php use App\Utils\StringUtils;   @endphp@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
     @if (Session::has('message'))
@@ -142,4 +144,6 @@
             </div>
         </div>
     @endforeach
-</x-layout>
+@endsection
+
+

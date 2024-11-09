@@ -2,8 +2,10 @@
     use App\Models\CharacterSpecimen;
     $specimen_id = $request->specimen_id;
     //dd($specimen_id);
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
 
@@ -129,5 +131,6 @@
         </div>
     </div>
 
+@endsection
 
-</x-layout>
+

@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-slot:heading>
         views/characters/create.blade.php
     </x-slot:heading>
@@ -41,4 +44,6 @@
             <x-form-button>Save</x-form-button>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

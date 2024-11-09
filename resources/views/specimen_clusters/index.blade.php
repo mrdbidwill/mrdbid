@@ -1,7 +1,9 @@
 @php
     //dd($specimen_clusters);
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimen_clusters/index.blade.php.</p>
 
@@ -71,5 +73,7 @@
             </tr>
         </table>    <!-- end table line 180 of specimen_clusters/index.blade.php -->
     @endforeach
-</x-layout>
+@endsection
+
+
 

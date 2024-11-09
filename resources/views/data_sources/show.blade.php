@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <p>This is views/data_sources/show.blade.php</p>
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
@@ -15,4 +18,6 @@
         @method('DELETE')
         <button type="submit">Delete</button>
     </form>
-</x-layout>
+@endsection
+
+

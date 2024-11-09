@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <form method="POST" action="/specimen_groups/{{  $specimenGroup->id }}">
@@ -85,4 +88,6 @@
         @csrf
         @method('DELETE')
     </form>
-</x-layout>
+@endsection
+
+

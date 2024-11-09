@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <!-- resources/views/book.blade.php -->
     <div class="container">
         <h1>Books Listing</h1>
@@ -22,4 +25,6 @@
             </ul>
         </div>
     </div>
-</x-layout>
+@endsection
+
+

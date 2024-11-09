@@ -1,8 +1,10 @@
 @php
     //dd($specimen_cluster);
     $specimen_cluster_id = $specimen_cluster['id'];
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimen_clusters/edit.blade.php</p>
     <form method="POST" action="/specimen_cluster/{{ $specimen_cluster->id }}">
@@ -91,4 +93,6 @@
         @csrf
         @method('DELETE')
     </form>
-</x-layout>
+@endsection
+
+

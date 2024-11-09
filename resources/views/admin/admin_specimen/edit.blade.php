@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     <p>resources/views/admin/admin_specimen/edit.blade.php</p>
     <form method="POST" action="/specimen_table/{{ $character->id }}">
@@ -69,4 +72,6 @@
         @csrf
         @method('DELETE')
     </form>
-</x-layout>
+@endsection
+
+

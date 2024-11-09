@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <p>This is views/data_sources/edit.blade.php</p>
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
@@ -20,4 +23,6 @@
                                                                                                             placeholder="Entered By"><br>
         <button type="submit">Update</button>
     </form>
-</x-layout>
+@endsection
+
+

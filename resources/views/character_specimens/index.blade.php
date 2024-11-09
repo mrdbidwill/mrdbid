@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar/>
     <x-notification message="{{ Session::get('message') }}"/>
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
@@ -75,4 +78,6 @@
             </div>
         </div>
   --}}      -->
-</x-layout>
+@endsection
+
+

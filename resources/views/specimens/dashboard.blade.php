@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <div class="container">
         <x-dashboard-nav-bar></x-dashboard-nav-bar>
 
@@ -15,4 +18,6 @@
             </div>
         @endforeach
     </div>
-</x-layout>
+@endsection
+
+

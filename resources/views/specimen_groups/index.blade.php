@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimen_groups/index.blade.php.</p>
 
@@ -20,4 +23,6 @@
             {{ $specimen_groups->links() }}
         </div>
     </div>
-</x-layout>
+@endsection
+
+

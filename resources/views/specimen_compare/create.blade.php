@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-slot:heading>
         Create Specimen Compare
     </x-slot:heading>
@@ -12,19 +15,13 @@
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
                         <label for="specimen_comparename" class="block text-sm font-medium leading-6 text-gray-900">Specimen
-                            Compare
-                            Name</label>
+                            Compare Name</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="specimen_comparename"
-                                    id="specimen_comparename"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Specimen Compare Name"
-                                    value=""
-                                    required>
+                                <input type="text" name="specimen_comparename" id="specimen_comparename"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Specimen Compare Name" value="" required>
                             </div>
 
                             @error('specimen_comparename')
@@ -38,16 +35,10 @@
                             Name</label>
                         <div class="mt-2">
                             <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                            >
-                                <input
-                                    type="text"
-                                    name="common_name"
-                                    id="common_name"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Little Brown Mushroom - Front Yard"
-                                    value=""
-                                    required>
+                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="common_name" id="common_name"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Little Brown Mushroom - Front Yard" value="" required>
                             </div>
 
                             @error('common_name')
@@ -62,13 +53,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="description"
-                                    id="description"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Description"
-                                    value="">
+                                <input type="text" name="description" id="description"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Description" value="">
                             </div>
                             @error('description')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
@@ -82,13 +69,9 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="comment"
-                                    id="comment"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Comment"
-                                    value="">
+                                <input type="text" name="comment" id="comment"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="Comment" value="">
                             </div>
 
                             @error('comment')
@@ -115,14 +98,11 @@
                                             <td>
                                                 @if( $item->id == 1)
                                                     <input type="radio" id="specimen_comparelocation_now"
-                                                           name="specimen_comparelocation_now"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
+                                                           name="specimen_comparelocation_now" value="{{$item->id}}"
+                                                           required checked>
                                                 @else
                                                     <input type="radio" id="specimen_comparelocation_now"
-                                                           name="specimen_comparelocation_now"
-                                                           value="{{$item->id}}"
+                                                           name="specimen_comparelocation_now" value="{{$item->id}}"
                                                            required>
                                                 @endif
                                                 <label for="specimen_comparelocation_now">{{$item->name}}</label>
@@ -140,8 +120,7 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="country"
-                               class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+                        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -155,16 +134,11 @@
                                         <tr>
                                             <td>
                                                 @if( $item->id == 1)
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
+                                                    <input type="radio" id="country" name="country"
+                                                           value="{{$item->id}}" required checked>
                                                 @else
-                                                    <input type="radio" id="country"
-                                                           name="country"
-                                                           value="{{$item->id}}"
-                                                           required>
+                                                    <input type="radio" id="country" name="country"
+                                                           value="{{$item->id}}" required>
                                                 @endif
                                                 <label for="{{$item->id}}">{{$item->name}}</label>
                                             </td>
@@ -181,8 +155,7 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="state"
-                               class="block text-sm font-medium leading-6 text-gray-900">State</label>
+                        <label for="state" class="block text-sm font-medium leading-6 text-gray-900">State</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -196,15 +169,10 @@
                                         <tr>
                                             <td>
                                                 @if( $item->id == 98)
-                                                    <input type="radio" id="state"
-                                                           name="state"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
+                                                    <input type="radio" id="state" name="state" value="{{$item->id}}"
+                                                           required checked>
                                                 @else
-                                                    <input type="radio" id="state"
-                                                           name="state"
-                                                           value="{{$item->id}}"
+                                                    <input type="radio" id="state" name="state" value="{{$item->id}}"
                                                            required>
                                                 @endif
                                                 <label for="parts">{{$item->id}}. {{$item->name}}</label>
@@ -222,19 +190,14 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="location_found_city"
-                               class="block text-sm font-medium leading-6 text-gray-900">Nearest city or town</label>
+                        <label for="location_found_city" class="block text-sm font-medium leading-6 text-gray-900">Nearest
+                            city or town</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="location_found_city"
-                                    id="location_found_city"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="City or town where found"
-                                    value=""
-                                    required>
+                                <input type="text" name="location_found_city" id="location_found_city"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="City or town where found" value="" required>
                             </div>
 
                             @error('location_found_city')
@@ -245,19 +208,13 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="location_found_county"
-                               class="block text-sm font-medium leading-6 text-gray-900">County</label>
+                        <label for="location_found_county" class="block text-sm font-medium leading-6 text-gray-900">County</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input
-                                    type="text"
-                                    name="location_found_county"
-                                    id="location_found_county"
-                                    class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="County where found"
-                                    value=""
-                                    required>
+                                <input type="text" name="location_found_county" id="location_found_county"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="County where found" value="" required>
                             </div>
 
                             @error('location_found_county')
@@ -268,24 +225,16 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="location_public_y_n"
-                               class="block text-sm font-medium leading-6 text-gray-900">Make location visible to
-                            others?</label>
+                        <label for="location_public_y_n" class="block text-sm font-medium leading-6 text-gray-900">Make
+                            location visible to others?</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="radio" id="location_public_y_n"
-                                       name="location_public_y_n"
-                                       value="1"
-                                       required
-                                       checked>
-                                <label for="{{$item->id}}">Yes</label>
+                                <input type="radio" id="location_public_y_n" name="location_public_y_n" value="1"
+                                       required checked> <label for="{{$item->id}}">Yes</label>
 
-                                <input type="radio" id="location_public_y_n"
-                                       name="location_public_y_n"
-                                       value="0"
-                                       required>
-                                <label for="location_public_y_n">No</label>
+                                <input type="radio" id="location_public_y_n" name="location_public_y_n" value="0"
+                                       required> <label for="location_public_y_n">No</label>
                             </div>
 
                             @error('location_public_y_n')
@@ -296,24 +245,16 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="share_data_y_n"
-                               class="block text-sm font-medium leading-6 text-gray-900">Share this data with
-                            others?</label>
+                        <label for="share_data_y_n" class="block text-sm font-medium leading-6 text-gray-900">Share this
+                            data with others?</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="radio" id="share_data_y_n"
-                                       name="share_data_y_n"
-                                       value="1"
-                                       required
-                                       checked>
-                                <label for="{{$item->id}}">Yes</label>
+                                <input type="radio" id="share_data_y_n" name="share_data_y_n" value="1" required
+                                       checked> <label for="{{$item->id}}">Yes</label>
 
-                                <input type="radio" id="share_data_y_n"
-                                       name="share_data_y_n"
-                                       value="0"
-                                       required>
-                                <label for="share_data_y_n">No</label>
+                                <input type="radio" id="share_data_y_n" name="share_data_y_n" value="0" required> <label
+                                    for="share_data_y_n">No</label>
                             </div>
 
                             @error('share_data_y_n')
@@ -347,16 +288,11 @@
                                                 <label for="month_found"
                                                        class="text-sm font-medium leading-6 text-gray-900">{{$month[1]}}</label>
                                                 @if( $month[0][1] == "01")
-                                                    <input type="radio" id="month_found"
-                                                           name="month_found"
-                                                           value="{{$month[0][1]}}"
-                                                           required
-                                                           checked>
+                                                    <input type="radio" id="month_found" name="month_found"
+                                                           value="{{$month[0][1]}}" required checked>
                                                 @else
-                                                    <input type="radio" id="month_found"
-                                                           name="month_found"
-                                                           value="{{$month[0][1]}}"
-                                                           required>
+                                                    <input type="radio" id="month_found" name="month_found"
+                                                           value="{{$month[0][1]}}" required>
                                                 @endif
 
                                             </td>
@@ -374,8 +310,8 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="day_found"
-                               class="block text-sm font-medium leading-6 text-gray-900">Day Found</label>
+                        <label for="day_found" class="block text-sm font-medium leading-6 text-gray-900">Day
+                            Found</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -396,9 +332,8 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="year_found"
-                               class="block text-sm font-medium leading-6 text-gray-900">Year Found (todo: year range
-                            1900 to 2024?)</label>
+                        <label for="year_found" class="block text-sm font-medium leading-6 text-gray-900">Year Found
+                            (todo: year range 1900 to 2024?)</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -417,8 +352,8 @@
 
 
                     <div class="sm:col-span-4">
-                        <label for="fungus_type"
-                               class="block text-sm font-medium leading-6 text-gray-900">Fungus Type</label>
+                        <label for="fungus_type" class="block text-sm font-medium leading-6 text-gray-900">Fungus
+                            Type</label>
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -432,16 +367,11 @@
                                         <tr>
                                             <td>
                                                 @if( $item->id == 1)
-                                                    <input type="radio" id="fungus_type"
-                                                           name="fungus_type"
-                                                           value="{{$item->id}}"
-                                                           required
-                                                           checked>
+                                                    <input type="radio" id="fungus_type" name="fungus_type"
+                                                           value="{{$item->id}}" required checked>
                                                 @else
-                                                    <input type="radio" id="fungus_type"
-                                                           name="fungus_type"
-                                                           value="{{$item->id}}"
-                                                           required>
+                                                    <input type="radio" id="fungus_type" name="fungus_type"
+                                                           value="{{$item->id}}" required>
                                                 @endif
                                                 <label for="fungus_type">{{$item->id }}. {{$item->name }}</label>
                                             </td>
@@ -459,11 +389,7 @@
 
 
                 <div>
-                    <input
-                        type="hidden"
-                        name="entered_by"
-                        id="entered_by"
-                        value="{{auth()->user()->id}}">
+                    <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
 
                     <div class="mx-auto mt-6">
                         <x-primary-button>Submit</x-primary-button>
@@ -474,4 +400,6 @@
             </div>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

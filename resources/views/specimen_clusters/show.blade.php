@@ -1,8 +1,10 @@
-@php use Illuminate\Support\Facades\DB; @endphp
-<x-layout>
+@php use Illuminate\Support\Facades\DB; @endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <h1>specimen_clusters.show.blade.php</h1>
-    
+
     //dd($specimen_clusters);
     @foreach ($specimen_clusters as $specimen_cluster)
 
@@ -10,4 +12,6 @@
             Comments: {{$specimen_cluster['comments']}}</p>
 
     @endforeach
-</x-layout>
+@endsection
+
+

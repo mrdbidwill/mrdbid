@@ -1,8 +1,10 @@
 @php
     use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
     //dd($specimens);
-@endphp
-<x-layout>
+@endphp@extends('layouts.app')
+
+@section('content')
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <p>This is views/specimens/index.blade.php.</p>
 
@@ -34,4 +36,6 @@
         {{ $specimens->links() }}
     </div>
 
-</x-layout>
+@endsection
+
+

@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <p>This is views/data_sources/create.blade.php</p>
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
@@ -13,4 +16,6 @@
         <input type="text" name="entered_by" placeholder="Entered By">
         <button type="submit">Create</button>
     </form>
-</x-layout>
+@endsection
+
+

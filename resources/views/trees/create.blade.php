@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-slot:heading>
         Create Tree
     </x-slot:heading>
@@ -16,9 +19,9 @@
                         <x-form-label for="title">Tree Name</x-form-label>
 
                         <div class="mt-2">
-                            <x-form-input name="tree_name" id="tree_name" placeholder="wrj_2_20_2024_1" />
+                            <x-form-input name="tree_name" id="tree_name" placeholder="wrj_2_20_2024_1"/>
 
-                            <x-form-error name="tree_name" />
+                            <x-form-error name="tree_name"/>
                         </div>
                     </x-form-field>
 
@@ -26,9 +29,10 @@
                         <x-form-label for="common_name">Common Name</x-form-label>
 
                         <div class="mt-2">
-                            <x-form-input name="common_name" id="common_name" placeholder="Little brown mushroom - front yard" />
+                            <x-form-input name="common_name" id="common_name"
+                                          placeholder="Little brown mushroom - front yard"/>
 
-                            <x-form-error name="common_name" />
+                            <x-form-error name="common_name"/>
                         </div>
                     </x-form-field>
                 </div>
@@ -40,4 +44,6 @@
             <x-form-button>Save</x-form-button>
         </div>
     </form>
-</x-layout>
+@endsection
+
+

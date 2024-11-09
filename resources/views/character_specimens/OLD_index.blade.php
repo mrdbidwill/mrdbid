@@ -1,4 +1,7 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
+
     <x-slot:heading>
         Character Listings
     </x-slot:heading>
@@ -62,8 +65,7 @@
                                                                 : </label>
 
 
-                                                            <input id="{{ $character['id'] }}"
-                                                                   type="text"
+                                                            <input id="{{ $character['id'] }}" type="text"
                                                                    value="{{ old($character['name']) }}"
                                                                    class="@error('{{ $character->id }}') is-invalid @enderror">
 
@@ -78,8 +80,7 @@
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
-                                                            <input id="{{ $character['id'] }}"
-                                                                   type="text"
+                                                            <input id="{{ $character['id'] }}" type="text"
                                                                    value="{{ old($character['name']) }}"
                                                                    class="@error('{{ $character->id }}') is-invalid @enderror">
 
@@ -95,8 +96,7 @@
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
-                                                            <input id="{{ $character['id'] }}"
-                                                                   type="text"
+                                                            <input id="{{ $character['id'] }}" type="text"
                                                                    value="{{ old($character['name']) }}"
                                                                    class="@error('{{ $character->id }}') is-invalid @enderror">
 
@@ -114,8 +114,7 @@
                                                             <label for="{{$character['id']}}">{{$character['name']}}
                                                                 : </label>
 
-                                                            <input id="{{ $character['id'] }}"
-                                                                   type="text"
+                                                            <input id="{{ $character['id'] }}" type="text"
                                                                    value="{{ old($character['name']) }}"
                                                                    class="@error('{{ $character->id }}') is-invalid @enderror">
 
@@ -147,8 +146,7 @@
                                                                 <input type="radio" id="{{$item->id}}"
                                                                        name="{{$character['name']}}"
                                                                        value="{{$item->id}}">
-                                                                <label
-                                                                    for="{{$item->id}}">{{$item->name}}</label>
+                                                                <label for="{{$item->id}}">{{$item->name}}</label>
                                                                 <br>
                                                             @endforeach
                                                             @break
@@ -189,8 +187,7 @@
                                                                     <input type="radio" id="{{$item->id}}"
                                                                            name="{{$character['name']}}"
                                                                            value="{{$item->id}}">
-                                                                    <label
-                                                                        for="{{$item->id}}">{{$item->name}}
+                                                                    <label for="{{$item->id}}">{{$item->name}}
                                                                         - {{$item->description}}</label>
                                                                     <br>
 
@@ -256,8 +253,7 @@
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th colspan="10">Colors from
-                                            AMS Color Chart
+                                        <th colspan="10">Colors from AMS Color Chart
                                         </th>
 
                                     </tr>
@@ -271,10 +267,11 @@
                                     <tr>@endif
                                         <td>{{$i}}. <img
                                                 src="{{url('storage/images/AMS_colors/banner_50x50/banner_'.$i.'.jpg ')}}"
-                                                alt="{{$colors[$array_num]->latin_name}}">
-                                            <input type="radio" id="{{$i}}" name="{{$colors[$array_num]->latin_name }}"
-                                                   value="{{$i}}">
-                                            <label for="{{$i}}">{{$colors[$array_num]->latin_name}}</label>
+                                                alt="{{$colors[$array_num]->latin_name}}"> <input type="radio"
+                                                                                                  id="{{$i}}"
+                                                                                                  name="{{$colors[$array_num]->latin_name }}"
+                                                                                                  value="{{$i}}"> <label
+                                                for="{{$i}}">{{$colors[$array_num]->latin_name}}</label>
                                         </td>
                                         @endfor
 
@@ -323,5 +320,6 @@
         </div>
     </div>
 
+@endsection
 
-</x-layout>
+
