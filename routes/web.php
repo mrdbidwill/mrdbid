@@ -106,9 +106,6 @@ Route::get('/get-states/{countryId}', [SpecimenController::class, 'getStates']);
 Route::get('/api/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus'])->name('autocomplete.genus');
 Route::get('/api/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies'])->name('autocomplete.species');
 
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -127,10 +124,51 @@ Route::middleware('auth')->group(function () {
         Route::get('/specimens', [SpecimenController::class, 'index'])->name('specimens.index');
         Route::put('/specimens/{specimen}', [SpecimenController::class, 'update'])->name('specimens.update');
         Route::get('/specimens/{id}', [SpecimenController::class, 'show'])->name('specimens.show');
-        Route::get('get-states/{countryId}', [SpecimenController::class, 'getStates']);
-    });
+        //Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+        //Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');Route::get('get-states/{countryId}', [SpecimenController::class, 'getStates']);
 
-    Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
+        // Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+        // Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+        // Route::get('/send-test-email', function () {
+        //     Mail::to('test@example.com')->send(new \App\Mail\ContactMail());
+
+        //      return 'Test email sent!';
+        //  });
+
+        Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
+        Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
+
+        Route::get('/send-test-email', function () {
+            try {
+                Mail::raw('This is a test email.', function ($message) {
+                    $message->to('willgb54@yahoo.com')
+                        ->subject('Test Email');
+                });
+
+                return 'Test email sent successfully';
+            } catch (\Exception $e) {
+                Log::error('Failed to send email: '.$e->getMessage());
+
+                return 'Failed to send email: '.$e->getMessage();
+            }
+        });
+
+        Route::get('/check-config', function () {
+            return [
+                'MAIL_MAILER' => config('mail.default'),
+                'MAIL_HOST' => config('mail.mailers.smtp.host'),
+                'MAIL_PORT' => config('mail.mailers.smtp.port'),
+                'MAIL_USERNAME' => config('mail.mailers.smtp.username'),
+                'MAIL_PASSWORD' => config('mail.mailers.smtp.password'),
+                'MAIL_ENCRYPTION' => config('mail.mailers.smtp.encryption'),
+                'MAIL_FROM_ADDRESS' => config('mail.from.address'),
+                'MAIL_FROM_NAME' => config('mail.from.name'),
+            ];
+        });
+
+        Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
+    });
 
     Route::resource('abundance', AbundanceController::class);
     Route::resource('annulus_position', AnnulusPositionController::class);

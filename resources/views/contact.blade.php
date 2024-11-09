@@ -1,48 +1,73 @@
-<x-layout>
-    <p>resources/views/contact.blade.php</p>
-    @if (session('success'))
-        <p>{{ session('success') }}</p>
-    @endif
+@extends('layouts.app')
 
-    <form action="{{ route('contact.submit') }}" method="POST">
-        @csrf
-        <div class="border-2 border-amber-400 bg-amber-200 m-auto p-4">
-            <label for="name">Name:</label> <input type="text" id="name" name="name" size="80"
-                                                   value="{{ old('name') }}">
-            @error('name')
-            <div>{{ $message }}</div>
-            @enderror
-        </div>
+@section('content')
+    <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg mx-auto">
+        @if (session('success'))
+            <div
+                class="alert alert-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <strong class="font-bold">{{ session('success') }}</strong>
+            </div>
+        @endif
 
-        <div class="border-2 border-amber-400 bg-amber-200 m-auto p-4">
-            <label for="email">Email:</label> <input type="email" id="email" name="email" size="80"
-                                                     value="{{ old('email') }}">
-            @error('email')
-            <div>{{ $message }}</div>
-            @enderror
-        </div>
+        <h1 class="text-2xl font-bold mb-6">Contact Us</h1>
 
-        <div class="border-2 border-amber-400 bg-amber-200 m-auto p-4">
-            <label for="recipient">Send to:</label> <select id="recipient" name="recipient">
-                <option value="contact">Contact</option>
-                <option value="webmaster">Webmaster</option>
-                <option value="will">Will</option>
-            </select>
-            @error('recipient')
-            <div>{{ $message }}</div>
-            @enderror
-        </div>
+        @if (session('status'))
+            <div
+                class="alert alert-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <strong class="font-bold">{{ session('status') }}</strong>
+            </div>
+        @endif
 
-        <div class="border-2 border-amber-400 bg-amber-200 m-auto p-4">
-            <label for="message">Message:</label> <textarea id="message" name="message" rows="12"
-                                                            cols="80">{{ old('message') }}</textarea>
-            @error('message')
-            <div>{{ $message }}</div>
-            @enderror
-        </div>
+        @if ($errors->any())
+            <div
+                class="alert alert-danger bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <div class="border-2 border-amber-400 bg-amber-200 m-auto p-2 text-center font-extrabold">
-            <button type="submit">Send</button>
-        </div>
-    </form>
-</x-layout>
+        <form action="{{ route('contact.send') }}" method="POST" class="space-y-6">
+            @csrf
+            <div>
+                <label for="recipient" class="block text-gray-700 font-bold mb-2">Use Dropdown to Select Send
+                    to:</label> <select id="recipient" name="recipient"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
+                    <option value="contact@mrdbid.com">contact@mrdbid.com</option>
+                    <option value="webmaster@mrdbid.com">webmaster@mrdbid.com</option>
+                    <option value="will@mrdbid.com">will@mrdbid.com</option>
+                </select>
+            </div>
+            <div>
+                <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label> <input type="text" id="name"
+                                                                                                  name="name"
+                                                                                                  value="{{ old('name') }}"
+                                                                                                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                                  required>
+            </div>
+            <div>
+                <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label> <input type="email"
+                                                                                                    id="email"
+                                                                                                    name="email"
+                                                                                                    value="{{ old('email') }}"
+                                                                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                                    required>
+            </div>
+            <div>
+                <label for="message" class="block text-gray-700 font-bold mb-2">Message:</label> <textarea id="message"
+                                                                                                           name="message"
+                                                                                                           class="shadow appearance-none border rounded w-full h-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                                           required>{{ old('message') }}</textarea>
+            </div>
+            <div>
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+@endsection
