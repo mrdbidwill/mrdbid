@@ -4,7 +4,7 @@
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold leading-6 text-black">Characters (character_specimens/show.blade.php)</h1>
+        <h1 class="text-base font-semibold leading-6 text-black">Characters</h1>
         @if(isset($message))
             <p class="mt-2 text-sm text-black">{{$message}}</p>
         @endif

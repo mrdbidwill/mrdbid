@@ -10,8 +10,7 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens
-                                (character_specimens/index.blade.php)</h1>
+                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens</h1>
 
                             <p class="mt-2 text-xl text-black">When you created this specimen, you entered the <b>required</b>
                                 basic characters that you should have for every specimen. After the initial entry, those

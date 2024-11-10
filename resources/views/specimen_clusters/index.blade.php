@@ -5,7 +5,7 @@
 @section('content')
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
-    <p>This is views/specimen_clusters/index.blade.php.</p>
+
 
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>

@@ -2,7 +2,6 @@
 
 @section('content')
 
-    <p>This is views/specimens/create.blade.php</p>
     <x-specimens-nav-bar></x-specimens-nav-bar>
     <form method="POST" action="{{ route('specimens.store') }}">
         @csrf

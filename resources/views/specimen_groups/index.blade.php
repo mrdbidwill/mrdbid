@@ -3,7 +3,6 @@
 @section('content')
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
-    <p>This is views/specimen_groups/index.blade.php.</p>
 
     <p class="mt-2 text-xl text-black">These are your groups. Some are created automatically when a specimen is
         created. </p>

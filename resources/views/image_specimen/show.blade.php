@@ -8,7 +8,6 @@
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
     <h1 class="text-2xl font-bold">Image Specimen Show</h1>
-    <p>This is views/images_specimen/show.blade.php</p>
 
     @foreach($image_specimens as $image_specimen)
 

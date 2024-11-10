@@ -3,7 +3,7 @@
 @section('content')
 
     <x-slot:heading>
-        views/characters/create.blade.php
+
     </x-slot:heading>
 
     <form method="POST" action="/character_table">

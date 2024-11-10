@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
                 require base_path('routes/web.php');
 
                 Route::get('/specimens/', function () {
-                    return redirect()->route('specimens.dashboard');
+                    return redirect()->route('specimens.index');
                 });
             });
 

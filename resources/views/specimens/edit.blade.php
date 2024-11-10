@@ -8,7 +8,7 @@
 @section('content')
 
     <h2>Specimen ID: {{ $specimen_id  }}</h2>
-    <p>This is views/specimens/edit.blade.php</p>
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))

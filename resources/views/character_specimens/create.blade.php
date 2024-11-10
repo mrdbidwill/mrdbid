@@ -15,8 +15,7 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens
-                                (character_specimens/create.blade.php)</h1>
+                            <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens</h1>
                             @if ($errors->any())
                                 <div class="text-red-600 text-3xl">
                                     <ul>

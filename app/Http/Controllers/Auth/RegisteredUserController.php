@@ -38,7 +38,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('specimens.index', absolute: false));
+        // Redirect to the specimens index route
+        return redirect(route('specimens.index'));
     }
 
     /**

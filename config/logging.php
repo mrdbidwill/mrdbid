@@ -131,7 +131,7 @@ return [
 
         'php_errors' => [
             'driver' => 'single',
-            'path' => '/var/www/mrdbid/public/php_errors.log',
+            'path' => '/var/www/public_html/mrdbid/php_errors.log',
             'level' => 'debug',
         ],
 

@@ -6,7 +6,6 @@
 @section('content')
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
-    <p>This is views/specimens/show.blade.php.</p>
 
     @if(session('success'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
