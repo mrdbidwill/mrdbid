@@ -83,7 +83,6 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::resource('character_specimens', CharacterSpecimenController::class);
     Route::get('/support-articles/{path?}', [SupportArticleController::class, 'show'])->where('path', '.*')->name('support-articles.show');
     Route::put('/specimens/{id}/update-field/{field}', [SpecimenController::class, 'updateField'])->name('specimens.updateField');
-    Route::get('/specimens/{id}', [SpecimenController::class, 'show'])->name('specimens.show');
     Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
     Route::get('get-states', [SpecimenController::class, 'getStates'])->name('getStates');
 
