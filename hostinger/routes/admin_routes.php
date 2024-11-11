@@ -15,14 +15,5 @@ Route::prefix('admin')->name('admin_')->namespace('App\Http\Controllers\Admin')-
     Route::resource('characters', AdminCharacterController::class);
     Route::resource('data_sources', AdminDataSourceController::class);
     Route::resource('lookups', AdminLookUpController::class);
-
-    Route::resource('specimens', AdminSpecimenController::class)->names([
-        'index' => 'admin.specimens.index',
-        'create' => 'admin.specimens.create',
-        'store' => 'admin.specimens.store',
-        'show' => 'admin.specimens.show', // This resolves the conflict
-        'edit' => 'admin.specimens.edit',
-        'update' => 'admin.specimens.update',
-        'destroy' => 'admin.specimens.destroy',
-    ]);
+    Route::resource('specimens', AdminSpecimenController::class);
 });
