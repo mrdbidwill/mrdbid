@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MRDBID Mushroom Database Identification</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
     <script>
         function toggleImage(element) {
             const thumbnailSrc = element.getAttribute('data-thumbnail');
