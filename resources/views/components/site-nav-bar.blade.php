@@ -30,13 +30,13 @@
                 @endif
 
                 <x-nav-link href="{{ route('profile.edit') }}"
-                            :active="request()->is('profile.edit')"> {{  Auth::user()->name }}
+                            :active="request()->is('profile.edit')"> {{ Auth::user()->name }}
                 </x-nav-link>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-nav-link href="route('logout')"
-                                onclick="event.preventDefault();  this.closest('form').submit();">
+                    <x-nav-link href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-nav-link>
                 </form>
@@ -44,8 +44,7 @@
 
             @guest
                 <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
-                <x-nav-link href="/register" :active="request()->is('register')">Register
-                </x-nav-link>
+                <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
             @endguest
         </div>
         <!-- End Standard navigation links -->
@@ -85,13 +84,13 @@
                 @endif
 
                 <x-nav-link href="{{ route('profile.edit') }}"
-                            :active="request()->is('profile.edit')"> {{  Auth::user()->name }}
+                            :active="request()->is('profile.edit')"> {{ Auth::user()->name }}
                 </x-nav-link>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-nav-link href="route('logout')"
-                                onclick="event.preventDefault();  this.closest('form').submit();">
+                    <x-nav-link href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-nav-link>
                 </form>
@@ -99,8 +98,7 @@
 
             @guest
                 <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
-                <x-nav-link href="/register" :active="request()->is('register')">Register
-                </x-nav-link>
+                <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
             @endguest
         </div>
         <!-- End Mobile navigation links -->
@@ -110,10 +108,6 @@
 <script>
     function toggleMenu(menuId) {
         const menu = document.getElementById(menuId);
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-        } else {
-            menu.classList.add('hidden');
-        }
+        menu.classList.toggle('hidden');
     }
 </script>
