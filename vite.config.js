@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import laravel from "laravel-vite-plugin";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
@@ -17,7 +17,12 @@ export default defineConfig({
     },
     server: {
         hmr: {
-            overlay: false, // disable the overlay
+            host: '127.0.0.1',  // Ensure the host is set correctly for HMR
+            overlay: false      // Disable the overlay for HMR errors
         },
+        cors: true               // Enable CORS
+    },
+    build: {
+        sourcemap: true,         // Enable source maps
     },
 });

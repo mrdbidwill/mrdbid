@@ -26,7 +26,11 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            'human_check' => ['required', 'in:8'],  // Validate the human verification answer
+        ],
+            [
+                'human_check.in' => 'The answer to the human verification question is incorrect.',
+            ]);
 
         $user = User::create([
             'name' => $request->name,
