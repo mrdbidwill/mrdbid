@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
-    })->name('verification.notice');
+    })->name('verification.notice.alt');
 
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
