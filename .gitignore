@@ -1,33 +1,60 @@
+# Authentication information
 auth.json
+
+# Directories
+/bootstrap/cache
+
+# Composer related files
 composer.lock
-/coverage/   # coverage reports
-.DS_Store   # system file
-/.env
-/.env.backup
-/.env.example
-/.env.hostinger
-/.env.local
-/.env.prod
-/.fleet
-Homestead.json
-Homestead.yaml
-/hostinger   # my file
-/.idea       #   Specific IDEs/editors
-/node_modules
-npm-debug.log
-.phpactor.json
-/.phpunit.cache
-.phpunit.result.cache
-/.project    # Specific IDEs/editors
+
+# Test coverage reports
+/coverage/
+
 /public/build
 /public/hot
 /public/storage
+/storage
 /storage/*.key
-Thumbs.db   # system file
-/vendor
-/.vscode     # Specific IDEs/editors
+
+# Environment files
+.env
+.env.backup
+.env.example
+.env.hostinger
+.env.local
+.env.prod
+
+# Configuration and host specific files
+.fleet
+Homestead.json
+Homestead.yaml
+/hostinger
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor specific files
+.idea
+.project
+.vscode
+.phpactor.json
+.phpunit.cache
+.phpunit.result.cache
+
+# Node modules
+/node_modules
+npm-debug.log
 yarn-error.log
+
+# Vendor
+/vendor
+
+# Logs and temporary files
 *.log
-*.swp       # temporary files
-*~          # backup files
+*.swp
+*~
+
+
+
 
