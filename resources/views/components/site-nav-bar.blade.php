@@ -1,4 +1,6 @@
-@props(['active' => false])
+@props(['active' => false])@php
+    $member_type = \App\Utils\MemberUtils::get_member_type();
+@endphp
 <nav class="bg-gray-100 p-4">
     <div class="container mx-auto flex flex-wrap justify-between items-center">
         <!-- Logo -->
@@ -11,6 +13,7 @@
         <!-- Standard navigation links -->
         <div class="hidden md:flex space-x-4">
             <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+            <x-nav-link href="/articles" :active="request()->is('articles')">Articles</x-nav-link>
             <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
             <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
             <x-nav-link href="/books" :active="request()->is('books')">Books</x-nav-link>
@@ -19,9 +22,7 @@
                 <x-nav-link href="{{ route('specimens.index') }}" :active="request()->is('specimens.index')">
                     Specimens
                 </x-nav-link>
-                @php
-                    $member_type = \App\Utils\MemberUtils::get_member_type();
-                @endphp
+
                 @if($member_type < 4)
                     <x-nav-link href="{{ route('admin_dashboard') }}" style="color: red; font-weight: bold;"
                                 :active="request()->is('admin_dashboard')">
@@ -65,6 +66,7 @@
         <!-- Mobile navigation links -->
         <div id="site-menu" class="hidden w-full md:hidden flex flex-col space-y-2 mt-4">
             <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+            <x-nav-link href="/articles" :active="request()->is('articles')">Articles</x-nav-link>
             <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
             <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
             <x-nav-link href="/books" :active="request()->is('books')">Books</x-nav-link>
@@ -73,9 +75,7 @@
                 <x-nav-link href="{{ route('specimens.index') }}" :active="request()->is('specimens.index')">
                     Specimens
                 </x-nav-link>
-                @php
-                    $member_type = \App\Utils\MemberUtils::get_member_type();
-                @endphp
+
                 @if($member_type < 4)
                     <x-nav-link href="{{ route('admin_dashboard') }}" style="color: red; font-weight: bold;"
                                 :active="request()->is('admin_dashboard')">

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
 use App\Models\DataSource;
 use App\Models\Specimen;
 use App\Models\User;
+use App\Policies\ArticlePolicy;
 use App\Policies\BookPolicy;
 use App\Repositories\Lookup\CharacterRepository;
 use App\Services\Lookup\CharacterService;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
     protected $policies = [
         DataSource::class => BookPolicy::class,
+        Article::class => ArticlePolicy::class,
     ];
 
     /**

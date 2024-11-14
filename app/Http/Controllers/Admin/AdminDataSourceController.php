@@ -13,7 +13,7 @@ class AdminDataSourceController extends Controller
 
         $data_source_tables = DataSource::get();
 
-        return view('admin.admin_data_source_table.index', [
+        return view('admin.admin_data_source.index', [
             'data_source_tables' => $data_source_tables,
         ]);
     }
@@ -44,14 +44,14 @@ class AdminDataSourceController extends Controller
 
         //dd($data_source_table);
 
-        return view('admin.admin_data_source_table.index', [
+        return view('admin.admin_data_source.index', [
             'data_source_tables' => $data_source_tables,
         ]);
     }
 
     public function create()
     {
-        return view('admin.admin_data_source_table.create');
+        return view('admin.admin_data_source.create');
     }
 
     public function show($id) {}
@@ -64,7 +64,7 @@ class AdminDataSourceController extends Controller
         $data_source_table = DataSource::where('id', '=', $data_source_id)->get();
         //dd($data_source_table);
 
-        return view('admin.admin_data_source_table.edit', ['data_source_table' => $data_source_table]);
+        return view('admin.admin_data_source.edit', ['data_source_table' => $data_source_table]);
     }
 
     public function update(Request $request)
@@ -95,7 +95,7 @@ class AdminDataSourceController extends Controller
 
         //dd($data_source_table);
 
-        return view('admin.admin_data_source_table.index', [
+        return view('admin.admin_data_source.index', [
             'data_source_tables' => $data_source_tables,
         ]);
     }

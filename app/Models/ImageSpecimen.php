@@ -26,4 +26,9 @@ class ImageSpecimen extends Model
         'date_taken',
         'entered_by',
     ];
+
+    public function thumbnails()
+    {
+        return $this->hasMany(ImageSpecimenThumbnail::class, 'image_specimen_id');
+    }
 }

@@ -7,9 +7,9 @@ use Illuminate\View\View;
 
 class ImageSpecimenThumbnailController extends Controller
 {
-    public function index(): View
+    public function index(): void
     {
-        return view('specimens.look_up_tables.state');  // correct this
+        //return view('specimens.look_up_tables.state');  // correct this
     }
 
     public function create() {}

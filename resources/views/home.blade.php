@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <p class="py-16 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
-            tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
-            media associations, or marketing tracking addons. Fees may be received from links to book sales.</b></p>
+
     <main class="mt-6 space-y-4">
 
         <p class="mt-2 text-xl text-black">This website is a tool for storing and organizing <u>data</u> for mushrooms

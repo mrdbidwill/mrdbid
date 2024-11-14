@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- resources/views/specimens/create.blade.php --}}@props(['countries'])@extends('layouts.app')
 
 @section('content')
 
@@ -115,7 +115,7 @@
                     </div>
 
                     {{-- use the component for country state drop down menus using js to load appropriate states for country selected --}}
-                    <x-display-state-country-dropdown :countries="$countries"></x-display-state-country-dropdown>
+                    <x-display-state-country-dropdown id="unique-id" :countries="$countries"/>
 
                     <div class="sm:col-span-4">
                         <label for="location_found_city" class="block text-sm font-medium leading-6 text-gray-900">Nearest

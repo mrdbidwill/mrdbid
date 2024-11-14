@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <x-slot:heading>
-        MRDBID - About Page
-    </x-slot:heading>
+    
+    <p class="py-16 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
+            tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
+            media associations, or marketing tracking addons. Fees may be received from links to book sales.</b></p>
 
     <div class="mt-6 space-y-4">
         <h2 class="text-5xl font-normal leading-normal mt-0 mb-2 text-pink-800">What's in a name?</h2>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
 use App\Http\Controllers\DataImageSourceController;
@@ -85,6 +86,7 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::put('/specimens/{id}/update-field/{field}', [SpecimenController::class, 'updateField'])->name('specimens.updateField');
     Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
     Route::get('get-states', [SpecimenController::class, 'getStates'])->name('getStates');
+    Route::resource('articles', ArticleController::class);
 
     // Lookup routes under a common namespace
     Route::namespace('Lookup')->group(function () {

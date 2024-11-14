@@ -16,4 +16,9 @@ class ImageSpecimenThumbnail extends Model
         'image_height',
         'entered_by',
     ];
+
+    public function imageSpecimen()
+    {
+        return $this->belongsTo(ImageSpecimen::class, 'image_specimen_id');
+    }
 }

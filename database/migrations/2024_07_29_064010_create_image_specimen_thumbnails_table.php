@@ -4,29 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateImageSpecimenThumbnailsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('image_specimen_thumbnails', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('specimen_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('image_specimen_id');
             $table->string('thumbnail_file_address');
             $table->integer('image_width');
             $table->integer('image_height');
-            $table->integer('entered_by');
+            $table->unsignedBigInteger('entered_by');
             $table->timestamps();
+
+            $table->foreign('image_specimen_id')->references('id')->on('image_specimens')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('image_specimen_thumbnails');
     }
-};
+}

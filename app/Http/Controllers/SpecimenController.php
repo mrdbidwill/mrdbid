@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 
 class SpecimenController extends Controller
 {
+    /*
     public function dashboard(Request $request)
     {
         $user = $request->user();
@@ -21,6 +22,7 @@ class SpecimenController extends Controller
         return view('specimens.dashboard', compact('specimens'));
         //return view('specimens.dashboard');
     }
+   */
 
     public function index()
     {
@@ -115,8 +117,9 @@ class SpecimenController extends Controller
         return redirect()->intended(route('specimens.dashboard', absolute: false));
     }
 
-    public function getStates($countryId)
+    public function getStates(Request $request)
     {
+        $countryId = $request->input('country');
         $states = State::where('country_id', $countryId)->pluck('name', 'id');
 
         return response()->json($states);
