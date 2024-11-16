@@ -1,6 +1,7 @@
 @props(['active' => false])@php
     $member_type = \App\Utils\MemberUtils::get_member_type();
 @endphp
+
 <nav class="bg-gray-100 p-4">
     <div class="container mx-auto flex flex-wrap justify-between items-center">
         <!-- Logo -->
@@ -9,6 +10,9 @@
                 <x-application-logo/>
             </a>
         </div>
+        @if ($member_type == 0)
+            <!-- Only needed if no one is logged in -->
+        @endif
 
         <!-- Standard navigation links -->
         <div class="hidden md:flex space-x-4">

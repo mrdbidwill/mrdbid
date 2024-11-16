@@ -9,6 +9,11 @@ class MemberUtils
 {
     public static function get_member_type(): int
     {
-        return DB::table('users')->where('id', Auth::id())->value('type');
+        $member_type = 0;
+        $member_type = DB::table('users')->where('id', Auth::id())->value('type');
+
+        if ($member_type == null ) {$member_type = 0; }
+
+        return $member_type;
     }
 }
