@@ -61,6 +61,7 @@ use App\Http\Controllers\Lookup\VeilController;
 use App\Http\Controllers\MemberListClusterController;
 use App\Http\Controllers\MemberListGroupController;
 use App\Http\Controllers\MemberTypeController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlantAssociationController;
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PossibleMatchController;
@@ -91,6 +92,9 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
 
     Route::get('/compare', [CompareController::class, 'index']);
     Route::post('/compare', [CompareController::class, 'compare']);
+
+    Route::get('/pdf/user-specimens', [PdfController::class, 'userSpecimens']);
+    Route::get('/pdf/all-specimens', [PdfController::class, 'allSpecimens']);
 
     // Lookup routes under a common namespace
     Route::namespace('Lookup')->group(function () {
