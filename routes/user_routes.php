@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
+use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DataImageSourceController;
 use App\Http\Controllers\DataSourceController;
 use App\Http\Controllers\DataSourceDataTypeController;
@@ -87,6 +88,9 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
     Route::get('get-states', [SpecimenController::class, 'getStates'])->name('getStates');
     Route::resource('articles', ArticleController::class);
+
+    Route::get('/compare', [CompareController::class, 'index']);
+    Route::post('/compare', [CompareController::class, 'compare']);
 
     // Lookup routes under a common namespace
     Route::namespace('Lookup')->group(function () {

@@ -102,7 +102,7 @@
 
         <!-- sez it can not resolve - but it works -->
         <p class="mt-4 text-black dark:text-white text-lg"><img
-                src="{{ asset( '/storage/images/AMS_Field_Data_Sheet_400x298.png') }}" alt="AMS Field Data Sheet"></p>
+                src="{{ asset( 'storage/images/AMS_Field_Data_Sheet_400x298.png') }}" alt="AMS Field Data Sheet"></p>
 
         <!-- /storage/app/public/specimen_images/AMS_Field_Data_Sheet_400x298.png does not work -->
 
@@ -121,5 +121,4 @@
     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
     </footer>
-    </
 @endsection

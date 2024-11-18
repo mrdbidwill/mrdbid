@@ -62,4 +62,9 @@ class Specimen extends Model
     {
         return $this->hasMany(SpecimenGroup::class);
     }
+
+    public function characterSpecimens(): HasMany
+    {
+        return $this->hasMany(CharacterSpecimen::class);
+    }
 }

@@ -52,7 +52,7 @@ return [
             'port' => env('MBLIST_DB_PORT', '3306'),
             'database' => env('MBLIST_DB_DATABASE', 'MBList'),
             'username' => env('MBLIST_DB_USERNAME', 'root'),
-            'password' => env('MBLIST_DB_PASSWORD', 'moon1Dog'),
+            'password' => env('MBLIST_DB_PASSWORD', 'M/!r5dU|t2UaX3'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

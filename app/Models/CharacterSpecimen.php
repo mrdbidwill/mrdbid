@@ -62,4 +62,9 @@ class CharacterSpecimen extends Model
         // Method that should return a collection of set characters  - character_specimens table
         return CharacterSpecimen::where('specimen_id', $specimen_id)->get();
     }
+
+    public function specimen()
+    {
+        return $this->belongsTo(Specimen::class);
+    }
 }
