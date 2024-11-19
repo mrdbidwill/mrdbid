@@ -4,7 +4,6 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
 use App\Http\Controllers\CompareController;
-use App\Http\Controllers\DataImageSourceController;
 use App\Http\Controllers\DataSourceController;
 use App\Http\Controllers\DataSourceDataTypeController;
 use App\Http\Controllers\DisplayOptionController;
@@ -110,7 +109,6 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
         Route::resource('cap_surface_texture', CapSurfaceTextureController::class);
         Route::resource('chem_reaction', ChemReactionController::class);
         Route::resource('country', CountryController::class);
-        Route::resource('data_image_source', DataImageSourceController::class);
         Route::resource('data_source', DataSourceController::class);
         Route::resource('data_source_data_type', DataSourceDataTypeController::class);
         Route::resource('display_option', DisplayOptionController::class);

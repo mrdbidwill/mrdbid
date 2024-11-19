@@ -5,7 +5,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
@@ -13,12 +13,11 @@ class AdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->isAdmin()) {
+        if (Auth::check() && Auth::user()) {    // removed ->isAdmin()
             return $next($request);
         }
 

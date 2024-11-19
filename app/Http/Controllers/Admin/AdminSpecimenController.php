@@ -10,24 +10,45 @@ class AdminSpecimenController extends Controller
 {
     public function index()
     {
-        //DB::enableQueryLog();
-        $specimen_lists = Specimen::query()->simplePaginate(25);
-        // Debug the log
-        //dd(DB::getQueryLog());
-        //dd($specimen_lists);
+        $specimen_lists = Specimen::simplePaginate(25);
 
         return view('admin.admin_specimen.index', compact('specimen_lists'));
     }
 
-    public function create() {}
+    public function create()
+    {
+        return view('admin.admin_specimen.create');
+    }
 
-    public function store(Request $request) {}
+    public function store(Request $request)
+    {
+        // Placeholder: Implement logic later
+        return redirect()->route('admin_specimen.index');
+    }
 
-    public function show($id) {}
+    public function show($id)
+    {
+        $specimen = Specimen::findOrFail($id);
 
-    public function edit($id) {}
+        return view('admin.admin_specimen.show', compact('specimen'));
+    }
 
-    public function update(Request $request, $id) {}
+    public function edit($id)
+    {
+        $specimen = Specimen::findOrFail($id);
 
-    public function destroy($id) {}
+        return view('admin.admin_specimen.edit', compact('specimen'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Placeholder: Implement logic later
+        return redirect()->route('admin_specimen.index');
+    }
+
+    public function destroy($id)
+    {
+        // Placeholder: Implement logic later
+        return redirect()->route('admin_specimen.index');
+    }
 }

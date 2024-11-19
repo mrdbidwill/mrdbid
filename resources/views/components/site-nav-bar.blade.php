@@ -10,8 +10,11 @@
                 <x-application-logo/>
             </a>
         </div>
+
         @if ($member_type == 0)
             <!-- Only needed if no one is logged in -->
+        @else
+           {{--  Member Type: {{ $member_type }}  --}}
         @endif
 
         <!-- Standard navigation links -->
@@ -28,8 +31,7 @@
                 </x-nav-link>
 
                 @if($member_type < 4)
-                    <x-nav-link href="{{ route('admin_dashboard') }}" style="color: red; font-weight: bold;"
-                                :active="request()->is('admin_dashboard')">
+                    <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin.dashboard')">
                         Admin
                     </x-nav-link>
                 @endif
@@ -81,8 +83,8 @@
                 </x-nav-link>
 
                 @if($member_type < 4)
-                    <x-nav-link href="{{ route('admin_dashboard') }}" style="color: red; font-weight: bold;"
-                                :active="request()->is('admin_dashboard')">
+                    <x-nav-link href="{{ route('admin.dashboard') }}" style="color: red; font-weight: bold;"
+                                :active="request()->is('admin.dashboard')">
                         Admin
                     </x-nav-link>
                 @endif

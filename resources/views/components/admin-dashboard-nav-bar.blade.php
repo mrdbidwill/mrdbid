@@ -3,31 +3,35 @@
 @endphp
 
 <nav>
-    @if (!$isAdmin)
-        <x-specimens-nav-link href="{{ route('admin_dashboard') }}">
-            Back to Admin Dashboard
-        </x-specimens-nav-link>
-    @endif
 
-    <x-specimens-nav-link href="{{ route('admin_specimen.index') }}"
-                          :active="request()->routeIs('admin_specimen.index')">
-        Manage Specimen Table
-    </x-specimens-nav-link>
+<!-- resources/views/admin/dashboard.blade.php -->
 
-    <x-specimens-nav-link href="{{ route('admin_character.index') }}"
-                          :active="request()->routeIs('admin_character.index')">
-        Manage Character Table
-    </x-specimens-nav-link>
+    <title>Admin Dashboard</title>
 
-    <x-specimens-nav-link href="{{ route('admin_lookup.index') }}" :active="request()->routeIs('admin_lookup.index')">
-        Manage Lookup Tables
-    </x-specimens-nav-link>
+<h1>Admin Dashboard</h1>
+<ul>
+    <!-- Link to Admin Specimens Index -->
+    <li><a href="{{ route('admin.specimens.index') }}">Admin: View All Specimens</a></li>
 
-    <x-specimens-nav-link href="{{ route('admin_export_database.index') }}"
-                          :active="request()->routeIs('admin_export_database.index')">
-        Export Database
-    </x-specimens-nav-link>
+    <!-- Link to Admin Create Specimen -->
+    <li><a href="{{ route('admin.specimens.create') }}">Admin: Create New Specimen</a></li>
 
+    <!-- Link to Admin Specimen Show Example -->
+    <li><a href="{{ route('admin.specimens.show', ['specimen' => 1]) }}">Admin: View Specimen #1</a></li>
 
-    <!-- Add more links as needed -->
+    <!-- Link to Admin Specimen Edit Example -->
+    <li><a href="{{ route('admin.specimens.edit', ['specimen' => 1]) }}">Admin: Edit Specimen #1</a></li>
+
+    <!-- Link to Admin Characters Index -->
+    <li><a href="{{ route('admin.characters.index') }}">Admin: View All Characters</a></li>
+
+    <!-- Link to Admin Create Character -->
+    <li><a href="{{ route('admin.characters.create') }}">Admin: Create New Character</a></li>
+
+    <!-- Link to Admin Character Show Example -->
+    <li><a href="{{ route('admin.characters.show', ['character' => 1]) }}">Admin: View Character #1</a></li>
+
+    <!-- Link to Admin Character Edit Example -->
+    <li><a href="{{ route('admin.characters.edit', ['character' => 1]) }}">Admin: Edit Character #1</a></li>
+</ul>
 </nav>
