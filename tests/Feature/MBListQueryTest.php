@@ -17,7 +17,7 @@ class MBListQueryTest extends TestCase
         $query = 'agari'; // Replace 'ro' with the term you want to test
 
         // Execute the query
-        $results = DB::connection('MBList')->table('list')
+        $results = DB::connection('MBList.php')->table('list')
             ->where('Rank_', 'gen')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('Taxon_name')

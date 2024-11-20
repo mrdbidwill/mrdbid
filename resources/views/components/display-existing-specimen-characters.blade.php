@@ -176,7 +176,7 @@
                     @case(17)
                         <!--  genus and species autocomplete -->
                         @php
-                            $result = DB::connection('MBList')->table('list')
+                            $result = DB::connection('MBList.php')->table('list')
                                 ->where('id', $set_character->character_value)
                                 ->select( 'Taxon_name', 'Authors__abbreviated_', 'Year_of_effective_publication', 'Name_status')
                                 ->first();

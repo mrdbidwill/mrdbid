@@ -46,11 +46,11 @@ return [
             'engine' => null,
         ],
 
-        'MBList' => [
+        'MBList.php' => [
             'driver' => 'mysql',
             'host' => env('MBLIST_DB_HOST', '127.0.0.1'),
             'port' => env('MBLIST_DB_PORT', '3306'),
-            'database' => env('MBLIST_DB_DATABASE', 'MBList'),
+            'database' => env('MBLIST_DB_DATABASE', 'MBList.php'),
             'username' => env('MBLIST_DB_USERNAME', 'root'),
             'password' => env('MBLIST_DB_PASSWORD', 'M/!r5dU|t2UaX3'),
             'charset' => 'utf8mb4',

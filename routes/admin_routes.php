@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\MBListController;
 use Illuminate\Support\Facades\Route;
 
 // Grouping admin routes with proper namespace
@@ -7,6 +8,11 @@ Route::middleware(['auth'])->prefix('admin')->namespace('App\Http\Controllers\Ad
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('mblist/upload', [MBListController::class, 'showUploadForm'])->name('mblist.upload.form');
+        Route::post('mblist/upload', [MBListController::class, 'handleUpload'])->name('mblist.upload');
+    });
 
     Route::resource('specimens', 'AdminSpecimenController')->names([
         'index' => 'admin.specimens.index',

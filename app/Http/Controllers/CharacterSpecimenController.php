@@ -113,7 +113,7 @@ class CharacterSpecimenController extends Controller
         $query = $request->get('query');
         Log::info('Query for Genus: '.$query); // Log the query
 
-        $results = DB::connection('MBList')->table('list')
+        $results = DB::connection('MBList.php')->table('list')
             ->where('Rank_', 'gen.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('id', 'Taxon_name')  // Select the id and Taxon_name
@@ -130,7 +130,7 @@ class CharacterSpecimenController extends Controller
         $query = $request->get('query');
         Log::info('Query for Species: '.$query); // Log the query
 
-        $results = DB::connection('MBList')->table('list')
+        $results = DB::connection('MBList.php')->table('list')
             ->where('Rank_', 'sp.')
             ->where('Taxon_name', 'like', '%'.$query.'%')
             ->select('id', 'Taxon_name')  // Select the id and Taxon_name

@@ -33,5 +33,7 @@
 
     <!-- Link to Admin Character Edit Example -->
     <li><a href="{{ route('admin.characters.edit', ['character' => 1]) }}">Admin: Edit Character #1</a></li>
+
+    <li><a href="{{ route('admin.mblist.upload.form') }}">Manage MBList</a></li>
 </ul>
 </nav>

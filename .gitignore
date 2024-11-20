@@ -16,6 +16,11 @@ composer.lock
 /storage
 /storage/*.key
 
+# too big files
+/MBList
+*.csv
+*.sql
+
 # Environment files
 .env
 .env.backup
