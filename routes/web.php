@@ -7,3 +7,4 @@ require __DIR__.'/user_routes.php';
 require __DIR__.'/admin_routes.php';
 require __DIR__.'/email_routes.php';
 require __DIR__.'/test_routes.php';
+require __DIR__.'/lookup_routes.php';
