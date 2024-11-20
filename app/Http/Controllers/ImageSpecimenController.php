@@ -174,7 +174,7 @@ class ImageSpecimenController extends Controller
         //$image->move($destinationPath, $file_address);
 
         $thumbnail_image = ImageSpecimenThumbnail::create([
-            'specimen_id' => request('specimen_id'),
+            'image_specimen_id' => request('specimen_id'),
             'thumbnail_file_address' => 'thumb_'.$file_address,
             'image_width' => 200,
             'image_height' => 200,

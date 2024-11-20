@@ -47,6 +47,9 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::get('/pdf/user-specimens', [PdfController::class, 'userSpecimens']);
     Route::get('/pdf/all-specimens', [PdfController::class, 'allSpecimens']);
 
+    Route::get('/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus']);
+    Route::get('/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies']);
+
     Route::resource('data_source', DataSourceController::class);
     Route::resource('data_source_data_type', DataSourceDataTypeController::class);
     Route::resource('display_option', DisplayOptionController::class);

@@ -1,18 +1,16 @@
 <div>
-    <label for="autocomplete_{{ $type }}">{{ ucfirst($type) }}</label> <input type="text" id="autocomplete_{{ $type }}"
-                                                                              name="{{ $type }}" value="{{ $value }}"
-                                                                              placeholder="Start typing {{ $type }}..."/>
+    <label for="autocomplete_{{ $type }}">{{ ucfirst($type) }}</label>
+    <input type="text" id="autocomplete_{{ $type }}" name="{{ $type }}" value="{{ $value }}" placeholder="Start typing {{ $type }}..."/>
     <ul id="autocomplete_{{ $type }}_list" class="autocomplete-suggestions"></ul>
-    <input type="hidden" id="character_value_{{ $type }}" name="character_value" value=""> <input type="hidden"
-                                                                                                  id="character_id_{{ $type }}"
-                                                                                                  name="character_id"
-                                                                                                  value="">
+    <input type="hidden" id="character_value_{{ $type }}" name="character_value" value="">
+    <input type="hidden" id="character_id_{{ $type }}" name="character_id" value="">
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         console.log('Autocomplete component loaded for type: {{ $type }}'); // Debugging log
 
+        const type = '{{ $type }}';
         const input = document.getElementById('autocomplete_{{ $type }}');
         const suggestionList = document.getElementById('autocomplete_{{ $type }}_list');
         const hiddenValueInput = document.getElementById('character_value_{{ $type }}');
@@ -23,8 +21,13 @@
             const query = input.value;
 
             if (query.length >= 2) { // Start searching after 2 characters
-                fetch(`/api/autocomplete/{{ $type }}?query=${query}`)
-                    .then(response => response.json())
+                fetch(`/autocomplete/species?query=${query}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json(); // This will throw if the response is not valid JSON
+                    })
                     .then(data => {
                         suggestionList.innerHTML = ''; // Clear previous suggestions
 

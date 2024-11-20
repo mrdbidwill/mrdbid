@@ -109,7 +109,7 @@ class CharacterSpecimenController extends Controller
 
     public function autocompleteGenus(Request $request)
     {
-        //dd($request);
+        dd($request);
         $query = $request->get('query');
         Log::info('Query for Genus: '.$query); // Log the query
 

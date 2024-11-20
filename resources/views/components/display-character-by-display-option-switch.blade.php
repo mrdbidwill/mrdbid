@@ -337,33 +337,8 @@ text box number general format for temperatures ph  etc    NO Lookup tabl
 
             @case(13)
                 <!--  texture -->
-                        @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
-                                <p><b>{{ $display_name }}</b> (texture table)</p>
-                                @php
-                                    $data = DB::table( 'textures' )->get();
-                                @endphp
-                                @foreach($data as $item)
-                                    @php
-                                        // dd($item);
-                                    @endphp
-                                    <input type="radio" id="character_value" name="character_value"
-                                           value="{{ $item->id }}">
-                                    @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
-                                    <div id="character_{{ $character->id  }}">  <!-- div for tag -->
-                                    <label for="character_value">{{ $display_name }}</label>
-                                </div>   <!-- end div for tag -->
-                                    <br>
-                                @endforeach
-
-                                @error('$character->name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                                <input type="hidden" name="character_id" value="{{ $character->id }}">
-
-                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
-
-                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
-
+                               // thought of doing one texture table for all texture related characters by decided not enough similarity
+                               // texture characters now in 9 case
 
                 @break
             @case(14)
