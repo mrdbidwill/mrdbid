@@ -11,7 +11,7 @@
 
         <p class="mt-2 text-xl text-black">Use your admin power for good.</p>
 
-        <p class="mt-2 text-xl text-black"><strong>Please be absolutely certain you are making any changes in the table,
+        <p class="mt-2 text-xl text-black"><strong>Please be absolutely certain that the changes you are making will be in the table,
                 column, row, etc. <u>that you intend to change</u>.</strong></p>
 
         <p class="mt-2 text-xl text-black">Also understand that specimens may already have these characters assigned to

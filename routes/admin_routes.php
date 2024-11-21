@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\MBListController;
+use App\Http\Controllers\Admin\AdminMBListController;
 use Illuminate\Support\Facades\Route;
 
 // Grouping admin routes with proper namespace
@@ -10,8 +10,8 @@ Route::middleware(['auth'])->prefix('admin')->namespace('App\Http\Controllers\Ad
     })->name('admin.dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('mblist/upload', [MBListController::class, 'showUploadForm'])->name('mblist.upload.form');
-        Route::post('mblist/upload', [MBListController::class, 'handleUpload'])->name('mblist.upload');
+        Route::get('mblist/upload', [AdminMBListController::class, 'showUploadForm'])->name('mblist.upload.form');
+        Route::post('mblist/upload', [AdminMBListController::class, 'handleUpload'])->name('mblist.upload');
     });
 
     Route::resource('specimens', 'AdminSpecimenController')->names([
@@ -32,5 +32,45 @@ Route::middleware(['auth'])->prefix('admin')->namespace('App\Http\Controllers\Ad
         'edit' => 'admin.characters.edit',
         'update' => 'admin.characters.update',
         'destroy' => 'admin.characters.destroy',
+    ]);
+
+    Route::resource('data_sources', 'AdminDataSourceController')->names([
+        'index' => 'admin.data_sources.index',
+        'create' => 'admin.data_sources.create',
+        'store' => 'admin.data_sources.store',
+        'show' => 'admin.data_sources.show',
+        'edit' => 'admin.data_sources.edit',
+        'update' => 'admin.data_sources.update',
+        'destroy' => 'admin.data_sources.destroy',
+    ]);
+
+    Route::resource('export_databases', 'AdminExportDatabaseController')->names([
+        'index' => 'admin.export_databases.index',
+        'create' => 'admin.export_databases.create',
+        'store' => 'admin.export_databases.store',
+        'show' => 'admin.export_databases.show',
+        'edit' => 'admin.export_databases.edit',
+        'update' => 'admin.export_databases.update',
+        'destroy' => 'admin.export_databases.destroy',
+    ]);
+
+    Route::resource('lookups', 'AdminLookUpController')->names([
+        'index' => 'admin.lookups.index',
+        'create' => 'admin.lookups.create',
+        'store' => 'admin.lookups.store',
+        'show' => 'admin.lookups.show',
+        'edit' => 'admin.lookups.edit',
+        'update' => 'admin.lookups.update',
+        'destroy' => 'admin.lookups.destroy',
+    ]);
+
+    Route::resource('mblists', 'AdminMBListController')->names([
+        'index' => 'admin.mblists.index',
+        'create' => 'admin.mblists.create',
+        'store' => 'admin.mblists.store',
+        'show' => 'admin.mblists.show',
+        'edit' => 'admin.mblists.edit',
+        'update' => 'admin.mblists.update',
+        'destroy' => 'admin.mblists.destroy',
     ]);
 });

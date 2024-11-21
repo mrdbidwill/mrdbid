@@ -1,5 +1,6 @@
 @props(['active' => false])@php
-    $isAdmin = request()->routeIs('admin_dashboard');
+    $isAdmin = request()->routeIs('admin.dashboard');
+// dd($isAdmin);
 @endphp
 
 <nav>
@@ -9,31 +10,36 @@
     <title>Admin Dashboard</title>
 
 <h1>Admin Dashboard</h1>
-<ul>
-    <!-- Link to Admin Specimens Index -->
-    <li><a href="{{ route('admin.specimens.index') }}">Admin: View All Specimens</a></li>
 
-    <!-- Link to Admin Create Specimen -->
-    <li><a href="{{ route('admin.specimens.create') }}">Admin: Create New Specimen</a></li>
 
-    <!-- Link to Admin Specimen Show Example -->
-    <li><a href="{{ route('admin.specimens.show', ['specimen' => 1]) }}">Admin: View Specimen #1</a></li>
+    @if (!$isAdmin)
+        <x-admin-nav-link href="{{ route('admin.dashboard') }}">
+            Back to Admin Dashboard
+        </x-admin-nav-link>
+    @endif
 
-    <!-- Link to Admin Specimen Edit Example -->
-    <li><a href="{{ route('admin.specimens.edit', ['specimen' => 1]) }}">Admin: Edit Specimen #1</a></li>
+    <x-admin-nav-link href="{{ route('admin.specimens.index') }}"
+                          :active="request()->routeIs('admin.specimens.index')">
+        Manage Specimen Table
+    </x-admin-nav-link>
 
-    <!-- Link to Admin Characters Index -->
-    <li><a href="{{ route('admin.characters.index') }}">Admin: View All Characters</a></li>
+    <x-admin-nav-link href="{{ route('admin.characters.index') }}"
+                          :active="request()->routeIs('admin.characters.index')">
+        Manage Character Table
+    </x-admin-nav-link>
 
-    <!-- Link to Admin Create Character -->
-    <li><a href="{{ route('admin.characters.create') }}">Admin: Create New Character</a></li>
+    <x-admin-nav-link href="{{ route('admin.lookups.index') }}" :active="request()->routeIs('admin.lookups.index')">
+        Manage Lookup Tables
+    </x-admin-nav-link>
 
-    <!-- Link to Admin Character Show Example -->
-    <li><a href="{{ route('admin.characters.show', ['character' => 1]) }}">Admin: View Character #1</a></li>
+    <x-admin-nav-link href="{{ route('admin.export_databases.index') }}"
+                          :active="request()->routeIs('admin.export_databases.index')">
+        Export Database
+    </x-admin-nav-link>
 
-    <!-- Link to Admin Character Edit Example -->
-    <li><a href="{{ route('admin.characters.edit', ['character' => 1]) }}">Admin: Edit Character #1</a></li>
+    <x-admin-nav-link href="{{ route('admin.mblists.index') }}"
+                          :active="request()->routeIs('admin.mblists.index')">
+        Manage MBList Database
+    </x-admin-nav-link>
 
-    <li><a href="{{ route('admin.mblist.upload.form') }}">Manage MBList</a></li>
-</ul>
 </nav>

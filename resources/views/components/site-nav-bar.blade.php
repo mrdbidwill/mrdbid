@@ -32,7 +32,7 @@
 
                 @if($member_type < 4)
                     <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin.dashboard')">
-                        Admin
+                        <span class="text-red-500">Admin</span>
                     </x-nav-link>
                 @endif
 

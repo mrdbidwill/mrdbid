@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin_export_database.export') }}" method="POST">
+    <form action="{{ route('admin.export_databases.index') }}" method="POST">
         @csrf
 
         <div class="space-y-12">
@@ -46,7 +46,7 @@
         </div>
     </form>
 
-    <form action="{{ route('admin_export_database.save') }}" method="POST">
+    <form action="{{ route('admin.export_databases.index') }}" method="POST">
         @csrf
 
         <div class="space-y-12">
