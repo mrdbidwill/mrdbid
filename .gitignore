@@ -29,7 +29,8 @@ composer.lock
 .env.local
 .env.prod
 
-  # Ignore .htaccess
+# Ignore .htaccess
+public/.htaccess
 .htaccess
 
 # Configuration and host specific files
