@@ -30,7 +30,7 @@ composer.lock
 .env.prod
 
   # Ignore .htaccess
- .htaccess
+.htaccess
 
 # Configuration and host specific files
 .fleet
