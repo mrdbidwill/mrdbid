@@ -13,8 +13,22 @@ composer.lock
 /public/build
 /public/hot
 /public/storage
-/storage
 /storage/*.key
+
+# Ignore compiled assets
+/public/index.php
+/public/mix-manifest.json
+/public/css
+/public/js
+
+# Exclude Laravel log files
+/storage/logs/*.log
+
+# Ignore Debugbar storage
+/storage/debugbar
+
+# Include images in storage
+!/storage/app/public/images
 
 # too big files
 /MBList
