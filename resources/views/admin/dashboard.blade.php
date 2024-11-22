@@ -3,8 +3,7 @@
 @section('content')
 
     <div class="container">
-        <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-        <p class="mt-2 text-xl text-black">(resources/views/admin/dashboard.blade.php)</p>
+        <x-admin-dashboard-nav-bar/>
         <div class="flex justify-center items-center h-full">
             <h1 class="text-green-500 text-4xl">Admin Dashboard</h1>
         </div>

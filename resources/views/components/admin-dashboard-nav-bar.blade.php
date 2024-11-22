@@ -5,13 +5,6 @@
 
 <nav>
 
-<!-- resources/views/admin/dashboard.blade.php -->
-
-    <title>Admin Dashboard</title>
-
-<h1>Admin Dashboard</h1>
-
-
     @if (!$isAdmin)
         <x-admin-nav-link href="{{ route('admin.dashboard') }}">
             Back to Admin Dashboard
