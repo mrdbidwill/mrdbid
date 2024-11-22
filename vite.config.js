@@ -12,7 +12,7 @@ export default defineConfig({
     ],
     css: {
         postcss: {
-            plugins: [tailwindcss("./tailwind.config.js"), autoprefixer()],
+            plugins: [tailwindcss("./tailwind.config.mjs"), autoprefixer()],
         },
     },
     server: {
