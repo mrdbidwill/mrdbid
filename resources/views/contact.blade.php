@@ -3,30 +3,23 @@
 @section('content')
     <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg mx-auto">
         @if (session('success'))
-            <div
-                class="alert alert-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                <strong class="font-bold">{{ session('success') }}</strong>
-            </div>
+            <x-alert type="success" :message="session('success')" dismissable="true" />
         @endif
 
         <h1 class="text-2xl font-bold mb-6">Contact Us</h1>
 
         @if (session('status'))
-            <div
-                class="alert alert-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                <strong class="font-bold">{{ session('status') }}</strong>
-            </div>
+                <x-alert type="status" :message="session('status')" dismissable="true" />
         @endif
 
         @if ($errors->any())
-            <div
-                class="alert alert-danger bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <x-alert type="warning" :message="'Please fix the following errors.'" />
                 <ul class="list-disc pl-5">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div>
+
         @endif
 
         <form action="{{ route('contact.send') }}" method="POST" class="space-y-6">
