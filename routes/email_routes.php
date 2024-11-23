@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
         return back()->with('message', 'Verification link sent!');
     })->middleware('throttle:6,1')->name('verification.send');
 
-    Route::post('/contact/send', [ContactController::class, 'send'])
+    Route::post('/contact/sendContactEmail', [ContactController::class, 'send'])
         ->name('contact.send')
         ->middleware('throttle:10,1');
 });

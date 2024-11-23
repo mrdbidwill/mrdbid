@@ -13,18 +13,17 @@ class ContactController extends Controller
         return view('contact');
     }
 
-    public function sendContactEmail(Request $request)
+    public function send(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string',
-            'recipient' => 'required|in:contact@mrdbid.com,webmaster@mrdbid.com,will@mrdbid.com',
+            'recipient' => 'required|email',
         ]);
 
-        // Send the email
-        Mail::to($validated['recipient'])->send(new ContactMail($validated));
+        Mail::send(new ContactMail($validatedData));
 
-        return back()->with('status', 'Your message has been sent successfully!');
+        return back()->with('message', 'Your message has been sent!');
     }
 }
