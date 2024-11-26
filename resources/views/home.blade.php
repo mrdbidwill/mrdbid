@@ -4,6 +4,10 @@
 
     <main class="mt-6 space-y-4">
 
+        <h1 class="text-4xl text-black dark:text-white">Welcome to MushroomDB.com</h1>
+
+       <p class="mt-2 text-xl text-black">In the beginning, there was only a plan to eliminate the paper clutter. Where am I on identifying this mushroom? Where are my notes? Why can't I recall the mushrooms I have observed in the past? Dare I say easily? And, so this project began.</p>
+
         <p class="mt-2 text-xl text-black">This website is a tool for storing and organizing <u>data</u> for mushrooms
             that you observed and/or collected. Hopefully, it will provide a process that simplifies storing and
             retrieving <u>your</u> mushroom specimen <b>data</b> in order to compare it to other mushrooms that you and
@@ -12,11 +16,9 @@
 
         <p class="mt-2 text-xl text-black">The fact you observed a mushroom means you have some visual, time and
             location data. That is enough to start. You name this specimen "something" that is meaningful to <b>you,</b>
-            like "myinitials_1" or "myinitials_2", etc. with comment "brown mushroom - backyard". Or include the date,
-            whatever works for you.</p>
+            like "1_wrj" or "2_wrj", etc. with comment "brown mushroom - backyard". Or include the date, such as 1_wrj_11_24_2024_ganoderma or do whatever works for you.</p>
 
-        <p class="mt-2 text-xl text-black">There you go. A beginning. Any clear photo with <b class="text-orange-700">measurements</b>
-            is a plus. <u>Use coins if a ruler is not handy</u>.</p>
+        <p class="mt-2 text-xl text-black">There you go. A beginning. Any clear photo with <b class="text-orange-700">measurements</b> is a plus. <u>Use coins if a ruler is not handy</u>.</p>
 
         <div class="bg-gray-100 p-4">
             <h3 class="text-xl text-orange-700">Measurements:</h3>
@@ -67,14 +69,13 @@
             and/or other identification experts to match up <b>your</b> specimen <u>data</u> that is stored here. In the
             future, perhaps enough positive identifications will result in a match within the mrdbid.com
             <b>database.</b></p>
-
         <p class="mt-2 text-xl text-black">Again, a specimen need not be collected to be entered here. These entries
             will be recorded as an "observation", not a "specimen".</p>
 
 
         <p class="mt-2 text-xl text-black">PS The "Trees" link began from photographs of the informational signs at
             Blakely State Park, Baldwin County, Alabama. It is the beginning of a tool for identifying the trees
-            associated with mushrooms.</p>
+            associated with mushrooms. Note: "Trees" was in, then out, but is in the long term plan.</p>
 
         <p class="mt-2 text-xl text-black"><b>About Images:</b> I am not a photographer, an artist, or a scientist. My
             goal in observing or collecting specimens is to provide documentation of its facts that can be preserved for

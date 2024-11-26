@@ -21,6 +21,8 @@
 
                          $table->string('author', length: 240);
 
+                         $table->string('item_code', length: 240);
+
                          $table->integer('type');
 
                          $table->text('comment');

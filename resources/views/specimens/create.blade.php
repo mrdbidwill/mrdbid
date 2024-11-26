@@ -198,36 +198,35 @@
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <!-- radio list of months -->
+                                <!-- radio list of months -->
                                 @php
-                                    $month_array = array( array("01" , "January"), array("02" , "February"), array("03" ,
-                                    "March"), array("04" , "April"), array("05" , "May"), array("06" , "June"), array("07" ,
-                                    "July"), array("08" , "August"), array("09" , "September"), array("10" , "October"),
-                                    array("11" , "November"), array("12" , "December") );
-                                    //dd($month_array);
+                                    $month_array = [
+                                        ["01", "January"],
+                                        ["02", "February"],
+                                        ["03", "March"],
+                                        ["04", "April"],
+                                        ["05", "May"],
+                                        ["06", "June"],
+                                        ["07", "July"],
+                                        ["08", "August"],
+                                        ["09", "September"],
+                                        ["10", "October"],
+                                        ["11", "November"],
+                                        ["12", "December"]
+                                    ];
                                 @endphp
 
                                 <table>
-                                    @foreach($month_array as $month )
-                                        @php
-                                            //dd($item);
-                                        @endphp
+                                    @foreach($month_array as $month)
                                         <tr>
                                             <td>
-                                                <label for="month_found"
-                                                       class="text-sm font-medium leading-6 text-gray-900">{{$month[1]}}</label>
-                                                @if( $month[0][1] == "01")
-                                                    <input type="radio" id="month_found" name="month_found"
-                                                           value="{{$month[0][1]}}" required checked>
-                                                @else
-                                                    <input type="radio" id="month_found" name="month_found"
-                                                           value="{{$month[0][1]}}" required>
-                                                @endif
-
+                                                <label for="month_{{ $month[0] }}" class="text-sm font-medium leading-6 text-gray-900">{{ $month[1] }}</label>
+                                                <input type="radio" id="month_{{ $month[0] }}" name="month_found"
+                                                       value="{{ $month[0] }}" required @if($loop->first) checked @endif>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
-
                             </div>
 
                             @error('month_found')

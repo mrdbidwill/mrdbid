@@ -59,4 +59,13 @@ class DataSourceController extends Controller
 
         return redirect()->route('data_source.index');
     }
+
+    public function showFilteredBooks()
+    {
+        // Fetch all data sources of types 2, 4, and 5
+        $dataSources = DataSource::whereIn('type', [2, 4, 5])->get();
+
+        // Pass the filtered data sources to the view
+        return view('book', ['dataSources' => $dataSources]);
+    }
 }

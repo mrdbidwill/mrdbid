@@ -13,6 +13,7 @@ class DataSource extends Model
         'title',
         'author',
         'type',
+        'item_code',
         'comment',
         'my_rating',
         'my_comment',
