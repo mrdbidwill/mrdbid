@@ -52,7 +52,7 @@
                                                 <input type="radio" id="parts" name="parts" value="{{$item->id}}"
                                                        required>
                                             @endif
-                                            <label for="parts">{{$item->id}}. {{$item->name}}</label>
+                                            <label for="parts">{{$item->id}}. {{$item->name}}</label> <b>-</b> {{$item->description}}
                                         </td>
                                     </tr>
                                 @endforeach

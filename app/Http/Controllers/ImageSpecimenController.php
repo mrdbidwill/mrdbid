@@ -32,7 +32,6 @@ class ImageSpecimenController extends Controller
         return view('image_specimen.show', ['image' => $image, 'images_specimen' => $images]);
     }
 
-    //public function store(StoreImageSpecimenRequest $request)
     public function store(Request $request)
     {
         $specimen_id = request('specimen_id');

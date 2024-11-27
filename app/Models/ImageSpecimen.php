@@ -29,6 +29,6 @@ class ImageSpecimen extends Model
 
     public function thumbnails()
     {
-        return $this->hasMany(ImageSpecimenThumbnail::class, 'image_specimen_id');
+        return $this->hasOne(ImageSpecimenThumbnail::class, 'image_specimen_id');
     }
 }

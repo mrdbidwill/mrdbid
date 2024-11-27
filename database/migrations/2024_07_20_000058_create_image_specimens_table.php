@@ -49,7 +49,7 @@
 
                          $table->timestamps();
 
-                         $table->unique(['specimen_id', 'file_address']);
+                         $table->unique(['specimen_id', 'image_name']);
 
                      });
 
