@@ -4,7 +4,7 @@
 
     <main class="mt-6 space-y-4">
 
-        <h1 class="text-4xl text-black dark:text-white">Welcome to MushroomDB.com</h1>
+        <h1 class="text-4xl text-black dark:text-white">Welcome to MRDBID</h1>
 
        <p class="mt-2 text-xl text-black">In the beginning, there was only a plan to eliminate the paper clutter. Where am I on identifying this mushroom? Where are my notes? Why can't I recall the mushrooms I have observed in the past? Dare I say easily? And, so this project began.</p>
 
