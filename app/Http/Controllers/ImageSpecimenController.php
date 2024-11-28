@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ImageSpecimen;
 use App\Models\ImageSpecimenThumbnail;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rule;
 use Intervention\Image\Laravel\Facades\Image;
 
 class ImageSpecimenController extends Controller
@@ -32,11 +32,20 @@ class ImageSpecimenController extends Controller
         return view('image_specimen.show', ['image' => $image, 'images_specimen' => $images]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $specimen_id = request('specimen_id');
+        // dd($request);
+        // $this->validate($request, [
+        //    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+
         $image_name = $request['image_name'];
+        //dd($image_name);
         $image_file_name_text = $image_name->getClientOriginalName();
+
+        $image_file_name_text = preg_replace('/\s+/', '_', $image_file_name_text);  // replace one or more spaces with one underscore
+
+        $specimen_id = $request['specimen_id'];
 
         $check_duplicate_name = DB::table('image_specimens')
             ->where([
@@ -53,90 +62,41 @@ class ImageSpecimenController extends Controller
             return Redirect::back();
         }
 
-        $rules = [
-            'specimen_id' => [
-                'required',
-                'integer',
-            ],
-            'image_name' => [
-                'required',
-                'file',
-                'mimes:jpg,jpeg,png',
-                'max:6000',
-                Rule::unique('image_specimens', 'image_name')->where(function ($query) use ($request) {
-                    return $query->where('specimen_id', $request->specimen_id);
-                }),
-            ],
-            'parts' => [
-                'required',
-                'integer',
-            ],
-            'description' => [
-                'required',
-                'string',
-                'min:3',
-                'max:2048',
-            ],
-        ];
+        $image = Image::read($request->file('image_name'));
 
-        $messages = [
-            'image_name.required' => 'The image name field is required.',
-            'image_name.file' => 'The image name must be a file.',
-            'image_name.mimes' => 'The image must be a file of type: jpg, jpeg, png.',
-            'image_name.max' => 'The image must not be greater than 6000 kilobytes.',
-            'image_name.unique' => 'An image with this name already exists for the specified specimen.',
-            'specimen_id.required' => 'The Specimen ID must be included.',
-            'specimen_id.integer' => 'The Specimen ID must be an integer.',
-            'parts.required' => 'The parts field is required.',
-            'description.required' => 'The description field must be filled in with something meaningful to specimen image, else what is the point?',
-            'description.min' => 'Description is required.',
-            'description.max' => 'You have 2048 characters for description field.',
-        ];
+        // Access width and height
+        $width = $image->width();
+        $height = $image->height();
 
-        // Perform the validation
-        $validated = $request->validate($rules, $messages);
-
-        if ($image_name) {
-            // Get the original file name
-
-            // Get the temporary file path
-            $temporary_file_path = $image_name->getPathName();
-
-            // Use getimagesize() to get the image dimensions
-            $image_data = getimagesize($temporary_file_path);
-
-            //dd($image_data);
-
-            if ($image_data) {
-                $width = $image_data[0];
-                $height = $image_data[1];
-
-                if ($width > 2048) {
-                    // resize while maintain proportions
-                } elseif ($height > 2048) {
-                    // resize while maintain proportions
-                }
-            }
-
-        } else {
-            Session::flash('message', 'No image data received!');
-
-            return Redirect::back();
+        if ($width > 2048 || $height > 2048) {
+            $image->resize(2048, 2048);
         }
 
-        //end AI code
+        //dd($image);
+        // Main Image Upload on Folder Code
+        $imageName = time().'-'.$image_file_name_text;
+        $destinationPath = public_path('storage/uploaded_images/');
+        $image->save($destinationPath.$imageName);
 
-        $file_address = $specimen_id.'_'.time().'_'.$image_file_name_text;
+        // Generate Thumbnail Image Upload on Folder Code
+        $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
+        $image->resize(100, 100);
+        $image->save($destinationPathThumbnail.'thumb_'.$imageName);
 
-        //dd($file_address);
-
+        /**
+         * Write Code for Image Upload Here,
+         *
+         * $upload = new Images();
+         * $upload->file = $imageName;
+         * $upload->save();
+         */
         // save request to database
         $image = ImageSpecimen::create([
-            'specimen_id' => $validated['specimen_id'],
-            'parts' => $validated['parts'],
-            'description' => $validated['description'],
+            'specimen_id' => $specimen_id,
+            'parts' => $request['parts'],
+            'description' => $request['description'],
             'image_name' => $image_file_name_text,
-            'file_address' => $file_address,
+            'file_address' => $imageName,
             'image_width' => 0,
             'image_height' => 0,
             'camera_make' => 'generic_camera_make',
@@ -148,44 +108,16 @@ class ImageSpecimenController extends Controller
             'date_taken' => '2024-06-02 00:05:27',
             'entered_by' => 1]);
 
-        $file_name = request('image_name')->getClientOriginalName();
-        // $file_address = $specimen_id.'_'.time().'_'.$file_name;
-        // $request->file_name->move(public_path('storage/uploaded_images'), $file_address);
-        // $image_path = public_path('storage/uploaded_images/'.$file_address);
-        //dd($image_file_name_text);
-        //dd($image_name);
-        //dd($file_name);
-
-        $request->image_name->move(public_path('storage/uploaded_images'), $file_address);
-
-        $image_path = public_path('storage/uploaded_images/'.$file_address);
-        //dd($image_path);
-        // resize the image and save to thumbnail directory
-        $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail');
-
-        //dd($image_path);
-        $img = Image::read($image_path);
-        $img->resize(200, 200, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPathThumbnail.'/thumb_'.$file_address);
-
-        $destinationPath = public_path('storage/uploaded_images/thumbnail');
-        //$image->move($destinationPath, $file_address);
-
-        $thumbnail_image = ImageSpecimenThumbnail::create([
-            'image_specimen_id' => request('specimen_id'),
-            'thumbnail_file_address' => 'thumb_'.$file_address,
+        ImageSpecimenThumbnail::create([
+            'image_specimen_id' => $image->id,  // id of image_specimen just entered
+            'thumbnail_file_address' => 'thumb_'.$imageName,
             'image_width' => 200,
             'image_height' => 200,
             'entered_by' => 1]);
 
-        //dd($image);
-
-        //return redirect('/specimens.show/'.$specimen_id);
-        //return back()->with('success', 'Image Uploaded successfully!');
-        Session::flash('message', 'Image uploaded!');
-
-        return Redirect::back();
+        return back()
+            ->with('message', 'Image Upload successful')
+            ->with('imageName', $imageName);
     }
 
     public function create()

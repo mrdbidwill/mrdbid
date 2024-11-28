@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09cc903980ab78cfd828cefefa146701",
+    "content-hash": "385a4d690e3a5433a5f5a1b1db396e64",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1598,12 +1598,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Intervention\\Image\\Laravel\\ServiceProvider"
-                    ],
                     "aliases": {
                         "Image": "Intervention\\Image\\Laravel\\Facades\\Image"
-                    }
+                    },
+                    "providers": [
+                        "Intervention\\Image\\Laravel\\ServiceProvider"
+                    ]
                 }
             },
             "autoload": {
