@@ -12,7 +12,7 @@
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-6 gap-y-4">
-                <form method="POST" action="{{ route('custom_image_specimen.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('image_specimen.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="image_name" class="block text-sm font-medium leading-6 text-gray-900">Select image

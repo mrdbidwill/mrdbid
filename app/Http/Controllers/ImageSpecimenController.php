@@ -35,9 +35,9 @@ class ImageSpecimenController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // dd($request);
-        // $this->validate($request, [
-        //    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
+        $request->validate([
+            'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
+        ]);
 
         $image_name = $request['image_name'];
         //dd($image_name);
@@ -62,7 +62,11 @@ class ImageSpecimenController extends Controller
             return Redirect::back();
         }
 
-        $image = Image::read($request->file('image_name'));
+        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
+            $image = Image::read($request->file('image_name'));
+        } else {
+            return Redirect::back()->withErrors('Image file is not valid.');
+        }
 
         // Access width and height
         $width = $image->width();
