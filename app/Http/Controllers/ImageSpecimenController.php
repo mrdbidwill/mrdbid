@@ -74,7 +74,7 @@ class ImageSpecimenController extends Controller
 
         //dd($image);
         // Main Image Upload on Folder Code
-        $imageName = time().'-'.$image_file_name_text;
+        $imageName = time().'_'.$image_file_name_text;
         $destinationPath = public_path('storage/uploaded_images/');
         $image->save($destinationPath.$imageName);
 

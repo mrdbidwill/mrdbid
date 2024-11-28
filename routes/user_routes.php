@@ -50,6 +50,8 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::get('/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus']);
     Route::get('/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies']);
 
+    Route::post('image_specimen/store', [ImageSpecimenController::class, 'store'])->name('image_specimen.store');
+
     Route::resource('data_source', DataSourceController::class);
     Route::resource('data_source_data_type', DataSourceDataTypeController::class);
     Route::resource('display_option', DisplayOptionController::class);
