@@ -8,8 +8,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\ImageManager;
 use Intervention\Image\Laravel\Facades\Image;
 
 class ImageSpecimenController extends Controller
@@ -34,6 +37,9 @@ class ImageSpecimenController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        // create new manager instance with desired driver
+        $manager = new ImageManager(new Driver);
+
         // dd($request);
         $request->validate([
             'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
@@ -63,7 +69,8 @@ class ImageSpecimenController extends Controller
         }
 
         if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
-            $image = Image::read($request->file('image_name'));
+            //$image = Image::read($request->file('image_name'));
+            $image = $manager->read($request->file('image_name'));
         } else {
             return Redirect::back()->withErrors('Image file is not valid.');
         }
@@ -73,10 +80,7 @@ class ImageSpecimenController extends Controller
         $height = $image->height();
 
         if ($width > 2048 || $height > 2048) {
-            $image->resize(2048, 2048, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            $image->scale(2048, 2048);
         }
 
         //dd($image);
@@ -87,7 +91,7 @@ class ImageSpecimenController extends Controller
 
         // Generate Thumbnail Image Upload on Folder Code
         $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
-        $image->resize(100, 100);
+        $image->scale(100, 100);
         $image->save($destinationPathThumbnail.'thumb_'.$imageName);
 
         /**
@@ -98,29 +102,37 @@ class ImageSpecimenController extends Controller
          * $upload->save();
          */
         // save request to database
-        $imageSpecimen = ImageSpecimen::create([
-            'specimen_id' => $specimen_id,
-            'parts' => $request['parts'],
-            'description' => $request['description'],
-            'image_name' => $image_file_name_text,
-            'file_address' => $imageName,
-            'image_width' => 0,
-            'image_height' => 0,
-            'camera_make' => 'generic_camera_make',
-            'camera_model' => 'generic_camera_model',
-            'lens' => 'generic_lens',
-            'exposure' => 'generic_exposure',
-            'aperture' => 'generic_aperture',
-            'iso' => 'generic_iso',
-            'date_taken' => '2024-06-02 00:05:27',
-            'entered_by' => 1]);
+        try {
+            $imageSpecimen = ImageSpecimen::create([
+                'specimen_id' => $specimen_id,
+                'parts' => $request['parts'],
+                'description' => $request['description'],
+                'image_name' => $image_file_name_text,
+                'file_address' => $imageName,
+                'image_width' => 0,
+                'image_height' => 0,
+                'camera_make' => 'generic_camera_make',
+                'camera_model' => 'generic_camera_model',
+                'lens' => 'generic_lens',
+                'exposure' => 'generic_exposure',
+                'aperture' => 'generic_aperture',
+                'iso' => 'generic_iso',
+                'date_taken' => '2024-06-02 00:05:27',
+                'entered_by' => 1]);
+        } catch (\Exception $e) {
+            Log::error('Error creating ImageSpecimen: '.$e->getMessage());
+        }
 
-        ImageSpecimenThumbnail::create([
-            'image_specimen_id' => $imageSpecimen->id,  // id of image_specimen just entered
-            'thumbnail_file_address' => 'thumb_'.$imageName,
-            'image_width' => 100,
-            'image_height' => 100,
-            'entered_by' => 1]);
+        try {
+            ImageSpecimenThumbnail::create([
+                'image_specimen_id' => $imageSpecimen->id,  // id of image_specimen just entered
+                'thumbnail_file_address' => 'thumb_'.$imageName,
+                'image_width' => 100,
+                'image_height' => 100,
+                'entered_by' => 1]);
+        } catch (\Exception $e) {
+            Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
+        }
 
         return back()
             ->with('message', 'Image Upload successful')
