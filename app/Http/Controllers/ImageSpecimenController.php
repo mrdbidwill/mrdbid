@@ -39,7 +39,7 @@ class ImageSpecimenController extends Controller
             'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
         ]);
 
-        $image_name = $request['image_name'];
+        $image_name = $request->file('image_name');
         //dd($image_name);
         $image_file_name_text = $image_name->getClientOriginalName();
 
@@ -73,7 +73,10 @@ class ImageSpecimenController extends Controller
         $height = $image->height();
 
         if ($width > 2048 || $height > 2048) {
-            $image->resize(2048, 2048);
+            $image->resize(2048, 2048, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
         }
 
         //dd($image);
@@ -95,7 +98,7 @@ class ImageSpecimenController extends Controller
          * $upload->save();
          */
         // save request to database
-        $image = ImageSpecimen::create([
+        $imageSpecimen = ImageSpecimen::create([
             'specimen_id' => $specimen_id,
             'parts' => $request['parts'],
             'description' => $request['description'],
@@ -113,10 +116,10 @@ class ImageSpecimenController extends Controller
             'entered_by' => 1]);
 
         ImageSpecimenThumbnail::create([
-            'image_specimen_id' => $image->id,  // id of image_specimen just entered
+            'image_specimen_id' => $imageSpecimen->id,  // id of image_specimen just entered
             'thumbnail_file_address' => 'thumb_'.$imageName,
-            'image_width' => 200,
-            'image_height' => 200,
+            'image_width' => 100,
+            'image_height' => 100,
             'entered_by' => 1]);
 
         return back()
