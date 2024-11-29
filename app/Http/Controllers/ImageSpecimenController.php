@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use Intervention\Image\Drivers\Imagick\Driver;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Laravel\Facades\Image;
 
 class ImageSpecimenController extends Controller
@@ -37,83 +33,29 @@ class ImageSpecimenController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        // create new manager instance with desired driver
-        $manager = new ImageManager(new Driver);
-
-        // dd($request);
+        //dd($request);
         $request->validate([
-            'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
         ]);
-
-        $image_name = $request->file('image_name');
-        //dd($image_name);
-        $image_file_name_text = $image_name->getClientOriginalName();
-
-        $image_file_name_text = preg_replace('/\s+/', '_', $image_file_name_text);  // replace one or more spaces with one underscore
 
         $specimen_id = $request['specimen_id'];
 
-        $check_duplicate_name = DB::table('image_specimens')
-            ->where([
-                ['specimen_id', '=', $specimen_id],
-                ['image_name',  '=', $image_file_name_text],
-            ])
-            ->first();
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
 
-        //dd($check_duplicate_name);
+        //dd($imageName);
 
-        if ($check_duplicate_name != null) {
-            Session::flash('message', 'You have already uploaded an image with that name.');
-
-            return Redirect::back();
-        }
-
-        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
-            //$image = Image::read($request->file('image_name'));
-            $image = $manager->read($request->file('image_name'));
-        } else {
-            return Redirect::back()->withErrors('Image file is not valid.');
-        }
-
-        // Access width and height
-        $width = $image->width();
-        $height = $image->height();
-
-        if ($width > 2048 || $height > 2048) {
-            $image->scale(2048, 2048);
-        }
-
-        //dd($image);
-        // Main Image Upload on Folder Code
-        $imageName = time().'_'.$image_file_name_text;
-        $destinationPath = public_path('storage/uploaded_images/');
-        $image->save($destinationPath.$imageName);
-
-        $filePath = $destinationPath.$imageName;
-        if (file_exists($filePath) && filesize($filePath) > 0) {
-            Log::info("File '$imageName' was successfully saved.");
-        } else {
-            Log::error("File '$imageName' was not saved correctly.");
-
-            return Redirect::back()->withErrors('Failed to save the image file.');
-        }
-
-        // Generate Thumbnail Image Upload on Folder Code
         $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
-        $image->scale(100, 100);
-        $image->save($destinationPathThumbnail.'thumb_'.$imageName);
+        $img = Image::read($image->path());
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPathThumbnail.'/thumb_'.$imageName);
 
-        $filePathThumb = $destinationPathThumbnail.'thumb_'.$imageName;
-        if (file_exists($filePathThumb) && filesize($filePathThumb) > 0) {
-            Log::info("File '$imageName' thumb was successfully saved.");
-        } else {
-            Log::error("File '$imageName' thumb was not saved correctly.");
+        $destinationPath = public_path('storage/uploaded_images/');
+        $image->move($destinationPath, $imageName);
 
-            return Redirect::back()->withErrors('Failed to save the image thumb file.');
-        }
+        $image_file_name_text = $image->getClientOriginalName();
 
-        // dd("I'm working here on line ".__LINE__);
-        // save request to database
         try {
             $imageSpecimen = ImageSpecimen::create([
                 'specimen_id' => $specimen_id,
@@ -145,10 +87,8 @@ class ImageSpecimenController extends Controller
         } catch (\Exception $e) {
             Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
         }
-        // dd("I'm working here on line ".__LINE__);
 
-        return back()
-            ->with('message', 'Image Upload successful')
+        return back()->with('success', 'Image Uploaded successfully!')
             ->with('imageName', $imageName);
     }
 
