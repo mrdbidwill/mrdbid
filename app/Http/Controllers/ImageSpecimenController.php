@@ -89,18 +89,30 @@ class ImageSpecimenController extends Controller
         $destinationPath = public_path('storage/uploaded_images/');
         $image->save($destinationPath.$imageName);
 
+        $filePath = $destinationPath.$imageName;
+        if (file_exists($filePath) && filesize($filePath) > 0) {
+            Log::info("File '$imageName' was successfully saved.");
+        } else {
+            Log::error("File '$imageName' was not saved correctly.");
+
+            return Redirect::back()->withErrors('Failed to save the image file.');
+        }
+
         // Generate Thumbnail Image Upload on Folder Code
         $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
         $image->scale(100, 100);
         $image->save($destinationPathThumbnail.'thumb_'.$imageName);
 
-        /**
-         * Write Code for Image Upload Here,
-         *
-         * $upload = new Images();
-         * $upload->file = $imageName;
-         * $upload->save();
-         */
+        $filePathThumb = $destinationPathThumbnail.'thumb_'.$imageName;
+        if (file_exists($filePathThumb) && filesize($filePathThumb) > 0) {
+            Log::info("File '$imageName' thumb was successfully saved.");
+        } else {
+            Log::error("File '$imageName' thumb was not saved correctly.");
+
+            return Redirect::back()->withErrors('Failed to save the image thumb file.');
+        }
+
+        // dd("I'm working here on line ".__LINE__);
         // save request to database
         try {
             $imageSpecimen = ImageSpecimen::create([
@@ -133,6 +145,7 @@ class ImageSpecimenController extends Controller
         } catch (\Exception $e) {
             Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
         }
+        // dd("I'm working here on line ".__LINE__);
 
         return back()
             ->with('message', 'Image Upload successful')
