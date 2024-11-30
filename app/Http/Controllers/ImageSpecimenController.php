@@ -41,7 +41,11 @@ class ImageSpecimenController extends Controller
         $specimen_id = $request['specimen_id'];
 
         $image = $request->file('image');
-        $imageName = time().'.'.$image->extension();
+
+        $image_file_name_text = $image->getClientOriginalName();
+        $imageName = $specimen_id.'_'.time().'.'.$image_file_name_text;
+
+        $image_file_name_text = $image->getClientOriginalName();
 
         //dd($imageName);
 
@@ -57,6 +61,8 @@ class ImageSpecimenController extends Controller
         $image_file_name_text = $image->getClientOriginalName();
 
         try {
+
+            /*
             $imageSpecimen = ImageSpecimen::create([
                 'specimen_id' => $specimen_id,
                 'parts' => $request['parts'],
@@ -73,17 +79,49 @@ class ImageSpecimenController extends Controller
                 'iso' => 'generic_iso',
                 'date_taken' => '2024-06-02 00:05:27',
                 'entered_by' => 1]);
+            */
+
+            $imageSpecimen = DB::table('image_specimens')->insert([
+                'specimen_id' => $specimen_id,
+                'parts' => $request['parts'],
+                'description' => $request['description'],
+                'image_name' => $image_file_name_text,
+                'file_address' => $imageName,
+                'image_width' => 0,
+                'image_height' => 0,
+                'camera_make' => 'generic_camera_make',
+                'camera_model' => 'generic_camera_model',
+                'lens' => 'generic_lens',
+                'exposure' => 'generic_exposure',
+                'aperture' => 'generic_aperture',
+                'iso' => 'generic_iso',
+                'date_taken' => '2024-06-02 00:05:27',
+                'entered_by' => 1,
+            ]);
+
         } catch (\Exception $e) {
             Log::error('Error creating ImageSpecimen: '.$e->getMessage());
         }
 
         try {
+
+            $imageSpecimenThumbnail = DB::table('image_specimens_thumbnails')->insert([
+                'image_specimen_id' => $imageSpecimen,  // id of image_specimen just entered
+                'thumbnail_file_address' => 'thumb_'.$imageName,
+                'image_width' => 100,
+                'image_height' => 100,
+                'entered_by' => 1,
+            ]);
+
+            /*
             ImageSpecimenThumbnail::create([
                 'image_specimen_id' => $imageSpecimen->id,  // id of image_specimen just entered
                 'thumbnail_file_address' => 'thumb_'.$imageName,
                 'image_width' => 100,
                 'image_height' => 100,
                 'entered_by' => 1]);
+            */
+
         } catch (\Exception $e) {
             Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
         }
