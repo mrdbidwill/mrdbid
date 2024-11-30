@@ -105,7 +105,7 @@ class ImageSpecimenController extends Controller
 
         try {
 
-            $imageSpecimenThumbnail = DB::table('image_specimens_thumbnails')->insert([
+            $imageSpecimenThumbnail = DB::table('image_specimen_thumbnails')->insert([
                 'image_specimen_id' => $imageSpecimen,  // id of image_specimen just entered
                 'thumbnail_file_address' => 'thumb_'.$imageName,
                 'image_width' => 100,

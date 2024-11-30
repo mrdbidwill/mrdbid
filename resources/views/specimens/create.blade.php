@@ -201,15 +201,15 @@
                                 <!-- radio list of months -->
                                 @php
                                     $month_array = [
-                                        ["01", "January"],
-                                        ["02", "February"],
-                                        ["03", "March"],
-                                        ["04", "April"],
-                                        ["05", "May"],
-                                        ["06", "June"],
-                                        ["07", "July"],
-                                        ["08", "August"],
-                                        ["09", "September"],
+                                        ["1", "January"],
+                                        ["2", "February"],
+                                        ["3", "March"],
+                                        ["4", "April"],
+                                        ["5", "May"],
+                                        ["6", "June"],
+                                        ["7", "July"],
+                                        ["8", "August"],
+                                        ["9", "September"],
                                         ["10", "October"],
                                         ["11", "November"],
                                         ["12", "December"]
@@ -221,7 +221,7 @@
                                         <tr>
                                             <td>
                                                 <label for="month_{{ $month[0] }}" class="text-sm font-medium leading-6 text-gray-900">{{ $month[1] }}</label>
-                                                <input type="radio" id="month_{{ $month[0] }}" name="month_found"
+                                                <input type="radio" id="{{ $month[0] }}" name="month_found"
                                                        value="{{ $month[0] }}" required @if($loop->first) checked @endif>
                                             </td>
                                         </tr>
