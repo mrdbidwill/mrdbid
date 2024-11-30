@@ -51,4 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function specimens() // Assuming you want to access multiple specimens
+    {
+        return $this->hasMany(Specimen::class);
+    }
 }
