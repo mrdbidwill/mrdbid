@@ -57,7 +57,7 @@ class ImageSpecimenController extends Controller
 
         //dd($request);
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6000',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
             'description' => 'required|string|max:1280',
             'parts' => 'required|integer',
         ]);
@@ -117,7 +117,11 @@ class ImageSpecimenController extends Controller
         $aperture = $img->exif('EXIF.FNumber');
         $iso = $img->exif('EXIF.ISOSpeedRatings');
 
-        $img->scale(width: 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
+        /*
+        $img->scale(width: 100, height: 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
+*/
+
+        $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
 
         $destinationPath = public_path('storage/uploaded_images/');
         $image->move($destinationPath, $imageName);
