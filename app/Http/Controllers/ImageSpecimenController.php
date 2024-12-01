@@ -81,7 +81,7 @@ class ImageSpecimenController extends Controller
         $check_duplicate_name = DB::table('image_specimens')
             ->where([
                 ['specimen_id', '=', $specimen_id],
-                ['image_name',  '=', $image_file_name_text],
+                ['file_address',  '=', $image_file_name_text],
             ])
             ->first();
 
