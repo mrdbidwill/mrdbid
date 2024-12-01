@@ -21,7 +21,7 @@
 
                          $table->integer('parts');
 
-                         $table->text('description');
+                         $table->text('description')->nullable();
 
                          $table->string('image_name', length: 240);
 

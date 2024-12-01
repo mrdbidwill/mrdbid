@@ -58,9 +58,9 @@ class ImageSpecimenController extends Controller
         //dd($request);
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
-            'description' => 'string|max:1280',
+            'description' => 'nullable|string|max:1280',
             'parts' => 'required|integer',
-            'lens' => 'string|max:255',
+            'lens' => 'nullable|string|max:255',
         ]);
 
         $image = $request->file('image');
