@@ -35,7 +35,7 @@
 
                          $table->string('camera_model')->nullable();
 
-                         $table->string('lens', length: 64)->nullable();
+                         $table->string('lens', length: 255)->nullable();
 
                          $table->string('exposure', length: 64)->nullable();
 

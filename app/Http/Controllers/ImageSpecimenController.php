@@ -58,30 +58,32 @@ class ImageSpecimenController extends Controller
         //dd($request);
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
-            'description' => 'required|string|max:1280',
+            'description' => 'string|max:1280',
             'parts' => 'required|integer',
+            'lens' => 'string|max:255',
         ]);
 
         $image = $request->file('image');
 
         $image_file_name_text = $image->getClientOriginalName();
-
-        // remove any character that is not a word character (`\w` includes
-        // letters, numbers, and underscores), a hyphen (`-`), or a period (`.`).
-        $image_file_name_text = preg_replace('/[^\w\-_.]/', '', $image_file_name_text);
-
         // Replace one or more spaces with an underscore
         $image_file_name_text = preg_replace('/\s+/', '_', $image_file_name_text);
 
         //  Replace mid-line dash with underscore - keeps file names looking similar
         $image_file_name_text = preg_replace('/-/', '_', $image_file_name_text);
 
+        // remove any character that is not a word character (`\w` includes
+        // letters, numbers, and underscores), a hyphen (`-`), or a period (`.`).
+        $image_file_name_text = preg_replace('/[^\w\-_.]/', '', $image_file_name_text);
+
         $imageName = $specimen_id.'_'.time().'_'.$image_file_name_text;
+        // dd($imageName);             // 1_1733075120_IMG_9528.JPG
+        // dd($image_file_name_text);  //               IMG_9528.JPG
 
         $check_duplicate_name = DB::table('image_specimens')
             ->where([
                 ['specimen_id', '=', $specimen_id],
-                ['file_address',  '=', $image_file_name_text],
+                ['image_name',   '=', $image_file_name_text],  // this should match the local file name to prevent dup
             ])
             ->first();
 
@@ -92,8 +94,6 @@ class ImageSpecimenController extends Controller
 
             return Redirect::back();
         }
-
-        $image_file_name_text = $image->getClientOriginalName();
 
         //dd($imageName);
 
@@ -126,8 +126,6 @@ class ImageSpecimenController extends Controller
         $destinationPath = public_path('storage/uploaded_images/');
         $image->move($destinationPath, $imageName);
 
-        $image_file_name_text = $image->getClientOriginalName();
-
         try {
             /*
                         $imageSpecimenId = ImageSpecimen::create([
@@ -158,7 +156,7 @@ class ImageSpecimenController extends Controller
                 'image_height' => $image_height,
                 'camera_make' => $camera_make,
                 'camera_model' => $camera_model,
-                'lens' => '1',
+                'lens' => $request['lens'],
                 'exposure' => $exposure,
                 'aperture' => $aperture,
                 'iso' => $iso,
