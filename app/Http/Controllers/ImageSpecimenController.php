@@ -81,7 +81,7 @@ class ImageSpecimenController extends Controller
 
             // Resize the image if larger than 2048 x 2048
             if ($img->width() > 2048 and $img->height() > 2048) {
-                $img->scaleDown(2048, 2048);
+                $img->scale(2048, 2048);
             } elseif ($img->width() > 2048) {
                 $img->scaleDown(width: 2048);
             } elseif ($img->height() > 2048) {
