@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ImageSpecimen;
-use App\Models\ImageSpecimenThumbnail;
 use App\Models\Specimen;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,165 +38,102 @@ class ImageSpecimenController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $specimen_id = $request['specimen_id'];
-
-        // Get the currently authenticated user - all data
         $currentUser = Auth::user();
-        //dd($currentUser);
-
-        // Retrieve the user's ID
         $userId = $currentUser->id;
-
-        // Assuming you have a Specimen model and it is related to the User model
         $specimen = $currentUser->specimens()->find($specimen_id);
 
         if (! $specimen) {
-            // Handle the case where the specimen does not belong to the current user
             abort(404, 'Specimen not found or you do not have permission to access it');
         }
 
-        //dd($request);
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
             'description' => 'nullable|string|max:1280',
             'parts' => 'required|integer',
             'lens' => 'nullable|string|max:255',
         ]);
 
-        $image = $request->file('image');
+        $images = $request->file('images');
 
-        $image_file_name_text = $image->getClientOriginalName();
-        // Replace one or more spaces with an underscore
-        $image_file_name_text = preg_replace('/\s+/', '_', $image_file_name_text);
+        foreach ($images as $image) {
+            $image_file_name_text = $image->getClientOriginalName();
+            $image_file_name_text = preg_replace('/\s+/', '_', $image_file_name_text);
+            $image_file_name_text = preg_replace('/-/', '_', $image_file_name_text);
+            $image_file_name_text = preg_replace('/[^\w\-_.]/', '', $image_file_name_text);
 
-        //  Replace mid-line dash with underscore - keeps file names looking similar
-        $image_file_name_text = preg_replace('/-/', '_', $image_file_name_text);
+            $imageName = $specimen_id.'_'.time().'_'.$image_file_name_text;
 
-        // remove any character that is not a word character (`\w` includes
-        // letters, numbers, and underscores), a hyphen (`-`), or a period (`.`).
-        $image_file_name_text = preg_replace('/[^\w\-_.]/', '', $image_file_name_text);
+            $check_duplicate_name = DB::table('image_specimens')
+                ->where([
+                    ['specimen_id', '=', $specimen_id],
+                    ['image_name', '=', $image_file_name_text],
+                ])
+                ->first();
 
-        $imageName = $specimen_id.'_'.time().'_'.$image_file_name_text;
-        // dd($imageName);             // 1_1733075120_IMG_9528.JPG
-        // dd($image_file_name_text);  //               IMG_9528.JPG
+            if ($check_duplicate_name != null) {
+                Session::flash('message', 'You have already uploaded an image with that name.');
 
-        $check_duplicate_name = DB::table('image_specimens')
-            ->where([
-                ['specimen_id', '=', $specimen_id],
-                ['image_name',   '=', $image_file_name_text],  // this should match the local file name to prevent dup
-            ])
-            ->first();
+                return Redirect::back();
+            }
 
-        //dd($check_duplicate_name);
+            $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
+            $img = Image::read($image->path());
 
-        if ($check_duplicate_name != null) {
-            Session::flash('message', 'You have already uploaded an image with that name.');
+            $exifData = $img->exif();
+            $image_width = $img->exif('COMPUTED.Width');
+            $image_height = $img->exif('COMPUTED.Height');
+            $filesize = $img->exif('FILE.FileSize');
+            $camera_make = $img->exif('IFD0.Make');
+            $camera_model = $img->exif('IFD0.Model');
+            $date_taken = $img->exif('EXIF.DateTimeOriginal');
+            $exposure = $img->exif('EXIF.ExposureTime');
+            $aperture = $img->exif('EXIF.FNumber');
+            $iso = $img->exif('EXIF.ISOSpeedRatings');
 
-            return Redirect::back();
+            $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
+            $destinationPath = public_path('storage/uploaded_images/');
+            $image->move($destinationPath, $imageName);
+
+            try {
+                $imageSpecimenId = DB::table('image_specimens')->insertGetId([
+                    'specimen_id' => $specimen_id,
+                    'parts' => $request['parts'],
+                    'description' => $request['description'],
+                    'image_name' => $image_file_name_text,
+                    'file_address' => $imageName,
+                    'image_width' => $image_width,
+                    'image_height' => $image_height,
+                    'camera_make' => $camera_make,
+                    'camera_model' => $camera_model,
+                    'lens' => $request['lens'],
+                    'exposure' => $exposure,
+                    'aperture' => $aperture,
+                    'iso' => $iso,
+                    'date_taken' => $date_taken,
+                    'entered_by' => $userId,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Error creating ImageSpecimen: '.$e->getMessage());
+            }
+
+            try {
+                DB::table('image_specimen_thumbnails')->insert([
+                    'image_specimen_id' => $imageSpecimenId,
+                    'thumbnail_file_address' => 'thumb_'.$imageName,
+                    'image_width' => 100,
+                    'image_height' => 100,
+                    'entered_by' => $userId,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
+            }
         }
 
-        //dd($imageName);
-
-        $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
-
-        $img = Image::read($image->path());
-
-        $exifData = $img->exif();
-        //dd($exifData);
-
-        $image_width = $img->exif('COMPUTED.Width');
-        $image_height = $img->exif('COMPUTED.Height');
-        //dd($image_width);
-        $filesize = $img->exif('FILE.FileSize');
-        //dd($filesize);
-        $camera_make = $img->exif('IFD0.Make');
-        $camera_model = $img->exif('IFD0.Model');
-        //dd($camera_make);
-        $date_taken = $img->exif('EXIF.DateTimeOriginal');
-        $exposure = $img->exif('EXIF.ExposureTime');
-        $aperture = $img->exif('EXIF.FNumber');
-        $iso = $img->exif('EXIF.ISOSpeedRatings');
-
-        /*
-        $img->scale(width: 100, height: 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
-*/
-
-        $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
-
-        $destinationPath = public_path('storage/uploaded_images/');
-        $image->move($destinationPath, $imageName);
-
-        try {
-            /*
-                        $imageSpecimenId = ImageSpecimen::create([
-                            'specimen_id' => $specimen_id,
-                            'parts' => $request['parts'],
-                            'description' => $request['description'],
-                            'image_name' => $image_file_name_text,
-                            'file_address' => $imageName,
-                            'image_width' => $image_width,
-                            'image_height' => $image_height,
-                            'camera_make' => $camera_make,
-                            'camera_model' => $camera_model,
-                            'lens' => '1',
-                            'exposure' => $exposure,
-                            'aperture' => $aperture,
-                            'iso' => $iso,
-                            'date_taken' => $date_taken,
-                            'entered_by' => $userId]);
-
-            */
-            $imageSpecimenId = DB::table('image_specimens')->insertGetId([
-                'specimen_id' => $specimen_id,
-                'parts' => $request['parts'],
-                'description' => $request['description'],
-                'image_name' => $image_file_name_text,
-                'file_address' => $imageName,
-                'image_width' => $image_width,
-                'image_height' => $image_height,
-                'camera_make' => $camera_make,
-                'camera_model' => $camera_model,
-                'lens' => $request['lens'],
-                'exposure' => $exposure,
-                'aperture' => $aperture,
-                'iso' => $iso,
-                'date_taken' => $date_taken,
-                'entered_by' => $userId,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Error creating ImageSpecimen: '.$e->getMessage());
-        }
-
-        try {
-
-            DB::table('image_specimen_thumbnails')->insert([
-                'image_specimen_id' => $imageSpecimenId,  // id of image_specimen just entered
-                'thumbnail_file_address' => 'thumb_'.$imageName,
-                'image_width' => 100,
-                'image_height' => 100,
-                'entered_by' => $userId,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-
-            //dd($imageSpecimenId);
-            /*
-            ImageSpecimenThumbnail::create([
-                'image_specimen_id' => $imageSpecimenId,  // id of image_specimen just entered
-                'thumbnail_file_address' => 'thumb_'.$imageName,
-                'image_width' => 100,
-                'image_height' => 100,
-                'entered_by' => $userId]);
-            */
-
-        } catch (\Exception $e) {
-            Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
-        }
-
-        return back()->with('success', 'Image Uploaded successfully!')
-            ->with('imageName', $imageName);
+        return back()->with('success', 'Images Uploaded successfully!');
     }
 
     public function create()

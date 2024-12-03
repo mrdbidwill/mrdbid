@@ -4,6 +4,12 @@ auth.json
 # Directories
 /bootstrap/cache
 
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
 # Composer related files
 composer.lock
 
@@ -64,6 +70,7 @@ Thumbs.db
 .phpactor.json
 .phpunit.cache
 .phpunit.result.cache
+*.iml
 
 # Node modules
 /node_modules
@@ -77,3 +84,6 @@ yarn-error.log
 *.log
 *.swp
 *~
+*.tmp
+php_error.log
+php_errors.log*
