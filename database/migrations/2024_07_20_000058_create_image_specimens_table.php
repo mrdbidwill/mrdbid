@@ -19,7 +19,7 @@
 
                          $table->foreignIdFor(\App\Models\Specimen::class)->constrained()->cascadeOnDelete();
 
-                         $table->integer('parts');
+                         $table->integer('parts')->nullable();
 
                          $table->text('description')->nullable();
 

@@ -47,9 +47,9 @@ class ImageSpecimenController extends Controller
         }
 
         $request->validate([
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:6000',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:8000',
             'description' => 'nullable|string|max:1280',
-            'parts' => 'required|integer',
+            'parts' => 'nullable|integer',
             'lens' => 'nullable|string|max:255',
         ]);
 
@@ -79,9 +79,18 @@ class ImageSpecimenController extends Controller
             $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
             $img = Image::read($image->path());
 
+            // Resize the image if larger than 2048 x 2048
+            if ($img->width() > 2048 and $img->height() > 2048) {
+                $img->scaleDown(2048, 2048);
+            } elseif ($img->width() > 2048) {
+                $img->scaleDown(width: 2048);
+            } elseif ($img->height() > 2048) {
+                $img->scaleDown(height: 2048);
+            }
+
             $exifData = $img->exif();
-            $image_width = $img->exif('COMPUTED.Width');
-            $image_height = $img->exif('COMPUTED.Height');
+            $image_width = $img->width();
+            $image_height = $img->height();
             $filesize = $img->exif('FILE.FileSize');
             $camera_make = $img->exif('IFD0.Make');
             $camera_model = $img->exif('IFD0.Model');
