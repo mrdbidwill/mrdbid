@@ -4,6 +4,8 @@
 
     <x-specimens-nav-bar/>
     <x-notification message="{{ Session::get('message') }}"/>
+    <p>resources/views/character_specimens/index.blade.php</p>
+
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
         <div class="mx-auto max-w-7xl">
             <div class="bg-gray-300 py-10"> <!-- bg-gray-300 works-->

@@ -11,6 +11,9 @@
         @php
             //dd($specimens);
         @endphp
+
+        <p>resources/views/character_specimens/edit.show.php</p>
+
         <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
     </div>
 

@@ -1,7 +1,9 @@
 @php
     use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
     //dd($specimens);
-@endphp@extends('layouts.app')
+@endphp
+
+@extends('layouts.app')
 
 @section('content')
 
@@ -29,35 +31,17 @@
     @endif
 
 
-    <!--   <a href="/specimens/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Add Specimen</a>  -->
+    <p>resources/views/specimens/show.blade.php</p>
+
 
 
 
 
     @php
-        // get the passed in id
-        //$specimen_id = $specimen['id'];
-        //dd($specimen_id);
         $specimen_id = $specimen->id;
         $selected_country = $specimen->country;
         $selected_state = $specimen->state;
 
-        //dd($countries);
-        // dd($states);
-        //dd($selected_country);
-        //dd($selected_state);
-
-/*
-     $specimenState = DB::table('states')
-     ->where('id', '=', $specimen['state'])
-    ->first();
-    //dd($state);
-
-    $specimenCountry = DB::table('countries')
-   ->where('id', '=', $specimen['country'])
-    ->first();
-    // dd($country);
-*/
 
     if($specimen['location_public_y_n'] = 0){
     $location_public = 'Not Public';
@@ -86,7 +70,7 @@
     @endphp
 
     <table
-        class="w-full table-auto bg-indigo-100 border-separate border border-slate-900 border-4-rounded rounded-lg outline-slate-100 outline-4">
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
         <tr>
             <td class="p-2">
@@ -124,46 +108,46 @@
 
 
         <tr>
-            <td class="border-4 border-black p-2 text-fuchsia-700 text-center" colspan="2">
-                These are the basic characters that every specimen should have:
+            <td class="border-4 border-blue-300 p-2 text-black text-center" colspan="2" >
+                These are the basic characters that every specimen should have. To make changes, click on the
+                corresponding field and enter new text or select new values, then click the Update button.
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 Specimen ID: {{ $specimen->id }}
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'specimen_name']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Specimen Name: <input type="text" name="specimen_name"
-                                          value="{{ old('specimen_name', $specimen->specimen_name) }}"> <br>
-                    <x-form-button>Update</x-form-button>
+                    Specimen Name: <input type="text" class="wider-input"  name="specimen_name"
+                                          value="{{ old('specimen_name', $specimen->specimen_name) }}">
+                    <x-form-button-small class="spaced-button" fieldName="Specimen Name">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'common_name']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Common Name: <input type="text" name="common_name"
-                                        value="{{ old('common_name', $specimen->common_name) }}" style="width: 100%;">
-                    <br>
-                    <x-form-button>Update</x-form-button>
+                    Common Name: <input type="text" class="wider-input"   name="common_name"
+                                        value="{{ old('common_name', $specimen->common_name) }}">
+                    <x-form-button-small class="spaced-button" fieldName="Common Name">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'description']) }}"
                       method="POST">
                     @csrf
@@ -171,26 +155,26 @@
                     Description: <textarea name="description" rows="4"
                                            style="width: 100%;">{{ old('description', $specimen->description) }}</textarea>
                     <br>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="Description">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'comment']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
                     Comment: <textarea name="comment" rows="8"
                                        style="width: 100%;">{{ old('comment', $specimen->comment) }}</textarea> <br>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="Comment">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
         <!-- Country Dropdown -->
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 Country:
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'country']) }}"
                       method="POST">
@@ -204,14 +188,14 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="Country">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <!-- State Dropdown -->
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
 
                 State:
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'state']) }}"
@@ -225,80 +209,80 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="State">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form
                     action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_city']) }}"
                     method="POST">
                     @csrf
                     @method('PUT')
-                    Location Found City: <input type="text" name="location_found_city"
+                    Location Found City: <input type="text" class="wider-input"   name="location_found_city"
                                                 value="{{ old('location_found_city', $specimen->location_found_city) }}">
-                    <br>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="City Found">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form
                     action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_found_county']) }}"
                     method="POST">
                     @csrf
                     @method('PUT')
-                    Location Found County: <input type="text" name="location_found_county"
+                    Location Found County: <input type="text" class="wider-input"   name="location_found_county"
                                                   value="{{ old('location_found_county', $specimen->location_found_county) }}">
-                    <br>
-                    <x-form-button>Update</x-form-button>
+                    <x-form-button-small class="spaced-button" fieldName="County Found">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'month_found']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="month_found">Month Found</label> <select id="month_found" name="month_found"
-                                                                             class="form-control">
+                        <label for="month_found">Month Found:   </label> <select id="month_found" name="month_found"
+                                                                                 class="wider-input">
                             @foreach(App\Utils\DateUtils::getAllMonths() as $num => $name)
                                 <option value="{{ $num }}" {{ $specimen->month_found == $num ? 'selected' : '' }}>
                                     {{ $name }}
                                 </option>
                             @endforeach
                         </select>
+
+                    <x-form-button-small class="spaced-button" fieldName="Month Found">Update</x-form-button-small>
                     </div>
-                    <x-form-button>Update</x-form-button>
                 </form>
+
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'day_found']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Day Found: <input type="text" name="day_found" value="{{ old('day_found', $specimen->day_found) }}">
-                    <br>
-                    <x-form-button>Update</x-form-button>
+                    Day Found:   <input type="text" class="wider-input" name="day_found" value="{{ old('day_found', $specimen->day_found) }}">
+                    <x-form-button-small class="spaced-button" fieldName="Day Found">Update</x-form-button-small>
                 </form>
+
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'year_found']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Year Found: <input type="text" name="year_found"
-                                       value="{{ old('year_found', $specimen->year_found) }}"> <br>
-                    <x-form-button>Update</x-form-button>
+                    Year Found:   <input type="text"  class="wider-input"   name="year_found"
+                                       value="{{ old('year_found', $specimen->year_found) }}">
+                    <x-form-button-small class="spaced-button" fieldName="Year Found">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form
                     action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'location_public_y_n']) }}"
                     method="POST">
@@ -313,14 +297,14 @@
                             value="1" {{ old('location_public_y_n', $specimen->location_public_y_n) == 1 ? 'selected' : '' }}>
                             No
                         </option>
-                    </select> <br>
-                    <x-form-button>Update</x-form-button>
+                    </select>
+                    <x-form-button-small class="spaced-button" fieldName="Location Public?">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form
                     action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'share_data_y_n']) }}"
                     method="POST">
@@ -333,14 +317,14 @@
                         <option value="1" {{ old('share_data_y_n', $specimen->share_data_y_n) == 1 ? 'selected' : '' }}>
                             No
                         </option>
-                    </select> <br>
-                    <x-form-button>Update</x-form-button>
+                    </select>
+                    <x-form-button-small class="spaced-button" fieldName="Share Data">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2" colspan="2">
+            <td class="border-4 border-blue-300 p-2" colspan="2">
                 <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'fungus_type']) }}"
                       method="POST">
                     @csrf
@@ -352,14 +336,14 @@
                                 {{ $type->name }}
                             </option>
                         @endforeach
-                    </select> <br>
-                    <x-form-button>Update</x-form-button>
+                    </select>
+                    <x-form-button-small class="spaced-button" fieldName="Fungus Type">Update</x-form-button-small>
                 </form>
             </td>
         </tr>
 
         <tr>
-            <td class="border-4 border-black p-2 text-fuchsia-700 text-center" colspan="2">
+            <td class="border-4 border-blue-300 p-2 text-fuchsia-700 text-center" colspan="2">
                 End basic characters.
             </td>
         </tr> <!-- end basic specimen table line 180 of specimens/index.blade.php -->

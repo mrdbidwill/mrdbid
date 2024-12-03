@@ -19,7 +19,7 @@
 
     <x-specimens-nav-bar/>
     <x-notification message="{{ Session::get('message') }}"/>
-    <!--  <p>resources/views/character_specimens/edit.blade.php</p>  -->
+    <p>resources/views/character_specimens/edit.blade.php</p>
 
     @php $list_of_set_characters_array[] = '';  @endphp
     @foreach ($list_of_set_characters as $list_of_set_character)

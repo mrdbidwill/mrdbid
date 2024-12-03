@@ -18,6 +18,8 @@
         ImageUtils::displaySpecimenImages( $specimen_id );
     @endphp
 
+    <p>resources/views/specimens/edit.blade.php</p>
+
 
     <form method="POST" action="/specimens/{{ $specimen_id }}">
         @csrf

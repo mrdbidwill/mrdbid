@@ -1,87 +1,78 @@
-{{-- resources/views/specimens/create.blade.php --}}@props(['countries'])@extends('layouts.app')
+@props(['countries'])
+
+@extends('layouts.app')
 
 @section('content')
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
+
+    <p>resources/views/specimens/create.blade.php</p>
+
     <form method="POST" action="{{ route('specimens.store') }}">
         @csrf
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-4">
-                        <label for="specimen_name" class="block text-sm font-medium leading-6 text-gray-900">Specimen
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color:#e0e7ff; border: 4px solid #93c5fd; border-radius: 0.5rem; outline: 4px solid #f1f5f9;">
+            <tr>
+                <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
+                <label for="specimen_name" class="block text-sm font-medium leading-6 text-black">Specimen
                             Name</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="specimen_name" id="specimen_name"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Specimen Name" value="" required>
-                            </div>
+                <input  class="consistent-width"    type="text" name="specimen_name" id="specimen_name" placeholder="You pick the name, such as abc_12_31_99_agaricus_maybe..." value="" required>
 
-                            @error('specimen_name')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="sm:col-span-4">
+                @error('specimen_name')
+                <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                @enderror
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
+
                         <label for="common_name" class="block text-sm font-medium leading-6 text-gray-900">Common
                             Name</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="common_name" id="common_name"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Little Brown Mushroom - Front Yard" value="" required>
-                            </div>
+                                <input  class="consistent-width"    type="text" name="common_name" id="common_name"
+
+                                       placeholder="Whatever helps you." value="" required>
+
 
                             @error('common_name')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
-                    <div class="sm:col-span-4">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
                         <label for="description"
                                class="block text-sm font-medium leading-6 text-gray-900">Description</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="description" id="description"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Description" value="">
-                            </div>
+                                <input  class="consistent-width"    type="text" name="description" id="description"
+
+                                       placeholder="Type here..." value="">
+
                             @error('description')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="comment" class="block text-sm font-medium leading-6 text-gray-900">Comment</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="comment" id="comment"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Comment" value="">
-                            </div>
+                                <input  class="consistent-width"   type="text" name="comment" id="comment"
+
+                                       placeholder="Type here..." value="">
+
 
                             @error('comment')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
 
-                    <div class="sm:col-span-4">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
                         Specimen Location Now: (todo: list of herbariums)
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
 
                                 @php
                                     $specimen_data = DB::table( 'specimen_locations_now' )->get();
@@ -91,112 +82,106 @@
                                     @foreach($specimen_data as $item)
 
                                         <tr>
-                                            <td>
+                                            <td class="radio-cell">
+                                                <div class="radio-wrapper">
                                                 @if( $item->id == 1)
                                                     {{-- For standard lookup tables 1 is Not Entered --}}
-                                                    <input type="radio" id="specimen_location_now"
+                                                    <input  class="radio-button"    type="radio" id="specimen_location_now"
                                                            name="specimen_location_now" value="{{$item->id}}" required
                                                            checked>
                                                 @else
-                                                    <input type="radio" id="specimen_location_now"
+                                                    <input  class="radio-button"    type="radio" id="specimen_location_now"
                                                            name="specimen_location_now" value="{{$item->id}}" required>
                                                 @endif
                                                 <label for="specimen_location_now">{{$item->name}}</label>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
-                            </div>
+
 
                             @error('specimen_location_now')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
-
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
+                Select Country first and then State. Only USA, Mexico and Canada are supported at this time.
                     {{-- use the component for country state drop down menus using js to load appropriate states for country selected --}}
                     <x-display-state-country-dropdown id="unique-id" :countries="$countries"/>
 
-                    <div class="sm:col-span-4">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
                         <label for="location_found_city" class="block text-sm font-medium leading-6 text-gray-900">Nearest
                             city or town</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="location_found_city" id="location_found_city"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                <input  class="consistent-width"    type="text" name="location_found_city" id="location_found_city"
+
                                        placeholder="City or town where found" value="" required>
-                            </div>
+
 
                             @error('location_found_city')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="location_found_county" class="block text-sm font-medium leading-6 text-gray-900">County</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="location_found_county" id="location_found_county"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="County where found" value="" required>
-                            </div>
+                                <input  class="consistent-width"    type="text" name="location_found_county" id="location_found_county"
+
+                                       placeholder="Type here..." value="" required>
+
 
                             @error('location_found_county')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="location_public_y_n" class="block text-sm font-medium leading-6 text-gray-900">Make
                             location visible to others?</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="radio" id="location_public_y_n" name="location_public_y_n" value="1"
                                        required checked> <label for="{{$item->id}}">Yes</label>
 
                                 <input type="radio" id="location_public_y_n" name="location_public_y_n" value="0"
                                        required> <label for="location_public_y_n">No</label>
-                            </div>
 
                             @error('location_public_y_n')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="share_data_y_n" class="block text-sm font-medium leading-6 text-gray-900">Share this
                             data with others?</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="radio" id="share_data_y_n" name="share_data_y_n" value="1" required
                                        checked> <label for="{{$item->id}}">Yes</label>
 
                                 <input type="radio" id="share_data_y_n" name="share_data_y_n" value="0" required> <label
                                     for="share_data_y_n">No</label>
-                            </div>
 
                             @error('share_data_y_n')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
 
-                    <div class="sm:col-span-4">
-
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <!-- radio list of months -->
                                 <!-- radio list of months -->
                                 @php
@@ -219,71 +204,67 @@
                                 <table>
                                     @foreach($month_array as $month)
                                         <tr>
-                                            <td>
-                                                <label for="month_{{ $month[0] }}" class="text-sm font-medium leading-6 text-gray-900">{{ $month[1] }}</label>
-                                                <input type="radio" id="{{ $month[0] }}" name="month_found"
-                                                       value="{{ $month[0] }}" required @if($loop->first) checked @endif>
+                                            <td class="radio-cell">
+                                                <div class="radio-wrapper">
+                                                    <input class="radio-button" type="radio" id="{{ $month[0] }}" name="month_found"
+                                                           value="{{ $month[0] }}" required @if($loop->first) checked @endif>
+                                                    <label for="month_{{ $month[0] }}" class="radio-label">{{ $month[1] }}</label>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
-                            </div>
+
 
                             @error('month_found')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="day_found" class="block text-sm font-medium leading-6 text-gray-900">Day
                             Found</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
 
                                 <!-- drop down from 1 to 31 -->
-                                <select name="day_found" id="day_found" required>
+                                <select  class="consistent-width"    name="day_found" id="day_found" required>
                                     @for ($i = 1; $i <= 31; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
-                            </div>
+
 
                             @error('day_found')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
-                        <label for="year_found" class="block text-sm font-medium leading-6 text-gray-900">Year Found
-                            (todo: year range 1900 to 2024?)</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <label for="year_found" class="block text-sm font-medium leading-6 text-gray-900">Year Found
+                    (todo: year range 1900 to 2024?)</label>
                                 <!-- drop down for years subject to change -->
-                                <select name="year_found" id="year_found" required>
+                                <select  class="consistent-width"    name="year_found" id="year_found" required>
                                     @for ($i = 2020; $i <= 2024; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
-                            </div>
+
                             @error('year_found')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
 
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
-                    <div class="sm:col-span-4">
                         <label for="fungus_type" class="block text-sm font-medium leading-6 text-gray-900">Fungus
                             Type</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 @php
                                     $specimen_data = DB::table( 'fungus_types' )->get();
                                     //dd($specimen_data);
@@ -292,27 +273,30 @@
                                     @foreach($specimen_data as $item)
 
                                         <tr>
-                                            <td>
+                                            <td class="radio-cell">
+                                                <div class="radio-wrapper">
                                                 @if( $item->id == 1)
-                                                    <input type="radio" id="fungus_type" name="fungus_type"
+                                                    <input type="radio"  class="radio-button"    id="fungus_type" name="fungus_type"
                                                            value="{{$item->id}}" required checked>
                                                 @else
-                                                    <input type="radio" id="fungus_type" name="fungus_type"
+                                                    <input type="radio" class="consistent-width" id="fungus_type" name="fungus_type"
                                                            value="{{$item->id}}" required>
                                                 @endif
-                                                <label for="fungus_type">{{$item->id }}. {{$item->name }}</label>
+                                                <label for="fungus_type">{{$item->name }}</label>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
-                            </div>
+
 
                             @error('fungus_type')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
-                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
 
 
                 <div>
@@ -321,12 +305,14 @@
                     <div class="mx-auto mt-6">
                         <x-primary-button>Submit</x-primary-button>
                     </div>
-
-
                 </div>
-            </div>
-        </div>
+            </td>
+        </tr>
+    </table>
+
     </form>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {

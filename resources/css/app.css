@@ -51,3 +51,58 @@ footer p {
 .specimen_name {
     @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
 }
+
+.wider-input {
+    width: 600px; /* Adjust the width as needed */
+    padding: 6px; /* Adds space inside the input */
+    margin-right: 10px; /* Space between the input field and the button */
+}
+
+.spaced-button {
+    margin-left: 10px; /* Adds space to the left of the button */
+}
+
+.consistent-width {
+    width: 60%; /* You can adjust the percentage or use a fixed width */
+    padding: 6px; /* Adds space inside the input */
+    margin-right: 10px; /* Space between the input field and the button */
+    background-color: white;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    margin-right: 10px; /* Adjust space between label and select */
+}
+
+.radio-cell {
+    display: flex;
+    align-items: center;
+}
+
+.radio-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.radio-button {
+    margin-right: 0.5rem; /* Adjust the spacing as needed */
+}
+
+.radio-label {
+    white-space: nowrap;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

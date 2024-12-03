@@ -6,9 +6,7 @@
 ])
 
 <div class="sm:col-span-4">
-    <label for="country-{{ $attributes['id'] }}"
-           class="block text-sm font-medium leading-6 text-gray-900">Country</label>
-    <div class="mt-2">
+    <label for="country-{{ $attributes['id'] }}">Country</label>
         <select name="country" id="country-{{ $attributes['id'] }}"
                 class="block w-full border-0 bg-transparent py-1.5 px-3 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6">
             <option value="" disabled selected>Select your country</option>
@@ -19,11 +17,10 @@
         @error('country')
         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
         @enderror
-    </div>
 </div>
 
 <div class="sm:col-span-4">
-    <label for="state-{{ $attributes['id'] }}" class="block text-sm font-medium leading-6 text-gray-900">State</label>
+    <label for="state-{{ $attributes['id'] }}" class="visually-hidden">State</label>
     <div class="mt-2">
         <select name="state" id="state-{{ $attributes['id'] }}"
                 class="block w-full border-0 bg-transparent py-1.5 px-3 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6">

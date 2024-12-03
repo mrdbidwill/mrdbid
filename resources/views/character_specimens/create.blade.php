@@ -8,6 +8,7 @@
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
+    <p>resources/views/character_specimens/edit.blade.php</p>
 
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
         <div class="mx-auto max-w-7xl">

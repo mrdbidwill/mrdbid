@@ -11,6 +11,9 @@
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
 
+    <p>resources/views/specimens/index.blade.php</p>
+
+
     <!-- if no specimens are found, display message -->
     @if ($specimens->count() == 0)
         <p class="text-red-500">No specimens found.</p>
