@@ -99,9 +99,10 @@ class ImageSpecimenController extends Controller
             $aperture = $img->exif('EXIF.FNumber');
             $iso = $img->exif('EXIF.ISOSpeedRatings');
 
-            $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
             $destinationPath = public_path('storage/uploaded_images/');
-            $image->move($destinationPath, $imageName);
+            $img->save($destinationPath.$imageName);
+
+            $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
 
             try {
                 $imageSpecimenId = DB::table('image_specimens')->insertGetId([
