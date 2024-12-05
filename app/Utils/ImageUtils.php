@@ -27,7 +27,7 @@ class ImageUtils
 
         <tr>
             <td colspan="5" class="border border-slate-400 p-2">
-                Specimen: $specimen_id Click on thumbnail to view larger image. Click again to return to thumbnail.
+                Click on thumbnail to view larger image. Click again to return to thumbnail.
             </td>
         </tr>
         <tr>
@@ -51,6 +51,7 @@ class ImageUtils
                                 data-fullsize="<?php echo $image_address_full_size; ?>"
                                 onclick="toggleImage(this)">
                             <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>
+                <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit" style="font-size: 1.2em; color: #e3342f;">Edit</a>
             </div>
             <?php
         }

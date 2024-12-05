@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php
+    //dd($imageSpecimen);
+@endphp
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (Session::has('message'))
@@ -11,60 +13,79 @@
 
     <p>This is views/images_specimen/edit.blade.php</p>
 
-    <form method="POST" action="/images/{{ $image['id'] }}">
-        @csrf
-        @method('PATCH')
+    <div class="mt-6 flex items-center justify-between gap-x-6 p-4">
+        @php
+        $image_address = url('storage/uploaded_images/'.$imageSpecimen->file_address);
+        @endphp
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-4">
-                        <label for="parts" class="block text-sm font-medium leading-6 text-gray-900">What part of
-                            specimen?</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="parts" id="parts"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="What part of specimen?" value="{{ $image['parts'] }}" required>
-                            </div>
+        <img src="<?php echo $image_address; ?>" alt="<?php echo $image_address; ?>">
+    </div>
+
+        <form method="POST" action="{{ route('image_specimen.update', $imageSpecimen->id) }}">
+        @csrf
+        @method('PATCH')  <!-- not PATCH -->
+
+        <table
+            class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+            <!-- begin edit image_specimen table -->
+            <tr>
+                <td class="border-4 border-blue-300 p-2 text-black text-center">
+                        What part of specimen?
+
+                            @php
+                                $specimen_data = DB::table( 'parts' )->get();
+                                //dd($specimen_data);
+                            @endphp
+                            <table>
+                                @foreach($specimen_data as $item)
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="radio-wrapper">
+                                            @if( $item->id == 1)
+                                                <input class="radio-button" type="radio" id="parts" name="parts" value="{{$item->id}}"
+                                                       required checked>
+                                            @elseif($item->id ==$imageSpecimen['parts'])
+                                                <input  class="radio-button"  type="radio" id="parts" name="parts" value="{{$item->id}}"
+                                                       required checked>
+                                                @else
+                                                <input  class="radio-button"  type="radio" id="parts" name="parts" value="{{$item->id}}"
+                                                       required>
+                                            @endif
+                                            <label for="parts">{{$item->id}}. {{$item->name}}</label> <b>-</b> {{$item->description}}
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
 
                             @error('parts')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
+                </td>
+            </tr>
 
 
-                    <div class="sm:col-span-4">
-                        <label for="description"
-                               class="block text-sm font-medium leading-6 text-gray-900">Description</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="description" id="description"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Description" value="{{ $image['description'] }}">
-                            </div>
+            <tr>
+                <td class="border-4 border-blue-300 p-2 text-black text-center">
+                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
+
+                    <textarea  name="description" rows="12" style="width: 100%;">{{ old('description', $imageSpecimen->description) }}</textarea>
 
                             @error('description')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
-                    </div>
+                </td>
+            </tr>
 
 
-                </div>
-            </div>
-        </div>
+            <tr>
+                <td class="border-4 border-blue-300 p-2 text-black text-center">
 
-        <div class="mt-6 flex items-center justify-between gap-x-6">
-            <div class="flex items-center">
-                <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
-            </div>
 
-            <div class="flex items-center gap-x-6">
-                <a href="/images/{{ $image['id'] }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+
 
                 <div>
                     <button type="submit"
@@ -72,14 +93,34 @@
                         Update
                     </button>
                 </div>
-            </div>
-        </div>
+
+                </td>
+            </tr>
+        </table>
     </form>
 
-    <form method="POST" action="/images/{{ $image['id'] }}" id="delete-form" class="hidden">
+<table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <tr>
+        <td class="border-4 border-blue-300 p-2 text-black text-center">
+
+        <div class="mt-6 flex items-center justify-between gap-x-6">
+            <div class="flex items-center">
+                <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
+            </div>
+
+            <div class="flex items-center gap-x-6">
+                <a href="/images/{{ $imageSpecimen['id'] }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+            </div>
+        </div>
+
+    <form method="POST" action="/image_specimen/{{ $imageSpecimen['id'] }}" id="delete-form" class="hidden">
         @csrf
         @method('DELETE')
     </form>
+        </td>
+    </tr>
+</table>
+
 @endsection
 
 

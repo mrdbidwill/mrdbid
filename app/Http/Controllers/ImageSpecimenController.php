@@ -232,40 +232,33 @@ class ImageSpecimenController extends Controller
         }
     }
 
-    public function edit(ImageSpecimen $imagesSpecimen)
+    public function edit(int $image_specimen_id)
     {
-        return view('image_specimen.edit', ['imagesSpecimen' => $imagesSpecimen]);
+        // dd($image_specimen_id);
+
+        return view('image_specimen.edit', ['imageSpecimen' => $imageSpecimen = ImageSpecimen::findOrFail($image_specimen_id)]);
 
     }
 
-    public function update(ImageSpecimen $image)
+    public function update(Request $request, $id)
     {
-        Gate::authorize('edit-image', $image);
+        //Gate::authorize('edit-image', $image);
 
-        request()->validate([
-            'parts' => ['required'],
-            'description' => 'required',
-        ]);
+        //  request()->validate([
+        //      'parts' => 'required',
+        //     'description' => 'required',
+        //  ]);
+        //dd($request);
 
-        $image->update([
+        $entered_by = Auth::user()->id;
+        $imageSpecimen = ImageSpecimen::findOrFail($id);
+        $imageSpecimen->update([
             'parts' => request('parts'),
             'description' => request('description'),
-            'source_remote' => 'generic_source_remote',
-            'source_local' => 'generic_source_local',
-            'image_width' => 0,
-            'image_height' => 0,
-            'camera_make' => 'generic_camera_make',
-            'camera_model' => 'generic_camera_model',
-            'lens' => 'generic_lens',
-            'exposure' => 'generic_exposure',
-            'aperture' => 'generic_aperture',
-            'iso' => 'generic_iso',
-            'date_taken' => 'generic_date_taken',
-            'entered_by' => 0,
-
+            'entered_by' => $entered_by,
         ]);
 
-        return redirect('/image_specimen/'.$image['id']);
+        return redirect('/image_specimen/'.$id.'/edit')->with('message', 'Image Specimen updated successfully');
     }
 
     public function destroy(ImageSpecimen $image)
