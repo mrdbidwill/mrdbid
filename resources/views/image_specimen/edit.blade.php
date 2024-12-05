@@ -23,7 +23,7 @@
 
         <form method="POST" action="{{ route('image_specimen.update', $imageSpecimen->id) }}">
         @csrf
-        @method('PATCH')  <!-- not PATCH -->
+        @method('PATCH')  <!--or PUT? -->
 
         <table
             class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">

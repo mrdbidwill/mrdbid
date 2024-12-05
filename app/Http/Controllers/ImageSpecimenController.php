@@ -26,13 +26,15 @@ class ImageSpecimenController extends Controller
         ]);
     }
 
-    public function show(ImageSpecimen $image)
+    public function show($id)
     {
-        //return view('images_specimen.show', ['image' => $image->user_id = auth()->id()]);
-        // get images_specimen for this user
-        $images = ImageSpecimen::where('specimen_id', auth()->id())->get();
+        //dd($id);
 
-        return view('image_specimen.show', ['image' => $image, 'images_specimen' => $images]);
+        // get images_specimen for this user and this image_specimen id
+        $image_specimen = ImageSpecimen::where('id', $id)
+            ->first();
+
+        return view('image_specimen.show', ['image_specimen' => $image_specimen]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -79,6 +81,8 @@ class ImageSpecimenController extends Controller
             $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
             $img = Image::read($image->path());
 
+            //dd($img);
+
             // Resize the image if larger than 2048 x 2048
             if ($img->width() > 2048 and $img->height() > 2048) {
                 $img->scale(2048, 2048);
@@ -102,7 +106,8 @@ class ImageSpecimenController extends Controller
             $destinationPath = public_path('storage/uploaded_images/');
             $img->save($destinationPath.$imageName);
 
-            $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
+            // $img->resize(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
+            $img->scale(100, 100)->save($destinationPathThumbnail.'/thumb_'.$imageName);
 
             try {
                 $imageSpecimenId = DB::table('image_specimens')->insertGetId([

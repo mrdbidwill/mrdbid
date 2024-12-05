@@ -1,28 +1,91 @@
+@php
+    use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
+    //dd($image_specimens);
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    @if (Session::has('message'))
-        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+    @if(session('success'))
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
+             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
+             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+             class="custom-success text-orange-600">
+            <strong>Success!</strong> {{ session('success') }}
+        </div>
     @endif
-    <h1 class="text-2xl font-bold">Image Specimen Show</h1>
 
-    @foreach($image_specimens as $image_specimen)
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
-        <img src="{{ $image_specimen['file_address'] }}" alt="{{ $image_specimen['image->name'] }}" class="w-1/2">
-        <h2 class="font-bold text-lg">{{ $image_specimen['parts'] }}</h2>
+    <!-- if no specimens are found, display message -->
+    @if ($image_specimen->count() == 0)
+        <p class="text-red-500">No images found.</p>
+    @endif
 
-        <p>
-            {{ $image_specimen['description'] }}. </p>
+    <p>resources/views/image_specimen/show.blade.php</p>
 
-        <p class=" mt-6">
-            <x-button href="/images/{{ $image_specimen['id'] }}/edit">Edit Image</x-button>
-        </p>
+    @php
+        $image_specimen_id = $image_specimen->id;
+    @endphp
 
-    @endforeach
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
 
+<tr>
+
+            <td class="p-2">
+{{ $image_specimen['id'] }}
+
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2 text-black text-center">
+Image Info
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+                Specimen ID: {{ $image_specimen->id }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+Available
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+Available
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+Available
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2 text-fuchsia-700 text-center">
+                End image_specimen info.
+            </td>
+        </tr> <!-- end image_specimen info table line image_specimens/index.blade.php -->
+    </table>
 @endsection
 
 

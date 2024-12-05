@@ -52,6 +52,7 @@ class ImageUtils
                                 onclick="toggleImage(this)">
                             <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>
                 <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit" style="font-size: 1.2em; color: #e3342f;">Edit</a>
+                <a href="/image_specimen/<?php echo $images_specimen->id; ?>" style="font-size: 1.2em; color: #e3342f;">Info</a>
             </div>
             <?php
         }
