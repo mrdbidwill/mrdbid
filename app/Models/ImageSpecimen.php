@@ -24,6 +24,17 @@ class ImageSpecimen extends Model
         'aperture',
         'iso',
         'date_taken',
+        'focal_length',
+        'GPSLatitudeRef',
+        'GPSLatitude_0',
+        'GPSLatitude_1',
+        'GPSLatitude_2',
+        'GPSLongitudeRef',
+        'GPSLongitude_0',
+        'GPSLongitude_1',
+        'GPSLongitude_2',
+        'GPSAltitudeRef',
+        'GPSAltitude',
         'entered_by',
     ];
 

@@ -49,7 +49,7 @@ class ImageSpecimenController extends Controller
         }
 
         $request->validate([
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:8000',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:20000',
             'description' => 'nullable|string|max:1280',
             'parts' => 'nullable|integer',
             'lens' => 'nullable|string|max:255',
@@ -93,6 +93,15 @@ class ImageSpecimenController extends Controller
             }
 
             $exifData = $img->exif();
+
+            if ($img->exif('UndefinedTag:0xA434')) {
+                $lens = $img->exif('UndefinedTag:0xA434');
+                //dd($lens);
+            } else {
+                $lens = 'N/A';
+            }
+
+            //dd($exifData);
             $image_width = $img->width();
             $image_height = $img->height();
             $filesize = $img->exif('FILE.FileSize');
@@ -102,6 +111,20 @@ class ImageSpecimenController extends Controller
             $exposure = $img->exif('EXIF.ExposureTime');
             $aperture = $img->exif('EXIF.FNumber');
             $iso = $img->exif('EXIF.ISOSpeedRatings');
+            $FocalLength = $img->exif('EXIF.FocalLength');
+
+            $GPSLatitudeRef = $img->exif('GPS.GPSLatitudeRef');
+            $GPSLatitude_0 = $img->exif('GPS.GPSLatitude[0]');
+            $GPSLatitude_1 = $img->exif('GPS.GPSLatitude[1]');
+            $GPSLatitude_2 = $img->exif('GPS.GPSLatitude[2]');
+
+            $GPSLongitudeRef = $img->exif('GPS.GPSLongitudeRef');
+            $GPSLongitude_0 = $img->exif('GPS.GPSLongitude[0]');
+            $GPSLongitude_1 = $img->exif('GPS.GPSLongitude[1]');
+            $GPSLongitude_2 = $img->exif('GPS.GPSLongitude[2]');
+
+            $GPSAltitudeRef = $img->exif('GPS.GPSAltitudeRef');
+            $GPSAltitude = $img->exif('GPS.GPSAltitude');
 
             $destinationPath = public_path('storage/uploaded_images/');
             $img->save($destinationPath.$imageName);
@@ -120,10 +143,21 @@ class ImageSpecimenController extends Controller
                     'image_height' => $image_height,
                     'camera_make' => $camera_make,
                     'camera_model' => $camera_model,
-                    'lens' => $request['lens'],
+                    'lens' => $lens,
                     'exposure' => $exposure,
                     'aperture' => $aperture,
                     'iso' => $iso,
+                    'focal_length' => $FocalLength,
+                    'GPSLatitudeRef' => $GPSLatitudeRef,
+                    'GPSLatitude_0' => $GPSLatitude_0,
+                    'GPSLatitude_1' => $GPSLatitude_1,
+                    'GPSLatitude_2' => $GPSLatitude_2,
+                    'GPSLongitudeRef' => $GPSLongitudeRef,
+                    'GPSLongitude_0' => $GPSLongitude_0,
+                    'GPSLongitude_1' => $GPSLongitude_1,
+                    'GPSLongitude_2' => $GPSLongitude_2,
+                    'GPSAltitudeRef' => $GPSAltitudeRef,
+                    'GPSAltitude' => $GPSAltitude,
                     'date_taken' => $date_taken,
                     'entered_by' => $userId,
                     'created_at' => Carbon::now(),

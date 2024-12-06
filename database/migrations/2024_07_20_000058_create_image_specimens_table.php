@@ -45,6 +45,28 @@
 
                          $table->datetime('date_taken')->nullable();
 
+                         $table->string('focal_length', length: 16)->nullable();
+
+                         $table->string('GPSLatitudeRef', length: 16)->nullable();
+
+                         $table->string('GPSLatitude_0', length: 16)->nullable();
+
+                         $table->string('GPSLatitude_1', length: 16)->nullable();
+
+                         $table->string('GPSLatitude_2', length: 16)->nullable();
+
+                         $table->string('GPSLongitudeRef', length: 16)->nullable();
+
+                         $table->string('GPSLongitude_0', length: 16)->nullable();
+
+                         $table->string('GPSLongitude_1', length: 16)->nullable();
+
+                         $table->string('GPSLongitude_2', length: 16)->nullable();
+
+                         $table->string('GPSAltitudeRef', length: 16)->nullable();
+
+                         $table->string('GPSAltitude', length: 16)->nullable();
+
                          $table->integer('entered_by');
 
                          $table->timestamps();
