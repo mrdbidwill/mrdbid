@@ -31,7 +31,7 @@ class ImageUtils
             </td>
         </tr>
         <tr>
-            <td colspan="5" class="border border-slate-400 p-2">
+            <td colspan="5" class="border border-slate-600 p-2">
                 <div class="flex flex-wrap">
         <?php
         foreach ($images_specimens as $images_specimen) {
@@ -43,16 +43,26 @@ class ImageUtils
             $image_address_full_size = url('storage/uploaded_images/'.$images_specimen->file_address);
             ?>
 
-            <div class="w-1of5 p-1">
-                            <img class="h-100 w-100"
+            <div class="p-1 m-2 border-gray-400 border-2">
+                            <img class="thumbnail"
                                 src="<?php echo $image_address_thumbnail; ?>"
                                 alt="<?php echo $image_address_thumbnail; ?>"
                                 data-thumbnail="<?php echo $image_address_thumbnail; ?>"
                                 data-fullsize="<?php echo $image_address_full_size; ?>"
                                 onclick="toggleImage(this)">
                             <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>
-                <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit" style="font-size: 1.2em; color: #e3342f;">Edit</a>
-                <a href="/image_specimen/<?php echo $images_specimen->id; ?>" style="font-size: 1.2em; color: #e3342f;">Info</a>
+                <div class="flex space-x-4">
+                    <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit"
+                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300"
+                       title="Edit">
+                        <b>Edit</b>
+                    </a>
+                    <a href="/image_specimen/<?php echo $images_specimen->id; ?>"
+                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300"
+                       title="Info">
+                        <i class="fas fa-info-circle">Info</i>
+                    </a>
+                </div>
             </div>
             <?php
         }
