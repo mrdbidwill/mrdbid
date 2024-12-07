@@ -32,20 +32,8 @@
 
     <p>resources/views/image_specimen/show.blade.php</p>
 
-    @php
-        $image_specimen_id = $image_specimen->id;
-    @endphp
-
     <table
         class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
-
-<tr>
-
-            <td class="p-2">
-{{ $image_specimen['id'] }}
-
-            </td>
-        </tr>
 
 
         <tr>
@@ -54,31 +42,81 @@ Image Info
             </td>
         </tr>
 
+        <!--
+
+            $image_width = $img->width();
+            $image_height = $img->height();
+            $filesize = $img->exif('FILE.FileSize');
+            $camera_make = $img->exif('IFD0.Make');
+            $camera_model = $img->exif('IFD0.Model');
+            $date_taken = $img->exif('EXIF.DateTimeOriginal');
+            $exposure = $img->exif('EXIF.ExposureTime');
+            $aperture = $img->exif('EXIF.FNumber');
+            $iso = $img->exif('EXIF.ISOSpeedRatings');
+            $FocalLength = $img->exif('EXIF.FocalLength');
+
+            $GPSLatitudeRef = $img->exif('GPS.GPSLatitudeRef');
+            $GPSLatitude_0 = $img->exif('GPS.GPSLatitude[0]');
+            $GPSLatitude_1 = $img->exif('GPS.GPSLatitude[1]');
+            $GPSLatitude_2 = $img->exif('GPS.GPSLatitude[2]');
+
+            $GPSLongitudeRef = $img->exif('GPS.GPSLongitudeRef');
+            $GPSLongitude_0 = $img->exif('GPS.GPSLongitude[0]');
+            $GPSLongitude_1 = $img->exif('GPS.GPSLongitude[1]');
+            $GPSLongitude_2 = $img->exif('GPS.GPSLongitude[2]');
+
+            $GPSAltitudeRef = $img->exif('GPS.GPSAltitudeRef');
+            $GPSAltitude = $img->exif('GPS.GPSAltitude');
+         -->
+
         <tr>
             <td class="border-4 border-blue-300 p-2">
-                Specimen ID: {{ $image_specimen->id }}
+                Image ID: <b>{{ $image_specimen->id }}</b> Specimen ID: <b>{{ $image_specimen->specimen_id }}</b> Image Name: <b>{{ $image_specimen->image_name }}</b>  Date Taken: <b>{{ $image_specimen->date_taken }}</b>
             </td>
         </tr>
 
         <tr>
             <td class="border-4 border-blue-300 p-2">
-Available
+                Description: <b>{{ $image_specimen->description }}</b>
             </td>
         </tr>
 
         <tr>
             <td class="border-4 border-blue-300 p-2">
-Available
+                File Address: <b>{{ $image_specimen->file_address }}</b> Image Width: <b>{{ $image_specimen->image_width }}</b>  Image Height: <b>{{ $image_specimen->image_height }}</b>
             </td>
         </tr>
 
         <tr>
             <td class="border-4 border-blue-300 p-2">
-Available
+                Camera Make: <b>{{ $image_specimen->camera_make }}</b> Camera Model: <b>{{ $image_specimen->camera_model }}</b>  Lens: <b>{{ $image_specimen->lens }}</b>
             </td>
         </tr>
 
 
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+                Exposure: <b>{{ $image_specimen->exposure }}</b> Aperture: <b>{{ $image_specimen->aperture }}</b>  ISO: <b>{{ $image_specimen->iso }}</b> Focal Length: <b>{{ $image_specimen->focal_length }}</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+                GPS Latitude Ref: <b>{{ $image_specimen->GPSLatitudeRef }}</b> GPS Lat 0: <b>{{ $image_specimen->GPSLatitude_0 }}</b>  GPS Lat 1: <b>{{ $image_specimen->GPSLatitude_1 }}</b> GPS Lat 2: <b>{{ $image_specimen->GPSLatitude_2 }}</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+                GPS Longitude Ref: <b>{{ $image_specimen->GPSLongitudeRef }}</b> GPS Long 0: <b>{{ $image_specimen->GPSLongitude_0 }}</b>  GPS Long 1: <b>{{ $image_specimen->GPSLongitude_1 }}</b> GPS Long 2: <b>{{ $image_specimen->GPSLatitude_2 }}</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2">
+                GPS Altitude Ref: <b>{{ $image_specimen->GPSAltitudeRef }}</b>  GPS Altitude: <b>{{ $image_specimen->GPSAltitude }}</b>
+            </td>
+        </tr>
 
         <tr>
             <td class="border-4 border-blue-300 p-2 text-fuchsia-700 text-center">

@@ -58,16 +58,16 @@
                     </div>
 
 
-                    <div class="sm:col-span-4">
-                        What part of specimen?
-                        <div class="mt-2">
+                    <div>
+
+                        <div class="m-4 p-4">
                             @php
                                 $specimen_data = DB::table( 'parts' )->get();
                                 //dd($specimen_data);
                             @endphp
+                            Which part of this specimen does this image show?
                             <table>
                                 @foreach($specimen_data as $item)
-
                                     <tr>
                                         <td>
                                             @if( $item->id == 1)
@@ -94,7 +94,7 @@
                         <label for="description"
                                class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                         <div class="mt-2">
-                            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                            <div class="flex rounded-md shadow-lg ring-1 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
 
                                 <textarea  name="description" id="description" style="width: 100%;" rows="12" placeholder="Type description here..." value=""></textarea>
 

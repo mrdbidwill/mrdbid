@@ -49,7 +49,7 @@ class ImageSpecimenController extends Controller
         }
 
         $request->validate([
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,tiff,heic|max:20000',
+            'images.*' => 'required|image|mimes:jpeg,jpg,png,gif,svg,tiff,tif,heic|max:20000',
             'description' => 'nullable|string|max:1280',
             'parts' => 'nullable|integer',
             'lens' => 'nullable|string|max:255',
@@ -81,7 +81,7 @@ class ImageSpecimenController extends Controller
             $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
             $img = Image::read($image->path());
 
-            //dd($img);
+            // dd($img);
 
             // Resize the image if larger than 2048 x 2048
             if ($img->width() > 2048 and $img->height() > 2048) {
