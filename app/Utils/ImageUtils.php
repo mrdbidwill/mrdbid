@@ -50,18 +50,16 @@ class ImageUtils
                                 data-thumbnail="<?php echo $image_address_thumbnail; ?>"
                                 data-fullsize="<?php echo $image_address_full_size; ?>"
                                 onclick="toggleImage(this)">
-                            <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>
+                       <!--    <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>   -->
                 <div class="flex space-x-4">
                     <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit"
-                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300"
+                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300  no-underline"
                        title="Edit">
                         <b>Edit</b>
                     </a>
                     <a href="/image_specimen/<?php echo $images_specimen->id; ?>"
-                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300"
-                       title="Info">
-                        <i class="fas fa-info-circle">Info</i>
-                    </a>
+                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300  no-underline"
+                       title="Info">&#9432;</a>   <!-- &#9432; is the info symbol -->
                 </div>
             </div>
             <?php
