@@ -48,6 +48,8 @@ class ImageSpecimenController extends Controller
             abort(404, 'Specimen not found or you do not have permission to access it');
         }
 
+        //dd($request);
+
         $request->validate([
             'images.*' => 'required|image|mimes:jpeg,jpg,png,gif,svg,tiff,tif,heic|max:20000',
             'description' => 'nullable|string|max:1280',
