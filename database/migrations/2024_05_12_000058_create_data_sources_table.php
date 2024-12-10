@@ -21,11 +21,13 @@
 
                          $table->string('author', length: 240);
 
-                         $table->string('item_code', length: 240);
+                         $table->string('ref', length: 240)->nullable();
 
-                         $table->integer('type');
+                         $table->string('item_code', length: 240)->nullable();
 
-                         $table->text('comment');
+                         $table->integer('type')->nullable();
+
+                         $table->text('comment')->nullable();
 
                          $table->integer('my_rating')->nullable();
 

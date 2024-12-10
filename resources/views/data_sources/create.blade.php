@@ -6,19 +6,66 @@
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <h1>Create Data Source</h1>
+
     <form action="{{ route('data_source.store') }}" method="POST">
         @csrf
-        <!-- Form fields here -->
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="author" placeholder="Author">
-        <input type="text" name="asin" placeholder="ASIN 10 digit code"><br>
-        <input type="text" name="type" placeholder="Type">
-        <textarea name="comment" placeholder="Comment"></textarea>
+        <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+                <input type="text"  class="wider-input text-gray-900"   name="title" placeholder="Title">
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <input type="text"  class="wider-input text-gray-900"    name="author" placeholder="Author">
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <input type="text"  class="wider-input text-gray-900"    name="asin" placeholder="ASIN 10 digit code"><br>
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <input type="text"  class="wider-input text-gray-900"   name="type" placeholder="Type">
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <textarea  class="wider-input text-gray-900"    name="comment" placeholder="Comment"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
         <input type="number" name="my_rating" placeholder="Rating">
-        <textarea name="my_comment"
-                                                                              placeholder="My Comment"></textarea>
-        <input type="text" name="entered_by" placeholder="Entered By">
-        <button type="submit">Create</button>
+
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <textarea  class="wider-input text-gray-900"    name="my_comment"  placeholder="My Comment"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+        <input type="text"  class="wider-input text-gray-900"   name="entered_by" placeholder="Entered By">
+            </td>
+        </tr>
+
+        <tr>
+           <td class="border-4 border-blue-300 p-2">
+                <x-form-button-small class="spaced-button" fieldName="">Enter</x-form-button-small>
+            </td>
+        </tr>
+    </table>
+
     </form>
 @endsection
 

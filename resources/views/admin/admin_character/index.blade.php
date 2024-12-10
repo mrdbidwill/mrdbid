@@ -58,10 +58,6 @@
 
 
                         </div>
-                        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a href="/admin_character/create/" class="px-4 py-2 bg-blue-500 text-black rounded-lg">Add
-                                New Character to Character Table</a>
-                        </div>
                     </div>
                     <div class="mt-8 flow-root">
                         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -108,8 +104,7 @@
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-black">{{ $character_table['source'] }}</td>
 
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                <a href="{{ $character_table['id'] }}/edit"
-                                                   class="px-4 py-2 bg-blue-500 text-black rounded-lg">Edit</a>
+                                                <a href = "{{ route('admin.characters.edit', $character_table->id ) }}" class="px-4 py-2 bg-blue-500 text-black rounded-lg">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach

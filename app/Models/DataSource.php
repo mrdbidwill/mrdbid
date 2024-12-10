@@ -12,8 +12,9 @@ class DataSource extends Model
     protected $fillable = [
         'title',
         'author',
-        'type',
+        'ref',
         'item_code',
+        'type',
         'comment',
         'my_rating',
         'my_comment',

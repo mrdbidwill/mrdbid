@@ -69,8 +69,7 @@
 
     @endphp
 
-    <table
-        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
         <tr>
             <td class="p-2">
@@ -90,7 +89,9 @@
 
                 </form>
             </td>
+        </tr>
 
+        <tr>
             <td class="p-2">
                 <form method="GET" action="/character_specimens/{{$specimen['id']}}/edit" id="add_character">
                     @csrf

@@ -18,13 +18,16 @@
 
     <h1>Table Name: {{$display_name}}</h1>
 
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+
     @foreach ($lookup_table_edits as $lookup_table_edit)
         @php  //dd($lookup_table_edit->id); @endphp
-        <div class="space-y-4">
-            <div class="border-b border-gray-900/10 pb-6">
-                <div class="mt-2 grid grid-cols-1 gap-x-4 gap-y-4">
 
-                    <form method="POST" action="{{ route('admin_lookup.update', ['admin_lookup' => $id]) }}">
+        <tr class="odd:bg-white even:bg-gray-200">
+            <td class="p-2">
+
+                    <form method="POST" action="/admin.lookups/{$lookup_table_edit->id }}">
                         @csrf
                         @method('PATCH')
                         <label for="new_value" class="block text-sm font-medium leading-6 text-gray-900">Name
@@ -44,14 +47,16 @@
                                                                                                            id="column"
                                                                                                            value="name">
                         <div>
-                            <button type="submit"
-                                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                Update
-                            </button>
+                            <x-form-button-small class="spaced-button" fieldName="Table Name">Update</x-form-button-small>
                         </div>
                     </form>
+            </td>
+        </tr>
 
-                    <form method="POST" action="{{ route('admin_lookup.update', ['admin_lookup' => $id]) }}">
+            <tr class="odd:bg-white even:bg-gray-200">
+                <td class="p-2">
+
+                    <form method="POST" action="/admin.lookups/{$lookup_table_edit->id }}">
                         @csrf
                         @method('PATCH')
                         <label for="new_value"
@@ -61,7 +66,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="new_value" id="new_value"
                                        class="block flex-1 border-0 bg-transparent py-1  px-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Example:  Looks like lions mane, maybe?"
+                                       placeholder=""
                                        value="{{ $lookup_table_edit->description }}">
                             </div>
 
@@ -72,16 +77,17 @@
                             <input type="hidden" name="row" id="row" value="{{ $lookup_table_edit->id }}"> <input
                                 type="hidden" name="column" id="column" value="description">
                             <div>
-                                <button type="submit"
-                                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Update
-                                </button>
+                                <x-form-button-small class="spaced-button" fieldName="Description">Update</x-form-button-small>
                             </div>
                         </div>
                     </form>
+                </td>
+            </tr>
 
+            <tr class="odd:bg-white even:bg-gray-200">
+                <td class="p-2">
 
-                    <form method="POST" action="{{ route('admin_lookup.update', ['admin_lookup' => $id]) }}">
+                    <form method="POST" action="/admin.lookups/{$lookup_table_edit->id }}">
                         @csrf
                         @method('PATCH')
                         <label for="new_value"
@@ -91,7 +97,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="new_value" id="new_value"
                                        class="block flex-1 border-0 bg-transparent py-1  px-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Example:  Little Brown Mushroom - Front Yard"
+                                       placeholder=""
                                        value="{{ $lookup_table_edit->description }}">
                             </div>
 
@@ -102,16 +108,17 @@
                             <input type="hidden" name="row" id="row" value="{{ $lookup_table_edit->id }}"> <input
                                 type="hidden" name="column" id="column" value="comments">
                             <div>
-                                <button type="submit"
-                                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Update
-                                </button>
+                                <x-form-button-small class="spaced-button" fieldName="Comments">Update</x-form-button-small>
                             </div>
                         </div>
                     </form>
 
+                </td>
+            </tr>
 
-                    <form method="POST" action="{{ route('admin_lookup.update', ['admin_lookup' => $id]) }}">
+            <tr class="odd:bg-white even:bg-gray-200">
+                <td class="p-2">
+                    <form method="POST" action="/admin.lookups/{$lookup_table_edit->id }}">
                         @csrf
                         @method('PATCH')
                         <label for="new_value" class="block text-sm font-medium leading-6 text-gray-900">Source</label>
@@ -120,7 +127,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="new_value" id="new_value"
                                        class="block flex-1 border-0 bg-transparent py-1  px-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Example:  Little Brown Mushroom - Front Yard"
+                                       placeholder=""
                                        value="{{ $lookup_table_edit->source }}">
                             </div>
                             @error('new_value')
@@ -130,20 +137,14 @@
                             <input type="hidden" name="row" id="row" value="{{ $lookup_table_edit->id }}"> <input
                                 type="hidden" name="column" id="column" value="source">
                             <div>
-                                <button type="submit"
-                                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Update
-                                </button>
+                                <x-form-button-small class="spaced-button" fieldName="Source">Update</x-form-button-small>
                             </div>
                         </div>
                     </form>
-                    <hr>
-                    <hr>
-                    <hr>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
     @endforeach
+    </table>
 @endsection
 
 

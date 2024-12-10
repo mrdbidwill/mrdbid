@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataSource;
 use App\Models\Lookup\Character;
 use App\Utils\StringUtils;
 use Illuminate\Http\Request;
@@ -31,10 +32,12 @@ class AdminLookUpController extends Controller
     {
         //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
-        $look_up_tables = Character::where('id', $id)->get();
+        $lookup_table = Character::find($id); // This returns a single model instance
+
+        $lookup_source = DataSource::find($lookup_table->source);
         //dd($specimen);
 
-        return view('admin.admin_lookup.show', compact('look_up_tables'));
+        return view('admin.admin_lookup.show', compact('lookup_table', 'lookup_source'));
     }
 
     public function store(Request $request)
