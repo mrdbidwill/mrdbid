@@ -11,7 +11,7 @@
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
 
-    <p>resources/views/specimens/index.blade.php</p>
+    <!-- <p>resources/views/specimens/index.blade.php</p>  -->
 
 
     <!-- if no specimens are found, display message -->
@@ -36,7 +36,7 @@
         </ul>
 
         <!-- Pagination links -->
-        {{ $specimens->links() }}
+        {{ $specimens->onEachSide(3)->links() }}
     </div>
 
 @endsection

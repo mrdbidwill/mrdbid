@@ -28,7 +28,12 @@ class SpecimenController extends Controller
     {
         // Fetch specimens for the authenticated user and paginate to display 25 per page
         $userId = Auth::id();
-        $specimens = Specimen::where('user_id', $userId)->paginate(25);
+
+        $specimens = Specimen::where('user_id', $userId)
+            ->orderBy('year_found')
+            ->orderBy('month_found')
+            ->orderBy('day_found')
+            ->paginate(25);
 
         // Return the view with the paginated specimens
         return view('specimens.index', compact('specimens'));
