@@ -4,7 +4,6 @@
 
     <!-- resources/views/book.blade.php -->
     <div class="container">
-
         <h1 class="text-3xl text-black text-center mb-6">Book List</h1>
 
         <p class="mt-2 text-xl text-black">You can do just fine using Mushroom Expert <a
@@ -14,28 +13,39 @@
         <p class="mt-2 text-xl text-black">I use them AND I also like having books for reference. This is my list of mushroom books. A few are new, many are old. A few are real old and you will have to look a little harder for them.</p>
 
         <p class="mt-2 text-xl text-black">As an Amazon Associate I earn from qualifying purchase.</p>
-        <div class="books">
-            <ul role="list" class="space-y-3">
+
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color:#e0e7ff; border: 0px solid #93c5fd; border-radius: 0.5rem; outline: 4px solid #f1f5f9;">
                 @forelse ($dataSources as $dataSource)
-                        <li class="overflow-hidden rounded-md bg-white px-6 py-4 shadow">
+                    <tr class="{{ $loop->even ? 'bg-gray-200' : 'bg-white' }}">
+                        <td colspan="2" style="padding: 0.5rem; border: 0px solid #93c5fd;">
                             <h2>{{ $dataSource->title }}</h2>
-                            <p class="mt-2">{{ $dataSource->author }}</p>
-                            <p class="mt-2">{{ $dataSource->comment }}</p>
-                            <p class="mt-2">MRDBID comment: {{ $dataSource->my_comment }}</p>
-                            @if($dataSource->item_code)
-                            <p class="mt-2">
-                                <a href="{{ $dataSource->item_code }}" target="_blank"> <img
-                                    src="{{ asset( 'storage/images/amazon/available_at_amazon_en_horizontal.png') }}" alt="Available at Amazon"></a>
-                            </p>
-                            @endif
-                        </li>
+                        </td>
+                    </tr>
+                    @if($dataSource->item_code)
+                    <tr class="{{ $loop->even ? 'bg-gray-200' : 'bg-white' }}">
+                            <td style="padding: 0.5rem; border: 0px solid #93c5fd;">{{ $dataSource->author }}</td>
+                            <td style="padding: 0.5rem; border: 0px solid #93c5fd;"><a href="{{ $dataSource->item_code }}" target="_blank"><img class="w-19 h-auto"  src="{{ asset( 'storage/images/amazon/available_at_amazon_US_EN_logo_stacked_RGB_SQUID_100x48.png') }}" alt="Available at Amazon"></a></td>
+                        </tr>
+                    @else
+                    <tr class="{{ $loop->even ? 'bg-gray-200' : 'bg-white' }}">
+                            <td colspan="2" style="padding: 0.5rem; border: 0px solid #93c5fd;">{{ $dataSource->author }}</td>
+                        </tr>
+                    @endif
+
+                   @if( $dataSource->comment || $dataSource->description )
+                    <tr class="{{ $loop->even ? 'bg-gray-200' : 'bg-white' }}">
+                            <td colspan="2" style="padding: 0.5rem; border: 0px solid #93c5fd;">{{ $dataSource->comment }} {{ $dataSource->description }}</td>
+                        </tr>
+                    @endif
+
                 @empty
-                    <li>
-                    <p class="mt-2">No books available.</p>
-                    </li>
+                <tr class="{{ $loop->even ? 'bg-gray-200' : 'bg-white' }}">
+                        <td style="padding: 0.5rem; border: 0px solid #93c5fd;">
+                        <p class="mt-2">No books available.</p>
+                         </td>
+                </tr>
                 @endforelse
-            </ul>
-        </div>
+        </table>
     </div>
 @endsection
 
