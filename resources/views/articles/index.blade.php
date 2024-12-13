@@ -10,7 +10,7 @@
         @foreach ($articles as $article)
             @php
                 // dd( $article->id);  // works here
-             dd( $memberType);
+             //dd( $memberType);
             @endphp
             <li class="overflow-hidden rounded-md bg-white px-6 py-4 shadow">
                 @php //dd($article->title); @endphp
