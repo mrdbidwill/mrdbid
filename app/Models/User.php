@@ -56,4 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Specimen::class);
     }
+
+    public function sendEmailVerificationNotification()
+    {
+        \Log::info('Email verification notification triggered for user: '.$this->email);
+        $this->notify(new \App\Notifications\CustomVerifyEmail);
+    }
 }

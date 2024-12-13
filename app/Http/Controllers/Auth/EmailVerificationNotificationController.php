@@ -17,7 +17,7 @@ class EmailVerificationNotificationController extends Controller
             return redirect()->intended(route('specimens.index', absolute: false));
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $request->user()->sendEmailVerificationNotification();  // not part of duplicate verification emails
 
         return back()->with('status', 'verification-link-sent');
     }

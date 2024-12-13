@@ -10,7 +10,7 @@ class VeilController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.state');
+        return view('specimens.look_up_tables.veil');
     }
 
     public function create() {}
