@@ -41,6 +41,7 @@ class SpecimenController extends Controller
 
     public function show($id)
     {
+        //dd($id);
         $specimen = Specimen::findOrFail($id);  // Fetch the specimen by ID
         // Fetch the countries and states as collections of objects
         $countries = Country::all(); // instead of pluck

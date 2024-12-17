@@ -53,12 +53,12 @@ class ImageUtils
                        <!--    <?php echo $parts->name; ?> <?php echo $images_specimen->description; ?>   -->
                 <div class="flex space-x-4">
                     <a href="/image_specimen/<?php echo $images_specimen->id; ?>/edit"
-                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300  no-underline"
+                       class="w-18 h-6 flex items-center justify-center rounded-full  text-black hover:bg-green-300  no-underline"
                        title="Edit">
                         <b>Edit</b>
                     </a>
                     <a href="/image_specimen/<?php echo $images_specimen->id; ?>"
-                       class="w-36 h-6 flex items-center justify-center rounded-full  text-black hover:bg-red-300  no-underline"
+                       class="w-18 h-6 flex items-center justify-center rounded-full  text-black hover:bg-green-300  no-underline"
                        title="Info">&#9432;</a>   <!-- &#9432; is the info symbol -->
                 </div>
             </div>

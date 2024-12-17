@@ -4,15 +4,15 @@
     <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg mx-auto">
         <p>This is views/articles/show.blade.php</p>
 
-        <h1>Title: {{ $articles->title }}</h1>
+        <h1>Title: {{ $article->title }}</h1>
 
-        <p>Author: {{ $articles->user_id }}</p>
+        <p>Author: {{ $article->user_id }}</p>
 
-        <p>{{ $articles->body }}</p>
+        <p>{{ $article->body }}</p>
 
-        <p>Created: {{ $articles->created_at }}</p>
+        <p>Created: {{ $article->created_at }}</p>
 
-        <p>Last Edit: {{ $articles->updated_at }}</p>
+        <p>Last Edit: {{ $article->updated_at }}</p>
 
     </div>
 @endsection

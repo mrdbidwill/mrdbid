@@ -4,9 +4,13 @@ namespace App\Policies;
 
 use App\Models\ImageSpecimen;
 use App\Models\Specimen;
+use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ImagesSpecimenPolicy
+class ImageSpecimenPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the specimen can view any models.
      */
@@ -47,9 +51,12 @@ class ImagesSpecimenPolicy
     /**
      * Determine whether the specimen can delete the model.
      */
-    public function delete(Specimen $specimen, ImageSpecimen $image): void
+    /**
+     * Determine if the given image can be deleted by the user.
+     */
+    public function delete(User $user, ImageSpecimen $imageSpecimen)
     {
-        //
+        return $user->id === $imageSpecimen->entered_by;
     }
 
     /**

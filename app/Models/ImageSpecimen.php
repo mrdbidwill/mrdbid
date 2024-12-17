@@ -42,4 +42,9 @@ class ImageSpecimen extends Model
     {
         return $this->hasOne(ImageSpecimenThumbnail::class, 'image_specimen_id');
     }
+
+    public function specimen()
+    {
+        return $this->belongsTo(Specimen::class);
+    }
 }

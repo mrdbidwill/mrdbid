@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ImageSpecimen;
 use App\Models\Specimen;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -17,6 +18,8 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class ImageSpecimenController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $images = ImageSpecimen::where('specimen_id', auth()->id())->latest()->simplePaginate(6);
@@ -302,14 +305,15 @@ class ImageSpecimenController extends Controller
         return redirect('/image_specimen/'.$id.'/edit')->with('message', 'Image Specimen updated successfully');
     }
 
-    public function destroy(ImageSpecimen $image)
+    public function destroy(int $id)
     {
-        Gate::authorize('edit-image', $image);
-
+        $image = ImageSpecimen::findOrFail($id);
+        $this->authorize('delete', $image);
+        $specimen_id = $image->specimen_id;
         $image->delete();
 
-        return redirect('/image_specimen');
-    }   // close image_return_exif_data($imagePath)
+        return redirect()->route('specimens.show', ['specimen' => $specimen_id])->with('success', 'Image deleted successfully.');
+    }
 
     public function store_image(Request $request)
     {

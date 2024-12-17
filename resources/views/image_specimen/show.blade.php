@@ -38,7 +38,10 @@
 
         <tr>
             <td class="border-4 border-blue-300 p-2 text-black text-center">
-Image Info
+Image Info   <a href="/image_specimen/<?php echo $image_specimen->id; ?>/edit" class="w-64 h-10 flex items-center justify-center rounded-full  text-black bg-green-100 hover:bg-green-300  no-underline"
+                                    title="Return to this Image">
+                    <b>Return to this Image</b>
+                </a>
             </td>
         </tr>
 

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
+use App\Models\ImageSpecimen;
+use App\Policies\ArticlePolicy;
+use App\Policies\ImageSpecimenPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        ImageSpecimen::class => ImageSpecimenPolicy::class,
+        Article::class => ArticlePolicy::class,
     ];
 
     /**

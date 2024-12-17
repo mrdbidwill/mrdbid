@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(Request $request)
     {
         $query = Article::query();
