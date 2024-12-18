@@ -1,3 +1,4 @@
+@php use App\Utils\StringUtils; @endphp
 @foreach ($characters as $character)
     <tr>
         <td>

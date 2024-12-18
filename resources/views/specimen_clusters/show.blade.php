@@ -1,4 +1,5 @@
-@php use Illuminate\Support\Facades\DB; @endphp@extends('layouts.app')
+@php use Illuminate\Support\Facades\DB;
+@endphp@extends('layouts.app')
 
 @section('content')
 

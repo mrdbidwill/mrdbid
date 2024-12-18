@@ -17,7 +17,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="name" id="name"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Example:  Little Brown Mushrooms - Front Yard" value="" required>
+                                       placeholder="" value="" required>
                             </div>
 
                             @error('name')
@@ -34,7 +34,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="description" id="description"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Description" value="A cluster needs a description to be helpful.">
+                                       placeholder="" value="">
                             </div>
                             @error('description')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
@@ -50,7 +50,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="comments" id="comments"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="Comments" value="Your comments here.">
+                                       placeholder="" value="">
                             </div>
 
                             @error('comments')
@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </form>
 
 @endsection

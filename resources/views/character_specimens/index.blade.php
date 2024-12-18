@@ -14,12 +14,12 @@
                         <div class="sm:flex-auto">
                             <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens</h1>
 
-                            <p class="mt-2 text-xl text-black">When you created this specimen, you entered the <b>required</b>
+                            <p class="mt-2 text-xl text-black">When you create a specimen, you enter the <b>required</b>
                                 basic characters that you should have for every specimen. After the initial entry, those
                                 are done for the time being. As always, the basic characters can be edited, if needed.
                             </p>
 
-                            <p class="mt-2 text-xl text-black">The characters listed below on this page are <b>all
+                            <p class="mt-2 text-xl text-black">The characters for any specimen are <b>all
                                     optional</b>. While it is obvious that a specimen with no characters is not very
                                 useful, which ones you enter <u>and when</u> are up to you.</p>
 
@@ -38,7 +38,7 @@
                                 that may be helpful for that <u>one</u> main "cap color" character. It will get unwieldy
                                 quickly if I did that to many characters.</p>
 
-                            <p class="mt-2 text-xl text-black">That said, I do not have a limit on the number of helpful
+                            <p class="mt-2 text-xl text-black">Then again, "unwieldy" is relative also. I do not have a limit on the number of helpful
                                 characters that knowledgeable people want to add as useful identification tools.</p>
 
                             <p class="mt-2 text-xl text-black">Below is a list of characters. Due to the (ongoing)
@@ -58,27 +58,15 @@
             </div>
         </div>
     </div>
-    <!--  {{--
+
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-
-
-                    <x-display-existing-specimen-characters :specimenId="$specimen_id"/>
-
-                    <x-display-unset-characters :unset_characters="$unset_characters"/>
-
-                    <x-display-character-by-display-option-switch :specimenId="$specimen_id"/>
-
-                    <x-display-color-character-select-form/>
-
-                    <x-character-specimens-form :colors="$colors" :color_character_names="$color_character_names"
-                                                :list_of_set_characters="$list_of_set_characters_array"
-                                                :specimen_id="$specimen_id"/>
+                    <x-display-characters-lookuptable-list :characters="$characters"/>
                 </div>
             </div>
         </div>
-  --}}      -->
+
 @endsection
 
 
