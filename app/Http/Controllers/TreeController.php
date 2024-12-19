@@ -8,11 +8,9 @@ class TreeController extends Controller
 {
     public function index()
     {
-        $trees = Tree::latest()->simplePaginate(3);
-
-        return view('trees.index', [
-            'trees' => $trees,
-        ]);
+        //$trees = Tree::latest()->simplePaginate(3);  // add trees table and data
+        // currently trees.index shows ordered list of blakeley tree signs - text
+        return view('trees.index');
     }
 
     public function show(Tree $Tree)

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <p>This is views/articles/index.blade.php</p>
 

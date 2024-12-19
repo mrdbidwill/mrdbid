@@ -40,6 +40,7 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::post('/specimens/{id}/date-found', [SpecimenController::class, 'dateFoundHandler'])->name('specimens.dateFoundHandler');
     Route::get('get-states', [SpecimenController::class, 'getStates'])->name('getStates');
     Route::resource('articles', ArticleController::class);
+    Route::resource('trees', TreeController::class);
 
     Route::get('/compare', [CompareController::class, 'index']);
     Route::post('/compare', [CompareController::class, 'compare']);

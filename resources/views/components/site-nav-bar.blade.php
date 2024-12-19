@@ -20,12 +20,13 @@
         <!-- Standard navigation links -->
         <div class="hidden md:flex space-x-4">
             <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-            <x-nav-link href="/articles" :active="request()->is('articles')">Articles</x-nav-link>
             <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
             <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
             <x-nav-link href="/books" :active="request()->is('books')">Books</x-nav-link>
 
             @auth
+                <x-nav-link href="/trees" :active="request()->is('trees')">Trees</x-nav-link>
+                <x-nav-link href="/articles" :active="request()->is('articles')">Articles</x-nav-link>
                 <x-nav-link href="{{ route('specimens.index') }}" :active="request()->is('specimens.index')">
                     Specimens
                 </x-nav-link>
