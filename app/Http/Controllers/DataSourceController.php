@@ -22,7 +22,7 @@ class DataSourceController extends Controller
     {
         DataSource::create($request->all());
 
-        return redirect()->route('data_source.index');
+        return redirect()->route('data_sources.index');
     }
 
     public function create()
@@ -49,7 +49,7 @@ class DataSourceController extends Controller
         $data_sources = DataSource::findOrFail($id);
         $data_sources->update($request->all());
 
-        return redirect()->route('data_source.index');
+        return redirect()->route('data_sources.index');
     }
 
     public function destroy($id)
@@ -57,7 +57,7 @@ class DataSourceController extends Controller
         $data_sources = DataSource::findOrFail($id);
         $data_sources->delete();
 
-        return redirect()->route('data_source.index');
+        return redirect()->route('data_sources.index');
     }
 
     public function showFilteredBooks()

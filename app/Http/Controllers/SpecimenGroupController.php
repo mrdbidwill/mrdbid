@@ -3,31 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\SpecimenGroup;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class SpecimenGroupController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
-        $groups = SpecimenGroup::latest()->simplePaginate(12);
+        $groups = SpecimenGroup::latest()->simplePaginate(36);
 
         return view('specimen_groups.index', [
             'specimen_groups' => $groups,
         ]);
     }
 
-    public function show(SpecimenGroup $group)
+    public function show(int $group_id)
     {
-        return view('specimen_groups.show', ['group' => $group]);
+        $specimen_group = SpecimenGroup::findOrFail($group_id);
+
+        return view('specimen_groups.show', ['specimen_group' => $specimen_group]);
     }
 
     public function store(Request $request)
     {
+        // dd($request);
         request()->validate([
             'name' => ['required', 'min:3'],
         ]);
 
-        $member_id = $entered_by = request('entered_by');  // member_id should be same as entered_by right here
+        $member_id = $entered_by = auth()->user()->id;
+
         SpecimenGroup::create([
             'member_id' => $member_id,
             'name' => request('name'),
@@ -36,12 +43,12 @@ class SpecimenGroupController extends Controller
             'entered_by' => $entered_by,
         ]);
 
-        return redirect('/specimen_group/')->with('message', 'Specimen Group created successfully');
+        return redirect('/specimen_groups/')->with('message', 'Specimen Group created successfully');
     }
 
     public function create()
     {
-        return view('specimen_clusters.create');
+        return view('specimen_groups.create');
     }
 
     public function edit(SpecimenGroup $specimenGroup)
@@ -68,15 +75,16 @@ class SpecimenGroupController extends Controller
 
         ]);
 
-        return redirect('/specimen_group/')->with('message', 'Specimen Group updated successfully');
+        return redirect('/specimen_groups')->with('message', 'Specimen Group updated successfully');
     }
 
-    public function destroy(SpecimenGroup $group)
+    public function destroy(int $id)
     {
-        // authorize (On hold...)
-
+        $group = SpecimenGroup::findOrFail($id);
+        $this->authorize('delete', $group);
+        $group_id = $group->id;
         $group->delete();
 
-        return redirect('/specimen_groups');
+        return redirect()->route('specimen_groups.index')->with('success', 'Group deleted successfully.');
     }
 }

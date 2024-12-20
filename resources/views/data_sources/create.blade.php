@@ -7,7 +7,7 @@
 
     <h1>Create Data Source</h1>
 
-    <form action="{{ route('data_source.store') }}" method="POST">
+    <form action="{{ route('data_sources.store') }}" method="POST">
         @csrf
         <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <tr>

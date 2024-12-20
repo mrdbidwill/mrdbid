@@ -2,15 +2,13 @@
 
 @section('content')
 
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+    <x-specimens-nav-bar/>
 
-    <h2 class="font-bold text-lg">{{ $character->name }}</h2>
+    <p>resources/views/specimen_groups/show.blade.php</p>
 
     <p>
-        This character display_option {{ $character->display_option }} . </p>
-    <p class="mt-6">
-        <x-button href="/characters/{{ $character->id }}/edit">Edit Character</x-button>
-    </p>
+        {{ $specimen_group->name }}  {{ $specimen_group->description }} </p>
+
 @endsection
 
 

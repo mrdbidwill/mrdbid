@@ -6,7 +6,7 @@
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <h1>Edit Data Source</h1>
-    <form action="{{ route('data_source.update', $data_source->id) }}" method="POST">
+    <form action="{{ route('data_sources.update', $data_source->id) }}" method="POST">
         @csrf
         @method('PUT')
 

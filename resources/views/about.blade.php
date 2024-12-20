@@ -6,6 +6,9 @@
             tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
             media associations, or marketing tracking addons. Fees may be received from links to book sales. As an Amazon Associate I earn from qualifying purchase.</b></p>
 
+    <p>This page is only information. The forms to add specimens and characters are elsewhere.You have to register and login to see the Specimens link and be able to actually do anything.</p>
+
+
     <div class="mt-6 space-y-4">
         <h2 class="text-5xl font-normal leading-normal mt-0 mb-2 text-pink-800">What's in a name?</h2>
 
@@ -17,16 +20,14 @@
             relatively short and meaningful to you. For the specimen name, something along the line of myinitials plus
             date plus short and descriptive, such as wrj_01_01_1999_first would work. And then the common name may be
             "Oyster looking on oak tree in park". The genus and species when you get that far will be from a current
-            (??) list of names you can select.</p>
-        <p>The specimen name can <b>not</b> be changed once set. Some people just use initials_1, initials_2,
-            initials_3, etc.</p>
+            list of names you can select.</p>
 
         <p>The rest of the basics should be things you know as you collect this specimen.</p>
 
         <h2 class="text-5xl font-normal leading-normal mt-0 mb-2 text-pink-800">Radio list or Drop-down or text box
             (area)?</h2>
 
-        <p>Yes. No. Maybe. A work in progress.This site relies on lookup tables a lot. For example, what are you choices
+        <p>Yes. No. Maybe. A work in progress.This site relies on lookup tables <u>a lot</u>. For example, what are you choices
             for a certain character? <b>Cap Surface Texture</b> has 24 options, which as of right now, subject to
             change, are:<br><br>
 
@@ -37,7 +38,7 @@
             'Virgate', 'A streaked surface.'<br> 'Hygrophanous', 'A surface that is transparent when wet and opaque when
             dry.'<br> 'Sericeous', 'A silky surface.'<br> 'Fibrillose', 'A surface covered in thread-like
             filaments.'<br> 'Squamose', 'A surface covered with scales.'<br> 'Squarrose', 'A ragged surface covered with
-            small scales.'<br> 'Pruinose', 'A surface covered with a white powdery frostlike substance.'<br>
+            small scales.'<br> 'Pruinose', 'A surface covered with a white powdery frost like substance.'<br>
             'Pulverulent', 'A surface covered with fine dust or powder.'<br> 'Granulose', 'A surface covered in
             salt-like granulates.'<br> 'Furfuraceous', 'A surface covered in flaky bran-like particles;
             dandruff-like.'<br> 'Zonate', 'A surface containing zones or bands that are distinguished by texture or
@@ -67,20 +68,15 @@
             on this, but have not found the currently accepted list yet.</p>
     </div>
 
-    <br>
     <hr>
-    <br>
+    <x-site-nav-bar-simple-no-logo/>
     <hr>
-    <br>
-    <hr>
-    <br>
-    <hr>
-    <br>
+
 
     <div class="space-y-6 space-x-4">
         <h1>Structure:</h1>
 
-        <p>The first step to add a specimen. The first form has all required fields which are listed next.</p>
+        <p>The first step is to add a specimen. The first form has all required fields which are listed next.</p>
 
         <h2>Basic Specimen Information (all required)</h2>
         <ol class="list-decimal">
@@ -113,7 +109,7 @@
         <p>A word about colors. I began with the Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names"
             chart which is labeled latin_colors.jpg on their website. I then sampled across each color away from the
             numbers and names imposed on the chart so as to arrive as closely as I could at ONE color. Not perfect, but
-            I came pretty close. That said, I am done with colors, it get too complicated too quickly. I will NOT do a
+            I came pretty close. That said, <u>I am done with colors</u>, it get too complicated too quickly. I will NOT do a
             color picker with millions of colors to choose from. There is no point to it.</p>
 
         <p>Kerrigan's quote below sums it up for me.</p>
@@ -128,115 +124,19 @@
         </blockquote>
 
 
-        <h2>Optional Specimen Information ( characters - none required ) - as of August 13, 2024</h2>
+        <h2>Specimen Characters</h2>
 
-        <ol class="list-decimal">
-            <li>id</li>
-            <li>AVAILABLE</li>
-            <li>specimen_age</li>
-            <li>odor</li>
-            <li>taste</li>
-            <li>toxic</li>
-            <li>habit</li>
-            <li>cap_width_mm</li>
-            <li>cap_height_mm</li>
-            <li>cap_shape</li>
-            <li>cap_shape_top_view</li>
-            <li>cap_color</li>
-            <li>cap_color_disc</li>
-            <li>cap_color_margin</li>
-            <li>cap_color_background</li>
-            <li>cap_color_fibrils</li>
-            <li>cap_color_bruised</li>
-            <li>cap_color_wet</li>
-            <li>cap_color_dry</li>
-            <li>cap_surface_dryness</li>
-            <li>cap_surface_texture</li>
-            <li>cap_margin_shape</li>
-            <li>cap_margin_type</li>
-            <li>cap_hairy_y_n</li>
-            <li>cap_context_flesh_color_moist</li>
-            <li>cap_context_flesh_color_dry</li>
-            <li>cap_context_flesh_color_cuticle</li>
-            <li>cap_context_flesh_thickness_disc_mm</li>
-            <li>cap_context_flesh_thickness_margin_mm</li>
-            <li>cap_context_flesh_texture</li>
-            <li>cap_context_flesh_latex_color</li>
-            <li>cap_context_flesh_latex_color_exposed</li>
-            <li>cap_context_flesh_latex_taste</li>
-            <li>cap_context_flesh_latex_abundance</li>
-            <li>gill_attachment</li>
-            <li>gill_breadth</li>
-            <li>gill_thickness</li>
-            <li>gill_spacing</li>
-            <li>gill_color_young</li>
-            <li>gill_color_mature</li>
-            <li>gill_edge</li>
-            <li>gill_misc_waxy_y_n</li>
-            <li>gill_misc_arid_dry_y_n</li>
-            <li>gill_misc_deliquescent_y_n</li>
-            <li>stem_location</li>
-            <li>stem_height_mm</li>
-            <li>stem_diameter_top_mm</li>
-            <li>stem_diameter_mid_mm</li>
-            <li>stem_diameter_low_mm</li>
-            <li>stem_shape</li>
-            <li>stem_color</li>
-            <li>stem_color_change</li>
-            <li>stem_color_base</li>
-            <li>stem_color_apex</li>
-            <li>stem_color_interior</li>
-            <li>stem_color_exterior</li>
-            <li>stem_color_bruise</li>
-            <li>stem_surface</li>
-            <li>stem_texture</li>
-            <li>stem_interior</li>
-            <li>part_in_veil_ann_ri_posit</li>
-            <li>veil_annulus</li>
-            <li>partial_inner_veil_color</li>
-            <li>partial_inner_veil_texture</li>
-            <li>partial_inner_veil_fate</li>
-            <li>partial_inner_veil_annular_ring</li>
-            <li>partial_inner_veil_appearance</li>
-            <li>universal_outer_veil_description</li>
-            <li>universal_outer_veil_volva</li>
-            <li>bulb_type</li>
-            <li>mycelium_color</li>
-            <li>mycelium_texture</li>
-            <li>spore_color</li>
-            <li>spore_range_low_um</li>
-            <li>spore_range_high_um</li>
-            <li>habitat</li>
-            <li>soil_type</li>
-            <li>soil_temp</li>
-            <li>air_temp</li>
-            <li>plant_association</li>
-            <li>rhizomorph_color</li>
-            <li>rhizomorph_texture</li>
-            <li>chem_reaction</li>
-            <li>weight_before_dry_grams</li>
-            <li>weight_after_dry_grams</li>
-            <li>elevation</li>
-            <li>soil_ph</li>
-            <li>stipe_latex_color_exposed</li>
-            <li>stipe_latex_taste</li>
-            <li>stipe_latex_abundance</li>
-            <li>Mycobank_name</li>
-            <li>inaturalist_num</li>
-            <li>mushroom_observer_num</li>
-            <li>location_found_latitude</li>
-            <li>location_found_longitude</li>
-            <li>project_belong_to</li>
-            <li>microscope_slides_inc_y_n</li>
-            <li>preservation_method</li>
-            <li>genus</li>
-            <li>species</li>
-            <li>annulus_position</li>
-            <li>univ_out_veil_appear</li>
-            <li>univ_out_veil_texture</li>
-            <li>univ_out_veil_fate</li>
+        <p>None are <u>required</u>, but obviously the more that are accurately entered, the better the chance for a reliable identification. At some point, I hope to match up good images with dna results, but not there yet.</p>
+        <p>And, <b>this is a big "and."</b> A  really big goal of this process is to identify and examine existing characters. If you can add anything to this process, please do.</p>
 
-        </ol>
+        @php
+            $characters = \App\Models\Character::all();
+        @endphp
+        <x-site-nav-bar-simple-no-logo/>
+
+        <x-display-characters-lookuptable-list :characters="$characters"></x-display-characters-lookuptable-list>
+
+        <x-site-nav-bar-simple-no-logo/>
     </div>
 
 @endsection

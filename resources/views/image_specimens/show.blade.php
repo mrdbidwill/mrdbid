@@ -30,7 +30,7 @@
         <p class="text-red-500">No images found.</p>
     @endif
 
-    <p>resources/views/image_specimen/show.blade.php</p>
+    <p>resources/views/image_specimens/show.blade.php</p>
 
     <table
         class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
@@ -38,7 +38,7 @@
 
         <tr>
             <td class="border-4 border-blue-300 p-2 text-black text-center">
-Image Info   <a href="/image_specimen/<?php echo $image_specimen->id; ?>/edit" class="w-64 h-10 flex items-center justify-center rounded-full  text-black bg-green-100 hover:bg-green-300  no-underline"
+Image Info   <a href="/image_specimens/<?php echo $image_specimen->id; ?>/edit" class="w-64 h-10 flex items-center justify-center rounded-full  text-black bg-green-100 hover:bg-green-300  no-underline"
                                     title="Return to this Image">
                     <b>Return to this Image</b>
                 </a>
@@ -125,7 +125,7 @@ Image Info   <a href="/image_specimen/<?php echo $image_specimen->id; ?>/edit" c
             <td class="border-4 border-blue-300 p-2 text-fuchsia-700 text-center">
                 End image_specimen info.
             </td>
-        </tr> <!-- end image_specimen info table line image_specimens/index.blade.php -->
+        </tr> <!-- end image_specimens info table line image_specimens/index.blade.php -->
     </table>
 @endsection
 

@@ -44,7 +44,7 @@
             <div class="mt-6 gap-y-4">
                 <p>This is views/images_specimen/create.blade.php</p>
                 <p class = "text-orange-600 text-2xl p-4 m-4">All that is required right now is to select the image. File size is limited at (TBD maybe 10?) MB. You can edit parts and description now or later. If lens is not determined from image EXIF date, you can add it later also.</p>
-                <form method="POST" action="{{ route('image_specimen.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('image_specimens.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="images" class="block text-sm font-medium leading-6 text-gray-900">Select images for this specimen:</label>

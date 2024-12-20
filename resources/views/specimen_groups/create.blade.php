@@ -4,33 +4,44 @@
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <form method="POST" action="/{{ route('specimen_group.create') }}">
+    <p>resources/views/specimen_groups/create.blade.php</p>
+
+    <form method="POST" action="{{ route('specimen_groups.store') }}">
         @csrf
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Create a New Character</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">Your groups:</p>
+                <h2 class="text-base font-semibold leading-7 text-gray-900">Create a New Group</h2>
+
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <x-form-field>
-                        <x-form-label for="title">Groups</x-form-label>
+                        <x-form-label for="name">Group Name</x-form-label>
 
-                        <div class="mt-2">
-                            <x-form-input name="character_name" id="character_name" placeholder="wrj_2_20_2024_1"/>
+                        <div class="shadow mt-2 leading-tight focus:outline-none focus:shadow-outline">
+                            <x-form-input name="name" id="name" placeholder=""/>
 
-                            <x-form-error name="character_name"/>
+                            <x-form-error name="name"/>
                         </div>
                     </x-form-field>
 
                     <x-form-field>
-                        <x-form-label for="common_name">Common Name</x-form-label>
+                        <x-form-label for="description">Description</x-form-label>
 
-                        <div class="mt-2">
-                            <x-form-input name="common_name" id="common_name"
-                                          placeholder="Little brown mushroom - front yard"/>
+                        <div class="shadow mt-2 leading-tight focus:outline-none focus:shadow-outline">
+                            <textarea name="description" rows="4" style="width: 100%;"></textarea>
 
-                            <x-form-error name="common_name"/>
+                            <x-form-error name="description"/>
+                        </div>
+                    </x-form-field>
+
+                    <x-form-field>
+                        <x-form-label for="comments">Comments</x-form-label>
+
+                        <div class="shadow mt-2 leading-tight focus:outline-none focus:shadow-outline">
+                            <textarea name="comments" rows="4" style="width: 100%;"></textarea>
+
+                            <x-form-error name="comments"/>
                         </div>
                     </x-form-field>
                 </div>

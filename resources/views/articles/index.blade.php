@@ -1,3 +1,6 @@
+@props(['active' => false])@php
+    $isArticles = request()->routeIs('articles.index');
+@endphp
 @extends('layouts.app')
 
 @section('content')

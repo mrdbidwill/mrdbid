@@ -7,7 +7,7 @@
 
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <form method="POST" action="/specimen_cluster/{{ $specimen_cluster->id }}">
+    <form method="POST" action="/specimen_clusters/{{ $specimen_cluster->id }}">
         @csrf
         @method('PATCH')
 
@@ -74,25 +74,21 @@
             </div>
 
             <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
-
-            <div class="flex items-center gap-x-6">
-                <a href="/{{ route('specimen_cluster.index') }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
-
-                <div>
-
                     <button type="submit"
                             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Update
+                        Update Cluster
                     </button>
                 </div>
-            </div>
-        </div>
     </form>
 
-    <form method="POST" action="/specimen_clusters/{{ $specimen_cluster->id }}" id="delete-form" class="hidden">
-        @csrf
-        @method('DELETE')
-    </form>
+
+
+    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+        <x-action-buttons
+            :cancelUrl="route('specimen_clusters.show', $specimen_cluster->id)"
+            :deleteAction="route('specimen_groups.destroy', $specimen_cluster->id)"
+            deleteItem="This Cluster"/>
+    </table>
 @endsection
 
 

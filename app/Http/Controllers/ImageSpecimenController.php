@@ -24,7 +24,7 @@ class ImageSpecimenController extends Controller
     {
         $images = ImageSpecimen::where('specimen_id', auth()->id())->latest()->simplePaginate(6);
 
-        return view('image_specimen.index', [
+        return view('image_specimens.index', [
             'images_specimen' => $images,
         ]);
     }
@@ -33,11 +33,11 @@ class ImageSpecimenController extends Controller
     {
         //dd($id);
 
-        // get images_specimen for this user and this image_specimen id
+        // get images_specimen for this user and this image_specimens id
         $image_specimen = ImageSpecimen::where('id', $id)
             ->first();
 
-        return view('image_specimen.show', ['image_specimen' => $image_specimen]);
+        return view('image_specimens.show', ['image_specimen' => $image_specimen]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -194,7 +194,7 @@ class ImageSpecimenController extends Controller
     {
         // get the specimen id from the request
 
-        return view('/image_specimen/create')->with('specimen_id', request('specimen_id'));
+        return view('/image_specimens/create')->with('specimen_id', request('specimen_id'));
     }
 
     public function image_return_exif_data($imagePath)
@@ -280,7 +280,7 @@ class ImageSpecimenController extends Controller
     {
         // dd($image_specimen_id);
 
-        return view('image_specimen.edit', ['imageSpecimen' => $imageSpecimen = ImageSpecimen::findOrFail($image_specimen_id)]);
+        return view('image_specimens.edit', ['imageSpecimen' => $imageSpecimen = ImageSpecimen::findOrFail($image_specimen_id)]);
 
     }
 
@@ -302,7 +302,7 @@ class ImageSpecimenController extends Controller
             'entered_by' => $entered_by,
         ]);
 
-        return redirect('/image_specimen/'.$id.'/edit')->with('message', 'Image Specimen updated successfully');
+        return redirect('/image_specimens/'.$id.'/edit')->with('message', 'Image Specimen updated successfully');
     }
 
     public function destroy(int $id)
@@ -340,6 +340,6 @@ class ImageSpecimenController extends Controller
             ],
         ]);
 
-        return redirect()->route('image_specimen.index')->with('success', 'image image upload successfully.');
+        return redirect()->route('image_specimens.index')->with('success', 'image image upload successfully.');
     }
 }

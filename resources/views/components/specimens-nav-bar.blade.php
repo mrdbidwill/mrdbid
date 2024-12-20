@@ -23,18 +23,18 @@
                 Characters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('data_source.index') }}"
-                                  :active="request()->routeIs('data_source.index')">
+            <x-specimens-nav-link href="{{ route('data_sources.index') }}"
+                                  :active="request()->routeIs('data_sources.index')">
                 Add Data Source
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_cluster.index') }}"
-                                  :active="request()->routeIs('specimens_cluster.index')">
+            <x-specimens-nav-link href="{{ route('specimen_clusters.index') }}"
+                                  :active="request()->routeIs('specimen_clusters.index')">
                 Manage Clusters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_group.index') }}"
-                                  :active="request()->routeIs('specimens_group.index')">
+            <x-specimens-nav-link href="{{ route('specimen_groups.index') }}"
+                                  :active="request()->routeIs('specimen_groups.index')">
                 Manage Groups
             </x-specimens-nav-link>
         </div>
@@ -72,18 +72,18 @@
                 Characters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('data_source.index') }}"
-                                  :active="request()->routeIs('data_source.index')">
+            <x-specimens-nav-link href="{{ route('data_sources.index') }}"
+                                  :active="request()->routeIs('data_sources.index')">
                 Add Data Source
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_cluster.index') }}"
-                                  :active="request()->routeIs('specimens_cluster.index')">
+            <x-specimens-nav-link href="{{ route('specimen_clusters.index') }}"
+                                  :active="request()->routeIs('specimen_clusters.index')">
                 Manage Clusters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_group.index') }}"
-                                  :active="request()->routeIs('specimens_group.index')">
+            <x-specimens-nav-link href="{{ route('specimen_groups.index') }}"
+                                  :active="request()->routeIs('specimen_groups.index')">
                 Manage Groups
             </x-specimens-nav-link>
         </div>

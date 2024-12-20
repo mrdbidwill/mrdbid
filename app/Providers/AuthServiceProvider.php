@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use App\Models\Article;
 use App\Models\ImageSpecimen;
+use App\Models\SpecimenCluster;
+use App\Models\SpecimenGroup;
 use App\Policies\ArticlePolicy;
 use App\Policies\ImageSpecimenPolicy;
+use App\Policies\SpecimenClusterPolicy;
+use App\Policies\SpecimenGroupPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         ImageSpecimen::class => ImageSpecimenPolicy::class,
         Article::class => ArticlePolicy::class,
+        SpecimenGroup::class => SpecimenGroupPolicy::class,
+        SpecimenCluster::class => SpecimenClusterPolicy::class,
     ];
 
     /**

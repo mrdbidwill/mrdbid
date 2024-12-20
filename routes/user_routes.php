@@ -42,8 +42,8 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::resource('articles', ArticleController::class);
     Route::resource('trees', TreeController::class);
 
-    Route::get('/compare', [CompareController::class, 'index']);
-    Route::post('/compare', [CompareController::class, 'compare']);
+    Route::get('/compares', [CompareController::class, 'index']);
+    Route::post('/compares', [CompareController::class, 'compare']);
 
     Route::get('/pdf/user-specimens', [PdfController::class, 'userSpecimens']);
     Route::get('/pdf/all-specimens', [PdfController::class, 'allSpecimens']);
@@ -51,22 +51,22 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::get('/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus']);
     Route::get('/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies']);
 
-    Route::resource('data_source', DataSourceController::class);
-    Route::resource('data_source_data_type', DataSourceDataTypeController::class);
-    Route::resource('display_option', DisplayOptionController::class);
-    Route::resource('dna_sequence', DnaSequenceController::class);
-    Route::resource('image_specimen', ImageSpecimenController::class);
-    Route::resource('member_list_cluster', MemberListClusterController::class);
-    Route::resource('member_list_group', MemberListGroupController::class);
-    Route::resource('member_type', MemberTypeController::class);
-    Route::resource('plant_association', PlantAssociationController::class);
-    Route::resource('plant', PlantController::class);
-    Route::resource('possible_match', PossibleMatchController::class);
-    Route::resource('project_belongs_to', ProjectBelongToController::class);
-    Route::resource('specimen_cluster', SpecimenClusterController::class);
-    Route::resource('specimen_compare', SpecimenCompareController::class);
-    Route::resource('specimen_group', SpecimenGroupController::class);
+    Route::resource('data_sources', DataSourceController::class);
+    Route::resource('data_source_data_types', DataSourceDataTypeController::class);
+    Route::resource('display_options', DisplayOptionController::class);
+    Route::resource('dna_sequences', DnaSequenceController::class);
+    Route::resource('image_specimens', ImageSpecimenController::class);
+    Route::resource('member_list_clusters', MemberListClusterController::class);
+    Route::resource('member_list_groups', MemberListGroupController::class);
+    Route::resource('member_types', MemberTypeController::class);
+    Route::resource('plant_associations', PlantAssociationController::class);
+    Route::resource('plants', PlantController::class);
+    Route::resource('possible_matches', PossibleMatchController::class);
+    Route::resource('project_belongs_tos', ProjectBelongToController::class);
+    Route::resource('specimen_clusters', SpecimenClusterController::class);
+    Route::resource('specimen_compares', SpecimenCompareController::class);
+    Route::resource('specimen_groups', SpecimenGroupController::class);
     Route::resource('synonym', SynonymController::class);
-    Route::resource('tree', TreeController::class);
+    Route::resource('trees', TreeController::class);
 
 });

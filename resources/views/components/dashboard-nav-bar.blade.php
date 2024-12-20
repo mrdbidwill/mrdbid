@@ -25,12 +25,12 @@
 </x-specimens-nav-link>
     --}}
     <x-specimens-nav-link href="{{ route('specimen_cluster.index') }}"
-                          :active="request()->routeIs('specimens_cluster.index')">
+                          :active="request()->routeIs('specimen_clusters.index')">
         Manage Clusters
     </x-specimens-nav-link>
 
     <x-specimens-nav-link href="{{ route('specimen_group.index') }}"
-                          :active="request()->routeIs('specimens_group.index')">
+                          :active="request()->routeIs('specimen_groups.index')">
         Manage Groups
     </x-specimens-nav-link>
 

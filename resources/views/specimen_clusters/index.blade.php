@@ -8,7 +8,7 @@
 
 
     @if (Session::has('message'))
-        <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
+        <div c lass="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
 
     <!-- if no specimens are found, display message -->
@@ -18,8 +18,8 @@
 
 
     <p class="border-4 border-black p-2 text-fuchsia-700 text-center">
-        <x-specimens-nav-link href="{{ route('specimen_cluster.create') }}"
-                              :active="request()->routeIs('specimens_cluster.create')">
+        <x-specimens-nav-link href="{{ route('specimen_clusters.create') }}"
+                              :active="request()->routeIs('specimen_clusters.create')">
             Add New Cluster
         </x-specimens-nav-link>
     </p>
@@ -41,8 +41,8 @@
 
             <tr>
                 <td class="border-4 border-black p-2 text-fuchsia-700 text-center">
-                    <x-specimens-nav-link href="{{ route('specimen_cluster.edit', $specimen_cluster['id']) }}"
-                                          :active="request()->routeIs('specimens_cluster.edit')">
+                    <x-specimens-nav-link href="{{ route('specimen_clusters.edit', $specimen_cluster['id']) }}"
+                                          :active="request()->routeIs('specimen_clusters.edit')">
                         Edit This Cluster
                     </x-specimens-nav-link>
                 </td>

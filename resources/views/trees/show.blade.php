@@ -2,9 +2,8 @@
 
 @section('content')
 
-    <x-slot:heading>
-        Tree
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+
 
     <h2 class="font-bold text-lg">{{ $tree['tree_name'] }}</h2>
 

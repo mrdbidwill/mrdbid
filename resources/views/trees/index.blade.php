@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <x-slot:heading>
-        Tree Listings
-    </x-slot:heading>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <div class="space-y-4">
         <h1>Trees:</h1>

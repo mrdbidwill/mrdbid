@@ -1,9 +1,21 @@
+@props(['active' => false])@php
+    $isArticles = request()->routeIs('articles.index');
+@endphp
 @extends('layouts.app')
 
 @section('content')
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     <p>This is views/articles/create.blade.php</p>
+
+    <div class="flex justify-center">
+        @if (!$isArticles)
+            <x-button href="{{ route('articles.index') }}"
+                      :active="request()->routeIs('articles.index')">
+                Back to Articles
+            </x-button>
+        @endif
+    </div>
 
     <h1>Create Article</h1>
     <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg mx-auto">

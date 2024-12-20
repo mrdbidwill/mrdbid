@@ -4,8 +4,6 @@
     <option name="generationStringOptionValues">
       <map>
         <entry key="newModelSimpleOption:addFillable" value="1" />
-        <entry key="postGeneration:databaseClassFactory" value="1" />
-        <entry key="postGeneration:formRequest" value="1" />
         <entry key="postGeneration:migration2" value="" />
       </map>
     </option>

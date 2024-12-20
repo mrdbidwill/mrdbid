@@ -21,13 +21,12 @@
         <img src="<?php echo $image_address; ?>" alt="<?php echo $image_address; ?>">
     </div>
 
-    <form method="POST" action="{{ route('image_specimen.update', $imageSpecimen->id) }}">
+    <form method="POST" action="{{ route('image_specimens.update', $imageSpecimen->id) }}">
         @csrf
         @method('PATCH')  <!--or PUT? -->
 
-        <table
-            class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
-            <!-- begin edit image_specimen table -->
+        <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+            <!-- begin edit image_specimens table -->
             <tr>
                 <td class="border-4 border-blue-300 p-2 text-black text-center">
                     What part of specimen?
@@ -100,25 +99,10 @@
     </form>
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
-        <tr>
-            <td class="border-4 border-blue-300 p-2 text-black text-center">
-
-                <div class="mt-6 flex items-center justify-between gap-x-6">
-                    <div class="flex items-center">
-                        <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
-                    </div>
-
-                    <div class="flex items-center gap-x-6">
-                        <a href="/specimens/{{ $imageSpecimen->specimen_id }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
-                    </div>
-                </div>
-
-                <form method="POST" action="/image_specimen/{{ $imageSpecimen->id }}" id="delete-form" class="hidden">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            </td>
-        </tr>
+    <x-action-buttons
+        :cancelUrl="route('specimens.show', $imageSpecimen->specimen_id)"
+        :deleteAction="route('image_specimens.destroy', $imageSpecimen->id)"
+         deleteItem="This Image"/>
     </table>
 
 @endsection

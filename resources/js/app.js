@@ -1,4 +1,3 @@
 import "./bootstrap";
 
-
-import.meta.glob(["../image_specimen/**", "../../storage/app/public/**"]);
+import.meta.glob(["../image_specimens/**", "../../storage/app/public/**"]);

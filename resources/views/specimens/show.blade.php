@@ -69,11 +69,37 @@
 
     @endphp
 
+
+    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+        <tr>
+            <td class="border-4 border-blue-300 p-2 text-black text-center">
+
+                <div class="mt-6 flex items-center justify-between gap-x-6">
+                    <div class="flex items-center">
+                        <button form="delete-form" class="text-red-500 text-sm font-bold">Delete This Specimen</button>
+                    </div>
+
+                    <div class="flex items-center gap-x-6">
+                        <a href="/specimens" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                    </div>
+                </div>
+
+                <form method="POST" action="/specimens/{{ $specimen->id }}" id="delete-form" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+
+
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
         <tr>
             <td class="p-2">
-                <form method="GET" action="/image_specimen/create" id="upload-image">
+                <form method="GET" action="/image_specimens/create" id="upload-image">
                     @csrf
                     <!-- add hidden field specimen_id -->
                     <input type="hidden" name="specimen_id" value="{{ $specimen['id'] }}">
@@ -348,6 +374,27 @@
                 End basic characters.
             </td>
         </tr> <!-- end basic specimen table line 180 of specimens/index.blade.php -->
+    </table>
+    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+        <tr>
+            <td class="border-4 border-blue-300 p-2 text-black text-center">
+
+                <div class="mt-6 flex items-center justify-between gap-x-6">
+                    <div class="flex items-center">
+                        <button form="delete-form" class="text-red-500 text-sm font-bold">Delete This Specimen</button>
+                    </div>
+
+                    <div class="flex items-center gap-x-6">
+                        <a href="/specimens" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                    </div>
+                </div>
+
+                <form method="POST" action="/specimens/{{ $specimen->id }}" id="delete-form" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            </td>
+        </tr>
     </table>
 @endsection
 
