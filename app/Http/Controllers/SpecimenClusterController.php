@@ -49,6 +49,8 @@ class SpecimenClusterController extends Controller
     public function edit($id)
     {
         $specimen_cluster = SpecimenCluster::findOrFail($id);
+        //dd($specimen_cluster);
+        Gate::authorize('edit-cluster', $specimen_cluster);
 
         return view('specimen_clusters.edit', compact('specimen_cluster'));
 
@@ -78,10 +80,10 @@ class SpecimenClusterController extends Controller
 
     public function destroy(SpecimenCluster $specimen_cluster)
     {
-        Gate::authorize('edit-specimen', $specimen_cluster);
+        Gate::authorize('edit-cluster', $specimen_cluster);   // same ownership check as needed here
 
         $specimen_cluster->delete();
 
-        return redirect()->intended(route('specimen_clusters', absolute: false));
+        return redirect()->intended(route('specimen_clusters.index', absolute: false));
     }
 }

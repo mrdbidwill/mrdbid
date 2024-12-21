@@ -3,7 +3,9 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>This is resources/views/admin/admin_character/show.blade.php</p>
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_character/show.blade.php</p>
+    @endif
 
 
     <h2 class="font-bold text-lg">{{ $character_table->name }}</h2>

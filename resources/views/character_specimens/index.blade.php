@@ -3,8 +3,15 @@
 @section('content')
 
     <x-specimens-nav-bar/>
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/index.blade.php</p>
+    @endif
+
     <x-notification message="{{ Session::get('message') }}"/>
-    <p>resources/views/character_specimens/index.blade.php</p>
+
 
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
         <div class="mx-auto max-w-7xl">

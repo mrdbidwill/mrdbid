@@ -30,7 +30,9 @@
     @endphp
 
     <div class="bg-amber-600 text-white p-4 rounded-lg">
-        <h2 class="text-2xl font-bold">Edit lookup Table (admin_lookup/edit.blade.php)</h2>
+        @if (config('app.env') === 'local')
+            <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_character/edit.blade.php</p>
+        @endif
         <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin! Admin!</h2>
     </div>
 

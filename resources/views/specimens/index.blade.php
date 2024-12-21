@@ -5,7 +5,11 @@
 
 @section('content')
 
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/specimens/index.blade.php</p>
+    @endif
+
 
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>

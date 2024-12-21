@@ -3,7 +3,11 @@
 @section('content')
 
     <p>This is views/data_sources/index.blade.php</p>
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    @endif
+
 
     <h1>Data Sources</h1>
     <a href="{{ route('data_sources.create') }}">Create New Data Source</a>

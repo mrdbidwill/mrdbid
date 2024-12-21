@@ -3,7 +3,11 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>resources/views/admin/admin_specimen/index.blade.php</p>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_specimen/index.blade.php</p>
+    @endif
 
     <div class="bg-gray-900">
         <div class="mx-auto max-w-7xl">

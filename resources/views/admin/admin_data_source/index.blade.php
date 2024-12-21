@@ -5,14 +5,20 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_data_source/index.blade.php</p>
+    @endif
+
     <div class="bg-gray-100">
         <div class="mx-auto max-w-7xl">
             <div class="bg-gray-100 py-8">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Edit data_source Table:
-                                (admin_data_source_table/index.blade.php)</h1>
+                            <h1 class="text-base font-semibold leading-6 text-black">Edit data_source Table:</h1>
                             <h2 class="text-sm font-semibold leading-5 text-red-600">Admin! Admin! Admin! Admin!
                                 Admin!</h2>
                             <p class="text-black">These are the data_sources in the "data_sources" table down below.

@@ -34,6 +34,7 @@ class SpecimenGroupController extends Controller
         ]);
 
         $member_id = $entered_by = auth()->user()->id;
+        // dd($member_id);   // ok here - 2
 
         SpecimenGroup::create([
             'member_id' => $member_id,

@@ -3,7 +3,12 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>This is views/admin/admin_export_database/index.blade.php.</p>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_export_database/index.blade.php</p>
+    @endif
+
     <h1 class="text-red-700 text-2xl">Export Database Page</h1>
 
     @if(session('success'))

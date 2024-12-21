@@ -7,7 +7,11 @@
 
 @section('content')
 
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/image_specimens/show.blade.php</p>
+    @endif
+
 
     @if(session('success'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
@@ -30,7 +34,6 @@
         <p class="text-red-500">No images found.</p>
     @endif
 
-    <p>resources/views/image_specimens/show.blade.php</p>
 
     <table
         class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">

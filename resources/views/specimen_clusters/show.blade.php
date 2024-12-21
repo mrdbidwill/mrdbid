@@ -3,7 +3,13 @@
 
 @section('content')
 
+        {{-- Show file address if in development environment --}}
     <x-specimens-nav-bar></x-specimens-nav-bar>
+
+        @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_clusters/show.blade.php</p>
+    @endif
+
     <h1>specimen_clusters.show.blade.php</h1>
 
     //dd($specimen_clusters);

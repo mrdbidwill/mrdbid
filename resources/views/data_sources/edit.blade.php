@@ -3,7 +3,11 @@
 @section('content')
 
     <p>This is views/data_sources/edit.blade.php</p>
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    @endif
+
 
     <h1>Edit Data Source</h1>
     <form action="{{ route('data_sources.update', $data_source->id) }}" method="POST">

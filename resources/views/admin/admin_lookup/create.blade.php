@@ -3,10 +3,18 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
+
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_lookup/create.blade.php</p>
+    @endif
+
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
-    <p>(resources/views/admin/admin_lookup/create.blade.php)</p>
+
     <form method="POST" action="/admin_look_up">
         @csrf
 

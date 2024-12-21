@@ -3,7 +3,11 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
-    <p>This is resources/views/admin/admin_data_source_table/show.blade.php</p>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_data_source/show.blade.php</p>
+    @endif
 
 
     <h2 class="font-bold text-lg">{{ $data_source_table->name }}</h2>

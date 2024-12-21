@@ -3,6 +3,13 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_data_source/edit.blade.php</p>
+    @endif
+
     @php
         //dd($data_source_table);
         // $name does not work
@@ -30,7 +37,7 @@
     @endphp
 
     <div class="bg-amber-600 text-white p-4 rounded-lg">
-        <h2 class="text-2xl font-bold">Edit data_source Table (admin_data_source_table/edit.blade.php)</h2>
+        <h2 class="text-2xl font-bold">Edit data_source Table</h2>
         <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin! Admin!</h2>
     </div>
 

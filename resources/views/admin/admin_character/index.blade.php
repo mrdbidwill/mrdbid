@@ -11,8 +11,9 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-black">Edit Character Table:
-                                (admin_character/index.blade.php)</h1>
+                            @if (config('app.env') === 'local')
+                                <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_character/index.blade.php</p>
+                            @endif
                             <h2 class="text-sm font-semibold leading-5 text-red-600">Admin! Admin! Admin! Admin!
                                 Admin!</h2>
                             <p class="text-black">These are the characters in the "characters" table down below. They

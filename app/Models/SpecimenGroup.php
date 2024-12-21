@@ -2,20 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SpecimenGroup extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
+        'member_id',
         'name',
-        'display_options',
-        'look_up_y_n',
-        'part',
-        'source',
+        'description',
+        'comments',
         'entered_by',
     ];
 

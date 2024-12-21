@@ -2,7 +2,14 @@
 
 @section('content')
 
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
+
+        {{-- Show file address if in development environment --}}
+        @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/show.blade.php</p>
+    @endif
+
     <div class="sm:flex-auto">
         <h1 class="text-base font-semibold leading-6 text-black">Characters</h1>
         @if(isset($message))
@@ -11,8 +18,6 @@
         @php
             //dd($specimens);
         @endphp
-
-        <p>resources/views/character_specimens/edit.show.php</p>
 
         <p class="mt-2 text-sm text-black">Use this list to add characters to your specimen.</p>
     </div>

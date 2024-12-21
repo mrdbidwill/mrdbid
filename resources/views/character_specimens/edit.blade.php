@@ -18,8 +18,15 @@
 @section('content')
 
     <x-specimens-nav-bar/>
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/edit.blade.php</p>
+    @endif
+
+
     <x-notification message="{{ Session::get('message') }}"/>
-    <p>resources/views/character_specimens/edit.blade.php</p>
 
     @php $list_of_set_characters_array[] = '';  @endphp
     @foreach ($list_of_set_characters as $list_of_set_character)

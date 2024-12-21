@@ -2,7 +2,11 @@
 
 @section('content')
 
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    @endif
+
 
 
     <h2 class="font-bold text-lg">{{ $tree['tree_name'] }}</h2>

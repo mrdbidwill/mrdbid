@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\DataSource;
 use App\Models\Specimen;
+use App\Models\SpecimenCluster;
+use App\Models\SpecimenGroup;
 use App\Models\User;
 use App\Policies\ArticlePolicy;
 use App\Policies\BookPolicy;
@@ -54,6 +56,14 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('edit-specimen', function (User $user, Specimen $specimen) {
             return $user->id === $specimen->user_id;
+        });
+
+        Gate::define('edit-group', function (User $user, SpecimenGroup $specimen_group) {
+            return $user->id === $specimen_group->member_id;
+        });
+
+        Gate::define('edit-cluster', function (User $user, SpecimenCluster $specimen_cluster) {
+            return $user->id === $specimen_cluster->member_id;
         });
 
         Gate::define('delete-specimen', function (User $user, Specimen $specimen) {

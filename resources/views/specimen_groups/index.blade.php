@@ -4,7 +4,10 @@
 
     <x-specimens-nav-bar/>
 
-    <p>resources/views/specimen_groups/index.blade.php</p>
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_groups/index.blade.php</p>
+    @endif
 
     <p class="mt-2 text-xl text-black">These are <u>your</u> groups. Some are created automatically when a specimen is created, such as the months of the year. These month groups can not be edited or deleted, so they are not shown here. You do not have to use them. You can also create your own version, just give them a different name.</p>
 

@@ -4,6 +4,11 @@
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_lookup/show.blade.php</p>
+    @endif
+
     @if (Session::has('message'))
         <div class="text-3xl text-red-700"><strong>{{ Session::get('message') }} </strong></div>
     @endif
@@ -13,12 +18,6 @@
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
-        <tr>
-            <td class="p-2">
-    (resources/views/admin/admin_lookup/show.blade.php)
-            </td>
-        </tr>
-
         <tr>
             <td class="p-2">
     Lookup Table ID:  <strong>{{ $lookup_table->id }} </strong>

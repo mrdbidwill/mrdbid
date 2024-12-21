@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ImageSpecimen;
+use App\Models\ImageSpecimenThumbnail;
 use App\Models\Specimen;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -309,13 +310,36 @@ class ImageSpecimenController extends Controller
     {
         $image = ImageSpecimen::findOrFail($id);
         $this->authorize('delete', $image);
-        $specimen_id = $image->specimen_id;
-        $image->delete();
 
-        return redirect()->route('specimens.show', ['specimen' => $specimen_id])->with('success', 'Image deleted successfully.');
+        $specimen_id = $image->specimen_id;
+        $file_name = $image->file_address;
+
+        // Get the thumbnail for the image
+        $thumbnail = ImageSpecimenThumbnail::where('image_specimen_id', $id)->first();
+        $thumb_file_name = $thumbnail->thumbnail_file_address ?? null;
+
+        // Define file paths
+        $imagePath = public_path('storage/uploaded_images/'.$file_name);
+        $thumbPath = public_path('storage/uploaded_images/thumbnail/'.$thumb_file_name);
+
+        // Delete files from storage if they exist
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        if ($thumb_file_name && file_exists($thumbPath)) {
+            unlink($thumbPath);
+        }
+
+        // Delete database records
+        $thumbnail?->delete(); // Deletes the thumbnail record if it exists
+        $image->delete(); // Deletes the image record
+
+        return redirect()->route('specimens.show', ['specimen' => $specimen_id])
+            ->with('success', 'Image and its thumbnail deleted successfully.');
     }
 
-    public function store_image(Request $request)
+    public function store_image(Request $request)   // NOT used - delete?
     {
         $request->validate([
             'parts' => 'required',

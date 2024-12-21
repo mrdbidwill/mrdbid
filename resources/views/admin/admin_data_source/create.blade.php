@@ -3,6 +3,14 @@
 @section('content')
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
+
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_data_source/create.blade.php</p>
+    @endif
+
     <form method="POST" action="/admin_data_source_table/">
         @csrf
 
@@ -11,8 +19,6 @@
                 <h2 class="text-base font-semibold leading-7 text-gray-900">Add a new data_source to the "data_sources"
                     Table?</h2>
                 <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin! Admin!</h2>
-
-                <p>This is resources/views/admin/admin_data_source_table/create.blade.php</p>
 
                 <p class="mt-1 text-sm leading-6 text-gray-600">All fields are required.</p>
 

@@ -6,9 +6,14 @@
 
 @section('content')
 
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <p>resources/views/character_specimens/edit.blade.php</p>
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/create.blade.php</p>
+    @endif
+
 
     <div class="bg-gray-100">    <!--  bg-gray-100 no effect?-->
         <div class="mx-auto max-w-7xl">

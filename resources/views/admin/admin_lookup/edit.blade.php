@@ -4,11 +4,18 @@
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
 
+
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_lookup/edit.blade.php</p>
+    @endif
+
     @if (Session::has('message'))
         <div class="text-3xl text-red-700">{{ Session::get('message') }}</div>
     @endif
 
-    <p>(resources/views/admin/admin_lookup/edit.blade.php)</p>
+
     @php //dd($lookup_table_edits); @endphp
     @php //dd($id); // contains the character table id
         $table_name = DB::table('characters')->select('name')->where('id', '=', $id)->get();

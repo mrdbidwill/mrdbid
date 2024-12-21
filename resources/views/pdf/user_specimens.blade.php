@@ -5,7 +5,15 @@
 
 @section('content')
 
-    <x-specimens-nav-bar></x-specimens-nav-bar>
+        {{-- Show file address if in development environment --}}
+        {{-- Show file address if in development environment --}}
+    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    @endif
+@if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    @endif
+
 <h1>User Specimens</h1>
 @foreach ($specimens as $specimen)
     <div>

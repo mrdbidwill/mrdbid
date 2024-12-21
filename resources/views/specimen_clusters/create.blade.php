@@ -2,7 +2,14 @@
 
 @section('content')
 
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_clusters/create.blade.php</p>
+    @endif
+
 
     <form method="POST" action="{{ route('specimen_clusters.store') }}">
         @csrf

@@ -2,9 +2,13 @@
 
 @section('content')
 
+
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
-    <p>resources/views/specimen_groups/edit.blade.php</p>
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_groups/edit.blade.php</p>
+    @endif
 
     <form method="POST" action="/specimen_groups/{{  $specimenGroup->id }}">
         @csrf
@@ -77,7 +81,7 @@
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <x-action-buttons
-            :cancelUrl="route('specimen_groups.show', $specimenGroup->id)"
+            :cancelUrl="route('specimen_groups.index', $specimenGroup->id)"
             :deleteAction="route('specimen_groups.destroy', $specimenGroup->id)"
             deleteItem="This Group"/>
     </table>
