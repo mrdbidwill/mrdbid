@@ -59,6 +59,9 @@
                             {{ $table_name_plural }}:
                             @php  //dd($lookup_table_row); @endphp
                             <b>{{ $lookup_table_row->name ?? 'Unknown Name' }}</b>
+                            @if($loop->iteration % 5 === 0)
+                                <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+                            @endif
                         </td>
                     </tr>
                     @endif
@@ -66,10 +69,14 @@
             @else
                 <tr class="{{ $character_bg_class }}">
                     <td>
-                        <b>{{ $display_name }} Not lookup</b>
+                        <b>{{ $display_name }}</b>
+                        @if($loop->iteration % 5 === 0)
+                            <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+                        @endif
                     </td>
                 </tr>
             @endif
+
         @endforeach
     </table>
 </div>

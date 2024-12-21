@@ -1,13 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
 
-    <p>This is views/data_sources/edit.blade.php</p>
-        {{-- Show file address if in development environment --}}
-    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/data_sources/edit.blade.php</p>
     @endif
-
 
     <h1>Edit Data Source</h1>
     <form action="{{ route('data_sources.update', $data_source->id) }}" method="POST">
@@ -70,6 +68,13 @@
         </tr>
     </table>
     </form>
+
+    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+        <x-action-buttons
+            :cancelUrl="route('data_sources.show', $data_source->id)"
+            :deleteAction="route('data_sources.destroy', $data_source->id)"
+            deleteItem="This Data Source"/>
+    </table>
 @endsection
 
 

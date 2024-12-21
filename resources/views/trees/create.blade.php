@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-        {{-- Show file address if in development environment --}}
-    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/trees/create.blade.php</p>
     @endif
 
 

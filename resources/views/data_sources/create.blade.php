@@ -1,13 +1,12 @@
 @extends('layouts.app')
-
 @section('content')
 
-    <p>This is views/data_sources/create.blade.php</p>
-        {{-- Show file address if in development environment --}}
-    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
-    @endif
+    <x-specimens-nav-bar></x-specimens-nav-bar>
 
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/data_sources/create.blade.php</p>
+    @endif
 
     <h1>Create Data Source</h1>
 
@@ -68,6 +67,9 @@
                 <x-form-button-small class="spaced-button" fieldName="">Enter</x-form-button-small>
             </td>
         </tr>
+
+            <x-cancel-button :cancelUrl="route('data_sources.index')"/>
+
     </table>
 
     </form>

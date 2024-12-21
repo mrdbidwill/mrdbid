@@ -19,7 +19,6 @@
 
     <x-specimens-nav-bar/>
 
-
     {{-- Show file address if in development environment --}}
     @if (config('app.env') === 'local')
         <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/edit.blade.php</p>

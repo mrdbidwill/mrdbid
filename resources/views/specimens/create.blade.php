@@ -302,19 +302,14 @@
                             @enderror
             </td>
         </tr>
-        <tr>
-            <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
-
-
-                <div>
-                    <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
-
-                    <div class="mx-auto mt-6">
+            <tr>
+                <td style="padding: 0.5rem; border: 4px solid #93c5fd;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <x-primary-button>Submit</x-primary-button>
+                        <x-cancel-button :cancelUrl="route('specimens.index')" />
                     </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
     </table>
 
     </form>

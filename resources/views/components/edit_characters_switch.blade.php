@@ -60,7 +60,7 @@
 
                 @case(4)
                     <!--  text box string   NO Lookup table -->
-                    <p>{{$character_name}}: text box string - line 56</p>
+                    <p>{{$character_name}}:</p>
 
                     <label for="{{$character['id']}}">{{$character_name}}
                         : </label>
@@ -78,7 +78,7 @@
                 @case(5)
                     <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
 
-                    <p>{{$character['name']}}: text box number general format - line 77</p>
+                    <p>{{$character['name']}}:</p>
 
                     <label for="{{$character['id']}}">{{$character_name}}
                         : </label>
@@ -106,7 +106,7 @@
 
                 @case(7)
                     <!--  taste ALL taste characters use the tastes table-->
-                    <p>{{$character_name}}: taste - line 107</p>
+                    <p>{{$character_name}}:</p>
                     @php
                         $data = DB::table( 'tastes' )->get();
                     @endphp
@@ -119,7 +119,7 @@
 
                 @case(8)
                     <!-- odor ALL odor characters use the odors table-->
-                    <p>{{$character_name}}: odor - line 123</p>
+                    <p>{{$character_name}}:</p>
                     @php
                         $data = DB::table( 'odors' )->get();
                     @endphp
@@ -146,55 +146,43 @@
                             <b>{{$character['name']}}</b> {{$item]'name'}}</p>
                         <hr>
                     @else
-                        <!--
-                                                            <hr>
-                                                            <p>Character ID: {{$character['id']}}
-                        Name: {{$character['name']}} is NOT in the array</p>
-                                                            <hr>
-                                                            -->
+
                     @endif
-
-
-
-                    <!--  <p>{{$character['name']}} on <b>line 160</b></p>  -->
-
-
                     @break
 
                 @case(10)
                     <!--  dropdown -->
-                    <p>{{$character_name}}: dropdown - line 167</p>
+                    <p>{{$character_name}}:</p>
                     @break
 
                 @case(11)
                     <!--  state -->
-                    <p>{{$character_name}}: state - line 172</p>
+                    <p>{{$character_name}}:</p>
                     @break
 
                 @case(12)
                     <!-- country -->
-                    <p>{{$character_name}}: country - line 177</p>
+                    <p>{{$character_name}}:</p>
                     @break
 
                 @case(13)
                     <!--  texture -->
-                    <p>{{$character_name}}: texture - line 182</p>
+                    <p>{{$character_name}}:</p>
                     @break
                 @case(14)
                     <!-- yes_no  -->
-                    <p>{{$character_name}}: yes_no - line 186</p>
-                    @break
+                    <p>{{$character_name}}:
                 @case(15)
                     <!--  abundance -->
-                    <p>{{$character_name}}: abundance - line 190</p>
+                    <p>{{$character_name}}:</p>
                     @break
                 @case(16)
                     <!--  text box number grams measurement -->
-                    <p>{{$character_name}}: text box number grams measurement - line 195</p>
+                    <p>{{$character_name}}:</p>
                     @break
                 @default
                     <!--       Default case... -->
-                    <p>{{$character_name}}: Default case - line 199</p>
+                    <p>{{$character_name}}:</p>
             @endswitch
 
         </td>

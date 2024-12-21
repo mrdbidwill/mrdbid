@@ -2,10 +2,10 @@
 
 @section('content')
 
-    This is views/data_sources/show.blade.php
-        {{-- Show file address if in development environment --}}
-    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/</p>
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/data_sources/show.blade.php</p>
     @endif
 
 
@@ -47,6 +47,12 @@
         <tr>
             <td class="border-4 border-blue-300 p-2" colspan="2">
     Entered By: {{ $data_source->entered_by }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="border-4 border-blue-300 p-2" colspan="2">
+                <x-cancel-button :cancelUrl="route('data_sources.index')"/>
             </td>
         </tr>
 

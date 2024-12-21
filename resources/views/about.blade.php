@@ -1,15 +1,15 @@
 @extends('layouts.app')
-
 @section('content')
-
-    <p class="py-16 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
+    <div id="top">
+    <p class="py-2 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
             tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
             media associations, or marketing tracking addons. Fees may be received from links to book sales. As an Amazon Associate I earn from qualifying purchase.</b></p>
+    </div>
+    <p>This page is only information. The forms to add specimens and characters are elsewhere. You have to register and login to see the Specimens link and be able to actually do anything.</p>
 
-    <p>This page is only information. The forms to add specimens and characters are elsewhere.You have to register and login to see the Specimens link and be able to actually do anything.</p>
+    <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage characters for this specimen" button link.</p>
 
-
-    <div class="mt-6 space-y-4">
+    <div class="mt-2 space-y-2">
         <h2 class="text-5xl font-normal leading-normal mt-0 mb-2 text-pink-800">What's in a name?</h2>
 
         <p>The database will assign each specimen a unique numerical id to keep track of each specimen. You don't need
@@ -71,9 +71,9 @@
     <hr>
     <x-site-nav-bar-simple-no-logo/>
     <hr>
+    <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage characters for this specimen" button link.</p>
 
-
-    <div class="space-y-6 space-x-4">
+    <div class="space-y-2 space-x-2">
         <h1>Structure:</h1>
 
         <p>The first step is to add a specimen. The first form has all required fields which are listed next.</p>
@@ -132,10 +132,13 @@
         @php
             $characters = \App\Models\Character::all();
         @endphp
+
+        <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage characters for this specimen" button link.</p>
+
         <x-site-nav-bar-simple-no-logo/>
 
         <x-display-characters-lookuptable-list :characters="$characters"></x-display-characters-lookuptable-list>
-
+        <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage characters for this specimen" button link.</p>
         <x-site-nav-bar-simple-no-logo/>
     </div>
 
