@@ -12,7 +12,8 @@
                     <label for="group_id" class="form-label">Select a Group:</label>
                     <select name="group_id" id="group_id" class="form-control" required>
                         <option value="" disabled selected>Select Group</option>
-                        @foreach ($groups ?? [] as $group)
+                        @php //dd($all_groups); @endphp
+                        @foreach ($all_groups ?? [] as $group)
                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                         @endforeach
                     </select>

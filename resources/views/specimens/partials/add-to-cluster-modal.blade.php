@@ -12,7 +12,8 @@
                     <label for="cluster_id" class="form-label">Select a Cluster:</label>
                     <select name="cluster_id" id="cluster_id" class="form-control" required>
                         <option value="" disabled selected>Select Cluster</option>
-                        @foreach ($clusters as $cluster)
+                        @php // dd($all_clusters); @endphp
+                        @foreach ($all_clusters as $cluster)
                             <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
                         @endforeach
                     </select>

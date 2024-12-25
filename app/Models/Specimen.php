@@ -56,15 +56,13 @@ class Specimen extends Model
     // Relationship with groups
     public function groups()
     {
-        return $this->belongsToMany(Group::class, 'group_specimens')
-            ->withPivot('user_id', 'created_at', 'updated_at');
+        return $this->belongsToMany(Group::class, 'group_specimens');
     }
 
     // Relationship with clusters
     public function clusters()
     {
-        return $this->belongsToMany(Cluster::class, 'cluster_specimens')
-            ->withPivot('user_id', 'created_at', 'updated_at');
+        return $this->belongsToMany(Cluster::class, 'cluster_specimens');
     }
 
     public function characterSpecimens(): HasMany

@@ -1,12 +1,18 @@
 @php
     use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
     //dd($specimens);
+
+// dd($all_clusters);  // good
+// dd($all_groups);  // good
+// dd($this_clusters);  // good
+// dd($this_groups);   // good
 @endphp
+
 @extends('layouts.app')
 
 @section('content')
 
-        {{-- Show file address if in development environment --}}
+    {{-- Show file address if in development environment --}}
     <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
         <p class="text-gray-500 mt-4">File Address: /resources/views/specimens/show.blade.php</p>
     @endif
@@ -62,7 +68,8 @@
     ImageUtils::displaySpecimenImages( $specimen_id );   // within the foreach loop display the images for each specimen
     @endphp
 
-    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <tr>
             <td class="border-4 border-blue-300 p-2 text-black text-center">
 
@@ -87,7 +94,8 @@
 
 
 
-    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <!-- begin basic specimens table -->
         <tr>
             <td class="p-2">
@@ -111,9 +119,8 @@
 
             <td class="p-2">
                 <!-- Trigger Button for Add to Group -->
-                <a href="#" data-bs-toggle="modal" data-bs-target="#addToGroupModal" class="btn btn-primary">
-                    Add to Group
-                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addToGroupModal" class="btn btn-primary"> Add to
+                    Group </a>
             </td>
 
         </tr>
@@ -134,15 +141,30 @@
             </td>
             <td class="p-2">
                 <!-- Trigger Button for Add to Cluster -->
-                <a href="#" data-bs-toggle="modal" data-bs-target="#addToClusterModal" class="btn btn-secondary">
-                    Add to Cluster
-                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addToClusterModal" class="btn btn-secondary"> Add to
+                    Cluster </a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <!-- Button to View Clusters -->
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#viewClustersModal">
+                    View Clusters
+                </button>
+
+                <!-- Button to View Groups -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#viewGroupsModal">
+                    View Groups
+                </button>
             </td>
         </tr>
 
 
         <tr>
-            <td class="border-4 border-blue-300 p-2 text-black text-center" colspan="2" >
+            <td class="border-4 border-blue-300 p-2 text-black text-center" colspan="2">
                 These are the basic characters that every specimen should have. To make changes, click on the
                 corresponding field and enter new text or select new values, then click the Update button.
             </td>
@@ -160,7 +182,7 @@
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Specimen Name: <input type="text" class="wider-input"  name="specimen_name"
+                    Specimen Name: <input type="text" class="wider-input" name="specimen_name"
                                           value="{{ old('specimen_name', $specimen->specimen_name) }}">
                     <x-form-button-small class="spaced-button" fieldName="Specimen Name">Update</x-form-button-small>
                 </form>
@@ -173,7 +195,7 @@
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Common Name: <input type="text" class="wider-input"   name="common_name"
+                    Common Name: <input type="text" class="wider-input" name="common_name"
                                         value="{{ old('common_name', $specimen->common_name) }}">
                     <x-form-button-small class="spaced-button" fieldName="Common Name">Update</x-form-button-small>
                 </form>
@@ -255,7 +277,7 @@
                     method="POST">
                     @csrf
                     @method('PUT')
-                    Location Found City: <input type="text" class="wider-input"   name="location_found_city"
+                    Location Found City: <input type="text" class="wider-input" name="location_found_city"
                                                 value="{{ old('location_found_city', $specimen->location_found_city) }}">
                     <x-form-button-small class="spaced-button" fieldName="City Found">Update</x-form-button-small>
                 </form>
@@ -269,7 +291,7 @@
                     method="POST">
                     @csrf
                     @method('PUT')
-                    Location Found County: <input type="text" class="wider-input"   name="location_found_county"
+                    Location Found County: <input type="text" class="wider-input" name="location_found_county"
                                                   value="{{ old('location_found_county', $specimen->location_found_county) }}">
                     <x-form-button-small class="spaced-button" fieldName="County Found">Update</x-form-button-small>
                 </form>
@@ -283,8 +305,8 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="month_found">Month Found:   </label> <select id="month_found" name="month_found"
-                                                                                 class="wider-input">
+                        <label for="month_found">Month Found: </label> <select id="month_found" name="month_found"
+                                                                               class="wider-input">
                             @foreach(App\Utils\DateUtils::getAllMonths() as $num => $name)
                                 <option value="{{ $num }}" {{ $specimen->month_found == $num ? 'selected' : '' }}>
                                     {{ $name }}
@@ -292,7 +314,7 @@
                             @endforeach
                         </select>
 
-                    <x-form-button-small class="spaced-button" fieldName="Month Found">Update</x-form-button-small>
+                        <x-form-button-small class="spaced-button" fieldName="Month Found">Update</x-form-button-small>
                     </div>
                 </form>
 
@@ -300,7 +322,8 @@
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Day Found:   <input type="text" class="wider-input" name="day_found" value="{{ old('day_found', $specimen->day_found) }}">
+                    Day Found: <input type="text" class="wider-input" name="day_found"
+                                      value="{{ old('day_found', $specimen->day_found) }}">
                     <x-form-button-small class="spaced-button" fieldName="Day Found">Update</x-form-button-small>
                 </form>
 
@@ -308,7 +331,7 @@
                       method="POST">
                     @csrf
                     @method('PUT')
-                    Year Found:   <input type="text"  class="wider-input"   name="year_found"
+                    Year Found: <input type="text" class="wider-input" name="year_found"
                                        value="{{ old('year_found', $specimen->year_found) }}">
                     <x-form-button-small class="spaced-button" fieldName="Year Found">Update</x-form-button-small>
                 </form>
@@ -382,7 +405,8 @@
             </td>
         </tr> <!-- end basic specimen table line 180 of specimens/index.blade.php -->
     </table>
-    <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
+    <table
+        class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <tr>
             <td class="border-4 border-blue-300 p-2 text-black text-center">
 
@@ -403,13 +427,19 @@
             </td>
         </tr>
     </table>
-        <!-- Modals -->
-        @if (isset($groups))
-            @include('specimens.partials.add_to_group_modal', ['groups' => $groups, 'specimen'=>$specimen])
-        @endif
-        @if (isset($clusters))
-            @include('specimens.partials.add_to_cluster_modal', ['clusters' => $clusters, 'specimen'=>$specimen])
-        @endif
+    <!-- Modals -->
+    @if (isset($all_groups))
+        @include('specimens.partials.add-to-group-modal', ['all_groups' => $all_groups, 'specimen'=>$specimen])
+    @endif
+    @if (isset($all_clusters))
+        @include('specimens.partials.add-to-cluster-modal', ['all_clusters' => $all_clusters, 'specimen'=>$specimen])
+    @endif
+    @if (isset($this_groups))
+        @include('specimens.partials.button-view-groups-modal', ['this_groups' => $this_groups, 'specimen'=>$specimen])
+    @endif
+    @if (isset($this_clusters))
+        @include('specimens.partials.button-view-clusters-modal', ['this_clusters' => $this_clusters, 'specimen'=>$specimen])
+    @endif
 @endsection
 
 

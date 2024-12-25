@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cluster;
+use App\Models\ClusterSpecimen;
 use App\Models\Group;
+use App\Models\GroupSpecimen;
 use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
 use App\Models\Specimen;
@@ -33,20 +35,27 @@ class SpecimenController extends Controller
     public function show($id)
     {
         //dd($id);
-        $specimen = Specimen::findOrFail($id);  // Fetch the specimen by ID
+        // Fetch the specimen by ID and load relationships for groups and clusters
+        $specimen = Specimen::with(['groups', 'clusters'])->findOrFail($id);
+
+        //$specimen = Specimen::findOrFail($id);  // Fetch the specimen by ID
         // Fetch the countries and states as collections of objects
         $countries = Country::all(); // instead of pluck
         $states = State::all(); // same adjustment for states if required
 
         // Fetch the groups (modify query based on your requirements)
-        $groups = Group::all(); // Use any filtering logic if needed
+        $all_groups = Group::all(); // Use any filtering logic if needed
 
         // Fetch the clusters (modify query based on your requirements)
-        $clusters = Cluster::all(); // Use any filtering logic if needed
+        $all_clusters = Cluster::all(); // Use any filtering logic if needed
 
-        //dd($groups, $clusters);
+        $this_groups = GroupSpecimen::where('specimen_id', $id)->get();
+        //dd($this_groups);    // ok group_id and specimen_id are set
+        $this_clusters = ClusterSpecimen::where('specimen_id', $id)->get();
+        //dd($this_clusters);    // ok cluster_id and specimen_id are set
+        //dd($all_groups, $all_clusters);
 
-        return view('specimens.show', compact('specimen', 'countries', 'states', 'groups', 'clusters'));
+        return view('specimens.show', compact('specimen', 'countries', 'states', 'all_groups', 'all_clusters', 'this_groups', 'this_clusters'));
     }
 
     public function store(Request $request)
@@ -218,6 +227,7 @@ class SpecimenController extends Controller
 
     public function addToGroup(Request $request, Specimen $specimen)
     {
+        //dd($request);
         // Validate the incoming request
         $validated = $request->validate([
             'group_id' => 'required|exists:groups,id',
