@@ -2,7 +2,6 @@
     use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
     //dd($specimens);
 @endphp
-
 @extends('layouts.app')
 
 @section('content')
@@ -34,13 +33,6 @@
         <p class="text-red-500">No specimens found.</p>
     @endif
 
-
-    <p>resources/views/specimens/show.blade.php</p>
-
-
-
-
-
     @php
         $specimen_id = $specimen->id;
         $selected_country = $specimen->country;
@@ -67,12 +59,8 @@
     ->where('id', '=', $specimen['fungus_type'])
     ->first();
     // dd($fungus_type);
-
-
     ImageUtils::displaySpecimenImages( $specimen_id );   // within the foreach loop display the images for each specimen
-
     @endphp
-
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <tr>
@@ -114,11 +102,20 @@
 
                     <button type="submit"
                             class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">
-                        Upload Image for this specimen. ({{$image_count }}) image(s) uploaded.
+                        Upload Image for this specimen. <strong>{{$image_count }}</strong> image(s) uploaded.
                     </button>
 
                 </form>
             </td>
+
+
+            <td class="p-2">
+                <!-- Trigger Button for Add to Group -->
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addToGroupModal" class="btn btn-primary">
+                    Add to Group
+                </a>
+            </td>
+
         </tr>
 
         <tr>
@@ -134,6 +131,12 @@
                         </button>
                     </div>
                 </form>
+            </td>
+            <td class="p-2">
+                <!-- Trigger Button for Add to Cluster -->
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addToClusterModal" class="btn btn-secondary">
+                    Add to Cluster
+                </a>
             </td>
         </tr>
 
@@ -400,6 +403,13 @@
             </td>
         </tr>
     </table>
+        <!-- Modals -->
+        @if (isset($groups))
+            @include('specimens.partials.add_to_group_modal', ['groups' => $groups, 'specimen'=>$specimen])
+        @endif
+        @if (isset($clusters))
+            @include('specimens.partials.add_to_cluster_modal', ['clusters' => $clusters, 'specimen'=>$specimen])
+        @endif
 @endsection
 
 

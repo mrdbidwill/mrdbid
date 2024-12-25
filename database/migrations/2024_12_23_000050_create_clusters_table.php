@@ -13,22 +13,14 @@
                  public function up(): void
                  {
 
-                     Schema::create('specimen_groups', function (Blueprint $table) {
-
+                     Schema::create('clusters', function (Blueprint $table) {
                          $table->id();
-
-                         $table->integer('member_id');
-
-                         $table->string('name', length: 128);
-
+                         $table->string('name', 240)->unique();
                          $table->text('description')->nullable();
-
-                         $table->text('comments')->nullable();
-
-                         $table->integer('entered_by');
-
+                         $table->unsignedBigInteger('created_by'); // Reference to the user who created the cluster
                          $table->timestamps();
 
+                         $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
                      });
 
                  }
@@ -36,7 +28,7 @@
                  public function down(): void
                  {
 
-                     Schema::dropIfExists('specimen_groups');
+                     Schema::dropIfExists('clusters');
 
                  }
              };

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class MemberListGroupController extends Controller
+class UserTypeController extends Controller
 {
     public function index(): View
     {
-        return view('specimens.look_up_tables.state'); // correct this
+        return view('specimens.look_up_tables.member_type');
     }
 
     public function create() {}

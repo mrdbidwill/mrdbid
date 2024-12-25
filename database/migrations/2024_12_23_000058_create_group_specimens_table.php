@@ -13,22 +13,16 @@
                  public function up(): void
                  {
 
-                     Schema::create('specimen_clusters', function (Blueprint $table) {
-
+                     Schema::create('group_specimens', function (Blueprint $table) {
                          $table->id();
-
-                         $table->integer('member_id');
-
-                         $table->string('name', length: 128);
-
-                         $table->text('description')->nullable();
-
-                         $table->text('comments')->nullable();
-
-                         $table->integer('entered_by');
-
+                         $table->unsignedBigInteger('group_id');
+                         $table->unsignedBigInteger('specimen_id');
                          $table->timestamps();
 
+                         $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+                         $table->foreign('specimen_id')->references('id')->on('specimens')->onDelete('cascade');
+
+                         $table->unique(['group_id', 'specimen_id']); // Ensure each specimen can only belong to a group once
                      });
 
                  }
@@ -36,7 +30,7 @@
                  public function down(): void
                  {
 
-                     Schema::dropIfExists('specimen_clusters');
+                     Schema::dropIfExists('group_specimens');
 
                  }
              };

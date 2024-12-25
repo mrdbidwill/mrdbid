@@ -6,7 +6,9 @@
 @section('content')
 
         {{-- Show file address if in development environment --}}
-    <x-specimens-nav-bar></x-specimens-nav-bar>@if (config('app.env') === 'local')
+    <x-specimens-nav-bar></x-specimens-nav-bar>
+
+    @if (config('app.env') === 'local')
         <p class="text-gray-500 mt-4">File Address: /resources/views/specimens/index.blade.php</p>
     @endif
 
@@ -31,10 +33,21 @@
                     //dd($specimen);
                 @endphp
                 <li>
-                    <a href="{{ route('specimens.show', $specimen->id) }}" style="font-size: 1.2em; color: #e3342f;"> (
-                        ID: {{ $specimen->id }} ) {{ $specimen->specimen_name }} </a> Common
-                    Name: {{ $specimen->common_name }}
-                    Description: {{ $specimen->description }} Comments: {{ $specimen->comment }}
+                    <a href="{{ route('specimens.show', $specimen->id) }}" style="font-size: 1.2em; color: #e3342f;">
+                        ID: {{ $specimen->id }}  {{ $specimen->specimen_name }}</a> Images ({{ $specimen->images_specimens_count }}) Groups ({{ $specimen->groups_count }})  Clusters ({{ $specimen->clusters_count }})
+
+
+                    @if (!empty($specimen->common_name))
+                        Common Name: {{ $specimen->common_name }}
+                    @endif
+
+                    @if (!empty($specimen->description))
+                        Description: {{ $specimen->description }}
+                    @endif
+
+                    @if (!empty($specimen->comment))
+                        Comments: {{ $specimen->comment }}
+                    @endif
                 </li>
             @endforeach
         </ul>

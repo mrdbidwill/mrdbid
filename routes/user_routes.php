@@ -3,28 +3,28 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterSpecimenController;
+use App\Http\Controllers\ClusterController;
+use App\Http\Controllers\ClusterSpecimenController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DataSourceController;
 use App\Http\Controllers\DataSourceDataTypeController;
 use App\Http\Controllers\DisplayOptionController;
 use App\Http\Controllers\DnaSequenceController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\GroupSpecimenController;
 use App\Http\Controllers\ImageSpecimenController;
-use App\Http\Controllers\MemberListClusterController;
-use App\Http\Controllers\MemberListGroupController;
-use App\Http\Controllers\MemberTypeController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlantAssociationController;
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PossibleMatchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectBelongToController;
-use App\Http\Controllers\SpecimenClusterController;
 use App\Http\Controllers\SpecimenCompareController;
 use App\Http\Controllers\SpecimenController;
-use App\Http\Controllers\SpecimenGroupController;
 use App\Http\Controllers\SupportArticleController;
 use App\Http\Controllers\SynonymController;
 use App\Http\Controllers\TreeController;
+use App\Http\Controllers\UserTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->group(function () {
@@ -33,6 +33,13 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('specimens', SpecimenController::class);
+
+    // Add Specimen to Group
+    Route::post('specimens/{specimen}/groups', [SpecimenController::class, 'addToGroup'])->name('specimens.addToGroup');
+
+    // Add Specimen to Cluster
+    Route::post('specimens/{specimen}/clusters', [SpecimenController::class, 'addToCluster'])->name('specimens.addToCluster');
+
     Route::resource('characters', CharacterController::class);
     Route::resource('character_specimens', CharacterSpecimenController::class);
     Route::get('/support-articles/{path?}', [SupportArticleController::class, 'show'])->where('path', '.*')->name('support-articles.show');
@@ -51,21 +58,22 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
     Route::get('/autocomplete/genus', [CharacterSpecimenController::class, 'autocompleteGenus']);
     Route::get('/autocomplete/species', [CharacterSpecimenController::class, 'autocompleteSpecies']);
 
+    Route::resource('cluster_specimens', ClusterSpecimenController::class);
     Route::resource('data_sources', DataSourceController::class);
     Route::resource('data_source_data_types', DataSourceDataTypeController::class);
     Route::resource('display_options', DisplayOptionController::class);
     Route::resource('dna_sequences', DnaSequenceController::class);
     Route::resource('image_specimens', ImageSpecimenController::class);
-    Route::resource('member_list_clusters', MemberListClusterController::class);
-    Route::resource('member_list_groups', MemberListGroupController::class);
-    Route::resource('member_types', MemberTypeController::class);
+    Route::resource('member_list_clusters', ClusterSpecimenController::class);
+    Route::resource('group_specimens', GroupSpecimenController::class);
+    Route::resource('member_types', UserTypeController::class);
     Route::resource('plant_associations', PlantAssociationController::class);
     Route::resource('plants', PlantController::class);
     Route::resource('possible_matches', PossibleMatchController::class);
     Route::resource('project_belongs_tos', ProjectBelongToController::class);
-    Route::resource('specimen_clusters', SpecimenClusterController::class);
+    Route::resource('clusters', ClusterController::class);
     Route::resource('specimen_compares', SpecimenCompareController::class);
-    Route::resource('specimen_groups', SpecimenGroupController::class);
+    Route::resource('groups', GroupController::class);
     Route::resource('synonym', SynonymController::class);
     Route::resource('trees', TreeController::class);
 

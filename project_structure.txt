@@ -480,7 +480,7 @@
 │       │       ├── delete-user-form.blade.php
 │       │       ├── update-password-form.blade.php
 │       │       └── update-profile-information-form.blade.php
-│       ├── specimen_clusters
+│       ├── clusters
 │       │   ├── create.blade.php
 │       │   ├── edit.blade.php
 │       │   ├── index.blade.php
@@ -546,7 +546,7 @@
 │       │   │   ├── species.blade.php
 │       │   │   ├── specimen_age.blade.php
 │       │   │   ├── specimen_cluster.blade.php
-│       │   │   ├── specimen_group.blade.php
+│       │   │   ├── group.blade.php
 │       │   │   ├── specimen_location_now.blade.php
 │       │   │   ├── state.blade.php
 │       │   │   ├── stem_interior.blade.php

@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Cluster;
 use App\Models\DataSource;
+use App\Models\Group;
 use App\Models\Specimen;
-use App\Models\SpecimenCluster;
-use App\Models\SpecimenGroup;
 use App\Models\User;
 use App\Policies\ArticlePolicy;
 use App\Policies\BookPolicy;
@@ -58,11 +58,11 @@ class AppServiceProvider extends ServiceProvider
             return $user->id === $specimen->user_id;
         });
 
-        Gate::define('edit-group', function (User $user, SpecimenGroup $specimen_group) {
+        Gate::define('edit-group', function (User $user, Group $specimen_group) {
             return $user->id === $specimen_group->member_id;
         });
 
-        Gate::define('edit-cluster', function (User $user, SpecimenCluster $specimen_cluster) {
+        Gate::define('edit-cluster', function (User $user, Cluster $specimen_cluster) {
             return $user->id === $specimen_cluster->member_id;
         });
 

@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Cluster;
+use App\Models\Group;
 use App\Models\ImageSpecimen;
-use App\Models\SpecimenCluster;
-use App\Models\SpecimenGroup;
 use App\Policies\ArticlePolicy;
 use App\Policies\ImageSpecimenPolicy;
 use App\Policies\SpecimenClusterPolicy;
@@ -23,8 +23,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         ImageSpecimen::class => ImageSpecimenPolicy::class,
         Article::class => ArticlePolicy::class,
-        SpecimenGroup::class => SpecimenGroupPolicy::class,
-        SpecimenCluster::class => SpecimenClusterPolicy::class,
+        Group::class => SpecimenGroupPolicy::class,
+        Cluster::class => SpecimenClusterPolicy::class,
     ];
 
     /**

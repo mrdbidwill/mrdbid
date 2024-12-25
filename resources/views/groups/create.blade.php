@@ -7,13 +7,13 @@
 
         {{-- Show file address if in development environment --}}
         @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_groups/create.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/groups/create.blade.php</p>
     @endif
 
 
     <p>resources/views/specimen_groups/create.blade.php</p>
 
-    <form method="POST" action="{{ route('specimen_groups.store') }}">
+    <form method="POST" action="{{ route('groups.store') }}">
         @csrf
 
         <div class="space-y-12">
@@ -39,16 +39,6 @@
                             <textarea name="description" rows="4" style="width: 100%;"></textarea>
 
                             <x-form-error name="description"/>
-                        </div>
-                    </x-form-field>
-
-                    <x-form-field>
-                        <x-form-label for="comments">Comments</x-form-label>
-
-                        <div class="shadow mt-2 leading-tight focus:outline-none focus:shadow-outline">
-                            <textarea name="comments" rows="4" style="width: 100%;"></textarea>
-
-                            <x-form-error name="comments"/>
                         </div>
                     </x-form-field>
                 </div>

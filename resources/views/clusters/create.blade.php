@@ -7,11 +7,11 @@
 
     {{-- Show file address if in development environment --}}
     @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_clusters/create.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/clusters/create.blade.php</p>
     @endif
 
 
-    <form method="POST" action="{{ route('specimen_clusters.store') }}">
+    <form method="POST" action="{{ route('clusters.store') }}">
         @csrf
 
         <div class="space-y-12">

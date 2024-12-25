@@ -48,19 +48,23 @@ class Specimen extends Model
         return $this->hasMany(Character::class);
     }
 
-    public function images_specimen(): HasMany
+    public function images_specimens(): HasMany
     {
-        return $this->hasMany(Specimen::class);
+        return $this->hasMany(ImageSpecimen::class, 'specimen_id');
     }
 
-    public function specimen_clusters(): HasMany
+    // Relationship with groups
+    public function groups()
     {
-        return $this->hasMany(SpecimenCluster::class);
+        return $this->belongsToMany(Group::class, 'group_specimens')
+            ->withPivot('user_id', 'created_at', 'updated_at');
     }
 
-    public function specimen_groups(): HasMany
+    // Relationship with clusters
+    public function clusters()
     {
-        return $this->hasMany(SpecimenGroup::class);
+        return $this->belongsToMany(Cluster::class, 'cluster_specimens')
+            ->withPivot('user_id', 'created_at', 'updated_at');
     }
 
     public function characterSpecimens(): HasMany

@@ -6,11 +6,11 @@
 
     {{-- Show file address if in development environment --}}
     @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_groups/show.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/groups/show.blade.php</p>
     @endif
 
     <p>
-        {{ $specimen_group->name }}  {{ $specimen_group->description }} </p>
+        {{ $group->name }}  {{ $group->description }} </p>
 
 @endsection
 

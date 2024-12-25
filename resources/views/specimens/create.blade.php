@@ -157,7 +157,7 @@
                         <label for="location_public_y_n" class="block text-sm font-medium leading-6 text-gray-900">Make
                             location visible to others?</label>
                                 <input type="radio" id="location_public_y_n" name="location_public_y_n" value="1"
-                                       required checked> <label for="{{$item->id}}">Yes</label>
+                                       required checked> <label for="location_public_y_n">Yes</label>
 
                                 <input type="radio" id="location_public_y_n" name="location_public_y_n" value="0"
                                        required> <label for="location_public_y_n">No</label>
@@ -174,7 +174,7 @@
                         <label for="share_data_y_n" class="block text-sm font-medium leading-6 text-gray-900">Share this
                             data with others?</label>
                                 <input type="radio" id="share_data_y_n" name="share_data_y_n" value="1" required
-                                       checked> <label for="{{$item->id}}">Yes</label>
+                                       checked> <label for="share_data_y_n">Yes</label>
 
                                 <input type="radio" id="share_data_y_n" name="share_data_y_n" value="0" required> <label
                                     for="share_data_y_n">No</label>

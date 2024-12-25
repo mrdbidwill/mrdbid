@@ -28,13 +28,13 @@
                 Add Data Source
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_clusters.index') }}"
-                                  :active="request()->routeIs('specimen_clusters.index')">
+            <x-specimens-nav-link href="{{ route('clusters.index') }}"
+                                  :active="request()->routeIs('clusters.index')">
                 Manage Clusters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_groups.index') }}"
-                                  :active="request()->routeIs('specimen_groups.index')">
+            <x-specimens-nav-link href="{{ route('groups.index') }}"
+                                  :active="request()->routeIs('groups.index')">
                 Manage Groups
             </x-specimens-nav-link>
         </div>
@@ -77,13 +77,13 @@
                 Add Data Source
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_clusters.index') }}"
-                                  :active="request()->routeIs('specimen_clusters.index')">
+            <x-specimens-nav-link href="{{ route('clusters.index') }}"
+                                  :active="request()->routeIs('clusters.index')">
                 Manage Clusters
             </x-specimens-nav-link>
 
-            <x-specimens-nav-link href="{{ route('specimen_groups.index') }}"
-                                  :active="request()->routeIs('specimen_groups.index')">
+            <x-specimens-nav-link href="{{ route('groups.index') }}"
+                                  :active="request()->routeIs('groups.index')">
                 Manage Groups
             </x-specimens-nav-link>
         </div>

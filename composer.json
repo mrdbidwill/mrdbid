@@ -21,6 +21,7 @@
         "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
         "maatwebsite/excel": "^3.1",
+        "spatie/laravel-permission": "^6.10",
         "symfony/http-foundation": "^7.1.7",
         "symfony/process": "^7.1.7"
     },

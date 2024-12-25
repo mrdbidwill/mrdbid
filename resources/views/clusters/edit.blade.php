@@ -9,11 +9,11 @@
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
         @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_clusters/edit.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/clusters/edit.blade.php</p>
     @endif
 
 
-    <form method="POST" action="/specimen_clusters/{{ $specimen_cluster->id }}">
+    <form method="POST" action="/clusters/{{ $specimen_cluster->id }}">
         @csrf
         @method('PATCH')
 
@@ -85,8 +85,8 @@
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <x-action-buttons
-            :cancelUrl="route('specimen_clusters.index', $specimen_cluster->id)"
-            :deleteAction="route('specimen_clusters.destroy', $specimen_cluster->id)"
+            :cancelUrl="route('clusters.index', $specimen_cluster->id)"
+            :deleteAction="route('clusters.destroy', $specimen_cluster->id)"
             deleteItem="This Cluster"/>
     </table>
 @endsection

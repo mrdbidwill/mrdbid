@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cluster;
+use App\Models\Group;
 use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
 use App\Models\Specimen;
@@ -12,24 +14,13 @@ use Illuminate\Support\Facades\Gate;
 
 class SpecimenController extends Controller
 {
-    /*
-    public function dashboard(Request $request)
-    {
-        $user = $request->user();
-        $specimens = Specimen::where('user_id', $user->id)->get();
-        //dd($specimens);
-
-        return view('specimens.dashboard', compact('specimens'));
-        //return view('specimens.dashboard');
-    }
-   */
-
     public function index()
     {
         // Fetch specimens for the authenticated user and paginate to display 25 per page
         $userId = Auth::id();
 
-        $specimens = Specimen::where('user_id', $userId)
+        $specimens = Specimen::withCount(['images_specimens', 'groups as groups_count', 'clusters as clusters_count'])
+            ->where('user_id', $userId)
             ->orderBy('year_found')
             ->orderBy('month_found')
             ->orderBy('day_found')
@@ -47,7 +38,15 @@ class SpecimenController extends Controller
         $countries = Country::all(); // instead of pluck
         $states = State::all(); // same adjustment for states if required
 
-        return view('specimens.show', compact('specimen', 'countries', 'states'));
+        // Fetch the groups (modify query based on your requirements)
+        $groups = Group::all(); // Use any filtering logic if needed
+
+        // Fetch the clusters (modify query based on your requirements)
+        $clusters = Cluster::all(); // Use any filtering logic if needed
+
+        //dd($groups, $clusters);
+
+        return view('specimens.show', compact('specimen', 'countries', 'states', 'groups', 'clusters'));
     }
 
     public function store(Request $request)
@@ -215,5 +214,35 @@ class SpecimenController extends Controller
         ]);
 
         return redirect('/specimens/'.$specimen['id'].'/edit')->with('message', 'Specimen updated successfully');
+    }
+
+    public function addToGroup(Request $request, Specimen $specimen)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'group_id' => 'required|exists:groups,id',
+        ]);
+
+        // Add the specimen to the specified group (prevent duplicate entries)
+        $specimen->groups()->syncWithoutDetaching([$validated['group_id']]);
+
+        // Return success response
+        return redirect()->route('specimens.show', $specimen->id)
+            ->with('success', 'Specimen successfully added to the group!');
+    }
+
+    public function addToCluster(Request $request, Specimen $specimen)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'cluster_id' => 'required|exists:clusters,id',
+        ]);
+
+        // Add the specimen to the specified cluster (prevent duplicate entries)
+        $specimen->clusters()->syncWithoutDetaching([$validated['cluster_id']]);
+
+        // Return success response
+        return redirect()->route('specimens.show', $specimen->id)
+            ->with('success', 'Specimen successfully added to the cluster!');
     }
 }

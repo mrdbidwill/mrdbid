@@ -1,5 +1,5 @@
 @php
-    //dd($specimen_clusters);
+    //dd($clusters);
 @endphp@extends('layouts.app')
 
 @section('content')
@@ -8,7 +8,7 @@
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
         @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_clusters/index.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/clusters/index.blade.php</p>
     @endif
 
 
@@ -24,8 +24,8 @@
 
 
     <p class="border-4 border-black p-2 text-fuchsia-700 text-center">
-        <x-specimens-nav-link href="{{ route('specimen_clusters.create') }}"
-                              :active="request()->routeIs('specimen_clusters.create')">
+        <x-specimens-nav-link href="{{ route('clusters.create') }}"
+                              :active="request()->routeIs('clusters.create')">
             Add New Cluster
         </x-specimens-nav-link>
     </p>
@@ -47,8 +47,8 @@
 
             <tr>
                 <td class="border-4 border-black p-2 text-fuchsia-700 text-center">
-                    <x-specimens-nav-link href="{{ route('specimen_clusters.edit', $specimen_cluster['id']) }}"
-                                          :active="request()->routeIs('specimen_clusters.edit')">
+                    <x-specimens-nav-link href="{{ route('clusters.edit', $specimen_cluster['id']) }}"
+                                          :active="request()->routeIs('clusters.edit')">
                         Edit This Cluster
                     </x-specimens-nav-link>
                 </td>
@@ -81,7 +81,7 @@
         <tr>
             <td class="bg-blue-400 border border-slate-800 p-2"></td>
         </tr>
-    </table>    <!-- end table line 180 of specimen_clusters/index.blade.php -->
+    </table>    <!-- end table line 180 of clusters/index.blade.php -->
 @endsection
 
 
