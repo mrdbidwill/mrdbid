@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataSource;
+use App\Models\DataSourceDataTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,21 +28,46 @@ class DataSourceController extends Controller
 
     public function create()
     {
-        return view('data_sources.create');
+        $dataTypes = DataSourceDataTypes::all();
+
+        if ($dataTypes->isEmpty()) {
+            // Pass an error message to the view instead of redirecting.
+            return view('data_sources.create', [
+                'dataTypes' => $dataTypes,
+                'error' => 'No types found. Please create data types before proceeding.',
+            ]);
+        }
+
+        return view('data_sources.create', ['dataTypes' => $dataTypes]);
     }
 
     public function show($id)
     {
         $data_source = DataSource::findOrFail($id);
 
-        return view('data_sources.show', compact('data_source'));
+        $selected_data_type = DataSourceDataTypes::where('id', $data_source->type)->first();
+
+        return view('data_sources.show', compact('data_source', 'selected_data_type'));
     }
 
     public function edit($id)
     {
         $data_source = DataSource::findOrFail($id);
+        $memberType = Auth::user()->type;
 
-        return view('data_sources.edit', compact('data_source'));
+        $dataTypes = DataSourceDataTypes::all();
+
+        if ($dataTypes->isEmpty()) {
+            // Pass an error message to the view instead of redirecting.
+            return view('data_sources.create', [
+                'dataTypes' => $dataTypes,
+                'error' => 'No types found. Please create data types before proceeding.',
+            ]);
+        }
+
+        $selected_data_type = $data_source->type;
+
+        return view('data_sources.edit', compact('data_source', 'dataTypes', 'memberType', 'selected_data_type'));
     }
 
     public function update(Request $request, $id)

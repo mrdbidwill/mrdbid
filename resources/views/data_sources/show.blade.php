@@ -22,7 +22,7 @@
 
         <tr>
             <td class="border-4 border-blue-300 p-2" colspan="2">
-    Type: {{ $data_source->type }}
+    Type: {{ $selected_data_type->name }}
             </td>
         </tr>
 

@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg mx-auto">
+
+        @if (config('app.env') === 'local')
+            <p class="text-gray-500 mt-4">File Address: /resources/views/contact.blade.php</p>
+        @endif
+
+
         @if (session('success'))
             <x-alert type="success" :message="session('success')" dismissable="true" />
         @endif
@@ -25,24 +31,26 @@
         <form action="{{ route('contact.send') }}" method="POST" class="space-y-6">
             @csrf
             <div>
-                <label for="recipient" class="block text-gray-700 font-bold mb-2">Use Dropdown to Select Send
-                    to:</label> <select id="recipient" name="recipient"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        required>
+                <label for="recipient" class="block text-gray-700 font-bold mb-2">Select Recipient:</label>
+                <select id="recipient" name="recipient"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                        required>
+                    <option value="" disabled selected>Choose a recipient...</option>
                     <option value="contact@mrdbid.com">contact@mrdbid.com</option>
                     <option value="webmaster@mrdbid.com">webmaster@mrdbid.com</option>
                     <option value="will@mrdbid.com">will@mrdbid.com</option>
                 </select>
+                <p class="text-sm text-gray-600 mt-1">Click the dropdown to select an email address.</p>
             </div>
             <div>
-                <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label> <input type="text" id="name"
+                <label for="name" class="block text-gray-700 font-bold mb-2">Your Name:</label> <input type="text" id="name"
                                                                                                   name="name"
                                                                                                   value="{{ old('name') }}"
                                                                                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                                                   required>
             </div>
             <div>
-                <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label> <input type="email"
+                <label for="email" class="block text-gray-700 font-bold mb-2">Your Email:</label> <input type="email"
                                                                                                     id="email"
                                                                                                     name="email"
                                                                                                     value="{{ old('email') }}"

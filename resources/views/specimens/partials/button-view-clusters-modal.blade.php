@@ -21,7 +21,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php // dd($this_clusters); @endphp  
+                    @php // dd($this_clusters); @endphp
                     @foreach ($this_clusters as $cluster)
                     <tr>
                         <td>{{ $cluster->id }}</td>

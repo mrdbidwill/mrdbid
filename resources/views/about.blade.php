@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <div id="top">
+
+
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/about.blade.php</p>
+    @endif
     <p class="py-2 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
             tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
             media associations, or marketing tracking addons. Fees may be received from links to book sales. As an Amazon Associate I earn from qualifying purchase.</b></p>
@@ -16,9 +21,8 @@
             to worry about that.</p>
 
         <p>While you can create whatever <b>Specimen Name</b> and <b>Common Name</b> you like, it should be easier as
-            you add many specimens to follow some type of naming convention. It is recommended to keep the Specimen Name
-            relatively short and meaningful to you. For the specimen name, something along the line of myinitials plus
-            date plus short and descriptive, such as wrj_01_01_1999_first would work. And then the common name may be
+            you add many specimens to follow some type of naming convention. Something along the line of myinitials plus
+            date plus short and descriptive, such as wrj_5_24_2023_metallic_bronze_side_yard. And then the common name may be
             "Oyster looking on oak tree in park". The genus and species when you get that far will be from a current
             list of names you can select.</p>
 
@@ -52,7 +56,7 @@
             densely with matted hairs.'<br> 'Hispid - Hairy', 'Hairy - A surface covered with straight bristle-like
             hairs.'<br> 'Hirsute - Hairy', 'Hairy - A surface covered with slightly stiff and shaggy hairs.'<br>
             'Villose - Hairy', 'Hairy - A surface covered with long soft hairs.'<br> 'Strigose - Hairy', 'Hairy - A
-            surface covered with long bristle-like hairs.', '', 7, 1, '2024-06-02 05:05:27', '2024-06-02 05:05:27');<br>
+            surface covered with long bristle-like hairs.<br>
         </p>
 
         <p>Some of these character descriptions don't exactly roll off the tongue easily and a drop down list may be a
@@ -85,6 +89,7 @@
             <li> specimen name - you create this in whatever format you normally use to identify your collection. This
                 does not have to be a formal scientific name.
             </li>
+            <li> common name - whatever helps you</li>
             <li> description - something that tells about this specimen.</li>
             <li> comment - other helpful notes to add facts to the specimen.</li>
             <li> specimen location now - where is this specimen located right now?</li>
@@ -95,16 +100,19 @@
             <li> do you want this location shared with others?</li>
             <li> do you want this data shared with others?</li>
             <li> day month year specimen found</li>
+            <li> fungus type, such as gills, pores, teeth, etc.</li>
             <li> who entered this information? ( this is you for your specimens )</li>
         </ol>
 
-        <p>All of the above is required.</p>
+        <p><b>All of the above is required.</b></p>
 
-        <p>All of below is optional. These are the characters you <u>may</u> assign to each specimen. It is a work in
+        <p><b>All of below is optional.</b> These are the characters you <u>may</u> assign to each specimen. It is a work in
             progress. I started with Scates' 1982 "Easy Guide to Mushroom Descriptions" and added more from various
             books. But, in my opinion, even Scates ran into the "plan ahead" problem with the beginning (upper left
             corner of her chart) being clear and organized but toward the end of the lower right part of her chart with
             some ? and etc.s that would take up quite a bit of space if fully fleshed out.</p>
+
+        <p>Computers help with this problem. A form can get long and longer, but nothing relevant has to be left out of the selection process.</p>
 
         <p>A word about colors. I began with the Alabama Mushroom Society's "Latin Colors Used In Many Mushroom Names"
             chart which is labeled latin_colors.jpg on their website. I then sampled across each color away from the
@@ -127,7 +135,9 @@
         <h2>Specimen Characters</h2>
 
         <p>None are <u>required</u>, but obviously the more that are accurately entered, the better the chance for a reliable identification. At some point, I hope to match up good images with dna results, but not there yet.</p>
-        <p>And, <b>this is a big "and."</b> A  really big goal of this process is to identify and examine existing characters. If you can add anything to this process, please do.</p>
+        <p>And... <b>This is a big "And."</b> A really big goal of this process is to identify and examine existing characters. If you can add anything to this process, please do.</p>
+
+        <p>The data trail for this goes through the "characters" table, but first there must be a "data source" stored in the "data_sources" table. There is a reference column in the data_sources table to make it easier to find your reference with a page number, or "middle of page" or "in chart". Any registered user can create a new data source. Once created, anyone else can use </p>
 
         @php
             $characters = \App\Models\Character::all();
@@ -137,7 +147,7 @@
 
         <x-site-nav-bar-simple-no-logo/>
 
-        <x-display-characters-lookuptable-list :characters="$characters"></x-display-characters-lookuptable-list>
+        <x-display-characters-lookup-table-list :characters="$characters"></x-display-characters-lookup-table-list>
         <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage characters for this specimen" button link.</p>
         <x-site-nav-bar-simple-no-logo/>
     </div>

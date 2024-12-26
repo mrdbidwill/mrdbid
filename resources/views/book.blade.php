@@ -2,7 +2,9 @@
 
 @section('content')
 
-    <!-- resources/views/book.blade.php -->
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/book.blade.php</p>
+    @endif
     <div class="container">
         <h1 class="text-3xl text-black text-center mb-6">Book List</h1>
 

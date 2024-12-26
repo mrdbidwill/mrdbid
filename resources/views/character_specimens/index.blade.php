@@ -22,7 +22,7 @@
                             <h1 class="text-base font-semibold leading-6 text-black">Character-Specimens</h1>
 
                             <p class="mt-2 text-xl text-black">When you create a specimen, you enter the <b>required</b>
-                                basic characters that you should have for every specimen. After the initial entry, those
+                                <u>basic</u> characters that you should have for every specimen. After the initial entry, those
                                 are done for the time being. As always, the basic characters can be edited, if needed.
                             </p>
 
@@ -48,17 +48,11 @@
                             <p class="mt-2 text-xl text-black">Then again, "unwieldy" is relative also. I do not have a limit on the number of helpful
                                 characters that knowledgeable people want to add as useful identification tools.</p>
 
-                            <p class="mt-2 text-xl text-black">Below is a list of characters. Due to the (ongoing)
-                                design of this website and the desire to streamline the process of managing specimens,
-                                additions to each specimen are now done when you are looking at the specimen data. Below
-                                is just informational. However, the list below should remain up to date.</p>
+                            <p class="mt-2 text-xl text-black">Below is a list of characters. Note how many characters have a prefilled list of possible options. These options are stored in what I call "lookup tables". If you
+                                propose a new character, please include a list of  with any correspondence proposing new character(s). A csv format would be great, but send what you got and I will try to work with it.</p>
 
-                            <p class="mt-2 text-xl text-black">Also note how many characters have a prefilled list of
-                                possible options. These options are stored in what I call "lookup tables". If you
-                                propose a new character and it has these type options particular to that table, please
-                                include them with any correspondence proposing new character(s). A csv format would be
-                                great. If you don't know what that is, send what you got and I will try to work with
-                                it.</p>
+                            <p class="mt-2 text-xl text-black">Measurement characters do not need a lookup table. Units are mm for macro and nm for micro. Since the measure is for this one specimen, it will not have a range of high to low. This may seem at odds with some of the "key" type identification guides, but they are using a composite of more than one specimen usually.</p>
+
                         </div>
                     </div>
                 </div>
@@ -69,7 +63,7 @@
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <x-display-characters-lookuptable-list :characters="$characters"/>
+                    <x-display-characters-lookup-table-list :characters="$characters"/>
                 </div>
             </div>
         </div>

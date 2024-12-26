@@ -1,4 +1,5 @@
-@props(['active' => false])@php
+@props(['active' => false])
+@php
     $member_type = \App\Utils\MemberUtils::get_member_type();
 @endphp
 
