@@ -10,13 +10,10 @@
         <p class="text-gray-500 mt-4">File Address: /resources/views/clusters/show.blade.php</p>
     @endif
 
-    <h1>clusters.show.blade.php</h1>
-
     //dd($specimen_clusters);
     @foreach ($specimen_clusters as $specimen_cluster)
 
-        <p>Cluster: {{$specimen_cluster['name']}} Description: {{$specimen_cluster['description']}}
-            Comments: {{$specimen_cluster['comments']}}</p>
+        <p>Cluster: {{$specimen_cluster['name']}} Description: {{$specimen_cluster['description']}}</p>
 
     @endforeach
 @endsection

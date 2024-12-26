@@ -10,7 +10,7 @@ class ClusterController extends Controller
 {
     public function index()
     {
-        $clusters = Cluster::where('created_by', auth()->id())->orderBY('name', 'asc')->latest()->simplePaginate(6);
+        $clusters = Cluster::where('created_by', auth()->id())->orderBY('name', 'asc')->simplePaginate(6);
 
         return view('clusters.index', compact('clusters'));
     }
@@ -28,13 +28,11 @@ class ClusterController extends Controller
             'name' => ['required', 'min:3'],
         ]);
 
-        $member_id = $entered_by = request('entered_by');  // member_id should be same as entered_by right here
         Cluster::create([
-            'member_id' => $member_id,
             'name' => request('name'),
             'description' => request('description'),
             'comments' => request('comments'),
-            'entered_by' => $entered_by,
+            'created_by' => auth()->id(), // Use authenticated user's id
         ]);
 
         //return redirect('/specimen_cluster/');

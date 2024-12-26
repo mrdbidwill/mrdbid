@@ -49,31 +49,11 @@
                         </div>
                     </div>
 
-
-                    <div class="sm:col-span-4">
-                        <label for="comments" class="block text-sm font-medium leading-6 text-gray-900">Comments</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="comments" id="comments"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="" value="">
-                            </div>
-
-                            @error('comments')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
                     <div>
-                        <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
-
-                        <div class="mx-auto mt-6">
-                            <x-primary-button>Submit</x-primary-button>
+                        <div class="mt-6 flex items-center justify-end gap-x-6">
+                            <x-cancel-button :cancelUrl="route('clusters.index')"></x-cancel-button>
+                            <x-form-button>Save</x-form-button>
                         </div>
-
-
                     </div>
                 </div>
             </div>

@@ -58,12 +58,12 @@ class AppServiceProvider extends ServiceProvider
             return $user->id === $specimen->user_id;
         });
 
-        Gate::define('edit-group', function (User $user, Group $specimen_group) {
-            return $user->id === $specimen_group->member_id;
+        Gate::define('edit-group', function (User $user, Group $group) {
+            return $user->id === $group->created_by;
         });
 
-        Gate::define('edit-cluster', function (User $user, Cluster $specimen_cluster) {
-            return $user->id === $specimen_cluster->member_id;
+        Gate::define('edit-cluster', function (User $user, Cluster $cluster) {
+            return $user->id === $cluster->created_by;
         });
 
         Gate::define('delete-specimen', function (User $user, Specimen $specimen) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class GroupController extends Controller
 {
@@ -12,7 +13,8 @@ class GroupController extends Controller
 
     public function index()
     {
-        $groups = Group::latest()->simplePaginate(36);
+        // $groups = Group::latest()->simplePaginate(36);
+        $groups = Group::where('created_by', auth()->id())->orderBY('name', 'asc')->simplePaginate(36);
 
         return view('groups.index', [
             'groups' => $groups,
@@ -33,13 +35,10 @@ class GroupController extends Controller
             'name' => ['required', 'min:3'],
         ]);
 
-        $created_by = auth()->user()->id;
-        // dd($created_by);   // ok here - 2
-
         Group::create([
             'name' => request('name'),
             'description' => request('description'),
-            'created_by' => $created_by,
+            'created_by' => auth()->id(), // Use authenticated user's id
         ]);
 
         return redirect('/groups/')->with('message', 'Group created successfully');
@@ -50,9 +49,13 @@ class GroupController extends Controller
         return view('groups.create');
     }
 
-    public function edit(Group $Group)
+    public function edit($id)
     {
-        return view('groups.edit', ['Group' => $Group]);
+        $group = Group::findOrFail($id);
+        //dd($group);
+        Gate::authorize('edit-group', $group);
+
+        return view('groups.edit', compact('group'));
 
     }
 

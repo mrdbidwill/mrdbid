@@ -25,15 +25,12 @@
             @endphp
 
             @if(in_array($cluster['name'], $months))
-
             @else
                 <a href="/clusters/{{ $cluster['id'] }}/edit"
                    class="block px-1 py-1 border border-gray-200 rounded-lg">
-                    <div class="font-bold text-blue-500 text-sm">{{ $cluster['name'] }} {{ $cluster['description'] }}
-                        - {{ $cluster['comments'] }}</div>
+                    <div class="font-bold text-blue-500 text-sm">{{ $cluster['name'] }} {{ $cluster['description'] }}</div>
                 </a>
             @endif
-
         @endforeach
 
         <div>

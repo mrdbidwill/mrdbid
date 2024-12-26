@@ -1,7 +1,8 @@
 @php
     //dd($specimen_cluster);
-    $specimen_cluster_id = $specimen_cluster['id'];
-@endphp@extends('layouts.app')
+@endphp
+
+@extends('layouts.app')
 
 @section('content')
 
@@ -13,7 +14,7 @@
     @endif
 
 
-    <form method="POST" action="/clusters/{{ $specimen_cluster->id }}">
+    <form method="POST" action="/clusters/{{ $cluster->id }}">
         @csrf
         @method('PATCH')
 
@@ -27,7 +28,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="name" id="name"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder="" value="{{ $specimen_cluster->name }}" required>
+                                       placeholder="" value="{{ $cluster->name }}" required>
                             </div>
 
                             @error('name')
@@ -45,27 +46,10 @@
                                 <input type="text" name="description" id="description"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                        placeholder=""
-                                       value="{{ $specimen_cluster->description }}">
+                                       value="{{ $cluster->description }}">
                             </div>
 
                             @error('description')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="sm:col-span-4">
-                        <label for="comments" class="block text-sm font-medium leading-6 text-gray-900">Comments</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="comments" id="comments"
-                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       placeholder=""
-                                       value="{{ $specimen_cluster->comments }}">
-                            </div>
-
-                            @error('comments')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -74,7 +58,7 @@
             </div>
         </div>
 
-            <input type="hidden" name="entered_by" id="entered_by" value="{{auth()->user()->id}}">
+            <input type="hidden" name="created_by" id="created_by" value="{{auth()->user()->id}}">
                     <button type="submit"
                             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Update Cluster
@@ -85,8 +69,8 @@
 
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <x-action-buttons
-            :cancelUrl="route('clusters.index', $specimen_cluster->id)"
-            :deleteAction="route('clusters.destroy', $specimen_cluster->id)"
+            :cancelUrl="route('clusters.index', $cluster->id)"
+            :deleteAction="route('clusters.destroy', $cluster->id)"
             deleteItem="This Cluster"/>
     </table>
 @endsection
