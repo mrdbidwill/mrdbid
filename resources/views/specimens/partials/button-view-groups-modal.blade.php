@@ -20,14 +20,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php //dd($this_groups); @endphp
-                    @foreach ($this_groups as $this_group)
-                    <tr>
-                        @php // dd($this_group->id); @endphp
-                        <td>{{ $this_group->id }}</td>
-                        <td>{{ $this_group->group_id }}</td>
-                        <td>{{ $this_group->specimen_id }}</td>
-                    </tr>
+                    @foreach ($this_groups as $groupSpecimen)
+                        <tr>
+                            <td>{{ $groupSpecimen->group->id }}</td>
+                            <td>{{ $groupSpecimen->group->name }}</td>
+                            <td>{{ $groupSpecimen->group->description }}</td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

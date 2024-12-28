@@ -66,10 +66,9 @@ class CharacterController extends Controller
 
     public function update(Character $character)
     {
-        // authorize (On hold...)
 
         request()->validate([
-            'name' => ['required', 'min:3'],
+            'name' => ['required', 'min:2'],
             'display_options' => ['required'],
             'look_up_y_n' => 'required',
             'parts' => 'required',

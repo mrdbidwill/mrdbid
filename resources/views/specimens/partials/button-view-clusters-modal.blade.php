@@ -21,13 +21,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php // dd($this_clusters); @endphp
-                    @foreach ($this_clusters as $cluster)
-                    <tr>
-                        <td>{{ $cluster->id }}</td>
-                        <td>{{ $cluster->cluster_id }}</td>
-                        <td>{{ $cluster->specimen_id }}</td>
-                    </tr>
+                    @foreach ($this_clusters as $clusterSpecimen)
+                        <tr>
+                            <td>{{ $clusterSpecimen->cluster->id }}</td>
+                            <td>{{ $clusterSpecimen->cluster->name }}</td>
+                            <td>{{ $clusterSpecimen->cluster->description }}</td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

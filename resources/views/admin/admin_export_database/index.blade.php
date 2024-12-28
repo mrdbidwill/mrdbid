@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.export_databases.index') }}" method="POST">
+    <form action="{{ route('admin.export_databases.export') }}" method="POST">
         @csrf
 
         <div class="space-y-12">
@@ -32,9 +32,9 @@
                     <label for="database_name">Database Name</label>
                     <div class="mt-2">
                         <div
-                            class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            class="flex rounded-md shadow-lg ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="text" name="database_name" id="database_name"
-                                   class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                   class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:outline-indigo-500 focus:shadow-lg focus:shadow-indigo-500/40 sm:text-sm sm:leading-6"
                                    required>
                         </div>
 
@@ -51,7 +51,7 @@
         </div>
     </form>
 
-    <form action="{{ route('admin.export_databases.index') }}" method="POST">
+    <form action="{{  route('admin.export_databases.save') }}" method="POST">
         @csrf
 
         <div class="space-y-12">

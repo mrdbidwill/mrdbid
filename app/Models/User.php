@@ -37,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin(): bool
     {
-        return $this->type < 4;
+        return $this->type < 2;   // only owner
     }
 
     /**

@@ -17,6 +17,9 @@ class AdminExportDatabaseController extends Controller
     // Method to handle the AJAX request for exporting the database
     public function admin_export_database(Request $request)
     {
+        //echo 'Hello';  // OK
+        //dd($request);  // OK
+
         $dbName = $request->input('database_name');
         $dbUtils = new DatabaseUtils;
 
@@ -25,6 +28,8 @@ class AdminExportDatabaseController extends Controller
 
             return back()->with('success', $message);
         } catch (\Exception $e) {
+            \Log::error('Database export failed: '.$e->getMessage());
+
             return back()->with('error', 'An error occurred: '.$e->getMessage());
         }
     }

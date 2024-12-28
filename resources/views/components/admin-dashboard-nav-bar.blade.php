@@ -4,13 +4,6 @@
 @endphp
 
 <nav>
-
-    @if (!$isAdmin)
-        <x-admin-nav-link href="{{ route('admin.dashboard') }}">
-            Back to Admin Dashboard
-        </x-admin-nav-link>
-    @endif
-
     <x-admin-nav-link href="{{ route('admin.specimens.index') }}"
                           :active="request()->routeIs('admin.specimens.index')">
         Manage Specimen Table

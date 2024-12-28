@@ -23,7 +23,7 @@ class AdminCharacterController extends Controller
         //dd($request->all());
 
         request()->validate([
-            'name' => 'required|unique:characters,name|min:3',
+            'name' => 'required|unique:characters,name|min:2',
             'display_options' => 'required',
             'look_up_y_n' => 'required',
             'parts' => 'required',
@@ -42,7 +42,7 @@ class AdminCharacterController extends Controller
         $character_tables = Character::get();
         //return 'Got her done!';
 
-        //dd($character_table);
+        //dd($character_tables);
 
         return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
@@ -69,17 +69,18 @@ class AdminCharacterController extends Controller
 
     public function update(Request $request)
     {
-        //Gate::authorize('edit-character', $character);
         //dd($request->all());
+        //  dd($request->id);  // 1
+        //  dd($request->route('id')); // null
         $request->validate([
-            'name' => 'required|min:3|unique:characters,name,'.$request->id,
+            'name' => 'required|min:2|unique:characters,name,'.$request->id,
             'display_options' => 'required',
             'look_up_y_n' => 'required',
             'parts' => 'required',
             'source' => 'required',
             'entered_by' => 'required',
         ]);
-
+        //dd($request->all());
         $one_character = Character::where('id', '=', $request->id)->first();
         $one_character->update([
             'name' => $request->input('name'),
@@ -93,7 +94,7 @@ class AdminCharacterController extends Controller
         $character_tables = Character::get();
         //return 'Got her done!';
 
-        //dd($character_table);
+        //dd($character_tables);
 
         return view('admin.admin_character.index', [
             'character_tables' => $character_tables,

@@ -4,40 +4,44 @@
 
     <x-admin-dashboard-nav-bar></x-admin-dashboard-nav-bar>
     @php
-        //dd($lookup_table);
+        //dd($character_table);
+        //dd($character_table);
         // $name does not work
-        // $lookup_table['name'] does not work
-        // $lookup_table->name does not work
-        // $lookup_table[0]['name'] works
+        // $character_table['name'] does not work
+        // $character_table->name does not work
+        // $character_table[0]['name'] works
 
-    if ( $lookup_table[0]['look_up_y_n'] == 1 ) {
+    if ( $character_table[0]['look_up_y_n'] == 1 ) {
         $look_up_y_n_DISPLAY = 'Yes';
     } else {
         $look_up_y_n_DISPLAY = 'No';
     }
 
     $display_options = DB::table('display_options')
-        ->where('id', '=', $lookup_table[0]['display_options'])
+        ->where('id', '=', $character_table[0]['display_options'])
         ->first();
 
         $parts = DB::table('parts')
-        ->where('id', '=', $lookup_table[0]['parts'])
+        ->where('id', '=', $character_table[0]['parts'])
         ->first();
 
         $source = DB::table('data_sources')
-        ->where('id', '=', $lookup_table[0]['source'])
+        ->where('id', '=', $character_table[0]['source'])
         ->first();
     @endphp
 
-    <div class="bg-amber-600 text-white p-4 rounded-lg">
+    <div class="bg-amber-200 text-white p-4 rounded-lg">
         @if (config('app.env') === 'local')
             <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_character/edit.blade.php</p>
         @endif
         <h2 class="text-sm font-semibold leading-5 text-red-800">Admin! Admin! Admin! Admin! Admin!</h2>
     </div>
 
+    @php
+        //dd($character_table);
+    @endphp
 
-    <form method="POST" action="/admin_lookup/{{ $lookup_table[0]['id'] }} ">
+    <form method="POST" action="/admin/characters/{{$character_table[0]['id'] }}">
         @csrf
         @method('PATCH')
 
@@ -51,7 +55,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="name" id="name"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value="{{ $lookup_table[0]['name'] }}" required>
+                                       value="{{ $character_table[0]['name'] }}" required>
                             </div>
 
 
@@ -70,7 +74,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="display_options" id="display_options"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value="{{ $lookup_table[0]['display_options'] }}" -
+                                       value="{{ $character_table[0]['display_options'] }}" -
                                        {{$display_options->name}}required>
                             </div>
 
@@ -89,7 +93,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="look_up_y_n" id="look_up_y_n"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value="{{ $lookup_table[0]['look_up_y_n'] }}"> - {{ $look_up_y_n_DISPLAY }}
+                                       value="{{ $character_table[0]['look_up_y_n'] }}"> - {{ $look_up_y_n_DISPLAY }}
                             </div>
 
                             @error('look_up_y_n')
@@ -107,7 +111,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="parts" id="parts"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value="{{ $lookup_table[0]['parts'] }}"> - {{$parts->name}}
+                                       value="{{ $character_table[0]['parts'] }}"> - {{$parts->name}}
                             </div>
 
                             @error('parts')
@@ -123,7 +127,7 @@
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input type="text" name="source" id="source"
                                        class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                       value="{{ $lookup_table[0]['source'] }}"> - {{ $source->title }}
+                                       value="{{ $character_table[0]['source'] }}"> - {{ $source->title }}
                             </div>
 
                             @error('source')
@@ -132,33 +136,39 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="id" value="{{ $lookup_table[0]['id'] }}">
+                    <input type="hidden" name="id" value="{{ $character_table[0]['id'] }}">
                 </div>
             </div>
         </div>
 
         <div class="mt-6 flex items-center justify-between gap-x-6">
-            <div class="flex items-center">
-                <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
-            </div>
-
-            <div class="flex items-center gap-x-6">
-                <a href="/lookups/{{ $lookup_table[0]['id'] }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
 
                 <div>
+                       <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
                     <button type="submit"
                             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Update
                     </button>
                 </div>
             </div>
-        </div>
     </form>
 
-    <form method="POST" action="/lookups/{{ $lookup_table[0]['id'] }}" id="delete-form" class="hidden">
+    <div class="mt-6 flex items-center justify-between gap-x-6">
+        <div class="flex items-center">
+            <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
+        </div>
+
+        <div class="flex items-center gap-x-6">
+            <a href="{{ route('admin.characters.index') }}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+        </div>
+    </div>
+
+    <form method="POST" action="admin.characters/{{ $character_table[0]['id']  }}" id="delete-form" class="hidden">
         @csrf
         @method('DELETE')
     </form>
+
+
 @endsection
 
 

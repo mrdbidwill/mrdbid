@@ -9,6 +9,10 @@
         <p class="text-gray-500 mt-4">File Address: /resources/views/admin/admin_specimen/index.blade.php</p>
     @endif
 
+    <p>This just displays a list of <b>my</b> specimens. So, not very useful in admin. And, since all of the relations between models, controllers, views, and migrations need to be maintained in any changes to <u>the structure of any table</u>, I won't add any ability to do that here.</p>
+
+    <p>Not sure this view or whole admin_specimen directory is necessary.</p>
+
     <div class="bg-gray-900">
         <div class="mx-auto max-w-7xl">
             <div class="bg-gray-300 py-10">

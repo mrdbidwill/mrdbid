@@ -9,7 +9,6 @@ class Character extends Model
     protected $table = 'characters';
 
     protected $fillable = [
-        'id',
         'name',
         'display_options',
         'look_up_y_n',

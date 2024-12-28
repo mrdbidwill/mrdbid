@@ -49,9 +49,17 @@ class SpecimenController extends Controller
         // Fetch the clusters (modify query based on your requirements)
         $all_clusters = Cluster::all(); // Use any filtering logic if needed
 
-        $this_groups = GroupSpecimen::where('specimen_id', $id)->get();
+        $this_groups = GroupSpecimen::with('group') // Load the related group
+            ->where('specimen_id', $id)
+            ->get();
+
+        //$this_groups = GroupSpecimen::where('specimen_id', $id)->get();
         //dd($this_groups);    // ok group_id and specimen_id are set
-        $this_clusters = ClusterSpecimen::where('specimen_id', $id)->get();
+
+        $this_clusters = ClusterSpecimen::with('cluster') // Load the related cluster
+            ->where('specimen_id', $id)
+            ->get();
+        //$this_clusters = ClusterSpecimen::where('specimen_id', $id)->get();
         //dd($this_clusters);    // ok cluster_id and specimen_id are set
         //dd($all_groups, $all_clusters);
 

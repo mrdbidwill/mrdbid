@@ -37,7 +37,10 @@
                         <tr class="{{ $character_bg_class }}">
                             <td class="flex justify-between items-center">
                             <span>
-                                {{ $table_name_plural }}: <b>{{ $lookup_table_row->name ?? 'Unknown Name' }}</b>
+                                @php
+                                    //dd($lookup_table_data);
+                                @endphp
+                                {{ $table_name_plural }}: <b>{{ $lookup_table_row->name ?? 'Unknown Name' }}</b> {{  $character['description'] }}  {{  $character['comments'] }}  {{  $lookup_table_row->source }}
                             </span>
                                 @if($loop->iteration % 5 === 0)
                                     <a href="#top" class="text-orange-600 font-bold">Top</a>
@@ -50,7 +53,7 @@
                 <tr class="{{ $character_bg_class }}">
                     <td class="flex justify-between items-center">
                     <span>
-                        <b>{{ $display_name }}</b>
+                        <b>{{ $display_name }}</b> {{  $character['description'] }}  {{  $character['comments'] }}  ( {{  $character['source'] }} is source of this character name)
                     </span>
                         @if($loop->iteration % 5 === 0)
                             <a href="#top" class="text-orange-600 font-bold">Top</a>

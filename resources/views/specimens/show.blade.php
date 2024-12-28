@@ -151,13 +151,13 @@
                 <!-- Button to View Clusters -->
                 <button type="button" class="btn btn-info" data-bs-toggle="modal"
                         data-bs-target="#viewClustersModal">
-                    View Clusters
+                    View This Specimen's Clusters
                 </button>
 
                 <!-- Button to View Groups -->
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                         data-bs-target="#viewGroupsModal">
-                    View Groups
+                    View This Specimen's Groups
                 </button>
             </td>
         </tr>

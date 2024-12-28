@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminExportDatabaseController;
 use App\Http\Controllers\Admin\AdminMBListController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,10 @@ Route::middleware(['auth'])->prefix('admin')->namespace('App\Http\Controllers\Ad
         'update' => 'admin.data_sources.update',
         'destroy' => 'admin.data_sources.destroy',
     ]);
+
+    Route::post('export_databases/export', [AdminExportDatabaseController::class, 'admin_export_database'])->name('admin.export_databases.export');
+
+    Route::post('export_databases/save', [AdminExportDatabaseController::class, 'saveDatabaseToLocalFile'])->name('admin.export_databases.save');
 
     Route::resource('export_databases', 'AdminExportDatabaseController')->names([
         'index' => 'admin.export_databases.index',
