@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class CompareController extends Controller
 {
-    // Display comparison form/dashboard
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    // Display comparison form
     public function index()
     {
-        return view('compare.index');
+        return view('compares.index');
     }
 
     // Perform the comparison and return results
@@ -26,6 +31,8 @@ class CompareController extends Controller
 
         // Here, you can add your comparison logic
 
-        return view('compare.result', compact('specimens', 'comparisonResult'));
+        $comparisonResult = [];
+
+        return view('compares.result', compact('specimens', 'comparisonResult'));
     }
 }

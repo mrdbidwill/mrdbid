@@ -21,6 +21,11 @@ class ImageSpecimenController extends Controller
 {
     use AuthorizesRequests;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $images = ImageSpecimen::where('specimen_id', auth()->id())->latest()->simplePaginate(6);

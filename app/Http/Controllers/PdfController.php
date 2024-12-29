@@ -8,6 +8,11 @@ use PDF; // Import the facade
 
 class PdfController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // Generate PDF for user-specific specimens
     public function userSpecimens()
     {

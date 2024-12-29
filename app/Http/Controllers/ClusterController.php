@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Gate;
 
 class ClusterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         // return cluster created by - owned by - this authorized user
-        $clusters = Cluster::where('created_by', auth()->id())->orderBY('name', 'asc')->simplePaginate(6);
+        $clusters = Cluster::where('created_by', auth()->id())->orderBy('name', 'asc')->simplePaginate(6);
 
         return view('clusters.index', compact('clusters'));
     }
@@ -71,8 +76,6 @@ class ClusterController extends Controller
         $cluster->update([
             'name' => request('name'),
             'description' => request('description'),
-            'created_by' => $created_by,
-
         ]);
 
         //return redirect('/clusters/'.$cluster['id'].'/edit')->with('message', 'Cluster updated successfully');
@@ -81,7 +84,7 @@ class ClusterController extends Controller
 
     public function destroy(Cluster $cluster)
     {
-        Gate::authorize('edit-cluster', $cluster);   // same ownership check as needed here
+        Gate::authorize('delete-cluster', $cluster);   // same ownership check as needed here
 
         $cluster->delete();
 

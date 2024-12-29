@@ -11,10 +11,15 @@ class GroupController extends Controller
 {
     use AuthorizesRequests;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         // $groups = Group::latest()->simplePaginate(36);
-        $groups = Group::where('created_by', auth()->id())->orderBY('name', 'asc')->simplePaginate(36);
+        $groups = Group::where('created_by', auth()->id())->orderBy('name', 'asc')->simplePaginate(36);
 
         return view('groups.index', [
             'groups' => $groups,
@@ -70,7 +75,6 @@ class GroupController extends Controller
         $group->update([
             'name' => request('name'),
             'description' => request('description'),
-            'created_by' => $created_by,
 
         ]);
 

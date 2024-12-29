@@ -14,13 +14,4 @@ class Cluster extends Model
         return $this->belongsToMany(Specimen::class, 'clusters')
             ->withPivot('user_id', 'created_by', 'created_at', 'updated_at');
     }
-
-    /**
-     * @property int $created_by
-     */
-    // Relationship with the user who created the cluster
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
 }

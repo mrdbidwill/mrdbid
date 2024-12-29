@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
             // Remove or avoid adding the default listener
             // \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
         ],
+        \App\Events\SpecimenCreated::class => [
+            \App\Listeners\AssignSpecimenToGroup::class,
+        ],
     ];
 
     /**

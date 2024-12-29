@@ -18,7 +18,7 @@ class ClusterPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Cluster $specimen_cluster): void
+    public function view(User $user, Cluster $cluster): void
     {
         //
     }
@@ -34,31 +34,32 @@ class ClusterPolicy
     /**
      * Determine whether the user can edit the model.
      */
-    public function edit(User $user, Cluster $specimen_cluster): bool
+    public function edit(User $user, Cluster $cluster): bool
     {
-        return $specimen_cluster->member_id === $user->id;   // Only the user who created the specimen_cluster can edit it
+        return $cluster->created_by === $user->id;   // Only the user who created the cluster can edit it
+
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Cluster $specimen_cluster): bool
+    public function update(User $user, Cluster $cluster): bool
     {
-        return $specimen_cluster->member_id === $user->id;   // Only the user who created the specimen_cluster can update it
+        return $cluster->created_by === $user->id;   // Only the user who created the cluster can update it
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Cluster $specimen_cluster): bool
+    public function delete(User $user, Cluster $cluster): bool
     {
-        return $specimen_cluster->member_id === $user->id;   // Only the user who created the specimen_cluster can delete it
+        return $cluster->created_by->is($user);   // Only the user who created the cluster can delete it
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Cluster $specimen_cluster): void
+    public function restore(User $user, Cluster $cluster): void
     {
         //
     }
@@ -66,7 +67,7 @@ class ClusterPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Cluster $specimen_cluster): void
+    public function forceDelete(User $user, Cluster $cluster): void
     {
         //
     }

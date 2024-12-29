@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Specimen;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\Factory as Queue;
@@ -13,11 +14,18 @@ class SpecimenCreated implements \Illuminate\Contracts\Mail\Mailable
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * The specimen instance.
+     *
+     * @var \App\Models\Specimen
+     */
+    public $specimen;
+
+    /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Specimen $specimen)
     {
-        //
+        $this->specimen = $specimen;
     }
 
     /**

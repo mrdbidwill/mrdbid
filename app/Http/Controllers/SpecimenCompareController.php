@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 
 class SpecimenCompareController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return view('specimen_compare.index');
+        return view('specimen_compares.index');
     }
 
     public function create() {}

@@ -52,7 +52,7 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group): bool
     {
-        return $group->created_by === $user->id;   // Only the user who created the group can delete it
+        return $group->created_by->is($user);  // Only the user who created the group can delete it
     }
 
     /**

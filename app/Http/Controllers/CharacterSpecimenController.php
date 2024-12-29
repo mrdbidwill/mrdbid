@@ -19,6 +19,7 @@ class CharacterSpecimenController extends Controller
 
     public function __construct(CharacterService $characterService)
     {
+        $this->middleware('auth');
         $this->characterService = $characterService;
     }
 

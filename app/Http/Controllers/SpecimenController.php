@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Gate;
 
 class SpecimenController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         // Fetch specimens for the authenticated user and paginate to display 25 per page
@@ -107,6 +112,8 @@ class SpecimenController extends Controller
             'entered_by' => request('entered_by')]);
 
         // Mail::to($specimen['user'])->queue(new SpecimenCreated($specimen));
+
+        // add this specimen to group named for month found owned by this user
 
         return redirect('/specimens/');
         //return view('specimens.show', ['specimen' => $specimen]);

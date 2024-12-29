@@ -7,6 +7,11 @@ use Illuminate\View\View;
 
 class DataSourceDataTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(): View
     {
         return view('specimens.look_up_tables.data_source_data_type');

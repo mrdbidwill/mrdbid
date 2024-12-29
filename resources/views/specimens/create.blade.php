@@ -12,9 +12,6 @@
         <p class="text-gray-500 mt-4">File Address: /resources/views/specimens/create.blade.php</p>
     @endif
 
-
-    <p>resources/views/specimens/create.blade.php</p>
-
     <form method="POST" action="{{ route('specimens.store') }}">
         @csrf
 
