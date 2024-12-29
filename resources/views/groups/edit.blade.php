@@ -65,7 +65,7 @@
     <table class="w-full table-auto bg-indigo-100 border-separate border border-4-rounded rounded-lg outline-slate-100 outline-4">
         <x-action-buttons
             :cancelUrl="route('groups.index', $group->id)"
-            :deleteAction="route('groups.destroy', $sgroup->id)"
+            :deleteAction="route('groups.destroy', $group->id)"
             deleteItem="This Group"/>
     </table>
 
