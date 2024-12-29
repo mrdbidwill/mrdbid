@@ -10,6 +10,7 @@ class ClusterController extends Controller
 {
     public function index()
     {
+        // return cluster created by - owned by - this authorized user
         $clusters = Cluster::where('created_by', auth()->id())->orderBY('name', 'asc')->simplePaginate(6);
 
         return view('clusters.index', compact('clusters'));
@@ -17,9 +18,13 @@ class ClusterController extends Controller
 
     public function show($id)
     {
-        $clusters = Cluster::where('id', $id)->get();
+        // Enforce ownership check
+        $cluster = Cluster::where('id', $id)
+            ->where('created_by', auth()->id())
+            ->firstOrFail();
 
-        return view('clusters.show', compact('clusters'));
+        // Return the proper view with the cluster
+        return view('clusters.show', ['cluster' => $cluster]);
     }
 
     public function store(Request $request)

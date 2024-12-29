@@ -81,7 +81,6 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
         $this->authorize('delete', $group);
-        $group_id = $group->id;
         $group->delete();
 
         return redirect()->route('groups.index')->with('success', 'Group deleted successfully.');
