@@ -246,6 +246,7 @@ class SpecimenController extends Controller
         // Validate the incoming request
         $validated = $request->validate([
             'group_id' => 'required|exists:groups,id',
+            'description' => 'nullable|string|max:1024',
         ]);
 
         // Add the specimen to the specified group (prevent duplicate entries)

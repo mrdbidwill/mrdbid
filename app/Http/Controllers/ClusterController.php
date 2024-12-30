@@ -41,7 +41,6 @@ class ClusterController extends Controller
         Cluster::create([
             'name' => request('name'),
             'description' => request('description'),
-            'comments' => request('comments'),
             'created_by' => auth()->id(), // Use authenticated user's id
         ]);
 
