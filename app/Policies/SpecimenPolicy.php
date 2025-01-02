@@ -70,4 +70,9 @@ class SpecimenPolicy
     {
         //
     }
+
+    public function guestView(?User $user)
+    {
+        return true;
+    }
 }

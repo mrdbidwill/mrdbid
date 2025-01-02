@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Events\SpecimenCreated;
 use App\Models\Lookup\Character;
+use App\Models\Lookup\Country;
+use App\Models\Lookup\State;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,8 +24,8 @@ class Specimen extends Model
         'specimen_location_now',
         'location_found_city',
         'location_found_county',
-        'state',
-        'country',
+        'state_id',
+        'country_id',
         'location_public_y_n',
         'share_data_y_n',
         'month_found',
@@ -68,5 +70,15 @@ class Specimen extends Model
     public function characterSpecimens(): HasMany
     {
         return $this->hasMany(CharacterSpecimen::class);
+    }
+
+    public function country()    // The `with` method expects relationships defined in the model, not column names
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 }

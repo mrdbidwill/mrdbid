@@ -41,8 +41,8 @@
 
     @php
         $specimen_id = $specimen->id;
-        $selected_country = $specimen->country;
-        $selected_state = $specimen->state;
+        $selected_country = $specimen->country_id;
+        $selected_state = $specimen->state_id;
 
 
     if($specimen['location_public_y_n'] = 0){
@@ -232,11 +232,11 @@
         <tr>
             <td class="border-4 border-blue-300 p-2" colspan="2">
                 Country:
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'country']) }}"
+                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'country_id']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    <select name="country" class="form-select">
+                    <select name="country_id" class="form-select">
                         @foreach($countries as $country)
                             <option
                                 value="{{ $country->id }}" {{ $selected_country == $country->id ? 'selected' : '' }}>
@@ -254,11 +254,11 @@
             <td class="border-4 border-blue-300 p-2" colspan="2">
 
                 State:
-                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'state']) }}"
+                <form action="{{ route('specimens.updateField', ['id' => $specimen->id, 'field' => 'state_id']) }}"
                       method="POST">
                     @csrf
                     @method('PUT')
-                    <select name="state" class="form-select">
+                    <select name="state_id" class="form-select">
                         @foreach($states as $state)
                             <option value="{{ $state->id }}" {{ $selected_state == $state->id ? 'selected' : '' }}>
                                 {{ $state->name }}

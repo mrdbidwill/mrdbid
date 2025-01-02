@@ -10,6 +10,8 @@
 
         <h1 class="text-4xl text-black dark:text-white">Welcome to MRDBID</h1>
 
+        <p class="mt-2 text-xl text-black"><a href="{{ route('specimens.guest.index') }}" style="font-size: 1.2em; color: #e3342f;">View Specimens Samples</a></p>
+
        <p class="mt-2 text-xl text-black">In the beginning, there was only a plan to eliminate the paper clutter. Where am I on identifying this mushroom? Where are my notes? Why can't I recall the mushrooms I have observed in the past? Dare I say easily? And, so this project began.</p>
 
         <p class="mt-2 text-xl text-black">This website is a tool for storing and organizing <u>data</u> for mushrooms

@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->grou
 
     Route::resource('specimens', SpecimenController::class);
 
+    Route::get('/specimens/filter', [SpecimenController::class, 'filterSpecimens'])->name('specimens.filter');
+
     // Add Specimen to Group
     Route::post('specimens/{specimen}/groups', [SpecimenController::class, 'addToGroup'])->name('specimens.addToGroup');
 

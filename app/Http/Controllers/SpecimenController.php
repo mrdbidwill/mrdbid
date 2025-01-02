@@ -18,7 +18,7 @@ class SpecimenController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('guestIndex');  // Exclude guestIndex from auth
     }
 
     public function index()
@@ -79,8 +79,8 @@ class SpecimenController extends Controller
             'specimen_location_now' => 'required|integer',
             'location_found_city' => 'required|string|min:3|max:255',
             'location_found_county' => 'required|string|min:3|max:255',
-            'state' => 'required|integer',
-            'country' => 'required|integer',
+            'state_id' => 'required|integer',
+            'country_id' => 'required|integer',
             'location_public_y_n' => 'required',
             'share_data_y_n' => 'required',
             'month_found' => 'required|integer|min:1|max:12',
@@ -101,8 +101,8 @@ class SpecimenController extends Controller
             'specimen_location_now' => request('specimen_location_now'),
             'location_found_city' => request('location_found_city'),
             'location_found_county' => request('location_found_county'),
-            'state' => request('state'),
-            'country' => request('country'),
+            'state_id' => request('state_id'),
+            'country_id' => request('country_id'),
             'location_public_y_n' => request('location_public_y_n'),
             'share_data_y_n' => request('share_data_y_n'),
             'month_found' => request('month_found'),
@@ -206,8 +206,8 @@ class SpecimenController extends Controller
             'specimen_location_now' => 'sometimes|integer',
             'location_found_city' => 'sometimes|string|min:3|max:255',
             'location_found_county' => 'sometimes|string|min:3|max:255',
-            'state' => 'sometimes|integer',
-            'country' => 'sometimes|integer',
+            'state_id' => 'sometimes|integer',
+            'country_id' => 'sometimes|integer',
             'location_public_y_n' => 'sometimes',
             'share_data_y_n' => 'sometimes',
             'month_found' => 'sometimes|integer|min:1|max:12',
@@ -225,8 +225,8 @@ class SpecimenController extends Controller
             'specimen_location_now' => request('specimen_location_now'),
             'location_found_city' => request('location_found_city'),
             'location_found_county' => request('location_found_county'),
-            'state' => request('state'),
-            'country' => request('country'),
+            'state_id' => request('state_id'),
+            'country_id' => request('country_id'),
             'location_public_y_n' => request('location_public_y_n'),
             'share_data_y_n' => request('share_data_y_n'),
             'month_found' => request('month_found'),
@@ -270,5 +270,95 @@ class SpecimenController extends Controller
         // Return success response
         return redirect()->route('specimens.show', $specimen->id)
             ->with('success', 'Specimen successfully added to the cluster!');
+    }
+
+    public function filterMenu()
+    {
+        $states = State::all(); // Load list of states
+        $countries = Country::all(); // Load list of countries
+
+        return view('specimens.filter', compact('states', 'countries'));
+    }
+
+    public function filterSpecimens(Request $request)
+    {
+        $query = Specimen::query();
+
+        // Filter by user
+        $query->where('user_id', $request->user()->id);
+
+        // Filter by month
+        if ($request->filled('month')) {
+            $query->where('month_found', $request->input('month'));
+        }
+
+        // Filter by year
+        if ($request->filled('year')) {
+            $query->where('year_found', $request->input('year'));
+        }
+
+        // Filter by state
+        if ($request->filled('state')) {
+            $query->whereHas('state', function ($q) use ($request) {
+                $q->where('name', $request->input('state'));
+            });
+        }
+
+        // Filter by country
+        if ($request->filled('country')) {
+            $query->whereHas('country', function ($q) use ($request) {
+                $q->where('name', $request->input('country'));
+            });
+        }
+
+        return $query->paginate(20); // Paginate results for large datasets
+    }
+
+    public function filter_search(Request $request)
+    {
+        $states = State::all(); // Load states
+        $countries = Country::all(); // Load countries
+        $specimens = Specimen::query();
+
+        // Apply filters
+        if ($request->filled('month')) {
+            $specimens->where('month_found', $request->input('month'));
+        }
+        if ($request->filled('year')) {
+            $specimens->where('year_found', $request->input('year'));
+        }
+        if ($request->filled('state')) {
+            $specimens->whereHas('state', function ($q) use ($request) {
+                $q->where('name', $request->state);
+            });
+        }
+        if ($request->filled('country')) {
+            $specimens->whereHas('country', function ($q) use ($request) {
+                $q->where('name', $request->country);
+            });
+        }
+
+        // Paginate
+        $specimens = $specimens->paginate(20);
+
+        return view('specimens.filter_search', compact('states', 'countries', 'specimens'));
+    }
+
+    public function guestIndex()
+    {
+        // Explicitly allow access to guests
+        $this->authorize('guestView', Specimen::class);
+
+        // The `with` method expects relationships defined in the model, not column names
+        $specimens = Specimen::with(['country', 'state']) // Eager load relationships
+            ->where('location_public_y_n', 1)
+            ->where('share_data_y_n', 1)
+            ->paginate(10);
+
+        //foreach ($specimens as $specimen) {
+        //    dump($specimen->toArray()); // Check if 'state' and 'country' relationships are loaded
+        // }
+
+        return view('specimens.guest', compact('specimens'));
     }
 }

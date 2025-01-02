@@ -25,8 +25,8 @@
                          $table->integer('specimen_location_now');
                          $table->string('location_found_city', length: 128);
                          $table->string('location_found_county', length: 64);
-                         $table->integer('state');
-                         $table->integer('country');
+                         $table->integer('state_id');
+                         $table->integer('country_id');
                          $table->integer('location_public_y_n');
                          $table->integer('share_data_y_n');
                          $table->integer('month_found');
@@ -36,11 +36,14 @@
                          $table->integer('entered_by');
                          $table->timestamps();
 
-                         // Add the index
+                         // Add the indexes
                          $table->index('user_id', 'idx_user_id');
+                         $table->index(['user_id', 'month_found', 'year_found'], 'idx_user_time'); // Composite index
+                         $table->index(['state_id', 'country_id'], 'idx_location'); // Composite index
 
                          // Foreign key constraint
                          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
                      });
 
                  }

@@ -11,7 +11,7 @@ class DataSourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('showFilteredBooks'); // Exclude showFilteredBooks from auth
     }
 
     public function index()

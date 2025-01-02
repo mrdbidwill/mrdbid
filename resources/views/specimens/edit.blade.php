@@ -111,26 +111,26 @@
         @enderror
 
 
-        <label for="state" class="block text-sm font-medium leading-6 text-gray-900">State</label>
+        <label for="state_id" class="block text-sm font-medium leading-6 text-gray-900">State</label>
 
-        <input type="number" name="state" id="state"
+        <input type="number" name="state_id" id="state_id"
                class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-               value="{{ $specimen['state'] }}" required>
+               value="{{ $specimen['state_id'] }}" required>
 
 
-        @error('state')
+        @error('state_id')
         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
         @enderror
 
 
-        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+        <label for="country_id" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
 
-        <input type="number" name="country" id="country"
+        <input type="number" name="country_id" id="country_id"
                class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-               value="{{ $specimen['country'] }}">
+               value="{{ $specimen['country_id'] }}">
 
 
-        @error('country')
+        @error('country_id')
         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
         @enderror
 
