@@ -7,10 +7,10 @@
 
     {{-- Show file address if in development environment --}}
     @if (config('app.env') === 'local')
-        <p class="text-gray-500 mt-4">File Address: /resources/views/specimen_groups/edit.blade.php</p>
+        <p class="text-gray-500 mt-4">File Address: /resources/views/groups/edit.blade.php</p>
     @endif
 
-    <form method="POST" action="/specimen_groups/{{  $group->id }}">
+    <form method="POST" action="/groups/{{  $group->id }}">
         @csrf
         @method('PATCH')
 

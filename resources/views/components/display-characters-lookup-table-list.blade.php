@@ -40,7 +40,7 @@
                                 @php
                                     //dd($lookup_table_data);
                                 @endphp
-                                {{ $table_name_plural }}: <b>{{ $lookup_table_row->name ?? 'Unknown Name' }}</b> {{  $character['description'] }}  {{  $character['comments'] }}  {{  $lookup_table_row->source }}
+                                {{ $table_name_plural }}: <b>{{ $lookup_table_row->name ?? 'Unknown Name' }}</b> {{  $lookup_table_row->description  }}  {{  $lookup_table_row->comments }}  {{  $lookup_table_row->source }}
                             </span>
                                 @if($loop->iteration % 5 === 0)
                                     <a href="#top" class="text-orange-600 font-bold">Top</a>

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CharacterSpecimenForm extends Component
+class CharacterSpecimenFormDELETE extends Component
 {
     /**
      * Create a new component instance.
