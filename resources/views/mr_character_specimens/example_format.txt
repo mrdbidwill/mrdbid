@@ -1,0 +1,841 @@
+edit.blade.php:
+
+@props([
+'colors',
+'color_character_names',
+'list_of_set_characters',
+'unset_characters',
+'specimen_id'
+])
+
+@php
+    use App\Models\Lookup\Character;
+    use App\Repositories\Lookup\CharacterRepository;
+     use App\Utils\StringUtils;
+
+@endphp
+
+@extends('layouts.app')
+
+@section('content')
+
+    <x-specimens-nav-bar/>
+
+    {{-- Show file address if in development environment --}}
+    @if (config('app.env') === 'local')
+        <p class="text-gray-500 mt-4">File Address: /resources/views/character_specimens/edit.blade.php</p>
+    @endif
+
+
+    <x-notification message="{{ Session::get('message') }}"/>
+
+    @php $list_of_set_characters_array[] = '';  @endphp
+    @foreach ($list_of_set_characters as $list_of_set_character)
+        @php    //dd($list_of_set_character);
+        $list_of_set_characters_array[] = $list_of_set_character; @endphp
+    @endforeach
+
+    <div class="bg-gray-200 mx-auto max-w-7xl py-10 px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+            <div id="top">
+                <div class="sm:flex-auto">
+                    <h1 class="text-base font-semibold leading-6 text-black">Specimen ID: {{  $specimen_id }}</h1>
+                    <h3 class="text-base font-semibold leading-6 text-black">Character Specimens</h3>
+                    <p class="mt-2 text-sm text-black">If you have added any <b>character</b> data for this specimen, it will
+                        appear at top with golden background. Next will be a list of characters you can add for this
+                        specimen. All are optional. At the bottom, which is also accessible on clicking on any color
+                        related characters is a color chart for adding color characters.</p>
+                </div>  <!-- end div top -->
+            </div>
+        </div>
+
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+
+                    @php //dd($specimen_id); @endphp
+
+                    <x-display-existing-specimen-characters :specimen_id="$specimen_id"/>
+
+                    <x-display-unset-characters :unset_characters="$unset_characters"/>
+
+                    <x-display-character-by-display-option-switch :specimen_id="$specimen_id"
+                                                                  :unset_characters="$unset_characters"/>
+
+                    <x-display-colors-top-characters-bottom-form-table :colors="$colors"
+                                                                       :color_character_names="$color_character_names"
+                                                                       :list_of_set_characters="$list_of_set_characters"
+                                                                       :specimen_id="$specimen_id"/>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+component display-existing-specimen-characters.blade.php:
+@php
+    use Illuminate\Support\Facades\DB;
+    use App\Utils\StringUtils;
+    use App\Models\Lookup\Character;
+    use App\Models\CharacterSpecimen;
+    use Illuminate\Http\Request;
+
+       $specimen_id = request()->input('specimen_id');
+
+        // Store the default connection
+        $defaultConnection = DB::getDefaultConnection();
+               // Instantiate the model
+        $characterSpecimen = new CharacterSpecimen();
+        $set_characters = $characterSpecimen->getSetCharacters($specimen_id);
+
+        //dd($set_characters);
+
+        /*
+         * At this point this is all I have - but need final
+         * sorting by characters table name alphabetically
+         "id" => 12
+        "character_id" => 99
+        "specimen_id" => 2
+        "character_value" => "56581"
+        "entered_by" => 1
+        "created_at" => "2024-10-29 10:53:42"
+        "updated_at" => "2024-10-29 10:53:42"
+        */
+
+        // Fetch all characters whose IDs are present in $set_characters
+        $character_ids = $set_characters->pluck('character_id')->all();
+        $characters = Character::whereIn('id', $character_ids)->get()->keyBy('id');
+
+        // Sort the set_characters by the name of characters
+        $set_characters = $set_characters->sortBy(function($set_character) use ($characters) {
+        return $characters[$set_character->character_id]->name ?? '';
+        })->values();
+@endphp
+<table class="table-auto w-full">  <!-- display-existing-specimen-characters -->
+    @foreach ($set_characters as $set_character)
+        @php
+            $character_id = $set_character->character_id;
+            $character = $characters[$character_id] ?? null;
+            $display_option = $character ? $character->display_options : '';
+            $processed_table_name = StringUtils::get_table_name_special_cases($character->name);
+            $display_name = StringUtils::convert_table_name_for_display($character->name);
+        @endphp
+
+        <tr class="{{ $loop->odd ? 'bg-amber-100' : 'bg-green-100' }}">
+            <td class="border border-collapse border-gray-400 p-2">
+                @switch($display_option)
+                    @case(1)
+                        <!-- ID - Do not display  -->
+                        @break
+                    @case(2)
+                        <!--  text box number mm is measure  NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}} mm
+                        @break
+                    @case(3)
+                        <!--  text box number um is measure   NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}} &#181; (micron)
+                        @break
+                    @case(4)
+                        <!--  text box string   NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}}
+                        @break
+                    @case(5)
+                        <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
+                        {{ $display_name }}: {{$set_character->character_value}}
+                        @break
+                    @case(6)
+                        <!-- colors -->
+                        @php
+                            $data = DB::table('colors')->where('id', $set_character->character_value)->first();
+                            $imagePath = asset('storage/images/AMS_colors/banner_50x50/banner_' . $set_character->character_value . '.jpg');
+                        @endphp
+                        {{ $display_name }}:
+                        <small>Latin Name:</small> <b>{{ $data->latin_name }}</b>
+                        <small>Common Name:</small> <b>{{ $data->common_name }}</b>
+                        <small>Closest Websafe Color:</small> <b>{{ $data->closest_websafe_color }}</b>
+                        <small>Source: Alabama Mushroom Society</small>
+                        <img src="{{$imagePath}}" alt="{{ $data->latin_name }}" width="50" height="50"
+                             class="inline-block mt-2">
+                        @break
+                    @case(7)
+                        <!--  taste ALL taste characters use the tastes table-->
+                        @php
+                            $table_name = 'tastes';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(8)
+                        <!-- odor ALL odor characters use the odors table-->
+                        @php
+                            $table_name = 'odors';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(9)
+                        <!--  radio USE LOOKUP TABLE -->
+                        @php
+                            $data = DB::table($processed_table_name)->where('id', $set_character->character_value)->first();
+                            $data_source = DB::table('data_sources')->where('id', $data->source)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }}
+                        <span class="text-xs font-bold">Source: {{$data_source->title}}</span>
+                        @break
+                    @case(10)
+                        <!--  dropdown -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(11)
+                        <!--  state -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(12)
+                        <!-- country -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(13)
+                        <!--  texture -->
+                        @php
+                            $table_name = 'textures';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(14)
+                        <!-- yes_no  -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(15)
+                        <!--  abundance -->
+                        @php
+                            $table_name = 'abundances';
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(16)
+                        <!--  text box number grams measurement -->
+                        @php
+                            $table_name = $character->name;
+                            $data = DB::table($table_name)->where('id', $set_character->character_value)->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{$data->name}} {{$data->description}} {{$data->comments }} {{$data->source}}
+                        @break
+                    @case(17)
+                        <!--  genus and species autocomplete -->
+                        @php
+                            $result = DB::connection('MBList.php')->table('list')
+                                ->where('id', $set_character->character_value)
+                                ->select( 'Taxon_name', 'Authors__abbreviated_', 'Year_of_effective_publication', 'Name_status')
+                                ->first();
+                        @endphp
+                        {{ $display_name }}:
+                        {{ $result->Taxon_name }} {{ $result->Authors__abbreviated_ }} {{ $result->Year_of_effective_publication }} {{ $result->Name_status }}
+                        @break
+                    @default
+                        <!--  default -->
+                        <p><b>{{ $processed_table_name }} Default case</b></p>
+                @endswitch
+
+                @if($loop->iteration % 5 === 0)
+                    <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</table>   <!-- display-existing-specimen-characters -->
+
+component display-character-by-display-option-switch.blade.php:
+@php
+    use App\Models\CharacterSpecimen;use App\Models\Lookup\Character;use App\Utils\StringUtils;
+@endphp
+
+@props([
+   'specimen_id',
+   'unset_characters',
+])
+
+@php  //dd($specimen_id); @endphp
+
+@php //dd($unset_characters); @endphp
+
+<table class="min-w-full hover:table-fixed border-collapse border border-blue-700 p-4"> <!-- display-character-by-display-option-switch -->
+
+
+
+    @php
+        $characters = $unset_characters->sortBy('name');
+        $color_character_names = array();
+    @endphp
+
+    <tbody>
+
+
+    @foreach ($characters as $character)
+        @php //dd($character->name); @endphp
+
+        @if( $character->display_options != 6 )
+            <tr>
+                <td class="border border-collapse border-gray-400 p-4">
+                    <form method="POST" action="{{ route('character_specimens.store') }}">
+                        @csrf
+        @endif
+
+        @switch($character->display_options)
+            @case(1)
+                <!-- ID - Do not display  -->
+
+                @break
+
+            @case(2)
+                <!--  text box number mm is measure  NO Lookup table -->
+
+                 @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                 <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                 <label for="character_value"><b>{{ $display_name }}</b></label>
+
+                 <input type="number"
+                         id="character_value"
+                         name="character_value"
+                         value="">
+                 </div>   <!-- end div for tag -->
+                         @error('$character->name')
+                         <div class="alert alert-danger">{{ $message }}</div>
+                         @enderror
+                         <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                         <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                         <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+
+            @case(3)
+
+                <!--  text box number um is measure   NO Lookup table -->
+                @php
+                    //dd($character->name);
+                @endphp
+                text box number um is measure   NO Lookup table
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                 <input type="number"
+                                                    id="character_value"
+                                                    name="character_value"
+                                                    value="">
+                                 </div>   <!-- end div for tag -->
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+            @case(4)
+
+                <!--  text box string   NO Lookup table -->
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+text box string   NO Lookup table
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label> <input type="text"
+                                                                                                       id="character_value"
+                                                                                                       name="character_value"
+                                                                                                       value="">
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+            @case(5)
+                <!--  text box number general format for temperatures ph  etc    NO Lookup table -->
+text box number general format for temperatures ph  etc    NO Lookup tabl
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label> <input type="number"
+                                                                                                       id="character_value"
+                                                                                                       name="character_value"
+                                                                                                       value="">
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
+                @break
+
+            @case(6)
+            colors
+                @php
+
+                    $color_character_names[] = $character->name;
+                @endphp
+
+                @break
+
+            @case(7)
+                <!--  taste ALL taste characters use the tastes table-->
+                        @php $display_taste = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_taste }}</b> (taste table)</p>
+                                @php
+                                    $data = DB::table( 'tastes' )->get();
+                                @endphp
+                                <div id="character_{{ $character->id  }}">   <!-- div for tag -->
+                                @foreach($data as $item)
+                                <input type="radio" name="character_value" id="character_value" value="{{ $item->id }}">
+                                <label for="character_value">{{$item->name}}</label><br>
+                                </div>   <!-- end div for tag -->
+                               @endforeach
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+            @case(8)
+                <!-- odor ALL odor characters use the odors table-->
+                @php $display_odor = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_odor }}</b> (odor table)</p>
+                                @php
+                                    $data = DB::table( 'odors' )->get();
+                                @endphp
+                                @foreach($data as $item)
+                                    @php
+                                        // dd($item);
+                                    @endphp
+                                    <input type="radio" id="character_value" name="character_value"
+                                           value="{{ $item->id }}">
+                                    @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                    <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                    <label for="character_value">{{ $display_name }}</label>
+                                </div>   <!-- end div for tag -->
+                                    <br>
+                                @endforeach
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
+                @break
+
+            @case(9)
+                <!--  radio USE LOOKUP TABLE -->
+                @php
+                    //dd($character->name );
+                @endphp
+
+                        @php
+                            if( ( $character->name ==  'cap_surface_dryness')  || ( $character->name ==  'genus' ) || ( $character->name ==  'gill_edges' )|| ( $character->name ==  'gill_thickness' )|| ( $character->name ==  'species' ) || ( $character->name ==  'veil_annulus' ) )
+                            {
+                            $data = DB::table( $character->name )->get();  // ALL from character Lookup table
+                            }
+                            else
+                            {
+                            $data = DB::table( $character->name.'s' )->get();
+                            //dd($data);
+                            }
+                        @endphp
+
+                        <div id="character_{{ $character->id  }}">  <!-- div for tag  -->
+                            @php
+                                if( $character->name ==  'part_in_veil_ann_ri_posit' )
+                                {
+                                    $display_name = 'Partial Inner Veil Annulus Ring Position';
+                                }
+                                else
+                                {
+                                     $display_name = StringUtils::convert_table_name_for_display($character->name);
+                                }
+                            @endphp
+                            <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                            <label for="character_value"><b>{{ $display_name }}</b></label>
+                        </div>   <!-- end div for tag -->
+
+
+
+                            @foreach($data as $item)
+
+                                @php
+                                    //dd($data);  // all data
+                                    //dd($item);    // one item
+                                       $select = CharacterSpecimen::where('character_id', $character->id )->first();
+
+                                       //dd($select);
+                                //dd($request->session()->all());
+
+                                @endphp
+
+                                <input type="radio" id="{{ $item->id }}" name="character_value"
+
+                                       @if((isset($select->character_value) && ($item->id == $select->character_value)) ||
+                                           (isset($select->character_value) && ($select->character_value == 'Not Entered')) ||
+                                           (!isset($select->character_value) && ($item->name == 'Not Entered')))
+                                           checked @endif
+
+                                       value="{{$item->id}}">
+                                @php $display_name = StringUtils::convert_table_name_for_display($item->name); @endphp
+                                <label for="{{$item->id}}">{{$display_name}}
+                                    - {{$item->description}}</label>
+
+                                <br>
+
+                            @endforeach
+
+                            <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                            <input type="hidden" name="specimen_id" value="{{ $specimen_id }} ">
+
+
+                            @error('$character->name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+
+                @break
+
+            @case(10)
+                <!--  dropdown -->
+
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+            @case(11)
+                <!--  state -->
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+
+                @break
+
+            @case(12)
+                <!-- country -->
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for {{$character->name}}><p><b>{{ $character->name }}</b> (country table)</p>
+                                </label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+
+            @case(13)
+                <!--  texture -->
+                              <!-- thought of doing one texture table for all texture related characters by decided not enough similarity -->
+                              <!-- texture characters now in 9 case  -->
+
+                @break
+            @case(14)
+                <!-- yes_no  -->
+
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <p><b>{{ $display_name }}</b> (yes_no)</p>
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                <label for="yes_no"><b>Yes or No</b></label><br> <input type="radio" id="yes"
+                                                                                        name="yes_no" value="yes">
+                                <label for="yes">Yes</label><br> <input type="radio" id="no" name="yes_no" value="no">
+                                <label for="no">No</label><br>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+            @case(15)
+                <!--  abundance -->
+
+                                @php
+                                    $display_name = StringUtils::convert_table_name_for_display($character->name);
+                                    $data = DB::table( 'abundances' )->get();
+                                @endphp
+
+                                <div id="character_{{ $character->id  }}">   <!-- div for tag -->
+                                <b>{{ $display_name }}</b><br>
+                                @foreach($data as $item)
+                                <input type="radio" name="character_value" id="character_value" value="{{ $item->id }}">
+                                <label for="character_value">{{$item->name}}</label><br>
+                                </div>   <!-- end div for tag -->
+                               @endforeach
+
+
+
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+            @case(16)
+                <!--  text box number grams measurement -->
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                @php $display_name = StringUtils::convert_table_name_for_display($character->name); @endphp
+                                <label for="character_value"><b>{{ $display_name }}</b></label>
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+            @case(17)
+                <!--  genus and species autocomplete -->
+
+                                @php //dd($character);
+                                    $current_value = '';
+                                @endphp
+                                <div id="character_{{ $character->id  }}">  <!-- div for tag -->
+                                @if ($character->name === 'genus')
+                                    @component('components.autocomplete', ['type' => 'genus', 'value' => $current_value])
+                                    @endcomponent
+                                @elseif ($character->name === 'species')
+                                    @component('components.autocomplete', ['type' => 'species', 'value' => $current_value])
+                                    @endcomponent
+                                @else
+                                    Invalid Input!
+                                @endif
+                                </div>   <!-- end div for tag -->
+                                @error('$character->name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="hidden" name="character_id" value="{{ $character->id }}">
+
+                                <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+                                <input type="hidden" name="entered_by" value="{{ auth()->id()}}">
+
+                @break
+            @default
+                <!--       Default case... -->
+
+                        <p><b>{{ $character->name }} Default case</b></p>
+
+        @endswitch
+        @if( $character->display_options != 6 )
+           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+               Add Character
+            </button>
+
+            </form>
+
+    <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+        </td>
+            </tr>
+        @endif
+ @endforeach
+
+
+    </tbody>
+
+</table>     <!-- display-character-by-display-option-switch -->
+
+component display-colors-top-characters-bottom-form.blade.php:
+@props([
+'colors',
+'color_character_names',
+'list_of_set_characters',
+'specimen_id'
+])
+
+<form method="POST" action="/character_specimens" id="color_character">
+    @csrf
+    <x-display-color-character-select-table :colors="$colors" :color_character_names="$color_character_names"
+                                            :list_of_set_characters="$list_of_set_characters"
+                                            :specimen_id="$specimen_id"/>
+
+    <x-display-character-specimens-form :color_character_names="$color_character_names"
+                                        :list_of_set_characters="$list_of_set_characters" :specimen_id="$specimen_id"/>
+
+
+    <input type="hidden" name="specimen_id" value="{{ $specimen_id }}">
+
+    <button type="submit" class="bg-blue-300 rounded p-1 border border-slate-400 hover:bg-blue-500 hover:text-white">
+        Submit
+    </button>
+</form>
+
+component display-color-character-select-table.blade.php:
+
+@props([
+'colors',
+'color_character_names',
+'list_of_set_characters',
+'specimen_id'
+])
+
+
+<table>        <!-- display-color-character-select-table.blade.php  L9-->
+    <thead>
+    <tr>
+        <th colspan="10">Colors from AMS Color Chart Line 14</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($colors as $index => $color)
+        @if($index % 10 == 0)
+            @if($index != 0)
+                </tr>
+    @endif
+    <tr>
+        @endif
+        <td>
+            <div id="character_{{$index + 1  }}">   <!-- div for tag -->
+                <img src="{{ url('storage/images/AMS_colors/banner_50x50/banner_'.($index + 1).'.jpg') }}"
+                     alt="{{ $color->latin_name }}"> <input type="radio" id="character_value" name="character_value"
+                                                            value="{{ $index + 1 }}"> <label
+                    for="{{ $index + 1 }}">{{ $color->latin_name }}</label>
+            </div>   <!-- div for tag  -->
+        </td>
+    @endforeach
+    </tbody>
+</table>          <!-- display-color-character-select-table.blade.php  L 36 -->
+
+component display-character-specimen-form.blade.php:
+
+<div>
+    @props([
+    'color_character_names',
+    'list_of_set_characters',
+    'specimen_id'
+])
+    <!-- resources/views/components/display-character-specimens-form.blade.php -->
+    @php
+
+        //dd($color_character_names); // OK
+       // dd($list_of_set_characters); //OK
+       //dd($specimen_id);
+    @endphp
+
+    <table class="min-w-full divide-y divide-gray-700">  <!-- display-character-specimens-form -->
+        @foreach($color_character_names->chunk(3) as $chunk)
+            <tr>
+                @foreach($chunk as $color_character_name)
+                    @if(!in_array($color_character_name['id'], $list_of_set_characters))
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-black">
+                            @php
+                                $display_name = \App\Utils\StringUtils::convert_table_name_for_display($color_character_name['name']);
+                            @endphp
+                            <div id="character_{{ $color_character_name['id']  }}">   <!-- div for tag -->
+                                <input type="radio" id="character_id" name="character_id"
+                                       value="{{ $color_character_name['id'] }}"> <label
+                                    for="character_{{ $color_character_name['name'] }}">{{ $display_name }}</label>
+                            </div>  <!-- end div for tag -->
+                        </td>
+                    @endif
+                @endforeach
+            </tr>
+        @endforeach
+    </table>  <!-- display-character-specimens-form -->
+
+    <div class="text-right text-orange-600 font-bold"><a href="#top">Top</a></div>
+</div>
+
+
+
+
