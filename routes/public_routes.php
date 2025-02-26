@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataSourceController;
-use App\Http\Controllers\SpecimenController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');    // remove
@@ -14,12 +12,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');    // remove
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');    // remove
 });
-
-
 
 // Publicly accessible routes
 Route::view('/', 'home')->name('home');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSource;
 use App\Models\Specimen;
+use App\Repositories\Lookup\ColorRepository;
 use App\Repositories\MrCharacterRepository;
 use App\Repositories\MrCharacterSpecimenRepository;
-use App\Repositories\Lookup\ColorRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,20 +24,45 @@ class MrCharacterSpecimenController extends Controller
 
     public function __construct(
         MrCharacterSpecimenRepository $MrCharacterSpecimenRepository,
-        MrCharacterRepository         $MrCharacterRepository,
-        ColorRepository               $colorRepository // Inject ColorRepository
+        MrCharacterRepository $MrCharacterRepository,
+        ColorRepository $colorRepository // Inject ColorRepository
     ) {
 
         $this->MrCharacterSpecimenRepository = $MrCharacterSpecimenRepository;
-        $this->MrCharacterRepository         = $MrCharacterRepository;
-        $this->colorRepository             = $colorRepository; // Assign to property
+        $this->MrCharacterRepository = $MrCharacterRepository;
+        $this->colorRepository = $colorRepository; // Assign to property
     }
 
     public function index()
     {
-        $characters = $this->MrCharacterRepository->getCharactersByDisplayOptions([]);
+        /*
+        // $characters = $this->MrCharacterRepository->getCharactersByDisplayOptions([]);  // If nothing passed in array - get all?
+        $characters = $this->MrCharacterRepository->getAll();
+        // dd($characters);
 
         return view('mr_character_specimens.index', ['mr_characters' => $characters]);
+        */
+        $characters = $this->MrCharacterRepository->getAll();
+
+        // Fetch data sources and map them
+        $dataSources = DataSource::all()->map(function ($dataSource) {
+            return [
+                'title' => $dataSource->title,
+                'author' => $dataSource->author,
+            ];
+        })->keyBy(fn ($_, $key) => $key + 1);  // Adjust indexing if needed
+
+        // Add source name and author to characters
+        $characters = $characters->map(function ($character) use ($dataSources) {
+            $sourceId = $character->source;
+            $character->source_name = $dataSources[$sourceId]['title'] ?? 'Unknown Source';
+            $character->source_author = $dataSources[$sourceId]['author'] ?? 'Unknown Author';
+
+            return $character;
+        });
+
+        return view('mr_character_specimens.index', ['mr_characters' => $characters]);
+
     }
 
     public function edit($id)
@@ -58,7 +84,7 @@ class MrCharacterSpecimenController extends Controller
         // Set mr_characters already linked to the specimen
         $setCharacters = $this->MrCharacterSpecimenRepository->getSetCharactersWithLookupData($specimenId);
 
-        //dd($colors, $unsetCharacters, $colorCharacterNames, $unsetColorCharacters, $setCharacters, $specimenId);
+        // dd($colors, $unsetCharacters, $colorCharacterNames, $unsetColorCharacters, $setCharacters, $specimenId);
 
         return view('mr_character_specimens.edit', compact(
             'setCharacters',

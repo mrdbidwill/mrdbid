@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ImageSpecimen;
 use App\Models\ImageSpecimenThumbnail;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,16 +14,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Image;
 
 class ImageSpecimenController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -35,7 +33,7 @@ class ImageSpecimenController extends Controller
 
     public function show($id)
     {
-        //dd($id);
+        // dd($id);
 
         // get images_specimen for this user and this image_specimens id
         $image_specimen = ImageSpecimen::where('id', $id)
@@ -55,7 +53,7 @@ class ImageSpecimenController extends Controller
             abort(404, 'Specimen not found or you do not have permission to access it');
         }
 
-        //dd($request);
+        // dd($request);
 
         $request->validate([
             'images.*' => 'required|image|mimes:jpeg,jpg,png,gif,svg,tiff,tif,heic|max:20000',
@@ -105,12 +103,12 @@ class ImageSpecimenController extends Controller
 
             if ($img->exif('UndefinedTag:0xA434')) {
                 $lens = $img->exif('UndefinedTag:0xA434');
-                //dd($lens);
+                // dd($lens);
             } else {
                 $lens = 'N/A';
             }
 
-            //dd($exifData);
+            // dd($exifData);
             $image_width = $img->width();
             $image_height = $img->height();
             $filesize = $img->exif('FILE.FileSize');
@@ -172,7 +170,7 @@ class ImageSpecimenController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error('Error creating ImageSpecimen: '.$e->getMessage());
             }
 
@@ -186,7 +184,7 @@ class ImageSpecimenController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error('Error creating ImageSpecimenThumbnail: '.$e->getMessage());
             }
         }
@@ -208,20 +206,20 @@ class ImageSpecimenController extends Controller
         if ((isset($imagePath)) and (file_exists($imagePath))) {
 
             // There are 2 arrays which contains the information we are after, so it's easier to state them both
-            //$exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);
-            //$exif_exif = read_exif_data($imagePath ,'EXIF' ,0);
+            // $exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);
+            // $exif_exif = read_exif_data($imagePath ,'EXIF' ,0);
 
             $exif_ifd0 = exif_read_data($imagePath, 'IFD0', 0);
             $exif_exif = exif_read_data($imagePath, 'EXIF', 0);
 
-            //$exif = exif_read_data($imagePath, 0, true);
-            //foreach ($exif as $key => $section) {
+            // $exif = exif_read_data($imagePath, 0, true);
+            // foreach ($exif as $key => $section) {
             //    foreach ($section as $name => $val) {
             //        echo "$key.$name: $val<br>\n";
             //    }
-            //}
+            // }
 
-            //error control
+            // error control
             $notFound = 'Unavailable';
 
             // Make
@@ -290,13 +288,13 @@ class ImageSpecimenController extends Controller
 
     public function update(Request $request, $id)
     {
-        //Gate::authorize('edit-image', $image);
+        // Gate::authorize('edit-image', $image);
 
         //  request()->validate([
         //      'parts' => 'required',
         //     'description' => 'required',
         //  ]);
-        //dd($request);
+        // dd($request);
 
         $entered_by = Auth::user()->id;
         $imageSpecimen = ImageSpecimen::findOrFail($id);
@@ -356,7 +354,7 @@ class ImageSpecimenController extends Controller
 
         $specimen_id = request('specimen_id');
         $file_name = request('file_name')->getClientOriginalName();
-        //dd($file_name);
+        // dd($file_name);
         // file_address is created:   $file_address = $specimen_id.'_'.$file_name.'_'.time().'.'.$request->file_name->extension();
         $file_address = $specimen_id.'_'.$file_name.'_'.time().'.'.$request->file_name->extension();
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@php use App\Models\MrCharacter; @endphp@extends('layouts.app')
 @section('content')
     <div id="top">
 
@@ -74,11 +74,10 @@
             on this, but have not found the currently accepted list yet.</p>
     </div>
 
-    <hr>
-    <x-site-nav-bar-simple-no-logo/>
-    <hr>
-    <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage
-        characters for this specimen" button link.</p>
+    <div class="flex items-center justify-center space-x-2">
+        <x-site-nav-bar-one-line-no-logo/>
+        <a href="#top" class="text-orange-600 font-bold">Top</a>
+    </div>
 
     <div class="space-y-2 space-x-2">
         <h1>Structure:</h1>
@@ -150,18 +149,16 @@
             data source. Once created, anyone else can use that data source for their specimens.</p>
 
         @php
-            $mr_characters = \App\Models\MrCharacter::all();
+            $mr_characters = MrCharacter::all();
         @endphp
 
-        <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage
-            characters for this specimen" button link.</p>
+        <div class="flex items-center justify-center space-x-2">
+            <x-site-nav-bar-one-line-no-logo/>
+            <a href="#top" class="text-orange-600 font-bold">Top</a>
+        </div>
 
-        <x-site-nav-bar-simple-no-logo/>
-
-        <x-display-characters-lookup-table-list :mr_characters="$mr_characters"></x-display-characters-lookup-table-list>
-        <p class="text-orange-600">If want to add characters to a specimen, go to that specimen and look for the "Manage
-            characters for this specimen" button link.</p>
-        <x-site-nav-bar-simple-no-logo/>
+        <x-display-characters-lookup-table-list
+            :mr_characters="$mr_characters"></x-display-characters-lookup-table-list>
     </div>
 
 @endsection

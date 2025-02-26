@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cluster;
-use App\Models\ClusterSpecimen;
 use App\Models\AllGroup;
 use App\Models\AllGroupSpecimen;
+use App\Models\Cluster;
+use App\Models\ClusterSpecimen;
 use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
 use App\Models\Specimen;
+use App\Utils\DateUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,7 @@ use Illuminate\Support\Facades\Gate;
 
 class SpecimenController extends Controller
 {
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -39,11 +37,11 @@ class SpecimenController extends Controller
 
     public function show($id)
     {
-        //dd($id);
+        // dd($id);
         // Fetch the specimen by ID and load relationships for all_groups and clusters
         $specimen = Specimen::with(['all_groups', 'clusters'])->findOrFail($id);
 
-        //$specimen = Specimen::findOrFail($id);  // Fetch the specimen by ID
+        // $specimen = Specimen::findOrFail($id);  // Fetch the specimen by ID
         // Fetch the countries and states as collections of objects
         $countries = Country::all(); // instead of pluck
         $states = State::all(); // same adjustment for states if required
@@ -54,24 +52,25 @@ class SpecimenController extends Controller
         // Fetch the clusters (modify query based on your requirements)
         $all_clusters = Cluster::all(); // Use any filtering logic if needed
 
-        //$this_groups = AllGroupSpecimen::where('specimen_id', $id)->get();
-        //dd($this_groups);    // ok group_id and specimen_id are set
+        // $this_groups = AllGroupSpecimen::where('specimen_id', $id)->get();
+        // dd($this_groups);    // ok group_id and specimen_id are set
         $this_groups = AllGroupSpecimen::with('all_group') // Load the related group
-        ->where('specimen_id', $id)
+            ->where('specimen_id', $id)
             ->get();
 
         $this_clusters = ClusterSpecimen::with('cluster') // Load the related cluster
             ->where('specimen_id', $id)
             ->get();
-        //$this_clusters = ClusterSpecimen::where('specimen_id', $id)->get();
-        //dd($this_clusters);    // ok cluster_id and specimen_id are set
-        //dd($all_groups, $all_clusters);
+        // $this_clusters = ClusterSpecimen::where('specimen_id', $id)->get();
+        // dd($this_clusters);    // ok cluster_id and specimen_id are set
+        // dd($all_groups, $all_clusters);
 
         return view('specimens.show', compact('specimen', 'countries', 'states', 'all_groups', 'all_clusters', 'this_groups', 'this_clusters'));
     }
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
             'common_name' => 'required|string|min:3|max:255',
@@ -115,7 +114,7 @@ class SpecimenController extends Controller
         // add this specimen to group named for month found owned by this user
 
         return redirect('/specimens/');
-        //return view('specimens.show', ['specimen' => $specimen]);
+        // return view('specimens.show', ['specimen' => $specimen]);
     }
 
     public function create()
@@ -129,7 +128,7 @@ class SpecimenController extends Controller
     {
         $countries = Country::all();
 
-        //dd($specimen);
+        // dd($specimen);
 
         return view('specimens.edit', [compact('countries'), 'specimen' => $specimen]);
 
@@ -155,7 +154,7 @@ class SpecimenController extends Controller
 
     public function updateField(Request $request, $id, $field)
     {
-        //dd($field);
+        // dd($field);
         $specimen = Specimen::findOrFail($id);
         // dd($specimen);
         $specimen->$field = $request->input($field);
@@ -191,7 +190,7 @@ class SpecimenController extends Controller
         $day = request('day_found');
         $year = request('year_found');
 
-        $is_valid_date = \App\Utils\DateUtils::isValidDate((int) $month, (int) $day, (int) $year);
+        $is_valid_date = DateUtils::isValidDate((int) $month, (int) $day, (int) $year);
 
         if (! $is_valid_date) {
             return redirect()->back()->withErrors(['date' => 'Invalid date.']);
@@ -241,7 +240,7 @@ class SpecimenController extends Controller
 
     public function addToGroup(Request $request, Specimen $specimen)
     {
-        //dd($request);
+        // dd($request);
         // Validate the incoming request
         $validated = $request->validate([
             'group_id' => 'required|exists:all_groups,id',
@@ -354,7 +353,7 @@ class SpecimenController extends Controller
             ->where('share_data_y_n', 1)
             ->paginate(10);
 
-        //foreach ($specimens as $specimen) {
+        // foreach ($specimens as $specimen) {
         //    dump($specimen->toArray()); // Check if 'state' and 'country' relationships are loaded
         // }
 

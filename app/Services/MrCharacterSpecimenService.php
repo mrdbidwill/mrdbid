@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\Lookup\CharacterRepository;
+use App\Repositories\MrCharacterRepository;
 
 class MrCharacterSpecimenService
 {
-    protected CharacterRepository $characterRepository;
+    protected MrCharacterRepository $characterRepository;
 
-    public function __construct(CharacterRepository $characterRepository)
+    public function __construct(MrCharacterRepository $characterRepository)
     {
         $this->characterRepository = $characterRepository;
     }

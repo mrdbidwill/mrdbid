@@ -1,0 +1,17 @@
+./config/app.php                                            -Done
+./app/Http/Controllers/MrCharacterSpecimenController.php    -Done
+./app/Http/Controllers/ImageSpecimenController.php          -Done
+./app/Services/MrCharacterSpecimenService.php               -Done
+./app/Repositories/MrCharacterRepository.php                -Done
+./app/Repositories/MrCharacterSpecimenRepository.php        -Done
+./bootstrap/app.php                                         -Done
+./bootstrap/cache/services.php                              -Removed to Sunday File
+./bootstrap/cache/packages.php                              -Done
+./resources/views/mr_character_specimens/edit.blade.php     -Done
+./resources/views/mr_character_specimens/index.blade.php    -Done
+./resources/views/navigation-menu.blade.php                 -Done
+./resources/views/components/display-characters-lookup-table-list.blade.php -Done
+./resources/views/components/site-nav-bar-simple-no-logo.blade.php          -Done
+./resources/views/data_sources/edit.blade.php               -Done     
+./resources/views/about.blade.php -Done
+

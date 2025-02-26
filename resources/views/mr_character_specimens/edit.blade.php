@@ -24,9 +24,10 @@
             // dd($setCharacters, $unsetCharacters, $colorCharacterNames, $specimenId);
         @endphp
         <p>
-            character.manage-existing-characters :specimen-id="$specimenId" :setCharacters="$setCharacters" </p>
+            character.manage-existing-mr-characters :specimen-id="$specimenId" :setCharacters="$setCharacters" </p>
 
-        <livewire:character.manage-existing-characters :specimen-id="$specimenId" :setCharacters="$setCharacters"/>
+        <livewire:mr_character.manage-existing-mr-characters :specimen-id="$specimenId"
+                                                             :setCharacters="$setCharacters"/>
         <hr>
         <hr>
         <hr>
@@ -35,7 +36,8 @@
         <!-- Unset Characters Component -->
 
 
-        <livewire:character.edit-unset-characters :specimen-id="$specimenId" :unset-characters="$unsetCharacters"/>
+        <livewire:mr_character.edit-unset-mr-characters :specimen-id="$specimenId"
+                                                        :unset-characters="$unsetCharacters"/>
         <hr>
         <hr>
         <hr>
@@ -43,8 +45,8 @@
             character.color-selection :colors="$colors" :color-character-names="$colorCharacterNames"
             :list-of-set-characters="$setCharacters" :specimen-id="$specimenId" </p>
         <!-- Color Selection Component -->
-        <livewire:character.color-selection :colors="$colors" :color-character-names="$colorCharacterNames"
-                                            :list-of-set-characters="$setCharacters" :specimen-id="$specimenId"/>
+        <livewire:mr_character.color-selection :colors="$colors" :color-character-names="$colorCharacterNames"
+                                               :list-of-set-characters="$setCharacters" :specimen-id="$specimenId"/>
         <hr>
         <hr>
         <hr>

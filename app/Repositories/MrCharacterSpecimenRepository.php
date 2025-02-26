@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\MrCharacter;
 use App\Models\MrCharacterSpecimen;
+use DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
@@ -42,7 +43,7 @@ class MrCharacterSpecimenRepository
         foreach ($lookupCharacterNames as $tableName) {
             $tableName = strtolower($tableName); // Ensure table names are in lowercase
             if (Schema::hasTable($tableName)) { // Check if the table exists
-                $lookups[$tableName] = \DB::table($tableName)->get()->keyBy('id'); // Fetch lookup data
+                $lookups[$tableName] = DB::table($tableName)->get()->keyBy('id'); // Fetch lookup data
             }
         }
 
@@ -79,12 +80,12 @@ class MrCharacterSpecimenRepository
         */
 
         $setCharacters = MrCharacterSpecimen::where('specimen_id', $specimenId)
-            ->join('mr_characters', 'mr_character_specimens.character_id', '=', 'mr_characters.id')
+            ->join('mr_characters', 'mr_character_specimens.mr_character_id', '=', 'mr_characters.id')
             ->select('mr_characters.id', 'mr_character_specimens.character_value')
             ->orderBy('name')
             ->get();
 
-        //dd($setCharacters->toArray());
+        // dd($setCharacters->toArray());
         // for each row -0 => array:2 id => 79 character_value => 120
 
         return $setCharacters;
@@ -100,13 +101,13 @@ class MrCharacterSpecimenRepository
         // dd($specimenId, $excludedDisplayOptions);  // OK
         // Get characters NOT in the character_specimens table for this specimen
         $setCharacterIds = $this->getSetCharactersBySpecimen($specimenId)->pluck('id')->toArray();
-        //dd($setCharacterIds);  // OK
+        // dd($setCharacterIds);  // OK
 
         $characters = MrCharacter::whereNotIn('id', $setCharacterIds)->get();
-        //dd($characters->toArray(), $excludedDisplayOptions);
+        // dd($characters->toArray(), $excludedDisplayOptions);
 
         $filteredCharacters = $characters->whereNotIn('display_options', $excludedDisplayOptions);
-        //dd($filteredCharacters->toArray());
+        // dd($filteredCharacters->toArray());
 
         return MrCharacter::whereNotIn('id', $setCharacterIds)
             ->when($excludedDisplayOptions, function ($query) use ($excludedDisplayOptions) {

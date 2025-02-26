@@ -8,7 +8,7 @@
         @if ($member_type == 0)
             <!-- Only needed if no one is logged in -->
         @else
-           {{--  Member Type: {{ $member_type }}  --}}
+            {{--  Member Type: {{ $member_type }}  --}}
         @endif
 
         <!-- Standard navigation links -->
@@ -31,20 +31,20 @@
                     </x-nav-link>
                 @endif
 
-                @livewire('navigation-menu')
+                {{-- @livewire('navigation-menu') --}}
 
-    {{--             <x-nav-link href="{{ route('profile.edit') }}"
-                            :active="request()->is('profile.edit')"> {{ Auth::user()->name }}
-                </x-nav-link>
+                {{--             <x-nav-link href="{{ route('profile.edit') }}"
+                                        :active="request()->is('profile.edit')"> {{ Auth::user()->name }}
+                            </x-nav-link>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-nav-link href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-nav-link>
-                </form>
-     --}}
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-nav-link href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-nav-link>
+                            </form>
+                 --}}
             @endauth
 
             @guest
