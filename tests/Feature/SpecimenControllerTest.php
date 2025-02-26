@@ -3,61 +3,58 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-
 class SpecimenControllerTest extends TestCase
 {
-    // use RefreshDatabase, WithFaker;
-    use WithFaker;
+    use RefreshDatabase;
 
     #[test]
     public function test_it_validates_specimen_creation_data(): void
     {
-        // Make a POST request with incomplete data
+        // Create and authenticate a test user
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Submit invalid data
         $response = $this->post('/specimens', [
-            // Intentionally leave out required fields (e.g., 'specimen_name')
-            'specimen_name' => '', // This should trigger validation failure
-            'common_name' => 'Test Common',
-            'description' => 'Test Description',
-            'comment' => 'Test Comment',
-            'specimen_location_now' => '', // Example of missing required field
-            'location_found_city' => '',
-            'state_id' => '',
-            // More data here...
+            'specimen_name' => '', // Missing required field
+            'common_name' => '', // Missing required field
+
         ]);
 
-        // Assert response status for redirects due to validation error
+        // Assert that the response indicates a validation failure
         $response->assertStatus(302);
 
-        // Assert specific validation errors are present in the session
+        // Assert specific validation errors were returned for missing fields
         $response->assertSessionHasErrors([
             'specimen_name',
+            'common_name',
             'specimen_location_now',
             'location_found_city',
+            'location_found_county',
             'state_id',
-            // Include other required fields here
+            'country_id',
         ]);
     }
 
     #[test]
     public function test_it_creates_a_new_specimen(): void
     {
-        // Create a test user and authenticate
-        $user = $this->createUser();
+        // Create and authenticate a test user
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Send POST request with valid data
+        // Submit valid data
         $response = $this->post('/specimens', [
-            'specimen_name' => 'this_is_a_test_specimen_name',
-            'common_name' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'comment' => $this->faker->sentence,
+            'specimen_name' => 'test-specimen',
+            'common_name' => 'test-common',
+            'description' => 'test-description',
+            'comment' => 'test-comment',
             'specimen_location_now' => 1,
-            'location_found_city' => $this->faker->city,
+            'location_found_city' => 'Blakeley',
             'location_found_county' => 'Baldwin',
             'state_id' => 1,
             'country_id' => 1,
@@ -70,20 +67,13 @@ class SpecimenControllerTest extends TestCase
             'entered_by' => $user->id,
         ]);
 
-        // Assert the response is a redirect (302)
+        // Assert the request was a success (302 redirect)
         $response->assertStatus(302);
 
-        // Verify the data was inserted into the database
+        // Verify the database contains the new specimen
         $this->assertDatabaseHas('specimens', [
-            'specimen_name' => 'this_is_a_test_specimen_name',
+            'specimen_name' => 'test-specimen',
             'user_id' => $user->id,
         ]);
-    }
-
-    // Helper function (if you need to create users)
-    private function createUser()
-    {
-        return User::factory()->create();
-
     }
 }
