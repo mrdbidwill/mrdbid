@@ -10,11 +10,11 @@ use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
 use App\Models\Specimen;
 use App\Utils\DateUtils;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Log;
 
@@ -73,68 +73,51 @@ class SpecimenController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('Validation in store function started for specimen_name: '.$request->input('specimen_name'));
         // dd($request);
-        try {
-            $validated_data = $request->validate([
-                'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
-                'common_name' => 'required|string|min:3|max:255',
-                'specimen_location_now' => 'required|integer',
-                'location_found_city' => 'required|string|min:3|max:255',
-                'location_found_county' => 'required|string|min:3|max:255',
-                'state_id' => 'required|integer',
-                'country_id' => 'required|integer',
-                'location_public_y_n' => 'required',
-                'share_data_y_n' => 'required',
-                'month_found' => 'required|integer|min:1|max:12',
-                'day_found' => 'required|integer|min:1|max:31',
-                'year_found' => 'required|integer|min:1954|max:2025',
-                'fungus_type' => 'required|integer',
-                'entered_by' => 'required|integer',
+        $isDuplicate = Specimen::where('specimen_name', $request->specimen_name)
+            ->where('user_id', auth()->id())
+            ->exists();
+
+        if ($isDuplicate) {
+            throw ValidationException::withMessages([
+                'specimen_name' => ['You have used that specimen name already. The specimen name must be unique for your specimens.'],
             ]);
-            // Dump validated data to ensure it works
-            // dd($validated_data);
-        } catch (ValidationException $e) {
-            // To debug failures, dump the errors
-            // dd($e->errors());
         }
 
-        // dd(request()->all());
-        // dd(auth()->user()->id);
+        $validated_data = $request->validate([
+            'specimen_name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                Rule::unique('specimens', 'specimen_name')
+                    ->where(function ($query) {
+                        return $query->where('user_id', auth()->id()); // Scope uniqueness to authenticated user
+                    }),
+            ],
+            'common_name' => 'required|string|min:3|max:255',
+            'description' => 'nullable|string|max:1024',
+            'comment' => 'nullable|string|max:1024',
+            'specimen_location_now' => 'required|integer',
+            'location_found_city' => 'required|string|min:3|max:255',
+            'location_found_county' => 'required|string|min:3|max:255',
+            'state_id' => 'required|integer',
+            'country_id' => 'required|integer',
+            'location_public_y_n' => 'required|boolean',
+            'share_data_y_n' => 'required|boolean',
+            'month_found' => 'required|integer|min:1|max:12',
+            'day_found' => 'required|integer|min:1|max:31',
+            'year_found' => 'required|integer|min:1800|max:'.date('Y'), // Validate year dynamically
+            'entered_by' => 'required|integer|exists:users,id',
+        ]);
 
-        try {
-            $specimen = Specimen::create([
-                'user_id' => auth()->user()->id,
-                'specimen_name' => request('specimen_name'),
-                'common_name' => request('common_name'),
-                'description' => request('description'),
-                'comment' => request('comment'),
-                'specimen_location_now' => request('specimen_location_now'),
-                'location_found_city' => request('location_found_city'),
-                'location_found_county' => request('location_found_county'),
-                'state_id' => request('state_id'),
-                'country_id' => request('country_id'),
-                'location_public_y_n' => request('location_public_y_n'),
-                'share_data_y_n' => request('share_data_y_n'),
-                'month_found' => request('month_found'),
-                'day_found' => request('day_found'),
-                'year_found' => request('year_found'),
-                'fungus_type' => request('fungus_type'),
-                'entered_by' => request('entered_by'),
-            ]);
-        } catch (QueryException $e) {
-            // Log the error details for debugging
-            Log::error('Database query error: '.$e->getMessage());
+        // Create the Specimen after validation passes
+        $specimen = Specimen::create($validated_data);
 
-            // Return an error message
-            return back()->withErrors(['message' => 'An error occurred while saving the specimen data. Please check your input and try again.']);
-        }
+        Log::info('Specimen created successfully: '.$specimen->id);
 
-        // Mail::to($specimen['user'])->queue(new SpecimenCreated($specimen));
-
-        // add this specimen to group named for month found owned by this user
-
-        return redirect('/specimens')->with('message', 'Specimen created successfully');
-        // return view('specimens.show', ['specimen' => $specimen])->with('message', 'Specimen created successfully');
+        return redirect()->route('specimens.index')->with('success', 'Specimen created successfully!');
     }
 
     public function create()
@@ -150,7 +133,7 @@ class SpecimenController extends Controller
 
         // dd($specimen);
 
-        return view('specimens.edit', [compact('countries'), 'specimen' => $specimen]);
+        return view('specimens.edit', compact('countries', 'specimen'));
 
     }
 
@@ -202,10 +185,10 @@ class SpecimenController extends Controller
         return redirect()->back()->with('success', 'Field updated successfully!');
     }
 
-    public function update(Specimen $specimen)
+    public function update(Request $request, Specimen $specimen)
     {
+        // dd($request, $specimen);
         Gate::authorize('edit-specimen', $specimen);  // does same as if created update-specimen
-
         $month = request('month_found');
         $day = request('day_found');
         $year = request('year_found');
@@ -216,12 +199,25 @@ class SpecimenController extends Controller
             return redirect()->back()->withErrors(['date' => 'Invalid date.']);
         }
 
-        request()->validate([
-            // Exclude the current specimen's ID from the unique check
-            // Allow same specimen_name if it is NOT being changed
-            'specimen_name' => 'sometimes|string|min:3|max:255|unique:specimens,specimen_name,'.$specimen->id.',id,user_id,'.auth()->id(),
+        $isDuplicate = Specimen::where('specimen_name', $request->specimen_name)
+            ->where('user_id', $request->user_id)
+            ->where('id', '!=', $request->id) // Ignore current instance during updates
+            ->exists();
+
+        if ($isDuplicate) {
+            throw ValidationException::withMessages([
+                'specimen_name' => ['You have used that specimen name already. The specimen name must be unique for your specimens.'],
+            ]);
+        }
+
+        Log::info('Validation in update function started for specimen_name: '.request('specimen_name'));
+
+        $request->validate([
+            'specimen_name' => 'required|string|min:3|max:255',
             'common_name' => 'sometimes|string|min:3|max:255',
             'specimen_location_now' => 'sometimes|integer',
+            'description' => 'sometimes|string|max:1024',
+            'comment' => 'sometimes|string|max:1024',
             'location_found_city' => 'sometimes|string|min:3|max:255',
             'location_found_county' => 'sometimes|string|min:3|max:255',
             'state_id' => 'sometimes|integer',
@@ -295,7 +291,7 @@ class SpecimenController extends Controller
         $states = State::all(); // Load list of states
         $countries = Country::all(); // Load list of countries
 
-        return view('specimens.filter', compact('states', 'countries'));
+        return view('specimens.filter_search', compact('states', 'countries'));
     }
 
     public function filterSpecimens(Request $request)

@@ -1,12 +1,14 @@
 @php
-    use App\Models\ImageSpecimen;  use App\Models\Specimen;use App\Utils\ImageUtils;use Illuminate\Support\Facades\DB ;
-    //dd($specimens);
-@endphp
-@extends('layouts.app')
+    //   use App\Models\ImageSpecimen;
+    //   use App\Models\Specimen;
+    //   use App\Utils\ImageUtils;
+    //   use Illuminate\Support\Facades\DB ;
+       //dd($specimens);
+@endphp@extends('layouts.app')
 
 @section('content')
 
-        {{-- Show file address if in development environment --}}
+    {{-- Show file address if in development environment --}}
     <x-specimens-nav-bar></x-specimens-nav-bar>
 
     @if (config('app.env') === 'local')
@@ -35,7 +37,9 @@
                 @endphp
                 <li>
                     <a href="{{ route('specimens.show', $specimen->id) }}" style="font-size: 1.2em; color: #e3342f;">
-                        ID: {{ $specimen->id }}  {{ $specimen->specimen_name }}</a> Images ({{ $specimen->images_specimens_count }}) Groups ({{ $specimen->groups_count }})  Clusters ({{ $specimen->clusters_count }})
+                        ID: {{ $specimen->id }}  {{ $specimen->specimen_name }}</a> Images
+                    ({{ $specimen->images_specimens_count }}) Groups ({{ $specimen->groups_count }}) Clusters
+                    ({{ $specimen->clusters_count }})
 
 
                     @if (!empty($specimen->common_name))
