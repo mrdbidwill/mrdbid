@@ -10,10 +10,13 @@ use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
 use App\Models\Specimen;
 use App\Utils\DateUtils;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
+use Log;
 
 class SpecimenController extends Controller
 {
@@ -71,50 +74,67 @@ class SpecimenController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
-            'common_name' => 'required|string|min:3|max:255',
-            'specimen_location_now' => 'required|integer',
-            'location_found_city' => 'required|string|min:3|max:255',
-            'location_found_county' => 'required|string|min:3|max:255',
-            'state_id' => 'required|integer',
-            'country_id' => 'required|integer',
-            'location_public_y_n' => 'required',
-            'share_data_y_n' => 'required',
-            'month_found' => 'required|integer|min:1|max:12',
-            'day_found' => 'required|integer|min:1|max:31',
-            'year_found' => 'required|integer|min:1954|max:2025',
-            'fungus_type' => 'required|integer',
-            'entered_by' => 'required|integer',
-        ]);
+        try {
+            $validated_data = $request->validate([
+                'specimen_name' => 'required|string|min:3|max:255|unique:specimens,specimen_name,NULL,id,user_id,'.auth()->user()->id,
+                'common_name' => 'required|string|min:3|max:255',
+                'specimen_location_now' => 'required|integer',
+                'location_found_city' => 'required|string|min:3|max:255',
+                'location_found_county' => 'required|string|min:3|max:255',
+                'state_id' => 'required|integer',
+                'country_id' => 'required|integer',
+                'location_public_y_n' => 'required',
+                'share_data_y_n' => 'required',
+                'month_found' => 'required|integer|min:1|max:12',
+                'day_found' => 'required|integer|min:1|max:31',
+                'year_found' => 'required|integer|min:1954|max:2025',
+                'fungus_type' => 'required|integer',
+                'entered_by' => 'required|integer',
+            ]);
+            // Dump validated data to ensure it works
+            // dd($validated_data);
+        } catch (ValidationException $e) {
+            // To debug failures, dump the errors
+            // dd($e->errors());
+        }
 
         // dd(request()->all());
         // dd(auth()->user()->id);
-        Specimen::create([
-            'user_id' => auth()->user()->id,
-            'specimen_name' => request('specimen_name'),
-            'common_name' => request('common_name'),
-            'description' => request('description'),
-            'comment' => request('comment'),
-            'specimen_location_now' => request('specimen_location_now'),
-            'location_found_city' => request('location_found_city'),
-            'location_found_county' => request('location_found_county'),
-            'state_id' => request('state_id'),
-            'country_id' => request('country_id'),
-            'location_public_y_n' => request('location_public_y_n'),
-            'share_data_y_n' => request('share_data_y_n'),
-            'month_found' => request('month_found'),
-            'day_found' => request('day_found'),
-            'year_found' => request('year_found'),
-            'fungus_type' => request('fungus_type'),
-            'entered_by' => request('entered_by')]);
+
+        try {
+            $specimen = Specimen::create([
+                'user_id' => auth()->user()->id,
+                'specimen_name' => request('specimen_name'),
+                'common_name' => request('common_name'),
+                'description' => request('description'),
+                'comment' => request('comment'),
+                'specimen_location_now' => request('specimen_location_now'),
+                'location_found_city' => request('location_found_city'),
+                'location_found_county' => request('location_found_county'),
+                'state_id' => request('state_id'),
+                'country_id' => request('country_id'),
+                'location_public_y_n' => request('location_public_y_n'),
+                'share_data_y_n' => request('share_data_y_n'),
+                'month_found' => request('month_found'),
+                'day_found' => request('day_found'),
+                'year_found' => request('year_found'),
+                'fungus_type' => request('fungus_type'),
+                'entered_by' => request('entered_by'),
+            ]);
+        } catch (QueryException $e) {
+            // Log the error details for debugging
+            Log::error('Database query error: '.$e->getMessage());
+
+            // Return an error message
+            return back()->withErrors(['message' => 'An error occurred while saving the specimen data. Please check your input and try again.']);
+        }
 
         // Mail::to($specimen['user'])->queue(new SpecimenCreated($specimen));
 
         // add this specimen to group named for month found owned by this user
 
-        return redirect('/specimens/');
-        // return view('specimens.show', ['specimen' => $specimen]);
+        return redirect('/specimens')->with('message', 'Specimen created successfully');
+        // return view('specimens.show', ['specimen' => $specimen])->with('message', 'Specimen created successfully');
     }
 
     public function create()

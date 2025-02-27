@@ -4,7 +4,7 @@ use App\Http\Controllers\DataSourceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');    // remove
+    return view('welcomeDELETE');    // remove
 });
 
 Route::middleware([

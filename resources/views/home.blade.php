@@ -8,7 +8,9 @@
 
         <h1 class="text-4xl text-black dark:text-white">Welcome to MRDBID</h1>
 
-       <p class="mt-2 text-xl text-black">In the beginning, there was only a plan to eliminate the paper clutter. Where am I on identifying this mushroom? Where are my notes? Why can't I recall the mushrooms I have observed in the past? Dare I say easily? And, so this project began.</p>
+        <p class="mt-2 text-xl text-black">In the beginning, there was only a plan to eliminate the paper clutter. Where
+            am I on identifying this mushroom? Where are my notes? Why can't I recall the mushrooms I have observed in
+            the past? Dare I say easily? And, so this project began.</p>
 
         <p class="mt-2 text-xl text-black">This website is a tool for storing and organizing <u>data</u> for mushrooms
             that you observed and/or collected. Hopefully, it will provide a process that simplifies storing and
@@ -18,9 +20,11 @@
 
         <p class="mt-2 text-xl text-black">The fact you observed a mushroom means you have some visual, time and
             location data. That is enough to start. You name this specimen "something" that is meaningful to <b>you,</b>
-            like "me_1" or "me_2", etc. with comment "brown mushroom - backyard". Or include the date, such as me_11_24_2024_ganoderma or do whatever works for you.</p>
+            like "me_1" or "me_2", etc. with comment "brown mushroom - backyard". Or include the date, such as
+            me_11_24_2024_ganoderma or do whatever works for you.</p>
 
-        <p class="mt-2 text-xl text-black">There you go. A beginning. Any clear photo with <b class="text-orange-700">measurements</b> is a plus. <u>Use coins if a ruler is not handy</u>.</p>
+        <p class="mt-2 text-xl text-black">There you go. A beginning. Any clear photo with <b class="text-orange-700">measurements</b>
+            is a plus. <u>Use coins if a ruler is not handy</u>.</p>
 
         <div class="bg-gray-100 p-4">
             <h3 class="text-xl text-orange-700">Measurements:</h3>
@@ -123,8 +127,8 @@
 
     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
         <p class="py-2 text-sm text-orange-600 dark:text-orange-500"><b>Privacy Notice: MRDBID.com has not added any
-                tracking other than basic analytics provided by our hosting service. There are no Google analytics, social
-                media associations, or marketing tracking addons. Fees may be received from links to book sales. As an Amazon Associate I earn from qualifying purchase.</b></p>
+                tracking other than basic analytics provided by our hosting service. There are no Google analytics,
+                social media associations, or marketing tracking addons.</b></p>
     </footer>
-    @endsection
+@endsection
 
