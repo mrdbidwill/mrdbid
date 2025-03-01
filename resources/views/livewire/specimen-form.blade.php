@@ -83,6 +83,37 @@
     </div>
 
     <div class="mb-4">
+        <label for="day_found">Day:</label> <select wire:model="day_found" id="day_found">
+            <option value="">Select Day</option>
+            @foreach ($days as $day)
+                <option value="{{ $day }}">{{ $day }}</option>
+            @endforeach
+        </select>
+        @error('day_found') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+    </div>
+
+    <div class="mb-4">
+        <label for="month_found">Month:</label> <select wire:model="month_found" id="month_found">
+            <option value="">Select Month</option>
+            @foreach ($months as $month)
+                <option value="{{ $month }}">{{ $month }}</option>
+            @endforeach
+        </select>
+        @error('month_found') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+    </div>
+
+    <div class="mb-4">
+        <label for="year_found">Year:</label> <select wire:model="year_found" id="year_found">
+            <option value="">Select Year</option>
+            @foreach ($years as $year)
+                <option value="{{ $year }}">{{ $year }}</option>
+            @endforeach
+        </select>
+        @error('year_found') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+    </div>
+
+
+    <div class="mb-4">
         <label>Fungus Type:</label> <select wire:model="fungus_type">
             <option value="">Select Fungus Type</option>
             @foreach($fungus_types as $id => $name)

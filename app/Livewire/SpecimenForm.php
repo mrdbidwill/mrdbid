@@ -118,7 +118,7 @@ class SpecimenForm extends Component
             'fungus_type' => 'sometimes|integer',
             'entered_by' => 'sometimes|integer',
         ]);
-
+        dd($validatedData);
         // Add user ID field for saving
         $validatedData['user_id'] = Auth::id();
 
