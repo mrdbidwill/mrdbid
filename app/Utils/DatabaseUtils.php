@@ -6,7 +6,7 @@ class DatabaseUtils
 {
     public function admin_export_database(string $dbName): string
     {
-        //dd($dbName);
+        // dd($dbName);
         // Database credentials
         $user = 'root';
         $password = 'moon1Dog';
@@ -44,10 +44,10 @@ class DatabaseUtils
         exec($command, $output, $result);
 
         $this->downloadExportFile($backupFile);
-        //dd($backupFile);
+        // dd($backupFile);
 
         $insert_only_string = $this->processExportFileDataOnly($backupFile);
-        //dd($insert_only_string);
+        // dd($insert_only_string);
         $insert_only_path = $backupPath.$dbName.'_INSERT_INTO.sql';
 
         file_put_contents($insert_only_path, $insert_only_string);
@@ -61,7 +61,7 @@ class DatabaseUtils
 
     public function downloadExportFile($filename)
     {
-        //$file_path = storage_path('app/public/'.$filename);
+        // $file_path = storage_path('app/public/'.$filename);
         $file_path = $filename;
 
         if (file_exists($file_path)) {

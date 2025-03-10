@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-
-
 // Public Routes: Accessible by anyone (e.g., Home, About, Contact)
 require __DIR__.'/public_routes.php';
 
@@ -21,6 +17,3 @@ require __DIR__.'/lookup_routes.php';
 
 // Test Routes: For testing/debugging (should not exist in production)
 require __DIR__.'/test_routes.php';
-
-
-

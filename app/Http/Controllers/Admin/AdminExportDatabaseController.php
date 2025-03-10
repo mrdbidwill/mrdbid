@@ -17,8 +17,8 @@ class AdminExportDatabaseController extends Controller
     // Method to handle the AJAX request for exporting the database
     public function admin_export_database(Request $request)
     {
-        //echo 'Hello';  // OK
-        //dd($request);  // OK
+        // echo 'Hello';  // OK
+        // dd($request);  // OK
 
         $dbName = $request->input('database_name');
         $dbUtils = new DatabaseUtils;

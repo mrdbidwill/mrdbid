@@ -20,7 +20,7 @@ class AdminDataSourceController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
 
         request()->validate([
             'name' => 'required|unique:data_sources,name|min:3',
@@ -40,9 +40,9 @@ class AdminDataSourceController extends Controller
         ]);
 
         $data_source_tables = DataSource::get();
-        //return 'Got her done!';
+        // return 'Got her done!';
 
-        //dd($data_source_table);
+        // dd($data_source_table);
 
         return view('admin.admin_data_source.index', [
             'data_source_tables' => $data_source_tables,
@@ -59,18 +59,18 @@ class AdminDataSourceController extends Controller
     public function edit($id)
     {
         $data_source_id = $id;
-        //dd($specimen_id);
+        // dd($specimen_id);
 
         $data_source_table = DataSource::where('id', '=', $data_source_id)->get();
-        //dd($data_source_table);
+        // dd($data_source_table);
 
         return view('admin.admin_data_source.edit', ['data_source_table' => $data_source_table]);
     }
 
     public function update(Request $request)
     {
-        //Gate::authorize('edit-book', $data_source);
-        //dd($request->all());
+        // Gate::authorize('edit-book', $data_source);
+        // dd($request->all());
         $request->validate([
             'name' => 'required|min:3|unique:data_sources,name,'.$request->id,
             'display_options' => 'required',
@@ -91,9 +91,9 @@ class AdminDataSourceController extends Controller
         ]);
 
         $data_source_tables = DataSource::get();
-        //return 'Got her done!';
+        // return 'Got her done!';
 
-        //dd($data_source_table);
+        // dd($data_source_table);
 
         return view('admin.admin_data_source.index', [
             'data_source_tables' => $data_source_tables,

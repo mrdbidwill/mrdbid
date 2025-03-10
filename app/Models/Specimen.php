@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use App\Events\SpecimenCreated;
-use App\Models\Lookup\Character;
 use App\Models\Lookup\Country;
 use App\Models\Lookup\State;
-use App\Models\AllGroup;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DataSourceController extends Controller
 {
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -20,7 +17,7 @@ class DataSourceController extends Controller
         // Get the current user's member type
         $memberType = Auth::user()->type;
 
-        //dd($data_sources);
+        // dd($data_sources);
         return view('data_sources.index', compact('data_sources', 'memberType'));
     }
 

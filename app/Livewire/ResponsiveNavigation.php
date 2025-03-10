@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 
 class ResponsiveNavigation extends Component
 {
@@ -11,7 +10,7 @@ class ResponsiveNavigation extends Component
 
     public function toggleMenu()
     {
-        $this->open = !$this->open;
+        $this->open = ! $this->open;
     }
 
     public function render()

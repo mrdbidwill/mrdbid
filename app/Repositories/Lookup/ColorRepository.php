@@ -19,6 +19,7 @@ class ColorRepository
     {
         return $this->color->all(); // Call the `all()` method
     }
+
     /**
      * Get all colors with caching.
      *
@@ -52,5 +53,4 @@ class ColorRepository
             return Color::find($id);
         });
     }
-
 }

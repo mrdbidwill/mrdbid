@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LookupController extends Controller
@@ -10,13 +9,13 @@ class LookupController extends Controller
     /**
      * Fetch records from a generic lookup table.
      *
-     * @param  string $table
+     * @param  string  $table
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetch($table)
     {
         // Check if the table exists in the database
-        if (!in_array($table, ['countries', 'states', 'categories', 'types', 'colors'])) {
+        if (! in_array($table, ['countries', 'states', 'categories', 'types', 'colors'])) {
             return response()->json(['error' => 'Invalid lookup table'], 404);
         }
 
@@ -41,7 +40,7 @@ class LookupController extends Controller
     /**
      * Fetch states by country ID (dependent lookup).
      *
-     * @param  int $country_id
+     * @param  int  $country_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchStatesByCountry($country_id)

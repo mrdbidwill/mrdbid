@@ -11,16 +11,13 @@ class AllGroupController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index()
     {
         $all_groups = AllGroup::where('created_by', auth()->id())->orderBy('name', 'asc')->simplePaginate(36);
 
-        \Log::info('Groups fetched for user ID ' . auth()->id() . ': ' . $all_groups);
+        \Log::info('Groups fetched for user ID '.auth()->id().': '.$all_groups);
 
         return view('all_groups.index', [
             'all_groups' => $all_groups,
@@ -58,7 +55,7 @@ class AllGroupController extends Controller
     public function edit($id)
     {
         $all_group = AllGroup::findOrFail($id);
-        //dd($group);
+        // dd($group);
         Gate::authorize('edit-group', $all_group);
 
         return view('all_groups.edit', compact('all_group'));

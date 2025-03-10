@@ -37,6 +37,7 @@ class SpecimenAllGroupPolicy
     public function edit(User $user, AllGroup $specimen_all_group): bool
     {
         dd($specimen_all_group);
+
         return $specimen_all_group->created_by === $user->id;   // Only the user who created the group can edit it
     }
 

@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Gate;
 
 class ClusterController extends Controller
 {
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -44,7 +41,7 @@ class ClusterController extends Controller
             'created_by' => auth()->id(), // Use authenticated user's id
         ]);
 
-        //return redirect('/specimen_cluster/');
+        // return redirect('/specimen_cluster/');
         return redirect('/clusters/')->with('message', 'Specimen Cluster created successfully');
     }
 
@@ -56,7 +53,7 @@ class ClusterController extends Controller
     public function edit($id)
     {
         $cluster = Cluster::findOrFail($id);
-        //dd($specimen_cluster);
+        // dd($specimen_cluster);
         Gate::authorize('edit-cluster', $cluster);
 
         return view('clusters.edit', compact('cluster'));
@@ -77,7 +74,7 @@ class ClusterController extends Controller
             'description' => request('description'),
         ]);
 
-        //return redirect('/clusters/'.$cluster['id'].'/edit')->with('message', 'Cluster updated successfully');
+        // return redirect('/clusters/'.$cluster['id'].'/edit')->with('message', 'Cluster updated successfully');
         return redirect('/clusters/')->with('message', 'Cluster updated successfully');
     }
 

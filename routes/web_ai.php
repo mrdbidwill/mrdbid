@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\DataSourceController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return redirect(route('specimens.index'));
     });
 });
-
-

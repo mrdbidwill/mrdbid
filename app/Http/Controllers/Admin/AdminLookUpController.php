@@ -14,15 +14,15 @@ class AdminLookUpController extends Controller
 {
     public function index(): View
     {
-        //DB::enableQueryLog();
+        // DB::enableQueryLog();
         $lookup_lists = Character::where('look_up_y_n', '1')
             ->where('display_options', '9')
             ->orderBy('name', 'asc')
             ->get();
 
         // Debug the log
-        //dd(DB::getQueryLog());
-        //dd($lookup_lists);
+        // dd(DB::getQueryLog());
+        // dd($lookup_lists);
         // index will display list of all radio lookup tables
         // user will click on one and send to edit for that one id selected
         return view('admin.admin_lookup.index', compact('lookup_lists'));
@@ -30,12 +30,12 @@ class AdminLookUpController extends Controller
 
     public function show($id)
     {
-        //return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
+        // return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
         $lookup_table = Character::find($id); // This returns a single model instance
 
         $lookup_source = DataSource::find($lookup_table->source);
-        //dd($specimen);
+        // dd($specimen);
 
         return view('admin.admin_lookup.show', compact('lookup_table', 'lookup_source'));
     }
@@ -71,26 +71,26 @@ class AdminLookUpController extends Controller
 
     public function edit($id)
     {
-        //dd($id);
-        //DB::enableQueryLog();
+        // dd($id);
+        // DB::enableQueryLog();
         $characters = DB::table('mr_characters')->where('id', '=', $id)->first();
         // Debug the log
-        //dd(DB::getQueryLog());
-        //$character = MrCharacter::findOrFail($id);
-        //dd($mr_characters);
+        // dd(DB::getQueryLog());
+        // $character = MrCharacter::findOrFail($id);
+        // dd($mr_characters);
 
         $table_name = $characters->name;
-        //dd($table_name);
+        // dd($table_name);
 
         $table_name_plural = StringUtils::get_table_name_special_cases($table_name);
-        //dd($table_name_plural);
+        // dd($table_name_plural);
 
         if ($characters->look_up_y_n === 1 && $characters->display_options === 9) {
-            //DB::enableQueryLog();
+            // DB::enableQueryLog();
             $lookup_table_edits = DB::table($table_name_plural)->get();
-            //dd(DB::getQueryLog());
+            // dd(DB::getQueryLog());
 
-            //dd($lookup_table_edits);
+            // dd($lookup_table_edits);
 
             // get data for this one lookup table and return to edit for editing
             return view('admin.admin_lookup.edit', compact('lookup_table_edits', 'characters', 'id'));
@@ -101,10 +101,10 @@ class AdminLookUpController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request);
-        //dd($id);  // this id is the character table id
-        //dd($request->table_name);
-        //dd($request->new_value);
+        // dd($request);
+        // dd($id);  // this id is the character table id
+        // dd($request->table_name);
+        // dd($request->new_value);
 
         request()->validate([
             // Exclude the current specimen's ID from the unique check
@@ -120,13 +120,13 @@ class AdminLookUpController extends Controller
         $table_name_plural = StringUtils::get_table_name_special_cases($table_name);
         $column_name = $request->column;
         $row = $request->row;
-        //dd($row);
+        // dd($row);
 
         // Update the relevant table in the database
-        //DB::enableQueryLog();
+        // DB::enableQueryLog();
         DB::table($table_name_plural)->where('id', $row)->update([$column_name => $request->new_value]);
         // Debug the log
-        //dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());
 
         return redirect('admin_lookup/'.$id.'/edit')->with('message', 'Table updated successfully');
     }

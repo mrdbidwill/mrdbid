@@ -27,6 +27,7 @@ class MrCharacterController extends Controller
     public function show(MrCharacterService $MrCharacter)
     {
         $mr_characters = MrCharacter::all();
+
         return view('mr_characters.show', compact('mr_characters'));
     }
 

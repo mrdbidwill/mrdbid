@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LookupController;
+use Illuminate\Support\Facades\Route;
 
 // Protect lookup routes to ensure only authenticated users can use them
 Route::middleware('auth')->prefix('lookups')->group(function () {

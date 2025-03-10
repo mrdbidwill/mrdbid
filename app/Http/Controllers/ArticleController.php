@@ -10,10 +10,7 @@ class ArticleController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index(Request $request)
     {

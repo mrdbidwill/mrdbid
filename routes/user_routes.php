@@ -1,16 +1,16 @@
 <?php
 
+use App\Http\Controllers\AllGroupController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\MrCharacterController;
-use App\Http\Controllers\MrCharacterSpecimenController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DataSourceController;
 use App\Http\Controllers\DataSourceDataTypeController;
 use App\Http\Controllers\DisplayOptionController;
 use App\Http\Controllers\DnaSequenceController;
-use App\Http\Controllers\AllGroupController;
 use App\Http\Controllers\ImageSpecimenController;
+use App\Http\Controllers\MrCharacterController;
+use App\Http\Controllers\MrCharacterSpecimenController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlantAssociationController;
 use App\Http\Controllers\PlantController;
@@ -29,8 +29,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
 
     Route::resource('specimens', SpecimenController::class);
 

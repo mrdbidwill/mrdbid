@@ -12,7 +12,9 @@ class MemberUtils
         $member_type = 0;
         $member_type = DB::table('users')->where('id', Auth::id())->value('type');
 
-        if ($member_type == null ) {$member_type = 0; }
+        if ($member_type == null) {
+            $member_type = 0;
+        }
 
         return $member_type;
     }

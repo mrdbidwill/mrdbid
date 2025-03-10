@@ -20,7 +20,7 @@ class AdminCharacterController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
 
         request()->validate([
             'name' => 'required|unique:mr_characters,name|min:2',
@@ -40,9 +40,9 @@ class AdminCharacterController extends Controller
         ]);
 
         $character_tables = Character::get();
-        //return 'Got her done!';
+        // return 'Got her done!';
 
-        //dd($character_tables);
+        // dd($character_tables);
 
         return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
@@ -59,17 +59,17 @@ class AdminCharacterController extends Controller
     public function edit($id)
     {
         $character_id = $id;
-        //dd($specimen_id);
+        // dd($specimen_id);
 
         $character_table = Character::where('id', '=', $character_id)->get();
-        //dd($character_table);
+        // dd($character_table);
 
         return view('admin.admin_character.edit', ['character_table' => $character_table]);
     }
 
     public function update(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         //  dd($request->id);  // 1
         //  dd($request->route('id')); // null
         $request->validate([
@@ -80,7 +80,7 @@ class AdminCharacterController extends Controller
             'source' => 'required',
             'entered_by' => 'required',
         ]);
-        //dd($request->all());
+        // dd($request->all());
         $one_character = Character::where('id', '=', $request->id)->first();
         $one_character->update([
             'name' => $request->input('name'),
@@ -92,9 +92,9 @@ class AdminCharacterController extends Controller
         ]);
 
         $character_tables = Character::get();
-        //return 'Got her done!';
+        // return 'Got her done!';
 
-        //dd($character_tables);
+        // dd($character_tables);
 
         return view('admin.admin_character.index', [
             'character_tables' => $character_tables,
