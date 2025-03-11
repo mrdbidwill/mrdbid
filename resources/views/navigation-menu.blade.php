@@ -12,8 +12,6 @@
                                 class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"></x-mrdbid-logo-svg>
                         </a>
 
-
-
                         <x-nav-link href="{{ route('about') }}" :active="request()->routeIs('about')">
                             {{ __('About') }}
                         </x-nav-link>
@@ -28,7 +26,7 @@
                         </x-nav-link>
 
                         <!-- Admin Dashboard Link -->
-                        @if(auth()->check() && auth()->user()->type < 4)
+                        @if($user = auth()->user() && $user->type < 4)
                             <x-nav-link href="{{ route('admin.dashboard') }}"
                                         :active="request()->routeIs('admin.dashboard')" style="color: red;">
                                 {{ __('Admin Dashboard') }}
