@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\ImageManager;
 
 class ImageSpecimenController extends Controller
 {
@@ -43,6 +45,7 @@ class ImageSpecimenController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $manager = new ImageManager(new Driver);
         $specimen_id = $request['specimen_id'];
         $currentUser = Auth::user();
         $userId = $currentUser->id;
@@ -85,7 +88,8 @@ class ImageSpecimenController extends Controller
             }
 
             $destinationPathThumbnail = public_path('storage/uploaded_images/thumbnail/');
-            $img = Image::read($image->path());
+
+            $img = $manager->read($image->path());
 
             // dd($img);
 
