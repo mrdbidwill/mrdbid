@@ -27,6 +27,16 @@
                             {{ __('Books') }}
                         </x-nav-link>
 
+                        <!-- Admin Dashboard Link -->
+                        @if(auth()->check() && auth()->user()->type < 4)
+                            <x-nav-link href="{{ route('admin.dashboard') }}"
+                                        :active="request()->routeIs('admin.dashboard')" style="color: red;">
+                                {{ __('Admin Dashboard') }}
+                            </x-nav-link>
+                        @endif
+
+
+
                         <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
                             {{ __('Login') }}
                         </x-nav-link>

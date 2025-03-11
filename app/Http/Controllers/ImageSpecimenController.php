@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\Image;
 
 class ImageSpecimenController extends Controller
 {
@@ -56,7 +55,7 @@ class ImageSpecimenController extends Controller
         // dd($request);
 
         $request->validate([
-            'images.*' => 'required|image|mimes:jpeg,jpg,png,gif,svg,tiff,tif,heic|max:20000',
+            'images.*' => 'required|image|mimes:jpeg,jpg,png,gif,svg,tiff,tif,heic|max:10240',
             'description' => 'nullable|string|max:1280',
             'parts' => 'nullable|integer',
             'lens' => 'nullable|string|max:255',
