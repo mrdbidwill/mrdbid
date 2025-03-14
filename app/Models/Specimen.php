@@ -10,6 +10,67 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $specimen_name
+ * @property string $common_name
+ * @property string $description
+ * @property string $comment
+ * @property int $specimen_location_now
+ * @property string $location_found_city
+ * @property string $location_found_county
+ * @property int $state_id
+ * @property int $country_id
+ * @property int $location_public_y_n
+ * @property int $share_data_y_n
+ * @property int $month_found
+ * @property int $day_found
+ * @property int $year_found
+ * @property int $fungus_type
+ * @property int $entered_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AllGroup> $all_groups
+ * @property-read int|null $all_groups_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MrCharacterSpecimen> $characterSpecimens
+ * @property-read int|null $character_specimens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MrCharacter> $characters
+ * @property-read int|null $characters_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cluster> $clusters
+ * @property-read int|null $clusters_count
+ * @property-read Country|null $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ImageSpecimen> $images_specimens
+ * @property-read int|null $images_specimens_count
+ * @property-read State|null $state
+ * @property-read \App\Models\User $user
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereCommonName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereDayFound($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereEnteredBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereFungusType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereLocationFoundCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereLocationFoundCounty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereLocationPublicYN($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereMonthFound($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereShareDataYN($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereSpecimenLocationNow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereSpecimenName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereStateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Specimen whereYearFound($value)
+ *
+ * @mixin \Eloquent
+ */
 class Specimen extends Model
 {
     use HasFactory;

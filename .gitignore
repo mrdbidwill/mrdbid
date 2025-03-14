@@ -18,6 +18,7 @@ yarn-error.log
 /auth.json
 /.fleet
 /.idea
+/_ide_helper.php
 /.nova
 /.vscode
 /.zed

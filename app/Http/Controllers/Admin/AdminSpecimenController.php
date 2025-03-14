@@ -22,6 +22,10 @@ class AdminSpecimenController extends Controller
 
     public function store(Request $request)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Placeholder: Implement logic later
         return redirect()->route('admin_specimen.index');
     }
@@ -35,6 +39,10 @@ class AdminSpecimenController extends Controller
 
     public function edit($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $specimen = Specimen::findOrFail($id);
 
         return view('admin.admin_specimen.edit', compact('specimen'));
@@ -42,12 +50,20 @@ class AdminSpecimenController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Placeholder: Implement logic later
         return redirect()->route('admin_specimen.index');
     }
 
     public function destroy($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Placeholder: Implement logic later
         return redirect()->route('admin_specimen.index');
     }

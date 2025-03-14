@@ -72,12 +72,17 @@
                     </x-responsive-nav-link>
 
                     <!-- Admin Dashboard Link (for Users with type < 4) -->
-                    @if(auth()->user()->type < 4)
+                    @php
+                        $user = auth()->user();
+                    @endphp
+
+                    @if($user->type < 4)
                         <x-responsive-nav-link href="{{ route('admin.dashboard') }}"
                                                :active="request()->routeIs('admin.dashboard')" style="color: red;">
                             {{ __('Admin Dashboard') }}
                         </x-responsive-nav-link>
                     @endif
+
 
 
                     <!-- Profile Link -->

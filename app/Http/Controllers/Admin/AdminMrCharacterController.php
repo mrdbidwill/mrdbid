@@ -3,23 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Lookup\Character;
+use App\Models\MrCharacter;
 use Illuminate\Http\Request;
 
-class AdminCharacterController extends Controller
+class AdminMrCharacterController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
 
-        $character_tables = Character::get();
+        $character_tables = MrCharacter::get();
 
-        return view('admin.admin_character.index', [
+        return view('admin.admin_mr_character.index', [
             'character_tables' => $character_tables,
         ]);
     }
 
     public function store(Request $request)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // dd($request->all());
 
         request()->validate([
@@ -30,7 +37,7 @@ class AdminCharacterController extends Controller
             'source' => 'required',
             'entered_by' => 'required',
         ]);
-        $character = Character::create([
+        $character = MrCharacter::create([
             'name' => request('name'),
             'display_options' => request('display_options'),
             'look_up_y_n' => request('look_up_y_n'),
@@ -39,36 +46,48 @@ class AdminCharacterController extends Controller
             'entered_by' => auth()->user()->id,
         ]);
 
-        $character_tables = Character::get();
+        $character_tables = MrCharacter::get();
         // return 'Got her done!';
 
         // dd($character_tables);
 
-        return view('admin.admin_character.index', [
+        return view('admin.admin_mr_character.index', [
             'character_tables' => $character_tables,
         ]);
     }
 
     public function create()
     {
-        return view('admin.admin_character.create');
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('admin.admin_mr_character.create');
     }
 
     public function show($id) {}
 
     public function edit($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $character_id = $id;
         // dd($specimen_id);
 
-        $character_table = Character::where('id', '=', $character_id)->get();
+        $character_table = MrCharacter::where('id', '=', $character_id)->get();
         // dd($character_table);
 
-        return view('admin.admin_character.edit', ['character_table' => $character_table]);
+        return view('admin.admin_mr_character.edit', ['character_table' => $character_table]);
     }
 
     public function update(Request $request)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // dd($request->all());
         //  dd($request->id);  // 1
         //  dd($request->route('id')); // null
@@ -81,7 +100,7 @@ class AdminCharacterController extends Controller
             'entered_by' => 'required',
         ]);
         // dd($request->all());
-        $one_character = Character::where('id', '=', $request->id)->first();
+        $one_character = MrCharacter::where('id', '=', $request->id)->first();
         $one_character->update([
             'name' => $request->input('name'),
             'display_options' => $request->input('display_options'),
@@ -91,15 +110,21 @@ class AdminCharacterController extends Controller
             'entered_by' => auth()->user()->id,
         ]);
 
-        $character_tables = Character::get();
+        $character_tables = MrCharacter::get();
         // return 'Got her done!';
 
         // dd($character_tables);
 
-        return view('admin.admin_character.index', [
+        return view('admin.admin_mr_character.index', [
             'character_tables' => $character_tables,
         ]);
     }
 
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
+    }
 }

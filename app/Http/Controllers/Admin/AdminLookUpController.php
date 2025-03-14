@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataSource;
-use App\Models\Lookup\Character;
+use App\Models\MrCharacter;
 use App\Utils\StringUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +14,12 @@ class AdminLookUpController extends Controller
 {
     public function index(): View
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // DB::enableQueryLog();
-        $lookup_lists = Character::where('look_up_y_n', '1')
+        $lookup_lists = MrCharacter::where('look_up_y_n', '1')
             ->where('display_options', '9')
             ->orderBy('name', 'asc')
             ->get();
@@ -30,9 +34,13 @@ class AdminLookUpController extends Controller
 
     public function show($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // return view('specimens.show', ['specimen' => $specimen->user_id = auth()->id()]);
         // get specimens for this user
-        $lookup_table = Character::find($id); // This returns a single model instance
+        $lookup_table = MrCharacter::find($id); // This returns a single model instance
 
         $lookup_source = DataSource::find($lookup_table->source);
         // dd($specimen);
@@ -42,6 +50,10 @@ class AdminLookUpController extends Controller
 
     public function store(Request $request)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         request()->validate([
             'name' => ['required', 'min:3'],
             'description' => ['min:3', 'max:2048'],
@@ -50,7 +62,7 @@ class AdminLookUpController extends Controller
             'entered_by' => ['required'],
         ]);
 
-        Character::create([
+        MrCharacter::create([
             'name' => request('name'),
             'description' => request('description'),
             'comments' => request('comments'),
@@ -64,13 +76,21 @@ class AdminLookUpController extends Controller
 
     public function create()
     {
-        $characters = Character::all(); // Fetch all mr_characters
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $characters = MrCharacter::all(); // Fetch all mr_characters
 
         return view('admin.admin_lookup.create', compact('characters'));
     }
 
     public function edit($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // dd($id);
         // DB::enableQueryLog();
         $characters = DB::table('mr_characters')->where('id', '=', $id)->first();
@@ -101,6 +121,10 @@ class AdminLookUpController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // dd($request);
         // dd($id);  // this id is the character table id
         // dd($request->table_name);
@@ -133,6 +157,10 @@ class AdminLookUpController extends Controller
 
     public function destroy($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         echo '<p>In Destroy!</p>';
     }
 }

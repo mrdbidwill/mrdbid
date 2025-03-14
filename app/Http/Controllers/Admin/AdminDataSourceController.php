@@ -10,6 +10,9 @@ class AdminDataSourceController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $data_source_tables = DataSource::get();
 
@@ -20,6 +23,11 @@ class AdminDataSourceController extends Controller
 
     public function store(Request $request)
     {
+
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // dd($request->all());
 
         request()->validate([
@@ -51,6 +59,10 @@ class AdminDataSourceController extends Controller
 
     public function create()
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('admin.admin_data_source.create');
     }
 
@@ -58,6 +70,10 @@ class AdminDataSourceController extends Controller
 
     public function edit($id)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $data_source_id = $id;
         // dd($specimen_id);
 
@@ -69,6 +85,10 @@ class AdminDataSourceController extends Controller
 
     public function update(Request $request)
     {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Gate::authorize('edit-book', $data_source);
         // dd($request->all());
         $request->validate([
@@ -100,5 +120,11 @@ class AdminDataSourceController extends Controller
         ]);
     }
 
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+        if (auth()->user()->type >= 4) {
+            abort(403, 'Unauthorized action.');
+        }
+
+    }
 }

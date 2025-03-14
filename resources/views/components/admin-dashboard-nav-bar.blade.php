@@ -1,30 +1,29 @@
-@props(['active' => false])@php
-    $isAdmin = request()->routeIs('admin_dashboard');
-@endphp
+@props(['active' => false])
 
 <nav>
-    @if (!$isAdmin)
-        <x-specimens-nav-link href="{{ route('admin_dashboard') }}">
+    @if (!Route::is('admin.dashboard'))
+        <x-specimens-nav-link href="{{ route('admin.dashboard') }}">
             Back to Admin Dashboard
         </x-specimens-nav-link>
     @endif
 
-    <x-specimens-nav-link href="{{ route('admin_specimen.index') }}"
-                          :active="request()->routeIs('admin_specimen.index')">
+
+    <x-specimens-nav-link href="{{ route('admin.specimens.index') }}"
+                          :active="request()->routeIs('admin.specimens.index')">
         Manage Specimen Table
     </x-specimens-nav-link>
 
-    <x-specimens-nav-link href="{{ route('admin_character.index') }}"
-                          :active="request()->routeIs('admin_character.index')">
+    <x-specimens-nav-link href="{{ route('admin.mr_characters.index') }}"
+                          :active="request()->routeIs('admin.mr_characters.index')">
         Manage Character Table
     </x-specimens-nav-link>
 
-    <x-specimens-nav-link href="{{ route('admin_lookup.index') }}" :active="request()->routeIs('admin_lookup.index')">
+    <x-specimens-nav-link href="{{ route('admin.lookups.index') }}" :active="request()->routeIs('admin.lookups.index')">
         Manage Lookup Tables
     </x-specimens-nav-link>
 
-    <x-specimens-nav-link href="{{ route('admin_export_database.index') }}"
-                          :active="request()->routeIs('admin_export_database.index')">
+    <x-specimens-nav-link href="{{ route('admin.export_databases.export') }}"
+                          :active="request()->routeIs('admin.export_database.export')">
         Export Database
     </x-specimens-nav-link>
 

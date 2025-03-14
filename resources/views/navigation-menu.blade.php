@@ -25,16 +25,6 @@
                             {{ __('Books') }}
                         </x-nav-link>
 
-                        <!-- Admin Dashboard Link -->
-                        @if($user = auth()->user() && $user->type < 4)
-                            <x-nav-link href="{{ route('admin.dashboard') }}"
-                                        :active="request()->routeIs('admin.dashboard')" style="color: red;">
-                                {{ __('Admin Dashboard') }}
-                            </x-nav-link>
-                        @endif
-
-
-
                         <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
                             {{ __('Login') }}
                         </x-nav-link>
@@ -65,44 +55,59 @@
                             {{ __('Specimens') }}
                         </x-nav-link>
                     @endguest
+
+
+                    @auth
+
+                        <!-- Admin Dashboard Link -->
+                        @php
+                            $user = auth()->user();
+                        @endphp
+
+                        @if($user->type < 4)
+                            <x-nav-link href="{{ route('admin.dashboard') }}"
+                                        :active="request()->routeIs('admin.dashboard')" style="color: red;">
+                                {{ __('Admin Dashboard') }}
+                            </x-nav-link>
+                        @endif
                 </div>
 
-                @auth
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
-                        <!-- Profile Dropdown -->
-                        <div class="ml-3 relative">
-                            <x-dropdown align="right" width="48">
-                                <x-slot name="trigger">
-                                    <button
-                                        class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">
-                                        <div>{{ Auth::user()->name }}</div>
-                                        <div class="ml-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                 viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                      d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </x-slot>
 
-                                <x-slot name="content">
-                                    <x-dropdown-link href="{{ route('profile.show') }}">
-                                        {{ __('Profile') }}
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <!-- Profile Dropdown -->
+                    <div class="ml-3 relative">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button
+                                    class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">
+                                    <div>{{ Auth::user()->name }}</div>
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                  d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link href="{{ route('logout') }}"
+                                                     onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
                                     </x-dropdown-link>
-
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <x-dropdown-link href="{{ route('logout') }}"
-                                                         onclick="event.preventDefault(); this.closest('form').submit();">
-                                            {{ __('Log Out') }}
-                                        </x-dropdown-link>
-                                    </form>
-                                </x-slot>
-                            </x-dropdown>
-                        </div>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
                     </div>
+                </div>
                 @endif
             </div>
             @livewire('responsive-navigation')
