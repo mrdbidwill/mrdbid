@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  display_options: one
+  lookup: false
+  parts: one
+  source: one
+  entered_by: one
+
+two:
+  name: MyString
+  display_options: two
+  lookup: false
+  parts: two
+  source: two
+  entered_by: two

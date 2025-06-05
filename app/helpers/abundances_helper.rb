@@ -1,0 +1,2 @@
+module AbundancesHelper
+end

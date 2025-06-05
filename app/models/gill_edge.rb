@@ -1,0 +1,2 @@
+class GillEdge < ApplicationRecord
+end

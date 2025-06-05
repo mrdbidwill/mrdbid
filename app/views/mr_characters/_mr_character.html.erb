@@ -1,0 +1,26 @@
+<div id="<%= dom_id mr_character %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= mr_character.name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Display options:</strong>
+    <%= mr_character.display_options_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Lookup:</strong>
+    <%= mr_character.lookup? ? "Yes" : "No" %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Parts:</strong>
+    <%= mr_character.parts_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Source:</strong>
+    <%= mr_character.source_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Entered by:</strong>
+    <%= mr_character.entered_by_id %>
+  </div>
+</div>

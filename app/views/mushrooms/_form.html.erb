@@ -1,0 +1,87 @@
+<%= form_with(model: mushroom, class: "contents") do |form| %>
+  <% if mushroom.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(mushroom.errors.count, "error") %> prohibited this mushroom from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% mushroom.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :mushroom_name %>
+    <%= form.text_field :mushroom_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:mushroom_name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:mushroom_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :common_name %>
+    <%= form.text_field :common_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:common_name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:common_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :comment %>
+    <%= form.textarea :comment, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comment].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comment].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mushroom_location_id %>
+    <%= form.text_field :mushroom_location_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:mushroom_location_id].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:mushroom_location_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :location_found_city %>
+    <%= form.text_field :location_found_city, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:location_found_city].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:location_found_city].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :location_found_county %>
+    <%= form.text_field :location_found_county, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:location_found_county].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:location_found_county].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :state_id_id %>
+    <%= form.text_field :state_id_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:state_id_id].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:state_id_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :country_id_id %>
+    <%= form.text_field :country_id_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:country_id_id].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:country_id_id].any?}] %>
+  </div>
+
+  <div class="my-5 flex items-center gap-2">
+    <%= form.label :location_public %>
+    <%= form.checkbox :location_public, class: ["block shadow-sm rounded-md border order-first h-5 w-5", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:location_public].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:location_public].any?}] %>
+  </div>
+
+  <div class="my-5 flex items-center gap-2">
+    <%= form.label :share_data %>
+    <%= form.checkbox :share_data, class: ["block shadow-sm rounded-md border order-first h-5 w-5", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:share_data].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:share_data].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :date_found %>
+    <%= form.date_field :date_found, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:date_found].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:date_found].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :fungus_type_id %>
+    <%= form.text_field :fungus_type_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:fungus_type_id].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:fungus_type_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :entered_by_id %>
+    <%= form.text_field :entered_by_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:entered_by_id].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:entered_by_id].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

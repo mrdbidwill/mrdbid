@@ -1,0 +1,1 @@
+json.partial! "universal_outer_veil_textures/universal_outer_veil_texture", universal_outer_veil_texture: @universal_outer_veil_texture

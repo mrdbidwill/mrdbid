@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mushroom_name: MyString
+  common_name: MyString
+  description: MyText
+  comment: MyText
+  mushroom_location: one
+  location_found_city: MyString
+  location_found_county: MyString
+  state_id: one
+  country_id: one
+  location_public: false
+  share_data: false
+  date_found: 2025-06-05
+  fungus_type: one
+  entered_by: one
+
+two:
+  mushroom_name: MyString
+  common_name: MyString
+  description: MyText
+  comment: MyText
+  mushroom_location: two
+  location_found_city: MyString
+  location_found_county: MyString
+  state_id: two
+  country_id: two
+  location_public: false
+  share_data: false
+  date_found: 2025-06-05
+  fungus_type: two
+  entered_by: two

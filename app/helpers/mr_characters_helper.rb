@@ -1,0 +1,2 @@
+module MrCharactersHelper
+end
