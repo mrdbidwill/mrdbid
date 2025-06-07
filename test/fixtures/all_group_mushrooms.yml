@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  all_group_id: one
+  mushroom_id: one
+
+two:
+  all_group_id: two
+  mushroom_id: two

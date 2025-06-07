@@ -6,7 +6,8 @@ class CreateStates < ActiveRecord::Migration[8.0]
       t.text :comments
       t.references :source, null: false, foreign_key: true
       t.references :country, null: false, foreign_key: true
-      t.references :entered_by, null: false, foreign_key: true
+      t.references :entered_by, null: false, foreign_key: { to_table: :users }
+
 
       t.timestamps
     end

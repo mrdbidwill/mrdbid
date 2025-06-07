@@ -1,4 +1,5 @@
 class PossibleMatch < ApplicationRecord
   belongs_to :source
-  belongs_to :entered_by
+  belongs_to :entered_by, class_name: 'User'
+
 end

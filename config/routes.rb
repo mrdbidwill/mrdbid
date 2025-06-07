@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  resources :mushroom_locations
+  resources :project_belongs_tos
+  resources :mr_character_mushrooms
+  resources :cameras
+  resources :lens
+  resources :image_mushroom_thumbnails
+  resources :image_mushrooms
+  resources :source_data_types
+  resources :colors
+  resources :cluster_mushrooms
+  resources :clusters
+  resources :articles
+  resources :all_group_mushrooms
+  resources :all_groups
   resources :rhizomorph_textures
   resources :mycelium_textures
   resources :dna_sequences
@@ -37,7 +51,7 @@ Rails.application.routes.draw do
   resources :fungus_types
   resources :epithets
   resources :display_options
-  resources :data_sources
+  resources :sources
   resources :countries
   resources :chem_reactions
   resources :cap_surface_textures
@@ -63,5 +77,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "mushrooms#index" # Or any other controller and action
 end

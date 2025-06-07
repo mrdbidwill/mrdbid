@@ -17,7 +17,7 @@ class DnaSequencesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create dna_sequence" do
     assert_difference("DnaSequence.count") do
-      post dna_sequences_url, params: { dna_sequence: { comments: @dna_sequence.comments, description: @dna_sequence.description, entered_by_id: @dna_sequence.entered_by_id, name: @dna_sequence.name, source_id: @dna_sequence.source_id } }
+      post dna_sequences_url, params: { dna_sequence: { dna_barcode_its: @dna_sequence.dna_barcode_its, entered_by_id: @dna_sequence.entered_by_id, genbank_accession_number: @dna_sequence.genbank_accession_number, genbank_number_url: @dna_sequence.genbank_number_url, herbarium_catalog_number: @dna_sequence.herbarium_catalog_number, mushroom_id_id: @dna_sequence.mushroom_id_id, mycomap_blast_results: @dna_sequence.mycomap_blast_results, notes: @dna_sequence.notes, provisional_species_name: @dna_sequence.provisional_species_name, reads_in_consensus_ric: @dna_sequence.reads_in_consensus_ric, sequencing_technology: @dna_sequence.sequencing_technology, trace_files_raw_dna_data: @dna_sequence.trace_files_raw_dna_data, voucher_number: @dna_sequence.voucher_number } }
     end
 
     assert_redirected_to dna_sequence_url(DnaSequence.last)
@@ -34,7 +34,7 @@ class DnaSequencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update dna_sequence" do
-    patch dna_sequence_url(@dna_sequence), params: { dna_sequence: { comments: @dna_sequence.comments, description: @dna_sequence.description, entered_by_id: @dna_sequence.entered_by_id, name: @dna_sequence.name, source_id: @dna_sequence.source_id } }
+    patch dna_sequence_url(@dna_sequence), params: { dna_sequence: { dna_barcode_its: @dna_sequence.dna_barcode_its, entered_by_id: @dna_sequence.entered_by_id, genbank_accession_number: @dna_sequence.genbank_accession_number, genbank_number_url: @dna_sequence.genbank_number_url, herbarium_catalog_number: @dna_sequence.herbarium_catalog_number, mushroom_id_id: @dna_sequence.mushroom_id_id, mycomap_blast_results: @dna_sequence.mycomap_blast_results, notes: @dna_sequence.notes, provisional_species_name: @dna_sequence.provisional_species_name, reads_in_consensus_ric: @dna_sequence.reads_in_consensus_ric, sequencing_technology: @dna_sequence.sequencing_technology, trace_files_raw_dna_data: @dna_sequence.trace_files_raw_dna_data, voucher_number: @dna_sequence.voucher_number } }
     assert_redirected_to dna_sequence_url(@dna_sequence)
   end
 

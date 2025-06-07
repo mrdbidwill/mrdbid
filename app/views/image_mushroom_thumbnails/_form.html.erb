@@ -1,0 +1,42 @@
+<%= form_with(model: image_mushroom_thumbnail, class: "contents") do |form| %>
+  <% if image_mushroom_thumbnail.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(image_mushroom_thumbnail.errors.count, "error") %> prohibited this image_mushroom_thumbnail from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% image_mushroom_thumbnail.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :image_mushroom_id_id %>
+    <%= form.text_field :image_mushroom_id_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom_thumbnail.errors[:image_mushroom_id_id].none?, "border-red-400 focus:outline-red-600": image_mushroom_thumbnail.errors[:image_mushroom_id_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :thumbnail_file_address %>
+    <%= form.text_field :thumbnail_file_address, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom_thumbnail.errors[:thumbnail_file_address].none?, "border-red-400 focus:outline-red-600": image_mushroom_thumbnail.errors[:thumbnail_file_address].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_width %>
+    <%= form.number_field :image_width, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom_thumbnail.errors[:image_width].none?, "border-red-400 focus:outline-red-600": image_mushroom_thumbnail.errors[:image_width].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_height %>
+    <%= form.number_field :image_height, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom_thumbnail.errors[:image_height].none?, "border-red-400 focus:outline-red-600": image_mushroom_thumbnail.errors[:image_height].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :entered_by_id %>
+    <%= form.text_field :entered_by_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom_thumbnail.errors[:entered_by_id].none?, "border-red-400 focus:outline-red-600": image_mushroom_thumbnail.errors[:entered_by_id].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

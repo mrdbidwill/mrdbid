@@ -1,0 +1,57 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mushroom_id: one
+  parts: one
+  description: MyText
+  image_name: MyString
+  file_address: MyString
+  image_width: 1
+  image_height: 1
+  camera_make: one
+  camera_model: MyString
+  lens: MyString
+  exposure: MyString
+  aperture: MyString
+  iso: MyString
+  date_taken: 2025-06-06
+  focal_length: MyString
+  GPSLatitudeRef: MyString
+  GPSLatitude_0: MyString
+  GPSLatitude_1: MyString
+  GPSLatitude_2: MyString
+  GPSLongitudeRef: MyString
+  GPSLongitude_0: MyString
+  GPSLongitude_1: MyString
+  GPSLongitude_2: MyString
+  GPSAltitudeRef: MyString
+  GPSAltitude: MyString
+  entered_by: one
+
+two:
+  mushroom_id: two
+  parts: two
+  description: MyText
+  image_name: MyString
+  file_address: MyString
+  image_width: 1
+  image_height: 1
+  camera_make: two
+  camera_model: MyString
+  lens: MyString
+  exposure: MyString
+  aperture: MyString
+  iso: MyString
+  date_taken: 2025-06-06
+  focal_length: MyString
+  GPSLatitudeRef: MyString
+  GPSLatitude_0: MyString
+  GPSLatitude_1: MyString
+  GPSLatitude_2: MyString
+  GPSLongitudeRef: MyString
+  GPSLongitude_0: MyString
+  GPSLongitude_1: MyString
+  GPSLongitude_2: MyString
+  GPSAltitudeRef: MyString
+  GPSAltitude: MyString
+  entered_by: two

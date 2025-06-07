@@ -12,23 +12,63 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:name].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:name].any?}] %>
+    <%= form.label :mushroom_id_id %>
+    <%= form.text_field :mushroom_id_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:mushroom_id_id].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:mushroom_id_id].any?}] %>
   </div>
 
   <div class="my-5">
-    <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:description].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:description].any?}] %>
+    <%= form.label :notes %>
+    <%= form.text_field :notes, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:notes].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:notes].any?}] %>
   </div>
 
   <div class="my-5">
-    <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:comments].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:comments].any?}] %>
+    <%= form.label :dna_barcode_its %>
+    <%= form.textarea :dna_barcode_its, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:dna_barcode_its].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:dna_barcode_its].any?}] %>
   </div>
 
   <div class="my-5">
-    <%= form.label :source_id %>
-    <%= form.text_field :source_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:source_id].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:source_id].any?}] %>
+    <%= form.label :genbank_number_url %>
+    <%= form.text_field :genbank_number_url, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:genbank_number_url].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:genbank_number_url].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :genbank_accession_number %>
+    <%= form.number_field :genbank_accession_number, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:genbank_accession_number].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:genbank_accession_number].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :herbarium_catalog_number %>
+    <%= form.text_field :herbarium_catalog_number, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:herbarium_catalog_number].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:herbarium_catalog_number].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mycomap_blast_results %>
+    <%= form.text_field :mycomap_blast_results, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:mycomap_blast_results].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:mycomap_blast_results].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :provisional_species_name %>
+    <%= form.text_field :provisional_species_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:provisional_species_name].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:provisional_species_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :reads_in_consensus_ric %>
+    <%= form.number_field :reads_in_consensus_ric, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:reads_in_consensus_ric].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:reads_in_consensus_ric].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :sequencing_technology %>
+    <%= form.text_field :sequencing_technology, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:sequencing_technology].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:sequencing_technology].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :trace_files_raw_dna_data %>
+    <%= form.text_field :trace_files_raw_dna_data, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:trace_files_raw_dna_data].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:trace_files_raw_dna_data].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :voucher_number %>
+    <%= form.text_field :voucher_number, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": dna_sequence.errors[:voucher_number].none?, "border-red-400 focus:outline-red-600": dna_sequence.errors[:voucher_number].any?}] %>
   </div>
 
   <div class="my-5">

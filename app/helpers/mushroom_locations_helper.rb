@@ -1,0 +1,2 @@
+module MushroomLocationsHelper
+end

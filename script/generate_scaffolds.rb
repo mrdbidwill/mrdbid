@@ -11,7 +11,7 @@ models = {
   "CapSurfaceTexture" => "name:string description:text comments:text source:references entered_by:references",
   "ChemReaction" => "name:string description:text comments:text source:references entered_by:references",
   "Country" => "name:string description:text comments:text source:references entered_by:references",
-  "DataSource" => "name:string description:text comments:text source:references entered_by:references",
+  "Source" => "title:string author:string ref:string item_code:string comment:text my_rating:integer my_comment:text entered_by:references",
   "DisplayOption" => "name:string description:text comments:text source:references entered_by:references",
   "Epithet" => "name:string description:text comments:text source:references entered_by:references",
   "FungusType" => "name:string description:text comments:text source:references entered_by:references",
@@ -47,7 +47,7 @@ models = {
   "Plant" => "name:string description:text comments:text source:references entered_by:references",
   "Synonym" => "name:string description:text comments:text source:references entered_by:references",
   "Veil" => "name:string description:text comments:text source:references entered_by:references",
-  "DnaSequence" => "name:string description:text comments:text source:references entered_by:references",
+  "DnaSequence" => "mushroom_id:string notes:text dna_barcode_its:text genbank_number_url:string genbank_accession_number:integer herbarium_catalog_number:string mycomap_blast_results:string provisional_species_name:string sequencing_technology:string trace_files_raw_dna_data voucher_number:string entered_by:references",
   "MyceliumTextures" => "name:string description:text comments:text source:references entered_by:references",
   "RhizomorphTexture" => "name:string description:text comments:text source:references entered_by:references"
 }

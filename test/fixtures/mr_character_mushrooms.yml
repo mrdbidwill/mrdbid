@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mr_character_id: one
+  mushroom_id: one
+  character_value: MyString
+  entered_by: one
+
+two:
+  mr_character_id: two
+  mushroom_id: two
+  character_value: MyString
+  entered_by: two

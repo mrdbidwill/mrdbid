@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image_mushroom_id: one
+  thumbnail_file_address: MyString
+  image_width: 1
+  image_height: 1
+  entered_by: one
+
+two:
+  image_mushroom_id: two
+  thumbnail_file_address: MyString
+  image_width: 1
+  image_height: 1
+  entered_by: two

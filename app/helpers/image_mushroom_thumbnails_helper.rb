@@ -1,0 +1,2 @@
+module ImageMushroomThumbnailsHelper
+end

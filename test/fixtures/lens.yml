@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lens_make: one
+  lens_model: MyString
+  entered_by: one
+
+two:
+  lens_make: two
+  lens_model: MyString
+  entered_by: two
