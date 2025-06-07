@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :mushroom_locations
   resources :project_belongs_tos
   resources :mr_character_mushrooms
