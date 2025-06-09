@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" role="img" aria-label="MRDBID Logo">
+  <title>MRDBID Logo with Descriptive Text</title>
+
+  <!-- Main Logo -->
+  <text x="10" y="50" font-size="50" font-family="Arial, sans-serif" font-weight="bold">
+    <tspan fill="#f56565">M</tspan>
+    <tspan fill="#f6ad55">R</tspan>
+    <tspan fill="#ecc94b">D</tspan>
+    <tspan fill="#22543d">B</tspan>
+    <tspan fill="#3182ce">I</tspan>
+    <tspan fill="#5a67d8">D</tspan>
+  </text>
+
+  <!-- Descriptive Text -->
+  <text x="10" y="120" font-size="20" font-family="Arial, sans-serif">
+    <tspan fill="#f56565">M</tspan>ush
+    <tspan fill="#f6ad55">R</tspan>oom
+    <tspan fill="#ecc94b">D</tspan>ata
+    <tspan fill="#22543d">B</tspan>ase
+    <tspan fill="#3182ce">I</tspan>
+    <tspan fill="#5a67d8">D</tspan>entification
+  </text>
+</svg>

@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
+
+  root "pages#home"
+  get "pages/home"
+  get "pages/contact"
   devise_for :users
+  # Publicly available pages
+  get "home", to: "pages#home"
+  get "contact", to: "pages#contact"
   resources :mushroom_locations
   resources :project_belongs_tos
   resources :mr_character_mushrooms
@@ -77,6 +84,4 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  root "mushrooms#index" # Or any other controller and action
 end

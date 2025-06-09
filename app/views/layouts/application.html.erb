@@ -1,55 +1,53 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <title><%= content_for(:title) || "Mrdbid" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <title><%= content_for(:title) || "Mrdbid" %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <meta name="turbo-cache-control" content="no-cache">
 
-    <%= yield :head %>
+  <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+</head>
 
-  <body>
-  <%# Flash Messages Section %>
-  <% flash.each do |type, message| %>
-    <%# Map Rails flash types to Tailwind CSS styles (adjust styling as needed) %>
-    <% css_class = case type.to_s
-    when 'notice'
-      'bg-green-50 text-green-500'
-    when 'alert'
-      'bg-red-50 text-red-500'
-     else
-      'bg-gray-50 text-gray-700'
-    end %>
+<body class="bg-gray-100 text-gray-800 font-sans flex flex-col min-h-screen">
+<!-- Navigation Bar -->
+<header class="bg-white shadow">
+  <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- Clickable Logo -->
+    <%= render "shared/logo" %>
 
-    <div class="py-2 px-4 mb-4 rounded-md font-medium <%= css_class %>">
-      <%= message %>
-    </div>
-  <% end %>
+    <!-- Navigation Links -->
+    <ul class="flex space-x-6 text-lg">
+      <li><%= link_to "Home", root_path, class: "hover:underline text-gray-700" %></li>
+      <li><%= link_to "Contact", contact_path, class: "hover:underline text-gray-700" %></li>
+      <% if user_signed_in? %>
+        <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "hover:underline text-gray-700" %></li>
+      <% else %>
+        <li><%= link_to "Login", new_user_session_path, class: "hover:underline text-gray-700" %></li>
+        <li><%= link_to "Sign Up", new_user_registration_path, class: "hover:underline text-gray-700" %></li>
+      <% end %>
+    </ul>
+  </nav>
+</header>
 
-   <% if user_signed_in? %>
-     <%= button_to 'Logout', destroy_user_session_path, method: :delete
-     %>
-   <% else %>
-     <%= link_to 'Login', new_user_session_path %>
-     <%= link_to 'Sign Up', new_user_registration_path %>
-   <% end %>
+<!-- Page Content -->
+<main class="container mx-auto px-8 py-12 flex-grow">
+  <div class="bg-white border rounded-lg shadow-md p-6">
+    <%= yield %>
+  </div>
+</main>
 
-  <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+<!-- Footer (Optional) -->
+<footer class="bg-gray-200 text-center py-4">
+  <p class="text-sm text-gray-600">© <%= Time.now.year %> Mrdbid. All rights reserved.</p>
+</footer>
+</body>
 </html>

@@ -8,3 +8,107 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* ROYGBIV Color Spectrum for Comments */
+.redCommentLarge {
+    color: #FF0000; /* Red */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+}
+
+.orangeCommentLarge {
+    color: #FFA500; /* Orange */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+}
+
+.yellowCommentLarge {
+    color: #FFFF01; /* Yellow */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+    text-shadow:
+    -1px -1px 0 #000, /* Top-left shadow for better contrast with background */
+    1px -1px 0 #000,  /* Top-right shadow */
+    -1px 1px 0 #000,  /* Bottom-left shadow */
+    1px 1px 0 #000;   /* Bottom-right shadow */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.greenCommentLarge {
+    color: #008000; /* Green */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+}
+
+.blueCommentLarge {
+    color: #0000FF; /* Blue */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+}
+
+.indigoCommentLarge {
+    color: #4B0082; /* Indigo */
+    font-size: 3rem; /* Larger font */
+    font-weight: bold;
+}
+
+.violetCommentLarge {
+    color: #EE82EE; /* Violet */
+    font-size: 3rem; /* Regular font */
+    font-weight: bold;
+}
+
+.redComment {
+    color: #FF0000; /* Red */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.orangeComment {
+    color: #FFA500; /* Orange */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.yellowComment {
+    color: #FFFF01; /* Yellow */
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow:
+            -1px -1px 0 #000, /* Top-left shadow for better contrast with background */
+            1px -1px 0 #000,  /* Top-right shadow */
+            -1px 1px 0 #000,  /* Bottom-left shadow */
+            1px 1px 0 #000;   /* Bottom-right shadow */
+    text-decoration: none; /* Remove underline from links */
+
+}
+
+.greenComment {
+    color: #008000; /* Green */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.blueComment {
+    color: #0000FF; /* Blue */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.indigoComment {
+    color: #4B0082; /* Indigo */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.violetCommentLarge {
+    color: #EE82EE; /* Violet */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Add General Class for Flexibility, If Needed */
+.commentLarge {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
