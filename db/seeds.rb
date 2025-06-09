@@ -8,5 +8,47 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create!(name: "John Doe", email: "john.doe@example.com", password: "password1", password_confirmation: "password1")
-User.create!(name: "Jane Smith", email: "jane.smith@example.com", password: "password2", password_confirmation: "password2")
+# Create a user for seeding (idempotent)
+user = User.find_or_create_by!(email: "seeder@example.com") do |user|
+  user.name = "Seeder User"
+  user.password = "securepassword"
+  user.password_confirmation = "securepassword"
+end
+
+# Create sources with the user (idempotent)
+source = Source.find_or_create_by!(title: "Default Source", entered_by: user)
+
+# Create countries (idempotent)
+usa = Country.find_or_create_by!(name: "United States") do |country|
+  country.description = "USA Description"
+  country.entered_by = user
+  country.source = source
+end
+
+mexico = Country.find_or_create_by!(name: "Mexico") do |country|
+  country.description = "Mexico Description"
+  country.entered_by = user
+  country.source = source
+end
+
+# Create states associated with countries (idempotent)
+State.find_or_create_by!(name: "New York") do |state|
+  state.description = "State description"
+  state.entered_by = user
+  state.source = source
+  state.country = usa
+end
+
+State.find_or_create_by!(name: "California") do |state|
+  state.description = "State description"
+  state.entered_by = user
+  state.source = source
+  state.country = usa
+end
+
+State.find_or_create_by!(name: "Yucatan") do |state|
+  state.description = "State description"
+  state.entered_by = user
+  state.source = source
+  state.country = mexico
+end

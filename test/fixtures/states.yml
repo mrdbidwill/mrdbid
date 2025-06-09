@@ -1,17 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+new_york:
+  id: 1
+  name: "New York"
 
-one:
-  name: MyString
-  description: MyText
-  comments: MyText
-  source: one
-  country: one
-  entered_by: one
-
-two:
-  name: MyString
-  description: MyText
-  comments: MyText
-  source: two
-  country: two
-  entered_by: two
+california:
+  id: 2
+  name: "California"
