@@ -7,7 +7,6 @@
   <meta name="mobile-web-app-capable" content="yes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "tailwind", "application.css", "data-turbo-track": "reload" %>
   <meta name="turbo-cache-control" content="no-cache">
 
   <%= yield :head %>
@@ -16,37 +15,37 @@
 
 </head>
 
-<body class="bg-gray-100 text-red-800 font-sans flex flex-col min-h-screen">
+<body>
 <!-- Navigation Bar -->
-<header class="bg-white shadow">
-  <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+<header>
+  <nav >
     <!-- Clickable Logo -->
     <%= render "shared/logo" %>
 
     <!-- Navigation Links -->
-    <ul class="flex space-x-6 text-lg">
-      <li><%= link_to "Home", root_path, class: "hover:underline text-gray-700" %></li>
-      <li><%= link_to "Contact", contact_path, class: "hover:underline text-gray-700" %></li>
+    <ul>
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Contact", contact_path %></li>
       <% if user_signed_in? %>
-        <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "hover:underline text-gray-700" %></li>
+        <li><%= button_to "Logout", destroy_user_session_path, method: :delete %></li>
       <% else %>
-        <li><%= link_to "Login", new_user_session_path, class: "hover:underline text-gray-700" %></li>
-        <li><%= link_to "Sign Up", new_user_registration_path, class: "hover:underline text-gray-700" %></li>
+        <li><%= link_to "Login", new_user_session_path %></li>
+        <li><%= link_to "Sign Up", new_user_registration_path %></li>
       <% end %>
     </ul>
   </nav>
 </header>
 
 <!-- Page Content -->
-<main class="container mx-auto px-8 py-12 flex-grow">
-  <div class="bg-white border rounded-lg shadow-md p-6">
+<main>
+  <div>
     <%= yield %>
   </div>
 </main>
 
 <!-- Footer (Optional) -->
-<footer class="bg-gray-200 text-center py-4">
-  <p class="text-sm text-gray-600">© <%= Time.now.year %> Mrdbid. All rights reserved.</p>
+<footer>
+  <p>© <%= Time.now.year %> Mrdbid. All rights reserved.</p>
 </footer>
 </body>
 </html>

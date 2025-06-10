@@ -1,23 +1,23 @@
-<nav class="menu-bar bg-white shadow">
-  <ul class="flex justify-between px-4 py-2 items-center">
+<nav>
+  <ul>
     <!-- Logo -->
-    <li class="flex items-center">
+    <li>
       <%= render "shared/logo" %>
     </li>
 
     <!-- Navigation Links for All Users -->
-    <li><%= link_to "Home", root_path, class: "hover:underline text-gray-700" %></li>
-    <li><%= link_to "Contact", contact_path, class: "hover:underline text-gray-700" %></li>
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "Contact", contact_path %></li>
 
     <% if user_signed_in? %>
       <!-- Links for Logged-In Users -->
-      <li><%= link_to "Mushrooms", mushrooms_path, class: "hover:underline text-gray-700" %></li>
-      <li><%= link_to "MR Characters", mr_characters_path, class: "hover:underline text-gray-700" %></li>
-      <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "hover:underline text-gray-700" %></li>
+      <li><%= link_to "Mushrooms", mushrooms_path %></li>
+      <li><%= link_to "MR Characters", mr_characters_path %></li>
+      <li><%= button_to "Logout", destroy_user_session_path, method: :delete %></li>
     <% else %>
       <!-- Links for Guests -->
-      <li><%= link_to "Login", new_user_session_path, class: "hover:underline text-gray-700" %></li>
-      <li><%= link_to "Sign Up", new_user_registration_path, class: "hover:underline text-gray-700" %></li>
+      <li><%= link_to "Login", new_user_session_path %></li>
+      <li><%= link_to "Sign Up", new_user_registration_path %></li>
     <% end %>
   </ul>
 </nav>
