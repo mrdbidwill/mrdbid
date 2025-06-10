@@ -18,8 +18,6 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "devise"
 gem "devise-two-factor"
-gem "tailwindcss-rails"
-gem "tailwindcss-ruby"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -58,6 +56,8 @@ group :development, :test do
   gem "rspec-rails", ">= 6.0.0.beta"
 
   gem "factory_bot_rails"
+
+  gem "tailwindcss-rails"
 
 end
 

@@ -7,16 +7,16 @@
   <meta name="mobile-web-app-capable" content="yes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "application.css", "data-turbo-track": "reload" %>
   <meta name="turbo-cache-control" content="no-cache">
 
   <%= yield :head %>
-  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans flex flex-col min-h-screen">
+<body class="bg-gray-100 text-red-800 font-sans flex flex-col min-h-screen">
 <!-- Navigation Bar -->
 <header class="bg-white shadow">
   <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
