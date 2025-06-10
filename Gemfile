@@ -69,5 +69,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "selenium-webdriver" # Required for browser automation
+  gem "webdrivers"         # Automates WebDriver version management
+  gem "shoulda-matchers", "~> 5.0"
 end

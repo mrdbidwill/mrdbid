@@ -14,12 +14,14 @@
     color: #FF0000; /* Red */
     font-size: 3rem; /* Larger font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .orangeCommentLarge {
     color: #FFA500; /* Orange */
     font-size: 3rem; /* Larger font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .yellowCommentLarge {
@@ -38,36 +40,42 @@
     color: #008000; /* Green */
     font-size: 3rem; /* Larger font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .blueCommentLarge {
     color: #0000FF; /* Blue */
     font-size: 3rem; /* Larger font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .indigoCommentLarge {
     color: #4B0082; /* Indigo */
     font-size: 3rem; /* Larger font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .violetCommentLarge {
     color: #EE82EE; /* Violet */
     font-size: 3rem; /* Regular font */
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .redComment {
     color: #FF0000; /* Red */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .orangeComment {
     color: #FFA500; /* Orange */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .yellowComment {
@@ -80,31 +88,34 @@
             -1px 1px 0 #000,  /* Bottom-left shadow */
             1px 1px 0 #000;   /* Bottom-right shadow */
     text-decoration: none; /* Remove underline from links */
-
 }
 
 .greenComment {
     color: #008000; /* Green */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .blueComment {
     color: #0000FF; /* Blue */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .indigoComment {
     color: #4B0082; /* Indigo */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .violetCommentLarge {
     color: #EE82EE; /* Violet */
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: none; /* Remove underline from links */
 }
 
 /* Add General Class for Flexibility, If Needed */

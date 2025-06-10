@@ -10,9 +10,8 @@
   <meta name="turbo-cache-control" content="no-cache">
 
   <%= yield :head %>
-
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
 </head>
