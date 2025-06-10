@@ -70,5 +70,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver" # Required for browser automation
   gem "webdrivers"         # Automates WebDriver version management
-  gem "shoulda-matchers", "~> 5.0"
+  gem "shoulda-matchers", "~> 6.5"
 end
