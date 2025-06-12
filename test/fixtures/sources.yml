@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Book Title"
+  author: "Book Author"
+  ref: "Book Reference"
+  item_code: abcde
+  comment: "Book Comment"
+  my_rating: 1
+  my_comment: "My Book Comment"
+  entered_by: 1
+
+two:
+  title: "Website Title"
+  author: "Website Author"
+  ref: "Website Reference"
+  item_code: vwxyz
+  comment: "Website Comment"
+  my_rating: 1
+  my_comment: "My Website Comment"
+  entered_by: 1

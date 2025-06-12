@@ -1,0 +1,147 @@
+<%= form_with(model: image_mushroom, class: "contents") do |form| %>
+  <% if image_mushroom.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(image_mushroom.errors.count, "error") %> prohibited this image_mushroom from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% image_mushroom.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :mushroom_id_id %>
+    <%= form.text_field :mushroom_id_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:mushroom_id_id].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:mushroom_id_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :parts_id %>
+    <%= form.text_field :parts_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:parts_id].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:parts_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_name %>
+    <%= form.text_field :image_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:image_name].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:image_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :file_address %>
+    <%= form.text_field :file_address, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:file_address].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:file_address].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_width %>
+    <%= form.number_field :image_width, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:image_width].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:image_width].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_height %>
+    <%= form.number_field :image_height, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:image_height].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:image_height].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :camera_make_id %>
+    <%= form.text_field :camera_make_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:camera_make_id].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:camera_make_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :camera_model %>
+    <%= form.text_field :camera_model, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:camera_model].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:camera_model].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :lens %>
+    <%= form.text_field :lens, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:lens].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:lens].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :exposure %>
+    <%= form.text_field :exposure, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:exposure].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:exposure].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :aperture %>
+    <%= form.text_field :aperture, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:aperture].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:aperture].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :iso %>
+    <%= form.text_field :iso, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:iso].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:iso].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :date_taken %>
+    <%= form.date_field :date_taken, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:date_taken].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:date_taken].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :focal_length %>
+    <%= form.text_field :focal_length, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:focal_length].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:focal_length].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLatitudeRef %>
+    <%= form.text_field :GPSLatitudeRef, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLatitudeRef].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLatitudeRef].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLatitude_0 %>
+    <%= form.text_field :GPSLatitude_0, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLatitude_0].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLatitude_0].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLatitude_1 %>
+    <%= form.text_field :GPSLatitude_1, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLatitude_1].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLatitude_1].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLatitude_2 %>
+    <%= form.text_field :GPSLatitude_2, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLatitude_2].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLatitude_2].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLongitudeRef %>
+    <%= form.text_field :GPSLongitudeRef, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLongitudeRef].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLongitudeRef].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLongitude_0 %>
+    <%= form.text_field :GPSLongitude_0, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLongitude_0].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLongitude_0].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLongitude_1 %>
+    <%= form.text_field :GPSLongitude_1, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLongitude_1].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLongitude_1].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSLongitude_2 %>
+    <%= form.text_field :GPSLongitude_2, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSLongitude_2].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSLongitude_2].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSAltitudeRef %>
+    <%= form.text_field :GPSAltitudeRef, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSAltitudeRef].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSAltitudeRef].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :GPSAltitude %>
+    <%= form.text_field :GPSAltitude, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:GPSAltitude].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:GPSAltitude].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :entered_by_id %>
+    <%= form.text_field :entered_by_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": image_mushroom.errors[:entered_by_id].none?, "border-red-400 focus:outline-red-600": image_mushroom.errors[:entered_by_id].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

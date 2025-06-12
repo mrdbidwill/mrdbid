@@ -1,0 +1,57 @@
+<%= form_with(model: data_source, class: "contents") do |form| %>
+  <% if data_source.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(data_source.errors.count, "error") %> prohibited this data_source from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% data_source.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:title].none?, "border-red-400 focus:outline-red-600": data_source.errors[:title].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :author %>
+    <%= form.text_field :author, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:author].none?, "border-red-400 focus:outline-red-600": data_source.errors[:author].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :ref %>
+    <%= form.text_field :ref, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:ref].none?, "border-red-400 focus:outline-red-600": data_source.errors[:ref].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :item_code %>
+    <%= form.text_field :item_code, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:item_code].none?, "border-red-400 focus:outline-red-600": data_source.errors[:item_code].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :comment %>
+    <%= form.textarea :comment, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:comment].none?, "border-red-400 focus:outline-red-600": data_source.errors[:comment].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :my_rating %>
+    <%= form.number_field :my_rating, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:my_rating].none?, "border-red-400 focus:outline-red-600": data_source.errors[:my_rating].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :my_comment %>
+    <%= form.textarea :my_comment, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:my_comment].none?, "border-red-400 focus:outline-red-600": data_source.errors[:my_comment].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :entered_by_id %>
+    <%= form.text_field :entered_by_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": data_source.errors[:entered_by_id].none?, "border-red-400 focus:outline-red-600": data_source.errors[:entered_by_id].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

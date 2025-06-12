@@ -1,0 +1,8 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+new_york:
+  id: 1
+  name: "New York"
+
+california:
+  id: 2
+  name: "California"

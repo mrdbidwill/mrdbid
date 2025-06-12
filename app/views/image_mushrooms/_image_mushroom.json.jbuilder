@@ -1,0 +1,2 @@
+json.extract! image_mushroom, :id, :mushroom_id_id, :parts_id, :description, :image_name, :file_address, :image_width, :image_height, :camera_make_id, :camera_model, :lens, :exposure, :aperture, :iso, :date_taken, :focal_length, :GPSLatitudeRef, :GPSLatitude_0, :GPSLatitude_1, :GPSLatitude_2, :GPSLongitudeRef, :GPSLongitude_0, :GPSLongitude_1, :GPSLongitude_2, :GPSAltitudeRef, :GPSAltitude, :entered_by_id, :created_at, :updated_at
+json.url image_mushroom_url(image_mushroom, format: :json)

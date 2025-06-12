@@ -1,0 +1,1 @@
+json.partial! "universal_outer_veil_fates/universal_outer_veil_fate", universal_outer_veil_fate: @universal_outer_veil_fate

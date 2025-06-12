@@ -1,0 +1,58 @@
+<div id="<%= dom_id mushroom %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Mushroom name:</strong>
+    <%= mushroom.mushroom_name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Common name:</strong>
+    <%= mushroom.common_name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= mushroom.description %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Comment:</strong>
+    <%= mushroom.comment %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Mushroom location:</strong>
+    <%= mushroom.mushroom_location_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Location found city:</strong>
+    <%= mushroom.location_found_city %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Location found county:</strong>
+    <%= mushroom.location_found_county %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">State:</strong>
+    <%= mushroom.state_id_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Country:</strong>
+    <%= mushroom.country_id_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Location public:</strong>
+    <%= mushroom.location_public? ? "Yes" : "No" %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Share data:</strong>
+    <%= mushroom.share_data? ? "Yes" : "No" %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Date found:</strong>
+    <%= mushroom.date_found %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Fungus type:</strong>
+    <%= mushroom.fungus_type_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Entered by:</strong>
+    <%= mushroom.entered_by_id %>
+  </div>
+</div>

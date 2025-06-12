@@ -1,0 +1,1 @@
+json.partial! "gill_context_flesh_latex_abundances/gill_context_flesh_latex_abundance", gill_context_flesh_latex_abundance: @gill_context_flesh_latex_abundance

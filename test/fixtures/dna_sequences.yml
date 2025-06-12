@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mushroom_id: one
+  notes: MyString
+  dna_barcode_its: MyText
+  genbank_number_url: MyString
+  genbank_accession_number: 1
+  herbarium_catalog_number: MyString
+  mycomap_blast_results: MyString
+  provisional_species_name: MyString
+  reads_in_consensus_ric: 1
+  sequencing_technology: MyString
+  trace_files_raw_dna_data: MyString
+  voucher_number: MyString
+  entered_by: 1
+
+two:
+  mushroom_id: two
+  notes: MyString
+  dna_barcode_its: MyText
+  genbank_number_url: MyString
+  genbank_accession_number: 1
+  herbarium_catalog_number: MyString
+  mycomap_blast_results: MyString
+  provisional_species_name: MyString
+  reads_in_consensus_ric: 1
+  sequencing_technology: MyString
+  trace_files_raw_dna_data: MyString
+  voucher_number: MyString
+  entered_by: 2

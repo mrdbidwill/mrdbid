@@ -1,0 +1,1 @@
+json.partial! "partial_inner_veil_annular_ring_positions/partial_inner_veil_annular_ring_position", partial_inner_veil_annular_ring_position: @partial_inner_veil_annular_ring_position

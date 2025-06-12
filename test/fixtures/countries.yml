@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+USA:
+  id: 1
+  name: "United States"
+
+MEX:
+  id: 2
+  name: "CAN"
+
+CAN:
+  id: 3
+  name: "Mexico"

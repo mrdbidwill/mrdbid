@@ -1,0 +1,2 @@
+module PartialInnerVeilFatesHelper
+end
