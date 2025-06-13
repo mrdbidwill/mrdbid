@@ -65,6 +65,6 @@ class MyceliumTexturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mycelium_texture_params
-      params.expect(mycelium_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(mycelium_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

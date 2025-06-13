@@ -65,6 +65,6 @@ class RhizomorphTexturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rhizomorph_texture_params
-      params.expect(rhizomorph_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(rhizomorph_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

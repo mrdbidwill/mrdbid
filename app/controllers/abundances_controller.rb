@@ -65,6 +65,6 @@ class AbundancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def abundance_params
-      params.expect(abundance: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(abundance: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

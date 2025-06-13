@@ -65,6 +65,6 @@ class ClusterMushroomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cluster_mushroom_params
-      params.expect(cluster_mushroom: [ :cluster_id_id, :mushroom_id_id ])
+    params.require(cluster_mushroom: [ :cluster_id_id, :mushroom_id_id ])
     end
 end

@@ -65,6 +65,6 @@ class DnaSequencesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dna_sequence_params
-      params.expect(dna_sequence: [ :mushroom_id_id, :notes, :dna_barcode_its, :genbank_number_url, :genbank_accession_number, :herbarium_catalog_number, :mycomap_blast_results, :provisional_species_name, :reads_in_consensus_ric, :sequencing_technology, :trace_files_raw_dna_data, :voucher_number, :entered_by_id ])
+    params.require(dna_sequence: [ :mushroom_id_id, :notes, :dna_barcode_its, :genbank_number_url, :genbank_accession_number, :herbarium_catalog_number, :mycomap_blast_results, :provisional_species_name, :reads_in_consensus_ric, :sequencing_technology, :trace_files_raw_dna_data, :voucher_number, :entered_by_id ])
     end
 end

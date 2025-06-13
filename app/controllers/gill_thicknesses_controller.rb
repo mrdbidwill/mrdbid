@@ -65,6 +65,6 @@ class GillThicknessesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_thickness_params
-      params.expect(gill_thickness: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(gill_thickness: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

@@ -65,6 +65,6 @@ class HabitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def habit_params
-      params.expect(habit: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(habit: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

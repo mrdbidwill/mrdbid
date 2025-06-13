@@ -65,6 +65,6 @@ class CapSurfaceTexturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cap_surface_texture_params
-      params.expect(cap_surface_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(cap_surface_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

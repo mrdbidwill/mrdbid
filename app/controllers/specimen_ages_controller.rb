@@ -65,6 +65,6 @@ class SpecimenAgesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def specimen_age_params
-      params.expect(specimen_age: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(specimen_age: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

@@ -65,6 +65,6 @@ class PartsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def part_params
-      params.expect(part: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(part: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

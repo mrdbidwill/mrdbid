@@ -65,6 +65,6 @@ class PossibleMatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def possible_match_params
-      params.expect(possible_match: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(possible_match: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

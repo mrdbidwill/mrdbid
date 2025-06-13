@@ -65,6 +65,6 @@ class PlantsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def plant_params
-      params.expect(plant: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(plant: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

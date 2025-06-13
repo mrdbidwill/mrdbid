@@ -65,6 +65,6 @@ class OdorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def odor_params
-      params.expect(odor: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(odor: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

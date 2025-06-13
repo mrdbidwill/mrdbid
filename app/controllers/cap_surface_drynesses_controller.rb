@@ -65,6 +65,6 @@ class CapSurfaceDrynessesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cap_surface_dryness_params
-      params.expect(cap_surface_dryness: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(cap_surface_dryness: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

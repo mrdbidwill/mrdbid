@@ -65,6 +65,6 @@ class PartialInnerVeilAnnularRingPositionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def partial_inner_veil_annular_ring_position_params
-      params.expect(partial_inner_veil_annular_ring_position: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(partial_inner_veil_annular_ring_position: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

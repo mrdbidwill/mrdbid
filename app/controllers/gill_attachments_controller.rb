@@ -65,6 +65,6 @@ class GillAttachmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_attachment_params
-      params.expect(gill_attachment: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(gill_attachment: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

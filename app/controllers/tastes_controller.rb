@@ -65,6 +65,6 @@ class TastesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def taste_params
-      params.expect(taste: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(taste: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

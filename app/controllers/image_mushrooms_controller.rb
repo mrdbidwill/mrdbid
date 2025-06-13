@@ -65,6 +65,6 @@ class ImageMushroomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def image_mushroom_params
-      params.expect(image_mushroom: [ :mushroom_id_id, :parts_id, :description, :image_name, :file_address, :image_width, :image_height, :camera_make_id, :camera_model, :lens, :exposure, :aperture, :iso, :date_taken, :focal_length, :GPSLatitudeRef, :GPSLatitude_0, :GPSLatitude_1, :GPSLatitude_2, :GPSLongitudeRef, :GPSLongitude_0, :GPSLongitude_1, :GPSLongitude_2, :GPSAltitudeRef, :GPSAltitude, :entered_by_id ])
+    params.require(image_mushroom: [ :mushroom_id_id, :parts_id, :description, :image_name, :file_address, :image_width, :image_height, :camera_make_id, :camera_model, :lens, :exposure, :aperture, :iso, :date_taken, :focal_length, :GPSLatitudeRef, :GPSLatitude_0, :GPSLatitude_1, :GPSLatitude_2, :GPSLongitudeRef, :GPSLongitude_0, :GPSLongitude_1, :GPSLongitude_2, :GPSAltitudeRef, :GPSAltitude, :entered_by_id ])
     end
 end

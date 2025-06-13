@@ -65,6 +65,6 @@ class ProjectBelongsTosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_belongs_to_params
-      params.expect(project_belongs_to: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(project_belongs_to: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

@@ -65,6 +65,6 @@ class AllGroupMushroomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def all_group_mushroom_params
-      params.expect(all_group_mushroom: [ :all_group_id_id, :mushroom_id_id ])
+    params.require(all_group_mushroom: [ :all_group_id_id, :mushroom_id_id ])
     end
 end

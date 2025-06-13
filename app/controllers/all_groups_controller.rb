@@ -65,6 +65,6 @@ class AllGroupsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def all_group_params
-      params.expect(all_group: [ :name, :description, :comments, :entered_by_id, :source_id, :entered_by_id ])
+    params.require(all_group: [ :name, :description, :comments, :entered_by_id, :source_id, :entered_by_id ])
     end
 end

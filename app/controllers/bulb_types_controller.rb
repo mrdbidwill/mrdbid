@@ -65,6 +65,6 @@ class BulbTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bulb_type_params
-      params.expect(bulb_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(bulb_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

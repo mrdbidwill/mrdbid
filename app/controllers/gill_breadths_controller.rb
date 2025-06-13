@@ -65,6 +65,6 @@ class GillBreadthsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_breadth_params
-      params.expect(gill_breadth: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(gill_breadth: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

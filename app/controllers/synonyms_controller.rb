@@ -65,6 +65,6 @@ class SynonymsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def synonym_params
-      params.expect(synonym: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(synonym: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

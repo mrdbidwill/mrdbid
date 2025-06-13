@@ -65,6 +65,6 @@ class UniversalOuterVeilTexturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def universal_outer_veil_texture_params
-      params.expect(universal_outer_veil_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(universal_outer_veil_texture: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

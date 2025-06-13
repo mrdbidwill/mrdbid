@@ -65,6 +65,6 @@ class StatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def state_params
-      params.expect(state: [ :name, :description, :comments, :source_id, :country_id, :entered_by_id ])
+    params.require(state: [ :name, :description, :comments, :source_id, :country_id, :entered_by_id ])
     end
 end

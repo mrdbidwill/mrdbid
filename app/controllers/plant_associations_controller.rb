@@ -65,6 +65,6 @@ class PlantAssociationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def plant_association_params
-      params.expect(plant_association: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(plant_association: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

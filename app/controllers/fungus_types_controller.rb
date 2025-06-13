@@ -65,6 +65,6 @@ class FungusTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fungus_type_params
-      params.expect(fungus_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(fungus_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

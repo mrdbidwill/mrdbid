@@ -1,23 +1,18 @@
 FactoryBot.define do
   factory :mushroom do
-    mushroom_name { "Magic Mushroom" }
-    description { "A sample mushroom description" }
-    state { association :state }
-    country { association :country  }  # This uses the country from the state to avoid mismatches
+    mushroom_name { "Fly Agaric" }
+    common_name { "Amanita muscaria" }
+    description { "A highly toxic yet iconic mushroom." }
+    comment { "Found under a birch tree." }
+    location_found_city { "Mystic Grove" }
+    location_found_county { "Fairy County" }
+    location_public { false }
+    share_data { false }
+    date_found { "2025-06-05" }
     mushroom_location { association :mushroom_location }
+    state { association :state }
+    country { association :country }
     fungus_type { association :fungus_type }
-    entered_by { state.entered_by }
-
-    after(:build) do |mushroom|
-      puts "Mushroom Factory Debug:"
-      puts "Mushroom Name: #{mushroom.mushroom_name}"
-      puts "Description: #{mushroom.description}"
-      puts "State: #{mushroom.state.inspect}"
-      puts "Country: #{mushroom.country.inspect}"
-      puts "Mushroom Location: #{mushroom.mushroom_location.inspect}"
-      puts "Fungus Type: #{mushroom.fungus_type.inspect}"
-      puts "Entered by: #{mushroom.entered_by.inspect}"
-    end
+    entered_by { association :user }
   end
 end
-

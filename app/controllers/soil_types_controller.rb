@@ -65,6 +65,6 @@ class SoilTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def soil_type_params
-      params.expect(soil_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(soil_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

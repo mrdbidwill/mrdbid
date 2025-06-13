@@ -65,6 +65,6 @@ class ImageMushroomThumbnailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def image_mushroom_thumbnail_params
-      params.expect(image_mushroom_thumbnail: [ :image_mushroom_id_id, :thumbnail_file_address, :image_width, :image_height, :entered_by_id ])
+    params.require(image_mushroom_thumbnail: [ :image_mushroom_id_id, :thumbnail_file_address, :image_width, :image_height, :entered_by_id ])
     end
 end

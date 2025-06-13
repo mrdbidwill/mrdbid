@@ -65,6 +65,6 @@ class GillSpacingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_spacing_params
-      params.expect(gill_spacing: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(gill_spacing: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

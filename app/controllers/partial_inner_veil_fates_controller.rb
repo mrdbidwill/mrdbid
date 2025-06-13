@@ -65,6 +65,6 @@ class PartialInnerVeilFatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def partial_inner_veil_fate_params
-      params.expect(partial_inner_veil_fate: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(partial_inner_veil_fate: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

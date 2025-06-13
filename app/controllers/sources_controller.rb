@@ -65,6 +65,6 @@ class SourcesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def data_source_params
-      params.expect(source: [:title, :author, :ref, :item_code, :comment, :my_rating, :my_comment, :entered_by_id ])
+    params.require(source: [:title, :author, :ref, :item_code, :comment, :my_rating, :my_comment, :entered_by_id ])
     end
 end

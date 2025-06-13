@@ -16,7 +16,7 @@ class MushroomsTest < ApplicationSystemTestCase
 
     fill_in "Comment", with: @mushroom.comment
     fill_in "Common name", with: @mushroom.common_name
-    fill_in "Country id", with: @mushroom.country_id_id
+    fill_in "Country id", with: @mushroom.country_id
     fill_in "Date found", with: @mushroom.date_found
     fill_in "Description", with: @mushroom.description
     fill_in "Entered by", with: @mushroom.entered_by_id
@@ -27,7 +27,7 @@ class MushroomsTest < ApplicationSystemTestCase
     fill_in "Mushroom location", with: @mushroom.mushroom_location_id
     fill_in "Mushroom name", with: @mushroom.mushroom_name
     check "Share data" if @mushroom.share_data
-    fill_in "State id", with: @mushroom.state_id_id
+    fill_in "State id", with: @mushroom.state_id
     click_on "Create Mushroom"
 
     assert_text "Mushroom was successfully created"
@@ -40,7 +40,7 @@ class MushroomsTest < ApplicationSystemTestCase
 
     fill_in "Comment", with: @mushroom.comment
     fill_in "Common name", with: @mushroom.common_name
-    fill_in "Country id", with: @mushroom.country_id_id
+    fill_in "Country id", with: @mushroom.country_id
     fill_in "Date found", with: @mushroom.date_found
     fill_in "Description", with: @mushroom.description
     fill_in "Entered by", with: @mushroom.entered_by_id
@@ -51,7 +51,7 @@ class MushroomsTest < ApplicationSystemTestCase
     fill_in "Mushroom location", with: @mushroom.mushroom_location_id
     fill_in "Mushroom name", with: @mushroom.mushroom_name
     check "Share data" if @mushroom.share_data
-    fill_in "State id", with: @mushroom.state_id_id
+    fill_in "State id", with: @mushroom.state_id
     click_on "Update Mushroom"
 
     assert_text "Mushroom was successfully updated"

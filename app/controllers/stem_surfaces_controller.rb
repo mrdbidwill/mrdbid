@@ -65,6 +65,6 @@ class StemSurfacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def stem_surface_params
-      params.expect(stem_surface: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(stem_surface: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

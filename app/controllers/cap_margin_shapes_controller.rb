@@ -65,6 +65,6 @@ class CapMarginShapesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cap_margin_shape_params
-      params.expect(cap_margin_shape: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(cap_margin_shape: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

@@ -65,6 +65,6 @@ class GillEdgesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_edge_params
-      params.expect(gill_edge: [ :name, :description ])
+    params.require(gill_edge: [ :name, :description ])
     end
 end

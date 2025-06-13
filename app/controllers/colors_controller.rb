@@ -65,6 +65,6 @@ class ColorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def color_params
-      params.expect(color: [ :latin_name, :common_name, :color_group, :hex, :sequence, :r_val, :g_val, :b_val, :closest_websafe_color, :cwc_r, :cwc_g, :cwc_b, :image_file, :entered_by_id ])
+    params.require(color: [ :latin_name, :common_name, :color_group, :hex, :sequence, :r_val, :g_val, :b_val, :closest_websafe_color, :cwc_r, :cwc_g, :cwc_b, :image_file, :entered_by_id ])
     end
 end

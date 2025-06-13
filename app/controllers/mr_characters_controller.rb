@@ -65,6 +65,6 @@ class MrCharactersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mr_character_params
-      params.expect(mr_character: [ :name, :display_options_id, :lookup, :parts_id, :source_id, :entered_by_id ])
+    params.require(mr_character: [ :name, :display_options_id, :lookup, :parts_id, :source_id, :entered_by_id ])
     end
 end

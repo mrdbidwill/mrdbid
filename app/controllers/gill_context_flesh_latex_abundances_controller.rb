@@ -65,6 +65,6 @@ class GillContextFleshLatexAbundancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gill_context_flesh_latex_abundance_params
-      params.expect(gill_context_flesh_latex_abundance: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(gill_context_flesh_latex_abundance: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

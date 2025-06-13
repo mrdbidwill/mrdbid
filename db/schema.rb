@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_07_190407) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_12_235537) do
   create_table "abundances", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -77,12 +77,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_190407) do
     t.index ["source_id"], name: "index_bulb_types_on_source_id"
   end
 
+  create_table "camera_makes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.text "comments"
+    t.bigint "source_id", null: false
+    t.bigint "entered_by_id", null: false
+    t.index ["entered_by_id"], name: "index_camera_makes_on_entered_by_id"
+    t.index ["source_id"], name: "index_camera_makes_on_source_id"
+  end
+
   create_table "cameras", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "camera_make", null: false
     t.string "camera_model"
     t.bigint "entered_by_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "camera_make_id", null: false
+    t.index ["camera_make_id"], name: "index_cameras_on_camera_make_id"
     t.index ["entered_by_id"], name: "index_cameras_on_entered_by_id"
   end
 
@@ -880,6 +891,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_190407) do
   add_foreign_key "articles", "users", column: "entered_by_id"
   add_foreign_key "bulb_types", "sources"
   add_foreign_key "bulb_types", "users", column: "entered_by_id"
+  add_foreign_key "camera_makes", "sources"
+  add_foreign_key "camera_makes", "users", column: "entered_by_id"
+  add_foreign_key "cameras", "camera_makes"
   add_foreign_key "cameras", "users", column: "entered_by_id"
   add_foreign_key "cap_context_flesh_textures", "sources"
   add_foreign_key "cap_context_flesh_textures", "users", column: "entered_by_id"

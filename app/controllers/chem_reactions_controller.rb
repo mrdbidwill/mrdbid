@@ -65,6 +65,6 @@ class ChemReactionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def chem_reaction_params
-      params.expect(chem_reaction: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(chem_reaction: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

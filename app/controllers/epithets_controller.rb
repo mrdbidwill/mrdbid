@@ -65,6 +65,6 @@ class EpithetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def epithet_params
-      params.expect(epithet: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(epithet: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

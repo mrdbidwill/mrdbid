@@ -65,6 +65,6 @@ class CapShapesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cap_shape_params
-      params.expect(cap_shape: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(cap_shape: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

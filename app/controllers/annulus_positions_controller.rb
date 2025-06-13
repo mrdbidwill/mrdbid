@@ -65,6 +65,6 @@ class AnnulusPositionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def annulus_position_params
-      params.expect(annulus_position: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(annulus_position: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

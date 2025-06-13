@@ -65,6 +65,6 @@ class CamerasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def camera_params
-      params.expect(camera: [ :camera_make_id, :camera_model, :entered_by_id ])
+    params.require(camera: [ :camera_make_id, :camera_model, :entered_by_id ])
     end
 end

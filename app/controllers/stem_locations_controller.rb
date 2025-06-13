@@ -65,6 +65,6 @@ class StemLocationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def stem_location_params
-      params.expect(stem_location: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(stem_location: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

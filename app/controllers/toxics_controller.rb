@@ -65,6 +65,6 @@ class ToxicsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def toxic_params
-      params.expect(toxic: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(toxic: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

@@ -65,6 +65,6 @@ class VeilsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def veil_params
-      params.expect(veil: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(veil: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

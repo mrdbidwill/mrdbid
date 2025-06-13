@@ -65,6 +65,6 @@ class PreservationMethodsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def preservation_method_params
-      params.expect(preservation_method: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(preservation_method: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

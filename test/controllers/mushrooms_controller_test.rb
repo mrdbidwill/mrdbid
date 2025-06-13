@@ -17,7 +17,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create mushroom" do
     assert_difference("Mushroom.count") do
-      post mushrooms_url, params: { mushroom: { comment: @mushroom.comment, common_name: @mushroom.common_name, country_id_id: @mushroom.country_id_id, date_found: @mushroom.date_found, description: @mushroom.description, entered_by_id: @mushroom.entered_by_id, fungus_type_id: @mushroom.fungus_type_id, location_found_city: @mushroom.location_found_city, location_found_county: @mushroom.location_found_county, location_public: @mushroom.location_public, mushroom_location_id: @mushroom.mushroom_location_id, mushroom_name: @mushroom.mushroom_name, share_data: @mushroom.share_data, state_id_id: @mushroom.state_id_id } }
+      post mushrooms_url, params: { mushroom: { comment: @mushroom.comment, common_name: @mushroom.common_name, country_id: @mushroom.country_id, date_found: @mushroom.date_found, description: @mushroom.description, entered_by_id: @mushroom.entered_by_id, fungus_type_id: @mushroom.fungus_type_id, location_found_city: @mushroom.location_found_city, location_found_county: @mushroom.location_found_county, location_public: @mushroom.location_public, mushroom_location_id: @mushroom.mushroom_location_id, mushroom_name: @mushroom.mushroom_name, share_data: @mushroom.share_data, state_id: @mushroom.state_id } }
     end
 
     assert_redirected_to mushroom_url(Mushroom.last)
@@ -34,7 +34,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update mushroom" do
-    patch mushroom_url(@mushroom), params: { mushroom: { comment: @mushroom.comment, common_name: @mushroom.common_name, country_id_id: @mushroom.country_id_id, date_found: @mushroom.date_found, description: @mushroom.description, entered_by_id: @mushroom.entered_by_id, fungus_type_id: @mushroom.fungus_type_id, location_found_city: @mushroom.location_found_city, location_found_county: @mushroom.location_found_county, location_public: @mushroom.location_public, mushroom_location_id: @mushroom.mushroom_location_id, mushroom_name: @mushroom.mushroom_name, share_data: @mushroom.share_data, state_id_id: @mushroom.state_id_id } }
+    patch mushroom_url(@mushroom), params: { mushroom: { comment: @mushroom.comment, common_name: @mushroom.common_name, country_id: @mushroom.country_id, date_found: @mushroom.date_found, description: @mushroom.description, entered_by_id: @mushroom.entered_by_id, fungus_type_id: @mushroom.fungus_type_id, location_found_city: @mushroom.location_found_city, location_found_county: @mushroom.location_found_county, location_public: @mushroom.location_public, mushroom_location_id: @mushroom.mushroom_location_id, mushroom_name: @mushroom.mushroom_name, share_data: @mushroom.share_data, state_id: @mushroom.state_id } }
     assert_redirected_to mushroom_url(@mushroom)
   end
 

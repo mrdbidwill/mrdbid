@@ -65,6 +65,6 @@ class LensController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def len_params
-      params.expect(len: [ :lens_make_id, :lens_model, :entered_by_id ])
+    params.require(len: [ :lens_make_id, :lens_model, :entered_by_id ])
     end
 end

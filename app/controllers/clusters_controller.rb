@@ -65,6 +65,6 @@ class ClustersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cluster_params
-      params.expect(cluster: [ :name, :description, :comments, :entered_by_id, :source_id, :entered_by_id ])
+    params.require(cluster: [ :name, :description, :comments, :entered_by_id, :source_id, :entered_by_id ])
     end
 end

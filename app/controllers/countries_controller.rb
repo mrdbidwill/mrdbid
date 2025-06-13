@@ -65,6 +65,6 @@ class CountriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def country_params
-      params.expect(country: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(country: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

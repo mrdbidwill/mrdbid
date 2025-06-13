@@ -65,6 +65,6 @@ class MushroomLocationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mushroom_location_params
-      params.expect(mushroom_location: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(mushroom_location: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end

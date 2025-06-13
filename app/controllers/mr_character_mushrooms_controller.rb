@@ -65,6 +65,6 @@ class MrCharacterMushroomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mr_character_mushroom_params
-      params.expect(mr_character_mushroom: [ :mr_character_id_id, :mushroom_id_id, :character_value, :entered_by_id ])
+    params.require(mr_character_mushroom: [ :mr_character_id_id, :mushroom_id_id, :character_value, :entered_by_id ])
     end
 end

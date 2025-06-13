@@ -65,6 +65,6 @@ class SourceDataTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def source_data_type_params
-      params.expect(source_data_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
+    params.require(source_data_type: [ :name, :description, :comments, :source_id, :entered_by_id ])
     end
 end
