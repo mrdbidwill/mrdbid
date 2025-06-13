@@ -13,8 +13,7 @@ class CreateDnaSequences < ActiveRecord::Migration[8.0]
       t.string :sequencing_technology
       t.string :trace_files_raw_dna_data
       t.string :voucher_number
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
-
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
 
       t.timestamps
     end

@@ -5,7 +5,7 @@ class CreateCameraMakes < ActiveRecord::Migration[8.0]
       t.text :description
       t.text :comments
       t.references :source, null: false, foreign_key: true
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
     end
   end
 end

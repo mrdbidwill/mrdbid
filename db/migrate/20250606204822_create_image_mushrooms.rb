@@ -26,7 +26,7 @@ class CreateImageMushrooms < ActiveRecord::Migration[8.0]
       t.string :GPSLongitude_2
       t.string :GPSAltitudeRef
       t.string :GPSAltitude
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
       t.timestamps
     end
   end

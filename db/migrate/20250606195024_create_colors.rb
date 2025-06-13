@@ -14,8 +14,7 @@ class CreateColors < ActiveRecord::Migration[8.0]
       t.integer :cwc_g
       t.integer :cwc_b
       t.string :image_file
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
-
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
 
       t.timestamps
     end

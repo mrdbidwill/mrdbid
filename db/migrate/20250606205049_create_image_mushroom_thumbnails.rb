@@ -5,7 +5,7 @@ class CreateImageMushroomThumbnails < ActiveRecord::Migration[8.0]
       t.string :thumbnail_file_address
       t.integer :image_width
       t.integer :image_height
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
       t.timestamps
     end
   end

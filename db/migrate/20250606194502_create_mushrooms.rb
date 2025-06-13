@@ -14,8 +14,7 @@ class CreateMushrooms < ActiveRecord::Migration[8.0]
       t.boolean :share_data
       t.date :date_found
       t.references :fungus_type, null: false, foreign_key: true
-      t.references :entered_by, null: false, foreign_key: { to_table: :users }
-
+      t.references :entered_by, null: false, foreign_key: {to_table: :users}
 
       t.timestamps
     end
