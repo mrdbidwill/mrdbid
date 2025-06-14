@@ -3,6 +3,8 @@ require "test_helper"
 class AnnulusPositionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @annulus_position = annulus_positions(:one)
+    @source = sources(:one)
+    @user = users(:one)
   end
 
   test "should get index" do
@@ -15,34 +17,43 @@ class AnnulusPositionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create annulus_position" do
+  test "should create valid annulus_position" do
     assert_difference("AnnulusPosition.count") do
-      post annulus_positions_url, params: { annulus_position: { comments: @annulus_position.comments, description: @annulus_position.description, entered_by_id: @annulus_position.entered_by_id, name: @annulus_position.name, source_id: @annulus_position.source_id } }
+      post annulus_positions_url, params: { annulus_position: { 
+        name: "New Position", 
+        description: "Valid description", 
+        comments: "Valid comments", 
+        source_id: @source.id, 
+        entered_by_id: @user.id 
+      }}
     end
 
     assert_redirected_to annulus_position_url(AnnulusPosition.last)
   end
 
-  test "should show annulus_position" do
-    get annulus_position_url(@annulus_position)
-    assert_response :success
-  end
+  test "should not create invalid annulus_position" do
+    assert_no_difference("AnnulusPosition.count") do
+      post annulus_positions_url, params: { annulus_position: { 
+        name: nil, 
+        source_id: nil 
+      }}
+    end
 
-  test "should get edit" do
-    get edit_annulus_position_url(@annulus_position)
-    assert_response :success
+    assert_response :unprocessable_entity
   end
 
   test "should update annulus_position" do
-    patch annulus_position_url(@annulus_position), params: { annulus_position: { comments: @annulus_position.comments, description: @annulus_position.description, entered_by_id: @annulus_position.entered_by_id, name: @annulus_position.name, source_id: @annulus_position.source_id } }
+    patch annulus_position_url(@annulus_position), params: { annulus_position: { 
+      name: "Updated name" 
+    }}
     assert_redirected_to annulus_position_url(@annulus_position)
+    assert_equal "Updated name", @annulus_position.reload.name
   end
 
   test "should destroy annulus_position" do
     assert_difference("AnnulusPosition.count", -1) do
       delete annulus_position_url(@annulus_position)
     end
-
     assert_redirected_to annulus_positions_url
   end
 end

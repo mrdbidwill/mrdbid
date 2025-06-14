@@ -1,5 +1,5 @@
 class AllGroupsController < ApplicationController
-  before_action :set_all_group, only: %i[ show edit update destroy ]
+  before_action :set_all_group, only: %i[show edit update destroy]
 
   # GET /all_groups or /all_groups.json
   def index
@@ -58,13 +58,14 @@ class AllGroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_all_group
-      @all_group = AllGroup.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def all_group_params
-    params.require(all_group: [ :name, :description, :comments, :entered_by_id, :source_id, :entered_by_id ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_all_group
+    @all_group = AllGroup.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def all_group_params
+    params.require(:all_group).permit(:name, :description, :comments, :entered_by_id, :source_id)
+  end
 end

@@ -2,10 +2,22 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+require "coverage"
+Coverage.start
+
+at_exit do
+  result = Coverage.result
+  File.open("coverage.txt", "w") do |file|
+    result.each do |file_path, coverage|
+      file.puts "#{file_path}: #{coverage.inspect}"
+    end
+  end
+end
+
 module ActiveSupport
   class TestCase
-    # Run tests in parallel with specified workers
-    parallelize(workers: :number_of_processors)
+    # Disable Run tests in parallel with specified workers
+    # parallelize(workers: :number_of_processors)
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all

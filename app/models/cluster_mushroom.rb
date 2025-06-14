@@ -1,4 +1,4 @@
 class ClusterMushroom < ApplicationRecord
-  belongs_to :cluster_id
-  belongs_to :mushroom_id
+  belongs_to :cluster
+  belongs_to :mushroom
 end
