@@ -1,1 +1,0 @@
-json.partial! "universal_outer_veil_appearances/universal_outer_veil_appearance", universal_outer_veil_appearance: @universal_outer_veil_appearance

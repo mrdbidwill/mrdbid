@@ -1,1 +1,0 @@
-json.array! @partial_inner_veil_annular_ring_positions, partial: "partial_inner_veil_annular_ring_positions/partial_inner_veil_annular_ring_position", as: :partial_inner_veil_annular_ring_position
