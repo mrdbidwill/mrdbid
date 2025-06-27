@@ -1,0 +1,38 @@
+<section aria-labelledby="form-title" class="max-w-2xl mx-auto py-6">
+  <h2 id="form-title" class="text-xl font-semibold text-gray-800 mb-6 text-center">
+    Create or Edit MR Character
+  </h2>
+
+  <%= form_with(model: mr_character, class: "space-y-6") do |form| %>
+    <!-- Error Messages -->
+    <% if mr_character.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-4 py-2 rounded-md shadow-sm">
+        <h2 class="font-bold mb-2">
+          <%= pluralize(mr_character.errors.count, "error") %> prohibited this MR Character from being saved:
+        </h2>
+        <ul class="list-disc ml-6">
+          <% mr_character.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Name Field -->
+    <div class="my-5">
+      <%= form.label :name, "Name", class: "block font-medium text-gray-700" %>
+      <%= form.text_field :name, autofocus: true, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:name].any? ? 'border-red-400' : 'border-gray-400'}" %>
+    </div>
+
+    <!-- Display Options Field -->
+    <div class="my-5">
+      <%= form.label :display_options_id, "Display Options", class: "block font-medium text-gray-700" %>
+      <%= form.text_field :display_options, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:display_options].any? ? 'border-red-400' : 'border-gray-400'}" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="my-5">
+      <%= form.submit "Save MR Character", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer shadow-md" %>
+    </div>
+  <% end %>
+</section>

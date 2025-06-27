@@ -1,0 +1,2 @@
+class LookupTables::PreservationMethodsController < LookupTablesController
+end

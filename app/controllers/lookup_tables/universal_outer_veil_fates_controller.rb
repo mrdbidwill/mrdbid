@@ -1,0 +1,2 @@
+class LookupTables::UniversalOuterVeilFatesController < LookupTablesController
+end

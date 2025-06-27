@@ -1,0 +1,16 @@
+
+# Ignore temporary and system files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore logs
+log/*
+!log/.keep
+
+# Ignore tmp files
+tmp/*

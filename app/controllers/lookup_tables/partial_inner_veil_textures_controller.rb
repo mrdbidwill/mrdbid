@@ -1,0 +1,2 @@
+class LookupTables::PartialInnerVeilTexturesController < LookupTablesController
+end

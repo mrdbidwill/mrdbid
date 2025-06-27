@@ -1,0 +1,2 @@
+class LookupTables::UniversalOuterVeilAppearancesController < LookupTablesController
+end

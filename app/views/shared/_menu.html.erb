@@ -1,0 +1,60 @@
+<nav class="bg-gray-100 text-gray-800 w-full px-6 py-4">
+  <div class="w-full flex items-center justify-between">
+    <!-- Logo -->
+    <div class="text-2xl font-bold">
+      <%= render "shared/logo" %>
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="flex space-x-6">
+      <!-- Home -->
+      <% unless current_page?(root_path) %>
+        <li>
+          <%= link_to "Home", root_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(root_path)" %>
+        </li>
+      <% end %>
+
+      <!-- Contact -->
+      <% unless current_page?(contact_path) %>
+        <li>
+          <%= link_to "Contact", contact_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(contact_path)" %>
+        </li>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <!-- Mushrooms -->
+        <% unless current_page?(mushrooms_path) %>
+          <li>
+            <%= link_to "Mushrooms", mushrooms_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(mushrooms_path)" %>
+          </li>
+        <% end %>
+
+        <!-- MR Characters -->
+        <% unless current_page?(mr_characters_path) %>
+          <li>
+            <%= link_to "MR Characters", mr_characters_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(mr_characters_path)" %>
+          </li>
+        <% end %>
+
+        <!-- Logout -->
+        <li>
+          <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "hover:text-orange-400" %>
+        </li>
+      <% else %>
+        <!-- Login -->
+        <% unless current_page?(new_user_session_path) %>
+          <li>
+            <%= link_to "Login", new_user_session_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(new_user_session_path)" %>
+          </li>
+        <% end %>
+
+        <!-- Sign Up -->
+        <% unless current_page?(new_user_registration_path) %>
+          <li>
+            <%= link_to "Sign Up", new_user_registration_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(new_user_registration_path)" %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</nav>

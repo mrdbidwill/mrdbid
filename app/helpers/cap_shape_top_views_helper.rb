@@ -1,0 +1,2 @@
+module CapShapeTopViewsHelper
+end

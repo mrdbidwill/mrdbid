@@ -1,0 +1,12 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" class="bg-red-50 text-red-500 px-4 py-2 rounded-md mb-4" data-turbo-cache="false">
+    <h2 class="font-bold mb-2">
+      <%= resource.errors.count > 1 ? "#{resource.errors.count} errors" : "1 error" %> prevented submission:
+    </h2>
+    <ul class="list-disc ml-6">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

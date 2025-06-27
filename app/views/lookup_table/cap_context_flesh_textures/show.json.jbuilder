@@ -1,0 +1,1 @@
+json.partial! "cap_context_flesh_textures/cap_context_flesh_texture", cap_context_flesh_texture: @cap_context_flesh_texture

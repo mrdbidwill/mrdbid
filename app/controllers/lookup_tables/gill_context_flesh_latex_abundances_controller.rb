@@ -1,0 +1,2 @@
+class LookupTables::GillContextFleshLatexAbundancesController < LookupTablesController
+end

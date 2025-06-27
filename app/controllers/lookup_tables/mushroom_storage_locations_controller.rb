@@ -1,0 +1,2 @@
+class LookupTables::MushroomStorageLocationsController < LookupTablesController
+end

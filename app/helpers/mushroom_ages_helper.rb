@@ -1,0 +1,2 @@
+module MushroomAgesHelper
+end

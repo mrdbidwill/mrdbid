@@ -1,0 +1,2 @@
+class DnaSequence < ApplicationRecord
+end

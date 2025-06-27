@@ -1,0 +1,1 @@
+json.partial! "image_mushroom_thumbnails/image_mushroom_thumbnail", image_mushroom_thumbnail: @image_mushroom_thumbnail

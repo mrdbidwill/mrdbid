@@ -1,0 +1,2 @@
+module StemTexturesHelper
+end

@@ -1,0 +1,2 @@
+module StemLocationsHelper
+end

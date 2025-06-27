@@ -1,0 +1,2 @@
+class LookupTables::CapContextFleshTexturesController < LookupTablesController
+end

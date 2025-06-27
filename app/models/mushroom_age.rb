@@ -1,0 +1,2 @@
+class MushroomAge < LookupTable
+end

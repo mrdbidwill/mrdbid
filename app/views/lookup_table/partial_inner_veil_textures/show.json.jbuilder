@@ -1,0 +1,1 @@
+json.partial! "partial_inner_veil_textures/partial_inner_veil_texture", partial_inner_veil_texture: @partial_inner_veil_texture

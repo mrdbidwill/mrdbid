@@ -1,0 +1,2 @@
+module SoilTypesHelper
+end

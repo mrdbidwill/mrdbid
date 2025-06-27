@@ -1,0 +1,1 @@
+json.partial! "mushroom_storage_locations/mushroom_storage_location", mushroom_storage_location: @mushroom_storage_location

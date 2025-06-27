@@ -1,0 +1,2 @@
+module UniversalOuterVeilFatesHelper
+end
