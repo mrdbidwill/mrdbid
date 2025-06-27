@@ -1,2 +1,0 @@
-class LookupTables::PartialInnerVeilAppearancesController < LookupTablesController
-end

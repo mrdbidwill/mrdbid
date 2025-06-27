@@ -1,2 +1,0 @@
-class LookupTables::PartialInnerVeilAnnularRingPositionsController < LookupTablesController
-end
