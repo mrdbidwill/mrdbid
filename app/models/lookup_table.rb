@@ -1,9 +1,13 @@
 class LookupTable < ApplicationRecord
-  self.abstract_class = true  # Marks this as an abstract class; it won't map to any database table
+  self.abstract_class = true
 
-  belongs_to :source
-
-  # Validations
-  validates :name, presence: true, uniqueness: {scope: :source} # Scoped uniqueness
+  # Shared validations
+  validates :name, presence: true, uniqueness: true
+  validates :description, presence: true
   validates :source, presence: true
+
+  # Shared methods (if needed)
+  def display_name
+    "#{name} - #{description}"
+  end
 end

@@ -1,0 +1,30 @@
+<h1><%= @resource_class.model_name.human.pluralize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Comments</th>
+      <th>Source</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td><%= resource.name %></td>
+        <td><%= resource.description %></td>
+        <td><%= resource.comments %></td>
+        <td><%= resource.source %></td>
+        <td>
+          <%= link_to "Show", polymorphic_path(resource) %> |
+          <%= link_to "Edit", edit_polymorphic_path(resource) %> |
+          <%= link_to "Delete", resource, method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add New #{resource_class.model_name.human}", new_polymorphic_path(@resource_class) %>

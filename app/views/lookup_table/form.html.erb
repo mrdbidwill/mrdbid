@@ -1,0 +1,38 @@
+<h1><%= @resource.new_record? ? "New" : "Edit" %> <%= @resource_class.model_name.human %></h1>
+
+<%= form_with(model: @resource, local: true) do |form| %>
+  <% if @resource.errors.any? %>
+    <div>
+      <h2><%= pluralize(@resource.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+        <% @resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :comments %>
+    <%= form.text_area :comments %>
+  </div>
+
+  <div>
+    <%= form.label :source %>
+    <%= form.number_field :source %>
+  </div>
+
+  <%= form.submit %>
+<% end %>
+
+<%= link_to "Back", polymorphic_path(@resource_class) %>
