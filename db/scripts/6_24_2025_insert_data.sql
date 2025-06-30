@@ -298,13 +298,13 @@ LOCK TABLES `cameras` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_context_flesh_textures`
+-- Table structure for table `pileus_context_flesh_textures`
 --
 
-DROP TABLE IF EXISTS `cap_context_flesh_textures`;
+DROP TABLE IF EXISTS `pileus_context_flesh_textures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_context_flesh_textures` (
+CREATE TABLE `pileus_context_flesh_textures` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -317,22 +317,22 @@ CREATE TABLE `cap_context_flesh_textures` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_context_flesh_textures`
+-- Dumping data for table `pileus_context_flesh_textures`
 --
 
-LOCK TABLES `cap_context_flesh_textures` WRITE;
-/*!40000 ALTER TABLE `cap_context_flesh_textures` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_context_flesh_textures` ENABLE KEYS */;
+LOCK TABLES `pileus_context_flesh_textures` WRITE;
+/*!40000 ALTER TABLE `pileus_context_flesh_textures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_context_flesh_textures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_margin_shapes`
+-- Table structure for table `pileus_margin_shapes`
 --
 
-DROP TABLE IF EXISTS `cap_margin_shapes`;
+DROP TABLE IF EXISTS `pileus_margin_shapes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_margin_shapes` (
+CREATE TABLE `pileus_margin_shapes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -345,22 +345,22 @@ CREATE TABLE `cap_margin_shapes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_margin_shapes`
+-- Dumping data for table `pileus_margin_shapes`
 --
 
-LOCK TABLES `cap_margin_shapes` WRITE;
-/*!40000 ALTER TABLE `cap_margin_shapes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_margin_shapes` ENABLE KEYS */;
+LOCK TABLES `pileus_margin_shapes` WRITE;
+/*!40000 ALTER TABLE `pileus_margin_shapes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_margin_shapes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_margin_types`
+-- Table structure for table `pileus_margin_types`
 --
 
-DROP TABLE IF EXISTS `cap_margin_types`;
+DROP TABLE IF EXISTS `pileus_margin_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_margin_types` (
+CREATE TABLE `pileus_margin_types` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -373,22 +373,22 @@ CREATE TABLE `cap_margin_types` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_margin_types`
+-- Dumping data for table `pileus_margin_types`
 --
 
-LOCK TABLES `cap_margin_types` WRITE;
-/*!40000 ALTER TABLE `cap_margin_types` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_margin_types` ENABLE KEYS */;
+LOCK TABLES `pileus_margin_types` WRITE;
+/*!40000 ALTER TABLE `pileus_margin_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_margin_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_shape_top_views`
+-- Table structure for table `pileus_shape_top_views`
 --
 
-DROP TABLE IF EXISTS `cap_shape_top_views`;
+DROP TABLE IF EXISTS `pileus_shape_top_views`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_shape_top_views` (
+CREATE TABLE `pileus_shape_top_views` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -401,22 +401,22 @@ CREATE TABLE `cap_shape_top_views` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_shape_top_views`
+-- Dumping data for table `pileus_shape_top_views`
 --
 
-LOCK TABLES `cap_shape_top_views` WRITE;
-/*!40000 ALTER TABLE `cap_shape_top_views` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_shape_top_views` ENABLE KEYS */;
+LOCK TABLES `pileus_shape_top_views` WRITE;
+/*!40000 ALTER TABLE `pileus_shape_top_views` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_shape_top_views` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_shapes`
+-- Table structure for table `pileus_shapes`
 --
 
-DROP TABLE IF EXISTS `cap_shapes`;
+DROP TABLE IF EXISTS `pileus_shapes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_shapes` (
+CREATE TABLE `pileus_shapes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -429,22 +429,22 @@ CREATE TABLE `cap_shapes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_shapes`
+-- Dumping data for table `pileus_shapes`
 --
 
-LOCK TABLES `cap_shapes` WRITE;
-/*!40000 ALTER TABLE `cap_shapes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_shapes` ENABLE KEYS */;
+LOCK TABLES `pileus_shapes` WRITE;
+/*!40000 ALTER TABLE `pileus_shapes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_shapes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_surface_drynesses`
+-- Table structure for table `pileus_surface_drynesses`
 --
 
-DROP TABLE IF EXISTS `cap_surface_drynesses`;
+DROP TABLE IF EXISTS `pileus_surface_drynesses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_surface_drynesses` (
+CREATE TABLE `pileus_surface_drynesses` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -457,22 +457,22 @@ CREATE TABLE `cap_surface_drynesses` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_surface_drynesses`
+-- Dumping data for table `pileus_surface_drynesses`
 --
 
-LOCK TABLES `cap_surface_drynesses` WRITE;
-/*!40000 ALTER TABLE `cap_surface_drynesses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_surface_drynesses` ENABLE KEYS */;
+LOCK TABLES `pileus_surface_drynesses` WRITE;
+/*!40000 ALTER TABLE `pileus_surface_drynesses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_surface_drynesses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cap_surface_textures`
+-- Table structure for table `pileus_surface_textures`
 --
 
-DROP TABLE IF EXISTS `cap_surface_textures`;
+DROP TABLE IF EXISTS `pileus_surface_textures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cap_surface_textures` (
+CREATE TABLE `pileus_surface_textures` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -485,12 +485,12 @@ CREATE TABLE `cap_surface_textures` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cap_surface_textures`
+-- Dumping data for table `pileus_surface_textures`
 --
 
-LOCK TABLES `cap_surface_textures` WRITE;
-/*!40000 ALTER TABLE `cap_surface_textures` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cap_surface_textures` ENABLE KEYS */;
+LOCK TABLES `pileus_surface_textures` WRITE;
+/*!40000 ALTER TABLE `pileus_surface_textures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pileus_surface_textures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -757,18 +757,18 @@ CREATE TABLE `fungus_types` (
 
 LOCK TABLES `fungus_types` WRITE;
 /*!40000 ALTER TABLE `fungus_types` DISABLE KEYS */;
-INSERT INTO `fungus_types` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Gills','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Pores','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Teeth','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Cups','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Stinkhorn','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+INSERT INTO `fungus_types` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Lamellaes - Gills','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Pores','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Teeth','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Cups','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Stinkhorn','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
 /*!40000 ALTER TABLE `fungus_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_attachments`
+-- Table structure for table `lamella_attachments`
 --
 
-DROP TABLE IF EXISTS `gill_attachments`;
+DROP TABLE IF EXISTS `lamella_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_attachments` (
+CREATE TABLE `lamella_attachments` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -781,23 +781,23 @@ CREATE TABLE `gill_attachments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_attachments`
+-- Dumping data for table `lamella_attachments`
 --
 
-LOCK TABLES `gill_attachments` WRITE;
-/*!40000 ALTER TABLE `gill_attachments` DISABLE KEYS */;
-INSERT INTO `gill_attachments` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Free - remote','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Free - close','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Adnate - horizontal','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Adnate - ascending','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Adnexed (almost free)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Sinuate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Emarginate (notched)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Decurrent - long','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Decurrent - short','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Seceding (breaking away)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Uncinate (w/decurrent tooth)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Collared','Gills are attached to a collar or ring that encircles the stipe.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `gill_attachments` ENABLE KEYS */;
+LOCK TABLES `lamella_attachments` WRITE;
+/*!40000 ALTER TABLE `lamella_attachments` DISABLE KEYS */;
+INSERT INTO `lamella_attachments` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Free - remote','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Free - close','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Adnate - horizontal','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Adnate - ascending','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Adnexed (almost free)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Sinuate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Emarginate (notched)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Decurrent - long','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Decurrent - short','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Seceding (breaking away)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Uncinate (w/decurrent tooth)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Collared','Lamellaes are attached to a collar or ring that encircles the stipe.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `lamella_attachments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_breadths`
+-- Table structure for table `lamella_breadths`
 --
 
-DROP TABLE IF EXISTS `gill_breadths`;
+DROP TABLE IF EXISTS `lamella_breadths`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_breadths` (
+CREATE TABLE `lamella_breadths` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -810,23 +810,23 @@ CREATE TABLE `gill_breadths` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_breadths`
+-- Dumping data for table `lamella_breadths`
 --
 
-LOCK TABLES `gill_breadths` WRITE;
-/*!40000 ALTER TABLE `gill_breadths` DISABLE KEYS */;
-INSERT INTO `gill_breadths` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Broad','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Free - close','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Ventricose','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `gill_breadths` ENABLE KEYS */;
+LOCK TABLES `lamella_breadths` WRITE;
+/*!40000 ALTER TABLE `lamella_breadths` DISABLE KEYS */;
+INSERT INTO `lamella_breadths` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Broad','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Free - close','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Ventricose','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `lamella_breadths` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_context_flesh_latex_abundances`
+-- Table structure for table `lamella_context_flesh_latex_abundances`
 --
 
-DROP TABLE IF EXISTS `gill_context_flesh_latex_abundances`;
+DROP TABLE IF EXISTS `lamella_context_flesh_latex_abundances`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_context_flesh_latex_abundances` (
+CREATE TABLE `lamella_context_flesh_latex_abundances` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -839,22 +839,22 @@ CREATE TABLE `gill_context_flesh_latex_abundances` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_context_flesh_latex_abundances`
+-- Dumping data for table `lamella_context_flesh_latex_abundances`
 --
 
-LOCK TABLES `gill_context_flesh_latex_abundances` WRITE;
-/*!40000 ALTER TABLE `gill_context_flesh_latex_abundances` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gill_context_flesh_latex_abundances` ENABLE KEYS */;
+LOCK TABLES `lamella_context_flesh_latex_abundances` WRITE;
+/*!40000 ALTER TABLE `lamella_context_flesh_latex_abundances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lamella_context_flesh_latex_abundances` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_edges`
+-- Table structure for table `lamella_edges`
 --
 
-DROP TABLE IF EXISTS `gill_edges`;
+DROP TABLE IF EXISTS `lamella_edges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_edges` (
+CREATE TABLE `lamella_edges` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -867,23 +867,23 @@ CREATE TABLE `gill_edges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_edges`
+-- Dumping data for table `lamella_edges`
 --
 
-LOCK TABLES `gill_edges` WRITE;
-/*!40000 ALTER TABLE `gill_edges` DISABLE KEYS */;
-INSERT INTO `gill_edges` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Even - entire','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Serrate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Serrulate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Eroded (\"gnawed\")','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Fimbriate (fringed)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Marginate (diff. color)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Crenate (scalloped)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Acute','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Obtuse (blunt)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Crisped (crinkled)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `gill_edges` ENABLE KEYS */;
+LOCK TABLES `lamella_edges` WRITE;
+/*!40000 ALTER TABLE `lamella_edges` DISABLE KEYS */;
+INSERT INTO `lamella_edges` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Even - entire','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Serrate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Serrulate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Eroded (\"gnawed\")','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Fimbriate (fringed)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Marginate (diff. color)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Crenate (scalloped)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Acute','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Obtuse (blunt)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Crisped (crinkled)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `lamella_edges` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_spacings`
+-- Table structure for table `lamella_spacings`
 --
 
-DROP TABLE IF EXISTS `gill_spacings`;
+DROP TABLE IF EXISTS `lamella_spacings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_spacings` (
+CREATE TABLE `lamella_spacings` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -896,23 +896,23 @@ CREATE TABLE `gill_spacings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_spacings`
+-- Dumping data for table `lamella_spacings`
 --
 
-LOCK TABLES `gill_spacings` WRITE;
-/*!40000 ALTER TABLE `gill_spacings` DISABLE KEYS */;
-INSERT INTO `gill_spacings` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Crowded','The Gills are tightly close together.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Close','The Gills are close together.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Subdistant','The gills are spaced apart.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Distant','The gills are widely spaced apart.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `gill_spacings` ENABLE KEYS */;
+LOCK TABLES `lamella_spacings` WRITE;
+/*!40000 ALTER TABLE `lamella_spacings` DISABLE KEYS */;
+INSERT INTO `lamella_spacings` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Crowded','The Lamellaes are tightly close together.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Close','The Lamellaes are close together.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Subdistant','The Lamellaes are spaced apart.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Distant','The Lamellaes are widely spaced apart.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `lamella_spacings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gill_thicknesses`
+-- Table structure for table `lamella_thicknesses`
 --
 
-DROP TABLE IF EXISTS `gill_thicknesses`;
+DROP TABLE IF EXISTS `lamella_thicknesses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gill_thicknesses` (
+CREATE TABLE `lamella_thicknesses` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -925,13 +925,13 @@ CREATE TABLE `gill_thicknesses` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gill_thicknesses`
+-- Dumping data for table `lamella_thicknesses`
 --
 
-LOCK TABLES `gill_thicknesses` WRITE;
-/*!40000 ALTER TABLE `gill_thicknesses` DISABLE KEYS */;
-INSERT INTO `gill_thicknesses` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Average','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Thick','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Tapering','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `gill_thicknesses` ENABLE KEYS */;
+LOCK TABLES `lamella_thicknesses` WRITE;
+/*!40000 ALTER TABLE `lamella_thicknesses` DISABLE KEYS */;
+INSERT INTO `lamella_thicknesses` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Average','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Thick','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Tapering','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `lamella_thicknesses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1460,7 +1460,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
-INSERT INTO `parts` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Basic','default data that every specimen will have','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Cap - Pileus','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Gills - Lamellae','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Stem - Stipe','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Veil','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Mycelium','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Spores','micro for spores is here - not in micro','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Micro','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'DNA','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Habitat','Habitat, Plant Assoc ','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Rhizomorph','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Chemical Reaction','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(14,'Color','this will allow color selection for ALL color characters to be in one place','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(15,'Location','lat lon city county state country','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(16,'Identification','species genus inaturalist etc','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(17,'Storage','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+INSERT INTO `parts` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Basic','default data that every specimen will have','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Cap - Pileus','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Lamellae - Gills','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Stem - Stipe','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Veil','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Mycelium','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Spores','micro for spores is here - not in micro','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Micro','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'DNA','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Habitat','Habitat, Plant Assoc ','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Rhizomorph','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Chemical Reaction','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(14,'Color','this will allow color selection for ALL color characters to be in one place','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(15,'Location','lat lon city county state country','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(16,'Identification','species genus inaturalist etc','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(17,'Storage','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1779,13 +1779,13 @@ LOCK TABLES `states` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `stem_interiors`
+-- Table structure for table `stipe_interiors`
 --
 
-DROP TABLE IF EXISTS `stem_interiors`;
+DROP TABLE IF EXISTS `stipe_interiors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stem_interiors` (
+CREATE TABLE `stipe_interiors` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -1794,29 +1794,29 @@ CREATE TABLE `stem_interiors` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_stem_interiors_on_source` (`source`),
+  KEY `index_stipe_interiors_on_source` (`source`),
   CONSTRAINT `fk_rails_4460829c85` FOREIGN KEY (`source`) REFERENCES `sources` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stem_interiors`
+-- Dumping data for table `stipe_interiors`
 --
 
-LOCK TABLES `stem_interiors` WRITE;
-/*!40000 ALTER TABLE `stem_interiors` DISABLE KEYS */;
-INSERT INTO `stem_interiors` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Solid','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Hollow (fistulose)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Tubular','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Cavernous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Stuffed with pith','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `stem_interiors` ENABLE KEYS */;
+LOCK TABLES `stipe_interiors` WRITE;
+/*!40000 ALTER TABLE `stipe_interiors` DISABLE KEYS */;
+INSERT INTO `stipe_interiors` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Solid','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Hollow (fistulose)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Tubular','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Cavernous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Stuffed with pith','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `stipe_interiors` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `stem_locations`
+-- Table structure for table `stipe_locations`
 --
 
-DROP TABLE IF EXISTS `stem_locations`;
+DROP TABLE IF EXISTS `stipe_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stem_locations` (
+CREATE TABLE `stipe_locations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -1825,29 +1825,29 @@ CREATE TABLE `stem_locations` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_stem_locations_on_source` (`source`),
+  KEY `index_stipe_locations_on_source` (`source`),
   CONSTRAINT `fk_rails_0a165b504b` FOREIGN KEY (`source`) REFERENCES `sources` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stem_locations`
+-- Dumping data for table `stipe_locations`
 --
 
-LOCK TABLES `stem_locations` WRITE;
-/*!40000 ALTER TABLE `stem_locations` DISABLE KEYS */;
-INSERT INTO `stem_locations` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Central','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Eccentric (off-center)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Lateral (attached at margin)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Sessile (missing)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `stem_locations` ENABLE KEYS */;
+LOCK TABLES `stipe_locations` WRITE;
+/*!40000 ALTER TABLE `stipe_locations` DISABLE KEYS */;
+INSERT INTO `stipe_locations` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Central','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Eccentric (off-center)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Lateral (attached at margin)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Sessile (missing)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `stipe_locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `stem_shapes`
+-- Table structure for table `stipe_shapes`
 --
 
-DROP TABLE IF EXISTS `stem_shapes`;
+DROP TABLE IF EXISTS `stipe_shapes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stem_shapes` (
+CREATE TABLE `stipe_shapes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -1856,29 +1856,29 @@ CREATE TABLE `stem_shapes` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_stem_shapes_on_source` (`source`),
+  KEY `index_stipe_shapes_on_source` (`source`),
   CONSTRAINT `fk_rails_12677d0b7a` FOREIGN KEY (`source`) REFERENCES `sources` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stem_shapes`
+-- Dumping data for table `stipe_shapes`
 --
 
-LOCK TABLES `stem_shapes` WRITE;
-/*!40000 ALTER TABLE `stem_shapes` DISABLE KEYS */;
-INSERT INTO `stem_shapes` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Terete (round)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Compressed (flattened)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Equal','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Clavate (club)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Radicating (w/\"root\")','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Flexous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Ventricose Fusiform','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Tapering','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Abruptly bulbous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Rounded','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Oblique (angle)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Marginate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `stem_shapes` ENABLE KEYS */;
+LOCK TABLES `stipe_shapes` WRITE;
+/*!40000 ALTER TABLE `stipe_shapes` DISABLE KEYS */;
+INSERT INTO `stipe_shapes` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Terete (round)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Compressed (flattened)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Equal','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Clavate (club)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Radicating (w/\"root\")','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Flexous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Ventricose Fusiform','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Tapering','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Abruptly bulbous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Rounded','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Oblique (angle)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Marginate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `stipe_shapes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `stem_surfaces`
+-- Table structure for table `stipe_surfaces`
 --
 
-DROP TABLE IF EXISTS `stem_surfaces`;
+DROP TABLE IF EXISTS `stipe_surfaces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stem_surfaces` (
+CREATE TABLE `stipe_surfaces` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -1887,29 +1887,29 @@ CREATE TABLE `stem_surfaces` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_stem_surfaces_on_source` (`source`),
+  KEY `index_stipe_surfaces_on_source` (`source`),
   CONSTRAINT `fk_rails_8d3a7fd124` FOREIGN KEY (`source`) REFERENCES `sources` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stem_surfaces`
+-- Dumping data for table `stipe_surfaces`
 --
 
-LOCK TABLES `stem_surfaces` WRITE;
-/*!40000 ALTER TABLE `stem_surfaces` DISABLE KEYS */;
-INSERT INTO `stem_surfaces` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Smooth','No defining features found on the surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Uneven','A bumpy surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Rugose','A wrinkled or rough surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Rugulose','A slightly wrinkled surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Scrobiculate','A pitted or furrowed surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Virgate','A streaked surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Sericeous','A silky surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Fibrillose','A surface covered in thread-like filaments.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Squamose','A surface covered with scales.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(14,'Squarrose','A ragged surface covered with small scales.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(15,'Pruinose','A surface covered with a white powdery frostlike substance.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(16,'Pulverulent','A surface covered with fine dust or powder.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(17,'Granulose','A surface covered in salt-like granulates.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(18,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(19,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(20,'Areolate','A cracked surface resembling dried-mud or paint.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(21,'Rimose','A surface covered in cracks and crevices.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(22,'Laccate','A waxy or lacquered surface texture.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(23,'Viscid -','A sticky glue-like surface texture.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(24,'Glutinous','A slimy surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(25,'Glabrous - Hairy','Hairy - a bald surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(26,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(27,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(28,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(29,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(30,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(31,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(32,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(33,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(34,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(35,'Banded','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(36,'Peronate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(37,'Fibrous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(38,'Lacunose (w/dp.grooves)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(39,'Longitudinally striate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(40,'Ribbed/Costate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(41,'Scabrous (scabby)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(42,'Punctuate (w/small dots)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(43,'Glanular-dotted (w/dark sticky dots)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(44,'Reticulate (fishnet)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `stem_surfaces` ENABLE KEYS */;
+LOCK TABLES `stipe_surfaces` WRITE;
+/*!40000 ALTER TABLE `stipe_surfaces` DISABLE KEYS */;
+INSERT INTO `stipe_surfaces` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Smooth','No defining features found on the surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Uneven','A bumpy surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Rugose','A wrinkled or rough surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Rugulose','A slightly wrinkled surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Scrobiculate','A pitted or furrowed surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Virgate','A streaked surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Sericeous','A silky surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Fibrillose','A surface covered in thread-like filaments.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Squamose','A surface covered with scales.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(14,'Squarrose','A ragged surface covered with small scales.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(15,'Pruinose','A surface covered with a white powdery frostlike substance.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(16,'Pulverulent','A surface covered with fine dust or powder.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(17,'Granulose','A surface covered in salt-like granulates.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(18,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(19,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(20,'Areolate','A cracked surface resembling dried-mud or paint.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(21,'Rimose','A surface covered in cracks and crevices.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(22,'Laccate','A waxy or lacquered surface texture.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(23,'Viscid -','A sticky glue-like surface texture.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(24,'Glutinous','A slimy surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(25,'Glabrous - Hairy','Hairy - a bald surface.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(26,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(27,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(28,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(29,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(30,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(31,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(32,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(33,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(34,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(35,'Banded','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(36,'Peronate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(37,'Fibrous','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(38,'Lacunose (w/dp.grooves)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(39,'Longitudinally striate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(40,'Ribbed/Costate','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(41,'Scabrous (scabby)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(42,'Punctuate (w/small dots)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(43,'Glanular-dotted (w/dark sticky dots)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(44,'Reticulate (fishnet)','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `stipe_surfaces` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `stem_textures`
+-- Table structure for table `stipe_textures`
 --
 
-DROP TABLE IF EXISTS `stem_textures`;
+DROP TABLE IF EXISTS `stipe_textures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stem_textures` (
+CREATE TABLE `stipe_textures` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -1918,19 +1918,19 @@ CREATE TABLE `stem_textures` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_stem_textures_on_source` (`source`),
+  KEY `index_stipe_textures_on_source` (`source`),
   CONSTRAINT `fk_rails_caa57da3d2` FOREIGN KEY (`source`) REFERENCES `sources` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stem_textures`
+-- Dumping data for table `stipe_textures`
 --
 
-LOCK TABLES `stem_textures` WRITE;
-/*!40000 ALTER TABLE `stem_textures` DISABLE KEYS */;
-INSERT INTO `stem_textures` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Fragile','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Pliable','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Chalky','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Rigid','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Fibrous (Fleshy-Fibrous)','usually rather thick, and when broken in two, leaves a ragged edge.','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Cartilaginous','Common stipe, usually thin and breaks with a firm split when bent in two, similar to cartilage.','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Firm','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Woody','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Corky','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Leathery (coriaceous)','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Chalky','feels and breaks like chalk in hand. When crushed, it breaks up into powder or chunks.','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Breaking with a snap','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
-/*!40000 ALTER TABLE `stem_textures` ENABLE KEYS */;
+LOCK TABLES `stipe_textures` WRITE;
+/*!40000 ALTER TABLE `stipe_textures` DISABLE KEYS */;
+INSERT INTO `stipe_textures` VALUES (1,'Not Entered','','',1,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(2,'Fragile','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(3,'Pliable','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(4,'Chalky','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(5,'Rigid','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(6,'Fibrous (Fleshy-Fibrous)','usually rather thick, and when broken in two, leaves a ragged edge.','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(7,'Cartilaginous','Common stipe, usually thin and breaks with a firm split when bent in two, similar to cartilage.','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(8,'Firm','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(9,'Woody','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(10,'Corky','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(11,'Leathery (coriaceous)','','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(12,'Chalky','feels and breaks like chalk in hand. When crushed, it breaks up into powder or chunks.','',13,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000'),(13,'Breaking with a snap','','',5,'2024-06-02 05:05:27.000000','2024-06-02 05:05:27.000000');
+/*!40000 ALTER TABLE `stipe_textures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

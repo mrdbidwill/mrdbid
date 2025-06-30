@@ -1,6 +1,6 @@
-class CreateStemLocations < ActiveRecord::Migration[8.0]
+class CreateStipeLocations < ActiveRecord::Migration[8.0]
   def change
-    create_table :stem_locations do |t|
+    create_table :stipe_locations do |t|
       t.string :name
       t.text :description
       t.text :comments

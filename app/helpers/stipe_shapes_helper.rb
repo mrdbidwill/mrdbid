@@ -1,0 +1,2 @@
+module StipeShapesHelper
+end

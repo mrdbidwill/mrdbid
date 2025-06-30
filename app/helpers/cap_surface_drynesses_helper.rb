@@ -1,2 +1,0 @@
-module CapSurfaceDrynessesHelper
-end

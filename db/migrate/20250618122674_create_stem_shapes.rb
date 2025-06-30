@@ -1,6 +1,6 @@
-class CreateStemShapes < ActiveRecord::Migration[8.0]
+class CreateStipeShapes < ActiveRecord::Migration[8.0]
   def change
-    create_table :stem_shapes do |t|
+    create_table :stipe_shapes do |t|
       t.string :name
       t.text :description
       t.text :comments

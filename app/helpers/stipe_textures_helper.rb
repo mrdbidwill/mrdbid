@@ -1,0 +1,2 @@
+module StipeTexturesHelper
+end

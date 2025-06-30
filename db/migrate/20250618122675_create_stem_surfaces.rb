@@ -1,6 +1,6 @@
-class CreateStemSurfaces < ActiveRecord::Migration[8.0]
+class CreateStipeSurfaces < ActiveRecord::Migration[8.0]
   def change
-    create_table :stem_surfaces do |t|
+    create_table :stipe_surfaces do |t|
       t.string :name
       t.text :description
       t.text :comments

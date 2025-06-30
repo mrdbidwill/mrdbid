@@ -1,6 +1,6 @@
-class CreateStemTextures < ActiveRecord::Migration[8.0]
+class CreateStipeTextures < ActiveRecord::Migration[8.0]
   def change
-    create_table :stem_textures do |t|
+    create_table :stipe_textures do |t|
       t.string :name
       t.text :description
       t.text :comments

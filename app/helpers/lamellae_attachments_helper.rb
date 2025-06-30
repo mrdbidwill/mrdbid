@@ -1,0 +1,2 @@
+module LamellaeAttachmentsHelper
+end

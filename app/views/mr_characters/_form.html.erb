@@ -1,6 +1,6 @@
 <section aria-labelledby="form-title" class="max-w-2xl mx-auto py-6">
   <h2 id="form-title" class="text-xl font-semibold text-gray-800 mb-6 text-center">
-    Create or Edit MR Character
+    Create or Edit MR Character (from _form.html.erb)
   </h2>
 
   <%= form_with(model: mr_character, class: "space-y-6") do |form| %>
@@ -18,16 +18,31 @@
       </div>
     <% end %>
 
-    <!-- Name Field -->
-    <div class="my-5">
-      <%= form.label :name, "Name", class: "block font-medium text-gray-700" %>
-      <%= form.text_field :name, autofocus: true, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:name].any? ? 'border-red-400' : 'border-gray-400'}" %>
+    <!-- Fields Group -->
+    <div class="gap-4">
+      <!-- Name Field -->
+      <div class="my-5">
+        <%= form.label :name, "Name", class: "block font-medium text-gray-700" %>
+        <%= form.text_field :name, autofocus: true, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:name].any? ? 'border-red-400' : 'border-gray-400'}" %>
+      </div>
+
+      <!-- Display Option Field -->
+      <div class="my-5">
+        <%= form.label :display_option, "Display Option", class: "block font-medium text-gray-700" %>
+        <%= form.text_field :display_option, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:display_options].any? ? 'border-red-400' : 'border-gray-400'}" %>
+      </div>
+
+      <!-- Part Field -->
+      <div class="my-5">
+        <%= form.label :part, "Part", class: "block font-medium text-gray-700" %>
+        <%= form.text_field :part, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:part].any? ? 'border-red-400' : 'border-gray-400'}" %>
+      </div>
     </div>
 
-    <!-- Display Options Field -->
+    <!-- Source Field -->
     <div class="my-5">
-      <%= form.label :display_options_id, "Display Options", class: "block font-medium text-gray-700" %>
-      <%= form.text_field :display_options, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:display_options].any? ? 'border-red-400' : 'border-gray-400'}" %>
+      <%= form.label :source, "Source", class: "block font-medium text-gray-700" %>
+      <%= form.text_field :source, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:source].any? ? 'border-red-400' : 'border-gray-400'}" %>
     </div>
 
     <!-- Submit Button -->

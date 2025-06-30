@@ -6,27 +6,20 @@ LOOKUP_TABLES = %w[
   bulb_types
   camera_makes
   camera_models
-  cap_context_flesh_textures
-  cap_margin_shapes
-  cap_margin_types
-  cap_shape_top_views
-  cap_shapes
-  cap_surface_drynesses
-  cap_surface_textures
   chem_reactions
   clusters
   countries
   display_options
   epithets
   fungus_types
-  gill_attachments
-  gill_breadths
-  gill_context_flesh_latex_abundances
-  gill_edges
-  gill_spacings
-  gill_thicknesses
   habitats
   habits
+  lamella_attachments
+  lamella_breadths
+  lamella_context_flesh_latex_abundances
+  lamella_edges
+  lamella_spacings
+  lamella_thicknesses
   mushroom_ages
   mushroom_storage_locations
   mycelium_textures
@@ -37,6 +30,13 @@ LOOKUP_TABLES = %w[
   partial_inner_veil_textures
   parts
   permissions
+  pileus_context_flesh_textures
+  pileus_margin_shapes
+  pileus_margin_types
+  pileus_shape_top_views
+  pileus_shapes
+  pileus_surface_drynesses
+  pileus_surface_textures
   plants
   possible_matches
   preservation_methods
@@ -44,11 +44,11 @@ LOOKUP_TABLES = %w[
   rhizomorph_textures
   soil_types
   source_data_types
-  stem_interiors
-  stem_locations
-  stem_shapes
-  stem_surfaces
-  stem_textures
+  stipe_interiors
+  stipe_locations
+  stipe_shapes
+  stipe_surfaces
+  stipe_textures
   synonyms
   tastes
   toxics

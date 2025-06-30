@@ -1,0 +1,2 @@
+module StipeLocationsHelper
+end

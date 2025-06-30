@@ -1,6 +1,6 @@
-class CreateStemInteriors < ActiveRecord::Migration[8.0]
+class CreateStipeInteriors < ActiveRecord::Migration[8.0]
   def change
-    create_table :stem_interiors do |t|
+    create_table :stipe_interiors do |t|
       t.string :name
       t.text :description
       t.text :comments
