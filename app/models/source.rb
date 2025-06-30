@@ -8,4 +8,9 @@ class Source < ApplicationRecord
 
   # Associations with lookup tables
   has_many :abundances, class_name: "LookupTables::Abundance", dependent: :destroy
+
+  # Add safe_name method
+  def safe_name
+    title || "N/A"
+  end
 end

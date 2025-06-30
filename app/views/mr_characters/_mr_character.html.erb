@@ -1,18 +1,11 @@
 <div id="<%= dom_id mr_character %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <strong class="block font-medium mb-1">Name: (using mr_character.html.erb)</strong>
-    <%= mr_character.name %>
+  <div class="text-sm">
+    ID: <span class="font-bold text-lg"><%= mr_character.id %></span>,
+    Name: <span class="font-bold text-lg"><%= mr_character.name %></span>,
+    Display options: <span class="font-bold text-lg"><%= mr_character.display_option_name %></span>,
+    Parts: <span class="font-bold text-lg"><%= mr_character.part_name %></span>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Display options:</strong>
-    <%= mr_character.display_option %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Parts:</strong>
-    <%= mr_character.part %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Source:</strong>
-    <%= mr_character.source %>
+  <div class="text-sm">
+    Source: <span class="font-bold text-lg"><%= mr_character.source_name %></span>
   </div>
 </div>
