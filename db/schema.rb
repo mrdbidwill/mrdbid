@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_18_122685) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_30_000076) do
   create_table "abundances", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -322,11 +322,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_122685) do
 
   create_table "mr_characters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.integer "display_option"
-    t.integer "part"
-    t.integer "source"
+    t.bigint "display_option_id"
+    t.bigint "part_id"
+    t.bigint "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["display_option_id"], name: "index_mr_characters_on_display_option_id"
+    t.index ["part_id"], name: "index_mr_characters_on_part_id"
+    t.index ["source_id"], name: "index_mr_characters_on_source_id"
   end
 
   create_table "mushroom_ages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -751,6 +754,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_122685) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "mr_characters", "display_options"
+  add_foreign_key "mr_characters", "parts"
+  add_foreign_key "mr_characters", "sources"
   add_foreign_key "plant_associations", "mushrooms"
   add_foreign_key "plant_associations", "plants"
   add_foreign_key "tree_associations", "mushrooms"
