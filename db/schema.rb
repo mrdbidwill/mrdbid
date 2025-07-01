@@ -327,9 +327,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_30_000076) do
     t.bigint "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["display_option_id"], name: "index_mr_characters_on_display_option_id"
-    t.index ["part_id"], name: "index_mr_characters_on_part_id"
-    t.index ["source_id"], name: "index_mr_characters_on_source_id"
   end
 
   create_table "mushroom_ages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
