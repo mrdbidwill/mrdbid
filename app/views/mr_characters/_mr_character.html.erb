@@ -1,11 +1,23 @@
 <div id="<%= dom_id mr_character %>" class="w-full sm:w-auto my-5 space-y-5">
   <div class="text-sm">
-    ID: <span class="font-bold text-lg"><%= mr_character.id %></span>,
+    ID XX: <span class="font-bold text-lg"><%= mr_character.id %></span>,
     Name: <span class="font-bold text-lg"><%= mr_character.name %></span>,
     Display options: <span class="font-bold text-lg"><%= mr_character.display_option_name %></span>,
     Parts: <span class="font-bold text-lg"><%= mr_character.part_name %></span>
   </div>
   <div class="text-sm">
-    Source: <span class="font-bold text-lg"><%= mr_character.source_name %></span>
+    Source:
+    <% if mr_character.source_details.present? %>
+      <ul class="font-bold text-lg">
+        <li>Title: <%= mr_character.source_details[:title] %></li>
+        <li>Author: <%= mr_character.source_details[:author] %></li>
+        <li>Reference: <%= mr_character.source_details[:ref] %></li>
+        <li>Item Code: <%= mr_character.source_details[:item_code] %></li>
+        <li>Comment: <%= mr_character.source_details[:comment] %></li>
+      </ul>
+    <% else %>
+      <p class="text-gray-500 italic">No source details available.</p>
+    <% end %>
   </div>
+
 </div>

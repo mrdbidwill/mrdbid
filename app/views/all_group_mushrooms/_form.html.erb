@@ -12,16 +12,24 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :all_group_id %>
-    <%= form.text_field :all_group_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": all_group_mushroom.errors[:all_group_id].none?, "border-red-400 focus:outline-red-600": all_group_mushroom.errors[:all_group_id].any?}] %>
+    <%= form.label :display_option, "Display Option", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :display_option, DisplayOption.all, :id, :safe_name,
+                               prompt: "Select Display Option",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :mushroom_id %>
-    <%= form.text_field :mushroom_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": all_group_mushroom.errors[:mushroom_id].none?, "border-red-400 focus:outline-red-600": all_group_mushroom.errors[:mushroom_id].any?}] %>
+    <%= form.label :part, "Part", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :part, Part.id, :id, :safe_name,
+                               prompt: "Select Part",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
   </div>
 
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <div class="my-5">
+    <%= form.label :source, "Source", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :source, Source.all, :id, :title,
+                               prompt: "Select Source",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
   </div>
+
 <% end %>

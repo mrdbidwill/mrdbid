@@ -3,7 +3,7 @@
     Create or Edit MR Character (from _form.html.erb)
   </h2>
 
-  <%= form_with(model: mr_character, class: "space-y-6") do |form| %>
+  <%= form_with(model: mr_character, class: "contents") do |form| %>
     <!-- Error Messages -->
     <% if mr_character.errors.any? %>
       <div id="error_explanation" class="bg-red-50 text-red-500 px-4 py-2 rounded-md shadow-sm">
@@ -26,28 +26,44 @@
         <%= form.text_field :name, autofocus: true, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:name].any? ? 'border-red-400' : 'border-gray-400'}" %>
       </div>
 
-      <!-- Display Option Field -->
+      <!-- Display Option -->
       <div class="my-5">
-        <%= form.label :display_option, "Display Option", class: "block font-medium text-gray-700" %>
-        <%= form.text_field :display_option, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:display_options].any? ? 'border-red-400' : 'border-gray-400'}" %>
+        <%= form.label :display_option_id, "Display Option", class: "block font-medium text-gray-700" %>
+        <%= form.collection_select :display_option_id,
+                                   LookupTables::DisplayOption.all,
+                                   :id,
+                                   :safe_name,
+                                   prompt: "Select Display Option",
+                                   class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
       </div>
 
-      <!-- Part Field -->
+      <!-- Part -->
       <div class="my-5">
-        <%= form.label :part, "Part", class: "block font-medium text-gray-700" %>
-        <%= form.text_field :part, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:part].any? ? 'border-red-400' : 'border-gray-400'}" %>
+        <%= form.label :part_id, "Part", class: "block font-medium text-gray-700" %>
+        <%= form.collection_select :part_id,
+                                   LookupTables::Part.all,
+                                   :id,
+                                   :safe_name,
+                                   prompt: "Select Part",
+                                   class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
       </div>
-    </div>
 
-    <!-- Source Field -->
-    <div class="my-5">
-      <%= form.label :source, "Source", class: "block font-medium text-gray-700" %>
-      <%= form.text_field :source, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mr_character.errors[:source].any? ? 'border-red-400' : 'border-gray-400'}" %>
-    </div>
+      <!-- Source -->
+      <div class="my-5">
+        <%= form.label :source_id, "Source", class: "block font-medium text-gray-700" %>
+        <%= form.collection_select :source_id,
+                                   Source.all,
+                                   :id,
+                                   :title,
+                                   prompt: "Select Source",
+                                   class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600" %>
+      </div>
+
 
     <!-- Submit Button -->
-    <div class="my-5">
-      <%= form.submit "Save MR Character", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer shadow-md" %>
-    </div>
+      <div class="mt-5">
+        <%= form.submit "Save", class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
   <% end %>
+  </div>
 </section>

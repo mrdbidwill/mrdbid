@@ -15,8 +15,8 @@ class LookupTable < ApplicationRecord
     find_by(id: id) || "N/A" # Returns 'N/A' if the record isn't found
   end
 
-  # Example for safely accessing `name` across lookup instances
+  # Safely access the `name` field
   def safe_name
-    name || "N/A"
+    name.presence || "N/A"
   end
 end
