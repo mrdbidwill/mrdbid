@@ -3,10 +3,10 @@ class CreateMushrooms < ActiveRecord::Migration[8.0]
     create_table :mushrooms do |t|
       t.string :mushroom_name
       t.text :description
-      t.integer :state
-      t.integer :country
-      t.integer :fungus_type
-      t.integer :mushroom_storage_location
+      t.references :state, foreign_key: true
+      t.references :country, foreign_key: true
+      t.references :fungus_type, foreign_key: true
+      t.references :mushroom_storage_location, foreign_key: true
 
       t.timestamps
     end

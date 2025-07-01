@@ -20,7 +20,48 @@
     <%= form.text_area :description, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mushroom.errors[:description].any? ? 'border-red-400' : 'border-gray-400'}" %>
   </div>
 
-  <!-- Additional fields styled similarly -->
+
+  <div class="my-5">
+    <%= form.label :state_id, "State", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :state_id,
+                               State.all,
+                               :id,
+                               :safe_name,
+                               prompt: "Select State",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mushroom.errors[:state].any? ? 'border-red-400' : 'border-gray-400'}" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :country_id, "Country", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :country_id,
+                               LookupTables::Country.all,
+                               :id,
+                               :safe_name,
+                               prompt: "Select Country",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mushroom.errors[:country].any? ? 'border-red-400' : 'border-gray-400'}" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :fungus_type_id, "Fungus Type", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :fungus_type_id,
+                               LookupTables::FungusType.all,
+                               :id,
+                               :safe_name,
+                               prompt: "Select Fungus Type",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mushroom.errors[:fungus_type].any? ? 'border-red-400' : 'border-gray-400'}" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mushroom_storage_location_id, "Mushroom Storage Location", class: "block font-medium text-gray-700" %>
+    <%= form.collection_select :mushroom_storage_location_id,
+                               LookupTables::MushroomStorageLocation.all,
+                               :id,
+                               :safe_name,
+                               prompt: "Select Mushroom Storage Location",
+                               class: "block shadow-sm rounded-md border px-3 py-2 w-full focus:outline-blue-600 #{mushroom.errors[:mushroom_storage_location].any? ? 'border-red-400' : 'border-gray-400'}" %>
+  </div>
+
+
 
   <div class="my-5">
     <%= form.submit "Save Mushroom", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer shadow-md" %>
