@@ -66,6 +66,6 @@ class MushroomsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def mushroom_params
-    params.expect(mushroom: [:mushroom_name, :description, :state_id, :country_id, :fungus_type_id, :mushroom_storage_location_id])
+    params.require(:mushroom).permit(:mushroom_name, :description, :state_id, :country_id, :fungus_type_id, :mushroom_storage_location_id)
   end
 end
