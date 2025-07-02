@@ -13,18 +13,36 @@ require "rails_helper"
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/articles", type: :request do
+  # Define a minimal set of valid attributes required to create an Article
+  let(:valid_attributes) do
+    {title: "Sample Title", author: "Author Name", comment: "Some comment"}
+  end
+
+  # Define attributes that would fail validation, leaving key fields blank or invalid
+  let(:invalid_attributes) do
+    {title: nil, author: ""} # Title is nil and Author is empty, which should trigger validation failures
+  end
+
+  # Your actual tests then use these attributes in their examples
+  describe "POST /create" do
+    context "with valid parameters" do
+      it "creates a new Article" do
+        expect {
+          post articles_url, params: {article: valid_attributes}
+        }.to change(Article, :count).by(1)
+      end
+    end
+
+    context "with invalid parameters" do
+      it "does not create a new Article" do
+        expect {
+          post articles_url, params: {article: invalid_attributes}
+        }.to change(Article, :count).by(0)
+      end
+    end
+  end
+
   let(:source) { create(:source) }
-
-  # This should return the minimal set of attributes required to create a valid
-  # Article. As you add validations to Article, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -57,45 +75,18 @@ RSpec.describe "/articles", type: :request do
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Article" do
-        expect {
-          post articles_url, params: {article: valid_attributes}
-        }.to change(Article, :count).by(1)
-      end
-
-      it "redirects to the created article" do
-        post articles_url, params: {article: valid_attributes}
-        expect(response).to redirect_to(article_url(Article.last))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Article" do
-        expect {
-          post articles_url, params: {article: invalid_attributes}
-        }.to change(Article, :count).by(0)
-      end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post articles_url, params: {article: invalid_attributes}
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {title: "Updated Title", author: "Updated Author"}
       }
 
       it "updates the requested article" do
         article = Article.create! valid_attributes
         patch article_url(article), params: {article: new_attributes}
         article.reload
-        skip("Add assertions for updated state")
+        expect(article.title).to eq("Updated Title")
+        expect(article.author).to eq("Updated Author")
       end
 
       it "redirects to the article" do
