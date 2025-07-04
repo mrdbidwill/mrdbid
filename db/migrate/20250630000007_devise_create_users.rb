@@ -4,6 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
       ## Devise standard modules
       t.string :email, null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :display_name, null: false, default: ""
 
       ## Recoverable
       t.string :reset_password_token

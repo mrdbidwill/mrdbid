@@ -1997,7 +1997,7 @@ $\
       return null;
     }
     // Allow the callers to control the unique policy name
-    // by adding a data-tt-policy-suffix to the script element with the DOMPurify.
+    // by adding a data-tt-policy-suffix to the scripts element with the DOMPurify.
     // Policy creation with duplicate names throws in Trusted Types.
     let suffix = null;
     const ATTR_NAME = 'data-tt-policy-suffix';
@@ -2015,7 +2015,7 @@ $\
         }
       });
     } catch (_) {
-      // Policy creation failed (most likely another DOMPurify script has
+      // Policy creation failed (most likely another DOMPurify scripts has
       // already run). Skip creating the policy, as this will only cause errors
       // if TT are enforced.
       console.warn('TrustedTypes policy ' + policyName + ' could not be created.');
@@ -2170,7 +2170,7 @@ $\
     let WHOLE_DOCUMENT = false;
     /* Track whether config is already set on this instance of DOMPurify. */
     let SET_CONFIG = false;
-    /* Decide if all elements (e.g. style, script) must be children of
+    /* Decide if all elements (e.g. style, scripts) must be children of
      * document.body. By default, browsers might move them to document.head */
     let FORCE_BODY = false;
     /* Decide if a DOM `HTMLBodyElement` should be returned, instead of a html
@@ -3080,7 +3080,7 @@ $\
   });
   const DEFAULT_ALLOWED_ATTRIBUTES = "style href src width height language class".split(" ");
   const DEFAULT_FORBIDDEN_PROTOCOLS = "javascript:".split(" ");
-  const DEFAULT_FORBIDDEN_ELEMENTS = "script iframe form noscript".split(" ");
+  const DEFAULT_FORBIDDEN_ELEMENTS = "scripts iframe form noscript".split(" ");
   class HTMLSanitizer extends BasicObject {
     static setHTML(element, html) {
       const sanitizedElement = new this(html).sanitize();

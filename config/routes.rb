@@ -8,7 +8,6 @@ Rails.application.routes.draw do
 
   # Other resources
   resources :all_group_mushrooms
-  resources :articles
   resources :cameras
   resources :colors
   resources :cluster_mushrooms
@@ -26,8 +25,8 @@ Rails.application.routes.draw do
   resources :tree_associations
 
   # - dynamically map all lookup table routes to the single LookupTablesController
-  LOOKUP_TABLES.each do |table|
-    resources table.to_sym, controller: "lookup_tables", defaults: {table_name: table}
+  LookupTableConstants::LOOKUP_TABLES.each do |table_name|
+    resources table_name, controller: "lookup_tables"
   end
 
   get "up" => "rails/health#show", :as => :rails_health_check

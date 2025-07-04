@@ -865,7 +865,7 @@ class StreamMessage {
 function importStreamElements(fragment) {
   for (const element of fragment.querySelectorAll("turbo-stream")) {
     const streamElement = document.importNode(element, true);
-    for (const inertScriptElement of streamElement.templateElement.content.querySelectorAll("script")) {
+    for (const inertScriptElement of streamElement.templateElement.content.querySelectorAll("scripts")) {
       inertScriptElement.replaceWith(activateScriptElement(inertScriptElement));
     }
     element.replaceWith(streamElement);
@@ -1666,7 +1666,7 @@ class FrameRenderer extends Renderer {
     }
   }
   get newScriptElements() {
-    return this.currentElement.querySelectorAll("script");
+    return this.currentElement.querySelectorAll("scripts");
   }
 }
 
@@ -3812,7 +3812,7 @@ class ErrorRenderer extends Renderer {
     return this.newSnapshot.headSnapshot.element;
   }
   get scriptElements() {
-    return document.documentElement.querySelectorAll("script");
+    return document.documentElement.querySelectorAll("scripts");
   }
 }
 
@@ -3980,7 +3980,7 @@ class PageRenderer extends Renderer {
     return this.newHeadSnapshot.provisionalElements;
   }
   get newBodyScriptElements() {
-    return this.newElement.querySelectorAll("script");
+    return this.newElement.querySelectorAll("scripts");
   }
 }
 

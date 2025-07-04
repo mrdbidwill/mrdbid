@@ -10,7 +10,7 @@ export function eagerLoadControllersFrom(under, application) {
 }
 
 function parseImportmapJson() {
-  return JSON.parse(document.querySelector("script[type=importmap]").text).imports
+  return JSON.parse(document.querySelector("scripts[type=importmap]").text).imports
 }
 
 function registerControllerFromPath(path, under, application) {

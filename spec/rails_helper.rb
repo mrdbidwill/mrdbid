@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 puts "rails_helper loaded"
+
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
@@ -29,7 +30,11 @@ require "factory_bot_rails"
 #
 # Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
-Rails.root.glob("spec/support/**/*.rb").sort.each { |f| require f }
+# Load shared examples first
+Dir[Rails.root.join("spec/shared_examples/**/*.rb")].sort.each { |file| require file }
+
+# Load support files after shared examples
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Ensures that the test database schema matches the current schema file.
 # If there are pending migrations it will invoke `db:test:prepare` to
