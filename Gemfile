@@ -56,14 +56,13 @@ group :development, :test do
   gem 'brakeman', require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop', require: false # Ensure the main Rubocop gem is included
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rails-omakase', require: false
-  gem 'rubocop-rspec', require: false
-  gem "rubocop-capybara", require: false
-  gem "rubocop-factory_bot", require: false
-  gem "rubocop-rspec_rails", require: false
+  gem "rubocop-rails-omakase", require: false
+
+  gem 'rubocop', '~> 1.78.0', require: false
+  gem 'rubocop-rails', '~> 2.21.0', require: false
+  gem 'rubocop-rspec', '~> 2.18.0', require: false
+  gem 'rubocop-performance', '~> 1.16.0', require: false
+  gem 'rubocop-capybara', '~> 2.22.0', require: false
 
 
   gem 'factory_bot_rails' # Test factories
@@ -78,6 +77,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-end
+  gem "shoulda-matchers", "~> 5.0"
 
-gem 'rspec-rails', '~> 8.0'
+end

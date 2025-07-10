@@ -1,3 +1,4 @@
+# Creates the mr_characters table
 # frozen_string_literal: true
 
 class CreateMrCharacters < ActiveRecord::Migration[8.0]

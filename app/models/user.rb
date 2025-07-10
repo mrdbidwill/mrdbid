@@ -6,4 +6,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
          :recoverable, :rememberable, :validatable
+
+  # Association with mushrooms
+  has_many :mushrooms, dependent: :destroy
+
 end

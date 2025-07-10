@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# MrCharactersController manages the CRUD operations for MrCharacter records.
+# It provides actions to list, view, create, edit, update, and delete instances
+# of MrCharacter. Each request triggers appropriate callbacks to ensure data integrity.
+
 class MrCharactersController < ApplicationController
   before_action :set_mr_character, only: %i[show edit update destroy]
 

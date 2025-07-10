@@ -2,10 +2,12 @@
 
 class MushroomsController < ApplicationController
   before_action :set_mushroom, only: %i[show edit update destroy]
+  before_action :authorize_mushroom, only: %i[edit update destroy]
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @mushrooms = Mushroom.all
+    # Users can only see their own mushrooms
+    @mushrooms = current_user.mushrooms
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json
@@ -21,7 +23,9 @@ class MushroomsController < ApplicationController
 
   # POST /mushrooms or /mushrooms.json
   def create
-    @mushroom = Mushroom.new(mushroom_params)
+    # Automatically associate the mushroom with the signed-in user
+    @mushroom = current_user.mushrooms.build(mushroom_params)
+
 
     respond_to do |format|
       if @mushroom.save
@@ -61,11 +65,18 @@ class MushroomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_mushroom
-    @mushroom = Mushroom.find(params.expect(:id))
+    # Ensure the mushroom belongs to the current user
+    @mushroom = current_user.mushrooms.find_by(id: params[:id])
+    redirect_to mushrooms_path, alert: "Mushroom not found or not authorized." unless @mushroom
+  end
+
+  def authorize_mushroom
+    # Ensures a user can edit, update, or destroy only their mushrooms
+    redirect_to mushrooms_path, alert: "Not authorized to perform this action." unless @mushroom.user == current_user
   end
 
   # Only allow a list of trusted parameters through.
   def mushroom_params
-    params.expect(mushroom: %i[name description comment user_id])
+    params.require(:mushroom).permit(:name, :description, :comment)
   end
 end
