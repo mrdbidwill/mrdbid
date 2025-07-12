@@ -19,11 +19,11 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
-gem 'annotate'                   # Model annotations
-gem 'devise'                     # Authentication
-gem 'devise-two-factor'          # Two-factor authentication
-gem 'pundit'                     # Permissions and policies
-gem 'tailwindcss-rails'          # Tailwind CSS
+gem 'annotate'                      # Model annotations
+gem 'devise'                        # Authentication
+gem 'devise-two-factor', '~> 6.1.0' # Two-factor authentication
+gem 'pundit'                        # Permissions and policies
+gem 'tailwindcss-rails'             # Tailwind CSS
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -63,9 +63,6 @@ group :development, :test do
   gem 'rubocop-rspec', '~> 2.18.0', require: false
   gem 'rubocop-performance', '~> 1.16.0', require: false
   gem 'rubocop-capybara', '~> 2.22.0', require: false
-
-
-  gem 'factory_bot_rails' # Test factories
 end
 
 group :development do
@@ -75,6 +72,8 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'factory_bot_rails' # Test factories
+  gem 'rspec-rails', '~> 6.0.0'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem "shoulda-matchers", "~> 5.0"

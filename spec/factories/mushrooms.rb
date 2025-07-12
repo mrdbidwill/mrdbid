@@ -1,9 +1,10 @@
+# spec/factories/mushrooms.rb
 # frozen_string_literal: true
 
 FactoryBot.define do
   factory :mushrooms do
-    name { 'Test Mushroom' }
-    description { 'Test Mushroom Description' }
-    user
+    name { "Amanita muscaria" }
+    description { "Fly agaric mushroom" }
+    association :user
   end
 end
