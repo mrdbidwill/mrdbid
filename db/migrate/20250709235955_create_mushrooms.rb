@@ -8,10 +8,8 @@ class CreateMushrooms < ActiveRecord::Migration[8.0]
       t.string :name
       t.text :description
       t.text :comment
-      t.references :user, null: false, foreign_key: true
-
+      t.references :user, null: false, foreign_key: false  # Foreign key added in a separate migration
       t.timestamps
     end
-    add_index :mushrooms, :name
   end
 end

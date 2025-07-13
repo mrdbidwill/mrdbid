@@ -5,7 +5,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
     create_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ''
+      t.string :display_name,       null: false, default: ''
       t.string :encrypted_password, null: false, default: ''
+
+      t.string :otp_secret
+      t.integer :consumed_timestep
+      t.boolean :otp_required_for_login
 
       ## Recoverable
       t.string   :reset_password_token
