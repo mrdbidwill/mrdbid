@@ -5,6 +5,7 @@ class CreateColors < ActiveRecord::Migration[8.0]
       t.string :common_name
       t.integer :color_group
       t.string :hex
+      t.integer :sequence
       t.integer :r_val
       t.integer :g_val
       t.integer :b_val

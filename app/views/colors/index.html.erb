@@ -14,7 +14,11 @@
     <% if @colors.any? %>
       <% @colors.each do |color| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render color %>
+          <img src="<%= color.image_file %>" alt="<%= color.latin_name %>" />
+          <p><strong>Latin:</strong> <%= color.latin_name %></p>
+          <p><strong>Common:</strong> <%= color.common_name %></p>
+          <p><strong>Hex:</strong> <%= color.hex %></p>
+          <p><strong>Group:</strong> <%= color.color_group %></p>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
             <%= link_to "Show", color, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
             <%= link_to "Edit", edit_color_path(color), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
