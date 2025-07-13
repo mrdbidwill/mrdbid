@@ -24,6 +24,7 @@ gem 'devise'                        # Authentication
 gem 'devise-two-factor', '~> 6.1.0' # Two-factor authentication
 gem 'pundit'                        # Permissions and policies
 gem 'tailwindcss-rails'             # Tailwind CSS
+gem 'rqrcode'                       # ### **Integrate with OTP Apps (e.g., Google Authenticator)**
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

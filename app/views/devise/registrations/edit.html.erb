@@ -47,3 +47,9 @@
 <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
 <%= link_to "Back", :back %>
+
+<% if current_user.otp_secret.present? && current_user.otp_provisioning_uri.present? %>
+  <p>Scan this QR code with your authenticator app:</p>
+  <%= raw RQRCode::QRCode.new(current_user.otp_provisioning_uri).as_svg(module_size: 6) %>
+<% end %>
+

@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   # Publicly available pages
   get 'contact', to: 'pages#contact'
 
-  devise_for :users, controllers: { two_factor_authentication: "users/two_factor_authentication" }
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
+  devise_scope :user do
+    resource :two_factor_authentication, only: [:show, :update], controller: 'users/two_factor_authentication'
+  end
 
   resources :mr_characters
   resources :mushrooms
