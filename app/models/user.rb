@@ -3,9 +3,9 @@
 class User < ApplicationRecord
   # Add default Devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable, and :omniauthable
-  devise :registerable,
-         :recoverable, :rememberable, :validatable,
-         :two_factor_authenticatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+         :validatable, :confirmable, :lockable, :two_factor_authenticatable
+
 
   # Add the OTP encryption key
   devise :two_factor_authenticatable,
