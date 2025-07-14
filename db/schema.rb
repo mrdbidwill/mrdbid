@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_12_194416) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_12_194415) do
   create_table "camera_makes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -53,6 +53,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_12_194416) do
     t.json "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "image_mushrooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "mushroom_id", null: false
+    t.bigint "part_id", null: false
+    t.string "image_name"
+    t.string "image_file_address"
+    t.integer "image_width"
+    t.integer "image_height"
+    t.bigint "camera_make_id"
+    t.bigint "camera_model_id"
+    t.string "lens"
+    t.string "exposure"
+    t.string "aperture"
+    t.string "iso"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["camera_make_id"], name: "index_image_mushrooms_on_camera_make_id"
+    t.index ["camera_model_id"], name: "index_image_mushrooms_on_camera_model_id"
+    t.index ["mushroom_id"], name: "index_image_mushrooms_on_mushroom_id"
+    t.index ["part_id"], name: "index_image_mushrooms_on_part_id"
   end
 
   create_table "lookup_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -113,15 +134,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_12_194416) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "role_permissions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "role_id", null: false
-    t.bigint "permission_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["permission_id"], name: "index_role_permissions_on_permission_id"
-    t.index ["role_id"], name: "index_role_permissions_on_role_id"
-  end
-
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -176,8 +188,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_12_194416) do
   add_foreign_key "mr_characters", "lookup_items", column: "part_id"
   add_foreign_key "mr_characters", "source_data", column: "source_data_id"
   add_foreign_key "mushrooms", "users"
-  add_foreign_key "role_permissions", "permissions"
-  add_foreign_key "role_permissions", "roles"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
