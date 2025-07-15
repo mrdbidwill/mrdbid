@@ -1,0 +1,2 @@
+class AllGroupMushroom < ApplicationRecord
+end

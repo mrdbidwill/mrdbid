@@ -1,0 +1,2 @@
+class Len < ApplicationRecord
+end

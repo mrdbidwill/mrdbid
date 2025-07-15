@@ -1,0 +1,77 @@
+<p>form in  app/views/image_mushrooms/_form.html.erb</p>
+<%= form_with(model: image_mushroom, local: true) do |form| %>
+  <% if image_mushroom.errors.any? %>
+    <div class="text-red-500">
+      <h2>Errors:</h2>
+      <ul>
+        <% image_mushroom.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :image_name %>
+    <%= form.text_field :image_name, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :mushroom_id, "Mushroom" %>
+    <%= form.collection_select :mushroom_id, @mushrooms, :id, :name, { prompt: 'Select Mushroom' }, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :part_id, "Part" %>
+    <%= form.collection_select :part_id, @lookup_parts, :id, :name, { prompt: 'Select Part' }, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :camera_make_id, "Camera Make" %>
+    <%= form.collection_select :camera_make_id, @camera_makes, :id, :name, { prompt: 'Select Camera Make' }, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :camera_model_id, "Camera Model" %>
+    <%= form.collection_select :camera_model_id, @camera_models, :id, :name, { prompt: 'Select Camera Model' }, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :image_file_address %>
+    <%= form.text_field :image_file_address, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :image_width %>
+    <%= form.number_field :image_width, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :image_height %>
+    <%= form.number_field :image_height, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :lens %>
+    <%= form.text_field :lens, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :exposure %>
+    <%= form.text_field :exposure, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :aperture %>
+    <%= form.text_field :aperture, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.label :iso %>
+    <%= form.text_field :iso, class: 'border' %>
+  </div>
+
+  <div>
+    <%= form.submit class: 'bg-blue-500 text-white px-4 py-2' %>
+  </div>
+<% end %>

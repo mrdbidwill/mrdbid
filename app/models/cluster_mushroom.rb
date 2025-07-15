@@ -1,0 +1,2 @@
+class ClusterMushroom < ApplicationRecord
+end

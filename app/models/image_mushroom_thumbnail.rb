@@ -1,0 +1,2 @@
+class ImageMushroomThumbnail < ApplicationRecord
+end

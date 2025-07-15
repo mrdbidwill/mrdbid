@@ -1,0 +1,2 @@
+class PlantAssociation < ApplicationRecord
+end

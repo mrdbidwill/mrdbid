@@ -1,0 +1,18 @@
+<div>
+  <p>app/views/image_mushrooms/show.html.erb</p>
+  <h1 class="font-bold text-4xl"><%= @image_mushroom.image_name %></h1>
+
+  <p><strong>Mushroom:</strong> <%= @image_mushroom.mushroom.name %></p>
+  <p><strong>Part:</strong> <%= @image_mushroom.part.name %></p>
+  <p><strong>Image File Address:</strong> <%= @image_mushroom.image_file_address %></p>
+  <p><strong>Dimensions:</strong> <%= @image_mushroom.dimensions %></p>
+  <p><strong>Camera Make:</strong> <%= @image_mushroom.camera_make&.name || 'N/A' %></p>
+  <p><strong>Camera Model:</strong> <%= @image_mushroom.camera_model&.name || 'N/A' %></p>
+  <p><strong>Lens:</strong> <%= @image_mushroom.lens %></p>
+  <p><strong>Exposure:</strong> <%= @image_mushroom.exposure %></p>
+  <p><strong>Aperture:</strong> <%= @image_mushroom.aperture %></p>
+  <p><strong>ISO:</strong> <%= @image_mushroom.iso %></p>
+
+  <%= link_to 'Edit', edit_image_mushroom_path(@image_mushroom), class: 'text-yellow-500' %>
+  <%= link_to 'Back to List', image_mushrooms_path, class: 'text-blue-500' %>
+</div>
