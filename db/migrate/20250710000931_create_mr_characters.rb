@@ -7,8 +7,9 @@ class CreateMrCharacters < ActiveRecord::Migration[8.0]
 
     create_table :mr_characters do |t|
       t.string :name
-      t.references :display_option, null: false, foreign_key: false # Foreign key added in a separate migration
       t.references :part, null: false, foreign_key: false # Foreign key added in a separate migration
+      t.references :lookup_type, null: false, foreign_key: false # Foreign key added in a separate migration
+      t.references :display_option, null: false, foreign_key: false # Foreign key added in a separate migration
       t.references :source_data, null: false, foreign_key: false# Foreign key added in a separate migration
 
       t.timestamps
