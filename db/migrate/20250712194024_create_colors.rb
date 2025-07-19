@@ -10,6 +10,10 @@ class CreateColors < ActiveRecord::Migration[8.0]
       t.integer :g_val
       t.integer :b_val
       t.string :closest_websafe_color
+      t.string :cwc_r
+      t.string :cwc_g
+      t.string :cwc_b
+      t.string :image_file_address
       t.json :metadata
 
       t.timestamps
