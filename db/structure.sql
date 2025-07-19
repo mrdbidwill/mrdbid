@@ -179,21 +179,18 @@ DROP TABLE IF EXISTS `lookup_items`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lookup_items` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `lookup_type_id` bigint NOT NULL,
   `mr_character_id` bigint DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
   `comments` text,
-  `parent_id` bigint DEFAULT NULL,
+  `data_source_id` bigint DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_lookup_items_on_lookup_type_id` (`lookup_type_id`),
   KEY `index_lookup_items_on_mr_character_id` (`mr_character_id`),
-  KEY `index_lookup_items_on_parent_id` (`parent_id`),
-  CONSTRAINT `fk_rails_0565391360` FOREIGN KEY (`lookup_type_id`) REFERENCES `lookup_types` (`id`),
-  CONSTRAINT `fk_rails_6c26b020d6` FOREIGN KEY (`parent_id`) REFERENCES `lookup_items` (`id`),
-  CONSTRAINT `fk_rails_7986eea0da` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`)
+  KEY `index_lookup_items_on_data_source_id` (`data_source_id`),
+  CONSTRAINT `fk_rails_7986eea0da` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
+  CONSTRAINT `fk_rails_db82e6926c` FOREIGN KEY (`id`) REFERENCES `source_data` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_types`;
@@ -231,16 +228,16 @@ DROP TABLE IF EXISTS `mr_characters`;
 CREATE TABLE `mr_characters` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `display_option_id` bigint NOT NULL,
-  `lookup_type_id` bigint NOT NULL,
   `part_id` bigint NOT NULL,
+  `lookup_type_id` bigint NOT NULL,
+  `display_option_id` bigint NOT NULL,
   `source_data_id` bigint NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_mr_characters_on_display_option_id` (`display_option_id`),
-  KEY `index_mr_characters_on_lookup_type_id` (`lookup_type_id`),
   KEY `index_mr_characters_on_part_id` (`part_id`),
+  KEY `index_mr_characters_on_lookup_type_id` (`lookup_type_id`),
+  KEY `index_mr_characters_on_display_option_id` (`display_option_id`),
   KEY `index_mr_characters_on_source_data_id` (`source_data_id`),
   CONSTRAINT `fk_rails_4452ee2843` FOREIGN KEY (`display_option_id`) REFERENCES `lookup_items` (`id`),
   CONSTRAINT `fk_rails_97936aa437` FOREIGN KEY (`part_id`) REFERENCES `lookup_items` (`id`),
@@ -348,6 +345,22 @@ CREATE TABLE `source_data` (
   CONSTRAINT `fk_rails_e2b6e4c854` FOREIGN KEY (`source_data_type_id`) REFERENCES `lookup_items` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `states`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `states` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `comments` text,
+  `country_id` bigint NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_states_on_country_id` (`country_id`),
+  CONSTRAINT `fk_rails_40bd891262` FOREIGN KEY (`country_id`) REFERENCES `lookup_items` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tree_associations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -422,6 +435,7 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20250717200001'),
 ('20250713200016'),
 ('20250713200015'),
 ('20250713200014'),
@@ -457,5 +471,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20250630000020'),
 ('20250630000016'),
 ('20250630000015'),
+('20250630000010'),
 ('20250630000008');
 

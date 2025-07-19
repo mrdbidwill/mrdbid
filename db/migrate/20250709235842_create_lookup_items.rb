@@ -9,6 +9,7 @@ class CreateLookupItems < ActiveRecord::Migration[8.0]
       t.string :name
       t.text :description
       t.text :comments
+      t.references :data_source, foreign_key: false
 
       t.timestamps
     end
