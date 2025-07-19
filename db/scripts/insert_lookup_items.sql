@@ -125,11 +125,11 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (23,'Crenate - Hairy','Hairy - Semi-circle notches or round-toothed edges that are more blunted than serrate margins. Also referred to as scalloped.','',7, now(), now() ),
 (23,'Serrate - Hairy','Hairy - The edges of the cap appear jagged and saw-toothed. More pronounced than crenate margins.','',7, now(), now() ),
 (24,'pileus_hairy_y_n','','',7, now(), now() ),                                                                                                                            -- 24 pileus_hairy_y_n
-(25,'pileus_context_flesh_color_moist',6,1,3, now(), now() ),                                                           -- 25 pileus_context_flesh_color_moist
-(26,'pileus_context_flesh_color_dry',6,1,3, now(), now() ),                                               -- 26  pileus_context_flesh_color_dry
-(27,'pileus_context_flesh_color_cuticle',6,1,3, now(), now() ),                         -- 27  pileus_context_flesh_color_cuticle
-(28,'pileus_context_flesh_thickness_disc',2,1,3, now(), now() ),                                    -- 28  pileus_context_flesh_thickness_disc
-(29,'pileus_context_flesh_thickness_margin',2,1,3, now(), now() ),                                              -- 29 pileus_context_flesh_thickness_margin
+(25,'pileus_context_flesh_color_moist','','',3, now(), now() ),                                                           -- 25 pileus_context_flesh_color_moist
+(26,'pileus_context_flesh_color_dry','','',3, now(), now() ),                                               -- 26  pileus_context_flesh_color_dry
+(27,'pileus_context_flesh_color_cuticle','','',3, now(), now() ),                         -- 27 pileus_context_flesh_color_cuticle
+(28,'pileus_context_flesh_thickness_disc','','',3, now(), now() ),                                    -- 28 pileus_context_flesh_thickness_disc
+(29,'pileus_context_flesh_thickness_margin','','',3, now(), now() ),                                              -- 29 pileus_context_flesh_thickness_margin
 (30,'Soft','','',5, now(), now() ),                                               -- 30 pileus_context_flesh_texture
 (30,'Spongy','','',5, now(), now() ),
 (30,'Firm','','',5, now(), now() ),
@@ -138,10 +138,10 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (30,'Brittle','','',5, now(), now() ),
 (30,'Corky','','',5, now(), now() ),
 (30,'Other','','',5, now(), now() ),
-(31,'pileus_context_flesh_latex_color',6,1,3, now(), now() ),                     -- 31  'pileus_context_flesh_latex_color
-(32,'pileus_context_flesh_latex_color_exposed',6,1,3, now(), now() ),                                        -- 32  pileus_context_flesh_latex_color_exposed
-(33,'pileus_context_flesh_latex_taste',7,1,3, now(), now() ),                            -- 33  pileus_context_flesh_latex_taste
-(34,'pileus_context_flesh_latex_abundance',15,1,3, now(), now() ),                -- 34   pileus_context_flesh_latex_abundance
+(31,'pileus_context_flesh_latex_color','','',3, now(), now() ),                     -- 31  'pileus_context_flesh_latex_color
+(32,'pileus_context_flesh_latex_color_exposed','','',3, now(), now() ),                                        -- 32  pileus_context_flesh_latex_color_exposed
+(33,'pileus_context_flesh_latex_taste','','',3, now(), now() ),                            -- 33  pileus_context_flesh_latex_taste
+(34,'pileus_context_flesh_latex_abundance','','',3, now(), now() ),                -- 34   pileus_context_flesh_latex_abundance
 (35,'Free - remote','','',5, now(), now() ),                                  -- 35 lamella_attachment
 (35,'Free - close','','',5, now(), now() ),
 (35,'Adnate - horizontal','','',5, now(), now() ),
@@ -176,20 +176,20 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (41,'Acute','','',5, now(), now() ),
 (41,'Obtuse (blunt)','','',5, now(), now() ),
 (41,'Crisped (crinkled)','','',5, now(), now() ),
-(41,'lamella_misc_waxy_y_n',14,1,4, now(), now() ),
-(41,'lamella_misc_arid_dry_y_n',14,1,4, now(), now() ),
-(41,'lamella_misc_deliquescent_y_n',14,1,4, now(), now() ),
-(42,'lamella_misc_waxy_y_n',14,1,4, now(), now() ),          -- 42 lamella_misc_deliquescent_y_n
-(43,'lamella_misc_arid_dry_y_n',14,1,4, now(), now() ),        -- 43 lamella_misc_arid_dry_y_n
-(44,'lamella_misc_deliquescent_y_n',14,1,4, now(), now() ),        -- 44  lamella_misc_deliquescent_y_n
+(41,'lamella_misc_waxy_y_n','','',4, now(), now() ),
+(41,'lamella_misc_arid_dry_y_n','','',4, now(), now() ),
+(41,'lamella_misc_deliquescent_y_n','','',4, now(), now() ),
+(42,'lamella_misc_waxy_y_n','','',4, now(), now() ),          -- 42 lamella_misc_deliquescent_y_n
+(43,'lamella_misc_arid_dry_y_n','','',4, now(), now() ),        -- 43 lamella_misc_arid_dry_y_n
+(44,'lamella_misc_deliquescent_y_n','','',4, now(), now() ),        -- 44  lamella_misc_deliquescent_y_n
 (45,'Central','','',5, now(), now() ),                            -- 45 stipe location
 (45,'Eccentric - off-center','','',5, now(), now() ),
 (45,'Lateral - attached at margin','','',5, now(), now() ),
 (45,'Sessile - missing','','',5, now(), now() ),
-(46,'stipe_height',2,1,5, now(), now() ),                     -- 46 stipe_height
-(47,'stipe_diameter_top',2,1,5, now(), now() ),                       -- 47 stipe_diameter_top
-(48,'stipe_diameter_mid',2,1,5, now(), now() ),               -- 48  stipe_diameter_mid
-(49,'stipe_diameter_low',2,1,5, now(), now() ),                       -- 49 stipe_diameter_low
+(46,'stipe_height','','',5, now(), now() ),                     -- 46 stipe_height
+(47,'stipe_diameter_top','','',5, now(), now() ),                       -- 47 stipe_diameter_top
+(48,'stipe_diameter_mid','','',5, now(), now() ),               -- 48  stipe_diameter_mid
+(49,'stipe_diameter_low','','',5, now(), now() ),                       -- 49 stipe_diameter_low
 (50,'Terete (round)','','',5, now(), now() ),                  -- 50 stipe shape
 (50,'Compressed (flattened)','','',5, now(), now() ),
 (50,'Equal','','',5, now(), now() ),
@@ -202,13 +202,13 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (50,'Rounded','','',5, now(), now() ),
 (50,'Oblique (angle)','','',5, now(), now() ),
 (50,'Marginate','','',5, now(), now() ),
-(51,'stipe_color',6,1,5, now(), now() ),                 -- 51  stipe_color
-(52,'stipe_color_change',6,1,5, now(), now() ),        -- 52 stipe_color_change
-(53,'stipe_color_base',6,1,5, now(), now() ),                  -- 53 stipe_color_base
-(54,'stipe_color_apex',6,1,5, now(), now() ),          -- 54 stipe_color_apex
-(55,'stipe_color_interior',6,1,5, now(), now() ),               -- 55 stipe_color_interior
-(56,'stipe_color_exterior',6,1,5, now(), now() ),    -- 56 stipe_color_exterior
-(57,'stipe_color_bruise',6,1,5, now(), now() ),             -- 57 stipe_color_bruise
+(51,'stipe_color','','',5, now(), now() ),                 -- 51 stipe_color
+(52,'stipe_color_change','','',5, now(), now() ),        -- 52 stipe_color_change
+(53,'stipe_color_base','','',5, now(), now() ),                  -- 53 stipe_color_base
+(54,'stipe_color_apex','','',5, now(), now() ),          -- 54 stipe_color_apex
+(55,'stipe_color_interior','','',5, now(), now() ),               -- 55 stipe_color_interior
+(56,'stipe_color_exterior','','',5, now(), now() ),    -- 56 stipe_color_exterior
+(57,'stipe_color_bruise','','',5, now(), now() ),             -- 57 stipe_color_bruise
 (58,'Smooth','No defining features found on the surface.','',7, now(), now() ),   -- 58 stipe_surface
 (58,'Uneven','A bumpy surface.','',7, now(), now() ),
 (58,'Rugose','A wrinkled or rough surface.','',7, now(), now() ),
@@ -275,15 +275,15 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (61,'Median','in the middle','',5, now(), now() ),
 (61,'Inferior','Lower half','',5, now(), now() ),
 (61,'Basal','Near the base','',5, now(), now() ),
-(62,'veil_annulus',4,1,6, now(), now() ),              -- 62 veil_annulus ? not sure about this one
-(63,'partial_inner_veil_color',6,1,6, now(), now() ),      -- 63  partial_inner_veil_color
+(62,'veil_annulus','','',6, now(), now() ),              -- 62 veil_annulus ? not sure about this one
+(63,'partial_inner_veil_color','','',6, now(), now() ),      -- 63  partial_inner_veil_color
 (64,'Membranous (skin-like)','','',5, now(), now() ),   -- 64 partial_inner_veil_texture
 (64,'Cortinate (cobwebby)','','',5, now(), now() ),
 (64,'Fibillose (thready)','','',5, now(), now() ),
 (64,'Gelatinous (slimy)','','',5, now(), now() ),
 (65,'Disappearing - Evanescent','can only be detected in button stage','',4, now(), now() ),  -- 65 partial_inner_veil_fate
 (65,'Persistent','leaving remnants on cap','',4, now(), now() ),
-(66,'partial_inner_veil_annular_ring',4,1,6, now(), now() ),  -- 66 partial_inner_veil_annular_ring ?? chek this
+(66,'partial_inner_veil_annular_ring','','',6, now(), now() ),  -- 66 partial_inner_veil_annular_ring ?? chek this
 (67,'Two Rings (from 2 veils)','','',5, now(), now() ),  -- 67  partial_inner_veil_appearance
 (67,'Doubly-flared Ring','','',5, now(), now() ),
 (67,'\"Cogwheel\" Stellate','','',5, now(), now() ),
@@ -293,8 +293,8 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (67,'Pendant (hanging)','','',5, now(), now() ),
 (67,'Subperonate','','',5, now(), now() ),
 (67,'Peronate (w/\"boot\")','','',5, now(), now() ),
-(68,'universal_outer_veil_description',4,1,6, now(), now() ),     -- 68  universal_outer_veil_description ??
-(69,'universal_outer_veil_volva',4,1,6, now(), now() ),        -- 69   universal_outer_veil_volva  ??
+(68,'universal_outer_veil_description','','',6, now(), now() ),     -- 68  universal_outer_veil_description ??
+(69,'universal_outer_veil_volva','','',6, now(), now() ),        -- 69   universal_outer_veil_volva  ??
 (70,'Napiform (turnip)','','',5, now(), now() ),                         -- 70 bulb_type
 (70,'Saccate','','',5, now(), now() ),
 (70,'Sheathing','','',5, now(), now() ),
@@ -305,11 +305,11 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (70,'Fusiform','','',5, now(), now() ),
 (70,'Marginate-depressed','','',5, now(), now() ),
 (70,'Cleft','','',5, now(), now() ),
-(71,'mycelium_color',6,1,7, now(), now() ),                 -- 71 mycelium_color
-(72,'mycelium_texture',13,1,7, now(), now() ),         -- 72 mycelium_texture
-(73,'spore_color',6,1,8, now(), now() ),          -- 73 spore_color
-(74,'spore_range_low',3,1,8, now(), now() ),            -- 74 spore_range_low
-(75,'spore_range_high',3,1,8, now(), now() ),     -- 75 spore_range_high
+(71,'mycelium_color','','',7, now(), now() ),                 -- 71 mycelium_color
+(72,'mycelium_texture','','',7, now(), now() ),         -- 72 mycelium_texture
+(73,'spore_color','','',8, now(), now() ),          -- 73 spore_color
+(74,'spore_range_low','','',8, now(), now() ),            -- 74 spore_range_low
+(75,'spore_range_high','','',8, now(), now() ),     -- 75 spore_range_high
 (76,'Terrestrial (on soil - bare )','','',5, now(), now() ),           -- 76 habitat
 (76,'Terrestrial (on soil - burned )','','',5, now(), now() ),
 (76,'Terrestrial (on soil - disturbed )','','',5, now(), now() ),
@@ -321,28 +321,28 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (76,'fungicolous','mushroom mycelia grow in other mushrooms','p 7, How to Identify Mushrooms to Genus I: Macroscopic Features - David L. Largent',13,'2023-03-16 21:46:17','2023-03-16 21:46:17'),
 (77,'Unknown','','',1, now(), now() ),                                  -- 77 soil_type
 (77,'Loam','','',1, now(), now() ),
-(78,'soil_temp',4,1,11, now(), now() ),                -- 78 soil_temp
-(79,'air_temp',4,1,11, now(), now() ),          -- 79 air_temp
-(80,'plant_association',9,1,11, now(), now() ),    -- 80 plant_association
-(81,'rhizomorph_color',6,1,12, now(), now() ),               -- 81 rhizomorph_color
-(82,'rhizomorph_texture',13,1,12, now(), now() ),    -- 82 rhizomorph_texture
+(78,'soil_temp','','',11, now(), now() ),                -- 78 soil_temp
+(79,'air_temp','','',11, now(), now() ),          -- 79 air_temp
+(80,'plant_association','','',11, now(), now() ),    -- 80 plant_association
+(81,'rhizomorph_color','','',12, now(), now() ),               -- 81 rhizomorph_color
+(82,'rhizomorph_texture','','',12, now(), now() ),    -- 82 rhizomorph_texture
 (83,'Ammonia (NH4OH, Ammonium Hydroxide)','','',8, now(), now() ),  -- 83 chem_reaction
 (83,'KOH (Potassium Hydroxide) - 3%','','',8, now(), now() ),
-(84,'weight_before_dry',4,1,17, now(), now() ),              -- 84  weight_before_dry
-(85,'weight_after_dry',4,1,17, now(), now() ),     -- 85    weight_after_dry
-(86,'elevation',4,1,11, now(), now() ),                      -- 86 elevation
-(87,'soil_ph',4,1,11, now(), now() ),                   -- 87  soil_ph
-(88,'stipe_latex_color_exposed',6,1,5, now(), now() ),            -- 88  stipe_latex_color_exposed
-(89,'stipe_latex_taste',7,1,5, now(), now() ),        -- 89 stipe_latex_taste
-(90,'stipe_latex_abundance',15,1,5, now(), now() ),       -- 90
-(91,'mycobank_name',5,1,16, now(), now() ),                       -- 91  mycobank_name
-(92,'inaturalist_num',5,1,16, now(), now() ),            -- 92 inaturalist_num
-(93,'mushroom_observer_num',5,1,16, now(), now() ),               -- 93 mushroom_observer_num
-(94,'location_found_latitude',5,1,15, now(), now() ),    -- 94 location_found_latitude
-(95,'location_found_longitude',5,1,15, now(), now() ),            -- 95 location_found_longitude
-(96,'project_belong_to',9,1,16, now(), now() ),             -- 96 project_belong_to
-(97,'microscope_slides_included',14,1,17, now(), now() ),           -- 97 microscope_slides_included
-(98,'preservation_method',9,1,17, 1, now(), now() ),           -- 98 preservation-method
+(84,'weight_before_dry','','',17, now(), now() ),              -- 84 weight_before_dry
+(85,'weight_after_dry','','',17, now(), now() ),        -- 85 weight_after_dry
+(86,'elevation','','',11, now(), now() ),                      -- 86 elevation
+(87,'soil_ph','','',11, now(), now() ),                   -- 87  soil_ph
+(88,'stipe_latex_color_exposed','','',5, now(), now() ),            -- 88  stipe_latex_color_exposed
+(89,'stipe_latex_taste','','',5, now(), now() ),        -- 89 stipe_latex_taste
+(90,'stipe_latex_abundance','','',5, now(), now() ),       -- 90
+(91,'mycobank_name','','',16, now(), now() ),                       -- 91  mycobank_name
+(92,'inaturalist_num','','',16, now(), now() ),            -- 92 inaturalist_num
+(93,'mushroom_observer_num','','',16, now(), now() ),               -- 93 mushroom_observer_num
+(94,'location_found_latitude','','',15, now(), now() ),    -- 94 location_found_latitude
+(95,'location_found_longitude','','',15, now(), now() ),            -- 95 location_found_longitude
+(96,'project_belong_to','','',16, now(), now() ),             -- 96 project_belong_to
+(97,'microscope_slides_included','','',17, now(), now() ),           -- 97 microscope_slides_included
+(98,'preservation_method','','',17, now(), now() ),           -- 98 preservation-method
 (99,'Superior','Near the cap','',7, now(), now() ),      --  99 annulus_position
 (99,'Apical','upper half', '',   7, now(), now() ),
 (99,'Median','in the middle','', 7, now(), now() ),

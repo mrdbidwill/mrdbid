@@ -8,7 +8,7 @@ starting_number = 112
 # Process lines
 File.open(file_path, 'w') do |file|
   lines.each_with_index do |line, index|
-    # Add the prefix to every line after the first
+    # Add the prefix (id, to the beginning of every line after the first
     if index.zero?
       file.puts(line) # Write the first line as is
     else
