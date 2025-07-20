@@ -1,6 +1,10 @@
  # app/models/lookup_item.rb
  # frozen_string_literal: true
+
  class LookupItem < ApplicationRecord
+
+   self.inheritance_column = :_type_disabled  # stop rails from using default type column STI
+
    belongs_to :source_data, optional: true
    belongs_to :lookup_type
    belongs_to :mr_character, optional: true # Add this for clarity

@@ -4,8 +4,9 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @user_mushrooms = current_user.mushrooms # Mushrooms the user owns
-    # @shared_mushrooms = Mushroom.where.not(user_id: current_user.id) # Mushrooms owned by others
+    @mushrooms = current_user.mushrooms # Assign the user's mushrooms to @mushrooms
+    # Optionally, if you want to include shared mushrooms, you can append them:
+    # @mushrooms = current_user.mushrooms + Mushroom.where.not(user_id: current_user.id)
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json

@@ -9,8 +9,23 @@ class MrCharactersController < ApplicationController
 
   # GET /mr_characters or /mr_characters.json
   def index
-    @mr_characters = MrCharacter.all
+    # Filter by lookup_type_id and part_id if provided
+    @mr_characters = MrCharacter.includes(:part, :lookup_type, :display_option)
+    @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
+    @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+    @mr_characters = @mr_characters.page(params[:page]).per(20)
+
+    # In MrCharactersController#index
+    # Get parts that belong to 'Part' category in the `lookup_types` table
+    @parts = LookupItem.joins(:mr_character)
+                       .joins('INNER JOIN lookup_types ON mr_characters.lookup_type_id = lookup_types.id')
+                       .where(lookup_types: { name: 'Part' })
+                       .pluck(:name, :id)
+
+
+
   end
+
 
   # GET /mr_characters/1 or /mr_characters/1.json
   def show; end
@@ -67,11 +82,14 @@ class MrCharactersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_mr_character
-    @mr_character = MrCharacter.find(params.expect(:id))
+    @mr_character = MrCharacter.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mr_characters_path, alert: "Mr character not found."
   end
+
 
   # Only allow a list of trusted parameters through.
   def mr_character_params
-    params.expect(mr_character: %i[name display_option_id part_id source_data_id])
+    params.require(:mr_character).permit(:name, :display_option_id, :part_id, :source_data_id)
   end
 end

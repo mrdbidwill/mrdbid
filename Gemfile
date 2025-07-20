@@ -19,6 +19,9 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
+gem 'kaminari' # pagination
+
+
 gem 'annotate'                      # Model annotations
 gem 'devise'                        # Authentication
 gem 'devise-two-factor', '~> 6.1.0' # Two-factor authentication

@@ -93,7 +93,7 @@ CREATE TABLE `colors` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dna_sequences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -176,7 +176,7 @@ CREATE TABLE `lens` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -195,7 +195,7 @@ CREATE TABLE `lookup_items` (
   KEY `index_lookup_items_on_data_source_id` (`data_source_id`),
   CONSTRAINT `fk_rails_7986eea0da` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
   CONSTRAINT `fk_rails_db82e6926c` FOREIGN KEY (`id`) REFERENCES `source_data` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1185 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -207,7 +207,7 @@ CREATE TABLE `lookup_types` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_character_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -247,7 +247,7 @@ CREATE TABLE `mr_characters` (
   CONSTRAINT `fk_rails_97936aa437` FOREIGN KEY (`part_id`) REFERENCES `lookup_items` (`id`),
   CONSTRAINT `fk_rails_f1528c1890` FOREIGN KEY (`lookup_type_id`) REFERENCES `lookup_types` (`id`),
   CONSTRAINT `fk_rails_f919b11cf9` FOREIGN KEY (`source_data_id`) REFERENCES `source_data` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=674 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -276,7 +276,7 @@ CREATE TABLE `permissions` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `plant_associations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -347,7 +347,7 @@ CREATE TABLE `source_data` (
   PRIMARY KEY (`id`),
   KEY `index_source_data_on_source_data_type_id` (`source_data_type_id`),
   CONSTRAINT `fk_rails_e2b6e4c854` FOREIGN KEY (`source_data_type_id`) REFERENCES `lookup_items` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -363,7 +363,7 @@ CREATE TABLE `states` (
   PRIMARY KEY (`id`),
   KEY `index_states_on_country_id` (`country_id`),
   CONSTRAINT `fk_rails_40bd891262` FOREIGN KEY (`country_id`) REFERENCES `lookup_items` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tree_associations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -426,7 +426,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
   KEY `index_users_on_otp_required_for_login` (`otp_required_for_login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -439,6 +439,7 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('2025071900001'),
 ('20250717200001'),
 ('20250713200016'),
 ('20250713200015'),

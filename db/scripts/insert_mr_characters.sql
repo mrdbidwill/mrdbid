@@ -107,6 +107,5 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,1,23, 1,now(), now() ),
                                    (107,'universal_outer_veil_fates',9,1,15, 1, now(), now()),
                                    (108,'universal_outer_veil_textures',9,1,15, 1, now(), now()),
                                    (109,'veils',9,1,15, 1, now(), now()),
-                                   (110,'synonyms',9,1,15, 1, now(), now()),
-                                   (111,'parts',9,9,15, 1, now(), now());
+                                   (110,'synonyms',9,1,15, 1, now(), now());
 

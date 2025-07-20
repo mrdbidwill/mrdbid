@@ -7,8 +7,10 @@ class MrCharacter < ApplicationRecord
   belongs_to :source_data
   belongs_to :color, optional: true
 
-  has_many :mr_character_mushrooms
+  has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mushrooms, through: :mr_character_mushrooms
+  has_many :lookup_items, foreign_key: :mr_character_id, dependent: :nullify # Proper association with LookupItem
+
 
   validates :name, presence: true
 end

@@ -5,6 +5,23 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
+   <%= form_with url: mr_characters_path, method: :get, local: true, class: "flex space-x-4 mb-5" do |form| %>
+     <div>
+       <%= form.label :lookup_type_id, "Lookup Type", class: "block font-bold" %>
+       <%= form.select :lookup_type_id, LookupType.pluck(:name, :id), include_blank: "All", class: "rounded-md border-gray-300 w-full" %>
+     </div>
+
+    <div>
+      <%= form.label :part_id, "Part", class: "block font-bold" %>
+      <%= form.select :part_id, @parts, include_blank: "All", class: "rounded-md border-gray-300 w-full" %>
+    </div>
+
+
+     <div class="flex items-end">
+       <%= form.submit "Filter", class: "rounded-md px-4 py-2 bg-blue-600 text-white" %>
+     </div>
+   <% end %>
+
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Mr characters</h1>
     <%= link_to "New mr character", new_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
@@ -22,6 +39,10 @@
           </div>
         </div>
       <% end %>
+
+      <div class="mt-5">
+        <%= paginate @mr_characters %> <!-- Pagination links -->
+      </div>
     <% else %>
       <p class="text-center my-10">No mr characters found.</p>
     <% end %>

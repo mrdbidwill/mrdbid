@@ -11,7 +11,7 @@
   </div>
 
   <div id="mushrooms" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @mushrooms.any? %>
+    <% if @mushrooms&.any? %>
       <% @mushrooms.each do |mushroom| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
           <%= render mushroom %>
