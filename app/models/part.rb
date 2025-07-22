@@ -1,4 +1,7 @@
 # frozen_string_literal: true
 
-class Part < LookupItem
+# app/models/part.rb
+class Part < ApplicationRecord
+  validates :name, presence: true, uniqueness: true
 end
+

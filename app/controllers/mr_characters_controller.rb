@@ -15,16 +15,16 @@ class MrCharactersController < ApplicationController
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
     @mr_characters = @mr_characters.page(params[:page]).per(20)
 
-    # In MrCharactersController#index
-    # Get parts that belong to 'Part' category in the `lookup_types` table
-    @parts = LookupItem.joins(:mr_character)
-                       .joins('INNER JOIN lookup_types ON mr_characters.lookup_type_id = lookup_types.id')
-                       .where(lookup_types: { name: 'Part' })
-                       .pluck(:name, :id)
-
-
-
+    @parts = if params[:lookup_type_id].present?
+           LookupItem.joins("JOIN mr_characters ON lookup_items.id = mr_characters.part_id")
+                     .joins("JOIN lookup_types ON mr_characters.lookup_type_id = lookup_types.id")
+                     .where(lookup_types: { id: params[:lookup_type_id] })
+                     .pluck(:name, :id)
+    else
+           []
+         end
   end
+
 
 
   # GET /mr_characters/1 or /mr_characters/1.json

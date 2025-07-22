@@ -1,4 +1,7 @@
 # frozen_string_literal: true
 
-class DisplayOption < LookupItem
+# app/models/display_option.rb
+class DisplayOption < ApplicationRecord
+  validates :name, presence: true, uniqueness: true
 end
+
