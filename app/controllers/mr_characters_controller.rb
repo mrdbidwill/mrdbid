@@ -15,15 +15,17 @@ class MrCharactersController < ApplicationController
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
     @mr_characters = @mr_characters.page(params[:page]).per(20)
 
+    # Populate the parts dropdown
     @parts = if params[:lookup_type_id].present?
-           LookupItem.joins("JOIN mr_characters ON lookup_items.id = mr_characters.part_id")
-                     .joins("JOIN lookup_types ON mr_characters.lookup_type_id = lookup_types.id")
-                     .where(lookup_types: { id: params[:lookup_type_id] })
-                     .pluck(:name, :id)
-    else
-           []
-         end
+               Part.joins(:mr_characters)
+                   .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
+                   .distinct
+                   .pluck(:name, :id)
+             else
+               Part.pluck(:name, :id) # Show all parts if no lookup_type_id is selected
+             end
   end
+
 
 
 

@@ -281,7 +281,7 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (99,'Median','in the middle','', 7, now(), now() ),
 (99,'Inferior','Lower half','',  7, now(), now() ),
 (99,'Basal','Near the base','',  7, now(), now() ),
-(100,'Observation Only - No specimen collected','','None',2, now(), now() ),              -- 100 mushroom_storage_location
+(100,'Observation Only - No specimen collected','','',2, now(), now() ),              -- 100 mushroom_storage_location
 (100,'Specimen Collector','This is you, if you collected this specimen','',2, now(), now() ),
 (100,'Herbarium','','',2, now(), now() ),
 (101, 'USA', 'United States', '',  23, now(), now() ),  -- 101 countries
