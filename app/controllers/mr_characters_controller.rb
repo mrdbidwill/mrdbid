@@ -10,7 +10,7 @@ class MrCharactersController < ApplicationController
   # GET /mr_characters or /mr_characters.json
   def index
     # Filter by lookup_type_id and part_id if provided
-    @mr_characters = MrCharacter.includes(:part, :lookup_type, :display_option)
+    @mr_characters = MrCharacter.includes(:part, :lookup_type, :display_option, :source_data)
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
     @mr_characters = @mr_characters.page(params[:page]).per(20)
@@ -21,7 +21,7 @@ class MrCharactersController < ApplicationController
                    .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
                    .distinct
                    .pluck(:name, :id)
-             else
+    else
                Part.pluck(:name, :id) # Show all parts if no lookup_type_id is selected
              end
   end
