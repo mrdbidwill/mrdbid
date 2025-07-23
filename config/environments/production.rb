@@ -89,4 +89,10 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+   # Ensure assets are handled by Rails
+   config.assets.css_compressor = nil # Tailwind doesn't need CSS compression
+   config.assets.compile = true
+   config.assets.digest = true
+   config.assets.debug = false
 end
