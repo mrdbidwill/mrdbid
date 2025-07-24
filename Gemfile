@@ -73,7 +73,7 @@ group :development, :test do
 
   gem 'rubocop', '~> 1.78.0', require: false
   gem 'rubocop-rails', '~> 2.21.0', require: false
-  gem 'rubocop-rspec', '~> 2.18.0', require: false
+  gem 'rubocop-rspec', '~> 3.6.0', require: false
   gem 'rubocop-performance', '~> 1.16.0', require: false
   gem 'rubocop-capybara', '~> 2.22.0', require: false
 end

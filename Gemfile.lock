@@ -349,9 +349,9 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
-    rubocop-rspec (2.18.1)
-      rubocop (~> 1.33)
-      rubocop-capybara (~> 2.17)
+    rubocop-rspec (3.6.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -467,7 +467,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.16.0)
   rubocop-rails (~> 2.21.0)
   rubocop-rails-omakase
-  rubocop-rspec (~> 2.18.0)
+  rubocop-rspec (~> 3.6.0)
   selenium-webdriver
   shoulda-matchers
   solid_cable
