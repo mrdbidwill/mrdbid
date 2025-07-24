@@ -53,8 +53,17 @@ gem 'thruster', require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
+  gem 'faker'
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
+  # gem 'guard-rspec', require: false
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
@@ -72,14 +81,4 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'factory_bot_rails' # Test factories
-  gem 'rspec-rails', '~> 6.0.0'
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem "shoulda-matchers", "~> 5.0"
-
 end
