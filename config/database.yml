@@ -52,7 +52,7 @@ production:
   primary: &primary_production
     <<: *default
     database: mrdbid_production
-    username: mrdbid
+    username: mrdbid_user
     password: <%= ENV["MRDBID_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production

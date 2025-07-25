@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   resources :camera_models
   resources :camera_makes
   resources :colors
+  resources :users
+
   root 'pages#home'
 
   # Publicly available pages

@@ -4,7 +4,7 @@ class CreateStates < ActiveRecord::Migration[8.0]
       t.string :name
       t.text :description
       t.text :comments
-      t.references :country, null: false, foreign_key: false
+      t.references :country, foreign_key: false
 
       t.timestamps
     end

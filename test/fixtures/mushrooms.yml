@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# test/fixtures/mushrooms.yml
+mushroom_1:
+  name: "Tiny parasol"
+  comment: "I will know more later"
+
+
+mushroom_2:
+  name: "Yellow mushroom"
+  comment: "I can't say right now"
+

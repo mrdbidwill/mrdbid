@@ -18,7 +18,7 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (18,'pileus_color_wet',3,1,6, 5, now(), now() ),
                                    (19,'pileus_color_dry',3,1,6, 5, now(), now() ),
                                    (20,'pileus_surface_dryness',3,1,9, 5, now(), now() ),             -- lookup in lookup_items
-                                   (21,'pileus_surface_texture',3,1,9, 5, now(), now() ),             -- lookup in lookup_items
+                                   (21,'pileus_surface_texture_mrdbid',3,1,9, 5, now(), now() ),             -- lookup in lookup_items
                                    (22,'pileus_margin_shape',3,1,9, 5, now(), now() ),             -- lookup in lookup_items
                                    (23,'pileus_margin_type',3,1,9, 5, now(), now() ),             -- lookup in lookup_items
                                    (24,'pileus_hairy_y_n',3,1,5, 5, now(), now() ),
@@ -57,7 +57,7 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (57,'stipe_color_bruise',5,1,6, 1, now(), now() ),
                                    (58,'stipe_surface',5,1,9, 1, now(), now() ),             -- lookup in lookup_items
                                    (59,'stipe_texture',5,1,9, 1, now(), now() ),             -- lookup in lookup_items
-                                   (60,'stipe_interior',5,1,9, 1, now(), now() ),             -- lookup in lookup_items
+                                   (60,'stipe_interior_mrdbid',5,1,9, 1, now(), now() ),             -- lookup in lookup_items
                                    (61,'partial_inner_veil_annular_ring_position',6,1,9, 1, now(), now() ),             -- lookup in lookup_items
                                    (62,'veil_annulus',6,1,5, 1, now(), now() ),
                                    (63,'partial_inner_veil_color',6,1,6, 1, now(), now() ),
@@ -98,7 +98,8 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (98,'preservation_method',2,1,5, 1, now(), now() ),
                                    (99,'annulus_position',2,9,5,1, now(), now() ),                   -- lookup in lookup_items
                                    (100,'mushroom_storage_location',467,1,9, 1, now(), now() ),             -- lookup in lookup_items
-                                   (101,'countries',15,1,12, 1, now(), now() ),                      -- lookup in lookup_items
+                                   (101,'countries',15,1,11, 1, now(), now() ),                      -- lookup in lookup_items
+                                   (102,'states',15,1,12, 1, now(), now() ),
                                    (105,'fungus_types',2,1,9, 1, now(), now()),                    -- lookup in lookup_items
                                    (106,'universal_outer_veil_appearances',6,1,9, 1, now(), now()),             -- lookup in lookup_items
                                    (107,'universal_outer_veil_fates',6,1,9, 1, now(), now()),             -- lookup in lookup_items
@@ -318,22 +319,22 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (322,'pelei_cystidia_form',3,4,5,44,now(),now() ),
                                    (323,'pileipellis_end_hyphae_present',3,4,5,44,now(),now() ),
                                    (324,'pileocystidia_present',3,4,5,44,now(),now() ),
-                                   (325,'setae_present',3,4,5,44,now(),now() ),
+                                   (325,'setae_present_2',3,4,5,44,now(),now() ),
                                    (326,'circumcystidia_present',3,4,5,44,now(),now() ),
                                    (327,'pileipellis_end_hyphae_measurement',3,4,5,44,now(),now() ),
                                    (328,'pileocystidia_measurement',3,4,5,44,now(),now() ),
                                    (329,'setae_measurement',2,4,5,44,now(),now() ),
                                    (330,'circumcystidia_measurement',2,4,5,44,now(),now() ),
-                                   (331,'circumcystidia_form',2,4,5,44,now(),now() ),
-                                   (332,'circumcystidia_form',2,4,5,44,now(),now() ),
-                                   (333,'circumcystidia_form',2,4,5,44,now(),now() ),
-                                   (334,'circumcystidia_form',2,4,5,44,now(),now() ),
+                                   (331,'circumcystidia_form_1',2,4,5,44,now(),now() ),
+                                   (332,'circumcystidia_form_2',2,4,5,44,now(),now() ),
+                                   (333,'circumcystidia_form_3',2,4,5,44,now(),now() ),
+                                   (334,'circumcystidia_form_4',2,4,5,44,now(),now() ),
                                    (335,'clamp_connection_present',2,4,5,44,now(),now() ),
                                    (336,'pileipellis_exhibits_encrusted_pigments',2,4,5,44,now(),now() ),
                                    (337,'broom_cells_observed_in_pileipellis',2,4,5,44,now(),now() ),
                                    (338,'apical_projections_observed_in_pileipellis',2,4,5,44,now(),now() ),
                                    (339,'velipellis_present',2,4,5,44,now(),now() ),
-                                   (340,'lamellae_spore_width_max_nm',8,4,5,44,now(),now() ),
+                                   (340,'lamellae_spore_width_nm',8,4,5,44,now(),now() ),
                                    (341,'lamellae_spore_height_nm',8,4,5,44,now(),now() ),
                                    (342,'lamellae_spore_width_max_nm',8,4,5,44,now(),now() ),
                                    (343,'lamellae_spore_width_min_nm',8,4,5,44,now(),now() ),
@@ -394,7 +395,7 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (398,'stipe_cystidia_present',5,4,5,44,now(),now() ),
                                    (399,'stipe_cystidia_width',5,4,5,44,now(),now() ),
                                    (400,'stipe_cystidia_height',5,4,5,44,now(),now() ),
-                                   (401,'stipe_form',5,4,5,44,now(),now() ),
+                                   (401,'stipe_form_2',5,4,5,44,now(),now() ),
                                    (402,'stipe_palisade_present',5,4,5,44,now(),now() ),
                                    (403,'stipe_more_characters_pileus_cystidia_present',5,4,5,44,now(),now() ),
                                    (404,'stipe_more_characters_pileus_cystidia_form',5,4,5,44,now(),now() ),
@@ -428,7 +429,7 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (432,'stipe_more_characters_cell_chemical_reaction_test_sulfuric_acid',5,4,5,44,now(),now() ),
                                    (433,'stipe_more_characters_melzers',5,4,5,44,now(),now() ),
                                    (434,'stipe_more_characters_clamp_connection_present',5,4,5,44,now(),now() ),
-                                   (435,'stipe_more_characters_setae_present',5,4,5,44,now(),now() ),
+                                   (435,'stipe_more_characters_setae_present_3',5,4,5,44,now(),now() ),
                                    (436,'stipe_more_characters_acanthocytesPresent',5,4,5,44,now(),now() ),
                                    (437,'stipe_more_characters_basal_mycelium_crystals_present',5,4,5,44,now(),now() ),
                                    (438,'stipe_more_characters_spores_exhibit_calyptration',5,4,5,44,now(),now() ),
@@ -595,7 +596,7 @@ INSERT INTO `mr_characters` VALUES (1,'id',1,9,1, 23,now(), now() ),
                                    (599,'vasopressin_present',9,5,5,44,now(),now() ),
                                    (600,'vasopressin_quantity',9,5,5,44,now(),now() ),
                                    (601,'known_novel_maois_monoamine_oxidase_inhibitors_present',9,5,5,44,now(),now() ),
-                                   (602,'muscarine_present',9,5,5,44,now(),now() ),
+                                   (602,'muscarine_present_2',9,5,5,44,now(),now() ),
                                    (603,'muscimol_present',9,5,5,44,now(),now() ),
                                    (604,'ibotenic_acid_present',9,5,5,44,now(),now() ),
                                    (605,'antamanide_present',9,5,5,44,now(),now() ),

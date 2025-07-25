@@ -18,9 +18,18 @@
    scope :by_type, ->(type_name) { joins(:lookup_type).where(lookup_types: { name: type_name }) }
    #  usage of scope :by_type: LookupItem.by_type("Fungus Type")
 
+   # Scope for countries
+   scope :countries, -> { joins(:mr_character).where(mr_characters: { name: 'countries' }) }
+
+
    # Implement a convenience method to get a more descriptive lookup_type name
    def full_type
      "#{lookup_type_name}: #{name}"
    end
+
+   def self.available_for_mushroom_creation
+     by_type('SomeType').pluck(:name, :id) # Adjust the type name as needed
+   end
+
 
  end

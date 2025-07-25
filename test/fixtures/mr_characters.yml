@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# test/fixtures/mr_characters.yml
+mr_character_1:
+  name: "What it is"
+  part_id: 2
+
+mr_character_2:
+  name: "Where it is"
+  part_id: 3
+

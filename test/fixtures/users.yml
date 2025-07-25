@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# test/fixtures/users.yml
+john_doe:
+  email: "john@example.com"
+  display_name: "John Doe"
+
+
+jane_doe:
+  email: "jane@example.com"
+  display_name: "Jane Doe"
+
+

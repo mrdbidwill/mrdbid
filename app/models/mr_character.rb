@@ -9,6 +9,7 @@ class MrCharacter < ApplicationRecord
 
   has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mushrooms, through: :mr_character_mushrooms
+  has_many :lookup_items
 
 
   validates :name, presence: true

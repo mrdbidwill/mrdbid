@@ -24,9 +24,11 @@ module Mrdbid
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     # Force Rails to use structure.sql instead of schema.rb
     config.active_record.schema_format = :sql
+    # Force Rails to raise errors on unknown database attributes
+    config.active_record.strict_loading_by_default = true
   end
 end

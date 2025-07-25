@@ -53,13 +53,8 @@ gem 'thruster', require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
-
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers'
-  gem 'faker'
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
@@ -73,7 +68,6 @@ group :development, :test do
 
   gem 'rubocop', '~> 1.78.0', require: false
   gem 'rubocop-rails', '~> 2.21.0', require: false
-  gem 'rubocop-rspec', '~> 2.18.0', require: false
   gem 'rubocop-performance', '~> 1.16.0', require: false
   gem 'rubocop-capybara', '~> 2.22.0', require: false
 end
@@ -81,4 +75,11 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
+end
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-reporters', '~> 1.4' # Better test output
+  gem 'minitest-rails'             # Adds Minitest integration with Rails
+  gem 'rails-controller-testing', '~> 1.0' # For controller tests if needed
 end

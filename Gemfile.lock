@@ -77,6 +77,7 @@ GEM
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
+    ansi (1.5.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.20)
@@ -117,7 +118,6 @@ GEM
       devise (~> 4.0)
       railties (>= 7.0, < 8.1)
       rotp (~> 6.0)
-    diff-lcs (1.6.2)
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -125,13 +125,6 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    factory_bot (6.5.4)
-      activesupport (>= 6.1.0)
-    factory_bot_rails (6.5.0)
-      factory_bot (~> 6.5)
-      railties (>= 6.1.0)
-    faker (3.5.2)
-      i18n (>= 1.8.11, < 2)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -190,6 +183,14 @@ GEM
     matrix (0.4.3)
     mini_mime (1.1.5)
     minitest (5.25.5)
+    minitest-rails (8.0.0)
+      minitest (~> 5.20)
+      railties (>= 8.0.0, < 8.1.0)
+    minitest-reporters (1.7.1)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     msgpack (1.8.0)
     mysql2 (0.5.6)
     net-imap (0.5.9)
@@ -267,6 +268,10 @@ GEM
       activesupport (= 8.0.2)
       bundler (>= 1.15.0)
       railties (= 8.0.2)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
@@ -299,23 +304,6 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 2.0)
     rqrcode_core (2.0.0)
-    rspec-core (3.13.5)
-      rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.5)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.5)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.13.0)
-    rspec-rails (8.0.1)
-      actionpack (>= 7.2)
-      activesupport (>= 7.2)
-      railties (>= 7.2)
-      rspec-core (~> 3.13)
-      rspec-expectations (~> 3.13)
-      rspec-mocks (~> 3.13)
-      rspec-support (~> 3.13)
-    rspec-support (3.13.4)
     rubocop (1.78.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -349,9 +337,6 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
-    rubocop-rspec (2.18.1)
-      rubocop (~> 1.33)
-      rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -361,8 +346,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    shoulda-matchers (6.5.0)
-      activesupport (>= 5.2.0)
     solid_cable (3.0.11)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -449,27 +432,26 @@ DEPENDENCIES
   debug
   devise
   devise-two-factor (~> 6.1.0)
-  factory_bot_rails
-  faker
   importmap-rails
   jbuilder
   kamal
   kaminari
+  minitest
+  minitest-rails
+  minitest-reporters (~> 1.4)
   mysql2 (~> 0.5)
   propshaft
   puma (>= 5.0)
   pundit
   rails (~> 8.0.2)
+  rails-controller-testing (~> 1.0)
   rqrcode
-  rspec-rails
   rubocop (~> 1.78.0)
   rubocop-capybara (~> 2.22.0)
   rubocop-performance (~> 1.16.0)
   rubocop-rails (~> 2.21.0)
   rubocop-rails-omakase
-  rubocop-rspec (~> 2.18.0)
   selenium-webdriver
-  shoulda-matchers
   solid_cable
   solid_cache
   solid_queue

@@ -4,15 +4,14 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @mushrooms = current_user.mushrooms # Assign the user's mushrooms to @mushrooms
-    # Optionally, if you want to include shared mushrooms, you can append them:
-    # @mushrooms = current_user.mushrooms + Mushroom.where.not(user_id: current_user.id)
+    @mushrooms = current_user.mushrooms.includes(:user, :mr_characters, :mr_character_mushrooms)
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json
   def show
     # Check if the user can edit (user owns the mushroom)
     @can_edit = @mushroom.user_id == current_user.id
+
   end
 
   # GET /mushrooms/new
@@ -34,6 +33,7 @@ class MushroomsController < ApplicationController
   # GET /mushrooms/1/edit
   def edit
     # Authorization already handled by `authorize_mushroom`
+
   end
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
@@ -68,4 +68,8 @@ class MushroomsController < ApplicationController
   def mushroom_params
     params.require(:mushroom).permit(:name, :description, :comment)
   end
+
+
+
+
 end

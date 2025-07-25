@@ -1,8 +1,8 @@
 class CreateImageMushrooms < ActiveRecord::Migration[8.0]
   def change
     create_table :image_mushrooms do |t|
-      t.references :mushroom, null: false, foreign_key: false
-      t.references :part, null: false, foreign_key: false
+      t.references :mushroom, foreign_key: false
+      t.references :part, foreign_key: false
       t.string :image_name
       t.string :image_file_address
       t.integer :image_width
