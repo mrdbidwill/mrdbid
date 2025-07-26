@@ -1,0 +1,13 @@
+one:
+  name: "Grilled"
+  part: one # References a valid part from parts.yml
+  lookup_type: one # References a valid lookup_type from lookup_types.yml
+  display_option: one # References display_option from display_options.yml
+  source_data: one # References a valid source_data from source_data.yml
+
+two:
+  name: "Boiled"
+  part: two # References a valid part from parts.yml
+  lookup_type: two # References a valid lookup_type from lookup_types.yml
+  display_option: two # References display_option from display_options.yml
+  source_data: two # References a valid source_data from source_data.yml

@@ -1,0 +1,11 @@
+one:
+  name: "Button Mushroom"
+  description: "Common mushroom"
+  comment: "Good for pizza"
+  user: one # References the "one" user from users.yml
+
+two:
+  name: "Shiitake"
+  description: "Has a rich taste"
+  comment: "Great for soups"
+  user: two # References the "two" user from users.yml
