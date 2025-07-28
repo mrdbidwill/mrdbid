@@ -2,8 +2,12 @@ one:
   mushroom: one # Refers to "Button Mushroom" from mushrooms.yml
   mr_character: one # Refers to "Grilled" from mr_characters.yml
   character_value: "Sweet and soft"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
   mushroom: two # Refers to "Shiitake" from mushrooms.yml
   mr_character: two # Refers to "Boiled" from mr_characters.yml
   character_value: "Rich and chewy"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -1,6 +1,17 @@
 one:
   title: "Field Guide of Fungi"
+  source_data_type_id: one # Reference to source_data_type.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 two:
   title: "Mycology Database"
+  source_data_type_id: two # Reference to source_data_type.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 three:
   title: "Fungi Illustrated"
+  source_data_type_id: three # Reference to source_data_type.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

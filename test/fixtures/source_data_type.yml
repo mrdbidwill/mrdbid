@@ -1,12 +1,12 @@
 one:
-  name: "Morphological"
+  name: "Web Site"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 two:
-  name: "Chemical"
+  name: "Book"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 three:
-  name: "Ecological"
+  name: "Database"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

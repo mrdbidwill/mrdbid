@@ -4,6 +4,9 @@ one:
   lookup_type: one # References lookup_types.yml
   display_option: one # References display_options.yml
   source_data: one # References source_data.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 
 two:
   name: "Bruise Reaction"
@@ -11,3 +14,5 @@ two:
   lookup_type: two # References lookup_types.yml
   display_option: two # References display_options.yml
   source_data: two # References source_data.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -1,6 +1,12 @@
 one:
   name: "Standard"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 two:
   name: "None"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 three:
   name: "Detailed"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

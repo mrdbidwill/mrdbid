@@ -3,9 +3,14 @@ one:
   description: "Common mushroom"
   comment: "Good for pizza"
   user: one # References the "one" user from users.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 
 two:
   name: "Shiitake"
   description: "Has a rich taste"
   comment: "Great for soups"
   user: two # References the "two" user from users.yml
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -45,7 +45,10 @@ class MushroomTest < ActiveSupport::TestCase
       part: Part.create!(name: "Sample Part"),
       lookup_type: LookupType.create!(name: "Sample LookupType"),
       display_option: display_option,
-      source_data: SourceData.create!(title: "Sample Data Source Title")
+      source_data: SourceData.create!(
+        title: "Sample Data Source Title",
+        source_data_type: SourceDataType.create!(name: "Sample Type")
+      )
     )
 
     # Associate the mushroom and mr_character through MrCharacterMushroom

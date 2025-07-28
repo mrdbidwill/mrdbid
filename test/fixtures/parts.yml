@@ -1,6 +1,12 @@
 one:
   name: "Cap"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 two:
   name: "Stem"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 three:
   name: "Pore Surface"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
