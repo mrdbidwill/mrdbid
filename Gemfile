@@ -21,6 +21,8 @@ gem 'jbuilder'
 
 gem 'kaminari' # pagination
 
+gem 'csv'
+
 
 gem 'annotate'                      # Model annotations
 gem 'devise'                        # Authentication
