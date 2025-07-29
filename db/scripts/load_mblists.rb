@@ -1,5 +1,6 @@
 require "csv"
 
+# rails runner db/scripts/load_mblists.rb
 # Path to your CSV file
 file_path = Rails.root.join("db", "scripts", "MBList.csv")
 

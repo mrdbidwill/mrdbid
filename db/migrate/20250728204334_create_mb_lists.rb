@@ -1,22 +1,35 @@
 class CreateMbLists < ActiveRecord::Migration[8.0] # Adjust version as per your Rails app
   def change
+    return if table_exists?(:mb_lists)
     create_table :mb_lists do |t|
-      t.string :taxon_name
-      t.string :authors
-      t.string :rank_name
-      t.integer :year_of_effective_publication
-      t.string :name_status
-      t.bigint :mycobank_number
-      t.string :hyperlink
+      t.text :taxon_name
+      t.text :authors
+      t.text :rank_name
+      t.text :year_of_effective_publication   # data contains question marks
+      t.text :name_status
+      t.text :mycobank_number
+      t.text :hyperlink
       t.text :classification
-      t.string :current_name
+      t.text :current_name
       t.text :synonymy
-      t.timestamps
     end
-    # Adding indexes to optimize queries for large tables
-    add_index :mb_lists, [:taxon_name, :rank_name], unique: true, name: 'index_mblists_on_taxon_name_and_rank_name' # Unique index
-    add_index :mb_lists, :taxon_name, name: 'index_mblists_on_taxon_name' # Non-unique index
-    add_index :mb_lists, :rank_name, name: 'index_mblists_on_rank_name'   # Non-unique index
-    add_index :mb_lists, :name_status, name: 'index_mblists_on_name_status' # Non-unique index
+    # Add indexes with key lengths
+    add_index :mb_lists, [:taxon_name, :rank_name],
+              unique: true,
+              name: 'index_mblists_on_taxon_name_and_rank_name',
+              length: { taxon_name: 100, rank_name: 100 }
+
+    add_index :mb_lists, :taxon_name,
+              name: 'index_mblists_on_taxon_name',
+              length: 100
+
+    add_index :mb_lists, :rank_name,
+              name: 'index_mblists_on_rank_name',
+              length: 100
+
+    add_index :mb_lists, :name_status,
+              name: 'index_mblists_on_name_status',
+              length: 50
+
   end
 end

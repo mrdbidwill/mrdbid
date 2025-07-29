@@ -252,24 +252,22 @@ DROP TABLE IF EXISTS `mb_lists`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mb_lists` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `taxon_name` varchar(255) DEFAULT NULL,
-  `authors` varchar(255) DEFAULT NULL,
-  `rank_name` varchar(255) DEFAULT NULL,
-  `year_of_effective_publication` int DEFAULT NULL,
-  `name_status` varchar(255) DEFAULT NULL,
-  `mycobank_number` bigint DEFAULT NULL,
-  `hyperlink` varchar(255) DEFAULT NULL,
-  `classification` text,
-  `current_name` varchar(255) DEFAULT NULL,
-  `synonymy` text,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
+  `taxon_name` text COLLATE utf8mb4_0900_as_cs,
+  `authors` text COLLATE utf8mb4_0900_as_cs,
+  `rank_name` text COLLATE utf8mb4_0900_as_cs,
+  `year_of_effective_publication` text COLLATE utf8mb4_0900_as_cs,
+  `name_status` text COLLATE utf8mb4_0900_as_cs,
+  `mycobank_number` text COLLATE utf8mb4_0900_as_cs,
+  `hyperlink` text COLLATE utf8mb4_0900_as_cs,
+  `classification` text COLLATE utf8mb4_0900_as_cs,
+  `current_name` text COLLATE utf8mb4_0900_as_cs,
+  `synonymy` text COLLATE utf8mb4_0900_as_cs,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_mblists_on_taxon_name_and_rank_name` (`taxon_name`,`rank_name`),
-  KEY `index_mblists_on_taxon_name` (`taxon_name`),
-  KEY `index_mblists_on_rank_name` (`rank_name`),
-  KEY `index_mblists_on_name_status` (`name_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `index_mblists_on_taxon_name_and_rank_name` (`taxon_name`(100),`rank_name`(100)),
+  KEY `index_mblists_on_taxon_name` (`taxon_name`(100)),
+  KEY `index_mblists_on_rank_name` (`rank_name`(100)),
+  KEY `index_mblists_on_name_status` (`name_status`(50))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_character_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -528,7 +526,8 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
-('20250728174550'),
+('20250728224105'),
+('20250728204334'),
 ('20250726232934'),
 ('20250719000001'),
 ('20250717200001'),
