@@ -31,6 +31,22 @@ class MushroomTest < ActiveSupport::TestCase
     assert_equal 1, @mushroom.mr_characters.count, "Expected 1 associated mr_character"
   end
 
+  test "should enforce unique names for the same user but allow duplicates for different users" do
+    user1 = users(:one)
+    user2 = users(:two)
+
+    # Create a mushroom for user1
+    mushroom1 = Mushroom.create!(name: "Mushroom Name", user: user1)
+
+    # Attempt to create a mushroom with the same name for the same user
+    duplicate_mushroom = Mushroom.new(name: "Mushroom Name", user: user1)
+    assert_not duplicate_mushroom.valid?, "Duplicate name for the same user should not be valid"
+
+    # Create a mushroom with the same name for a different user
+    mushroom_for_user2 = Mushroom.new(name: "Mushroom Name", user: user2)
+    assert mushroom_for_user2.valid?, "Mushrooms with the same name should be valid for different users"
+  end
+
   test "name should not be too long" do
     @mushroom.name = "a" * 256 # Assuming 255 is the limit
     assert_not @mushroom.valid?, "Mushroom name should not exceed the character limit"
@@ -40,16 +56,7 @@ class MushroomTest < ActiveSupport::TestCase
     display_option = DisplayOption.create!(name: "Valid Option") # Create a valid display_option
 
     # Set up a valid mr_character with the appropriate relationships
-    mr_character = MrCharacter.create!(
-      name: "Unique Grilled",
-      part: Part.create!(name: "Sample Part"),
-      lookup_type: LookupType.create!(name: "Sample LookupType"),
-      display_option: display_option,
-      source_data: SourceData.create!(
-        title: "Sample Data Source Title",
-        source_data_type: SourceDataType.create!(name: "Sample Type")
-      )
-    )
+    mr_character = mr_characters(:one)
 
     # Associate the mushroom and mr_character through MrCharacterMushroom
     mr_character_mushroom = @mushroom.mr_character_mushrooms.create!(

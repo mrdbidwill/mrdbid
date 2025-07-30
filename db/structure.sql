@@ -323,6 +323,7 @@ CREATE TABLE `mushrooms` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mushrooms_on_user_id_and_name` (`user_id`,`name`),
   KEY `index_mushrooms_on_user_id` (`user_id`),
   CONSTRAINT `fk_rails_1d15355ab0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -527,8 +528,8 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20250730164500'),
 ('20250729233454'),
-('20250729195534'),
 ('20250728224105'),
 ('20250728204334'),
 ('20250726232934'),

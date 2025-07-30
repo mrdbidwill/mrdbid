@@ -1,7 +1,7 @@
 class Color < ApplicationRecord
   validates :latin_name, :common_name, :hex, :sequence, presence: true
-  validates :hex, format: { with: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, message: 'must be a valid hex code' }
-  validates :r_val, :g_val, :b_val, cwc_r, cwc_g, cwc_b,  numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 255 }
+  validates :hex, format: { with: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/, message: 'must be a valid hex code' }
+  validates :r_val, :g_val, :b_val, :cwc_r, :cwc_g, :cwc_b,  numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 255 }
   validates :sequence, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Scope to order colors by their sequence in the AMS chart

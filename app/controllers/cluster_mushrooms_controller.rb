@@ -1,3 +1,6 @@
+# This controller manages the pivot table cluster_mushrooms between clusters and mushrooms
+# which allows a user to add a mushroom object to a cluster
+
 class ClusterMushroomsController < ApplicationController
   def index
   end

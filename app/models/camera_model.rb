@@ -1,0 +1,2 @@
+class CameraModel < ApplicationRecord
+end

@@ -8,7 +8,7 @@ class Mushroom < ApplicationRecord
   has_many :mr_characters, through: :mr_character_mushrooms
 
 
-  validates :name, presence: true, length: { maximum: 255 }
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id }
   validates :user, presence: true
   # Add these associations after you've created the mushroom_lookup_items table
   # belongs_to :state, optional: true

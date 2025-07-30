@@ -1,3 +1,6 @@
+# This controller manages the pivot table all_group_mushrooms between all_groups and mushrooms
+#  which allows a user to add a mushroom object to an all_group
+
 class AllGroupMushroomsController < ApplicationController
   before_action :set_all_group_mushroom, only: %i[ show edit update destroy ]
   def index

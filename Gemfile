@@ -72,6 +72,8 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.21.0', require: false
   gem 'rubocop-performance', '~> 1.16.0', require: false
   gem 'rubocop-capybara', '~> 2.22.0', require: false
+
+  gem 'reek', require: false
 end
 
 group :development do

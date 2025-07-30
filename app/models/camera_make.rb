@@ -1,0 +1,2 @@
+class CameraMake < ApplicationRecord
+end
