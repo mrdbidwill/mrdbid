@@ -65,6 +65,6 @@ class CameraMakesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def camera_make_params
-      params.fetch(:camera_make, {})
+      params.expect(camera_make: [ :name, :description, :comments, :source_id ])
     end
 end
