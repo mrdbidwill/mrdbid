@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   # Restrict resourceful routes for UsersController to avoid conflicts
-  resources :users, only: [:index, :new, :edit, :create, :update, :destroy]
+  resources :users, only: [ :index, :new, :edit, :create, :update, :destroy ]
 
   # Additional resource routes
   resources :permissions
