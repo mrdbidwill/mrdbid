@@ -1,7 +1,10 @@
+# test/models/mushroom_test.rb
+
 require "test_helper"
 
 class MushroomTest < ActiveSupport::TestCase
   def setup
+    @user = users(:one)
     @mushroom = mushrooms(:one) # Refers to data in fixtures/mushrooms.yml
   end
 
@@ -14,9 +17,39 @@ class MushroomTest < ActiveSupport::TestCase
     assert_not @mushroom.valid?, "Mushroom should not be valid without an associated user"
   end
 
-  test "name should be present" do
+  test "should not save without a name" do
     @mushroom.name = nil
     assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:name], "Name cannot be blank."
+  end
+
+  test "should not save with a duplicate name for the same user" do
+    duplicate_mushroom = @mushroom.dup
+    assert_not duplicate_mushroom.valid?
+    assert_includes duplicate_mushroom.errors[:name], "Name already exists for your account."
+  end
+
+  test "should not save with description exceeding 4096 characters" do
+    @mushroom.description = "a" * 4097
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:description], I18n.t("errors.messages.description_limit")
+  end
+
+  test "should validate user association" do
+    @mushroom.user = nil
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:user], "must exist"
+  end
+
+  test "should respond to user association" do
+    assert_respond_to @mushroom, :user
+    assert_instance_of User, @mushroom.user
+  end
+
+  test "should destroy associated mr_character_mushrooms" do
+    assert_difference "MrCharacterMushroom.count", -@mushroom.mr_character_mushrooms.count do
+      @mushroom.destroy
+    end
   end
 
   test "user association should exist" do

@@ -7,14 +7,17 @@ class Mushroom < ApplicationRecord
   has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mr_characters, through: :mr_character_mushrooms
 
+  # Use I18n for validation messages stored in config/locales/en.yml
+  validates :name, presence: { message: I18n.t("errors.messages.name_blank") },
+            length: { maximum: 255 },
+            uniqueness: { scope: :user_id, message: I18n.t("errors.messages.name_unique") }
 
-  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id }
   validates :user, presence: true
-  # Add these associations after you've created the mushroom_lookup_items table
-  # belongs_to :state, optional: true
-  # belongs_to :country, optional: true
-  # belongs_to: fungus_type, optional: true
-  # belongs_to: mushroom_storage_location, optional: true
+  validates :description, length: { maximum: 4096, message: I18n.t("errors.messages.description_limit") }
+  validates :comment, length: { maximum: 4096, message: I18n.t("errors.messages.comment_limit") }
 
-
+scope :recent, -> { order(created_at: :desc) }
+scope :by_name, -> { order(:name) }
+scope :search_by_name, ->(query) { where("name ILIKE ?", "%#{query}%") }
+scope :by_user, ->(user_id) { where(user_id: user_id) }
 end

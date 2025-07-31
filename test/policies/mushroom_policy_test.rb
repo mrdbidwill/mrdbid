@@ -4,7 +4,17 @@ class MushroomPolicyTest < ActiveSupport::TestCase
   setup do
     @user = users(:one)
     @other_user = users(:two)
-    @mushroom = mushrooms(:one)
+    @mushroom = mushrooms(:one) # Owned by @user
+  end
+
+  test "should authorize owner to edit and destroy" do
+    assert Pundit.policy(@user, @mushroom).edit?
+    assert Pundit.policy(@user, @mushroom).destroy?
+  end
+
+  test "should not authorize another user to edit and destroy" do
+    refute Pundit.policy(@other_user, @mushroom).edit?
+    refute Pundit.policy(@other_user, @mushroom).destroy?
   end
 
   def test_scope

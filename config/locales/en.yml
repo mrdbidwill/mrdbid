@@ -27,5 +27,55 @@
 #       "yes": yup
 #       enabled: "ON"
 
-en:
-  hello: "Hello world"
+en: # Language identifier
+  activerecord: # Rails' built-in key for model-specific validation messages
+    errors:
+      models:
+        mushroom:
+          attributes:
+            name:
+              blank: "Name cannot be blank."
+              unique: "Name already exists for your account."
+            description:
+              too_long: "Description must not exceed %{count} characters."
+            comment:
+              too_long: "Comment must not exceed %{count} characters."
+
+    attributes: # Human-readable names for attributes
+      mushroom:
+        name: "Mushroom Name"
+        description: "Mushroom Description"
+        comment: "Mushroom Comment"
+
+  errors: # General errors/messages
+    messages: # Root for reusable error messages
+      too_long: "%{attribute} must not exceed %{count} characters."
+      blank: "%{attribute} cannot be blank."
+      not_unique: "%{attribute} must be unique."
+      unauthorized: "You are not authorized to perform this action."
+
+  views: # UI text for views (e.g., page titles, buttons, etc.)
+    mushrooms: # Mushrooms-specific views
+      index:
+        title: "List of Mushrooms"
+        button_add: "Add Mushroom"
+        no_mushrooms: "No mushrooms available."
+      new:
+        title: "Create a New Mushroom"
+        instructions: "Fill out the form to add a new mushroom."
+        submit_button: "Create Mushroom"
+      edit:
+        title: "Edit %{name}"
+        instructions: "Update the details for %{name}."
+        submit_button: "Update Mushroom"
+      show:
+        title: "Details for %{name}"
+        delete_button: "Delete Mushroom"
+
+  generic: # Common reusable UI strings
+    buttons:
+      save: "Save"
+      cancel: "Cancel"
+      delete: "Delete"
+    confirmations:
+      delete: "Are you sure you want to delete %{item}?"
