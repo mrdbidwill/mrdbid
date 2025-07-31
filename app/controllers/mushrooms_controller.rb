@@ -5,7 +5,7 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @mushrooms = policy_scope(Mushroom) # Use policy_scope for authorization
+    @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom) : Mushroom.where(user: current_user) # Use policy_scope for authorization if available
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json
