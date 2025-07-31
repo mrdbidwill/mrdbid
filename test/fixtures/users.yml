@@ -3,9 +3,15 @@ one:
   encrypted_password: <%= Devise::Encryptor.digest(User, "password") %> # Matches "password" used in tests
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+  confirmed_at: <%= Time.current %> # Add confirmation for Devise
+  confirmation_sent_at: <%= Time.current %>
+  confirmation_token: "token1"
 
 two:
   email: "user2@example.com"
   encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+  confirmed_at: <%= Time.current %> # Add confirmation for Devise
+  confirmation_sent_at: <%= Time.current %>
+  confirmation_token: "token2"

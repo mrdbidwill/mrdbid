@@ -3,11 +3,10 @@ require "test_helper"
 class MushroomsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one) # Load a valid user from fixtures
-    puts "Before sign_in: #{@user.inspect}" # Debug fixture data
-    sign_in(@user)
-    puts "After sign_in: #{@user.inspect}" # Debug fixture data
-    @mushroom = mushrooms(:one) # Ensure @mushroom belongs to @user
+    sign_in @user # Use Devise test helper directly
+    @mushroom = mushrooms(:one) # This mushroom belongs to @user based on fixtures
   end
+
 
   test "mushroom attributes must not be empty" do
     mushroom = Mushroom.new  # No attributes set
@@ -17,8 +16,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create mushroom" do
-    puts "After sign_in: #{@user.current_user.inspect}" # Debug fixture data
-    assert_difference("@user.mushrooms.count") do
+    assert_difference("Mushroom.where(user_id: @user.id).count") do
       post mushrooms_path, params: {
         mushroom: {
           name: "Portobello",
@@ -28,6 +26,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to mushroom_path(Mushroom.last)
   end
+
 
   test "should show mushroom" do
     get mushroom_path(@mushroom)
@@ -45,9 +44,10 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy mushroom" do
-    assert_difference("@user.mushrooms.count", -1) do
+    assert_difference("Mushroom.where(user_id: @user.id).count", -1) do
       delete mushroom_path(@mushroom)
     end
     assert_redirected_to mushrooms_path
   end
+
 end

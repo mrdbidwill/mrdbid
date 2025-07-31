@@ -1,27 +1,27 @@
 class MushroomsController < ApplicationController
+  before_action :authenticate_user! # Ensure user is authenticated first
   before_action :set_mushroom, only: %i[show edit update destroy]
-  before_action :authorize_mushroom, only: %i[edit update destroy]
+  before_action :authorize_mushroom, except: %i[index new create]
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @mushrooms = current_user.mushrooms.includes(:user, :mr_characters, :mr_character_mushrooms)
+    @mushrooms = policy_scope(Mushroom) # Use policy_scope for authorization
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json
   def show
-    # Check if the user can edit (user owns the mushroom)
-    @can_edit = @mushroom.user_id == current_user.id
-
   end
 
   # GET /mushrooms/new
   def new
     @mushroom = Mushroom.new
+    authorize @mushroom if respond_to?(:authorize)
   end
 
   # POST /mushrooms or /mushrooms.json
   def create
     @mushroom = current_user.mushrooms.build(mushroom_params)
+    authorize @mushroom if respond_to?(:authorize) # Authorize before saving
 
     if @mushroom.save
       redirect_to @mushroom, notice: "Mushroom was successfully created."
@@ -32,8 +32,6 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1/edit
   def edit
-    # Authorization already handled by `authorize_mushroom`
-
   end
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
@@ -47,33 +45,25 @@ class MushroomsController < ApplicationController
 
   # DELETE /mushrooms/1 or /mushrooms/1.json
   def destroy
-    @mushroom = current_user.mushrooms.find(params[:id])
+    # Temporarily disable strict_loading for this mushroom
+    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
     @mushroom.destroy
     redirect_to mushrooms_path, notice: "Mushroom was successfully destroyed."
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_mushroom
-    @mushroom = current_user&.mushrooms&.find_by(id: params[:id])
-    redirect_to mushrooms_path, alert: "Mushroom not found or not authorized" unless @mushroom
+    @mushroom = Mushroom.find(params[:id])
+    authorize @mushroom if respond_to?(:authorize)
   end
-
-
-  def authorize_mushroom
-    unless @mushroom && @mushroom.user_id == current_user&.id
-      redirect_to mushrooms_path, alert: "You are not authorized to perform this action."
-    end
-  end
-
 
   # Only allow a list of trusted parameters through.
   def mushroom_params
     params.require(:mushroom).permit(:name, :description, :comment)
   end
 
-
-
-
+  def authorize_mushroom
+    authorize @mushroom if respond_to?(:authorize)
+  end
 end

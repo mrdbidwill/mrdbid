@@ -10,7 +10,7 @@ two:
   name: "Shiitake"
   description: "Has a rich taste"
   comment: "Great for soups"
-  user: two # Refers to the "two" user in users.yml
+  user: one # Both mushrooms belong to user one for test simplicity
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 

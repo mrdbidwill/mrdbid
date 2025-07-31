@@ -5,9 +5,9 @@ require 'rails/test_help'
 require 'devise'
 
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
-  parallelize(workers: :number_of_processors)
-
+  # Run tests in parallel with a reduced number of workers to avoid DRb connection issues
+  parallelize(workers: 1)
+  include Pundit::Authorization # Include Pundit explicitly in tests
   # Set up all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
@@ -18,13 +18,8 @@ end
 
 
 class ActionDispatch::IntegrationTest
-  # Sign in helper for integration tests
-  def sign_in(user)
-    post user_session_path, params: {
-      user: {
-        email: user.email,
-        password: "password" # Ensure this matches the fixture's password
-      }
-    }
-  end
+  include Devise::Test::IntegrationHelpers
+  include Pundit::Authorization
+
+  # You don't need to define sign_in as it's provided by Devise::Test::IntegrationHelpers
 end
