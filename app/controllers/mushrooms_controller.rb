@@ -26,7 +26,7 @@ class MushroomsController < ApplicationController
     if @mushroom.save
       redirect_to @mushroom, notice: "Mushroom was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -47,22 +47,26 @@ class MushroomsController < ApplicationController
 
   # DELETE /mushrooms/1 or /mushrooms/1.json
   def destroy
-    @mushroom.destroy!
-    redirect_to mushrooms_path, status: :see_other, notice: "Mushroom was successfully destroyed."
+    @mushroom = current_user.mushrooms.find(params[:id])
+    @mushroom.destroy
+    redirect_to mushrooms_path, notice: "Mushroom was successfully destroyed."
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_mushroom
-    @mushroom = Mushroom.find(params[:id])
+    @mushroom = current_user&.mushrooms&.find_by(id: params[:id])
+    redirect_to mushrooms_path, alert: "Mushroom not found or not authorized" unless @mushroom
   end
 
+
   def authorize_mushroom
-    unless @mushroom.user_id == current_user.id
+    unless @mushroom && @mushroom.user_id == current_user&.id
       redirect_to mushrooms_path, alert: "You are not authorized to perform this action."
     end
   end
+
 
   # Only allow a list of trusted parameters through.
   def mushroom_params

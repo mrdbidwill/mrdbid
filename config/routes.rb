@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
-    resource :two_factor_authentication, only: [:show, :update], controller: 'users/two_factor_authentication'
+    resource :two_factor_authentication, only: [ :show, :update ], controller: 'users/two_factor_authentication'
   end
 
   # Restrict resourceful routes for UsersController to avoid conflicts

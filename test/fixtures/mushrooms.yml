@@ -2,15 +2,15 @@ one:
   name: "Button Mushroom"
   description: "Common mushroom"
   comment: "Good for pizza"
-  user: one # References the "one" user from users.yml
+  user: one # Refers to the "one" user in users.yml
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-
 
 two:
   name: "Shiitake"
   description: "Has a rich taste"
   comment: "Great for soups"
-  user: two # References the "two" user from users.yml
+  user: two # Refers to the "two" user in users.yml
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+
