@@ -23,6 +23,8 @@ gem 'kaminari' # pagination
 
 gem 'csv'
 
+gem 'i18n', '~> 1.14'
+
 
 gem 'annotate'                      # Model annotations
 gem 'devise'                        # Authentication

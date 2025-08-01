@@ -25,15 +25,23 @@ class MushroomTest < ActiveSupport::TestCase
 
   test "should not save with a duplicate name for the same user" do
     duplicate_mushroom = @mushroom.dup
-    assert_not duplicate_mushroom.valid?
-    assert_includes duplicate_mushroom.errors[:name], "Name already exists for your account."
+    refute duplicate_mushroom.valid?
+
+    # Updated key matches what's in en.yml
+    expected_message = I18n.t("errors.messages.name_unique")
+    assert_includes duplicate_mushroom.errors[:name], expected_message
   end
 
   test "should not save with description exceeding 4096 characters" do
     @mushroom.description = "a" * 4097
-    assert_not @mushroom.valid?
-    assert_includes @mushroom.errors[:description], I18n.t("errors.messages.description_limit")
+    refute @mushroom.valid?
+
+    # Properly interpolate :attribute and :count placeholders
+    expected_message = I18n.t("errors.messages.too_long", attribute: I18n.t("activerecord.attributes.mushroom.description"), count: 4096)
+    assert_includes @mushroom.errors[:description], expected_message
   end
+
+
 
   test "should validate user association" do
     @mushroom.user = nil

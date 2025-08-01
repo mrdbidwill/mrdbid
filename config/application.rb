@@ -1,9 +1,13 @@
+# config/application.rb
 # frozen_string_literal: true
+
 
 require_relative 'boot'
 
 require 'rails/all'
 require 'rails/application_controller' # Fix for Rails::ApplicationController error
+require 'i18n'
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -30,5 +34,9 @@ module Mrdbid
     config.active_record.schema_format = :sql
     # Force Rails to raise errors on unknown database attributes
     config.active_record.strict_loading_by_default = true
+
+    # Enable built-in I18n fallbacks
+    config.i18n.fallbacks = true
+
   end
 end

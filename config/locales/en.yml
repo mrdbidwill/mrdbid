@@ -33,13 +33,13 @@ en: # Language identifier
       models:
         mushroom:
           attributes:
-            name:
+            name:  
               blank: "Name cannot be blank."
               unique: "Name already exists for your account."
             description:
-              too_long: "Description must not exceed %{count} characters."
+              too_long: "Mushroom Description must not exceed %{count} characters."
             comment:
-              too_long: "Comment must not exceed %{count} characters."
+              too_long: "Mushroom Comment must not exceed %{count} characters."
 
     attributes: # Human-readable names for attributes
       mushroom:

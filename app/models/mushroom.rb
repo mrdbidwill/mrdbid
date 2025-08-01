@@ -13,7 +13,11 @@ class Mushroom < ApplicationRecord
             uniqueness: { scope: :user_id, message: I18n.t("errors.messages.name_unique") }
 
   validates :user, presence: true
-  validates :description, length: { maximum: 4096, message: I18n.t("errors.messages.description_limit") }
+  validates :description, length: {
+    maximum: 4096,
+    message: I18n.t("errors.messages.too_long", attribute: I18n.t("activerecord.attributes.mushroom.description"), count: 4096)
+  }
+
   validates :comment, length: { maximum: 4096, message: I18n.t("errors.messages.comment_limit") }
 
 scope :recent, -> { order(created_at: :desc) }
