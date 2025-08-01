@@ -4,6 +4,8 @@
 class ApplicationController < ActionController::Base
 
   include Pundit::Authorization # Updated inclusion for Pundit
+  # Make Pundit's policy and policy_scope methods available to views
+  helper_method :policy, :policy_scope
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
