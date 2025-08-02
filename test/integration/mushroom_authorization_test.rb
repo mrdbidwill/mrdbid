@@ -15,8 +15,12 @@ class MushroomAuthorizationTest < ActionDispatch::IntegrationTest
     get mushrooms_path
     assert_response :success
 
+    # Log the rendered HTML to inspect it
+    # puts @response.body
+
+
     # Verify "Show" and "Edit" links for their own mushroom
-    assert_select "a[href=?]", mushroom_path(@mushroom), text: "Show"
+    assert_select "a[href=?]", mushroom_path(@mushroom), text: "Show"                               # failing
     assert_select "a[href=?]", edit_mushroom_path(@mushroom), text: "Edit"
 
     # Ensure the unauthorized user's mushroom actions are not visible
@@ -39,7 +43,7 @@ class MushroomAuthorizationTest < ActionDispatch::IntegrationTest
   test "guest user does not see protected links" do
     # Simulate a guest (not signed in)
     get mushrooms_path
-    assert_response :success
+    assert_response :success                                                                          # failing
 
     # Guests only see public content; ensure no "Show" or "Edit" links
     assert_select "a[href=?]", mushroom_path(@mushroom), text: "Show", count: 0

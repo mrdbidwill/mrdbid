@@ -2,8 +2,9 @@ require "test_helper"
 
 class MrCharacterTest < ActiveSupport::TestCase
   def setup
-    @mr_character = mr_characters(:one)
-    puts "MR Character Source Data: #{@mr_character.source_data&.inspect}"
+    # Eager load all associations to avoid strict loading violations
+    @mr_character = MrCharacter.includes(:part, :lookup_type, :display_option, :source_data)
+                               .find(mr_characters(:one).id)
   end
 
   test "should be valid" do

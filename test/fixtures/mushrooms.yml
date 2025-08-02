@@ -1,4 +1,5 @@
 one:
+  id:  "980190962"
   name: "Button Mushroom"
   description: "Common mushroom"
   comment: "Good for pizza"
@@ -7,10 +8,11 @@ one:
   updated_at: <%= Time.current %>
 
 two:
+  id:  "298486374"
   name: "Shiitake"
   description: "Has a rich taste"
   comment: "Great for soups"
-  user: one # Both mushrooms belong to user one for test simplicity
+  user: two # This mushroom belongs to user two for testing authorization
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 

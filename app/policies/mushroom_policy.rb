@@ -21,6 +21,9 @@ class MushroomPolicy < ApplicationPolicy
   def show?
     record.user_id == user.id
   end
+  def edit?
+    record.user_id == user.id
+  end
 
   # Allow create if the user is signed in
   def create?

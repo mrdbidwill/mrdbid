@@ -84,10 +84,11 @@ class MrCharactersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_mr_character
-    @mr_character = MrCharacter.find(params[:id])
+    @mr_character = MrCharacter.includes(:part, :source_data).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to mr_characters_path, alert: "Mr character not found."
   end
+
 
 
   # Only allow a list of trusted parameters through.

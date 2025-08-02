@@ -1,11 +1,15 @@
 class MushroomsController < ApplicationController
-  before_action :authenticate_user! # Ensure user is authenticated first
+  before_action :authenticate_user!, except: [:index] # Ensure user is authenticated first, except for index
   before_action :set_mushroom, only: %i[show edit update destroy]
   before_action :authorize_mushroom, except: %i[index new create]
 
   # GET /mushrooms or /mushrooms.json
   def index
-    @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom) : Mushroom.where(user: current_user) # Use policy_scope for authorization if available
+    if user_signed_in?
+      @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom) : Mushroom.where(user: current_user) # Use policy_scope for authorization if available
+    else
+      @mushrooms = [] # Empty array for guest users
+    end
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json

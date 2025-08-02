@@ -21,5 +21,14 @@ class ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   include Pundit::Authorization
 
+  # Make Pundit's policy and policy_scope methods available to views in tests
+  def policy(record)
+    Pundit.policy(current_user, record)
+  end
+
+  def policy_scope(scope)
+    Pundit.policy_scope(current_user, scope)
+  end
+
   # You don't need to define sign_in as it's provided by Devise::Test::IntegrationHelpers
 end
