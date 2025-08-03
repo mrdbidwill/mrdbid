@@ -46,7 +46,7 @@ class MrCharactersController < ApplicationController
 
     respond_to do |format|
       if @mr_character.save
-        format.html { redirect_to @mr_character, notice: 'Mr character was successfully created.' }
+        format.html { redirect_to @mr_character, notice: 'Mushroom Character was successfully created.' }
         format.json { render :show, status: :created, location: @mr_character }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,7 +59,7 @@ class MrCharactersController < ApplicationController
   def update
     respond_to do |format|
       if @mr_character.update(mr_character_params)
-        format.html { redirect_to @mr_character, notice: 'Mr character was successfully updated.' }
+        format.html { redirect_to @mr_character, notice: 'Mushroom Character was successfully updated.' }
         format.json { render :show, status: :ok, location: @mr_character }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -70,14 +70,10 @@ class MrCharactersController < ApplicationController
 
   # DELETE /mr_characters/1 or /mr_characters/1.json
   def destroy
-    @mr_character.destroy!
-
-    respond_to do |format|
-      format.html do
-        redirect_to mr_characters_path, status: :see_other, notice: 'Mr character was successfully destroyed.'
-      end
-      format.json { head :no_content }
-    end
+    # Temporarily disable strict_loading for this mr_character
+    @mr_character.strict_loading!(false) if @mr_character.respond_to?(:strict_loading!)
+    @mr_character.destroy
+    redirect_to mr_characters_path, notice: "Mushroom Character was successfully destroyed."
   end
 
   private
@@ -86,13 +82,13 @@ class MrCharactersController < ApplicationController
   def set_mr_character
     @mr_character = MrCharacter.includes(:part, :source_data).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to mr_characters_path, alert: "Mr character not found."
+    redirect_to mr_characters_path, alert: "Mushroom Character not found."
   end
 
 
 
   # Only allow a list of trusted parameters through.
   def mr_character_params
-    params.require(:mr_character).permit(:name, :display_option_id, :part_id, :source_data_id)
+    params.require(:mr_character).permit(:name, :part_id, :lookup_type_id, :display_option_id,  :source_data_id)
   end
 end

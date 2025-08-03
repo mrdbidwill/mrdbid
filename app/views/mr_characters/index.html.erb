@@ -1,4 +1,4 @@
-<% content_for :title, "Mr characters" %>
+<% content_for :title, "Mushroom Characters" %>
 
 <div><p>app/views/mr_characters/index.html.erb</p></div>
 
@@ -25,8 +25,8 @@
    <% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Mr characters</h1>
-    <%= link_to "New mr character", new_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <h1 class="font-bold text-4xl">Mushroom Characters</h1>
+    <%= link_to "New Mushroom Character", new_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
   <div id="mr_characters" class="min-w-full divide-y divide-gray-200 space-y-5">
@@ -50,7 +50,7 @@
         <%= paginate @mr_characters %> <!-- Pagination links -->
       </div>
     <% else %>
-      <p class="text-center my-10">No mr characters found.</p>
+      <p class="text-center my-10">No mushroom characters found.</p>
     <% end %>
   </div>
 </div>

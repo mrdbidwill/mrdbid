@@ -14,7 +14,7 @@ class CameraMakesTest < ApplicationSystemTestCase
     visit camera_makes_url
     click_on "New camera make"
 
-    click_on "Create Camera make"
+    click_on "Create Camera Make"
 
     assert_text "Camera make was successfully created"
     click_on "Back"
@@ -24,7 +24,7 @@ class CameraMakesTest < ApplicationSystemTestCase
     visit camera_make_url(@camera_make)
     click_on "Edit this camera make", match: :first
 
-    click_on "Update Camera make"
+    click_on "Update Camera Make"
 
     assert_text "Camera make was successfully updated"
     click_on "Back"

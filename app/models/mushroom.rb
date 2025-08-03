@@ -40,7 +40,7 @@ scope :by_name, -> { order(:name) }
 scope :search_by_name, ->(query) {
   database_adapter = ActiveRecord::Base.connection.adapter_name.downcase
   if database_adapter.include?("postgresql")
-    # @language=PostgreSQL
+    # @language=MYSQL
     where("name ILIKE ?", "%#{query}%")
   elsif database_adapter.include?("mysql")
     # @language=MySQL
