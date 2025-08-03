@@ -28,7 +28,7 @@ class MushroomTest < ActiveSupport::TestCase
     refute duplicate_mushroom.valid?
 
     # Updated key matches what's in en.yml
-    expected_message = I18n.t("errors.messages.name_unique")
+    expected_message = I18n.t("activerecord.errors.models.mushroom.attributes.name.unique")
     assert_includes duplicate_mushroom.errors[:name], expected_message
   end
 
@@ -46,7 +46,7 @@ class MushroomTest < ActiveSupport::TestCase
   test "should validate user association" do
     @mushroom.user = nil
     assert_not @mushroom.valid?
-    assert_includes @mushroom.errors[:user], "must exist"
+    assert_includes @mushroom.errors[:user], "User cannot be blank."
   end
 
   test "should respond to user association" do

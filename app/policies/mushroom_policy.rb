@@ -5,6 +5,7 @@ class MushroomPolicy < ApplicationPolicy
   # code, beware of possible changes to the ancestors:
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
+
   class Scope < ApplicationPolicy::Scope
     # Only show mushrooms that belong to the current user
     def resolve

@@ -53,6 +53,7 @@ en: # Language identifier
       blank: "%{attribute} cannot be blank."
       not_unique: "%{attribute} must be unique."
       unauthorized: "You are not authorized to perform this action."
+      name_unique: "Name must be unique."
 
   views: # UI text for views (e.g., page titles, buttons, etc.)
     mushrooms: # Mushrooms-specific views

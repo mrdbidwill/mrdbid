@@ -25,8 +25,6 @@ gem 'csv'
 
 gem 'i18n', '~> 1.14'
 
-
-gem 'annotate'                      # Model annotations
 gem 'devise'                        # Authentication
 gem 'devise-two-factor', '~> 6.1.0' # Two-factor authentication
 gem 'pundit'                        # Permissions and policies

@@ -13,8 +13,8 @@ class MushroomPolicyTest < ActiveSupport::TestCase
   end
 
   test "should not authorize another user to edit and destroy" do
-    refute Pundit.policy(@other_user, @mushroom).edit?
-    refute Pundit.policy(@other_user, @mushroom).destroy?
+    assert_not Pundit.policy(@other_user, @mushroom).edit?
+    assert_not Pundit.policy(@other_user, @mushroom).destroy?
   end
 
   def test_scope
@@ -24,7 +24,7 @@ class MushroomPolicyTest < ActiveSupport::TestCase
 
   def test_show
     assert Pundit.policy(@user, @mushroom).show?
-    refute Pundit.policy(@other_user, @mushroom).show?
+    assert_not Pundit.policy(@other_user, @mushroom).show?
   end
 
   def test_create
@@ -33,11 +33,11 @@ class MushroomPolicyTest < ActiveSupport::TestCase
 
   def test_update
     assert Pundit.policy(@user, @mushroom).update?
-    refute Pundit.policy(@other_user, @mushroom).update?
+    assert_not Pundit.policy(@other_user, @mushroom).update?
   end
 
   def test_destroy
     assert Pundit.policy(@user, @mushroom).destroy?
-    refute Pundit.policy(@other_user, @mushroom).destroy?
+    assert_not Pundit.policy(@other_user, @mushroom).destroy?
   end
 end
