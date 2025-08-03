@@ -26,9 +26,6 @@ class MrCharactersController < ApplicationController
              end
   end
 
-
-
-
   # GET /mr_characters/1 or /mr_characters/1.json
   def show; end
 
