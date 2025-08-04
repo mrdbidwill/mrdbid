@@ -29,14 +29,29 @@
           </li>
         <% end %>
 
-        <!-- MR Characters -->
+        <!-- Mushroom Characters -->
         <% unless current_page?(mr_characters_path) %>
           <li>
             <%= link_to "Mushroom Characters", mr_characters_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(mr_characters_path)" %>
           </li>
         <% end %>
 
-          <li><%= link_to 'Account', edit_user_registration_path %></li>
+        <!-- Groups -->
+        <% unless current_page?(all_groups_path) %>
+          <li>
+            <%= link_to "Mushroom Groups", all_groups_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(all_groups_path)" %>
+          </li>
+        <% end %>
+
+        <!-- Clusters -->
+        <% unless current_page?(clusters_path) %>
+          <li>
+            <%= link_to "Mushroom Clusters", clusters_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(clusters_path)" %>
+          </li>
+        <% end %>
+
+
+        <li><%= link_to 'Account', edit_user_registration_path %></li>
 
         <!-- Logout -->
         <li>

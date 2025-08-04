@@ -1,3 +1,2 @@
 class Cluster < ApplicationRecord
-
 end

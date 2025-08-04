@@ -105,9 +105,6 @@ class MushroomTest < ActiveSupport::TestCase
       character_value: "Valid value"
     )
 
-    # Debugging to see the state of the associated records
-    puts "Associated MrCharacterMushroom count before destroy: #{@mushroom.mr_character_mushrooms.count}"
-
     initial_count = @mushroom.mr_character_mushrooms.count
     assert_difference("MrCharacterMushroom.count", -initial_count) do
       @mushroom.destroy

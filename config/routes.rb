@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :users, only: [ :index, :new, :edit, :create, :update, :destroy ]
 
   # Additional resource routes
+  resources :all_groups
+  resources :clusters
   resources :permissions
   resources :roles
   resources :cameras
