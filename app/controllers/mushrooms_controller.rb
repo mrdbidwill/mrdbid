@@ -6,9 +6,14 @@ class MushroomsController < ApplicationController
   # GET /mushrooms or /mushrooms.json
   def index
     if user_signed_in?
-      @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom) : Mushroom.where(user: current_user) # Use policy_scope for authorization if available
+      # Preload the `user` association to avoid strict loading violation
+      @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom.includes(:user)) : Mushroom.where(user: current_user).includes(:user)
+
+      # Fetch associated image mushrooms (if needed)
+      @image_mushrooms = ImageMushroom.includes(:mushroom).where(mushroom: @mushrooms)
     else
-      @mushrooms = [] # Empty array for guest users
+      @mushrooms = [] # Empty array for non-signed-in users
+      @image_mushrooms = [] # Default to empty array
     end
   end
 

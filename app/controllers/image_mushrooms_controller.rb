@@ -11,9 +11,9 @@ class ImageMushroomsController < ApplicationController
   def new
     @mushroom = Mushroom.find(params[:mushroom_id]) # Retrieve the mushroom from params
     @image_mushroom = ImageMushroom.new
-    @parts = Part.all
-    @camera_makes = CameraMake.all
-    @camera_models = CameraModel.all
+    @parts = Part.all.order(:name)
+    @camera_makes = CameraMake.all.order(:name)
+    @camera_models = CameraModel.all.order(:name)
   end
 
   def create
@@ -66,12 +66,12 @@ class ImageMushroomsController < ApplicationController
     params.require(:image_mushroom).permit(
       :mushroom_id,
       :part_id,
-      :camera_make_id,
-      :camera_model_id,
       :image_name,
-      :image_file_address,
+      :image_file,   # Permit the new `image_file` attachment - Active Storage
       :image_width,
       :image_height,
+      :camera_make_id,
+      :camera_model_id,
       :lens,
       :exposure,
       :aperture,

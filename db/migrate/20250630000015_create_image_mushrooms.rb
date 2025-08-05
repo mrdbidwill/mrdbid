@@ -4,7 +4,6 @@ class CreateImageMushrooms < ActiveRecord::Migration[8.0]
       t.references :mushroom, foreign_key: false
       t.references :part, foreign_key: false
       t.string :image_name
-      t.string :image_file_address
       t.integer :image_width
       t.integer :image_height
       t.references :camera_make, foreign_key: false
