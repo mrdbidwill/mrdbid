@@ -1,5 +1,46 @@
-<div>
-  <h1 class="font-bold text-4xl">New Image Mushroom</h1>
-  <%= render 'form', image_mushroom: @image_mushroom %>
-  <%= link_to 'Back to List', image_mushrooms_path, class: 'text-blue-500' %>
-</div>
+<h1>Upload Image for <%= @mushroom.name %></h1>
+
+<% if @image_mushroom.errors.any? %>
+  <div class="errors">
+    <h2><%= pluralize(@image_mushroom.errors.count, "error") %> prohibited the image from being saved:</h2>
+    <ul>
+      <% @image_mushroom.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @image_mushroom, url: mushroom_image_mushrooms_path(@mushroom), local: true) do |form| %>
+  <!-- Image File -->
+  <div class="field">
+    <%= form.label :image_file, "Select an Image File" %>
+    <%= form.file_field :image_file %>
+  </div>
+
+  <!-- Image Name -->
+  <div class="field">
+    <%= form.label :image_name, "Image Name" %>
+    <%= form.text_field :image_name %>
+  </div>
+
+  <!-- Part Dropdown -->
+  <div class="field">
+    <%= form.label :part_id, "Part" %>
+    <%= form.collection_select(:part_id, @parts, :id, :name, { prompt: "Select a Part" }) %>
+  </div>
+
+  <!-- Camera Make Dropdown -->
+  <div class="field">
+    <%= form.label :camera_make_id, "Camera Make" %>
+    <%= form.collection_select(:camera_make_id, @camera_makes, :id, :name, { prompt: "Select a Camera Make" }) %>
+  </div>
+
+  <!-- Camera Model Dropdown -->
+  <div class="field">
+    <%= form.label :camera_model_id, "Camera Model" %>
+    <%= form.collection_select(:camera_model_id, @camera_models, :id, :name, { prompt: "Select a Camera Model" }) %>
+  </div>
+
+  <%= form.submit "Upload Image", class: "btn btn-primary" %>
+<% end %>

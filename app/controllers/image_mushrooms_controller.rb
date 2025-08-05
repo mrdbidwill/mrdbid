@@ -9,33 +9,31 @@ class ImageMushroomsController < ApplicationController
   end
 
   def new
+    @mushroom = Mushroom.find(params[:mushroom_id]) # Retrieve the mushroom from params
     @image_mushroom = ImageMushroom.new
-    @mushrooms = Mushroom.all
-    @lookup_parts = LookupItem.by_type('part') # Assuming a scope exists for parts
-    @camera_makes = LookupItem.by_type('camera_make') # Assuming a scope exists
-    @camera_models = LookupItem.by_type('camera_model') # Assuming a scope exists
+    @parts = Part.all
+    @camera_makes = CameraMake.all
+    @camera_models = CameraModel.all
   end
 
   def create
     @image_mushroom = ImageMushroom.new(image_mushroom_params)
+    @image_mushroom.mushroom_id = params[:mushroom_id]
+    @mushroom = Mushroom.find(params[:mushroom_id]) # Set @mushroom explicitly for the view
 
     if @image_mushroom.save
-      redirect_to @image_mushroom, notice: 'Image Mushroom was successfully created.'
+      redirect_to mushroom_path(params[:mushroom_id]), notice: "Image successfully uploaded."
     else
-      # Load dropdowns again in case save fails
-      @mushrooms = Mushroom.all
-      @lookup_parts = LookupItem.by_type('part')
-      @camera_makes = LookupItem.by_type('camera_make')
-      @camera_models = LookupItem.by_type('camera_model')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
+
   def edit
     @mushrooms = Mushroom.all
-    @lookup_parts = LookupItem.by_type('part')
-    @camera_makes = LookupItem.by_type('camera_make')
-    @camera_models = LookupItem.by_type('camera_model')
+    @parts = Part.all
+    @camera_makes = CameraMake.all
+    @camera_models = CameraModel.all
   end
 
   def update
@@ -44,9 +42,9 @@ class ImageMushroomsController < ApplicationController
     else
       # Reload data for form rendering
       @mushrooms = Mushroom.all
-      @lookup_parts = LookupItem.by_type('part')
-      @camera_makes = LookupItem.by_type('camera_make')
-      @camera_models = LookupItem.by_type('camera_model')
+      @parts = Part.all
+      @camera_makes = CameraMake.all
+      @camera_models = CameraModel.all
       render :edit
     end
   end

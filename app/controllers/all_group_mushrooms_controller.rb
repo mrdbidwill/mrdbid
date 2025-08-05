@@ -11,10 +11,25 @@ class AllGroupMushroomsController < ApplicationController
   end
 
   def new
+    @mushroom = Mushroom.find(params[:mushroom_id]) # Fetch the mushroom from the route
+    @all_group_mushroom = AllGroupMushroom.new
+    @all_groups = AllGroup.all # Fetch all available groups (or scope to the current user if necessary)
   end
 
+
   def create
+    @all_group_mushroom = AllGroupMushroom.new(all_group_mushroom_params)
+    @all_group_mushroom.mushroom_id = params[:mushroom_id] # Assign the associated mushroom
+
+    if @all_group_mushroom.save
+      redirect_to mushrooms_path, notice: "Mushroom successfully assigned to group."
+    else
+      @mushroom = Mushroom.find(params[:mushroom_id]) # Re-fetch mushroom for the form
+      @all_groups = AllGroup.all
+      render :new, status: :unprocessable_entity
+    end
   end
+
 
   def edit
   end

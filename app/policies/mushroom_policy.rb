@@ -40,4 +40,19 @@ class MushroomPolicy < ApplicationPolicy
   def destroy?
     record.user_id == user.id
   end
+
+  def mushroom_image_mushroom?
+    user.present? && record.user_id == user.id
+  end
+
+  # Allow adding to a group
+  def all_group_mushroom?
+    user.present? && record.user_id == user.id
+  end
+
+  # Allow adding to a cluster
+  def mushroom_cluster?
+    user.present? && record.user_id == user.id
+  end
+
 end

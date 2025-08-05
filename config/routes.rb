@@ -9,9 +9,16 @@ Rails.application.routes.draw do
   # Restrict resourceful routes for UsersController to avoid conflicts
   resources :users, only: [ :index, :new, :edit, :create, :update, :destroy ]
 
+  resources :mushrooms do
+    # Nested resources to handle related actions
+    resources :all_group_mushrooms, only: %i[new create]
+    resources :cluster_mushrooms, only: %i[new create]
+    resources :image_mushrooms, only: %i[new create]
+  end
+  resources :all_groups, only: %i[index show new create edit update destroy]
+  resources :clusters, only: %i[index show new create edit update destroy]
+
   # Additional resource routes
-  resources :all_groups
-  resources :clusters
   resources :permissions
   resources :roles
   resources :cameras

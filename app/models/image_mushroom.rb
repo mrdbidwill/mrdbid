@@ -6,6 +6,8 @@ class ImageMushroom < ApplicationRecord
   belongs_to :camera_model, class_name: 'LookupItem', optional: true
 
   # Validations
+  validates :image_file_address, presence: true # Ensure an image file is provided
+  validates :mushroom_id, presence: true # Ensure the image is linked to a mushroom
   validates :image_name, presence: true
   validates :image_width, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :image_height, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
