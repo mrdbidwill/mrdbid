@@ -21,6 +21,10 @@ class Mushroom < ApplicationRecord
 
   has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mr_characters, through: :mr_character_mushrooms
+  has_many :image_mushrooms, dependent: :destroy
+  has_many :cluster_mushrooms, dependent: :destroy
+  has_many :clusters, through: :cluster_mushrooms
+
 
   # Use I18n for validation messages stored in config/locales/en.yml
   validates :name, presence: { message: I18n.t("activerecord.errors.models.mushroom.attributes.name.blank") },

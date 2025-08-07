@@ -111,4 +111,15 @@ class MushroomTest < ActiveSupport::TestCase
     end
   end
 
+  test "should destroy associated image_mushrooms" do
+    assert_difference "ImageMushroom.count", -@mushroom.image_mushrooms.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should respond to cluster_mushrooms association" do
+    assert_respond_to @mushroom, :cluster_mushrooms
+    assert_instance_of ClusterMushroom, @mushroom.cluster_mushrooms.first
+  end
+
 end

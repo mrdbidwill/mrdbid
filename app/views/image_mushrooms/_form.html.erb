@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :part_id, "Part" %>
-    <%= form.collection_select :part_id, @lookup_parts, :id, :name, { prompt: 'Select Part' }, class: 'border' %>
+    <%= form.collection_select :part_id, @parts, :id, :name, { prompt: 'Select Part' }, class: 'border' %>
   </div>
 
   <div>

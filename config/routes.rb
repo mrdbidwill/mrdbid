@@ -11,10 +11,14 @@ Rails.application.routes.draw do
 
   resources :mushrooms do
     # Nested resources to handle related actions
-    resources :all_group_mushrooms, only: %i[new create]
-    resources :cluster_mushrooms, only: %i[new create]
-    resources :image_mushrooms, only: %i[new create]
+    resources :all_group_mushrooms
+    resources :cluster_mushrooms
+    resources :image_mushrooms
   end
+
+  # Expand routes
+  resources :cluster_mushrooms, only: [:index, :show, :edit, :update, :destroy]
+  resources :all_group_mushrooms, only: [:index, :show, :edit, :update, :destroy]
   resources :all_groups, only: %i[index show new create edit update destroy]
   resources :clusters, only: %i[index show new create edit update destroy]
 
@@ -35,4 +39,7 @@ Rails.application.routes.draw do
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
+
+  # Add routes for image_mushrooms
+  resources :image_mushrooms
 end

@@ -1,0 +1,17 @@
+one:
+  image_name: "One Image"
+  mushroom: one
+  part: one  # This should reference a lookup_item fixture that represents a part
+  lens: "50mm"
+  exposure: "1/60"
+  aperture: "f/2.8"
+  iso: "100"
+
+two:
+  image_name: "Two Image"
+  mushroom: two
+  part: one
+  lens: "35mm"
+  exposure: "1/125"
+  aperture: "f/4.0"
+  iso: "200"

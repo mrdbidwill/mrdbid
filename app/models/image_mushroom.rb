@@ -4,9 +4,9 @@ class ImageMushroom < ApplicationRecord
 
   # Associations
   belongs_to :mushroom
-  belongs_to :part, class_name: 'LookupItem' # Assuming `LookupItem` is used for different "parts"
-  belongs_to :camera_make, class_name: 'LookupItem', optional: true
-  belongs_to :camera_model, class_name: 'LookupItem', optional: true
+  belongs_to :part
+  belongs_to :camera_make
+  belongs_to :camera_model
 
   # Validations
   validates :image_file, presence: { message: "An image file must be selected" }

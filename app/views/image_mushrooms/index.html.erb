@@ -19,9 +19,9 @@
         <tr>
           <td class="border px-4 py-2"><%= image_mushroom.id %></td>
           <td class="border px-4 py-2"><%= image_mushroom.image_name %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.mushroom.name %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.part.name %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.dimensions %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.mushroom&.name || "No Mushroom" %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.part&.name || "No Part" %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.dimensions || "No Dimensions" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.camera_make&.name || 'N/A' %></td>
           <td class="border px-4 py-2">
             <%= link_to 'Show', image_mushroom_path(image_mushroom), class: 'text-blue-500' %>

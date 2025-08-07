@@ -43,9 +43,12 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to mushroom_path(@mushroom)
   end
 
-  test "should destroy mushroom" do
+  test "should destroy mushroom and associated image_mushrooms" do
+    associated_image_mushrooms = @mushroom.image_mushrooms.count
     assert_difference("Mushroom.where(user_id: @user.id).count", -1) do
-      delete mushroom_path(@mushroom)
+      assert_difference("ImageMushroom.count", -associated_image_mushrooms) do
+        delete mushroom_path(@mushroom)
+      end
     end
     assert_redirected_to mushrooms_path
   end
