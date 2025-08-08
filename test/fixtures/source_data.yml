@@ -1,17 +1,29 @@
 one:
   title: "Field Guide of Fungi"
+  author: "Author One"
+  ref: "123456789"
+  item_code: "123456789"
   source_data_type_id: one # Reference to source_data_type.yml
+  comments: "Comments One"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
   title: "Mycology Database"
+  author: "Author Two"
+  ref: "987654321"
+  item_code: "987654321"
   source_data_type_id: two # Reference to source_data_type.yml
+  comments: "Comments Two"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 three:
   title: "Fungi Illustrated"
+  author: "Author Three"
+  ref: "098765432"
+  item_code: "098765432"
   source_data_type_id: three # Reference to source_data_type.yml
+  comments: "Comments Three"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

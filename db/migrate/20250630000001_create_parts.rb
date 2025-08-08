@@ -4,6 +4,7 @@ class CreateParts < ActiveRecord::Migration[8.0]
     create_table :parts do |t|
       t.string :name
       t.text :description
+      t.text :comments
 
       t.timestamps
     end

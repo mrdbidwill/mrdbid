@@ -1,4 +1,7 @@
 class MushroomsController < ApplicationController
+  # Pundit setup
+  include Pundit::Authorization
+
   before_action :authenticate_user!, except: [:index] # Ensure user is authenticated first, except for index
   before_action :set_mushroom, only: %i[show edit update destroy]
   before_action :authorize_mushroom, except: %i[index new create]
@@ -6,16 +9,17 @@ class MushroomsController < ApplicationController
   # GET /mushrooms or /mushrooms.json
   def index
     if user_signed_in?
-      # Preload the `user` association to avoid strict loading violation
-      @mushrooms = respond_to?(:policy_scope) ? policy_scope(Mushroom.includes(:user)) : Mushroom.where(user: current_user).includes(:user)
-
-      # Fetch associated image mushrooms (if needed)
-      @image_mushrooms = ImageMushroom.includes(:mushroom).where(mushroom: @mushrooms)
+      @mushrooms = policy_scope(Mushroom)
+                     .includes(
+                       :user,
+                       image_mushrooms: { image_file_attachment: :blob } # eager load ActiveStorage
+                     )
+                     .order(:id)
     else
-      @mushrooms = [] # Empty array for non-signed-in users
-      @image_mushrooms = [] # Default to empty array
+      @mushrooms = []
     end
   end
+
 
   # GET /mushrooms/1 or /mushrooms/1.json
   def show
@@ -69,7 +73,7 @@ class MushroomsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def mushroom_params
-    params.require(:mushroom).permit(:name, :description, :comment)
+    params.require(:mushroom).permit(:name, :description, :comments)
   end
 
   def authorize_mushroom

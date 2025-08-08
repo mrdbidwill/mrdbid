@@ -1,12 +1,18 @@
 one:
   name: "Standard"
-  created_at: <%= Time.current %>
-  updated_at: <%= Time.current %>
+  description: "Standard display"
+  comments: "Standard comments"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 two:
   name: "None"
-  created_at: <%= Time.current %>
-  updated_at: <%= Time.current %>
+  description: "High-quality cameras"
+  comments: "High-quality comments"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 three:
   name: "Detailed"
-  created_at: <%= Time.current %>
-  updated_at: <%= Time.current %>
+  description: "Detailed cameras"
+  comments: "Detailed comments"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

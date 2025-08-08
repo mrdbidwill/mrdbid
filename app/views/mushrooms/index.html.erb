@@ -16,19 +16,16 @@
 
     <% if @mushrooms&.any? %>
       <% @mushrooms.each do |mushroom| %>
-
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
 
-   <% if @image_mushrooms&.any? %>
-     <% @image_mushrooms.each do |image_mushroom| %>
-       <% if image_mushroom.image_file.attached? %>
-                <%= image_tag image_mushroom.image_file.variant(resize_to_limit: [300, 200]).processed if image_mushroom.image_file.attached? %>
-       <% end %>
-     <% end %>
-   <% else %>
-     <p>No images found for these mushrooms.</p>
-   <% end %>
-
+          <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
+          <% if images.any? %>
+            <% images.each do |image_mushroom| %>
+              <%= image_tag image_mushroom.image_file.variant(resize_to_limit: [300, 200]).processed %>
+            <% end %>
+          <% else %>
+            <p>No images for this mushroom.</p>
+          <% end %>
 
           <%= render mushroom %>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">

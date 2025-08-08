@@ -1,12 +1,16 @@
 one:
   name: "Canon"
   description: "High-quality cameras"
+  comments: "Canon comments"
+  source: "Canon Source"
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
 
 two:
   name: "Nikon"
   description: "Professional cameras"
+  comments: "Nikon comments"
+  source: "Nikon Source"
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
 

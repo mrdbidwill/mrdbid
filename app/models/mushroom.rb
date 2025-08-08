@@ -5,7 +5,7 @@
 #  id          :bigint           not null, primary key
 #  name        :string
 #  description :text
-#  comment     :text
+#  comments    :text
 #  user_id     :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -37,7 +37,7 @@ class Mushroom < ApplicationRecord
     message: I18n.t("errors.messages.too_long", attribute: I18n.t("activerecord.attributes.mushroom.description"), count: 4096)
   }
 
-  validates :comment, length: { maximum: 4096, message: I18n.t("activerecord.errors.models.mushroom.attributes.comment.too_long") }
+  validates :comments, length: { maximum: 4096, message: I18n.t("activerecord.errors.models.mushroom.attributes.comments.too_long") }
 
 scope :recent, -> { order(created_at: :desc) }
 scope :by_name, -> { order(:name) }

@@ -6,6 +6,8 @@ one:
   exposure: "1/60"
   aperture: "f/2.8"
   iso: "100"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 
 two:
   image_name: "Two Image"
@@ -15,3 +17,5 @@ two:
   exposure: "1/125"
   aperture: "f/4.0"
   iso: "200"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

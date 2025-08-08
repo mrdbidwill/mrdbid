@@ -22,8 +22,8 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :comment %>
-    <%= form.textarea :comment, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comment].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comment].any?}] %>
+    <%= form.label :comments %>
+    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
   </div>
 
   <div class="inline">

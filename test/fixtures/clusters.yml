@@ -4,8 +4,12 @@ one:
   name: MyString
   description: MyText
   comments: MyText
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
   name: MyString
   description: MyText
   comments: MyText
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

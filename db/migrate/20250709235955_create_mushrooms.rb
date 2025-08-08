@@ -7,8 +7,9 @@ class CreateMushrooms < ActiveRecord::Migration[8.0]
     create_table :mushrooms do |t|
       t.string :name
       t.text :description
-      t.text :comment
+      t.text :comments
       t.references :user, foreign_key: false    # Foreign key added in a separate migration
+
       t.timestamps
     end
   end

@@ -4,8 +4,12 @@ one:
   name: "First Group"
   description: "First Description"
   comments: "First Comments"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
   name: "Second Group"
   description: "Second Description"
   comments: "Second Comments"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

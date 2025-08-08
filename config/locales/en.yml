@@ -38,14 +38,14 @@ en: # Language identifier
               unique: "Name already exists for your account."
             description:
               too_long: "Mushroom Description must not exceed %{count} characters."
-            comment:
-              too_long: "Mushroom Comment must not exceed %{count} characters."
+            comments:
+              too_long: "Mushroom Comments must not exceed %{count} characters."
 
     attributes: # Human-readable names for attributes
       mushroom:
         name: "Mushroom Name"
         description: "Mushroom Description"
-        comment: "Mushroom Comment"
+        comments: "Mushroom Comment"
 
   errors: # General errors/messages
     messages: # Root for reusable error messages
