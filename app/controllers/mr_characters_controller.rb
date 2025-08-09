@@ -5,6 +5,8 @@
 # of MrCharacter. Each request triggers appropriate callbacks to ensure data integrity.
 
 class MrCharactersController < ApplicationController
+  include Pundit::Authorization
+
   before_action :set_mr_character, only: %i[show edit update destroy]
 
   # GET /mr_characters or /mr_characters.json

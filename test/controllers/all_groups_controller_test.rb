@@ -2,7 +2,7 @@ require "test_helper"
 
 class AllGroupsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @all_group = all_group(:one)
+    @all_group = all_groups(:one)   # note the s in all_groups - matches the naming convention of fixture file all_groups.yml
   end
 
   test "should get index" do

@@ -2,9 +2,13 @@
 #  which allows a user to add a mushroom object to an all_group
 
 class AllGroupMushroomsController < ApplicationController
-  before_action :set_all_group_mushroom, only: %i[ show edit update destroy ]
+  include Pundit::Authorization
+
+  before_action :set_and_authorize_all_group_mushroom, only: %i[ show edit update destroy ]
+  before_action :authorize_new_all_group_mushroom, only: %i[new create]
+
   def index
-    @all_group_mushrooms = AllGroupMushroom.all
+    @all_group_mushrooms = policy_scope(AllGroupMushroom)
   end
 
   def show
@@ -15,19 +19,23 @@ class AllGroupMushroomsController < ApplicationController
     @all_group_mushroom = AllGroupMushroom.new
     @all_groups = AllGroup.all # Fetch all available groups (or scope to the current user if necessary)
   end
-
   def create
-    @all_group_mushroom = AllGroupMushroom.new(all_group_mushroom_params)
-    @all_group_mushroom.mushroom_id = params[:mushroom_id] if params[:mushroom_id]
+    @mushroom = current_user.mushrooms.find(params[:mushroom_id])
+    @all_group = current_user.all_groups.find(params[:all_group_mushroom][:all_group_id])
+
+    # Authorize at the record/resource level
+    authorize @all_group
+
+    @all_group_mushroom = AllGroupMushroom.new(mushroom: @mushroom, all_group: @all_group)
 
     if @all_group_mushroom.save
-      redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "Mushroom successfully assigned to group."
+      redirect_to mushrooms_path, notice: "Mushroom successfully added to the group."
     else
-      @mushroom = Mushroom.find(params[:mushroom_id]) if params[:mushroom_id]
-      @all_groups = AllGroup.all
       render :new, status: :unprocessable_entity
     end
   end
+
+
 
   def edit
   end
@@ -50,9 +58,14 @@ class AllGroupMushroomsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_all_group_mushroom
-    @all_group_mushroom = AllGroupMushroom.find(params[:id])
+  def set_and_authorize_all_group_mushroom
+    @all_group_mushroom = authorize current_user.all_group_mushrooms.find(params[:id])
   end
+
+  def authorize_new_all_group_mushroom
+    authorize AllGroupMushroom
+  end
+
 
   # Only allow a list of trusted parameters through.
   def all_group_mushroom_params

@@ -1,9 +1,13 @@
 class AllGroupsController < ApplicationController
-  before_action :set_all_group, only: %i[ show edit update destroy ]
+  include Pundit::Authorization
+
+  before_action :set_and_authorize_all_group, only: %i[ show edit update destroy ]
+  before_action :authorize_new_all_group, only: %i[new create]
+
 
   # GET /all_groups or /all_groups.json
   def index
-    @all_groups = AllGroup.all
+    @all_groups = policy_scope(AllGroup)
   end
 
   # GET /all_groups/1 or /all_groups/1.json
@@ -21,18 +25,21 @@ class AllGroupsController < ApplicationController
 
   # POST /all_groups or /all_groups.json
   def create
-    @all_group = AllGroup.new(all_group_params)
+    @mushroom = current_user.mushrooms.find(params[:mushroom_id])
+    @all_group = current_user.all_groups.find(params[:all_group_mushroom][:all_group_id])
 
-    respond_to do |format|
-      if @all_group.save
-        format.html { redirect_to @all_group, notice: "All group was successfully created." }
-        format.json { render :show, status: :created, location: @all_group }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @all_group.errors, status: :unprocessable_entity }
-      end
+    # Authorize at the record/resource level
+    authorize @all_group
+
+    @all_group_mushroom = AllGroupMushroom.new(mushroom: @mushroom, all_group: @all_group)
+
+    if @all_group_mushroom.save
+      redirect_to mushrooms_path, notice: "Mushroom successfully added to the group."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /all_groups/1 or /all_groups/1.json
   def update
@@ -59,11 +66,16 @@ class AllGroupsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_all_group
-      @all_group = AllGroup.find(params.expect(:id))
-    end
+   def set_and_authorize_all_group
+     @all_group = authorize current_user.all_groups.find(params[:id])
+   end
 
-    # Only allow a list of trusted parameters through.
+  def authorize_new_all_group_mushroom
+    authorize AllGroupMushroom
+  end
+
+
+  # Only allow a list of trusted parameters through.
     def all_group_params
       params.expect(all_group: [ :name, :description, :comments ])
     end

@@ -1,9 +1,12 @@
 class ClustersController < ApplicationController
-  before_action :set_cluster, only: %i[ show edit update destroy ]
+  include Pundit::Authorization
+
+  before_action :set_and_authorize_cluster, only: %i[ show edit update destroy ]
+  before_action :authorize_new_cluster, only: %i[new create]
 
   # GET /clusters or /clusters.json
   def index
-    @clusters = Cluster.all
+    @clusters = policy_scope(Cluster)
   end
 
   # GET /clusters/1 or /clusters/1.json
@@ -21,18 +24,21 @@ class ClustersController < ApplicationController
 
   # POST /clusters or /clusters.json
   def create
-    @cluster = Cluster.new(cluster_params)
+    @mushroom = current_user.mushrooms.find(params[:mushroom_id])
+    @cluster = current_user.clusters.find(params[:cluster_mushroom][:cluster_id])
 
-    respond_to do |format|
-      if @cluster.save
-        format.html { redirect_to @cluster, notice: "Cluster was successfully created." }
-        format.json { render :show, status: :created, location: @cluster }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @cluster.errors, status: :unprocessable_entity }
-      end
+    # Authorize at the record/resource level
+    authorize @cluster
+
+    @cluster_mushroom = ClusterMushroom.new(mushroom: @mushroom, cluster: @cluster)
+
+    if @cluster_mushroom.save
+      redirect_to mushrooms_path, notice: "Mushroom successfully added to the cluster."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /clusters/1 or /clusters/1.json
   def update
@@ -59,11 +65,16 @@ class ClustersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_cluster
-      @cluster = Cluster.find(params.expect(:id))
+    def set_and_authorize_cluster
+      @cluster = authorize current_user.clusters.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+  def authorize_new_cluster
+    authorize Cluster
+  end
+
+
+  # Only allow a list of trusted parameters through.
     def cluster_params
       params.expect(cluster: [ :name, :description, :comments ])
     end
