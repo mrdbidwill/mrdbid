@@ -4,5 +4,3 @@ class AddUserIdToClustersAndAllGroups < ActiveRecord::Migration[8.0]
     add_reference :all_groups, :user, null: false, foreign_key: true
   end
 end
-
-

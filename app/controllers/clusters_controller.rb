@@ -1,9 +1,6 @@
 class ClustersController < ApplicationController
   include Pundit::Authorization
 
-  before_action :set_and_authorize_cluster, only: %i[ show edit update destroy ]
-  before_action :authorize_new_cluster, only: %i[new create]
-
   # GET /clusters or /clusters.json
   def index
     @clusters = policy_scope(Cluster)
@@ -11,70 +8,53 @@ class ClustersController < ApplicationController
 
   # GET /clusters/1 or /clusters/1.json
   def show
+    @cluster = authorize current_user.clusters.find(params[:id])
   end
 
   # GET /clusters/new
   def new
     @cluster = Cluster.new
+    authorize @cluster
   end
 
   # GET /clusters/1/edit
   def edit
+    @cluster = authorize current_user.clusters.find(params[:id])
   end
 
   # POST /clusters or /clusters.json
   def create
-    @mushroom = current_user.mushrooms.find(params[:mushroom_id])
-    @cluster = current_user.clusters.find(params[:cluster_mushroom][:cluster_id])
-
-    # Authorize at the record/resource level
+    @cluster = current_user.clusters.build(cluster_params)
     authorize @cluster
-
-    @cluster_mushroom = ClusterMushroom.new(mushroom: @mushroom, cluster: @cluster)
-
-    if @cluster_mushroom.save
-      redirect_to mushrooms_path, notice: "Mushroom successfully added to the cluster."
+    if @cluster.save
+      redirect_to clusters_path, notice: "Cluster was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
 
+
   # PATCH/PUT /clusters/1 or /clusters/1.json
   def update
-    respond_to do |format|
-      if @cluster.update(cluster_params)
-        format.html { redirect_to @cluster, notice: "Cluster was successfully updated." }
-        format.json { render :show, status: :ok, location: @cluster }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @cluster.errors, status: :unprocessable_entity }
-      end
+    @cluster = authorize current_user.clusters.find(params[:id])
+    if @cluster.update(cluster_params)
+      redirect_to @cluster, notice: "Cluster was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
+
 
   # DELETE /clusters/1 or /clusters/1.json
   def destroy
+    @cluster = authorize current_user.clusters.find(params[:id])
     @cluster.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to clusters_path, status: :see_other, notice: "Cluster was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to clusters_path, notice: "Cluster was successfully destroyed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_and_authorize_cluster
-      @cluster = authorize current_user.clusters.find(params[:id])
-    end
-
-  def authorize_new_cluster
-    authorize Cluster
-  end
-
-
-  # Only allow a list of trusted parameters through.
+    # Only allow a list of trusted parameters through.
     def cluster_params
       params.expect(cluster: [ :name, :description, :comments ])
     end
