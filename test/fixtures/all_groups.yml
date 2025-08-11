@@ -4,6 +4,7 @@ one:
   name: "First Group"
   description: "First Description"
   comments: "First Comments"
+  user: one # Reference the user from users.yml
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -11,5 +12,6 @@ two:
   name: "Second Group"
   description: "Second Description"
   comments: "Second Comments"
+  user: one # Reference the user from users.yml
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

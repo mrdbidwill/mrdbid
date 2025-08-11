@@ -30,6 +30,8 @@ class User < ApplicationRecord
 
   # Association with mushrooms
   has_many :mushrooms, dependent: :destroy
+  has_many :all_groups, dependent: :destroy
+  has_many :clusters, dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
 

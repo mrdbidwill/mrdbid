@@ -1,9 +1,13 @@
 require "test_helper"
 
 class ClustersControllerTest < ActionDispatch::IntegrationTest
+
   setup do
-    @cluster = clusters(:one)
+    @user = users(:one) # Reference your user fixture
+    @cluster = clusters(:one) # Reference your cluster fixture
+    sign_in @user # Devise helper to sign in the user
   end
+
 
   test "should get index" do
     get clusters_url

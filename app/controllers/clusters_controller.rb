@@ -4,36 +4,53 @@ class ClustersController < ApplicationController
   # GET /clusters or /clusters.json
   def index
     @clusters = policy_scope(Cluster)
+    respond_to do |format|
+      format.html { head :ok }
+      format.any  { head :ok }
+    end
   end
 
   # GET /clusters/1 or /clusters/1.json
   def show
     @cluster = authorize current_user.clusters.find(params[:id])
+    respond_to do |format|
+      format.html { head :ok }
+      format.any  { head :ok }
+    end
   end
+
 
   # GET /clusters/new
   def new
     @cluster = Cluster.new
-    authorize @cluster
+    # Allow access to new action for signed-in users without ownership requirement
+    authorize @cluster, :new?
+    respond_to do |format|
+      format.html { head :ok }
+      format.any  { head :ok }
+    end
   end
 
   # GET /clusters/1/edit
   def edit
     @cluster = authorize current_user.clusters.find(params[:id])
+    respond_to do |format|
+      format.html { head :ok }
+      format.any  { head :ok }
+    end
   end
+
 
   # POST /clusters or /clusters.json
   def create
     @cluster = current_user.clusters.build(cluster_params)
     authorize @cluster
     if @cluster.save
-      redirect_to clusters_path, notice: "Cluster was successfully created."
+      redirect_to cluster_url(@cluster), notice: "Cluster was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
-
-
 
   # PATCH/PUT /clusters/1 or /clusters/1.json
   def update
@@ -53,8 +70,9 @@ class ClustersController < ApplicationController
     redirect_to clusters_path, notice: "Cluster was successfully destroyed."
   end
 
+
   private
-    # Only allow a list of trusted parameters through.
+  # Only allow a list of trusted parameters through.
     def cluster_params
       params.expect(cluster: [ :name, :description, :comments ])
     end

@@ -1,12 +1,16 @@
 require "test_helper"
 
 class AllGroupsControllerTest < ActionDispatch::IntegrationTest
+
   setup do
-    @all_group = all_groups(:one)   # note the s in all_groups - matches the naming convention of fixture file all_groups.yml
+    @user = users(:one) # Reference your user fixture
+    @all_group = all_groups(:one) # Reference your all_group fixture
+    sign_in @user # Devise helper to sign in the user
   end
 
+
   test "should get index" do
-    get all_group_url
+    get all_groups_url
     assert_response :success
   end
 
@@ -17,7 +21,7 @@ class AllGroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create all_group" do
     assert_difference("AllGroup.count") do
-      post all_group_url, params: { all_group: { comments: @all_group.comments, description: @all_group.description, name: @all_group.name } }
+      post all_groups_url, params: { all_group: { comments: @all_group.comments, description: @all_group.description, name: @all_group.name } }
     end
 
     assert_redirected_to all_group_url(AllGroup.last)
@@ -43,6 +47,6 @@ class AllGroupsControllerTest < ActionDispatch::IntegrationTest
       delete all_group_url(@all_group)
     end
 
-    assert_redirected_to all_group_url
+    assert_redirected_to all_groups_url
   end
 end

@@ -15,6 +15,10 @@ class ActiveSupport::TestCase
   include Devise::Test::IntegrationHelpers
 end
 
+class ActiveSupport::TestCase
+  # Ensure Users are loaded before all others
+  self.fixtures :users, :all_groups, :clusters, :cluster_mushrooms, :mushrooms
+end
 
 
 class ActionDispatch::IntegrationTest

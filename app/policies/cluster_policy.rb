@@ -1,28 +1,42 @@
 class ClusterPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      # Allow users to see only their own groups
+      # Return only user-owned records
       scope.where(user_id: user.id)
     end
   end
 
-  def create?
+  # Reusable ownership logic
+  def owner?
     record.user_id == user.id
   end
 
-  def index?
+  def new?
     true
   end
 
+
+  def create?
+    owner? # Reuse ownership logic
+  end
+
+  def index?
+    true # Everyone can access the index
+  end
+
   def show?
-    record.user_id == user.id
+    owner? # Reuse ownership logic
+  end
+
+  def edit?
+    owner? # Reuse ownership logic
   end
 
   def update?
-    record.user_id == user.id
+    edit? # Reuse `edit?` for update permissions
   end
 
   def destroy?
-    record.user_id == user.id
+    owner?
   end
 end

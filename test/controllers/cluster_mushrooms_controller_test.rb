@@ -11,7 +11,7 @@ class ClusterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_cluster_mushrooms_path
+    get '/cluster_mushrooms/new'
     assert_response :success
   end
 

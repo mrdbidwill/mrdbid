@@ -1,5 +1,6 @@
 one:
   id:  "980190962"
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   name: "Button Mushroom"
   description: "Common mushroom"
   comments: "Good for pizza"
@@ -9,10 +10,11 @@ one:
 
 two:
   id:  "298486374"
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
   name: "Shiitake"
   description: "Has a rich taste"
   comments: "Great for soups"
-  user: two # This mushroom belongs to user two for testing authorization
+  user: two # Belongs to user two for authorization tests
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 

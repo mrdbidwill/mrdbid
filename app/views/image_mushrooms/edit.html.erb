@@ -1,4 +1,4 @@
-<h1>Edit Image for <%= @image_mushroom.mushroom.name %></h1>
+<h1>Edit Image for <%= @image_mushroom.mushroom&.name || 'Unknown' %></h1>
 
 <% if @image_mushroom.errors.any? %>
   <div class="errors">

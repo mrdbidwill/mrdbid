@@ -2,7 +2,18 @@ require "test_helper"
 
 class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @camera_make = camera_makes(:one)
+    @camera_model = camera_models(:one)
     @image_mushroom = image_mushrooms(:one)
+    @mushroom = mushrooms(:one)
+
+    # Ensure existing fixture record has an attached image to satisfy validations
+    unless @image_mushroom.image_file.attached?
+      image_file = fixture_file_upload("test_image.jpg", "image/jpeg")
+      @image_mushroom.image_file.attach(image_file)
+    end
+
+    @image_mushroom.update!(mushroom: @mushroom, camera_make: @camera_make, camera_model: @camera_model)
   end
 
   test "should get index" do
@@ -15,16 +26,17 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create image mushroom" do
-    # Create a test image file
-    image_file = fixture_file_upload(Rails.root.join('test', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+  test "should create image mushroom with valid data" do
+    image_file = fixture_file_upload("test_image.jpg", "image/jpeg")
 
     assert_difference("ImageMushroom.count") do
       post image_mushrooms_url, params: {
         image_mushroom: {
           image_name: "Test Image",
-          mushroom_id: mushrooms(:one).id,
-          part_id: parts(:one).id, # Assuming you have lookup_items fixtures for parts
+          mushroom_id: @mushroom.id,
+          part_id: parts(:one).id,
+          camera_make_id: @camera_make.id,
+          camera_model_id: @camera_model.id,
           image_file: image_file,
           lens: "50mm",
           exposure: "1/60",
@@ -35,7 +47,6 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to image_mushroom_path(ImageMushroom.last)
   end
-
 
   test "should show image_mushroom" do
     get image_mushroom_path(@image_mushroom)

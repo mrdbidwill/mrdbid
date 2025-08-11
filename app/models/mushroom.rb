@@ -23,7 +23,11 @@ class Mushroom < ApplicationRecord
   has_many :mr_characters, through: :mr_character_mushrooms
   has_many :image_mushrooms, dependent: :destroy
   has_many :cluster_mushrooms, dependent: :destroy
+  has_many :all_group_mushrooms, dependent: :destroy
   has_many :clusters, through: :cluster_mushrooms
+  has_many :all_groups, through: :all_group_mushrooms
+  has_many :images, through: :image_mushrooms
+  has_many :lookup_items
 
 
   # Use I18n for validation messages stored in config/locales/en.yml

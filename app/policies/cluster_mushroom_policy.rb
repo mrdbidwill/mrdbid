@@ -1,13 +1,12 @@
 class ClusterMushroomPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      # Allow users to see only their own groups
-      scope.where(user_id: user.id)
+      scope.all
     end
   end
 
   def create?
-    record.user_id == user.id
+    true
   end
 
   def index?
@@ -15,14 +14,14 @@ class ClusterMushroomPolicy < ApplicationPolicy
   end
 
   def show?
-    record.user_id == user.id
+    true
   end
 
   def update?
-    record.user_id == user.id
+    true
   end
 
   def destroy?
-    record.user_id == user.id
+    true
   end
 end

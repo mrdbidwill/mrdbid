@@ -7,9 +7,11 @@ class ClusterMushroom < ApplicationRecord
   private
 
   def ensure_same_user
+    return if mushroom.nil? || cluster.nil? # Skip validation if associations are missing
     if mushroom.user_id != cluster.user_id
       errors.add(:cluster, "must belong to the same user as the mushroom")
     end
   end
 end
+
 

@@ -1,11 +1,13 @@
 one:
   image_name: "One Image"
   mushroom: one
-  part: one  # This should reference a lookup_item fixture that represents a part
+  part: one
   lens: "50mm"
   exposure: "1/60"
   aperture: "f/2.8"
   iso: "100"
+  camera_make: one
+  camera_model: one
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
 
@@ -17,5 +19,7 @@ two:
   exposure: "1/125"
   aperture: "f/4.0"
   iso: "200"
+  camera_make: two
+  camera_model: two
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>

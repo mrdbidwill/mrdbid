@@ -1,16 +1,18 @@
+# camera_models.yml
 one:
-  name: "Canon"
-  description: "High-quality cameras"
-  comments: "Canon comments"
-  source: "Canon Source"
+  name: "EOS 5D Mark IV"
+  description: "High-quality DSLR"
+  comments: "Canon model"
+  source: null
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
 
 two:
-  name: "Nikon"
-  description: "Professional cameras"
-  comments: "Nikon comments"
-  source: "Nikon Source"
+  name: "D850"
+  description: "Professional DSLR"
+  comments: "Nikon model"
+  source: null
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
+
 
