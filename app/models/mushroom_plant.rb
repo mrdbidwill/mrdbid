@@ -1,0 +1,2 @@
+class PlantMushroom < ApplicationRecord
+end

@@ -99,8 +99,6 @@ INSERT INTO `mr_characters` VALUES
 (98,'preservation_method',2,1,5, 1, now(), now() ),
 (99,'annulus_position',2,9,5,1, now(), now() ),                   -- lookup in lookup_items
 (100,'mushroom_storage_location',467,1,9, 1, now(), now() ),             -- lookup in lookup_items
-(101,'countries',15,1,11, 1, now(), now() ),                      -- lookup in lookup_items
-(102,'states',15,1,12, 1, now(), now() ),
 (105,'fungus_types',2,1,9, 1, now(), now()),                    -- lookup in lookup_items
 (106,'universal_outer_veil_appearances',6,1,9, 1, now(), now()),             -- lookup in lookup_items
 (107,'universal_outer_veil_fates',6,1,9, 1, now(), now()),             -- lookup in lookup_items

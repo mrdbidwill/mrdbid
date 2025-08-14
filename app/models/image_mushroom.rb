@@ -1,18 +1,12 @@
 class ImageMushroom < ApplicationRecord
   belongs_to :mushroom
-  belongs_to :part
-  belongs_to :camera_make
-  belongs_to :camera_model
+  belongs_to :part, optional: true
+  belongs_to :camera, optional: true
 
+  # Attachments and presence validations
   has_one_attached :image_file
 
-  # Validations
   validates :image_file, presence: { message: "An image file must be selected" }
-  validates :mushroom_id, presence: true # Ensure the image is linked to a mushroom
-  validates :image_name, :mushroom_id, presence: true
-  validates :image_width, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
-  validates :image_height, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
-  validates :lens, :exposure, :aperture, :iso, presence: true, allow_blank: true
 
   # Ensure the Mushroom is associated with the correct user if needed
   def user_id

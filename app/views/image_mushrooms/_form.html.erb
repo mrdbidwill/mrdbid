@@ -27,13 +27,8 @@
   </div>
 
   <div>
-    <%= form.label :camera_make_id, "Camera Make" %>
-    <%= form.collection_select :camera_make_id, @camera_makes, :id, :name, { prompt: 'Select Camera Make' }, class: 'border' %>
-  </div>
-
-  <div>
-    <%= form.label :camera_model_id, "Camera Model" %>
-    <%= form.collection_select :camera_model_id, @camera_models, :id, :name, { prompt: 'Select Camera Model' }, class: 'border' %>
+    <%= form.label :camera_id, "Camera" %>
+    <%= form.collection_select :camera_id, @cameras, :id, :name, { prompt: 'Select Camera' }, class: 'border' %>
   </div>
 
   <div>

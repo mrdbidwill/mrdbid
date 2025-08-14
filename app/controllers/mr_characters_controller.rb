@@ -37,7 +37,9 @@ class MrCharactersController < ApplicationController
   end
 
   # GET /mr_characters/1/edit
-  def edit; end
+  def edit
+
+  end
 
   # POST /mr_characters or /mr_characters.json
   def create

@@ -1,0 +1,2 @@
+class MushroomSpecies < ApplicationRecord
+end

@@ -1,0 +1,6 @@
+one:
+  taxon_name: "SpeciesAlpha"
+  genus: one
+two:
+  taxon_name: "SpeciesBeta"
+  genus: two

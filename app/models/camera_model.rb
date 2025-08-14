@@ -1,3 +1,8 @@
 class CameraModel < ApplicationRecord
-  has_many :image_mushrooms, dependent: :nullify
+  # Associations
+  has_many :cameras, dependent: :nullify
+
+  # Optional: Additional validations
+  validates :name, presence: true
 end
+

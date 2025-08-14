@@ -1,2 +1,0 @@
-class TreeAssociation < ApplicationRecord
-end

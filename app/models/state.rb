@@ -1,6 +1,6 @@
 # app/models/state.rb
 class State < ApplicationRecord
-  belongs_to :country, class_name: "LookupItem", foreign_key: :country_id
+  belongs_to :country, class_name: "Country", foreign_key: :country_id
 
   before_create :set_default_country
 
@@ -18,8 +18,9 @@ class State < ApplicationRecord
   def set_default_country
     # If the state's country is not set, and the associated `mr_character_id` is 101, set default country_id to 835
     if country_id.nil? && country&.mr_character_id == 101
-      self.country_id = 835
+      self.country_id = 1   # USA
     end
   end
+
 end
 

@@ -284,9 +284,6 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_
 (100,'Observation Only - No specimen collected','','',2, now(), now() ),              -- 100 mushroom_storage_location
 (100,'Specimen Collector','This is you, if you collected this specimen','',2, now(), now() ),
 (100,'Herbarium','','',2, now(), now() ),
-(101, 'USA', 'United States', '',  23, now(), now() ),  -- 101 countries  - states has own table
-(101, 'MEX', 'Mexico',        '',  23, now(), now() ),
-(101, 'CAN', 'Canada',        '',  23, now(), now() ),
 (105,'Lamella - Gills','','',1, now(), now() ),        -- 105 fungus_types
 (105,'Pores','','',1, now(), now() ),
 (105,'Teeth','','',1, now(), now() ),

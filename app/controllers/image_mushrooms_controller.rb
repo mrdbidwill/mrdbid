@@ -16,8 +16,7 @@ class ImageMushroomsController < ApplicationController
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from params
     @image_mushroom = ImageMushroom.new
     @parts = Part.all.order(:name)
-    @camera_makes = CameraMake.all.order(:name)
-    @camera_models = CameraModel.all.order(:name)
+    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def create
@@ -32,8 +31,7 @@ class ImageMushroomsController < ApplicationController
       # Reload data for form rendering
       @mushroom = @image_mushroom.mushroom
       @parts = Part.all.order(:name)
-      @camera_makes = CameraMake.all.order(:name)
-      @camera_models = CameraModel.all.order(:name)
+      @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
     end
   end
@@ -41,8 +39,7 @@ class ImageMushroomsController < ApplicationController
   def edit
     @mushrooms = Mushroom.all
     @parts = Part.all
-    @camera_makes = CameraMake.all
-    @camera_models = CameraModel.all
+    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def update
@@ -68,7 +65,7 @@ class ImageMushroomsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
-    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera_make, :camera_model).find(params[:id])
+    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera).find(params[:id])
     @image_mushroom.strict_loading!(false) if @image_mushroom.respond_to?(:strict_loading!)
   end
 
@@ -81,8 +78,7 @@ class ImageMushroomsController < ApplicationController
       :image_file,   # Permit the new `image_file` attachment - Active Storage
       :image_width,
       :image_height,
-      :camera_make_id,
-      :camera_model_id,
+      :camera_id,
       :lens,
       :exposure,
       :aperture,

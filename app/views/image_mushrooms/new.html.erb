@@ -41,16 +41,10 @@
   </div>
 
 
-  <!-- Camera Make Dropdown -->
+  <!-- Camera Dropdown -->
   <div class="field">
-    <%= form.label :camera_make_id, "Camera Make" %>
-    <%= form.collection_select(:camera_make_id, @camera_makes || [], :id, :name, { prompt: "Select a Camera Make" }) %>
-  </div>
-
-  <!-- Camera Model Dropdown -->
-  <div class="field">
-    <%= form.label :camera_model_id, "Camera Model" %>
-    <%= form.collection_select(:camera_model_id, @camera_models || [], :id, :name, { prompt: "Select a Camera Model" }) %>
+    <%= form.label :camera_id, "Camera" %>
+    <%= form.collection_select(:camera_id, @cameras || [], :id, :name, { prompt: "Select a Camera" }) %>
   </div>
 
   <%= form.submit "Upload Image", class: "btn btn-primary" %>
