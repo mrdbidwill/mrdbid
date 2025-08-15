@@ -5,6 +5,8 @@ class CreateMushroomSpecies < ActiveRecord::Migration[8.0]
       t.references :mushroom, null: false, foreign_key: true
       t.timestamps
     end
+
+    add_index :mushroom_species, [:mushroom_id, :species_id], unique: true # Composite index
   end
 end
 

@@ -12,7 +12,7 @@ class CreateImageMushrooms < ActiveRecord::Migration[8.0]
       t.string :aperture
       t.string :iso
       t.timestamps
-    end
+  end
   end
 end
 

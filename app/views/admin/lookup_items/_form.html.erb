@@ -1,0 +1,25 @@
+<%= form_with(model: [:admin, item], local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+        <% item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% item.column_names.each do |column| %>
+    <% next if %w[id created_at updated_at].include?(column) %>
+    <div class="form-group">
+      <%= form.label column.humanize %>
+      <%= form.text_field column, class: 'form-control' %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.submit class: 'btn btn-success' %>
+    <%= link_to 'Back', admin_lookup_items_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

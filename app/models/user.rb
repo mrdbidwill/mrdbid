@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  belongs_to :permission
+
   # Add default Devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable, and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
@@ -24,14 +26,15 @@ class User < ApplicationRecord
     otp_secret.present? ? "otpauth://totp/#{issuer}:#{account}?secret=#{otp_secret}&issuer=#{issuer}" : nil
   end
 
-
-
-
+  def admin?
+    permission_id.present? && permission_id < 5
+  end
 
   # Association with mushrooms
   has_many :mushrooms, dependent: :destroy
   has_many :all_groups, dependent: :destroy
   has_many :clusters, dependent: :destroy
+  has_many :projects, dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
 

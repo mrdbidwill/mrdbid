@@ -3,7 +3,7 @@
 class CreateMushrooms < ActiveRecord::Migration[8.0]
   def change
   create_table :mushrooms do |t|
-      t.string :name
+      t.string :name, null: false
       t.text :description
       t.text :comments
       t.references :user, foreign_key: { on_delete: :cascade }

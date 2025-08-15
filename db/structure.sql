@@ -181,23 +181,25 @@ DROP TABLE IF EXISTS `colors`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `colors` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `latin_name` varchar(255) DEFAULT NULL,
+  `latin_name` varchar(255) NOT NULL,
   `common_name` varchar(255) DEFAULT NULL,
   `color_group` int DEFAULT NULL,
-  `hex` varchar(255) DEFAULT NULL,
+  `hex` varchar(255) NOT NULL,
   `sequence` int DEFAULT NULL,
-  `r_val` int DEFAULT NULL,
-  `g_val` int DEFAULT NULL,
-  `b_val` int DEFAULT NULL,
+  `r_val` int NOT NULL,
+  `g_val` int NOT NULL,
+  `b_val` int NOT NULL,
   `closest_websafe_color` varchar(255) DEFAULT NULL,
   `cwc_r` varchar(255) DEFAULT NULL,
   `cwc_g` varchar(255) DEFAULT NULL,
   `cwc_b` varchar(255) DEFAULT NULL,
-  `image_file_address` varchar(255) DEFAULT NULL,
+  `image_file_address` varchar(255) NOT NULL DEFAULT 'default_image_path.jpg',
   `metadata` json DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_colors_on_latin_name` (`latin_name`),
+  UNIQUE KEY `index_colors_on_hex` (`hex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `countries`;
@@ -467,6 +469,7 @@ CREATE TABLE `mushroom_species` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mushroom_species_on_mushroom_id_and_species_id` (`mushroom_id`,`species_id`),
   KEY `index_mushroom_species_on_species_id` (`species_id`),
   KEY `index_mushroom_species_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8833fee8ab` FOREIGN KEY (`species_id`) REFERENCES `species` (`id`),
@@ -494,7 +497,7 @@ DROP TABLE IF EXISTS `mushrooms`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `description` text,
   `comments` text,
   `user_id` bigint DEFAULT NULL,
@@ -643,11 +646,12 @@ DROP TABLE IF EXISTS `species`;
 CREATE TABLE `species` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mblist_id` varchar(255) DEFAULT NULL,
-  `taxon_name` varchar(255) DEFAULT NULL,
+  `taxon_name` varchar(255) NOT NULL,
   `genera_id` bigint DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_species_on_taxon_name` (`taxon_name`),
   KEY `index_species_on_genera_id` (`genera_id`),
   CONSTRAINT `fk_rails_21d681ad0e` FOREIGN KEY (`genera_id`) REFERENCES `genera` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -704,6 +708,7 @@ CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL DEFAULT '',
   `display_name` varchar(255) NOT NULL DEFAULT '',
+  `permission_id` bigint DEFAULT '9',
   `encrypted_password` varchar(255) NOT NULL DEFAULT '',
   `otp_secret` varchar(255) DEFAULT NULL,
   `consumed_timestep` int DEFAULT NULL,
@@ -730,7 +735,9 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
-  KEY `index_users_on_otp_required_for_login` (`otp_required_for_login`)
+  KEY `index_users_on_permission_id` (`permission_id`),
+  KEY `index_users_on_otp_required_for_login` (`otp_required_for_login`),
+  CONSTRAINT `fk_rails_1dc7d54aa4` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -764,7 +771,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20250814000040'),
 ('20250814000038'),
 ('20250814000034'),
-('20250814000030'),
 ('20250814000026'),
 ('20250814000024'),
 ('20250814000022'),
@@ -783,5 +789,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20250814000004'),
 ('20250814000003'),
 ('20250814000002'),
-('20250814000001');
+('20250814000001'),
+('20250813000001');
 

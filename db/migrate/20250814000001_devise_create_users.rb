@@ -6,6 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
       ## Database authenticatable
       t.string :email,              null: false, default: ''
       t.string :display_name,       null: false, default: ''
+      t.references :permission, foreign_key: true, default: 9
       t.string :encrypted_password, null: false, default: ''
 
       t.string :otp_secret
