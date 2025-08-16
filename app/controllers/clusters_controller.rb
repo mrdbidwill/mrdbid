@@ -5,8 +5,9 @@ class ClustersController < ApplicationController
   def index
     @clusters = policy_scope(Cluster)
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+
+      format.html 
+      format.json { render json: @clusters }
     end
   end
 
@@ -14,8 +15,9 @@ class ClustersController < ApplicationController
   def show
     @cluster = authorize current_user.clusters.find(params[:id])
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+
+      format.html 
+      format.json { render json: @clusters }
     end
   end
 
@@ -26,8 +28,9 @@ class ClustersController < ApplicationController
     # Allow access to new action for signed-in users without ownership requirement
     authorize @cluster, :new?
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+
+      format.html 
+      format.json { render json: @clusters }
     end
   end
 
@@ -35,8 +38,9 @@ class ClustersController < ApplicationController
   def edit
     @cluster = authorize current_user.clusters.find(params[:id])
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+
+      format.html 
+      format.json { render json: @clusters }
     end
   end
 

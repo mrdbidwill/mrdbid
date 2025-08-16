@@ -5,8 +5,8 @@ class AllGroupsController < ApplicationController
   def index
     @all_groups = policy_scope(AllGroup)
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+      format.html
+      format.json { render json: @all_groups }
     end
   end
 
@@ -14,8 +14,8 @@ class AllGroupsController < ApplicationController
   def show
     @all_group = authorize current_user.all_groups.find(params[:id])
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+      format.html
+      format.json { render json: @all_groups }
     end
   end
 
@@ -26,8 +26,8 @@ class AllGroupsController < ApplicationController
     # Allow access to new action for signed-in users without ownership requirement
     authorize @all_group, :new?
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+      format.html
+      format.json { render json: @all_groups }
     end
   end
 
@@ -35,8 +35,8 @@ class AllGroupsController < ApplicationController
   def edit
     @all_group = authorize current_user.all_groups.find(params[:id])
     respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
+      format.html
+      format.json { render json: @all_groups }
     end
   end
 

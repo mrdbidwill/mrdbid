@@ -1,4 +1,4 @@
-INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, data_source_id, created_at, updated_at) VALUES  -- refer to mr_characters table
+INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, source_data_id, created_at, updated_at) VALUES  -- refer to mr_characters table
 (2, 'None',     '','',5, now(), now() ),                      -- 2 abundance
 (2, 'Low',      '','',5, now(), now() ),
 (2, 'Moderate', '','',5, now(), now() ),

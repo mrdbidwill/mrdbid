@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
   end
 
+  resources :mr_characters
+
   # Projects
   resources :projects
 
@@ -39,6 +41,8 @@ Rails.application.routes.draw do
   # Generic resources
   resources :all_group_mushrooms
   get 'all_group_mushrooms/new', to: 'all_group_mushrooms#new'
+
+  resources :all_groups
 
   # Static pages
   root 'pages#home'
