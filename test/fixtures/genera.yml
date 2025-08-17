@@ -1,4 +1,9 @@
 one:
-  name: "GenusA"
+  mblist_id: 1
+  taxon_name: "GenusA"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 two:
-  name: "GenusB"
+  mblist_id: 2
+  taxon_name: "GenusB"

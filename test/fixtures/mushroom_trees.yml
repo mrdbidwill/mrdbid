@@ -1,3 +1,5 @@
 one:
-  mushroom: one
-  tree: one
+  mushroom_id: 1
+  tree_id: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -1,6 +1,13 @@
 one:
+  mblist_id: 1
   taxon_name: "SpeciesAlpha"
-  genus: one
+  genera_id: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 two:
+  mblist_id: 2
   taxon_name: "SpeciesBeta"
-  genus: two
+  genera_id: 2
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

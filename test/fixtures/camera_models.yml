@@ -4,15 +4,17 @@ one:
   description: "High-quality DSLR"
   comments: "Canon model"
   source: null
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 
 two:
   name: "D850"
   description: "Professional DSLR"
   comments: "Nikon model"
   source: null
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 
 

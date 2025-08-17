@@ -4,8 +4,9 @@ one:
   comments: "Paired with a great lens for wildlife photography"
   camera_make: one
   camera_model: one
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 
 two:
   name: "Nikon D850"
@@ -13,5 +14,5 @@ two:
   comments: "Used for nature and landscape photography"
   camera_make: two
   camera_model: two
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -3,12 +3,14 @@ one:
   description: "Nikon Corporation"
   comments: "Nikon comments"
   source: "Nikon Source"
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 two:
   name: "Canon"
   description: "Canon Corporation"
   comments: "Canon comments"
   source: "Canon Source"
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
