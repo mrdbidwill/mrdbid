@@ -32,7 +32,7 @@ class MushroomsController < ApplicationController
 
   # POST /mushrooms or /mushrooms.json
   def create
-    @mushroom = current_user.mushrooms.build(mushroom_params)
+    @mushroom = current_user.mushrooms.build(mushroom_params.except(:user_id))
     authorize @mushroom if respond_to?(:authorize) # Authorize before saving
 
     if @mushroom.save
@@ -53,7 +53,10 @@ class MushroomsController < ApplicationController
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
   def update
-    if @mushroom.update(mushroom_params)
+    # Ensure that user_id cannot be modified by removing it from params
+    filtered_params = mushroom_params.except(:user_id)
+
+    if @mushroom.update(filtered_params)
       redirect_to @mushroom, notice: "Mushroom was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -69,15 +72,16 @@ class MushroomsController < ApplicationController
   end
 
   private
-
-  def set_mushroom
-    @mushroom = Mushroom.find(params[:id])
-    authorize @mushroom if respond_to?(:authorize)
-  end
+    def set_mushroom
+      @mushroom = Mushroom.find(params[:id])
+      authorize @mushroom
+    rescue ActiveRecord::RecordNotFound
+      redirect_to mushrooms_path, alert: "Mushroom not found."
+    end
 
   # Only allow a list of trusted parameters through.
   def mushroom_params
-    params.require(:mushroom).permit(:name, :description, :comments)
+    params.require(:mushroom).permit(:name, :description, :comments, :user_id, :country_id, :state_id, :fungus_type_id)
   end
 
   def authorize_mushroom

@@ -23,6 +23,8 @@ class Mushroom < ApplicationRecord
   has_many :images, through: :image_mushrooms
 
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id }
+  validates :country_id, presence: true
+  validates :fungus_type_id, presence: true
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
 end

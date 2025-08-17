@@ -2,9 +2,13 @@ class StatesController < ApplicationController
   before_action :set_state, only: %i[show edit update destroy]
 
   # GET /states or /states.json
+  # GET /states or /states.json
   def index
-    @states = State.all
+    @states = State.where(country_id: params[:country_id])
+    render partial: "states/select", locals: { states: @states }
   end
+
+
 
   # GET /states/1 or /states/1.json
   def show

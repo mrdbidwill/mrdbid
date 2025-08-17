@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   end
   get 'cluster_mushrooms/new', to: 'cluster_mushrooms#new_collection', as: :new_cluster_mushrooms
 
+  resources :states, only: [:index]
+
   # Genus and Species
   resources :genera, only: [:index, :show]
   resources :species, only: [:index, :show]

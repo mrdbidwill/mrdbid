@@ -13,17 +13,24 @@ class MushroomPolicy < ApplicationPolicy
     end
   end
 
+  # Shared logic to check if the current user owns the mushroom
+  def owner?
+    record.user_id == user.id
+  end
+
+
+
   # Allow index for all signed-in users
   def index?
-    true
+    user.present?
   end
 
   # Only show mushrooms owned by the current user
   def show?
-    record.user_id == user.id
+    owner?
   end
   def edit?
-    record.user_id == user.id
+    owner?
   end
 
   # Allow create if the user is signed in
@@ -33,26 +40,31 @@ class MushroomPolicy < ApplicationPolicy
 
   # Allow update if the mushroom is owned by the current user
   def update?
-    record.user_id == user.id
+    owner?
   end
 
   # Allow destroy if the mushroom is owned by the current user
   def destroy?
-    record.user_id == user.id
+    owner?
   end
 
   def mushroom_image_mushroom?
-    user.present? && record.user_id == user.id
+    owner?
   end
 
   # Allow adding to a group
   def all_group_mushroom?
-    user.present? && record.user_id == user.id
+    owner?
   end
 
   # Allow adding to a cluster
   def mushroom_cluster?
-    user.present? && record.user_id == user.id
+    owner?
+  end
+
+  # Allow adding to a project
+  def mushroom_project?
+    owner?
   end
 
 end

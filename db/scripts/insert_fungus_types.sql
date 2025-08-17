@@ -1,0 +1,15 @@
+INSERT INTO `fungus_types` ( name, description, comments, created_at, updated_at)VALUES
+('Birds Nest Fungi','','',now() ,now()),
+('Boletes','','',now() ,now()),
+('Chanterelles and Trumpets','gills running down the stem','',now() ,now()),
+('Club - Coral Fungi','','',now() ,now()),
+('Cup Fungi','','',now() ,now()),
+('False Morels','','',now() ,now()),
+('Gills','','',now() ,now()),
+('Jelly Fungi','','',now() ,now()),
+('Mycotrophs','mushroom growing on other mushrooms','',now() ,now()),
+('Pores','','',now() ,now()),
+('Polypores','bracket - shelflike on wood','',now() ,now()),
+('Stinkhorns','','',now() ,now()),
+('Tooth Fungi','','',now() ,now()),
+('True Morels and Verpas','','',now() ,now());

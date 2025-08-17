@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class FungusType < LookupItem
+class FungusType < ApplicationRecord
 end
