@@ -8,13 +8,27 @@ class Mushroom < ApplicationRecord
   belongs_to :fungus_type, optional: true
   belongs_to :mushroom_storage_location, optional: true
 
-  has_and_belongs_to_many :all_groups
-  has_and_belongs_to_many :clusters
-  has_and_belongs_to_many :projects
-  has_and_belongs_to_many :genus_mushrooms
-  has_and_belongs_to_many :mushroom_species
-  has_and_belongs_to_many :mushroom_trees
-  has_and_belongs_to_many :mushroom_plants
+  # Change all HABTM to has_many :through since you have join models
+  has_many :all_group_mushrooms, dependent: :destroy
+  has_many :all_groups, through: :all_group_mushrooms
+
+  has_many :cluster_mushrooms, dependent: :destroy
+  has_many :clusters, through: :cluster_mushrooms
+
+  has_many :genus_mushrooms, dependent: :destroy
+  has_many :genera, through: :genus_mushrooms
+
+  has_many :mushroom_species, class_name: 'MushroomSpecies', dependent: :destroy
+  has_many :species, through: :mushroom_species
+
+  has_many :mushroom_trees, dependent: :destroy
+  has_many :trees, through: :mushroom_trees
+
+  has_many :mushroom_plants, dependent: :destroy
+  has_many :plants, through: :mushroom_plants
+
+  has_many :mushroom_projects, dependent: :destroy
+  has_many :projects, through: :mushroom_projects
 
   has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mr_characters, through: :mr_character_mushrooms

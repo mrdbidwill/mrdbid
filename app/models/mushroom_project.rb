@@ -1,4 +1,4 @@
-class ProjectMushroom < ApplicationRecord
+class MushroomProject < ApplicationRecord
   belongs_to :mushroom
   belongs_to :project
 

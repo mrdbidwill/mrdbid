@@ -1,3 +1,5 @@
 class Genus < ApplicationRecord
-  has_and_belongs_to_many :mushrooms, join_table: :genus_mushrooms
+  has_many :genus_mushrooms, dependent: :destroy
+  has_many :mushrooms, through: :genus_mushrooms
+  has_many :species, foreign_key: :genera_id, dependent: :destroy
 end

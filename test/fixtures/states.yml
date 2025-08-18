@@ -1,0 +1,14 @@
+one:
+  name: "Al"
+  description: "Alabama"
+  comments: "A state"
+  country: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+two:
+  name: "Texan"
+  description: "Texas"
+  comments: "Another state"
+  country: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

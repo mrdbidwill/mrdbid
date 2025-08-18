@@ -1,13 +1,16 @@
 one:
   mblist_id: 1
   taxon_name: "SpeciesAlpha"
-  genera_id: 1
+  genera_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
   mblist_id: 2
   taxon_name: "SpeciesBeta"
-  genera_id: 2
+  genera_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+
+  # AI code 8-18-2025 12:41 PM
+

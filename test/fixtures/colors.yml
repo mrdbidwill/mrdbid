@@ -20,12 +20,12 @@ two:
   latin_name: "Latin Name Two"
   common_name: "Common Name Two"
   color_group: one
-  hex: "#000000"
+  hex: "#000001"
   sequence: 1
   r_val: 0
   g_val: 0
   b_val: 0
-  closest_websafe_color: "#000000"
+  closest_websafe_color: "#000001"
   cwc_r: 0
   cwc_g: 0
   cwc_b: 0

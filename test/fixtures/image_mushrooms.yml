@@ -7,8 +7,8 @@ one:
   aperture: "f/2.8"
   iso: "100"
   camera: one
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
   image_name: "Two Image"
@@ -19,5 +19,5 @@ two:
   aperture: "f/4.0"
   iso: "200"
   camera: two
-  created_at: <%= Time.now %>
-  updated_at: <%= Time.now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

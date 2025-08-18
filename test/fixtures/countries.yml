@@ -1,11 +1,12 @@
 one:
-  mushroom_id: 1
-  tree_id: 1
+  name: "USA"
+  description: "United States"
+  comments: "USA comments"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-
 two:
-  mushroom_id: 1
-  tree_id: 2
+  name: "MEX"
+  description: "Mexico"
+  comments: "Mexico comments"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

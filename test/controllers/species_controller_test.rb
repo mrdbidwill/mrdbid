@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DisplayOptionsControllerTest < ActionDispatch::IntegrationTest
+class SpeciesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @user = users(:one) # Reference your user fixture
@@ -10,43 +10,43 @@ class DisplayOptionsControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should get index" do
-    get display_options_url
+    get species_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_display_option_url
+    get new_species_url
     assert_response :success
   end
 
   test "should create species" do
-    assert_difference("DisplayOption.count") do
-      post display_options_url, params: { species: { comments: @species.comments, description: @species.description, name: @species.name } }
+    assert_difference("Species.count") do
+      post species_url, params: { species: { comments: @species.comments, description: @species.description, name: @species.name } }
     end
 
-    assert_redirected_to display_option_url(DisplayOption.last)
+    assert_redirected_to species_url(Species.last)
   end
 
   test "should show species" do
-    get display_option_url(@species)
+    get species_url(@species)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_display_option_url(@species)
+    get edit_species_url(@species)
     assert_response :success
   end
 
   test "should update species" do
-    patch display_option_url(@species), params: { species: { comments: @species.comments, description: @species.description, name: @species.name } }
-    assert_redirected_to display_option_url(@species)
+    patch species_url(@species), params: { species: { comments: @species.comments, description: @species.description, name: @species.name } }
+    assert_redirected_to species_url(@species)
   end
 
   test "should destroy species" do
-    assert_difference("DisplayOption.count", -1) do
-      delete display_option_url(@species)
+    assert_difference("Species.count", -1) do
+      delete species_url(@species)
     end
 
-    assert_redirected_to display_options_url
+    assert_redirected_to species_url
   end
 end

@@ -5,6 +5,9 @@ one:
   description: "Common mushroom"
   comments: "Good for pizza"
   user: one # Refers to the "one" user in users.yml
+  country: one
+  state: one
+  fungus_type: one
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -15,6 +18,9 @@ two:
   description: "Has a rich taste"
   comments: "Great for soups"
   user: two # Belongs to user two for authorization tests
+  country: two
+  state: two
+  fungus_type: two
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 

@@ -20,8 +20,11 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       post mushrooms_path, params: {
         mushroom: {
           name: "Portobello",
-          description: "A healthy mushroom"
-        }
+          description: "A healthy mushroom",
+          country_id: countries(:one).id,
+          state_id: states(:one).id,
+          fungus_type_id: fungus_types(:one).id
+      }
       }
     end
     assert_redirected_to mushroom_path(Mushroom.last)

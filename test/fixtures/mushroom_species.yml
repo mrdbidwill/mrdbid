@@ -1,6 +1,16 @@
+
 one:
-  species_id: 1
-  mushroom_id: 1
+  species_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+
+two:
+  species_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+  # AI code 8-18-2025 12:39 PM
+
 

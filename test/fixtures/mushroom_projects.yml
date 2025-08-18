@@ -1,11 +1,11 @@
 one:
-  mushroom_id: 1
-  tree_id: 1
+  mushroom_id: one
+  project_id: one
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
-  mushroom_id: 1
-  tree_id: 2
+  mushroom_id: one
+  project_id: two
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
