@@ -1,2 +1,0 @@
-class Len < ApplicationRecord
-end

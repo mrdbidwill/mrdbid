@@ -1,6 +1,6 @@
-class CreateLens < ActiveRecord::Migration[8.0]
+class CreateLenses < ActiveRecord::Migration[8.0]
   def change
-  create_table :lens do |t|
+  create_table :lenses do |t|
       t.string :make
       t.string :model
       t.text :description
