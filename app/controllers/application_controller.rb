@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
   # Configure permitted parameters for Devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # In development/test, ensure actions are authorized and index actions are policy-scoped.
+  # Skips Devise controllers to avoid noise in auth flows.
+  if Rails.env.development? || Rails.env.test?
+    after_action :verify_authorized, except: [:index], unless: :devise_controller?
+    after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
+  end
+
+
   protected
 
   def configure_permitted_parameters
@@ -28,7 +36,21 @@ class ApplicationController < ActionController::Base
 
   private
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_to(request.referrer || root_path)
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "You are not authorized to perform this action."
+        # For non-GET requests, prefer 303 See Other to avoid form resubmission issues with Turbo.
+        fallback = root_path
+        if request.get?
+          redirect_back fallback_location: fallback
+        else
+          redirect_to (request.referer || fallback), status: :see_other, allow_other_host: false
+        end
+      end
+
+      format.json do
+        render json: { error: "forbidden", message: "You are not authorized to perform this action." }, status: :forbidden
+      end
+    end
   end
 end

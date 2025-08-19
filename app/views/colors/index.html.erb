@@ -14,7 +14,7 @@
     <% if @colors.any? %>
       <% @colors.each do |color| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <img src="<%= color.image_file %>" alt="<%= color.latin_name %>" />
+          <img src="<%= color.image_file_address %>" alt="<%= color.latin_name %>" />
           <p><strong>Latin:</strong> <%= color.latin_name %></p>
           <p><strong>Common:</strong> <%= color.common_name %></p>
           <p><strong>Hex:</strong> <%= color.hex %></p>

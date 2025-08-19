@@ -45,6 +45,19 @@ Rails.application.routes.draw do
   get 'all_group_mushrooms/new', to: 'all_group_mushrooms#new'
 
   resources :all_groups
+  resources :camera_makes
+  resources :camera_models
+  resources :colors
+  resources :countries
+  resources :parts
+  resources :plants
+  resources :trees
+  resources :mushroom_trees
+  resources :mushroom_plants
+  resources :mushroom_projects
+  resources :mushroom_species
+  resources :genus_mushrooms
+
 
   # Static pages
   root 'pages#home'
