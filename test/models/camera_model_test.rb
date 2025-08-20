@@ -12,12 +12,15 @@ class CameraModelTest < ActiveSupport::TestCase
   test "should not be valid without a name" do
     @camera_model.name = nil
     assert_not @camera_model.valid?
-    assert_includes @camera_model.errors[:name], "can't be blank"
+    assert @camera_model.errors.added?(:name, :blank)
   end
 
   test "can have many cameras" do
+    @camera_model.save! # ensure the parent is persisted before attaching children
     assert_difference "@camera_model.cameras.count", 1 do
-      @camera_model.cameras << cameras(:one) # Add a camera from the fixtures
+      cameras(:one).update!(camera_model: @camera_model)
     end
   end
 end
+
+
