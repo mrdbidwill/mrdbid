@@ -4,7 +4,6 @@ class CreateCameraMakes < ActiveRecord::Migration[8.0]
       t.string :name
       t.text :description
       t.text :comments
-      t.integer :source
       t.timestamps
     end
   end

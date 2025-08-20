@@ -12,13 +12,15 @@ class CameraMakeTest < ActiveSupport::TestCase
   test "should not be valid without a name" do
     @camera_make.name = nil
     assert_not @camera_make.valid?
-    assert_includes @camera_make.errors[:name], "can't be blank"
+    assert @camera_make.errors.added?(:name, :blank)
   end
 
   test "can have many cameras" do
+    @camera_make.save! # ensure the parent is persisted before attaching children
     assert_difference "@camera_make.cameras.count", 1 do
-      @camera_make.cameras << cameras(:one) # Add a camera from the fixtures
+      cameras(:one).update!(camera_make: @camera_make)
     end
   end
 end
+
 

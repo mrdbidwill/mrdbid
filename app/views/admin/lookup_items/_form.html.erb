@@ -1,25 +1,32 @@
-<%= form_with(model: [:admin, item], local: true) do |form| %>
-  <% if item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(item.errors.count, "error") %> prohibited this record from being saved:</h2>
-      <ul>
-        <% item.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+<%= form_with(model: cluster, class: "contents") do |form| %>
+  <% if cluster.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(cluster.errors.count, "error") %> prohibited this cluster from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% cluster.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <% item.column_names.each do |column| %>
-    <% next if %w[id created_at updated_at].include?(column) %>
-    <div class="form-group">
-      <%= form.label column.humanize %>
-      <%= form.text_field column, class: 'form-control' %>
-    </div>
-  <% end %>
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:name].none?, "border-red-400 focus:outline-red-600": cluster.errors[:name].any?}] %>
+  </div>
 
-  <div class="form-group">
-    <%= form.submit class: 'btn btn-success' %>
-    <%= link_to 'Back', admin_lookup_items_path, class: 'btn btn-secondary' %>
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:description].none?, "border-red-400 focus:outline-red-600": cluster.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :comments %>
+    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:comments].none?, "border-red-400 focus:outline-red-600": cluster.errors[:comments].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>

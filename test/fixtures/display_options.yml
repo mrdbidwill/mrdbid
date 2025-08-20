@@ -1,18 +1,18 @@
 one:
-  name: "Standard"
-  description: "Standard display"
-  comments: "Standard comments"
+  name: "Radio List"
+  description: "Radio List description"
+  comments: "Radio List comments"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 two:
-  name: "None"
-  description: "High-quality cameras"
-  comments: "High-quality comments"
+  name: "Drop-Down"
+  description: "Drop-Down description"
+  comments: "Drop-Down comments"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 three:
-  name: "Detailed"
-  description: "Detailed cameras"
-  comments: "Detailed comments"
+  name: "Text - Number"
+  description: "Text - Number description"
+  comments: "Text - Number comments"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

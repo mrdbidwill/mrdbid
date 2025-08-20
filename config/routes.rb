@@ -10,70 +10,49 @@ Rails.application.routes.draw do
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
   end
 
-  resources :mr_characters
-
-  # Projects
-  resources :projects
-
-  # Clusters
-  resources :clusters do
-    resources :cluster_mushrooms, only: [:create, :destroy]
-  end
-
-  # Provide top-level access for ClusterMushrooms (explicit alias)
-  resources :cluster_mushrooms do
-    collection do
-      get :new # Non-standard helper to satisfy tests expecting new_cluster_mushrooms_path
-    end
-  end
-  get 'cluster_mushrooms/new', to: 'cluster_mushrooms#new_collection', as: :new_cluster_mushrooms
-
-  resources :states, only: [:index]
-
-  # Genus and Species
-  resources :genera, only: [:index, :show]
-  resources :species, only: [:index, :show]
-
-  # Image Mushrooms with both nested and top-level routes
-  resources :image_mushrooms, only: [:index, :show]
-
-  # MbLists as Independent Resources
-  resources :mb_lists, only: [:index]
-
   # Generic resources
-  resources :all_group_mushrooms
-  get 'all_group_mushrooms/new', to: 'all_group_mushrooms#new'
-
   resources :all_groups
-  resources :camera_makes
-  resources :camera_models
-  resources :colors
-  resources :countries
-  resources :parts
-  resources :plants
-  resources :trees
+  resources :all_group_mushrooms
+  resources :clusters
+  resources :cluster_mushrooms
   resources :mushroom_trees
   resources :mushroom_plants
   resources :mushroom_projects
   resources :mushroom_species
   resources :genus_mushrooms
 
-
-  # Static pages
-  root 'pages#home'
-  get 'contact', to: 'pages#contact'
-
   # Admin-specific routes
   namespace :admin do
-    # Top-level routes for managing mr_characters globally (admin-only functionality)
-    resources :mr_characters
-    resources :permissions
-    resources :roles
+    resources :colors
+    resources :countries
     resources :cameras
     resources :camera_models
     resources :camera_makes
+    resources :display_options
+    resources :fungus_types
+    resources :genera
+    resources :image_mushrooms
+    resources :lookup_items
+    resources :lookup_tables
+    resources :lookup_types
+    resources :mb_lists
+    resources :mr_characters
+    resources :parts
+    resources :permissions
+    resources :plants
+    resources :projects
+    resources :roles
     resources :source_data
+    resources :source_data_types
+    resources :storage_locations
+    resources :species
+    resources :states
+    resources :trees
   end
+
+    # Static pages
+    root 'pages#home'
+    get 'contact', to: 'pages#contact'
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check

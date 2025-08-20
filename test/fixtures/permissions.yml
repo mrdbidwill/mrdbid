@@ -1,0 +1,13 @@
+admin:
+  name: "Admin"
+  description: "Admin role"
+  comments:
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+member:
+  name: "Member"
+  description: "Standard member"
+  comments:
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
