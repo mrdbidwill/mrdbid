@@ -36,7 +36,7 @@ class CameraModelsTest < ApplicationSystemTestCase
   end
 
 
-  test "should update camera model" do
+  test "should update Camera model" do
     visit admin_camera_model_url(@camera_model)
     click_on "Edit this camera model", match: :first
 
@@ -56,4 +56,3 @@ class CameraModelsTest < ApplicationSystemTestCase
     assert_text "Camera model was successfully destroyed"
   end
 end
-

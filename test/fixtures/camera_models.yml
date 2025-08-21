@@ -3,7 +3,7 @@ one:
   name: "EOS 5D Mark IV"
   description: "High-quality DSLR"
   comments: "Canon model"
-  source: null
+  source: "Canon Source"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -12,7 +12,7 @@ two:
   name: "D850"
   description: "Professional DSLR"
   comments: "Nikon model"
-  source: null
+  source: "Nikon Source"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 

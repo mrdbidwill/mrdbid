@@ -3,22 +3,25 @@ class Admin::CameraModelsController < Admin::ApplicationController
 
   # GET /camera_models
   def index
-    @camera_models = CameraModel.order(:name)
+    authorize CameraModel
+    @camera_models = policy_scope(CameraModel.order(:name))
   end
 
   # GET /camera_models/1
   def show
-    # @camera_model set by before_action
+    authorize @camera_model
   end
 
   # GET /camera_models/new
   def new
     @camera_model = CameraModel.new
+    authorize @camera_model
   end
 
   # POST /camera_models
   def create
     @camera_model = CameraModel.new(camera_model_params)
+    authorize @camera_model
     if @camera_model.save
       redirect_to admin_camera_model_path(@camera_model), notice: "Camera model was successfully created."
     else
@@ -28,11 +31,12 @@ class Admin::CameraModelsController < Admin::ApplicationController
 
   # GET /camera_models/1/edit
   def edit
-    # @camera_model set by before_action
+    authorize @camera_model
   end
 
   # PATCH/PUT /camera_models/1
   def update
+    authorize @camera_model
     if @camera_model.update(camera_model_params)
       redirect_to admin_camera_model_path(@camera_model), notice: "Camera model was successfully updated."
     else
@@ -42,6 +46,7 @@ class Admin::CameraModelsController < Admin::ApplicationController
 
   # DELETE /camera_models/1
   def destroy
+    authorize @camera_model
     @camera_model.destroy!
     redirect_to admin_camera_models_path, notice: "Camera model was successfully destroyed."
   end
