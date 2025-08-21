@@ -1,4 +1,5 @@
 admin:
+  id: 1
   name: "Admin"
   description: "Admin role"
   comments:
@@ -6,6 +7,7 @@ admin:
   updated_at: <%= Time.current %>
 
 member:
+  id: 9
   name: "Member"
   description: "Standard member"
   comments:

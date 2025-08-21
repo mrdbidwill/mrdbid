@@ -8,20 +8,9 @@ class CameraMakesTest < ApplicationSystemTestCase
 
     @camera_make = camera_makes(:one)
 
-    # Make sure an "Admin" permission exists with an id < 5 to satisfy User#admin?
-    admin_perm = Permission.find_by(id: 2) || Permission.create!(id: 2, name: "Admin", description: "Admin role")
-
     @user = users(:one)
-    # Persist FK to avoid reload issues and FK violations
-    @user.update_columns(permission_id: admin_perm.id)
-
     login_as(@user, scope: :user)
   end
-
-  teardown do
-    Warden.test_reset!
-  end
-
 
   teardown do
     Warden.test_reset!

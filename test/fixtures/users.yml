@@ -6,6 +6,7 @@ one:
   confirmed_at: <%= Time.current %> # Add confirmation for Devise
   confirmation_sent_at: <%= Time.current %>
   confirmation_token: "token1"
+  permission_id: 1
 
 two:
   email: "user2@example.com"
@@ -15,3 +16,4 @@ two:
   confirmed_at: <%= Time.current %> # Add confirmation for Devise
   confirmation_sent_at: <%= Time.current %>
   confirmation_token: "token2"
+  permission_id: 9

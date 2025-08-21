@@ -3,22 +3,25 @@ class Admin::CameraMakesController < Admin::ApplicationController
 
   # GET /camera_makes
   def index
-    @camera_makes = CameraMake.order(:name)
+    authorize CameraMake
+    @camera_makes = policy_scope(CameraMake.order(:name))
   end
 
   # GET /camera_makes/1
   def show
-    # @camera_make set by before_action
+    authorize @camera_make
   end
 
   # GET /camera_makes/new
   def new
     @camera_make = CameraMake.new
+    authorize @camera_make
   end
 
   # POST /camera_makes
   def create
     @camera_make = CameraMake.new(camera_make_params)
+    authorize @camera_make
     if @camera_make.save
       redirect_to admin_camera_make_path(@camera_make), notice: "Camera make was successfully created."
     else
@@ -28,11 +31,12 @@ class Admin::CameraMakesController < Admin::ApplicationController
 
   # GET /camera_makes/1/edit
   def edit
-    # @camera_make set by before_action
+    authorize @camera_make
   end
 
   # PATCH/PUT /camera_makes/1
   def update
+    authorize @camera_make
     if @camera_make.update(camera_make_params)
       redirect_to admin_camera_make_path(@camera_make), notice: "Camera make was successfully updated."
     else
@@ -42,6 +46,7 @@ class Admin::CameraMakesController < Admin::ApplicationController
 
   # DELETE /camera_makes/1
   def destroy
+    authorize @camera_make
     @camera_make.destroy!
     redirect_to admin_camera_makes_path, notice: "Camera make was successfully destroyed."
   end

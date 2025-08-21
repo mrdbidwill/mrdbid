@@ -3,8 +3,7 @@ require "test_helper"
 class Admin::CameraModelsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @camera_model = camera_models(:one)
-    @user = users(:one)
-    @user.permission_id = 1 # ensure admin? returns true
+    @user.update_columns(permission_id: 1) # ensure admin? returns true and is persisted
     sign_in @user
   end
 
