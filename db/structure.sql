@@ -753,6 +753,21 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_rails_1dc7d54aa4` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `versions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `item_type` varchar(191) COLLATE utf8mb4_general_ci NOT NULL,
+  `item_id` bigint NOT NULL,
+  `event` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `whodunnit` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `object` longtext COLLATE utf8mb4_general_ci,
+  `created_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_versions_on_item_type_and_item_id` (`item_type`,`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -764,6 +779,7 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20250822201733'),
 ('20250819000001'),
 ('20250814000109'),
 ('20250814000108'),

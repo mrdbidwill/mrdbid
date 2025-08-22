@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :set_paper_trail_whodunnit
 
   include Pundit::Authorization # Updated inclusion for Pundit
   # Make Pundit's policy and policy_scope methods available to views

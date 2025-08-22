@@ -2,7 +2,7 @@
  # frozen_string_literal: true
 
  class LookupItem < ApplicationRecord
-
+   has_paper_trail
    self.inheritance_column = :_type_disabled  # stop rails from using default type column STI
 
    belongs_to :source_data, optional: true
@@ -29,6 +29,13 @@
 
    def self.available_for_mushroom_creation
      by_type('SomeType').pluck(:name, :id) # Adjust the type name as needed
+   end
+
+   def versions
+     @lookup_item = LookupItem.find(params[:id])
+     # Show most recent first
+     @versions = @lookup_item.versions.order(created_at: :desc)
+     authorize @lookup_item # Pundit: restricts to admins
    end
 
 

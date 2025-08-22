@@ -17,7 +17,7 @@
       <!-- Contact -->
       <% unless current_page?(contact_path) %>
         <li>
-          <%= link_to "Contact", contact_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(contact_path)" %>
+          <%= link_to "Contact", contact_path, class: "inline-block px-4 py-2 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
       <% end %>
 
@@ -25,40 +25,47 @@
         <!-- Mushrooms -->
         <% unless current_page?(mushrooms_path) %>
           <li>
-            <%= link_to "Mushrooms", mushrooms_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(mushrooms_path)" %>
+            <%= link_to "Mushrooms", mushrooms_path, class: "inline-block px-4 py-2 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
           </li>
         <% end %>
 
 
         <!-- Manage Mushroom Characters -->
         <li>
-          <%= link_to "Characters", admin_mr_characters_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(mr_characters_path)" %>
+          <%= link_to "Characters", admin_mr_characters_path, class: "inline-block px-4 py-2 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
 
 
         <!-- Manage Clusters -->
         <li>
-          <%= link_to "Clusters", clusters_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(clusters_path)" %>
+          <%= link_to "Clusters", clusters_path, class: "inline-block px-4 py-2 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-700 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
 
         <!-- Manage Groups -->
         <li>
-          <%= link_to "Groups", all_groups_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(all_groups_path)" %>
+          <%= link_to "Groups", all_groups_path, class: "inline-block px-4 py-2 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-700 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
 
         <!-- Manage Projects -->
         <li>
-          <%= link_to "Projects", admin_projects_path, class: "hover:text-orange-400 <%= 'text-orange-400' if current_page?(projects_path)" %>
+          <%= link_to "Projects", admin_projects_path, class: "inline-block px-4 py-2 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-700 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
+
+        <!-- Admin -->
+        <% if current_user&.admin? %>
+          <li>
+          <%= link_to "Admin", admin_root_path, class: "inline-block px-4 py-2 rounded bg-red-600 text-white font-semibold shadow ring-2 ring-red-400 hover:bg-red-700 hover:ring-red-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          </li>
+        <% end %>
 
         <!-- Account -->
         <li>
-          <%= link_to 'Account', edit_user_registration_path %>
+          <%= link_to 'Account', edit_user_registration_path, class: "inline-block px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow ring-2 ring-orange-400 hover:bg-orange-700 hover:ring-orange-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
 
         <!-- Logout -->
         <li>
-          <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "hover:text-orange-400" %>
+          <%= button_to "Logout", destroy_user_session_path, method: :delete,class: "inline-block px-4 py-2 rounded bg-yellow-600 text-white font-semibold shadow ring-2 ring-yellow-400 hover:bg-yellow-700 hover:ring-yellow-700 focus:outline-none focus:ring-4 transition duration-150" %>
         </li>
       <% else %>
         <!-- Login -->

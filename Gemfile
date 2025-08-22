@@ -19,7 +19,7 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 gem "image_processing", "~> 1.2"
-
+gem 'paper_trail', '~> 16.0' # or the latest version
 gem 'kaminari' # pagination
 
 gem 'csv'

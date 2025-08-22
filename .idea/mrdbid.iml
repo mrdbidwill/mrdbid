@@ -115,6 +115,7 @@
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.18.9, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.5.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ostruct (v0.6.3, rbenv: 3.4.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="paper_trail (v16.0.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parallel (v1.27.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parser (v3.3.8.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pp (v0.6.2, rbenv: 3.4.3) [gem]" level="application" />
@@ -142,6 +143,7 @@
     <orderEntry type="library" scope="PROVIDED" name="reek (v6.5.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.10.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="reline (v0.6.2, rbenv: 3.4.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="request_store (v1.7.0, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v3.1.1, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rexml (v3.4.1, rbenv: 3.4.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rotp (v6.3.0, rbenv: 3.4.3) [gem]" level="application" />

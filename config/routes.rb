@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   # Admin-specific routes
   namespace :admin do
+    root to: "dashboard#index"
     resources :colors
     resources :countries
     resources :cameras
@@ -50,7 +51,14 @@ Rails.application.routes.draw do
     resources :trees
   end
 
-    # Static pages
+  resources :lookup_items do
+    member do
+      get :versions
+    end
+  end
+
+
+  # Static pages
     root 'pages#home'
     get 'contact', to: 'pages#contact'
 

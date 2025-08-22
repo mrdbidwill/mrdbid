@@ -1,4 +1,4 @@
-<%= form_with(model: camera, class: "contents") do |form| %>
+<%= form_with(model: [:admin, camera], class: "contents") do |form| %>
   <% if camera.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(camera.errors.count, "error") %> prohibited this camera from being saved:</h2>
@@ -17,26 +17,30 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:description].none?, "border-red-400 focus:outline-red-600": camera.errors[:description].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:comments].none?, "border-red-400 focus:outline-red-600": camera.errors[:comments].any?}] %>
-  </div>
-
-  <div class="my-5">
     <%= form.label :camera_make_id %>
-    <%= form.text_field :camera_make_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:camera_make_id].none?, "border-red-400 focus:outline-red-600": camera.errors[:camera_make_id].any?}] %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:camera_make_id].none?, "border-red-400 focus:outline-red-600": camera.errors[:camera_make_id].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :camera_model_id %>
-    <%= form.text_field :camera_model_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:camera_model_id].none?, "border-red-400 focus:outline-red-600": camera.errors[:camera_model_id].any?}] %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:camera_model_id].none?, "border-red-400 focus:outline-red-600": camera.errors[:camera_model_id].any?}] %>
   </div>
 
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:description].none?, "border-red-400 focus:outline-red-600": camera.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :comments %>
+    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": camera.errors[:comments].none?, "border-red-400 focus:outline-red-600": camera.errors[:comments].any?}] %>
+  </div>
+
+  <%# camera.persisted? checks if camera already exists in database %>
   <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit(
+          camera.persisted? ? "Update Camera" : "Create Camera",
+          class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer"
+        ) %>
   </div>
 <% end %>

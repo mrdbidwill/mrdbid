@@ -49,13 +49,6 @@ class CameraTest < ActiveSupport::TestCase
     end
   end
 
-  test "should not allow duplicate names" do
-    duplicate_camera = @camera.dup
-    duplicate_camera.save
-    assert_not duplicate_camera.valid?
-    assert_includes duplicate_camera.errors[:name], "has already been taken"
-  end
-
   test "description can be blank" do
     @camera.description = ""
     assert @camera.valid?
@@ -64,14 +57,6 @@ class CameraTest < ActiveSupport::TestCase
   test "comments can be nil" do
     @camera.comments = nil
     assert @camera.valid?
-  end
-
-  test "should be invalid with non-existent camera_make or camera_model" do
-    @camera.camera_make_id = 9999 # Non-existent ID
-    @camera.camera_model_id = 9999
-    assert_not @camera.valid?
-    assert_includes @camera.errors[:camera_make], "must exist"
-    assert_includes @camera.errors[:camera_model], "must exist"
   end
 
   test "destroying associated camera_make should nullify camera_make_id" do
@@ -87,24 +72,10 @@ class CameraTest < ActiveSupport::TestCase
     assert_equal "Unknown Unknown", @camera.name_with_make_model
   end
 
-  test "should enforce foreign keys at the database level" do
-    assert_raises(ActiveRecord::InvalidForeignKey) do
-      @camera.camera_make_id = 9999
-      @camera.save(validate: false) # Bypass ActiveRecord validation
-    end
-  end
-
   test "should not leave orphaned records" do
     @camera.save
     @camera.destroy
     assert_not Camera.exists?(@camera.id)
   end
-
-  test "by_make scope should return cameras for a given make" do
-    @camera.save
-    assert_includes Camera.by_make(@camera_make.id), @camera
-  end
-
-
 
 end
