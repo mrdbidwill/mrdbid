@@ -1,6 +1,5 @@
 class ImageMushroomsController < ApplicationController
 
-
   skip_before_action :authenticate_user!, raise: false
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 

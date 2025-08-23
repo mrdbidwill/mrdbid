@@ -3,8 +3,13 @@ class Admin::MrCharactersController < Admin::BaseController
   before_action :set_mr_character, only: [:edit, :update, :destroy]
 
   def index
-    @mr_characters = MrCharacter.includes(:part, :lookup_type, :display_option).order(:name)
+    @mr_characters = MrCharacter
+                       .includes(:source_data, :display_option, :part, :lookup_type)
+                       .page(params[:page])        # 👈 This is the key!
+                       .per(25)                    # Optional: specify items per page
+    @parts = Part.pluck(:name, :id)
   end
+
 
   def new
     @mr_character = MrCharacter.new

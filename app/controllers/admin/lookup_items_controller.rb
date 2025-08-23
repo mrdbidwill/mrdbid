@@ -3,12 +3,18 @@ class Admin::LookupItemsController < Admin::BaseController
   before_action :set_lookup_item, only: [:edit, :update, :destroy]
 
   def index
-    @lookup_items = LookupItem.includes(:lookup_type, :source_data).order(:name)
+    # @lookup_items = LookupItem.includes(:lookup_type, :source_data).order(:mr_character_id, :name)
+    @lookup_items = LookupItem.includes(:mr_character).order("mr_character_id, name")
   end
 
   def new
     @lookup_item = LookupItem.new
   end
+
+  def show
+    @lookup_item = LookupItem.find(params[:id])
+  end
+
 
   def create
     @lookup_item = LookupItem.new(lookup_item_params)

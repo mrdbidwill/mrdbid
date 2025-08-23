@@ -1,4 +1,4 @@
-class PartsController < ApplicationController
+class Admin::PartsController < Admin::BaseController
   include Pundit::Authorization
 
   # GET /parts or /parts.json

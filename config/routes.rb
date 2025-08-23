@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :mushrooms do
     resources :image_mushrooms, only: [:new, :create, :edit, :update, :destroy]
     resources :mr_characters, only: [:index, :show] # Specifically tied to mushrooms
-    resources :mushroom_projects, only: [:create, :destroy]
     resources :mushroom_species, only: [:index, :new, :create, :destroy]
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
   end
@@ -58,7 +57,7 @@ Rails.application.routes.draw do
   end
 
 
-  # Static pages
+    # Static pages
     root 'pages#home'
     get 'contact', to: 'pages#contact'
 

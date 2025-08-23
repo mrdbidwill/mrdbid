@@ -1,0 +1,40 @@
+<h1>Edit Image for <%= @image_mushroom.mushroom&.name || 'Unknown' %></h1>
+
+<% if @image_mushroom.errors.any? %>
+  <div class="errors">
+    <h2><%= pluralize(@image_mushroom.errors.count, "error") %> prohibited the image from being saved:</h2>
+    <ul>
+      <% @image_mushroom.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @image_mushroom, url: image_mushroom_path(@image_mushroom), method: :patch, local: true) do |form| %>
+  <!-- Image File -->
+  <div class="field">
+    <%= form.label :image_file, "Select an Image File" %>
+    <%= form.file_field :image_file %>
+  </div>
+
+  <!-- Image Name -->
+  <div class="field">
+    <%= form.label :image_name, "Image Name" %>
+    <%= form.text_field :image_name %>
+  </div>
+
+  <!-- Part Dropdown -->
+  <div class="field">
+    <%= form.label :part_id, "Part" %>
+    <%= form.collection_select(:part_id, @parts, :id, :name, { selected: @image_mushroom.part_id, prompt: "Select a Part" }) %>
+  </div>
+
+  <!-- Camera Dropdown -->
+  <div class="field">
+    <%= form.label :camera_id, "Camera" %>
+    <%= form.collection_select(:camera_id, @cameras, :id, :name, { selected: @image_mushroom.camera_id, prompt: "Select a Camera" }) %>
+  </div>
+
+  <%= form.submit "Update Image", class: "btn btn-primary" %>
+<% end %>

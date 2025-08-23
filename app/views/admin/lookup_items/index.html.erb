@@ -1,4 +1,4 @@
-<% content_for :title, "Clusters" %>
+<% content_for :title, "lookup_items" %>
 
 <div class="w-full">
   <% if notice.present? %>
@@ -6,24 +6,47 @@
   <% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Clusters</h1>
-    <%= link_to "New cluster", new_cluster_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <h1 class="font-bold text-4xl">Lookup Items</h1>
+    <%= link_to "New lookup_item", new_admin_lookup_item_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="clusters" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @clusters.any? %>
-      <% @clusters.each do |cluster| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render cluster %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", cluster, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_cluster_path(cluster), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Destroy", cluster, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  <div id="lookup_items" class="min-w-full divide-y divide-gray-200 space-y-5">
+    <% if @lookup_items.any? %>
+      <% @lookup_items.group_by(&:mr_character).each do |mr_character, items| %>
+        <div class="my-10">
+          <h2 class="font-bold text-2xl mb-3">
+            <%= mr_character&.name || 'Unassigned Character' %>
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="min-w-full table-auto border border-gray-200 mb-8">
+              <thead>
+              <tr>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Description</th>
+                <th class="px-4 py-2">Comments</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% items.each do |lookup_item| %>
+                <tr id="<%= dom_id lookup_item %>">
+                  <td class="border px-4 py-2"><%= lookup_item.name %></td>
+                  <td class="border px-4 py-2"><%= lookup_item.description %></td>
+                  <td class="border px-4 py-2"><%= lookup_item.comments %></td>
+                  <td class="border px-4 py-2">
+                    <%= link_to "Show", admin_lookup_item_path(lookup_item), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium" %>
+                    <%= link_to "Edit", edit_admin_lookup_item_path(lookup_item), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium" %>
+                    <%= button_to "Destroy", admin_lookup_item_path(lookup_item), method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       <% end %>
     <% else %>
-      <p class="text-center my-10">No clusters found.</p>
+      <p class="text-center my-10">No lookup items found.</p>
     <% end %>
   </div>
 </div>

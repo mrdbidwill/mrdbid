@@ -1,22 +1,15 @@
-class ProjectsController < ApplicationController
-  include Pundit::Authorization
+# app/controllers/admin/projects_controller.rb
+class Admin::ProjectsController < Admin::BaseController
+include Pundit::Authorization
 
   # GET /projects or /projects.json
   def index
     @projects = policy_scope(Project)
-    respond_to do |format|
-      format.html 
-      format.json { render json: @projects }
-    end
   end
 
   # GET /projects/1 or /projects/1.json
   def show
     @project = authorize current_user.projects.find(params[:id])
-    respond_to do |format|
-      format.html 
-      format.json { render json: @projects }
-    end
   end
 
 
@@ -25,23 +18,15 @@ class ProjectsController < ApplicationController
     @project = Project.new
     # Allow access to new action for signed-in users without ownership requirement
     authorize @project, :new?
-    respond_to do |format|
-      format.html 
-      format.json { render json: @projects }
-    end
   end
 
   # GET /projects/1/edit
   def edit
     @project = authorize current_user.projects.find(params[:id])
-    respond_to do |format|
-      format.html 
-      format.json { render json: @projects }
-    end
   end
 
 
-  # POST /projects or /projects.json
+  # POST /projects
   def create
     @project = current_user.projects.build(project_params)
     authorize @project
@@ -52,7 +37,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1 or /projects/1.json
+  # PATCH/PUT /projects/1
   def update
     @project = authorize current_user.projects.find(params[:id])
     if @project.update(project_params)
@@ -63,11 +48,11 @@ class ProjectsController < ApplicationController
   end
 
 
-  # DELETE /projects/1 or /projects/1.json
+  # DELETE /projects/1
   def destroy
     @project = authorize current_user.projects.find(params[:id])
     @project.destroy!
-    redirect_to projects_path, notice: "Project was successfully destroyed."
+    redirect_to admin_projects_path, notice: "Project was successfully destroyed."
   end
 
 

@@ -1,0 +1,51 @@
+<h1>Upload Image<%== @mushroom.present? ? " for #{ERB::Util.h(@mushroom.name)}" : '' %></h1>
+
+<% if @image_mushroom.errors.any? %>
+  <div class="errors">
+    <h2><%= pluralize(@image_mushroom.errors.count, "error") %> prohibited the image from being saved:</h2>
+    <ul>
+      <% @image_mushroom.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: [@mushroom, @image_mushroom], local: true) do |form| %>
+  <!-- Image File -->
+  <div class="field">
+    <%= form.label :image_file, "Select an Image File" %>
+    <%= form.file_field :image_file %>
+  </div>
+
+  <!-- Image Name -->
+  <div class="field">
+    <%= form.label :image_name, "Image Name" %>
+    <%= form.text_field :image_name %>
+  </div>
+
+  <!-- Mushroom (optional if not nested) -->
+  <div class="field">
+    <%= form.label :mushroom_id, "Mushroom" %>
+    <%= form.collection_select(:mushroom_id, Mushroom.all, :id, :name, { prompt: "Select a Mushroom" }) %>
+  </div>
+
+  <!-- Part Dropdown -->
+  <div class="field">
+    <%= form.label :part_id, "Part" %>
+    <% if @parts.present? %>
+      <%= form.collection_select(:part_id, @parts || [], :id, :name, { prompt: "Select a Part" }) %>
+    <% else %>
+      <p>No parts available. Please add parts and try again.</p>
+    <% end %>
+  </div>
+
+
+  <!-- Camera Dropdown -->
+  <div class="field">
+    <%= form.label :camera_id, "Camera" %>
+    <%= form.collection_select(:camera_id, @cameras || [], :id, :name, { prompt: "Select a Camera" }) %>
+  </div>
+
+  <%= form.submit "Upload Image", class: "btn btn-primary" %>
+<% end %>
