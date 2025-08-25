@@ -17,12 +17,12 @@
   <link rel="icon" href="<%= asset_path('favicon-32x32.png') %>" type="image/png">
   <link rel="apple-touch-icon" href="<%= asset_path('favicon-16x16.png') %>" type="image/png">
 
-  <%# Includes all stylesheet files in app/assets/stylesheets %>
-  <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="admin-layout">
+">
 <%= render 'shared/menu' %>
 <main class="max-w-full mx-auto px-2 py-2">
 

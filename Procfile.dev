@@ -1,5 +1,2 @@
-# Procfile.dev
-web: bin/rails server -p 3000
-css: npm run watch
-
+web: bin/rails server
 css: bin/rails tailwindcss:watch
