@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :camera_models
     resources :camera_makes
     resources :display_options
+    resources :dna_sequences
     resources :fungus_types
     resources :genera
     resources :image_mushrooms

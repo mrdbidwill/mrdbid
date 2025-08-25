@@ -1,11 +1,21 @@
-<h1>Admin Dashboard</h1>
-
+<h1 class="bg-gray-200 text-red-800 mx-auto px-2 py-2 text-4xl text-center">Admin Dashboard</h1>
+<p class="text-center">You are in the Admin section. The links below are to various tables and tools for improving the mushroom identification process.</p>
 <nav class="admin-dashboard-nav">
   <ul>
     <li><%= link_to "Camera Makes", admin_camera_makes_path %></li>
     <li><%= link_to "Camera Models", admin_camera_models_path %></li>
+    <li><%= link_to "Cameras", admin_cameras_path %></li>
+    <li><%= link_to "Colors", admin_colors_path %></li>
+    <li><%= link_to "Countries", admin_countries_path %></li>
+    <li><%= link_to "DNA Sequences", admin_dna_sequences_path %></li>
     <li><%= link_to "Fungus Types", admin_fungus_types_path %></li>
+    <li><%= link_to "Genus", admin_genera_index_path %></li>
+    <li><%= link_to "Image Mushrooms", admin_image_mushrooms_path %></li>
+    <li><%= link_to "Lens", admin_lens_path %></li>
     <li><%= link_to "Lookup Items", admin_lookup_items_path %></li>
+    <li><%= link_to "Lookup Types", admin_lookup_types_path %></li>
+    <li>MBList (not able to modify here)</li>
+    <li><%= link_to "Mushroom Characters", admin_mr_characters_path %></li>
     <!-- Add more as needed, or generate dynamically -->
   </ul>
 </nav>
