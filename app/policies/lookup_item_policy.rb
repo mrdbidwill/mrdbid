@@ -1,42 +1,15 @@
 class LookupItemPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      # Admins can see all; others can see all (or restrict if needed)
-      scope.all
+      user&.admin? ? scope.all : scope.none
     end
   end
 
-  # Keep if you still need it elsewhere
-  def owner?
-    record.user_id == user.id
-  end
-
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
-
-  def new?
-    user.admin?
-  end
-
-  def create?
-    user.admin?
-  end
-
-  def edit?
-    user.admin?
-  end
-
-  def update?
-    user.admin?
-  end
-
-  def destroy?
-    # If you also need a deletable guard, keep it; otherwise just user.admin?
-    user.admin? && (!record.respond_to?(:can_be_deleted?) || record.can_be_deleted?)
-  end
+  def index?;   user&.admin?; end
+  def show?;    user&.admin?; end
+  def new?;     user&.admin?; end
+  def create?;  user&.admin?; end
+  def edit?;    user&.admin?; end
+  def update?;  user&.admin?; end
+  def destroy?; user&.admin?; end
 end

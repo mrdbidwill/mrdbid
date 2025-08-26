@@ -4,7 +4,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def index
     # @lookup_items = LookupItem.includes(:lookup_type, :source_data).order(:mr_character_id, :name)
-    @lookup_items = LookupItem.includes(:mr_character).order("mr_character_id, name")
+    @lookup_items = policy_scope(LookupItem.includes(:mr_character).order("mr_character_id, name"))
   end
 
   def new
