@@ -4,19 +4,11 @@ class     SpeciesController < ApplicationController
   # GET /species or /species.json
   def index
     @species = policy_scope(Project)
-    respond_to do |format|
-      format.html
-      format.json { render json: @species }
-    end
   end
 
   # GET /species/1 or /species/1.json
   def show
     @species = authorize current_user.species.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @species }
-    end
   end
 
 
@@ -25,19 +17,11 @@ class     SpeciesController < ApplicationController
     @species = Species.new
     # Allow access to new action for signed-in users without ownership requirement
     authorize @species, :new?
-    respond_to do |format|
-      format.html
-      format.json { render json: @species }
-    end
   end
 
   # GET /    species/1/edit
   def edit
     @species = authorize current_user.species.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @species }
-    end
   end
 
 
