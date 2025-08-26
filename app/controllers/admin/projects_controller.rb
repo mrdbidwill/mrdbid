@@ -1,5 +1,5 @@
 # app/controllers/admin/projects_controller.rb
-class Admin::ProjectsController < Admin::BaseController
+class Admin::ProjectsController < Admin::ApplicationController
 include Pundit::Authorization
 
   # GET /projects or /projects.json

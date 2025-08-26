@@ -1,5 +1,5 @@
 # app/controllers/admin/mr_characters_controller.rb
-class Admin::MrCharactersController < Admin::BaseController
+class Admin::MrCharactersController < Admin::ApplicationController
   before_action :set_mr_character, only: [:edit, :update, :destroy]
 
   def index

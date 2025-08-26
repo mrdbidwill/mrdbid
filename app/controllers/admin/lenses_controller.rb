@@ -1,4 +1,4 @@
-class Admin::LensesController < Admin::BaseController
+class Admin::LensesController < Admin::ApplicationController
   def index
     @lenses = Lens.all
   end

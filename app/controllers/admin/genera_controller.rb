@@ -1,4 +1,4 @@
-class Admin::GeneraController < Admin::BaseController
+class Admin::GeneraController < Admin::ApplicationController
   include Pundit::Authorization
 
   # GET /admin/genera

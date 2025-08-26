@@ -1,5 +1,5 @@
 # app/controllers/admin/utility_controller.rb
-class Admin::UtilityController < Admin::BaseController
+class Admin::UtilityController < Admin::ApplicationController
   def export_database
     # Logic to create a database dump
     system("pg_dump -Fc --file=backup.dump #{Rails.configuration.database_configuration[Rails.env]['database']}")

@@ -1,5 +1,5 @@
 # app/controllers/admin/lookup_items_controller.rb
-class Admin::LookupItemsController < Admin::BaseController
+class Admin::LookupItemsController < Admin::ApplicationController
   before_action :set_lookup_item, only: [:edit, :update, :destroy]
 
   def index
