@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :fungus_types
     resources :genera
     resources :image_mushrooms
+    resources :lenses
     resources :lookup_items
     resources :lookup_tables
     resources :lookup_types

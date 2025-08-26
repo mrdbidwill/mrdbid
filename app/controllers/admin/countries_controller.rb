@@ -1,25 +1,16 @@
-class CountriesController < ApplicationController
+class Admin::CountriesController < Admin::ApplicationController
   include Pundit::Authorization
 
   # GET /countries or /countries.json
   def index
-    @countries = policy_scope(Country)
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @countries }
-    end
+    authorize Country
+    @countries = policy_scope(Country.order(:name))
   end
 
   # GET /countries/1 or /countries/1.json
   def show
     @country = Country.find(params[:id])
     authorize @country
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @country }
-    end
   end
 
 
@@ -28,22 +19,12 @@ class CountriesController < ApplicationController
     @country = Country.new
     # Allow access to new action for signed-in users without ownership requirement
     authorize @country, :new?
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @country }
-    end
   end
 
   # GET /countries/1/edit
   def edit
     @country = Country.find(params[:id])
     authorize @country
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @country }
-    end
   end
 
 
@@ -52,7 +33,7 @@ class CountriesController < ApplicationController
     @country = Country.new(country_params)
     authorize @country
     if @country.save
-      redirect_to country_url(@country), notice: "Country was successfully created."
+      redirect_to admin_country_url(@country), notice: "Country was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -75,7 +56,7 @@ class CountriesController < ApplicationController
     @country = Country.find(params[:id])
     authorize @country
     @country.destroy!
-    redirect_to countries_path, notice: "Country was successfully destroyed."
+    redirect_to admin_countries_path, notice: "Country was successfully destroyed."
   end
 
 

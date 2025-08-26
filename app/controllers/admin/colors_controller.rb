@@ -1,60 +1,54 @@
-class ColorsController < ApplicationController
+class Admin::ColorsController < Admin::ApplicationController
   before_action :set_color, only: %i[ show edit update destroy ]
 
   # GET /colors or /colors.json
   def index
-    @colors = Color.by_sequence.page(params[:page])
+    authorize Color
+    @colors = policy_scope(Color.order(:sequence))
   end
 
   # GET /colors/1 or /colors/1.json
   def show
+    authorize @color
   end
 
   # GET /colors/new
   def new
     @color = Color.new
+    authorize @color
+  end
+
+  # POST /camera_makes
+  def create
+    @color = Color.new(camera_make_params)
+    authorize @color
+    if @color.save
+      redirect_to admin_color_path(@color), notice: "Color was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   # GET /colors/1/edit
   def edit
+    authorize @color
   end
 
-  # POST /colors or /colors.json
-  def create
-    @color = Color.new(color_params)
-
-    respond_to do |format|
-      if @color.save
-        format.html { redirect_to @color, notice: "Color was successfully created." }
-        format.json { render :show, status: :created, location: @color }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @color.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /colors/1 or /colors/1.json
+  # PATCH/PUT /colors/1
   def update
-    respond_to do |format|
-      if @color.update(color_params)
-        format.html { redirect_to @color, notice: "Color was successfully updated." }
-        format.json { render :show, status: :ok, location: @color }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @color.errors, status: :unprocessable_entity }
-      end
+    authorize @color
+    if @color.update(color_params)
+      redirect_to admin_color_path(@color), notice: "Color was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /colors/1 or /colors/1.json
+  # DELETE /colors/1
   def destroy
+    authorize @color
     @color.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to colors_path, status: :see_other, notice: "Color was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to admin_colors_path, notice: "Color was successfully destroyed."
   end
 
   private
