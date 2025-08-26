@@ -1,35 +1,27 @@
 class Admin::GeneraController < Admin::ApplicationController
-  include Pundit::Authorization
+  before_action :set_genus, only: %i[show edit update destroy]
 
-  # GET /admin/genera
+  # GET /genera
   def index
-    @genera = policy_scope(Genus)
-    respond_to do |format|
-      format.html
-      format.json { render json: @genera }
-    end
+    authorize Genus
+    @genera = policy_scope(Genus.order(:taxon_name))
   end
 
-  # GET /admin/genera/:id
+  # GET /genera/1
   def show
-    @genus = authorize Genus.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @genus }
-    end
+    authorize @genus
   end
 
-  # GET /admin/genera/new
+  # GET /genera/new
   def new
     @genus = Genus.new
     authorize @genus
   end
 
-  # POST /admin/genera
+  # POST /genera
   def create
     @genus = Genus.new(genus_params)
     authorize @genus
-
     if @genus.save
       redirect_to admin_genera_path(@genus), notice: "Genus was successfully created."
     else
@@ -37,15 +29,14 @@ class Admin::GeneraController < Admin::ApplicationController
     end
   end
 
-  # GET /admin/genera/:id/edit
+  # GET /genera/1/edit
   def edit
-    @genus = authorize Genus.find(params[:id])
+    authorize @genus
   end
 
-  # PATCH/PUT /admin/genera/:id
+  # PATCH/PUT /genera/1
   def update
-    @genus = authorize Genus.find(params[:id])
-
+    authorize @genus
     if @genus.update(genus_params)
       redirect_to admin_genera_path(@genus), notice: "Genus was successfully updated."
     else
@@ -53,17 +44,20 @@ class Admin::GeneraController < Admin::ApplicationController
     end
   end
 
-  # DELETE /admin/genera/:id
+  # DELETE /genera/1
   def destroy
-    @genus = authorize Genus.find(params[:id])
+    authorize @genus
     @genus.destroy!
     redirect_to admin_genera_index_path, notice: "Genus was successfully destroyed."
   end
 
   private
 
-  # Strong parameters
+  def set_genus
+    @genus = Genus.find(params.expect(:id))
+  end
+
   def genus_params
-    params.require(:genus).permit(:mblist_id, :taxon_name)
+    params.expect(genus: [:mblist_id, :taxon_name])
   end
 end

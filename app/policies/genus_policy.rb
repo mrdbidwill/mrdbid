@@ -1,5 +1,5 @@
-# app/policies/image_mushroom_policy.rb
-class ImageMushroomPolicy < ApplicationPolicy
+# app/policies/camera_make_policy.rb
+class GenusPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       user&.admin? ? scope.all : scope.none
