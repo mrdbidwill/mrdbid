@@ -1,4 +1,10 @@
-<div>
-  <h1 class="font-bold text-4xl">PlantAssociations#edit</h1>
-  <p>Find me in app/views/plant_associations/edit.html.erb</p>
+<% content_for :title, "Editing camera make" %>
+
+<div class="md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">Editing camera make</h1>
+
+  <%= render "form", plant: @plant %>
+
+  <%= link_to "Show this camera make", admin_plant_path(@plant), class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to camera makes", admin_plants_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

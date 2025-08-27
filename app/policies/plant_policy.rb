@@ -1,13 +1,12 @@
 class PlantPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      user&.admin? ? scope.all : scope.none
     end
   end
 
-  def index?; true; end
-  def show?; true; end
-
+  def index?;   user&.admin?; end
+  def show?;    user&.admin?; end
   def new?;     user&.admin?; end
   def create?;  user&.admin?; end
   def edit?;    user&.admin?; end
