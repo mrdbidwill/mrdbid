@@ -11,8 +11,13 @@ class MrCharactersController < ApplicationController
 
   # GET /mr_characters or /mr_characters.json
   def index
-    # Filter by lookup_type_id and part_id if provided
-    @mr_characters = MrCharacter.includes(:part, :lookup_type, :display_option, :source_data)
+    authorize MrCharacter
+    @mr_characters = policy_scope(
+      MrCharacter
+        .includes(:part, :lookup_type, :display_option, :source_data)
+        .order(:name)
+    )
+  end
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
     @mr_characters = @mr_characters.page(params[:page]).per(20)
@@ -25,11 +30,18 @@ class MrCharactersController < ApplicationController
                    .pluck(:name, :id)
     else
                Part.pluck(:name, :id) # Show all parts if no lookup_type_id is selected
-             end
-  end
+    end
+end
 
-  # GET /mr_characters/1 or /mr_characters/1.json
-  def show; end
+# GET /mr_characters/1 or /mr_characters/1.json
+def show
+  @mr_character = MrCharacter
+                    .includes(:part, :lookup_type, :display_option, :source_data)
+                    .find(params.expect(:id))
+  authorize @mr_character
+end
+
+
 
   # GET /mr_characters/new
   def new
@@ -38,7 +50,7 @@ class MrCharactersController < ApplicationController
 
   # GET /mr_characters/1/edit
   def edit
-
+    authorize @mr_character
   end
 
   # POST /mr_characters or /mr_characters.json
@@ -58,15 +70,7 @@ class MrCharactersController < ApplicationController
 
   # PATCH/PUT /mr_characters/1 or /mr_characters/1.json
   def update
-    respond_to do |format|
-      if @mr_character.update(mr_character_params)
-        format.html { redirect_to @mr_character, notice: 'Mushroom Character was successfully updated.' }
-        format.json { render :show, status: :ok, location: @mr_character }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @mr_character.errors, status: :unprocessable_entity }
-      end
-    end
+    authorize @mr_character
   end
 
   # DELETE /mr_characters/1 or /mr_characters/1.json
@@ -92,4 +96,3 @@ class MrCharactersController < ApplicationController
   def mr_character_params
     params.require(:mr_character).permit(:name, :part_id, :lookup_type_id, :display_option_id,  :source_data_id)
   end
-end

@@ -1,5 +1,5 @@
 class CountryPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       # Admins can see all; others can see all (or restrict if needed)
       scope.all

@@ -1,6 +1,6 @@
 # app/policies/image_mushroom_policy.rb
 class ImageMushroomPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end

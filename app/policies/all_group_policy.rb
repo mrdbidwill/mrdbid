@@ -1,5 +1,5 @@
 class AllGroupPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       # Return only user-owned records
       scope.where(user_id: user.id)

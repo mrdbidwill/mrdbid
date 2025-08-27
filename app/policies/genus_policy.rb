@@ -1,6 +1,6 @@
 # app/policies/camera_make_policy.rb
 class GenusPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end

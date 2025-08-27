@@ -12,6 +12,10 @@ class MrCharacter < ApplicationRecord
   has_many :mushrooms, through: :mr_character_mushrooms
 
   validates :name, presence: true
+  validates :part_id, presence: true
+  validates :lookup_type_id, presence: true
+  validates :display_option_id, presence: true
+  validates :source_data_id, presence: true
 
   def versions
     @mr_character = MrCharacter.find(params[:id])

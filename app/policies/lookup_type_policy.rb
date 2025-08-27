@@ -1,6 +1,6 @@
 # app/policies/lookup_type_policy.rb
 class LookupTypePolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end

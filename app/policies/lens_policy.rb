@@ -1,6 +1,6 @@
 # app/policies/lens_policy.rb
 class LensPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end

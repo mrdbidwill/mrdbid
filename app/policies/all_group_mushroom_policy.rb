@@ -1,5 +1,5 @@
 class AllGroupMushroomPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       # Allow users to see only their own groups
       scope.where(user_id: user.id)

@@ -1,6 +1,6 @@
 # app/policies/species_policy.rb
 class SpeciesPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end

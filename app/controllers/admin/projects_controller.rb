@@ -1,20 +1,23 @@
 # app/controllers/admin/projects_controller.rb
 class Admin::ProjectsController < Admin::ApplicationController
-include Pundit::Authorization
+  before_action :set_project, only: %i[show edit update destroy]
 
   # GET /projects or /projects.json
   def index
+    authorize Project
     @projects = policy_scope(Project)
   end
 
   # GET /projects/1 or /projects/1.json
   def show
+    authorize @project
     @project = authorize current_user.projects.find(params[:id])
   end
 
 
   # GET /projects/new
   def new
+    authorize Project
     @project = Project.new
     # Allow access to new action for signed-in users without ownership requirement
     authorize @project, :new?
@@ -22,6 +25,7 @@ include Pundit::Authorization
 
   # GET /projects/1/edit
   def edit
+    authorize @project
     @project = authorize current_user.projects.find(params[:id])
   end
 
@@ -39,6 +43,7 @@ include Pundit::Authorization
 
   # PATCH/PUT /projects/1
   def update
+    authorize @project
     @project = authorize current_user.projects.find(params[:id])
     if @project.update(project_params)
       redirect_to @project, notice: "Project was successfully updated."
@@ -50,6 +55,7 @@ include Pundit::Authorization
 
   # DELETE /projects/1
   def destroy
+    authorize @project
     @project = authorize current_user.projects.find(params[:id])
     @project.destroy!
     redirect_to admin_projects_path, notice: "Project was successfully destroyed."
@@ -57,6 +63,11 @@ include Pundit::Authorization
 
 
   private
+
+  def set_project
+    @project = Project.find(params.expect(:id))
+  end
+
   # Only allow a list of trusted parameters through.
   def project_params
     params.expect(project: [ :name, :description, :comments ])

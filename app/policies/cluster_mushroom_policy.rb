@@ -1,5 +1,5 @@
 class ClusterMushroomPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       scope.all
     end

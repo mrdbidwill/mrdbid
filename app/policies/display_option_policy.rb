@@ -1,5 +1,5 @@
 class DisplayOptionPolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
     end
   end

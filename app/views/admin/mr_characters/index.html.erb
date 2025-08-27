@@ -2,6 +2,7 @@
 
 <div><p>app/views/mr_characters/index.html.erb</p></div>
 
+
 <div class="w-full">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
@@ -26,6 +27,7 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Mushroom Characters</h1>
+    <%= link_to "Back to dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 text-gray-600 block font-medium" %>
     <%= link_to "New Mushroom Character", new_admin_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
@@ -36,7 +38,7 @@
           <%= render mr_character %>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
             <!-- Tailwind-styled Show button -->
-            <%= link_to "Show", admin_project_path(mr_character),  class: "w-full sm:w-auto  inline-flex items-center text-center rounded-md px-2.5 py-2.5 text-white bg-blue-600 hover:bg-blue-500 font-medium" %>
+            <%= link_to "Show", admin_mr_character_path(mr_character),  class: "w-full sm:w-auto  inline-flex items-center text-center rounded-md px-2.5 py-2.5 text-white bg-blue-600 hover:bg-blue-500 font-medium" %>
             <!-- Tailwind-styled Edit button -->
             <%= link_to "Edit", edit_admin_mr_character_path(mr_character), class: "w-full sm:w-auto inline-flex items-center text-center rounded-md px-2.5 py-2.5 text-white bg-blue-600 hover:bg-blue-500 font-medium" %>
             <!-- Tailwind-styled Destroy button -->

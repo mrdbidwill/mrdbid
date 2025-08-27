@@ -1,21 +1,43 @@
 # app/controllers/admin/mr_characters_controller.rb
 class Admin::MrCharactersController < Admin::ApplicationController
-  before_action :set_mr_character, only: [:edit, :update, :destroy]
+  before_action :set_mr_character, only: [:show, :edit, :update, :destroy]
 
   def index
-    @mr_characters = MrCharacter
-                       .includes(:source_data, :display_option, :part, :lookup_type)
-                       .page(params[:page])        # 👈 This is the key!
-                       .per(25)                    # Optional: specify items per page
-    @parts = Part.pluck(:name, :id)
+    authorize MrCharacter
+    @mr_characters = policy_scope(
+      MrCharacter
+        .includes(:part, :lookup_type, :display_option, :source_data)
+        .order(:name)
+    )
+    # Apply filters
+    @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
+    @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+    # Paginate (required for `paginate` helper)
+    @mr_characters = @mr_characters.page(params[:page]).per(20)
+
+    # Populate parts dropdown
+    @parts =
+      if params[:lookup_type_id].present?
+        Part.joins(:mr_characters)
+            .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
+            .distinct
+            .order(:name)
+            .pluck(:name, :id)
+      else
+        Part.order(:name).pluck(:name, :id)
+      end
   end
 
 
+
+
   def new
+    authorize MrCharacter
     @mr_character = MrCharacter.new
   end
 
   def create
+    authorize MrCharacter
     @mr_character = MrCharacter.new(mr_character_params)
     if @mr_character.save
       redirect_to admin_mr_characters_path, notice: "Character created successfully."
@@ -24,9 +46,20 @@ class Admin::MrCharactersController < Admin::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize MrCharacter
+  end
+
+  def show
+    @mr_character = MrCharacter
+                      .includes(:part, :lookup_type, :display_option, :source_data)
+                      .find(params.expect(:id))
+    authorize @mr_character
+  end
+
 
   def update
+    authorize MrCharacter
     if @mr_character.update(mr_character_params)
       redirect_to admin_mr_characters_path, notice: "Character updated successfully."
     else
@@ -35,6 +68,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def destroy
+    authorize MrCharacter
     @mr_character.destroy
     redirect_to admin_mr_characters_path, notice: "Character deleted successfully."
   end

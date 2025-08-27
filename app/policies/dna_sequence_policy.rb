@@ -1,6 +1,6 @@
 # app/policies/dna_sequence_policy.rb
 class DnaSequencePolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none
     end
