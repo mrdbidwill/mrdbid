@@ -1,26 +1,26 @@
-<div id="<%= dom_id source_datum %>" class="w-full sm:w-auto my-5 space-y-5">
+<div id="<%= dom_id source_data %>" class="w-full sm:w-auto my-5 space-y-5">
   <div>
     <strong class="block font-medium mb-1">Title:</strong>
-    <%= source_datum.title %>
+    <%= source_data.title %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Author:</strong>
-    <%= source_datum.author %>
+    <%= source_data.author %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Ref:</strong>
-    <%= source_datum.ref %>
+    <%= source_data.ref %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Item code:</strong>
-    <%= source_datum.item_code %>
+    <%= source_data.item_code %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Source data type:</strong>
-    <%= source_datum.source_data_type %>
+    <%= source_data.source_data_type&.name %>
   </div>
   <div>
     <strong class="block font-medium mb-1">comments:</strong>
-    <%= source_datum.comments %>
+    <%= source_data.comments %>
   </div>
 </div>

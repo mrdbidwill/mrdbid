@@ -1,7 +1,7 @@
 # This controller manages the pivot table mushroom_projects between projects and mushrooms
 # which allows a user to add a mushroom object to a project
 
-class Admin::ProjectMushroomsController < Admin::ApplicationController
+class ProjectMushroomsController < ApplicationController
 
   skip_before_action :authenticate_user!, raise: false
 
@@ -14,8 +14,8 @@ class Admin::ProjectMushroomsController < Admin::ApplicationController
   end
 
   def index
-    authorize ProjectMushroom
-    @mushroom_projects = policy_scope(ProjectMushroom)
+    authorize MushroomProject
+    @mushroom_projects = policy_scope(MushroomProject)
   end
 
   def show
@@ -25,7 +25,7 @@ class Admin::ProjectMushroomsController < Admin::ApplicationController
   def new
     authorize MushroomProject
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from URL params
-    @mushroom_project = ProjectMushroom.new
+    @mushroom_project = MushroomProject.new
     @projects = Project.all
   end
 
@@ -80,17 +80,17 @@ class Admin::ProjectMushroomsController < Admin::ApplicationController
 
   def destroy
     @mushroom_project.destroy
-    redirect_to mushroom_projects_path, notice: "Project mushroom was successfully destroyed."
+    redirect_to mushroom_projects_path, notice: "Mushroom Project was successfully destroyed."
   end
 
 
   private
   def set_and_authorize_mushroom_project
-    @mushroom_project = authorize ProjectMushroom.find(params[:id])
+    @mushroom_project = authorize MushroomProject.find(params[:id])
   end
 
   def authorize_new_mushroom_project
-    authorize ProjectMushroom
+    authorize MushroomProject
   end
 
   def mushroom_project_params

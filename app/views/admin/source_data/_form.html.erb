@@ -1,10 +1,10 @@
-<%= form_with(model: source_datum, class: "contents") do |form| %>
-  <% if source_datum.errors.any? %>
+<%= form_with(model: [:admin, source_data], class: "contents") do |form| %>
+  <% if source_data.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(source_datum.errors.count, "error") %> prohibited this source_datum from being saved:</h2>
+      <h2><%= pluralize(source_data.errors.count, "error") %> prohibited this source_datum from being saved:</h2>
 
       <ul class="list-disc ml-6">
-        <% source_datum.errors.each do |error| %>
+        <% source_data.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -13,32 +13,32 @@
 
   <div class="my-5">
     <%= form.label :title %>
-    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:title].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:title].any?}] %>
+    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:title].none?, "border-red-400 focus:outline-red-600": source_data.errors[:title].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :author %>
-    <%= form.text_field :author, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:author].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:author].any?}] %>
+    <%= form.text_field :author, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:author].none?, "border-red-400 focus:outline-red-600": source_data.errors[:author].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :ref %>
-    <%= form.text_field :ref, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:ref].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:ref].any?}] %>
+    <%= form.text_field :ref, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:ref].none?, "border-red-400 focus:outline-red-600": source_data.errors[:ref].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :item_code %>
-    <%= form.text_field :item_code, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:item_code].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:item_code].any?}] %>
+    <%= form.text_field :item_code, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:item_code].none?, "border-red-400 focus:outline-red-600": source_data.errors[:item_code].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :source_data_type %>
-    <%= form.number_field :source_data_type, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:source_data_type].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:source_data_type].any?}] %>
+    <%= form.number_field :source_data_type, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:source_data_type].none?, "border-red-400 focus:outline-red-600": source_data.errors[:source_data_type].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_datum.errors[:comments].none?, "border-red-400 focus:outline-red-600": source_datum.errors[:comments].any?}] %>
+    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data.errors[:comments].none?, "border-red-400 focus:outline-red-600": source_data.errors[:comments].any?}] %>
   </div>
 
   <div class="inline">
