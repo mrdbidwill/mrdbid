@@ -1,83 +1,63 @@
 class Admin::PartsController < Admin::ApplicationController
-  include Pundit::Authorization
+  before_action :set_part, only: %i[show edit update destroy]
 
-  # GET /parts or /parts.json
+  # GET /parts
   def index
-    @parts = policy_scope(Part)
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @parts }
-    end
+    authorize Part
+    @parts = policy_scope(Part.order(:name))
   end
 
-  # GET /parts/1 or /parts/1.json
+  # GET /parts/1
   def show
-    @part = authorize current_user.parts.find(params[:id])
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @parts }
-    end
+    authorize @part
   end
-
 
   # GET /parts/new
   def new
     @part = Part.new
-    # Allow access to new action for signed-in users without ownership requirement
-    authorize @part, :new?
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @parts }
-    end
+    authorize @part
   end
 
-  # GET /parts/1/edit
-  def edit
-    @part = authorize current_user.parts.find(params[:id])
-    respond_to do |format|
-
-      format.html
-      format.json { render json: @parts }
-    end
-  end
-
-
-  # POST /parts or /parts.json
+  # POST /parts
   def create
-    @part = current_user.parts.build(part_params)
+    @part = Part.new(part_params)
     authorize @part
     if @part.save
-      redirect_to part_url(@part), notice: "Part was successfully created."
+      redirect_to admin_part_path(@part), notice: "Part was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /parts/1 or /parts/1.json
+  # GET /parts/1/edit
+  def edit
+    authorize @part
+  end
+
+  # PATCH/PUT /parts/1
   def update
-    @part = authorize current_user.parts.find(params[:id])
+    authorize @part
     if @part.update(part_params)
-      redirect_to @part, notice: "Part was successfully updated."
+      redirect_to admin_part_path(@part), notice: "Part was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
-
-  # DELETE /parts/1 or /parts/1.json
+  # DELETE /parts/1
   def destroy
-    @part = authorize current_user.parts.find(params[:id])
+    authorize @part
     @part.destroy!
-    redirect_to parts_path, notice: "Part was successfully destroyed."
+    redirect_to admin_parts_path, notice: "Part was successfully destroyed."
   end
 
-
   private
-  # Only allow a list of trusted parameters through.
+
+  def set_part
+    @part = Part.find(params.expect(:id))
+  end
+
   def part_params
-    params.expect(part: [ :name, :description, :comments ])
+    params.expect(part: [:name, :description, :comments, :source])
   end
 end

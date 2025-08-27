@@ -1,10 +1,10 @@
-<%= form_with(model: cluster, class: "contents") do |form| %>
-  <% if cluster.errors.any? %>
+<%= form_with(model: [:admin, part], class: "contents") do |form| %>
+  <% if part.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(cluster.errors.count, "error") %> prohibited this cluster from being saved:</h2>
+      <h2><%= pluralize(part.errors.count, "error") %> prohibited this part from being saved:</h2>
 
       <ul class="list-disc ml-6">
-        <% cluster.errors.each do |error| %>
+        <% part.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -13,17 +13,17 @@
 
   <div class="my-5">
     <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:name].none?, "border-red-400 focus:outline-red-600": cluster.errors[:name].any?}] %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": part.errors[:name].none?, "border-red-400 focus:outline-red-600": part.errors[:name].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:description].none?, "border-red-400 focus:outline-red-600": cluster.errors[:description].any?}] %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": part.errors[:description].none?, "border-red-400 focus:outline-red-600": part.errors[:description].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": cluster.errors[:comments].none?, "border-red-400 focus:outline-red-600": cluster.errors[:comments].any?}] %>
+    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": part.errors[:comments].none?, "border-red-400 focus:outline-red-600": part.errors[:comments].any?}] %>
   </div>
 
   <div class="inline">
