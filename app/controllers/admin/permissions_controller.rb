@@ -1,70 +1,63 @@
-class PermissionsController < ApplicationController
-  before_action :set_permission, only: %i[ show edit update destroy ]
+class Admin::PermissionsController < Admin::ApplicationController
+  before_action :set_permission, only: %i[show edit update destroy]
 
-  # GET /permissions or /permissions.json
+  # GET /permissions
   def index
-    @permissions = Permission.all
+    authorize Permission
+    @permissions = policy_scope(Permission.order(:name))
   end
 
-  # GET /permissions/1 or /permissions/1.json
+  # GET /permissions/1
   def show
+    authorize @permission
   end
 
   # GET /permissions/new
   def new
     @permission = Permission.new
+    authorize @permission
+  end
+
+  # POST /permissions
+  def create
+    @permission = Permission.new(permission_params)
+    authorize @permission
+    if @permission.save
+      redirect_to admin_permission_path(@permission), notice: "Camera make was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   # GET /permissions/1/edit
   def edit
+    authorize @permission
   end
 
-  # POST /permissions or /permissions.json
-  def create
-    @permission = Permission.new(permission_params)
-
-    respond_to do |format|
-      if @permission.save
-        format.html { redirect_to @permission, notice: "Permission was successfully created." }
-        format.json { render :show, status: :created, location: @permission }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @permission.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /permissions/1 or /permissions/1.json
+  # PATCH/PUT /permissions/1
   def update
-    respond_to do |format|
-      if @permission.update(permission_params)
-        format.html { redirect_to @permission, notice: "Permission was successfully updated." }
-        format.json { render :show, status: :ok, location: @permission }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @permission.errors, status: :unprocessable_entity }
-      end
+    authorize @permission
+    if @permission.update(permission_params)
+      redirect_to admin_permission_path(@permission), notice: "Camera make was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /permissions/1 or /permissions/1.json
+  # DELETE /permissions/1
   def destroy
+    authorize @permission
     @permission.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to permissions_path, status: :see_other, notice: "Permission was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to admin_permissions_path, notice: "Camera make was successfully destroyed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permission
-      @permission = Permission.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def permission_params
-      params.expect(permission: [ :name, :description, :comments ])
-    end
+  def set_permission
+    @permission = Permission.find(params.expect(:id))
+  end
+
+  def permission_params
+    params.expect(permission: [:name, :description, :comments, :source])
+  end
 end
