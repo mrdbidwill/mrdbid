@@ -1,75 +1,71 @@
-class StatesController < ApplicationController
+class Admin::StatesController < Admin::ApplicationController
   before_action :set_state, only: %i[show edit update destroy]
 
-  # GET /states or /states.json
-  # GET /states or /states.json
+  # GET /states
+  # GET /states
   def index
-    @states = State.where(country_id: params[:country_id])
-    render partial: "states/select", locals: { states: @states }
+    authorize State
+    scope = policy_scope(State).includes(:country)
+    @states = params[:country_id].present? ? scope.where(country_id: params[:country_id]) : scope.all
+    if params[:country_id].present?
+      render partial: "admin/states/select", locals: { states: @states }
+    else
+      render :index
+    end
   end
 
 
-
-  # GET /states/1 or /states/1.json
+  # GET /states/1
   def show
+    authorize @state
   end
 
   # GET /states/new
   def new
     @state = State.new
+    authorize @state
+  end
+
+  # POST /states
+  def create
+    @state = State.new(state_params)
+    authorize @state
+    if @state.save
+      redirect_to admin_state_path(@state), notice: "State was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   # GET /states/1/edit
   def edit
+    authorize @state
   end
 
-  # POST /states or /states.json
-  def create
-    @state = State.new(state_params)
-
-    respond_to do |format|
-      if @state.save
-        format.html { redirect_to @state, notice: "State was successfully created." }
-        format.json { render :show, status: :created, location: @state }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /states/1 or /states/1.json
+  # PATCH/PUT /states/1
   def update
-    respond_to do |format|
-      if @state.update(state_params)
-        format.html { redirect_to @state, notice: "State was successfully updated." }
-        format.json { render :show, status: :ok, location: @state }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
-      end
+    authorize @state
+    if @state.update(state_params)
+      redirect_to admin_state_path(@state), notice: "State was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /states/1 or /states/1.json
+  # DELETE /states/1
   def destroy
+    authorize @state
     @state.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to states_path, status: :see_other, notice: "State was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to admin_states_path, notice: "State was successfully destroyed."
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_state
-    @state = State.find(params.expect(:id))
+    @state = State.includes(:country).find(params.expect(:id))
   end
 
-  # Only allow a list of trusted parameters through.
   def state_params
-    params.expect(state: [:name, :description, :comments, :source_data, :country_id])
+    params.expect(state: [:name, :description, :comments, :country_id])
   end
 end

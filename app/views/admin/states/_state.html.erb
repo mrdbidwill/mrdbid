@@ -12,11 +12,7 @@
     <%= state.comments %>
   </div>
   <div>
-    <strong class="block font-medium mb-1">Source:</strong>
-    <%= state.source_data %>
-  </div>
-  <div>
     <strong class="block font-medium mb-1">Country:</strong>
-    <%= state.country_id %>
+    <%= state.country&.name || state.country_id %>
   </div>
 </div>
