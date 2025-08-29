@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :mushroom_projects
   resources :mushroom_species
   resources :genus_mushrooms
+  resources :states, only: [:index] # main use is for states in the dropdown
 
   # Admin-specific routes
   namespace :admin do
@@ -48,7 +49,7 @@ Rails.application.routes.draw do
     resources :source_data_types
     resources :storage_locations
     resources :species
-    resources :states
+    resources :states, only: [:index]
     resources :trees
   end
 
