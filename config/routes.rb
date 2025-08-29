@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   resources :genus_mushrooms
   resources :states, only: [:index] # main use is for states in the dropdown
 
+  # Expose public ImageMushrooms index/show to match controller
+  resources :image_mushrooms
+
+
   # Admin-specific routes
   namespace :admin do
     root to: "dashboard#index"

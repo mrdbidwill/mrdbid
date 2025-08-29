@@ -3,7 +3,7 @@
 <%= form_with(model: @mushroom_project, url: mushroom_projects_path, local: true) do |form| %>
   <div>
     <%= form.label :project_id, "Select a Mushroom project" %>
-    <%= form.collection_select(:projectr_id, @mushroom_projects, :id, :name, { prompt: "Choose a Mushroom project" }) %>
+    <%= form.collection_select(:project_id, @projects, :id, :name, { prompt: "Choose a Mushroom project" }) %>
   </div>
 
   <%# Allow entering a mushroom_id when not nested %>

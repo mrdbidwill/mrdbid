@@ -18,50 +18,37 @@ class MushroomProjectsController < ApplicationController
     @mushroom_projects = policy_scope(MushroomProject)
   end
 
-  def show
-  end
 
   def new
     authorize MushroomProject
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from URL params
     @mushroom_project = MushroomProject.new
-    @mushroom_projects = MushroomProject.all
+    @projects = policy_scope(Project)
   end
 
   def create
-    # Accept mushroom_project_id and mushroom_id either nested or within mushroom_project params
-    mushroom_project_id = params.dig(:mushroom_project, :mushroom_project_id) || params[:mushroom_project_id]
+    # Accept project_id and mushroom_id either nested or at top level
+    project_id  = params.dig(:mushroom_project, :project_id)  || params[:project_id]
     mushroom_id = params.dig(:mushroom_project, :mushroom_id) || params[:mushroom_id]
 
-    @mushroom_project = MushroomProject.find_by(id: mushroom_project_id) || MushroomProject.first
-    @mushroom = Mushroom.find_by(id: mushroom_id) || Mushroom.first
+    @mushroom_project = MushroomProject.new(project_id: project_id, mushroom_id: mushroom_id)
 
-    # Ensure we create a new association that is valid and not a duplicate of an existing one
-    pair = [@mushroom_project, @mushroom]
-    if pair.any?(&:nil?)
-      # As a last resort, pick any valid pair of records that belong to the same user and are not already linked
-      @mushroom_project = MushroomProject.first
-      if @mushroom_project
-        @mushroom = Mushroom.where(user_id: @mushroom_project.user_id).where.not(id: @mushroom_project.mushrooms.select(:id)).first || Mushroom.first
-      end
-    else
-      # If the chosen pair already exists, try to find an alternative mushroom for the same user
-      if MushroomProject.exists?(mushroom_project: @mushroom_project, mushroom: @mushroom)
-        @mushroom = Mushroom.where(user_id: @mushroom_project.user_id).where.not(id: @mushroom_project.mushrooms.select(:id)).first || @mushroom
-      end
+    # Instance-level authorization (policy owner? uses associations)
+    authorize @mushroom_project
+
+    # Prevent duplicate join rows
+    if MushroomProject.exists?(project_id: @mushroom_project.project_id, mushroom_id: @mushroom_project.mushroom_id)
+      redirect_to mushroom_projects_path, alert: "This mushroom is already in the selected project."
+      return
     end
-
-    @mushroom_project = MushroomProject.new(mushroom: @mushroom, mushroom_project: @mushroom_project)
 
     if @mushroom_project.save
       redirect_to mushroom_project_path(@mushroom_project), notice: "Mushroom project was successfully created."
     else
-      @mushroom_projects = MushroomProject.all
+      @projects = policy_scope(Project)
       render :new, status: :unprocessable_entity
     end
   end
-
-
 
   def edit
   end
@@ -81,20 +68,17 @@ class MushroomProjectsController < ApplicationController
     redirect_to mushroom_projects_path, notice: "Mushroom project was successfully destroyed."
   end
 
-
   private
   def set_and_authorize_mushroom_project
     @mushroom_project = authorize MushroomProject.find(params[:id])
   end
 
   def authorize_new_mushroom_project
-    authorize MushroomProject
+    # When authorizing the class for new/create, call :new? explicitly to avoid hitting create? on a class record.
+    authorize MushroomProject, :new?
   end
 
   def mushroom_project_params
-    params.require(:mushroom_project).permit(:mushroom_project_id, :mushroom_id)
+    params.require(:mushroom_project).permit(:project_id, :mushroom_id)
   end
-
 end
-
-

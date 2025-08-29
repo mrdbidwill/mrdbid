@@ -2,6 +2,8 @@
 class ProjectsController < ApplicationController
   include Pundit::Authorization
 
+  before_action :set_project, only: %i[ show edit update destroy ]
+
   # GET /projects
   def index
     @projects = policy_scope(Project)
@@ -10,7 +12,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    @project = authorize current_user.projects.find(params[:id])
+    authorize @project
   end
 
 
@@ -24,7 +26,6 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     authorize @project
-    @project = authorize current_user.projects.find(params[:id])
   end
 
 
@@ -42,7 +43,6 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     authorize @project
-    @project = authorize current_user.projects.find(params[:id])
     if @project.update(project_params)
       redirect_to @project, notice: "Project was successfully updated."
     else
@@ -54,15 +54,21 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     authorize @project
-    @project = authorize current_user.projects.find(params[:id])
     @project.destroy!
     redirect_to projects_path, notice: "Project was successfully destroyed."
   end
 
 
+
   private
+
+  def set_project
+    @project = current_user.projects.find(params[:id])
+  end
+
   # Only allow a list of trusted parameters through.
   def project_params
     params.expect(project: [ :name, :description, :comments ])
   end
-end
+  end
+
