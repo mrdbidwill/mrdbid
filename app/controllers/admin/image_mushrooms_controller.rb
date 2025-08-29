@@ -4,33 +4,27 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
 
   def index
     authorize ImageMushroom
-    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part, :image_name, :image_width, :image_height, :camera, :lens, :exposure, :aperture, :iso).order(:image_name))
+    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part, :camera).order(:image_name))
   end
 
   def show
     authorize @image_mushroom
   end
 
-  def new
-    authorize ImageMushroom
-    @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from params
-    @image_mushroom = ImageMushroom.new
-    @parts = Part.all.order(:name)
-    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
-  end
-
   def create
     # Build from top-level params; do not rely on current_user or nesting
     @image_mushroom = ImageMushroom.new(image_mushroom_params)
     authorize @image_mushroom
-    # Accept optional mushroom_id provided outside nested route
-    @image_mushroom.mushroom ||= Mushroom.find_by(id: params[:mushroom_id]) if params[:mushroom_id].present?
+    # Accept optional mushroom_id provided outside nested route without touching the association
+    if params[:mushroom_id].present? && @image_mushroom.mushroom_id.blank?
+      @image_mushroom.mushroom_id = params[:mushroom_id]
+    end
 
     if @image_mushroom.save
-      redirect_to @image_mushroom, notice: "Image successfully uploaded."
+      redirect_to [:admin, @image_mushroom], notice: "Image successfully uploaded."
     else
-      # Reload data for form rendering
-      @mushroom = @image_mushroom.mushroom
+      # Reload data for form rendering without touching associations
+      @mushroom = Mushroom.find_by(id: @image_mushroom.mushroom_id)
       @parts = Part.all.order(:name)
       @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
@@ -48,25 +42,23 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
     authorize @image_mushroom
     begin
       if @image_mushroom.update(image_mushroom_params)
-        redirect_to @image_mushroom, notice: 'Image Mushroom was successfully updated.'
+        redirect_to [:admin, @image_mushroom], notice: 'Image Mushroom was successfully updated.'
       else
-        # Instead of rendering edit (which tests don't expect), just redirect back to show
-        redirect_to @image_mushroom, alert: 'Changes could not be applied.'
+        redirect_to [:admin, @image_mushroom], alert: 'Changes could not be applied.'
       end
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
-      redirect_to @image_mushroom, alert: 'Invalid change ignored.'
+      redirect_to [:admin, @image_mushroom], alert: 'Invalid change ignored.'
     end
   end
 
   def destroy
     authorize @image_mushroom
     @image_mushroom.destroy
-    redirect_to image_mushrooms_url, notice: 'Image Mushroom was successfully deleted.'
+    redirect_to admin_image_mushrooms_url, notice: 'Image Mushroom was successfully deleted.'
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
     @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera).find(params[:id])

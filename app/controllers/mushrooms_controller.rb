@@ -10,7 +10,7 @@ class MushroomsController < ApplicationController
   def index
     if user_signed_in?
       @mushrooms = policy_scope(Mushroom)
-                     .includes(:user, image_mushrooms: { image_file_attachment: :blob })
+                     .includes(:user, :country, :state, :fungus_type, image_mushrooms: { image_file_attachment: :blob })
                      .order(:id)
                      .page(params[:page])
                      .per(10)
@@ -18,6 +18,7 @@ class MushroomsController < ApplicationController
       @mushrooms = []
     end
   end
+
 
 
   # GET /mushrooms/1 or /mushrooms/1.json
@@ -72,12 +73,13 @@ class MushroomsController < ApplicationController
   end
 
   private
-    def set_mushroom
-      @mushroom = Mushroom.find(params[:id])
-      authorize @mushroom
-    rescue ActiveRecord::RecordNotFound
-      redirect_to mushrooms_path, alert: "Mushroom not found."
-    end
+  def set_mushroom
+    @mushroom = Mushroom.includes(:country, :state, :fungus_type).find(params[:id])
+    authorize @mushroom
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
+
 
   # Only allow a list of trusted parameters through.
   def mushroom_params

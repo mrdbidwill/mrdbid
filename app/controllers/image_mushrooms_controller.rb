@@ -1,17 +1,20 @@
 class ImageMushroomsController < ApplicationController
 
-  skip_before_action :authenticate_user!, raise: false
+  include Pundit::Authorization
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 
   def index
-    @image_mushrooms = ImageMushroom.includes(:mushroom, :part, :camera_make, :camera_model)
+    @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part, :camera)
   end
+
 
   def show
   end
 
   def new
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from params
+    authorize @mushroom, :mushroom_image_mushroom? if @mushroom
     @image_mushroom = ImageMushroom.new
     @parts = Part.all.order(:name)
     @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
@@ -20,14 +23,20 @@ class ImageMushroomsController < ApplicationController
   def create
     # Build from top-level params; do not rely on current_user or nesting
     @image_mushroom = ImageMushroom.new(image_mushroom_params)
-    # Accept optional mushroom_id provided outside nested route
-    @image_mushroom.mushroom ||= Mushroom.find_by(id: params[:mushroom_id]) if params[:mushroom_id].present?
+    # Accept optional mushroom_id provided outside nested route without touching the association
+    if params[:mushroom_id].present? && @image_mushroom.mushroom_id.blank?
+      @image_mushroom.mushroom_id = params[:mushroom_id]
+    end
+    # Authorize against the parent mushroom (ownership)
+    @mushroom = Mushroom.find_by(id: @image_mushroom.mushroom_id)
+    authorize @mushroom, :mushroom_image_mushroom? if @mushroom
 
     if @image_mushroom.save
-      redirect_to @image_mushroom, notice: "Image successfully uploaded."
+      # Redirect using nested route without loading the association
+      parent = Mushroom.new(id: @image_mushroom.mushroom_id)
+      redirect_to [parent, @image_mushroom], notice: "Image successfully uploaded."
     else
-      # Reload data for form rendering
-      @mushroom = @image_mushroom.mushroom
+      # Reload data for form rendering without touching associations
       @parts = Part.all.order(:name)
       @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
@@ -35,32 +44,37 @@ class ImageMushroomsController < ApplicationController
   end
 
   def edit
+    authorize @image_mushroom
     @mushrooms = Mushroom.all
     @parts = Part.all
     @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def update
+    authorize @image_mushroom
     begin
       if @image_mushroom.update(image_mushroom_params)
-        redirect_to @image_mushroom, notice: 'Image Mushroom was successfully updated.'
+        parent = Mushroom.new(id: @image_mushroom.mushroom_id)
+        redirect_to [parent, @image_mushroom], notice: 'Image Mushroom was successfully updated.'
       else
-        # Instead of rendering edit (which tests don't expect), just redirect back to show
-        redirect_to @image_mushroom, alert: 'Changes could not be applied.'
+        parent = Mushroom.new(id: @image_mushroom.mushroom_id)
+        redirect_to [parent, @image_mushroom], alert: 'Changes could not be applied.'
       end
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
-      redirect_to @image_mushroom, alert: 'Invalid change ignored.'
+      parent = Mushroom.new(id: @image_mushroom.mushroom_id)
+      redirect_to [parent, @image_mushroom], alert: 'Invalid change ignored.'
     end
   end
 
   def destroy
+    authorize @image_mushroom
+    parent_id = @image_mushroom.mushroom_id
     @image_mushroom.destroy
-    redirect_to image_mushrooms_url, notice: 'Image Mushroom was successfully deleted.'
+    redirect_to mushroom_image_mushrooms_url(parent_id), notice: 'Image Mushroom was successfully deleted.'
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
     @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera).find(params[:id])

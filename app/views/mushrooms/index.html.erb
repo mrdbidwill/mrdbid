@@ -16,44 +16,23 @@
 
     <% if @mushrooms&.any? %>
       <% @mushrooms.each do |mushroom| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-
+        <div class="flex flex-col gap-4 pb-5">
           <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
           <% if images.any? %>
-            <% images.each do |image_mushroom| %>
-              <%= image_tag image_mushroom.image_file.variant(resize_to_limit: [300, 200]).processed %>
-            <% end %>
+            <div class="w-full">
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                <% images.each do |image_mushroom| %>
+                  <div class="border rounded-md overflow-hidden">
+                    <%= image_tag image_mushroom.image_file.variant(resize_to_limit: [800, 600]).processed, class: "w-full h-auto block" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           <% else %>
-            <p>No images for this mushroom.</p>
+            <p class="text-sm text-gray-500">No images for this mushroom.</p>
           <% end %>
 
           <%= render mushroom %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-
-            <% if !defined?(policy) || policy(mushroom)&.mushroom_image_mushroom? %>
-              <%= link_to "Upload Image", new_mushroom_image_mushroom_path(mushroom), class: "btn btn-primary" %>
-            <% end %>
-
-            <% if !defined?(policy) || policy(mushroom)&.all_group_mushroom? %>
-              <%= link_to "Add to Group", new_all_group_mushroom_path(mushroom), class: "btn btn-primary" %>
-            <% end %>
-
-            <% if !defined?(policy) || policy(mushroom)&.mushroom_cluster? %>
-              <%= link_to "Add to Cluster", new_cluster_mushroom_path(mushroom), class: "btn btn-primary" %>
-            <% end %>
-
-            <% if !defined?(policy) || policy(mushroom)&.show? %>
-              <%= link_to "Show", mushroom, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <% end %>
-
-            <% if !defined?(policy) || policy(mushroom)&.edit? %>
-              <%= link_to "Edit", edit_mushroom_path(mushroom), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <% end %>
-
-            <% if user_signed_in? && (defined?(policy) ? policy(mushroom)&.destroy? : (current_user && mushroom.user == current_user)) %>
-              <%= button_to "Destroy", mushroom, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-            <% end %>
-          </div>
         </div>
       <% end %>
     <% else %>

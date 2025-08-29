@@ -11,8 +11,15 @@
         <th class="border px-4 py-2">Image Name</th>
         <th class="border px-4 py-2">Mushroom</th>
         <th class="border px-4 py-2">Part</th>
-        <th class="border px-4 py-2">Dimensions</th>
+        <th class="border px-4 py-2">Image Width</th>
+        <th class="border px-4 py-2">Image Height</th>
         <th class="border px-4 py-2">Camera</th>
+        <th class="border px-4 py-2">Lens</th>
+        <th class="border px-4 py-2">Exposure</th>
+        <th class="border px-4 py-2">Aperture</th>
+        <th class="border px-4 py-2">ISO</th>
+        <th class="border px-4 py-2">Created</th>
+        <th class="border px-4 py-2">Updated</th>
         <th class="border px-4 py-2">Actions</th>
       </tr>
     </thead>
@@ -23,8 +30,15 @@
           <td class="border px-4 py-2"><%= image_mushroom.image_name %></td>
           <td class="border px-4 py-2"><%= image_mushroom.mushroom&.name || "No Mushroom" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.part&.name || "No Part" %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.dimensions || "No Dimensions" %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.image_height || "No Image Height" %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.image_width || "No Image Width" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.camera&.name || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.lens&.name || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.exposure || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.aperture || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.iso || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.created_at %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.updated_at %></td>
           <td class="border px-4 py-2">
             <%= link_to 'Show', admin_image_mushroom_path(image_mushroom), class: 'text-blue-500' %>
             <%= link_to 'Edit', edit_admin_image_mushroom_path(image_mushroom), class: 'text-yellow-500' %>

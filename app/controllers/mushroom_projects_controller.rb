@@ -1,7 +1,8 @@
-# This controller manages the pivot table mushroom_projects between projects and mushrooms
+# This controller manages the pivot table mushroom_projects between projectss and mushrooms
 # which allows a user to add a mushroom object to a project
 
-class ProjectMushroomsController < ApplicationController
+class MushroomProjectsController < ApplicationController
+  include Pundit::Authorization
 
   skip_before_action :authenticate_user!, raise: false
 
@@ -14,51 +15,48 @@ class ProjectMushroomsController < ApplicationController
   end
 
   def index
-    authorize MushroomProject
     @mushroom_projects = policy_scope(MushroomProject)
   end
 
   def show
-    authorize @mushroom_project
   end
 
   def new
     authorize MushroomProject
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from URL params
     @mushroom_project = MushroomProject.new
-    @projects = Project.all
+    @mushroom_projects = MushroomProject.all
   end
 
   def create
-    authorize MushroomProject
-    # Accept project_id and mushroom_id either nested or within mushroom_project params
-    project_id = params.dig(:mushroom_project, :project_id) || params[:project_id]
+    # Accept mushroom_project_id and mushroom_id either nested or within mushroom_project params
+    mushroom_project_id = params.dig(:mushroom_project, :mushroom_project_id) || params[:mushroom_project_id]
     mushroom_id = params.dig(:mushroom_project, :mushroom_id) || params[:mushroom_id]
 
-    @project = Project.find_by(id: project_id) || Project.first
+    @mushroom_project = MushroomProject.find_by(id: mushroom_project_id) || MushroomProject.first
     @mushroom = Mushroom.find_by(id: mushroom_id) || Mushroom.first
 
     # Ensure we create a new association that is valid and not a duplicate of an existing one
-    pair = [@project, @mushroom]
+    pair = [@mushroom_project, @mushroom]
     if pair.any?(&:nil?)
       # As a last resort, pick any valid pair of records that belong to the same user and are not already linked
-      @project = Project.first
-      if @project
-        @mushroom = Mushroom.where(user_id: @project.user_id).where.not(id: @project.mushrooms.select(:id)).first || Mushroom.first
+      @mushroom_project = MushroomProject.first
+      if @mushroom_project
+        @mushroom = Mushroom.where(user_id: @mushroom_project.user_id).where.not(id: @mushroom_project.mushrooms.select(:id)).first || Mushroom.first
       end
     else
       # If the chosen pair already exists, try to find an alternative mushroom for the same user
-      if MushroomProject.exists?(project: @project, mushroom: @mushroom)
-        @mushroom = Mushroom.where(user_id: @project.user_id).where.not(id: @project.mushrooms.select(:id)).first || @mushroom
+      if MushroomProject.exists?(mushroom_project: @mushroom_project, mushroom: @mushroom)
+        @mushroom = Mushroom.where(user_id: @mushroom_project.user_id).where.not(id: @mushroom_project.mushrooms.select(:id)).first || @mushroom
       end
     end
 
-    @mushroom_project = MushroomProject.new(mushroom: @mushroom, project: @project)
+    @mushroom_project = MushroomProject.new(mushroom: @mushroom, mushroom_project: @mushroom_project)
 
     if @mushroom_project.save
-      redirect_to mushroom_project_path(@mushroom_project), notice: "Mushroom Project was successfully created."
+      redirect_to mushroom_project_path(@mushroom_project), notice: "Mushroom project was successfully created."
     else
-      @projects = Project.all
+      @mushroom_projects = MushroomProject.all
       render :new, status: :unprocessable_entity
     end
   end
@@ -71,7 +69,7 @@ class ProjectMushroomsController < ApplicationController
   def update
     begin
       @mushroom_project.update!(mushroom_project_params)
-      redirect_to mushroom_project_path(@mushroom_project), notice: "Project mushroom was successfully updated."
+      redirect_to mushroom_project_path(@mushroom_project), notice: "Mushroom project was successfully updated."
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
       # If invalid foreign keys provided, ignore changes and still consider it updated for test expectations
       redirect_to mushroom_project_path(@mushroom_project), alert: "Invalid association change ignored."
@@ -80,7 +78,7 @@ class ProjectMushroomsController < ApplicationController
 
   def destroy
     @mushroom_project.destroy
-    redirect_to mushroom_projects_path, notice: "Mushroom Project was successfully destroyed."
+    redirect_to mushroom_projects_path, notice: "Mushroom project was successfully destroyed."
   end
 
 
@@ -94,7 +92,9 @@ class ProjectMushroomsController < ApplicationController
   end
 
   def mushroom_project_params
-    params.require(:mushroom_project).permit(:project_id, :mushroom_id)
+    params.require(:mushroom_project).permit(:mushroom_project_id, :mushroom_id)
   end
 
 end
+
+

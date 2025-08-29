@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :mushroom_plants
   resources :mushroom_projects
   resources :mushroom_species
+  resources :projects
   resources :genus_mushrooms
   resources :states, only: [:index] # main use is for states in the dropdown
 
@@ -43,7 +44,6 @@ Rails.application.routes.draw do
     resources :parts
     resources :permissions
     resources :plants
-    resources :projects
     resources :roles
     resources :source_data
     resources :source_data_types

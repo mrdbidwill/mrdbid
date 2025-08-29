@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
   belongs_to :user
-  has_many :project_mushrooms, dependent: :destroy
-  has_many :mushrooms, through: :project_mushrooms
+  has_many :mushroom_projects, dependent: :destroy
+  has_many :mushrooms, through: :mushroom_projects
 end
