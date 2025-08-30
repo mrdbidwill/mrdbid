@@ -54,16 +54,16 @@
           <% end %>
 
           <% if !defined?(policy) || policy(mushroom)&.all_group_mushroom? %>
-            <%= link_to "Add to Group", new_all_group_mushroom_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+            <%= link_to "Add to Group", new_all_group_mushroom_path(mushroom_id: mushroom.id), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
           <% end %>
 
           <% if !defined?(policy) || policy(mushroom)&.mushroom_cluster? %>
-            <%= link_to "Add to Cluster", new_cluster_mushroom_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+            <%= link_to "Add to Cluster", new_cluster_mushroom_path(mushroom_id: mushroom.id), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
           <% end %>
 
           <%# Mirror authorization style of groups/clusters for projects %>
           <% if !defined?(policy) || policy(mushroom)&.mushroom_project? %>
-            <%= link_to "Add to Project", new_mushroom_project_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+            <%= link_to "Add to Project", new_mushroom_project_path(mushroom_id: mushroom.id), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
           <% end %>
         </div>
 

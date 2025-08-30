@@ -17,12 +17,10 @@ class AllGroupMushroomsController < ApplicationController
     @mushroom = Mushroom.find(params[:mushroom_id])  if params[:mushroom_id]
     @all_group_mushroom = AllGroupMushroom.new
     @all_groups = AllGroup.all
-    # Avoid rendering template that may depend on authentication in test environment
-    respond_to do |format|
-      format.html { head :ok }
-      format.any  { head :ok }
-    end
+    # Render the normal template so users don't see a blank page
+    render :new
   end
+
   def create
     # Build from strong params without requiring current_user associations to support non-authenticated test usage
     @all_group_mushroom = AllGroupMushroom.new(all_group_mushroom_params)

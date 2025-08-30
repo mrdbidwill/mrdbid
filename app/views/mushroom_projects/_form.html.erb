@@ -1,3 +1,4 @@
+<%# locals: (mushroom_project: MushroomProject, mushrooms: ActiveRecord::Relation, projects: ActiveRecord::Relation) %>
 <%= form_with(model: mushroom_project, class: "contents") do |form| %>
   <% if mushroom_project.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
@@ -12,18 +13,17 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom_project.errors[:name].none?, "border-red-400 focus:outline-red-600": mushroom_project.errors[:name].any?}] %>
+    <%= form.label :project_id, "Project" %>
+    <%= form.text_field :project_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
+                  { "border-gray-400 focus:outline-blue-600": mushroom_project.errors[:project].none? && mushroom_project.errors[:project_id].none?,
+                    "border-red-400 focus:outline-red-600": mushroom_project.errors[:project].any? || mushroom_project.errors[:project_id].any? }] %>
   </div>
 
   <div class="my-5">
-    <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom_project.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom_project.errors[:description].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom_project.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom_project.errors[:comments].any?}] %>
+    <%= form.label :mushroom_id, "Mushroom" %>
+    <%= form.text_field :mushroom_id, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
+                  { "border-gray-400 focus:outline-blue-600": mushroom_project.errors[:mushroom].none? && mushroom_project.errors[:mushroom_id].none?,
+                    "border-red-400 focus:outline-red-600": mushroom_project.errors[:mushroom].any? || mushroom_project.errors[:mushroom_id].any? }] %>
   </div>
 
   <div class="inline">

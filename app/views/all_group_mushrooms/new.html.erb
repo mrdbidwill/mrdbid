@@ -1,10 +1,10 @@
-<h1>Add <%= @mushroom.name %> to a Group</h1>
+<h1 class="text-xl font-semibold mb-4">New Group Mushroom</h1>
 
-<%= form_with(model: @all_group_mushroom, url: mushroom_all_group_mushrooms_path(@mushroom), local: true) do |form| %>
-  <div>
-    <%= form.label :all_group_id, "Select a Group" %>
-    <%= form.collection_select(:all_group_id, @all_groups, :id, :name, { prompt: "Choose a Group" }) %>
-  </div>
+<%= render "form",
+           all_group_mushroom: @all_group_mushroom,
+           all_groups: (@all_groups || []),
+           mushrooms: (@mushrooms || []) %>
 
-  <%= form.submit "Add to Group", class: "btn btn-primary" %>
-<% end %>
+<div class="mt-4">
+  <%= link_to "Back", all_group_mushrooms_path, class: "text-blue-600 hover:underline" %>
+</div>

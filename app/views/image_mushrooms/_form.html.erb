@@ -1,3 +1,5 @@
+<%# locals: (image_mushroom: ImageMushroom, mushrooms: ActiveRecord::Relation, parts: ActiveRecord::Relation, cameras: ActiveRecord::Relation) %>
+
 <%= form_with(model: image_mushroom, local: true, class: "contents") do |form| %>
   <% if image_mushroom.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">

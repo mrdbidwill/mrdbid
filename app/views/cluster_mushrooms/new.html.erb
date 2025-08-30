@@ -1,16 +1,10 @@
-<h1>Add Mushroom to a Cluster</h1>
+<h1 class="text-xl font-semibold mb-4">New Cluster Mushroom</h1>
 
-<%= form_with(model: @cluster_mushroom, url: cluster_mushrooms_path, local: true) do |form| %>
-  <div>
-    <%= form.label :cluster_id, "Select a Cluster" %>
-    <%= form.collection_select(:cluster_id, @clusters, :id, :name, { prompt: "Choose a Cluster" }) %>
-  </div>
+<%= render "form",
+           cluster_mushroom: @cluster_mushroom,
+           clusters: (@clusters || []),
+           mushrooms: (@mushrooms || []) %>
 
-  <%# Allow entering a mushroom_id when not nested %>
-  <div>
-    <%= form.label :mushroom_id, "Mushroom ID" %>
-    <%= form.number_field :mushroom_id %>
-  </div>
-
-  <%= form.submit "Add to Cluster", class: "btn btn-primary" %>
-<% end %>
+<div class="mt-4">
+  <%= link_to "Back", cluster_mushrooms_path, class: "text-blue-600 hover:underline" %>
+</div>
