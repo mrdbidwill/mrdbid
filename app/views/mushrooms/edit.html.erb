@@ -46,7 +46,8 @@
   <!-- Not yet entered -->
   <% all_chars = MrCharacter.includes(:part, :display_option).order('parts.name ASC, mr_characters.name ASC') %>
   <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
-  <% missing_chars = all_chars.reject { |c| entered_ids.include?(c.id) } %>
+  <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
+  <% missing_chars = all_chars.reject { |c| entered_ids.include?(c.id) || color_chars.include?(c) } %>
   <% missing_grouped = missing_chars.group_by { |c| c.part&.name || "Other" } %>
 
   <div class="mt-8">
@@ -59,16 +60,12 @@
             <% chars.each do |c| %>
               <div class="flex items-center justify-between border rounded p-2">
                 <div class="text-sm text-gray-700"><%= c.name %></div>
-                <% if c.display_option_id == 6 %>
-                  <span class="text-xs text-gray-500">Color below</span>
-                <% else %>
-                  <!-- Placeholder for non-color add flows (e.g., select/text) -->
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, class: "ml-2" do |f| %>
-                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                    <%= hidden_field_tag :mr_character_id, c.id %>
-                    <%= text_field_tag :character_value, nil, placeholder: "Value", class: "border rounded px-2 py-1 text-sm" %>
-                    <%= f.submit "Add", class: "ml-2 rounded px-2 py-1 text-sm bg-gray-100 hover:bg-gray-50" %>
-                  <% end %>
+                <%# // color-type characters are excluded from this list %>
+                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, class: "ml-2" do |f| %>
+                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                  <%= hidden_field_tag :mr_character_id, c.id %>
+                  <%= text_field_tag :character_value, nil, placeholder: "Value", class: "border rounded px-2 py-1 text-sm" %>
+                  <%= f.submit "Add", class: "ml-2 rounded px-2 py-1 text-sm bg-gray-100 hover:bg-gray-50" %>
                 <% end %>
               </div>
             <% end %>
@@ -81,7 +78,8 @@
   </div>
 
   <!-- Color picker area -->
-  <% color_chars = all_chars.select { |c| c.display_option_id == 6 } %>
+  <%# // keep color_chars in sync with the exclusion above %>
+  <%# // color_chars already computed above %>
   <div class="mt-10">
     <h2 class="text-2xl font-semibold mb-3">Color characters</h2>
     <div data-controller="color-picker" data-color-picker-mushroom-id-value="<%= @mushroom.id %>">
