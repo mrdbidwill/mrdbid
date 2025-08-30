@@ -6,20 +6,23 @@ class MushroomsController < ApplicationController
   before_action :set_mushroom, only: %i[show edit update destroy]
   before_action :authorize_mushroom, except: %i[index new create]
 
-  # GET /mushrooms or /mushrooms.json
+  # GET /mushrooms
   def index
     if user_signed_in?
       @mushrooms = policy_scope(Mushroom)
                      .includes(:user, :country, :state, :fungus_type, image_mushrooms: { image_file_attachment: :blob })
-                     .order(:id)
+                     .left_joins(:fungus_type)
+                     .order(
+                       Arel.sql("fungus_types.name IS NULL ASC"), # emulate NULLS LAST on MySQL
+                       FungusType.arel_table[:name].asc,
+                       Mushroom.arel_table[:name].asc
+                     )
                      .page(params[:page])
                      .per(10)
     else
       @mushrooms = []
     end
   end
-
-
 
   # GET /mushrooms/1 or /mushrooms/1.json
   def show

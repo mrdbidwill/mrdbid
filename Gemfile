@@ -21,6 +21,7 @@ gem 'jbuilder'
 gem "image_processing", "~> 1.2"
 gem 'paper_trail', '~> 16.0' # or the latest version
 gem 'kaminari' # pagination
+gem 'ruby-vips', '~> 2.1'
 
 gem 'csv'
 
