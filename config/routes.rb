@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :all_group_mushrooms
   resources :clusters
   resources :cluster_mushrooms
+  resources :mr_character_mushrooms, only: [:create]
   resources :mushroom_trees
   resources :mushroom_plants
   resources :mushroom_projects
