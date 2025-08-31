@@ -3,11 +3,12 @@ class MrCharacterMushroomsController < ApplicationController
   before_action :set_mushroom
 
   def create
-    @rc = MrCharacterMushroom.new(
+    # Upsert behavior: one value per mushroom+character, update if exists
+    @rc = MrCharacterMushroom.find_or_initialize_by(
       mushroom_id: @mushroom.id,
-      mr_character_id: params[:mr_character_id],
-      character_value: params[:character_value]
+      mr_character_id: params[:mr_character_id]
     )
+    @rc.character_value = params[:character_value]
     authorize @rc if defined?(policy)
 
     if @rc.save

@@ -1,0 +1,44 @@
+<%# locals: f:, character:, current_value: %>
+<% key = (character.display_option&.name&.downcase.presence) || character.display_option_id.to_s %>
+
+<% case key %>
+<% when "color", "6" %>
+  <span class="text-xs text-gray-500">Use color picker below</span>
+<% when "radio", "9" %>
+  <% options = LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id) %>
+  <% if options.blank? %>
+    <span class="text-xs text-gray-500">No options</span>
+  <% else %>
+    <div class="flex flex-col gap-1">
+      <% options.each do |label, value| %>
+        <% id = "#{character.id}-#{value}" %>
+        <label for="<%= id %>" class="inline-flex items-center gap-2">
+          <%= f.radio_button(:character_value, value, id: id, checked: current_value.to_s == value.to_s) %>
+          <span class="text-sm"><%= label.to_s %></span>
+        </label>
+      <% end %>
+    </div>
+  <% end %>
+<% when "drop-down", "10" %>
+  <% options = LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id) %>
+  <% if options.blank? %>
+    <span class="text-xs text-gray-500">No options</span>
+  <% else %>
+    <%= f.select(
+          :character_value,
+          options_for_select(options, current_value),
+          { include_blank: "Select..." },
+          class: "border rounded px-2 py-1 text-sm w-full max-w-xs"
+        ) %>
+  <% end %>
+<% when "text_box_number_mm", "text_box_number_um", "text_box_number", "2", "3", "4" %>
+  <%= f.number_field :character_value, step: "any", class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+<% when "text_box_string", "5" %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+<% when "taste", "7", "odor", "8" %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, placeholder: key %>
+<% when "state", "11", "country", "12" %>
+  <span class="text-xs text-gray-500">Handled in location inputs</span>
+<% else %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+<% end %>
