@@ -1,0 +1,24 @@
+<% content_for :title, "Admin · #{h(@article.title)}" %>
+<p> app/views/admin/articles/show.html.erb> </p>
+
+<div class="flex items-center justify-between mb-4">
+  <h1 class="font-bold text-2xl"><%= @article.title %></h1>
+  <div class="flex gap-2">
+    <%= link_to "Edit", edit_admin_article_path(@article), class: "rounded px-3 py-1.5 border text-sm" %>
+    <%= link_to "View public", article_path(@article), class: "rounded px-3 py-1.5 border text-sm", target: "_blank", rel: "noopener" %>
+  </div>
+</div>
+
+<div class="text-sm text-gray-500 mb-3">
+  <% if @article.subject.present? %><span class="mr-2">Subject: <%= @article.subject %></span><% end %>
+  <% if @article.published_at.present? %><span class="mr-2"><%= @article.published_at.to_date %></span><% end %>
+  <span>Status: <%= @article.published? ? "Published" : "Draft" %></span>
+</div>
+
+<div class="prose max-w-none">
+  <% if @article.body.to_s.strip.starts_with?("<") %>
+    <%= sanitize(@article.body, tags: %w[p br ul ol li h2 h3 h4 strong em a blockquote code pre img], attributes: %w[href src alt title class]) %>
+  <% else %>
+    <%= simple_format(@article.body) %>
+  <% end %>
+</div>

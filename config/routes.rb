@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   # Admin-specific routes
   namespace :admin do
     root to: "dashboard#index"
+    resources :articles
     resources :colors
     resources :countries
     resources :cameras

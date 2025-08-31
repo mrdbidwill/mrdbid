@@ -1,0 +1,38 @@
+<% content_for :title, "Admin · Articles" %>
+<p> app/views/admin/articles/index.html.erb> </p>
+
+<div class="w-full">
+  <div class="flex items-center justify-between">
+    <h1 class="font-bold text-2xl">Articles</h1>
+    <%= link_to "New Article", new_admin_article_path, class: "rounded px-3 py-1.5 bg-blue-600 text-white text-sm" %>
+  </div>
+
+  <div class="mt-4 space-y-3">
+    <% @articles.each do |a| %>
+      <div class="border rounded p-3 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div class="font-semibold"><%= link_to a.title, admin_article_path(a) %></div>
+            <div class="text-xs text-gray-500">
+              <span>Slug: <%= a.slug %></span>
+              <% if a.subject.present? %><span class="ml-2">Subject: <%= a.subject %></span><% end %>
+              <% if a.published_at.present? %><span class="ml-2"><%= a.published_at.to_date %></span><% end %>
+              <span class="ml-2"><%= a.published? ? "Published" : "Draft" %></span>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <%= link_to "Edit", edit_admin_article_path(a), class: "rounded px-2 py-1 text-sm border" %>
+            <%= button_to "Delete", admin_article_path(a), method: :delete, data: { turbo_confirm: "Delete this article?" }, class: "rounded px-2 py-1 text-sm bg-red-600 text-white" %>
+          </div>
+        </div>
+        <% if a.summary.present? %>
+          <p class="text-sm text-gray-700 mt-2"><%= truncate(a.summary, length: 200) %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <%= paginate @articles %>
+  </div>
+</div>

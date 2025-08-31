@@ -1,0 +1,54 @@
+<%= form_with model: [:admin, @article], html: { class: "space-y-4" } do |f| %>
+  <% if @article.errors.any? %>
+    <div class="border border-red-200 bg-red-50 text-red-700 rounded p-3">
+      <p class="font-semibold"><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</p>
+      <ul class="list-disc ml-6 text-sm">
+        <% @article.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, class: "block text-sm font-medium" %>
+    <%= f.text_field :title, class: "border rounded px-2 py-1 w-full" %>
+  </div>
+
+  <div>
+    <%= f.label :slug, "Slug (URL)", class: "block text-sm font-medium" %>
+    <%= f.text_field :slug, class: "border rounded px-2 py-1 w-full", placeholder: "e.g., why-colors" %>
+    <p class="text-xs text-gray-500 mt-1">If blank, it will be generated from the title.</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div>
+      <%= f.label :subject, class: "block text-sm font-medium" %>
+      <%= f.text_field :subject, class: "border rounded px-2 py-1 w-full" %>
+    </div>
+    <div>
+      <%= f.label :published_at, class: "block text-sm font-medium" %>
+      <%= f.datetime_field :published_at, class: "border rounded px-2 py-1 w-full" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :summary, class: "block text-sm font-medium" %>
+    <%= f.text_area :summary, rows: 3, class: "border rounded px-2 py-1 w-full" %>
+  </div>
+
+  <div>
+    <%= f.label :body, class: "block text-sm font-medium" %>
+    <%= f.text_area :body, rows: 12, class: "border rounded px-2 py-1 w-full font-mono" %>
+    <p class="text-xs text-gray-500 mt-1">You can paste HTML or plain text. Basic tags will be sanitized when rendering.</p>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= f.check_box :published %>
+    <%= f.label :published, "Published", class: "text-sm" %>
+  </div>
+
+  <div class="flex gap-2">
+    <%= button_tag "Preview", name: "preview", value: "1", formnovalidate: true, class: "rounded px-3 py-1.5 border text-sm" %>
+    <%= f.submit(@article.persisted? ? "Update" : "Create", class: "rounded px-3 py-1.5 bg-blue-600 text-white text-sm") %>
+    <%= link_to "Cancel", @article.persisted? ? admin_article_path(@article) : admin_articles_path, class: "rounded px-3 py-1.5 border text-sm" %>
+  </div>
+<% end %>
