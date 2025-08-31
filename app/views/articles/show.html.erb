@@ -1,0 +1,21 @@
+<% content_for :title, @article.title %>
+<p> app/views/articles/show.html.erb> </p>
+
+<div class="prose max-w-none">
+  <h1 class="font-bold text-3xl"><%= @article.title %></h1>
+  <div class="text-sm text-gray-500 mb-4">
+    <% if @article.subject.present? %>
+      <span class="mr-2">Subject: <%= @article.subject %></span>
+    <% end %>
+    <% if @article.published_at.present? %>
+      <span><%= @article.published_at.to_date.to_s(:db) %></span>
+    <% end %>
+  </div>
+
+  <%# Body can be HTML; otherwise use simple_format for plain text %>
+  <% if @article.body.to_s.strip.starts_with?("<") %>
+    <%= sanitize(@article.body, tags: %w[p br ul ol li h2 h3 h4 strong em a blockquote code pre img], attributes: %w[href src alt title class]) %>
+  <% else %>
+    <%= simple_format(@article.body) %>
+  <% end %>
+</div>

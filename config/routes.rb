@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Generic resources
   resources :all_groups
   resources :all_group_mushrooms
+  resources :articles, only: %i[index show]
   resources :clusters
   resources :cluster_mushrooms
   resources :mr_character_mushrooms, only: [:create]
