@@ -1,1 +1,17 @@
+/* app/assets/tailwind/application.css */
+
+/* Tailwind v4 entry */
 @import "tailwindcss";
+
+/* Enable the typography plugin (Tailwind v4 style) */
+@plugin "@tailwindcss/typography";
+
+/* Your readable helpers for long-form text */
+@layer components {
+    .readable { /* constrained version (current behavior) */
+        @apply prose prose-slate lg:prose-lg max-w-prose mx-auto;
+    }
+    .readable--full { /* new full-width version */
+        @apply prose prose-slate lg:prose-lg max-w-none w-full;
+    }
+}

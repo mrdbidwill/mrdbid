@@ -1,4 +1,4 @@
-/*
+/* app/assets/stylesheets/application.css
  * This is a manifest file that'll be compiled into application.css.
  *
  * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
@@ -7,4 +7,10 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
- */
+ * app/assets/stylesheets/application.css
+ * Manifest for any non-Tailwind styles (optional).
+ * Do NOT put Tailwind directives here.
+ *
+ * Propshaft will serve compiled assets; Tailwind is handled in:
+ *   app/assets/tailwind/application.css
+*/

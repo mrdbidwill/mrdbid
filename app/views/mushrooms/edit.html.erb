@@ -1,12 +1,13 @@
 <% content_for :title, "Editing mushroom" %>
-<p> app/views/mushrooms/edit.html.erb> </p>
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Edit your mushroom characters here:</h1>
 
+<p> app/views/mushrooms/edit.html.erb> </p>
+<div class="w-full auto-margins">
+  <h1 class="font-bold text-4xl">Edit your mushroom characters here:</h1>
+  <div class="readable--full">
   <p class="text-gray-800">This is a work in progress, of course, but some explanation is necessary. You may see (currently you WILL SEE) some characters that don't seem to make any sense. One good explanation is that they DO NOT make any sense <u>as they are currently represented</u>.</p>
   <p>I made the choice to include every character that I found so that none dropped out of sight and ended up being lost before knowledgeable people could decide their value, or not. Some need more fleshing out by creating lookup tables with the available options for that specific character.</p>
   <p>I certainly realize that most people, however dedicated they are to mycology, will never use every or even most of these characters. That does not reduce the value of those rarely used.</p>
-
+  </div> <!-- readable -->
   <%= render "form", mushroom: @mushroom %>
 
   <!-- Entered characters -->
@@ -179,3 +180,4 @@
 
   <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>
+
