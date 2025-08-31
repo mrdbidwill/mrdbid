@@ -13,12 +13,12 @@ class MrCharacterMushroomsController < ApplicationController
 
     if @rc.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { redirect_to edit_mushroom_path(@mushroom), notice: "Character saved.", status: :see_other }
         format.html { redirect_to edit_mushroom_path(@mushroom), notice: "Character saved." }
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.update("flash", partial: "shared/flash", locals: { alert: @rc.errors.full_messages.to_sentence }) }
+        format.turbo_stream { redirect_to edit_mushroom_path(@mushroom), alert: @rc.errors.full_messages.to_sentence, status: :see_other }
         format.html { redirect_to edit_mushroom_path(@mushroom), alert: @rc.errors.full_messages.to_sentence }
       end
     end

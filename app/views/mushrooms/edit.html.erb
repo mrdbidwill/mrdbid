@@ -1,50 +1,100 @@
 <% content_for :title, "Editing mushroom" %>
 <p> app/views/mushrooms/edit.html.erb> </p>
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing mushroom</h1>
+  <h1 class="font-bold text-4xl">Edit your mushroom characters here:</h1>
+
+  <p class="text-gray-800">This is a work in progress, of course, but some explanation is necessary. You may see (currently you WILL SEE) some characters that don't seem to make any sense. One good explanation is that they DO NOT make any sense <u>as they are currently represented</u>.</p>
+  <p>I made the choice to include every character that I found so that none dropped out of sight and ended up being lost before knowledgeable people could decide their value, or not. Some need more fleshing out by creating lookup tables with the available options for that specific character.</p>
+  <p>I certainly realize that most people, however dedicated they are to mycology, will never use every or even most of these characters. That does not reduce the value of those rarely used.</p>
 
   <%= render "form", mushroom: @mushroom %>
 
   <!-- Entered characters -->
   <% existing_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option]).order('parts.name ASC, mr_characters.name ASC') %>
-  <% existing_grouped = existing_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
+  <% color_rows = existing_rows.select { |rc| (rc.mr_character&.display_option&.name&.downcase == "color") || rc.mr_character&.display_option_id == 6 } %>
+  <% non_color_rows = existing_rows - color_rows %>
+  <% existing_grouped = non_color_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
 
   <div class="mt-8">
     <h2 class="text-2xl font-semibold mb-3">Entered characters</h2>
-    <% if existing_rows.any? %>
-      <% existing_grouped.each do |part_name, rows| %>
-        <details class="bg-white border rounded-md p-4 mb-3" open>
-          <summary class="font-semibold cursor-pointer"><%= part_name %> (<%= rows.size %>)</summary>
-          <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <% rows.each do |rc| %>
-              <% c = rc.mr_character %>
-              <% next if (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 %>
-              <div class="flex items-start justify-between border rounded p-3 gap-3">
-                <div class="min-w-0">
-                  <div class="text-sm text-gray-500 break-words"><%= c&.name.to_s.tr("_", " ") %></div>
-                  <div class="font-medium">
-                    <%= rc.character_value %>
-                  </div>
-                </div>
-                <div class="shrink-0">
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "flex items-center gap-2" } do |f| %>
-                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                    <%= hidden_field_tag :mr_character_id, c.id %>
-                    <%= render partial: "character_input", locals: { f: f, character: c, current_value: rc.character_value } %>
-                    <%= f.submit "Update", class: "ml-2 rounded px-3 py-1.5 text-sm bg-blue-600 text-white" %>
+
+    <%# Colors at the top with per-card swatch picker and instruction %>
+    <% if color_rows.any? %>
+      <details class="bg-white border rounded-md p-4 mb-3" open>
+        <summary class="font-semibold cursor-pointer">Colors (<%= color_rows.size %>)</summary>
+        <p class="text-xs text-gray-600 mt-2">Click on a color patch to update this character.</p>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <% color_rows.each do |rc| %>
+            <% c = rc.mr_character %>
+            <% color_id = rc.character_value.to_i %>
+            <% current_color = Color.find_by(id: color_id) %>
+            <div class="flex flex-col border rounded p-3 gap-2">
+              <div class="min-w-0 font-medium break-words"><%= c&.name.to_s.tr("_", " ") %></div>
+              <div class="flex items-center text-sm text-gray-700">
+                <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
+                              alt: "Color #{color_id}",
+                              class: "w-6 h-6 mr-2 rounded border" %>
+                <% if current_color %>
+                  <span><%= current_color.latin_name %> (<%= current_color.common_name %>)</span>
+                <% else %>
+                  <span>Color ID: <%= color_id %></span>
+                <% end %>
+              </div>
+              <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-1" } do |f| %>
+                <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                <%= hidden_field_tag :mr_character_id, c.id %>
+                <div class="grid grid-cols-10 gap-1">
+                  <% (1..50).each do |cid| %>
+                    <button type="submit"
+                            name="character_value"
+                            value="<%= cid %>"
+                            title="Color <%= cid %>"
+                            class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500">
+                      <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
+                                    alt: "Color #{cid}",
+                                    class: "w-7 h-7 rounded border" %>
+                    </button>
                   <% end %>
                 </div>
+                <div class="sr-only"><%= f.submit "Update color" %></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+
+    <% if non_color_rows.any? %>
+      <details class="bg-white border rounded-md p-4 mb-3" open>
+        <summary class="font-semibold cursor-pointer">Non-color (<%= non_color_rows.size %>)</summary>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <% non_color_rows.each do |rc| %>
+            <% c = rc.mr_character %>
+            <div class="flex items-start justify-between border rounded p-3 gap-3">
+              <div class="min-w-0">
+                <div class="text-sm text-gray-500 break-words"><%= c&.name.to_s.tr("_", " ") %></div>
+                <div class="font-medium"><%= rc.character_value %></div>
               </div>
-            <% end %>
-          </div>
-        </details>
-      <% end %>
+              <div class="shrink-0">
+                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "flex items-center gap-2" } do |f| %>
+                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                  <%= hidden_field_tag :mr_character_id, c.id %>
+                  <%= render partial: "character_input", locals: { f: f, character: c, current_value: rc.character_value } %>
+                  <%= f.submit "Update", class: "ml-2 rounded px-3 py-1.5 text-sm bg-blue-600 text-white" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </details>
     <% else %>
-      <p class="text-gray-500">No characters entered yet.</p>
+      <% unless color_rows.any? %>
+        <p class="text-gray-500">No characters entered yet.</p>
+      <% end %>
     <% end %>
   </div>
 
-  <!-- Not yet entered -->
+  <!-- Not yet entered (non-colors only) -->
   <% all_chars = MrCharacter.includes(:part, :display_option).order('parts.name ASC, mr_characters.name ASC') %>
   <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
   <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
@@ -59,7 +109,7 @@
           <summary class="font-semibold cursor-pointer"><%= part_name %> (<%= chars.size %>)</summary>
           <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
             <% chars.each do |c| %>
-              <div class="flex items-start justify-between border rounded p-3 gap-3">
+              <div class="flex items-start justify-between border rounded p-2 gap-2">
                 <div class="min-w-0">
                   <div class="text-sm text-gray-700 break-words"><%= c.name.to_s.tr("_", " ") %></div>
                 </div>
@@ -68,7 +118,7 @@
                     <%= hidden_field_tag :mushroom_id, @mushroom.id %>
                     <%= hidden_field_tag :mr_character_id, c.id %>
                     <%= render partial: "character_input", locals: { f: f, character: c, current_value: nil } %>
-                    <%= f.submit "Add", class: "ml-2 rounded px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-50" %>
+                    <%= f.submit "Add", class: "ml-2 rounded px-2 py-1 text-sm bg-gray-100 hover:bg-gray-50" %>
                   <% end %>
                 </div>
               </div>
@@ -77,56 +127,51 @@
         </details>
       <% end %>
     <% else %>
-      <p class="text-gray-500">All characters are entered.</p>
+      <p class="text-gray-500">All non-color characters are entered.</p>
     <% end %>
   </div>
 
-  <!-- Color picker area -->
-  <%# // keep color_chars in sync with the exclusion above %>
-  <%# // color_chars already computed above %>
-  <div class="mt-10">
-    <h2 class="text-2xl font-semibold mb-3">Color characters</h2>
-    <div data-controller="color-picker" data-color-picker-mushroom-id-value="<%= @mushroom.id %>">
-      <!-- Color grid -->
-      <div class="mb-4">
-        <div class="grid grid-cols-10 gap-2">
-          <% (1..50).each do |color_id| %>
-            <button type="button"
-                    class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500"
-                    data-action="click->color-picker#selectColor"
-                    data-color-picker-color-id-param="<%= color_id %>">
-              <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
-                            alt: "Color #{color_id}",
-                            class: "w-10 h-10 rounded border" %>
-            </button>
-          <% end %>
-        </div>
-        <div class="text-sm text-gray-600 mt-2">
-          Selected color: <span data-color-picker-target="selectedColorLabel">None</span>
-        </div>
-      </div>
+  <!-- Color characters (not yet entered) with per-card swatch picker -->
+  <% set_color_char_ids = color_rows.map(&:mr_character_id).to_set %>
+  <% missing_color_chars = color_chars.reject { |c| set_color_char_ids.include?(c.id) } %>
 
-      <!-- Color characters list -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <% color_chars.each do |c| %>
-          <div class="border rounded p-3">
-            <div class="font-medium mb-2 break-words"><%= c.part&.name %> — <%= c.name.to_s.tr("_", " ") %></div>
-            <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "flex items-center gap-2" } do |f| %>
-              <%= hidden_field_tag :mushroom_id, @mushroom.id, data: { "color-picker-target": "mushroomId" } %>
+  <% if missing_color_chars.any? %>
+    <div class="mt-10">
+      <h2 class="text-2xl font-semibold mb-1">Color characters (not yet entered)</h2>
+      <p class="text-xs text-gray-600 mb-3">Click on a color patch to set this character.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <% missing_color_chars.each do |c| %>
+          <div class="flex flex-col border rounded p-2 gap-2">
+            <div class="min-w-0 font-medium break-words text-sm"><%= c.part&.name %> — <%= c.name.to_s.tr("_", " ") %></div>
+            <div class="flex items-center text-xs text-gray-700">
+              <span class="inline-flex items-center">
+                <span class="w-5 h-5 mr-2 rounded border inline-block bg-white"></span>
+                Not set
+              </span>
+            </div>
+            <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-1" } do |f| %>
+              <%= hidden_field_tag :mushroom_id, @mushroom.id %>
               <%= hidden_field_tag :mr_character_id, c.id %>
-              <%= hidden_field_tag :character_value, nil, data: { "color-picker-target": "colorValue" } %>
-              <button type="submit"
-                      class="rounded px-3 py-1.5 bg-blue-600 text-white text-sm disabled:opacity-50"
-                      data-color-picker-target="submitButton"
-                      disabled>
-                Save color
-              </button>
+              <div class="grid grid-cols-10 gap-1">
+                <% (1..50).each do |cid| %>
+                  <button type="submit"
+                          name="character_value"
+                          value="<%= cid %>"
+                          title="Color <%= cid %>"
+                          class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500">
+                    <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
+                                  alt: "Color #{cid}",
+                                  class: "w-7 h-7 rounded border" %>
+                  </button>
+                <% end %>
+              </div>
+              <div class="sr-only"><%= f.submit "Save color" %></div>
             <% end %>
           </div>
         <% end %>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <% if defined?(policy) && policy(@mushroom).show? %>
     <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto text-center mt-8 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
