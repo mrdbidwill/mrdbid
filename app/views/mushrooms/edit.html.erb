@@ -11,7 +11,7 @@
   <%= render "form", mushroom: @mushroom %>
 
   <!-- Entered characters -->
-  <% existing_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option]).order('parts.name ASC, mr_characters.name ASC') %>
+  <% existing_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option, :source_data]).order('parts.name ASC, mr_characters.name ASC') %>
   <% color_rows = existing_rows.select { |rc| (rc.mr_character&.display_option&.name&.downcase == "color") || rc.mr_character&.display_option_id == 6 } %>
   <% non_color_rows = existing_rows - color_rows %>
   <% existing_grouped = non_color_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
@@ -73,8 +73,8 @@
             <% c = rc.mr_character %>
             <div class="flex items-start justify-between border rounded p-3 gap-3">
               <div class="min-w-0">
-                <div class="text-sm text-gray-500 break-words"><%= c&.name.to_s.tr("_", " ") %></div>
-                <div class="font-medium"><%= rc.character_value %></div>
+                <div class="text-sm text-gray-500 break-words">Character: <b><%= c&.name.to_s.tr("_", " ") %></b></div>
+                <div class="text-sm text-gray-500 break-words">Source: <b><%= c&.source_data.title %></b></div>
               </div>
               <div class="shrink-0">
                 <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "flex items-center gap-2" } do |f| %>
@@ -96,7 +96,7 @@
   </div>
 
   <!-- Not yet entered (non-colors only) -->
-  <% all_chars = MrCharacter.includes(:part, :display_option).order('parts.name ASC, mr_characters.name ASC') %>
+  <% all_chars = MrCharacter.includes(:part, :display_option, :source_data).order('parts.name ASC, mr_characters.name ASC') %>
   <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
   <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
   <% missing_chars = all_chars.reject { |c| entered_ids.include?(c.id) || color_chars.include?(c) } %>

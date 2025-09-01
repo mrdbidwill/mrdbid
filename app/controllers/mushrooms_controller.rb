@@ -48,7 +48,7 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1/edit
   def edit
-    @mushroom = Mushroom.includes(mr_characters: [:part, :lookup_type, :color]).find(params[:id]) # The `@mushroom` variable is necessary for the view to reference the loaded mushroom.
+    @mushroom = Mushroom.includes(mr_characters: [:part, :lookup_type, :color, :source_data]).find(params[:id]) # The `@mushroom` variable is necessary for the view to reference the loaded mushroom.
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
