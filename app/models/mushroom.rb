@@ -2,6 +2,11 @@
 # frozen_string_literal: true
 
 class Mushroom < ApplicationRecord
+  # Prevent mass-assignment or runtime changes to the id
+  attr_readonly :id
+
+  before_update :prevent_id_change
+
   belongs_to :user
   belongs_to :country, optional: true
   belongs_to :state, optional: true
@@ -41,4 +46,13 @@ class Mushroom < ApplicationRecord
   validates :fungus_type_id, presence: true
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
+
+  private
+  def prevent_id_change
+    if will_save_change_to_id?
+      errors.add(:id, "cannot be changed")
+      throw :abort
+    end
+  end
+
 end
