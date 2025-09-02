@@ -1,5 +1,13 @@
 <div id="<%= dom_id mr_character %>" class="w-full sm:w-auto my-5 space-y-5">
   <div>
-    <strong class="block font-medium mb-1">Name:</strong> <%= mr_character.name %> <strong class="block font-medium mb-1">Part:</strong> <%= mr_character.part&.name %> <strong class="block font-medium mb-1">Lookup Type:</strong> <%= mr_character.lookup_type&.name %> <strong class="block font-medium mb-1">Display Option:</strong> <%= mr_character.display_option&.name %> <strong class="block font-medium mb-1">Source Data:</strong> <%= mr_character.source_data&.title %>
+    <span class="text-xl font-bold text-green-600">
+      <%= mr_character.name %> - </span> <span class="text-sm">Part:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.part&.name %></span> <span class="text-sm">Lookup Type:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.lookup_type&.name %></span> <span class="text-sm">Display Option:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.display_option&.name %></span> <span class="block"><span class="text-sm">Source Data:</span> <span class="text-lg"><%= mr_character.source_data&.title %></span></span>
+    <% if (desc = mr_character.description.presence) %>
+      <span class="block text-sm">Description: <%= desc %></span>
+    <% end %>
+    <% if (comm = mr_character.comments.presence) %>
+      <span class="block text-sm">Comments: <%= comm %></span>
+    <% end %>
+
   </div>
 </div>

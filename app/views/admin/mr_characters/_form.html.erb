@@ -19,24 +19,67 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :part_id, "Part" %>
-    <%= form.number_field :part_id, class: ["block shadow-md rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:part_id].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:part_id].any?}] %>
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:description].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:description].any?}] %>
   </div>
+
+  <div class="my-5">
+    <%= form.label :comments %>
+    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:comments].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:comments].any?}] %>
+  </div>
+
+  <div class="my-5">
+  <%= form.label :part_id, "Part" %>
+  <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <%= form.collection_radio_buttons :part_id, Part.order(:name), :id, :name do |b| %>
+      <label class="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-gray-50">
+        <%= b.radio_button(class: "text-blue-600 focus:ring-blue-600") %>
+        <span><%= b.text %></span>
+      </label>
+    <% end %>
+  </div>
+  </div>
+
 
   <div class="my-5">
     <%= form.label :lookup_type_id, "Lookup Type" %>
-    <%= form.number_field :lookup_type_id, class: ["block shadow-md rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:lookup_type_id].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:lookup_type_id].any?}] %>
+    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <%= form.collection_radio_buttons :lookup_type_id, LookupType.order(:name), :id, :name do |b| %>
+        <label class="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-gray-50">
+          <%= b.radio_button(class: "text-blue-600 focus:ring-blue-600") %>
+          <span><%= b.text %></span>
+        </label>
+      <% end %>
+    </div>
   </div>
 
-  <div class="my-5">
-    <%= form.label :display_option_id, "Display Option" %>
-    <%= form.number_field :display_option_id, class: ["block shadow-md rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:display_option_id].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:display_option_id].any?}] %>
-  </div>
 
-  <div class="my-5">
-    <%= form.label :source_data_id, "Source Data" %>
-    <%= form.text_field :source_data_id, class: ["block shadow-md rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:source_data_id].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:source_data_id].any?}] %>
-  </div>
+    <div class="my-5">
+      <%= form.label :display_option_id, "Display Option" %>
+      <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <%= form.collection_radio_buttons :display_option_id, DisplayOption.order(:name), :id, :name do |b| %>
+          <label class="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-gray-50">
+            <%= b.radio_button(class: "text-blue-600 focus:ring-blue-600") %>
+            <span><%= b.text %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+
+      <div class="my-5">
+        <%= form.label :source_data_id, "Source Data" %>
+        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <%= form.collection_radio_buttons :source_data_id, SourceData.order(:title), :id, :title do |b| %>
+            <label class="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-gray-50">
+              <%= b.radio_button(class: "text-blue-600 focus:ring-blue-600") %>
+              <span><%= b.text %></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+
 
   <%# mr_character.persisted? checks if mr_character already exists in database %>
   <div class="inline">
