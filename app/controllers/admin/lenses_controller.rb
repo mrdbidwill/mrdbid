@@ -47,6 +47,9 @@ class Admin::LensesController < Admin::ApplicationController
   end
 
   private
+  def set_lens
+    @lens = Lens.find(params.expect(:id))
+  end
 
   def lens_params
     params.require(:lens).permit(:make, :model, :description, :comments)

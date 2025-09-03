@@ -28,9 +28,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
       end
   end
 
-
-
-
   def new
     authorize MrCharacter
     @mr_character = MrCharacter.new

@@ -72,7 +72,7 @@ class MushroomsController < ApplicationController
     # Temporarily disable strict_loading for this mushroom
     @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
     @mushroom.destroy
-    redirect_to mushrooms_path, notice: "Mushroom was successfully destroyed."
+    redirect_to mushrooms_path, notice: "Mushroom was successfully deleted."
   end
 
   private
