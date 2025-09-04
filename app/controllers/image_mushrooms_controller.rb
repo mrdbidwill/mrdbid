@@ -14,34 +14,44 @@ class ImageMushroomsController < ApplicationController
 
   def new
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from params
-    authorize @mushroom, :mushroom_image_mushroom? if @mushroom
+    unless @mushroom
+      redirect_to mushrooms_path, alert: "You must choose a mushroom first." and return
+    end
+    authorize @mushroom, :mushroom_image_mushroom?
     @image_mushroom = ImageMushroom.new
+    @image_mushroom.mushroom_id = @mushroom.id
     @parts = Part.all.order(:name)
     @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
+
   def create
-    # Build from top-level params; do not rely on current_user or nesting
     @image_mushroom = ImageMushroom.new(image_mushroom_params)
-    # Accept optional mushroom_id provided outside nested route without touching the association
-    if params[:mushroom_id].present? && @image_mushroom.mushroom_id.blank?
-      @image_mushroom.mushroom_id = params[:mushroom_id]
+
+    # Prefer nested route param, else fall back to hidden field
+    route_parent_id = params[:mushroom_id].presence
+    form_parent_id  = image_mushroom_params[:mushroom_id].presence
+    parent_id = route_parent_id || form_parent_id
+
+    if parent_id.blank?
+      redirect_to mushrooms_path, alert: "You must choose a mushroom first." and return
     end
-    # Authorize against the parent mushroom (ownership)
+
+    @image_mushroom.mushroom_id = parent_id
+
     @mushroom = Mushroom.find_by(id: @image_mushroom.mushroom_id)
     authorize @mushroom, :mushroom_image_mushroom? if @mushroom
 
     if @image_mushroom.save
-      # Redirect using nested route without loading the association
-      parent = Mushroom.new(id: @image_mushroom.mushroom_id)
-      redirect_to [parent, @image_mushroom], notice: "Image successfully uploaded."
+      redirect_to mushroom_path(@image_mushroom.mushroom_id), notice: "Image successfully uploaded."
     else
-      # Reload data for form rendering without touching associations
       @parts = Part.all.order(:name)
       @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
     end
   end
+
+
 
   def edit
     authorize @image_mushroom
@@ -66,6 +76,7 @@ class ImageMushroomsController < ApplicationController
     end
   end
 
+
   def destroy
     authorize @image_mushroom
     parent_id = @image_mushroom.mushroom_id
@@ -87,7 +98,7 @@ class ImageMushroomsController < ApplicationController
       :mushroom_id,
       :part_id,
       :image_name,
-      :image_file,   # Permit the new `image_file` attachment - Active Storage
+      :image_file,
       :image_width,
       :image_height,
       :camera_id,

@@ -4,27 +4,12 @@
   <!-- Data + Actions in same vertical plane -->
   <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
     <!-- Left: data spans 4 columns on md+ -->
-    <div class="md:col-span-4">
+    <div class="md:col-span-3">
       <dl class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <!-- First row: 4 inline items -->
-        <div class="border rounded-md p-3">
-          <dt class="text-sm text-gray-500">Name</dt>
-          <dd class="font-medium"><%= mushroom.name %></dd>
-        </div>
-
-        <div class="border rounded-md p-3">
-          <dt class="text-sm text-gray-500">Country</dt>
-          <dd class="font-medium"><%= mushroom.country&.name %></dd>
-        </div>
-
-        <div class="border rounded-md p-3">
-          <dt class="text-sm text-gray-500">State</dt>
-          <dd class="font-medium"><%= mushroom.state&.name %></dd>
-        </div>
-
-        <div class="border rounded-md p-3">
-          <dt class="text-sm text-gray-500">Fungus Type</dt>
-          <dd class="font-medium"><%= mushroom.fungus_type&.name %></dd>
+        <div class="md:col-span-4 border rounded-md p-3">
+          <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span>
+          <dd class="font-medium"><%= mushroom.state&.name %> , <%= mushroom.country&.name %> <span class="text-sm text-gray-400">Fungus Type:</span> <%= mushroom.fungus_type&.name %></dd>
         </div>
 
         <!-- Full-width rows -->
@@ -44,10 +29,11 @@
       </dl>
     </div>
 
-    <!-- Right: actions column. Inside, two side-by-side groups on md+ -->
-    <div class="md:col-span-1">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <!-- Group A: Primary actions -->
+    <!-- Right: actions column. Widen to 2 columns on md+ -->
+    <div class="md:col-span-2 min-w-0">
+      <!-- Keep single column until large screens to give buttons room -->
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2">
+      <!-- Group A: Primary actions -->
         <div class="flex flex-col gap-2">
           <% if !defined?(policy) || policy(mushroom)&.mushroom_image_mushroom? %>
             <%= link_to "Upload Image", new_mushroom_image_mushroom_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
@@ -67,18 +53,23 @@
           <% end %>
         </div>
 
-        <!-- Group B: CRUD actions (standardized look) -->
-        <div class="flex flex-col gap-2">
+        <!-- Group B: CRUD actions -->
+        <div class="flex flex-col gap-2 min-w-0">
           <% if !defined?(policy) || policy(mushroom)&.show? %>
-            <%= link_to "Show", mushroom, class: "w-full text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium border border-gray-200" %>
+            <%= link_to "Show", mushroom, class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
           <% end %>
 
           <% if !defined?(policy) || policy(mushroom)&.edit? %>
-            <%= link_to "Edit", edit_mushroom_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+            <%= link_to "Edit", edit_mushroom_path(mushroom), class: "w-full text-center rounded-md px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
           <% end %>
 
           <% if user_signed_in? && (defined?(policy) ? policy(mushroom)&.destroy? : (current_user && mushroom.user == current_user)) %>
-            <%= button_to "Delete this mushroom", mushroom, method: :delete, class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+            <%= button_to "Delete this mushroom",
+                          mushroom,
+                          method: :delete,
+                          form: { class: "w-full" },
+                          class: "block w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer",
+                          data: { turbo_confirm: "Are you sure?" } %>
           <% end %>
         </div>
       </div>
