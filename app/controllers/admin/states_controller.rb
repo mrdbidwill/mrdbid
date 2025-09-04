@@ -5,7 +5,7 @@ class Admin::StatesController < Admin::ApplicationController
   # GET /states
   def index
     authorize State
-    scope = policy_scope(State).includes(:country)
+    scope = policy_scope(State).preload(:country)
     @states = params[:country_id].present? ? scope.where(country_id: params[:country_id]) : scope.all
     if params[:country_id].present?
       render partial: "admin/states/select", locals: { states: @states }

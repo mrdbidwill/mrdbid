@@ -4,7 +4,10 @@ class Admin::CamerasController < Admin::ApplicationController
   # GET /cameras
   def index
     authorize Camera
-    @cameras = policy_scope(Camera.order(:name))
+    # Error - Camera is marked for strict_loading. The CameraMake association named :camera_make cannot be lazily loaded.
+    # @cameras = policy_scope(Camera.order(:name))
+    # fix
+    @cameras = policy_scope(Camera).includes(:camera_make, :camera_model).order(:name)
   end
 
   # GET /cameras/1

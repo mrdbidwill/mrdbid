@@ -1,63 +1,63 @@
-class Admin::StatesController < Admin::ApplicationController
-  before_action :set_state, only: %i[show edit update destroy]
+class Admin::SpeciesController < Admin::ApplicationController
+  before_action :set_species, only: %i[show edit update destroy]
 
-  # GET /states
+  # GET /species
   def index
-    authorize State
-    @states = policy_scope(State.order(:name))
+    authorize Species
+    @species = policy_scope(Species.order(:taxon_name))
   end
 
-  # GET /states/1
+  # GET /speciess/1
   def show
-    authorize @state
+    authorize @species
   end
 
-  # GET /states/new
+  # GET /speciess/new
   def new
-    @state = State.new
-    authorize @state
+    @species = Species.new
+    authorize @species
   end
 
-  # POST /states
+  # POST /speciess
   def create
-    @state = State.new(state_params)
-    authorize @state
-    if @state.save
-      redirect_to admin_state_path(@state), notice: "State was successfully created."
+    @species = Species.new(species_params)
+    authorize @species
+    if @species.save
+      redirect_to admin_species_path(@species), notice: "Species was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  # GET /states/1/edit
+  # GET /speciess/1/edit
   def edit
-    authorize @state
+    authorize @species
   end
 
-  # PATCH/PUT /states/1
+  # PATCH/PUT /speciess/1
   def update
-    authorize @state
-    if @state.update(state_params)
-      redirect_to admin_state_path(@state), notice: "State was successfully updated."
+    authorize @species
+    if @species.update(species_params)
+      redirect_to admin_species_path(@species), notice: "Species was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /states/1
+  # DELETE /speciess/1
   def destroy
-    authorize @state
-    @state.destroy!
-    redirect_to admin_states_path, notice: "State was successfully destroyed."
+    authorize @species
+    @species.destroy!
+    redirect_to admin_species_path, notice: "Species was successfully destroyed."
   end
 
   private
 
-  def set_state
-    @state = State.find(params.expect(:id))
+  def set_species
+    @species = Species.find(params.expect(:id))
   end
 
-  def state_params
-    params.expect(state: [:name, :description, :comments, :source])
+  def species_params
+    params.expect(species: [:mb_list_id, :taxon_name, :genera_id])
   end
 end

@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     resources :source_data_types
     resources :storage_locations
     resources :species
-    resources :states, only: [:index]
+    resources :states
     resources :trees
   end
 

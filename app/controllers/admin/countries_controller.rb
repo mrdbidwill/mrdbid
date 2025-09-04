@@ -4,7 +4,8 @@ class Admin::CountriesController < Admin::ApplicationController
   # GET /countries or /countries.json
   def index
     authorize Country
-    @countries = policy_scope(Country.order(:name))
+    # @countries = policy_scope(Country.order(:name))
+    @countries = policy_scope(Country).includes(:states).order(:name)
   end
 
   # GET /countries/1 or /countries/1.json

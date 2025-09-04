@@ -13,6 +13,6 @@
   </div>
   <div>
     <strong class="block font-medium mb-1">Country:</strong>
-    <%= state.country&.name || state.country_id %>
+    <%= state.association(:country).loaded? ? (state.country&.name || state.country_id) : state.country_id %>
   </div>
 </div>

@@ -1,6 +1,8 @@
 class Admin::ImageMushroomsController < Admin::ApplicationController
 
   before_action :set_image_mushroom, only: %i[show edit update destroy]
+  before_action :set_collections, only: [:new, :create, :edit, :update]
+
 
   def index
     authorize ImageMushroom
@@ -8,6 +10,11 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
   end
 
   def show
+    authorize @image_mushroom
+  end
+
+  def new
+    @image_mushroom = ImageMushroom.new
     authorize @image_mushroom
   end
 
@@ -58,6 +65,12 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
   end
 
   private
+
+  def set_collections
+    @mushrooms = Mushroom.all.order(:name)
+    @parts = Part.all.order(:name)
+    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
+  end
 
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record

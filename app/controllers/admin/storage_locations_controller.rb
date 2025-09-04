@@ -1,4 +1,4 @@
-class StorageLocationsController < ApplicationController
+class Admin::StorageLocationsController < Admin::ApplicationController
   include Pundit::Authorization
 
   # GET /storage_locations or /storage_locations.json

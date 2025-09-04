@@ -1,72 +1,67 @@
-<%# locals: (image_mushroom: ImageMushroom, mushrooms: ActiveRecord::Relation, parts: ActiveRecord::Relation, cameras: ActiveRecord::Relation) %>
-
-<%= form_with(model: image_mushroom, local: true, class: "contents") do |form| %>
+<%= form_with(model: image_mushroom, local: true) do |form| %>
   <% if image_mushroom.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(image_mushroom.errors.count, "error") %> prohibited this image from being saved:</h2>
-
-      <ul class="list-disc ml-6">
-        <% image_mushroom.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="text-red-500">
+      <h2>Errors:</h2>
+      <ul>
+        <% image_mushroom.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+  <div><p>form in  app/views/image_mushrooms/_form.html.erb</p></div>
 
-  <!-- Image File -->
-  <div class="my-5">
-    <%= form.label :image_file %>
-    <%= form.file_field :image_file,
-          class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                  { "border-gray-400 focus:outline-blue-600": image_mushroom.errors[:image_file].none?,
-                    "border-red-400 focus:outline-red-600": image_mushroom.errors[:image_file].any? }] %>
-  </div>
-
-  <!-- Image Name -->
   <div class="my-5">
     <%= form.label :image_name %>
-    <%= form.text_field :image_name,
-          class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                  { "border-gray-400 focus:outline-blue-600": image_mushroom.errors[:image_name].none?,
-                    "border-red-400 focus:outline-red-600": image_mushroom.errors[:image_name].any? }] %>
+    <%= form.text_field :image_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_name].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_name].any?}] %>
   </div>
 
-  <!-- Mushroom -->
   <div class="my-5">
     <%= form.label :mushroom_id, "Mushroom" %>
-    <%= form.collection_select :mushroom_id, mushrooms, :id, :name,
-          { prompt: "Select a Mushroom" },
-          class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                  { "border-gray-400 focus:outline-blue-600": image_mushroom.errors[:mushroom].none? && image_mushroom.errors[:mushroom_id].none?,
-                    "border-red-400 focus:outline-red-600": image_mushroom.errors[:mushroom].any? || image_mushroom.errors[:mushroom_id].any? }] %>
+    <%= form.collection_select :mushroom_id, mushrooms, :id, :name, { prompt: 'Select Mushroom' }, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:mushroom_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:mushroom_id].any?}] %>
   </div>
 
-  <!-- Part -->
   <div class="my-5">
     <%= form.label :part_id, "Part" %>
-    <% if parts.present? %>
-      <%= form.collection_select :part_id, parts, :id, :name,
-            { prompt: "Select a Part" },
-            class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                    { "border-gray-400 focus:outline-blue-600": image_mushroom.errors[:part].none? && image_mushroom.errors[:part_id].none?,
-                      "border-red-400 focus:outline-red-600": image_mushroom.errors[:part].any? || image_mushroom.errors[:part_id].any? }] %>
-    <% else %>
-      <p class="text-sm text-gray-500">No parts available. Please add parts and try again.</p>
-    <% end %>
+    <%= form.collection_select :part_id, parts, :id, :name, { prompt: 'Select Part' }, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:part_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:part_id].any?}] %>
   </div>
 
-  <!-- Camera -->
   <div class="my-5">
     <%= form.label :camera_id, "Camera" %>
-    <%= form.collection_select :camera_id, cameras, :id, :name,
-          { prompt: "Select a Camera" },
-          class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                  { "border-gray-400 focus:outline-blue-600": image_mushroom.errors[:camera].none? && image_mushroom.errors[:camera_id].none?,
-                    "border-red-400 focus:outline-red-600": image_mushroom.errors[:camera].any? || image_mushroom.errors[:camera_id].any? }] %>
+    <%= form.collection_select :camera_id, cameras, :id, :name, { prompt: 'Select Camera' }, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:camera_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:camera_id].any?}] %>
   </div>
 
-  <div class="inline">
-    <%= form.submit "Upload Image",
-          class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <div class="my-5">
+    <%= form.label :image_width %>
+    <%= form.number_field :image_width, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_width].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_width].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image_height %>
+    <%= form.number_field :image_height, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_height].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_height].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :lens %>
+    <%= form.text_field :lens, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:lens].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:lens].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :exposure %>
+    <%= form.text_field :exposure, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:exposure].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:exposure].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :aperture %>
+    <%= form.text_field :aperture, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:aperture].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:aperture].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :iso %>
+    <%= form.text_field :iso, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:iso].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:iso].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.submit class: 'bg-blue-500 text-white px-4 py-2' %>
   </div>
 <% end %>
