@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :lookup_types
     resources :mb_lists
     resources :mr_characters
+    resource :mr_characters_source, only: :show
     resources :parts
     resources :permissions
     resources :plants

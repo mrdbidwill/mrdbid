@@ -4,14 +4,19 @@ export default class extends Controller {
   static targets = ["countrySelect", "stateSelect"]
   static values = { url: String }
 
-  connect() {
-    // If a country is already selected (edit form, or prefill), populate states immediately.
-    if (this.countrySelectTarget?.value) {
-      this.change()
-    } else {
-      this.disableStates("Select a country first")
+    connect() {
+        // If a country is already selected (edit form, or prefill), populate states immediately.
+        if (this.countrySelectTarget?.value) {
+            // If data-current is not provided, fall back to the select's current value (from server-rendered HTML)
+            if (!this.stateSelectTarget.getAttribute("data-current")) {
+                const existing = this.stateSelectTarget.value
+                if (existing) this.stateSelectTarget.setAttribute("data-current", existing)
+            }
+            this.change()
+        } else {
+            this.disableStates("Select a country first")
+        }
     }
-  }
 
   async change() {
     const countryId = this.countrySelectTarget.value
@@ -36,10 +41,10 @@ export default class extends Controller {
         return
       }
 
-      const options = [["", "Select a State"], ...states.map(s => [String(s.id), s.name])]
-      const current = this.stateSelectTarget.getAttribute("data-current")
-      this.setOptions(options, current)
-      this.stateSelectTarget.disabled = false
+        const options = [["", "Select a State"], ...states.map(s => [String(s.id), s.name])]
+        const current = this.stateSelectTarget.getAttribute("data-current") || this.stateSelectTarget.value
+        this.setOptions(options, current)
+        this.stateSelectTarget.disabled = false
     } catch (e) {
       this.setOptions([["", "Could not load states"]])
       this.stateSelectTarget.disabled = true

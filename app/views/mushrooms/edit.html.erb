@@ -2,14 +2,70 @@
 
 <p> app/views/mushrooms/edit.html.erb> </p>
 <div class="w-full auto-margins">
-  <h1 class="font-bold text-4xl">Edit your mushroom characters here:</h1>
+  <h1 class="flex items-baseline gap-2">
+    <span class="text-xl font-medium text-gray-700">Editing your mushroom:</span>
+    <span class="text-3xl font-bold text-gray-900"><%= @mushroom.name %></span>
+  </h1>
+
   <div class="text-lg font-semibold text-blue-800 mt-2">
-    Mushroom ID: <span class="inline-block px-2 py-0.5 rounded bg-blue-50 border border-blue-200"><%= @mushroom.id %></span>
+    Mushroom ID: <span class="inline-block px-2 py-0.5 rounded bg-blue-50 border border-blue-200"><%= @mushroom.id %></span> <span class="block text-xs text-gray-500">This is the database table ID.</span>
   </div>
   <div class="readable--full">
   <p class="text-gray-800">This is a work in progress, of course, but some explanation is necessary. You may see (currently you WILL SEE) some characters that don't seem to make any sense. One good explanation is that they DO NOT make any sense <u>as they are currently represented</u>.</p>
   <p>I made the choice to include every character that I found so that none dropped out of sight and ended up being lost before knowledgeable people could decide their value, or not. Some need more fleshing out by creating lookup tables with the available options for that specific character.</p>
   <p>I certainly realize that most people, however dedicated they are to mycology, will never use every or even most of these characters. That does not reduce the value of those rarely used.</p>
+
+    <% if current_user&.admin? %>
+      <p class="text-gray-800">You are an admin. You can view how I kept track of the original source of the characters. Actually, the <b>ORIGINAL source</b> is Mushroom Observer's Excited delirium [EXD].</p>
+      <p>I took EXD's list and attempted to add what would end up being database tables/rows. For example, original row 2, "2 The size (height and
+        3 width) of the pileus/pilei" became row 2 "pileus_height_mm" and row 3 "pileus_width_mm" (in original source) which ends up in table mr_characters as rows 113 and 114. Since these are measurements, there are no corresponding 'lookup' associations. Whatever value is entered is what is displayed. </p>
+      <p class="text-gray-800">Row 13 "13 Pileus surface texture: is glabrous (smooth) or non-glabrous (i.e. Downy-Wooly, Matted-Fibrillose, Furfuraceous, Granulose, Pruinose, Squamose, Squamulose, Scaly, Hairy, Shaggy, Bristled/Bristly, Strigose, Warted, Appressed, Appressed-Fibrillose, Tomentose, Virgate, Scrobiculate, Alveolate, Lacunose, Lacinate, Areolate, Atomate, Micaceous, Superficial, Innate, Venose, etc.)" becomes in table mr_characters (mushroom_characters), row (id) 124 'pileus_surface_texture' and in table lookup_items you have: mysql> select id, name, source_data_id from lookup_items where mr_character_id = 124;
+
+        | id  | name                           | source_data_id |<br>
+
+        | 371 | Glabrous smooth                |             44 |<br>
+        | 372 | non-glabrous Downy-Wooly       |             44 |<br>
+        | 373 | non-glabrous Matted-Fibrillose |             44 |<br>
+        | 374 | non-glabrous Furfuraceous      |             44 |<br>
+        | 375 | non-glabrous Granulose         |             44 |<br>
+        | 376 | non-glabrous Pruinose          |             44 |<br>
+        | 377 | non-glabrous Squamose          |             44 |<br>
+        | 378 | non-glabrous Squamulose        |             44 |<br>
+        | 379 | non-glabrous Scaly             |             44 |<br>
+        | 380 | non-glabrous Hairy             |             44 |<br>
+        | 381 | Shaggy                         |             44 |<br>
+        | 382 | Bristled/Bristly               |             44 |<br>
+        | 383 | Strigose                       |             44 |<br>
+        | 384 | Warted                         |             44 |<br>
+        | 385 | Appressed                      |             44 |<br>
+        | 386 | Appressed-Fibrillose           |             44 |<br>
+        | 387 | Tomentose                      |             44 |<br>
+        | 388 | Virgate                        |             44 |<br>
+        | 389 | Scrobiculate                   |             44 |<br>
+        | 390 | Alveolate                      |             44 |<br>
+        | 391 | Lacunose                       |             44 |<br>
+        | 392 | Lacinate                       |             44 |<br>
+        | 393 | Areolate                       |             44 |<br>
+        | 394 | Atomate                        |             44 |<br>
+        | 395 | Micaceous                      |             44 |<br>
+        | 396 | Superficial                    |             44 |<br>
+        | 397 | Innate                         |             44 |<br>
+        | 398 | Venose                         |             44 |<br>
+        | 399 | non-glabrous Other             |             44 |<br>
+
+        29 rows in set (0.00 sec)<br> and source is Excited Delirium [EXD]: mysql> select title, author from source_data where id = 44;<br>
+        | title                                                                                | author                 |<br>
+        | Observation List: Characters With Taxonomic Value For Stipitate-Lamellate Mushrooms  | Excited delirium [EXD] |.</p>
+      <p>The character 'pileus surface texture' will display these options in a radio list for selection. I use radio lists a lot more than drop-downs in an effort to make the data easier to understand.</p>
+      <p>So, that process is what you are in the middle of, RIGHT HERE. An effort to make selecting some or all of these characters and assigning them to a mushroom to help identify it.</p>
+      <p>I use a database from mycobank.org (MBList) for genus and species. More on that later.</p>
+      <p>So, in addition to learning Rails and modifying this project to function within it, I am working on the data to get it is a rough shape to be modified and corrected into something of value.</p>
+      <p>Note: One of the goals is to end up with a standard or uniform order of characters to be able to maintain a complete list of characters for specimens in Mushroom Observer or iNaturalist. Take the data here and paste into the other sites as notes or whatever. If this is already available, I have not found it.</p>
+      <%= link_to "View original mr_characters source (CSV) originally from EXD",
+                  admin_mr_characters_source_path,
+                  class: "w-full text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium" %>
+    <% end %>
+
   </div> <!-- readable -->
   <%= render "form", mushroom: @mushroom %>
 
@@ -191,10 +247,12 @@
     </div>
   <% end %>
 
+  <div class="mt-10">
   <% if defined?(policy) && policy(@mushroom).show? %>
-    <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto text-center mt-8 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <% end %>
+    <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
 
-  <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-</div>
+  <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+  </div>
 
