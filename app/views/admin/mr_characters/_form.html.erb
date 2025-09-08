@@ -13,10 +13,26 @@
 
   <div><p>app/views/mr_characters/_form.html.erb</p></div>
 
-  <div class="my-5">
+  <!-- Top action bar -->
+  <div class="mb-4 flex flex-wrap items-center gap-2">
+    <%= form.submit(
+          mr_character.persisted? ? "Update Mushroom Character" : "Create Mushroom Character",
+          class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer"
+        ) %>
+    <%= link_to "Show this character", admin_mr_character_path(mr_character),
+                class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" if mr_character.persisted? %>
+    <%= link_to "Back to characters", admin_mr_characters_path,
+                class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+
+  <p class="text-sm text-red-600">&lt;After your changes, use the "Update Mushroom Character" button above or at the bottom of form to submit them.&gt;</p>
+  </div>
+
+  <% unless mr_character.name.to_s == "id" %>
+    <div class="my-5">
     <%= form.label :name, "Name" %>
     <%= form.text_field :name, class: ["block shadow-md rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:name].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:name].any?}] %>
   </div>
+    <% end %>
 
   <div class="my-5">
     <%= form.label :description %>

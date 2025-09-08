@@ -51,7 +51,7 @@ class CameraMakesTest < ApplicationSystemTestCase
 
   test "should destroy Camera make" do
     visit admin_camera_make_url(@camera_make)
-    accept_confirm { click_on "Destroy this camera make", match: :first }
+    accept_confirm { click_on "Delete this camera make", match: :first }
 
     assert_text "Camera make was successfully destroyed"
   end

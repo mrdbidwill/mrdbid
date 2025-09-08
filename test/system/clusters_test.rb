@@ -38,7 +38,7 @@ class ClustersTest < ApplicationSystemTestCase
 
   test "should destroy Cluster" do
     visit cluster_url(@cluster)
-    accept_confirm { click_on "Destroy this cluster", match: :first }
+    accept_confirm { click_on "Delete this cluster", match: :first }
 
     assert_text "Cluster was successfully destroyed"
   end

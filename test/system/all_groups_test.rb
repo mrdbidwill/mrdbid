@@ -38,7 +38,7 @@ class AllGroupsTest < ApplicationSystemTestCase
 
   test "should destroy All group" do
     visit all_group_url(@all_group)
-    accept_confirm { click_on "Destroy this all group", match: :first }
+    accept_confirm { click_on "Delete this all group", match: :first }
 
     assert_text "All group was successfully destroyed"
   end

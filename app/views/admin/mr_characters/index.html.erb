@@ -2,6 +2,14 @@
 
 <div><p>app/views/mr_characters/index.html.erb</p></div>
 
+<style>
+    /* More spacing between pagination items and bigger click targets */
+    .pagination { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .pagination a, .pagination span {
+        padding: 0.375rem 0.625rem; /* ~py-1.5 px-2.5 */
+        border-radius: 0.375rem;    /* ~rounded-md */
+    }
+</style>
 
 <div class="w-full">
   <% if notice.present? %>
@@ -19,7 +27,6 @@
       <%= form.select :part_id, @parts, include_blank: "All", class: "rounded-md border-gray-300 w-full" %>
     </div>
 
-
      <div class="flex items-end">
        <%= form.submit "Filter", class: "rounded-md px-4 py-2 bg-blue-600 text-white" %>
      </div>
@@ -31,11 +38,19 @@
     <%= link_to "New Mushroom Character", new_admin_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
+  <%# TOP pagination %>
+  <% if @mr_characters.any? %>
+    <div class="my-4">
+      <%= paginate @mr_characters, params: request.query_parameters %>
+    </div>
+  <% end %>
+
   <div id="mr_characters" class="min-w-full divide-y divide-gray-200 space-y-5">
     <% if @mr_characters.any? %>
       <% @mr_characters.each do |mr_character| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-3 sm:pb-0">
           <%= render mr_character %>
+          <% unless mr_character.name.to_s == "id" %>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
             <!-- Tailwind-styled Show button -->
             <%= link_to "Show", admin_mr_character_path(mr_character),  class: "w-full sm:w-auto inline-flex items-center justify-center h-10 px-3.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-md whitespace-nowrap
@@ -47,13 +62,13 @@
 <%#
             <%= button_to "Delete this character", admin_mr_character_path(mr_character), method: :delete, class: "w-full sm:w-auto inline-flex items-center text-center rounded-md px-2.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
           </div>
-
+<% end %>
 
         </div>
       <% end %>
 
       <div class="mt-5">
-        <%= paginate @mr_characters %> <!-- Pagination links -->
+        <%= paginate @mr_characters, params: request.query_parameters %> <!-- Pagination links (BOTTOM) -->
       </div>
     <% else %>
       <p class="text-center my-10">No mushroom characters found.</p>

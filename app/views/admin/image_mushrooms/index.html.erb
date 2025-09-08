@@ -33,7 +33,7 @@
           <td class="border px-4 py-2"><%= image_mushroom.image_height || "No Image Height" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.image_width || "No Image Width" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.camera&.name || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.lens&.name || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.lens.presence || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.exposure || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.aperture || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.iso || 'N/A' %></td>

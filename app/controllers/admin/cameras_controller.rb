@@ -12,12 +12,15 @@ class Admin::CamerasController < Admin::ApplicationController
 
   # GET /cameras/1
   def show
+    @camera = Camera
+                .includes(:camera_make, :camera_model)
+                .find(params[:id])
     authorize @camera
   end
 
   # GET /cameras/new
   def new
-    @camera = Camera.new
+    @camera = Camera.includes(:camera_make, :camera_model).find(params[:id])
     authorize @camera
   end
 

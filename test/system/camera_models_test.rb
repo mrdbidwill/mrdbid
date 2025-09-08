@@ -51,7 +51,7 @@ class CameraModelsTest < ApplicationSystemTestCase
 
   test "should destroy Camera model" do
     visit admin_camera_model_url(@camera_model)
-    accept_confirm { click_on "Destroy this camera model", match: :first }
+    accept_confirm { click_on "Delete this camera model", match: :first }
 
     assert_text "Camera model was successfully destroyed"
   end

@@ -6,8 +6,8 @@ class Admin::MrCharactersController < Admin::ApplicationController
     authorize MrCharacter
     @mr_characters = policy_scope(
       MrCharacter
-        .includes(:part, :lookup_type, :display_option, :source_data)
-        .order(:name)
+        .includes( :part, :lookup_type, :display_option, :source_data)
+        .order(:id)
     )
     # Apply filters
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
@@ -77,6 +77,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def mr_character_params
-    params.require(:mr_character).permit(:name, :part_id, :lookup_type_id, :display_option_id, :source_data_id)
+    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id)
   end
 end

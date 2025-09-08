@@ -12,11 +12,11 @@
   </div>
   <div class="readable--full">
   <p class="text-gray-800">This is a work in progress, of course, but some explanation is necessary. You may see (currently you WILL SEE) some characters that don't seem to make any sense. One good explanation is that they DO NOT make any sense <u>as they are currently represented</u>.</p>
-  <p>I made the choice to include every character that I found so that none dropped out of sight and ended up being lost before knowledgeable people could decide their value, or not. Some need more fleshing out by creating lookup tables with the available options for that specific character.</p>
+  <p>I made the choice to include every character that I found so that none dropped out of sight and ended up being lost before knowledgeable people could decide their value, or not. Some need more fleshing out by adding data for available options for that specific character so that a radio list or drop-down can be displayed instead of simple text form field.</p>
   <p>I certainly realize that most people, however dedicated they are to mycology, will never use every or even most of these characters. That does not reduce the value of those rarely used.</p>
 
     <% if current_user&.admin? %>
-      <p class="text-gray-800">You are an admin. You can view how I kept track of the original source of the characters. Actually, the <b>ORIGINAL source</b> is Mushroom Observer's Excited delirium [EXD].</p>
+      <p class="text-gray-800"><b>You are an admin user.</b> You can view how I kept track of the original source of the characters. Actually, the <b>ORIGINAL source</b> for most of the character list is Mushroom Observer's Excited delirium [EXD].</p>
       <p>I took EXD's list and attempted to add what would end up being database tables/rows. For example, original row 2, "2 The size (height and
         3 width) of the pileus/pilei" became row 2 "pileus_height_mm" and row 3 "pileus_width_mm" (in original source) which ends up in table mr_characters as rows 113 and 114. Since these are measurements, there are no corresponding 'lookup' associations. Whatever value is entered is what is displayed. </p>
       <p class="text-gray-800">Row 13 "13 Pileus surface texture: is glabrous (smooth) or non-glabrous (i.e. Downy-Wooly, Matted-Fibrillose, Furfuraceous, Granulose, Pruinose, Squamose, Squamulose, Scaly, Hairy, Shaggy, Bristled/Bristly, Strigose, Warted, Appressed, Appressed-Fibrillose, Tomentose, Virgate, Scrobiculate, Alveolate, Lacunose, Lacinate, Areolate, Atomate, Micaceous, Superficial, Innate, Venose, etc.)" becomes in table mr_characters (mushroom_characters), row (id) 124 'pileus_surface_texture' and in table lookup_items you have: mysql> select id, name, source_data_id from lookup_items where mr_character_id = 124;
@@ -56,17 +56,23 @@
         29 rows in set (0.00 sec)<br> and source is Excited Delirium [EXD]: mysql> select title, author from source_data where id = 44;<br>
         | title                                                                                | author                 |<br>
         | Observation List: Characters With Taxonomic Value For Stipitate-Lamellate Mushrooms  | Excited delirium [EXD] |.</p>
-      <p>The character 'pileus surface texture' will display these options in a radio list for selection. I use radio lists a lot more than drop-downs in an effort to make the data easier to understand.</p>
-      <p>So, that process is what you are in the middle of, RIGHT HERE. An effort to make selecting some or all of these characters and assigning them to a mushroom to help identify it.</p>
+      <p>The character 'pileus surface texture' will display these options in a radio list for selection. <b>I use radio lists a lot more than drop-downs in an effort to make the data easier to view and understand.</b> Some option lists are quite long, and radio lists allow you to see all options, some that may appear similar, before you select your final choice.</p>
+      <p>This process is what you are in the middle of, <u>RIGHT HERE</u>. An effort to make selecting some or all of these characters and assigning them to a specific mushroom to help identify it.</p>
       <p>I use a database from mycobank.org (MBList) for genus and species. More on that later.</p>
       <p>So, in addition to learning Rails and modifying this project to function within it, I am working on the data to get it is a rough shape to be modified and corrected into something of value.</p>
       <p>Note: One of the goals is to end up with a standard or uniform order of characters to be able to maintain a complete list of characters for specimens in Mushroom Observer or iNaturalist. Take the data here and paste into the other sites as notes or whatever. If this is already available, I have not found it.</p>
+      <p>"Work in progress." I think I mentioned that. Sure, mr_characters table id = 163 name = <b>lamellae_lamellar_edge_partially_completely_pigmented_edges_not_cystidia_appearance_result</b> seems a little verbose. At the time I was adding the mushroom part to the beginning of the other description, and I may have gotten tired of editing long names down based on limited knowledge? And gills/lamellae? stem/stipe? cap/pileus?</p>
+
       <%= link_to "View original mr_characters source (CSV) originally from EXD",
                   admin_mr_characters_source_path,
                   class: "w-full text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium" %>
     <% end %>
 
   </div> <!-- readable -->
+  <hr class="my-4">
+  <h3 class="text-2xl font-semibold mb-3">The input form actually begins now:</h3>
+  <hr class="my-4">
+
   <%= render "form", mushroom: @mushroom %>
 
   <!-- Entered characters -->
@@ -163,8 +169,10 @@
       <% end %>
     <% end %>
   </div>
-
-  <!-- Not yet entered (non-colors only) -->
+  <hr class="my-4">
+  <h3 class="text-2xl mb-3">After setting a value for one of the 673 different characters (as of last count) that character will move from below to the set characters above, where it can still be edited, if needed. The "Not yet entered" characters are divided into categories in an attempt to keep screen clutter down.</h3>
+  <hr class="my-4">
+  <!-- Not entered (non-colors only) -->
   <% all_chars = MrCharacter.includes(:part, :display_option, :source_data).order('parts.name ASC, mr_characters.name ASC') %>
   <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
   <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
@@ -212,6 +220,7 @@
   <% if missing_color_chars.any? %>
     <div class="mt-10">
       <h2 class="text-2xl font-semibold mb-1">Color characters (not yet entered)</h2>
+      <p class="text-xs text-gray-600 mb-3">I know it looks odd at first glance, with the repeat of the color grid for each color character, but I got to it in the process of creating a workable scheme and stuck with it. Self-contained and easy to use. Other way was to have one grid for all color charaters and go back and forth. I chose this, for now. Once you enter a color, once you go to the "Show" page, only the character name and the color swatch shows.</p>
       <p class="text-xs text-gray-600 mb-3">Click on a color patch to set this character.</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         <% missing_color_chars.each do |c| %>

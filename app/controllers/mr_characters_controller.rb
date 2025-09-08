@@ -20,18 +20,29 @@ class MrCharactersController < ApplicationController
   end
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+    
+    # Apply search by name (case-insensitive on MySQL)
+    if params[:q].present?
+      term = ActiveRecord::Base.sanitize_sql_like(params[:q])
+      @mr_characters = @mr_characters.where("mr_characters.name LIKE ?", "%#{term}%")
+    end
+    # Paginate (required for `paginate` helper)
+
     @mr_characters = @mr_characters.page(params[:page]).per(20)
 
-    # Populate the parts dropdown
-    @parts = if params[:lookup_type_id].present?
-               Part.joins(:mr_characters)
-                   .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
-                   .distinct
-                   .pluck(:name, :id)
+  # Populate parts dropdown
+  @parts =
+    if params[:lookup_type_id].present?
+      Part.joins(:mr_characters)
+          .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
+          .distinct
+          .order(:name)
+          .pluck(:name, :id)
     else
-               Part.pluck(:name, :id) # Show all parts if no lookup_type_id is selected
+      Part.order(:name).pluck(:name, :id)
     end
 end
+
 
 # GET /mr_characters/1 or /mr_characters/1.json
 def show
