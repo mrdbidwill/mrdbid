@@ -3,20 +3,26 @@ class Admin::LookupItemsController < Admin::ApplicationController
   before_action :set_lookup_item, only: [:edit, :update, :destroy]
 
   def index
+    authorize LookupItem
     # @lookup_items = LookupItem.includes(:lookup_type, :source_data).order(:mr_character_id, :name)
-    @lookup_items = policy_scope(LookupItem.includes(:mr_character).order("mr_character_id, name"))
+    @lookup_items = policy_scope(
+      LookupItem.includes(:mr_character).order("mr_character_id, name")
+    ).page(params[:page]).per(20)
   end
 
   def new
+    authorize LookupItem
     @lookup_item = LookupItem.new
   end
 
   def show
+    authorize LookupItem
     @lookup_item = LookupItem.find(params[:id])
   end
 
 
   def create
+    authorize LookupItem
     @lookup_item = LookupItem.new(lookup_item_params)
     if @lookup_item.save
       redirect_to admin_lookup_items_path, notice: "Lookup item created successfully."
@@ -25,9 +31,12 @@ class Admin::LookupItemsController < Admin::ApplicationController
     end
   end
 
-  def edit; end
+  def edit;
+    authorize @lookup_item;
+  end
 
   def update
+    authorize @lookup_item
     if @lookup_item.update(lookup_item_params)
       redirect_to admin_lookup_items_path, notice: "Lookup item updated successfully."
     else
@@ -36,6 +45,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
   end
 
   def destroy
+    authorize @lookup_item
     @lookup_item.destroy
     redirect_to admin_lookup_items_path, notice: "Lookup item deleted successfully."
   end

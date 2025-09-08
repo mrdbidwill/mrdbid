@@ -1,0 +1,8 @@
+<%# app/views/kaminari/tailwind_bar/_last_page.html.erb %>
+<li>
+  <% if current_page.last? %>
+    <span class="inline-flex items-center h-9 px-3 rounded-md bg-gray-200 text-gray-500 cursor-not-allowed">Last</span>
+  <% else %>
+    <%= link_to "Last", url_for(page: total_pages), class: "inline-flex items-center h-9 px-3 rounded-md bg-white text-gray-700 border border-gray-300 hover:bg-gray-50" %>
+  <% end %>
+</li>

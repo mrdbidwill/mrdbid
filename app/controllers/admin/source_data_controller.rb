@@ -6,9 +6,8 @@ class Admin::SourceDataController < Admin::ApplicationController
     authorize SourceData
     @source_data = policy_scope(
       SourceData
-        .includes(:source_data_type) # eager load to satisfy strict_loading
-        .order(:title)
-    )
+        .includes(:source_data_type).order("title") # eager load to satisfy strict_loading
+    ).page(params[:page]).per(10)
   end
 
 

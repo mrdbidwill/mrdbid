@@ -4,12 +4,23 @@
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-
+  <div><p>app/views/admin/lookup_items/index.html.erb</p></div>
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Lookup Items</h1>
-    <%= link_to "Back to dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     <%= link_to "New lookup_item", new_admin_lookup_item_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
+
+  <% if @lookup_items.any? %>
+    <div class="my-4">
+      <%= paginate @lookup_items,
+                   theme: 'tailwind_bar',
+                   params: request.query_parameters,
+                   window: 2,        # how many pages around current
+                   outer_window: 1   # how many pages at the ends
+      %>
+    </div>
+  <% end %>
 
   <div id="lookup_items" class="min-w-full divide-y divide-gray-200 space-y-5">
     <% if @lookup_items.any? %>
@@ -38,7 +49,7 @@
                     <div class="flex flex-wrap items-center gap-2">
                       <%= link_to "Show", admin_lookup_item_path(lookup_item), class: "rounded-md px-3.5 py-2.5 text-white bg-blue-600 hover:bg-blue-500 font-medium cursor-pointer" %>
                       <%= link_to "Edit", edit_admin_lookup_item_path(lookup_item), class: "rounded-md px-3.5 py-2.5 text-white bg-blue-600 hover:bg-blue-500 font-medium cursor-pointer" %>
-                      <%= button_to "Delete", admin_lookup_item_path(lookup_item), method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", form: { class: "inline" }, data: { turbo_confirm: "Are you sure?" } %>
+                      <%# button_to "Delete", admin_lookup_item_path(lookup_item), method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", form: { class: "inline" }, data: { turbo_confirm: "Are you sure?" } %>
                     </div>
                   </td>
                 </tr>
@@ -52,4 +63,14 @@
       <p class="text-center my-10">No lookup items found.</p>
     <% end %>
   </div>
+  <% if @lookup_items.any? %>
+    <div class="my-4">
+      <%= paginate @lookup_items,
+                   theme: 'tailwind_bar',
+                   params: request.query_parameters,
+                   window: 2,        # how many pages around current
+                   outer_window: 1   # how many pages at the ends
+      %>
+    </div>
+  <% end %>
 </div>

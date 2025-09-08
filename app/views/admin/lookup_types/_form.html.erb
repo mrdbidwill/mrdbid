@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+  <div><p>app/views/admin/lookup_types/_form.html.erb</p></div>
+
   <div class="my-5">
     <%= form.label :name %>
     <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_type.errors[:name].none?, "border-red-400 focus:outline-red-600": lookup_type.errors[:name].any?}] %>

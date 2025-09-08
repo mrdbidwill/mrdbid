@@ -34,14 +34,19 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Mushroom Characters</h1>
-    <%= link_to "Back to dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     <%= link_to "New Mushroom Character", new_admin_mr_character_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
   <%# TOP pagination %>
   <% if @mr_characters.any? %>
     <div class="my-4">
-      <%= paginate @mr_characters, params: request.query_parameters %>
+      <%= paginate @mr_characters,
+                   theme: 'tailwind_bar',
+                   params: request.query_parameters,
+                   window: 2,        # how many pages around current
+                   outer_window: 1   # how many pages at the ends
+      %>
     </div>
   <% end %>
 
@@ -68,7 +73,17 @@
       <% end %>
 
       <div class="mt-5">
-        <%= paginate @mr_characters, params: request.query_parameters %> <!-- Pagination links (BOTTOM) -->
+        <!-- Pagination links (BOTTOM) -->
+        <% if @mr_characters.any? %>
+          <div class="my-4">
+            <%= paginate @mr_characters,
+                         theme: 'tailwind_bar',
+                         params: request.query_parameters,
+                         window: 2,        # how many pages around current
+                         outer_window: 1   # how many pages at the ends
+            %>
+          </div>
+        <% end %>
       </div>
     <% else %>
       <p class="text-center my-10">No mushroom characters found.</p>
