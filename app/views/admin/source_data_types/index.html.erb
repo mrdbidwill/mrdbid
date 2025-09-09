@@ -10,16 +10,11 @@
     <%= link_to "New source data type", new_admin_source_data_type_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="source_data _types" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="source_data _types" class="min-w-full divide-y divide-gray-200 space-y-2">
     <% if @source_data_types.any? %>
       <% @source_data_types.each do |source_data_type| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
+        <div class="pb-2">
           <%= render source_data_type %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", admin_source_data_type_path(source_data_type), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-            <%= link_to "Edit", edit_admin_source_data_type_path(source_data_type), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-            <%# button_to "Delete this source data type", admin_source_data_type_path(source_data_type), method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
         </div>
       <% end %>
     <% else %>

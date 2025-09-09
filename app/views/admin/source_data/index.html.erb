@@ -17,7 +17,7 @@
   </div>
   <!-- Pagination links (Top) -->
   <% if @source_data.any? %>
-    <div class="my-4">
+    <div class="my-2">
       <%= paginate @source_data,
                    theme: 'tailwind_bar',
                    params: request.query_parameters,
@@ -27,10 +27,10 @@
     </div>
   <% end %>
 
-  <div id="source_data" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="source_data" class="min-w-full divide-y divide-gray-200 space-y-2">
     <% if @source_data.any? %>
       <% @source_data.each do |source_datum| %>
-        <div class="pb-5">
+        <div class="pb-2">
           <%= render source_datum %>
         </div>
       <% end %>
@@ -40,7 +40,7 @@
   </div>
   <!-- Pagination links (BOTTOM) -->
   <% if @source_data.any? %>
-    <div class="my-4">
+    <div class="my-2">
       <%= paginate @source_data,
                    theme: 'tailwind_bar',
                    params: request.query_parameters,
