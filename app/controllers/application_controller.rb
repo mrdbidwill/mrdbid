@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
+  before_action :set_view_debug_identifier, if: -> { Rails.env.development? || Rails.env.test? }
 
   include Pundit::Authorization # Updated inclusion for Pundit
   # Make Pundit's policy and policy_scope methods available to views
@@ -55,4 +56,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def set_view_debug_identifier
+    # Find the main template for this request and expose a relative path
+    template = lookup_context.find_template(action_name.to_s, lookup_context.prefixes, false) rescue nil
+    @view_debug_identifier = template&.identifier&.sub("#{Rails.root}/", "")
+  end
+
+
 end

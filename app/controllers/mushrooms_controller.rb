@@ -18,7 +18,7 @@ class MushroomsController < ApplicationController
                        Mushroom.arel_table[:name].asc
                      )
                      .page(params[:page])
-                     .per(10)
+                     .per(5)
     else
       @mushrooms = []
     end

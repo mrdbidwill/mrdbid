@@ -22,7 +22,18 @@
   </head>
 
   <body class="bg-gray-100 text-gray-800">
+
   <%= render 'shared/menu' %>
+
+
+  <%# Dev/Test view origin banner %>
+  <% if Rails.env.development? || Rails.env.test? %>
+    <div class="w-full bg-yellow-50 text-yellow-800 text-xs px-3 py-1 border-b border-yellow-200">
+      <span class="font-semibold">View:</span>
+      <%= @view_debug_identifier.presence || "#{controller.controller_path}##{action_name}" %>
+    </div>
+  <% end %>
+
   <%#= <main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-2"> %>
   <%#= <main class="min-h-screen mx-auto pl-10 pr-4 pt-2 pb-32 md:pb-16"> %>
   <main class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-32 md:pb-16">
