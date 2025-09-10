@@ -48,7 +48,7 @@ class Admin::SpeciesController < Admin::ApplicationController
   def destroy
     authorize @species
     @species.destroy!
-    redirect_to admin_species_path, notice: "Species was successfully destroyed."
+    redirect_to admin_species_index_path, notice: "Species was successfully destroyed."
   end
 
   private

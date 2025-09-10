@@ -7,10 +7,10 @@
     <div><p>app/views/storage_locations/index.html.erb</p></div>
 
     <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-    <%= link_to "New camera make", new_admin_storage_location_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "New Tree", new_admin_storage_location_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="camera_makes" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="trees" class="min-w-full divide-y divide-gray-200 space-y-5">
     <% if @storage_locations.any? %>
       <% @storage_locations.each do |storage_location| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
