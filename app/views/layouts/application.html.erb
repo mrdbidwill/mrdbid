@@ -22,9 +22,7 @@
   </head>
 
   <body class="bg-gray-100 text-gray-800">
-
   <%= render 'shared/menu' %>
-
 
   <%# Dev/Test view origin banner %>
   <% if Rails.env.development? || Rails.env.test? %>
@@ -33,6 +31,36 @@
       <%= @view_debug_identifier.presence || "#{controller.controller_path}##{action_name}" %>
     </div>
   <% end %>
+
+
+  <%# Visible list of all rendered templates/partials, scoped to the current view's directory %>
+  <% if Rails.env.development? || Rails.env.test? %>
+    <% current_dir =
+         if @view_debug_identifier.present?
+           File.dirname(@view_debug_identifier) # e.g., "app/views/mushrooms"
+         else
+           "app/views/#{controller.controller_path}" # fallback, e.g., "app/views/mushrooms"
+         end %>
+
+    <% # Start with the main template if it belongs to this directory %>
+    <% items = [] %>
+    <% if @view_debug_identifier.present? && @view_debug_identifier.start_with?("#{current_dir}/") %>
+      <% items << @view_debug_identifier %>
+    <% end %>
+
+    <% # Add ONLY partials rendered from this directory %>
+    <% partials = Array(Thread.current[:rendered_partials]).uniq.select { |p| p.start_with?("#{current_dir}/") } %>
+    <% items.concat(partials) %>
+
+    <div class="w-full bg-yellow-50 text-yellow-800 text-xs px-3 py-1 border-b border-yellow-200">
+      <span class="font-semibold">Rendered views:</span>
+      <% items.each do |path| %>
+        <span class="ml-2 inline-block px-1.5 py-0.5 bg-yellow-100 border border-yellow-200 rounded"><%= path %></span>
+      <% end %>
+    </div>
+  <% end %>
+
+
 
   <%#= <main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-2"> %>
   <%#= <main class="min-h-screen mx-auto pl-10 pr-4 pt-2 pb-32 md:pb-16"> %>

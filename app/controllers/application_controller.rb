@@ -3,7 +3,9 @@
 
 class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
-  before_action :set_view_debug_identifier, if: -> { Rails.env.development? || Rails.env.test? }
+  before_action :set_view_debug_identifier, if: -> { Rails.env.development? || Rails.env.test? }  # see file name on each page
+  before_action :_debug_views_reset, if: -> { Rails.env.development? || Rails.env.test? }
+  helper_method :rendered_views_debug
 
   include Pundit::Authorization # Updated inclusion for Pundit
   # Make Pundit's policy and policy_scope methods available to views
@@ -63,5 +65,12 @@ class ApplicationController < ActionController::Base
     @view_debug_identifier = template&.identifier&.sub("#{Rails.root}/", "")
   end
 
+  def _debug_views_reset
+    Thread.current[:rendered_views] = []
+  end
 
+  # Helper used by the layout to read the collected list at render time
+  def rendered_views_debug
+    Array(Thread.current[:rendered_views]).uniq
+  end
 end
