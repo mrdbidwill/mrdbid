@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index show], raise: false
+  # skip_before_action :authenticate_user!, only: %i[index show], raise: false
 
   def index
     @subjects = Article.distinct.order(:subject).pluck(:subject).compact

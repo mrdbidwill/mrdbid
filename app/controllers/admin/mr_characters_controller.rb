@@ -7,11 +7,23 @@ class Admin::MrCharactersController < Admin::ApplicationController
     @mr_characters = policy_scope(
       MrCharacter
         .includes( :part, :lookup_type, :display_option, :source_data)
-        .order(:id)
+        .order(:name)
     )
     # Apply filters
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+
+    # Search by name or ID
+    if params[:q].present?
+      term_raw = params[:q].to_s.strip
+      term = ActiveRecord::Base.sanitize_sql_like(term_raw)
+      if term_raw =~ /\A\d+\z/
+        @mr_characters = @mr_characters.where("mr_characters.id = ? OR mr_characters.name LIKE ?", term_raw.to_i, "%#{term}%")
+      else
+        @mr_characters = @mr_characters.where("mr_characters.name LIKE ?", "%#{term}%")
+      end
+    end
+
     # Paginate (required for `paginate` helper)
     @mr_characters = @mr_characters.page(params[:page]).per(20)
 

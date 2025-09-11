@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   # Mushrooms and related nested relationships
   resources :mushrooms do
     resources :image_mushrooms, only: [:new, :create, :edit, :update, :destroy]
-    resources :mr_characters, only: [:index, :show] # Specifically tied to mushrooms
     resources :mushroom_species, only: [:index, :new, :create, :destroy]
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
   end
@@ -59,16 +58,20 @@ Rails.application.routes.draw do
     resources :species
     resources :states
     resources :trees
-  end
-
-  resources :lookup_items do
-    member do
-      get :versions
+    resources :lookup_items do
+      member do
+        get :versions
+      end
     end
-  end
+    resources :mr_characters do
+      member do
+        get :versions
+      end
+    end
+end
 
 
-    # Static pages
+  # Static pages
     root 'pages#home'
     get 'contact', to: 'pages#contact'
 

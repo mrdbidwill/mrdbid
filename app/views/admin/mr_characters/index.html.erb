@@ -1,7 +1,5 @@
 <% content_for :title, "Mushroom Characters" %>
 
-<div><p>app/views/mr_characters/index.html.erb</p></div>
-
 <style>
     /* More spacing between pagination items and bigger click targets */
     .pagination { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
@@ -16,21 +14,139 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-   <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "flex space-x-4 mb-5" do |form| %>
-     <div>
-       <%= form.label :lookup_type_id, "Lookup Type", class: "block font-bold" %>
-       <%= form.select :lookup_type_id, LookupType.pluck(:name, :id), include_blank: "All", class: "rounded-md border-gray-300 w-full" %>
-     </div>
+  <!-- Filter card -->
+  <div class="mb-6 rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div class="px-4 py-3 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900">Filter Mushroom Characters</h2>
+      <p class="mt-1 text-sm text-gray-600">Choose a Lookup Type and/or Part, then apply the filter. Use Reset to clear selections.</p>
+    </div>
+    <div class="px-4 py-4">
+      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 sm:grid-cols-3" do |form| %>
+        <div>
+          <%= form.label :lookup_type_id, "Lookup Type", class: "block text-sm font-medium text-gray-900" %>
+          <div class="relative mt-1">
+            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              <!-- Left chevron icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.707 15.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L8.414 10l4.293 4.293z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <%= form.select :lookup_type_id,
+                            LookupType.pluck(:name, :id),
+                            { include_blank: "All" },
+                            class: "block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 appearance-none pl-9 pr-8" %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Select a category to narrow results by character type.</p>
+        </div>
 
-    <div>
-      <%= form.label :part_id, "Part", class: "block font-bold" %>
-      <%= form.select :part_id, @parts, include_blank: "All", class: "rounded-md border-gray-300 w-full" %>
+        <div>
+          <%= form.label :part_id, "Part", class: "block text-sm font-medium text-gray-900" %>
+          <div class="relative mt-1">
+            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              <!-- Left chevron icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.707 15.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L8.414 10l4.293 4.293z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <%= form.select :part_id,
+                            @parts,
+                            { include_blank: "All" },
+                            class: "block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 appearance-none pl-9 pr-8" %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Limit characters to a specific mushroom part.</p>
+        </div>
+
+        <div class="flex items-end gap-2">
+          <%= form.submit "Apply Filter", class: "inline-flex items-center rounded-md px-4 py-2 bg-blue-600 text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1" %>
+          <%= link_to "Reset", admin_mr_characters_path, class: "inline-flex items-center rounded-md px-4 py-2 bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1" %>
+        </div>
+      <% end %>
     </div>
 
-     <div class="flex items-end">
-       <%= form.submit "Filter", class: "rounded-md px-4 py-2 bg-blue-600 text-white" %>
-     </div>
-   <% end %>
+    <!-- Current filter summary -->
+    <%# Safely compute human-friendly names for summary %>
+    <% selected_lookup_type = params[:lookup_type_id].presence && LookupType.find_by(id: params[:lookup_type_id]) %>
+    <% part_name_by_id = (@parts || []).each_with_object({}) { |(name, id), h| h[id.to_s] = name } %>
+    <% selected_part_name = params[:part_id].presence && part_name_by_id[params[:part_id].to_s] %>
+
+    <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
+      <% if params[:lookup_type_id].present? || params[:part_id].present? %>
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <span class="text-gray-700 font-medium">Currently showing:</span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
+            <span class="font-medium">Lookup Type:</span>
+            <span><%= selected_lookup_type&.name || "All" %></span>
+          </span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
+            <span class="font-medium">Part:</span>
+            <span><%= selected_part_name || "All" %></span>
+          </span>
+          <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_mr_characters_path}\"]').scrollIntoView({behavior:'smooth'})" %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-600">No filters applied. Showing all characters.</p>
+      <% end %>
+    </div>
+  </div>
+  <!-- End Filter card -->
+
+  <!-- Search card -->
+  <div class="mb-6 rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div class="px-4 py-3 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900">Search Characters</h2>
+      <p class="mt-1 text-sm text-gray-600">Search by name or ID. Press Enter or click Search.</p>
+    </div>
+    <div class="px-4 py-4">
+      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 sm:grid-cols-3 items-end" do %>
+        <%= hidden_field_tag :lookup_type_id, params[:lookup_type_id] if params[:lookup_type_id].present? %>
+        <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
+        <div class="sm:col-span-2">
+          <label for="q" class="block text-sm font-medium text-gray-900">Name or ID</label>
+          <div class="relative mt-1">
+            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              <!-- Left search icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M13.293 14.707a1 1 0 001.414 0l3.146-3.146a1 1 0 10-1.414-1.414L13.293 13.293a6 6 0 111.414-1.414l3.146-3.146a8 8 0 10-1.414 1.414l-3.146 3.146a1 1 0 000 1.414z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <%= text_field_tag :q, params[:q], placeholder: "e.g. ‘Cap surface’ or 1234",
+                               class: "block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 appearance-none pl-9 pr-3 py-2" %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Partial matches allowed for names. Use a number to search by ID.</p>
+        </div>
+        <div class="flex gap-2">
+          <%= submit_tag "Search", class: "inline-flex items-center rounded-md px-4 py-2 bg-blue-600 text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1" %>
+          <%= link_to "Reset", admin_mr_characters_path, class: "inline-flex items-center rounded-md px-4 py-2 bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1" %>
+        </div>
+      <% end %>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Current search summary -->
+    <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
+      <% if params[:q].present? %>
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <span class="text-gray-700 font-medium">Search:</span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 text-purple-700 px-2.5 py-1">
+            <span class="font-medium">Query:</span>
+            <span><%= params[:q] %></span>
+          </span>
+          <%= link_to "Clear", admin_mr_characters_path(request.query_parameters.except(:q)), class: "ml-auto text-blue-700 hover:underline" %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-600">No search applied.</p>
+      <% end %>
+    </div>
+  </div>
+  <!-- End Search card -->
+
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Mushroom Characters</h1>

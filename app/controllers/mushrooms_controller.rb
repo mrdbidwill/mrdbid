@@ -40,7 +40,7 @@ class MushroomsController < ApplicationController
     authorize @mushroom if respond_to?(:authorize) # Authorize before saving
 
     if @mushroom.save
-      redirect_to @mushroom, notice: "Mushroom was successfully created."
+      redirect_to new_image_mushroom_path(mushroom_id: @mushroom.id), notice: "Mushroom was successfully created. Now add an image."
     else
       render :new
     end
