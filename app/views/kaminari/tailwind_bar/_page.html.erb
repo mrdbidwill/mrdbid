@@ -1,8 +1,8 @@
 <%# app/views/kaminari/tailwind_bar/_page.html.erb %>
 <li>
   <% if page.current? %>
-    <span class="inline-flex items-center justify-center h-9 min-w-9 px-3 rounded-md bg-blue-600 text-white font-medium"><%= page.number %></span>
+    <span class="inline-flex items-center justify-center h-6 min-w-9 px-3 rounded-md bg-blue-600 text-white font-medium"><%= page.number %></span>
   <% else %>
-    <%= link_to page.number, url_for(page: page), class: "inline-flex items-center justify-center h-9 min-w-9 px-3 rounded-md bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 font-medium" %>
+    <%= link_to page.number, url_for(page: page), class: "inline-flex items-center justify-center h-6 min-w-9 px-3 rounded-md bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 font-medium" %>
   <% end %>
 </li>

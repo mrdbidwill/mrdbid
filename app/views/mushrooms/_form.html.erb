@@ -15,17 +15,17 @@
 
   <div class="my-5">
     <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:name].any?}] %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:name].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :description %>
-    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :comments %>
-    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
+    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
   </div>
 
     <!-- Country -->
@@ -35,7 +35,7 @@
       <%= form.label :country_id, "Country" %>
       <%= form.collection_select :country_id, Country.all, :id, :name,
                                  { prompt: "Please select your country" },
-                                 { class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
+                                 { class: "block shadow-sm rounded-md border px-3 py-2 mt-1 w-full",
                                    data: { action: "change->country-select#change",
                                            "country-select-target": "countrySelect"} } %>
 
@@ -43,7 +43,7 @@
       <div id="state-select-container" class="mt-2">
         <select name="mushroom[state_id]"
                 id="mushroom_state_id"
-                class="block shadow-sm rounded-md border px-3 py-2 w-full"
+                class="block shadow-sm rounded-md border px-3 py-1 w-full"
                 data-country-select-target="stateSelect"
                 data-current="<%= mushroom.state_id %>"
                 <%= mushroom.country_id.present? ? "" : "disabled" %>>
@@ -65,12 +65,12 @@
     <%= form.label :fungus_type_id, "Fungus Type" %>
     <%= form.collection_select :fungus_type_id, FungusType.all, :id, :name,
                                { prompt: "Select a Fungus Type" },
-                               { class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" } %>
+                               { class: "block shadow-sm rounded-md border px-3 py-1 mt-2 w-full" } %>
   </div>
 
 
   <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
     <p class="text-red-600">This button will update the above fields.</p>
   </div>
   </div>

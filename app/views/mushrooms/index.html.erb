@@ -1,13 +1,13 @@
 <% content_for :title, "Mushrooms" %>
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-2 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Your Mushrooms</h1>
-    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-    <%= link_to "Add New Mushroom", new_mushroom_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Add New Mushroom", new_mushroom_path, class: "rounded-md px-3.5 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
 
   </div>
 
@@ -25,16 +25,16 @@
 
   <div class="flex justify-between items-center"> <p class="font-bold text-sm text-red-600">Click on a mushroom to view details.</p></div>
 
-  <div id="mushrooms" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="mushrooms" class="min-w-full divide-y divide-gray-200 space-y-1">
   <% if @mushrooms&.any? %>
       <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
       <% grouped.keys.sort.each do |ft_name| %>
-        <div class="pt-6">
-          <h2 class="text-lg font-semibold text-gray-700 mb-3">Mushroom Type: <%= ft_name %></h2>
+        <div class="pt-1">
+          <h2 class="text-lg font-semibold text-gray-700 mb-2">Mushroom Type: <%= ft_name %></h2>
 
           <% grouped[ft_name].sort_by { |m| m.name.to_s.downcase }.each do |mushroom| %>
             <%= link_to mushroom_path(mushroom), class: "block rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-sm transition" do %>
-              <div class="p-3 flex flex-col gap-3">
+              <div class="p-1 flex flex-col gap-1">
                 <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
                 <% if images.any? %>
                   <div class="w-full">
@@ -76,7 +76,7 @@
                 <% end %>
 
                 <div class="rounded-md bg-white">
-                  <div class="p-3 rounded-md bg-gray-50">
+                  <div class="p-1 rounded-md bg-gray-50">
                     <% country_name = mushroom.country&.name %>
                     <% state_name = mushroom.state&.name %>
                     <% location = [state_name, country_name].compact.join(", ") %>
@@ -102,7 +102,7 @@
         </div>
       <% end %>
     <% else %>
-      <p class="text-center my-10">No mushrooms found.</p>
+      <p class="text-center my-4">No mushrooms found.</p>
     <% end %>
   </div>
   <!-- Top Pagination -->
