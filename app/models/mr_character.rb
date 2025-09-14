@@ -18,13 +18,5 @@ class MrCharacter < ApplicationRecord
   validates :lookup_type_id, presence: true
   validates :display_option_id, presence: true
   validates :source_data_id, presence: true
-
-  def versions
-    @mr_character = MrCharacter.find(params[:id])
-    # Show most recent first
-    @versions = @mr_character.versions.order(created_at: :desc)
-    authorize @mr_character # Pundit: restricts to admins
-  end
-
 end
 

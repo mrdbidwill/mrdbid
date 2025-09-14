@@ -30,11 +30,5 @@
     <%= form.collection_select(:part_id, @parts, :id, :name, { selected: @image_mushroom.part_id, prompt: "Select a Part" }) %>
   </div>
 
-  <!-- Camera Dropdown -->
-  <div class="field">
-    <%= form.label :camera_id, "Camera" %>
-    <%= form.collection_select(:camera_id, @cameras, :id, :name, { selected: @image_mushroom.camera_id, prompt: "Select a Camera" }) %>
-  </div>
-
   <%= form.submit "Update Image", class: "btn btn-primary" %>
 <% end %>

@@ -29,41 +29,6 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :camera_id, "Camera" %>
-    <%= form.collection_select :camera_id, cameras, :id, :name, { prompt: 'Select Camera' }, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:camera_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:camera_id].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :image_width %>
-    <%= form.number_field :image_width, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_width].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_width].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :image_height %>
-    <%= form.number_field :image_height, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_height].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_height].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :lens %>
-    <%= form.text_field :lens, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:lens].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:lens].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :exposure %>
-    <%= form.text_field :exposure, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:exposure].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:exposure].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :aperture %>
-    <%= form.text_field :aperture, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:aperture].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:aperture].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :iso %>
-    <%= form.text_field :iso, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:iso].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:iso].any?}] %>
-  </div>
-
-  <div class="my-5">
     <%= form.submit class: 'bg-blue-500 text-white px-4 py-2' %>
   </div>
 <% end %>

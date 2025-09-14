@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/db/scripts/insert_camera_models.sql" value="f151c20d-89c0-4552-b11e-56b736ff62a3" />
     <file url="file://$PROJECT_DIR$/db/scripts/insert_display_options.sql" value="f151c20d-89c0-4552-b11e-56b736ff62a3" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/f151c20d-89c0-4552-b11e-56b736ff62a3/console.sql" value="f151c20d-89c0-4552-b11e-56b736ff62a3" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/f151c20d-89c0-4552-b11e-56b736ff62a3/console_1.sql" value="f151c20d-89c0-4552-b11e-56b736ff62a3" />

@@ -5,7 +5,7 @@ class ImageMushroomsController < ApplicationController
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 
   def index
-    @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part, :camera)
+    @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part)
   end
 
 
@@ -21,7 +21,6 @@ class ImageMushroomsController < ApplicationController
     @image_mushroom = ImageMushroom.new
     @image_mushroom.mushroom_id = @mushroom.id
     @parts = Part.all.order(:name)
-    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
 
@@ -46,18 +45,14 @@ class ImageMushroomsController < ApplicationController
       redirect_to mushroom_path(@image_mushroom.mushroom_id), notice: "Image successfully uploaded."
     else
       @parts = Part.all.order(:name)
-      @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
     end
   end
-
-
 
   def edit
     authorize @image_mushroom
     @mushrooms = Mushroom.all
     @parts = Part.all
-    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def update
@@ -88,7 +83,7 @@ class ImageMushroomsController < ApplicationController
 
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
-    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera).find(params[:id])
+    @image_mushroom = ImageMushroom.includes(:mushroom, :part).find(params[:id])
     @image_mushroom.strict_loading!(false) if @image_mushroom.respond_to?(:strict_loading!)
   end
 
@@ -98,14 +93,7 @@ class ImageMushroomsController < ApplicationController
       :mushroom_id,
       :part_id,
       :image_name,
-      :image_file,
-      :image_width,
-      :image_height,
-      :camera_id,
-      :lens,
-      :exposure,
-      :aperture,
-      :iso
+      :image_file
     )
   end
 end

@@ -33,9 +33,6 @@ Rails.application.routes.draw do
     resources :articles
     resources :colors
     resources :countries
-    resources :cameras
-    resources :camera_models
-    resources :camera_makes
     resources :display_options
     resources :dna_sequences
     resources :fungus_types

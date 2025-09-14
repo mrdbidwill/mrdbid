@@ -6,7 +6,7 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
 
   def index
     authorize ImageMushroom
-    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part, :camera).order(:image_name))
+    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part).order(:image_name))
   end
 
   def show
@@ -33,7 +33,6 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
       # Reload data for form rendering without touching associations
       @mushroom = Mushroom.find_by(id: @image_mushroom.mushroom_id)
       @parts = Part.all.order(:name)
-      @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
       render :new, status: :unprocessable_entity
     end
   end
@@ -42,7 +41,6 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
     authorize @image_mushroom
     @mushrooms = Mushroom.all
     @parts = Part.all
-    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def update
@@ -69,12 +67,11 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
   def set_collections
     @mushrooms = Mushroom.all.order(:name)
     @parts = Part.all.order(:name)
-    @cameras = Camera.includes(:camera_make, :camera_model).order("camera_makes.name, camera_models.name")
   end
 
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
-    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera).find(params[:id])
+    @image_mushroom = ImageMushroom.includes(:mushroom, :part).find(params[:id])
     @image_mushroom.strict_loading!(false) if @image_mushroom.respond_to?(:strict_loading!)
   end
 
@@ -87,7 +84,6 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
       :image_file,   # Permit the new `image_file` attachment - Active Storage
       :image_width,
       :image_height,
-      :camera_id,
       :lens,
       :exposure,
       :aperture,

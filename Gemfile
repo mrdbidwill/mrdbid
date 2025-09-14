@@ -22,6 +22,8 @@ gem "image_processing", "~> 1.2"
 gem 'paper_trail', '~> 16.0' # or the latest version
 gem 'kaminari' # pagination
 gem 'ruby-vips', '~> 2.1'
+gem "exifr" # EXIF parsing for JPEG/TIFF images
+gem "mini_exiftool"   # Robust fallback for HEIC/RAW via exiftool
 
 gem 'csv'
 

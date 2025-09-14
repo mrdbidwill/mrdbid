@@ -13,7 +13,8 @@
         <th class="border px-4 py-2">Part</th>
         <th class="border px-4 py-2">Image Width</th>
         <th class="border px-4 py-2">Image Height</th>
-        <th class="border px-4 py-2">Camera</th>
+        <th class="border px-4 py-2">Camera Make</th>
+        <th class="border px-4 py-2">Camera Model</th>
         <th class="border px-4 py-2">Lens</th>
         <th class="border px-4 py-2">Exposure</th>
         <th class="border px-4 py-2">Aperture</th>
@@ -32,7 +33,8 @@
           <td class="border px-4 py-2"><%= image_mushroom.part&.name || "No Part" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.image_height || "No Image Height" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.image_width || "No Image Width" %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.camera&.name || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.camera_make || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.camera_model || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.lens.presence || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.exposure || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.aperture || 'N/A' %></td>
