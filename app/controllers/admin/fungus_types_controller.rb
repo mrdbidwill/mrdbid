@@ -23,7 +23,7 @@ class Admin::FungusTypesController < Admin::ApplicationController
     @fungus_type = FungusType.new(fungus_type_params)
     authorize @fungus_type
     if @fungus_type.save
-      redirect_to admin_fungus_type_path(@fungus_type), notice: "Camera make was successfully created."
+      redirect_to admin_fungus_type_path(@fungus_type), notice: "Fungus type was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class Admin::FungusTypesController < Admin::ApplicationController
   def update
     authorize @fungus_type
     if @fungus_type.update(fungus_type_params)
-      redirect_to admin_fungus_type_path(@fungus_type), notice: "Camera make was successfully updated."
+      redirect_to admin_fungus_type_path(@fungus_type), notice: "Fungus type was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class Admin::FungusTypesController < Admin::ApplicationController
   def destroy
     authorize @fungus_type
     @fungus_type.destroy!
-    redirect_to admin_fungus_types_path, notice: "Camera make was successfully destroyed."
+    redirect_to admin_fungus_types_path, notice: "Fungus type was successfully destroyed."
   end
 
   private

@@ -1,4 +1,4 @@
-<%= form_with(model: fungus_type, class: "contents") do |form| %>
+<%= form_with(model: [:admin, fungus_type], class: "contents") do |form| %>
   <% if fungus_type.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(fungus_type.errors.count, "error") %> prohibited this fungus_type from being saved:</h2>
@@ -18,15 +18,19 @@
 
   <div class="my-5">
     <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": fungus_type.errors[:description].none?, "border-red-400 focus:outline-red-600": fungus_type.errors[:description].any?}] %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": fungus_type.errors[:description].none?, "border-red-400 focus:outline-red-600": fungus_type.errors[:description].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :comments %>
-    <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": fungus_type.errors[:comments].none?, "border-red-400 focus:outline-red-600": fungus_type.errors[:comments].any?}] %>
+    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": fungus_type.errors[:comments].none?, "border-red-400 focus:outline-red-600": fungus_type.errors[:comments].any?}] %>
   </div>
 
   <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+    <% if fungus_type.persisted? %>
+      <%= link_to "Show this fungus type", admin_fungus_type_path(fungus_type), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+    <% end %>
+    <%= link_to "Back to fungus types", admin_fungus_types_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
   </div>
 <% end %>
