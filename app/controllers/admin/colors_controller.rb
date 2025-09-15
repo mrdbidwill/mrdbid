@@ -20,7 +20,7 @@ class Admin::ColorsController < Admin::ApplicationController
 
   # POST /camera_makes
   def create
-    @color = Color.new(camera_make_params)
+    @color = Color.new(color_params)
     authorize @color
     if @color.save
       redirect_to admin_color_path(@color), notice: "Color was successfully created."
