@@ -45,7 +45,7 @@ class Admin::CountriesController < Admin::ApplicationController
     @country = Country.find(params[:id])
     authorize @country
     if @country.update(country_params)
-      redirect_to @country, notice: "Country was successfully updated."
+      redirect_to admin_country_url(@country), notice: "Country was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
