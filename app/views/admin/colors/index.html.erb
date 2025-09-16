@@ -27,12 +27,8 @@
                   <div class="text-gray-600 text-sm mb-1"><b>Hex:</b> <%= color.hex %></div>
                   <div class="text-gray-600 text-sm"><b>Group:</b> <%= color.color_group %></div>
                 </div>
-                <div class="mt-4 sm:mt-0 flex flex-row gap-3">
-                  <%= link_to "Show", admin_color_path(color),
-                      class: "inline-flex items-center justify-center h-10 min-w-[5.5rem] px-4 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-100" %>
-                  <%= link_to "Edit", edit_admin_color_path(color),
-                      class: "inline-flex items-center justify-center h-10 min-w-[5.5rem] px-4 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-100" %>
-                  <%# button_to "Delete", admin_color_path(color), method: :delete, class: "inline-flex items-center justify-center h-10 min-w-[5.5rem] px-4 rounded-md bg-red-600 hover:bg-red-500 text-white font-medium transition-all duration-100", data: { turbo_confirm: "Are you sure?" } %>
+                <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+                  <%= render "admin/shared/resource_actions", record: color, delete: true %>
                 </div>
               </div>
             </div>

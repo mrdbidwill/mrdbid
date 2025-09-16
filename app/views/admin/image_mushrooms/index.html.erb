@@ -1,8 +1,7 @@
 <div>
-
+  <div class="flex justify-between items-center">
   <h1 class="font-bold text-4xl">Image Mushrooms</h1>
-  <div class="my-5">
-    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
   <table class="table-auto border-collapse border border-gray-200">
     <thead>
@@ -11,14 +10,9 @@
         <th class="border px-4 py-2">Image Name</th>
         <th class="border px-4 py-2">Mushroom</th>
         <th class="border px-4 py-2">Part</th>
-        <th class="border px-4 py-2">Image Width</th>
-        <th class="border px-4 py-2">Image Height</th>
-        <th class="border px-4 py-2">Camera Make</th>
-        <th class="border px-4 py-2">Camera Model</th>
-        <th class="border px-4 py-2">Lens</th>
-        <th class="border px-4 py-2">Exposure</th>
-        <th class="border px-4 py-2">Aperture</th>
-        <th class="border px-4 py-2">ISO</th>
+        <th class="border px-4 py-2">Image Size</th>
+        <th class="border px-4 py-2">Camera - Lens</th>
+        <th class="border px-4 py-2">Settings</th>
         <th class="border px-4 py-2">Created</th>
         <th class="border px-4 py-2">Updated</th>
         <th class="border px-4 py-2">Actions</th>
@@ -31,25 +25,16 @@
           <td class="border px-4 py-2"><%= image_mushroom.image_name %></td>
           <td class="border px-4 py-2"><%= image_mushroom.mushroom&.name || "No Mushroom" %></td>
           <td class="border px-4 py-2"><%= image_mushroom.part&.name || "No Part" %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.image_height || "No Image Height" %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.image_width || "No Image Width" %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.camera_make || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.camera_model || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.lens.presence || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.exposure || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.aperture || 'N/A' %></td>
-          <td class="border px-4 py-2"><%= image_mushroom.iso || 'N/A' %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.image_height || "No Image Height" %> X <%= image_mushroom.image_width || "No Image Width" %></td>
+          <td class="border px-4 py-2"><%= image_mushroom.camera_make || 'N/A' %> - <%= image_mushroom.camera_model || 'N/A' %> - <%= image_mushroom.lens.presence || 'N/A' %></td>
+          <td class="border px-4 py-2">Exposure: <%= image_mushroom.exposure || 'N/A' %> Aperture: <%= image_mushroom.aperture || 'N/A' %> ISO: <%= image_mushroom.iso || 'N/A' %></td>
           <td class="border px-4 py-2"><%= image_mushroom.created_at %></td>
           <td class="border px-4 py-2"><%= image_mushroom.updated_at %></td>
           <td class="border px-4 py-2">
-            <%= link_to 'Show', admin_image_mushroom_path(image_mushroom), class: 'text-blue-500' %>
-            <%= link_to 'Edit', edit_admin_image_mushroom_path(image_mushroom), class: 'text-yellow-500' %>
-            <%= link_to 'Delete', admin_image_mushroom_path(image_mushroom), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500' %>
+            <%= render "admin/shared/resource_actions", record: image_mushroom, delete: false %>  <!-- show, edit, destroy (optional -->
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-
-  <%= link_to 'New Image Mushroom', new_admin_image_mushroom_path, class: 'mt-4 text-green-500 block' %>
 </div>

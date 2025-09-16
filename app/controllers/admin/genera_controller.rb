@@ -23,7 +23,7 @@ class Admin::GeneraController < Admin::ApplicationController
     @genus = Genus.new(genus_params)
     authorize @genus
     if @genus.save
-      redirect_to admin_genera_path(@genus), notice: "Genus was successfully created."
+      redirect_to admin_genus_path(@genus), notice: "Genus was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class Admin::GeneraController < Admin::ApplicationController
   def update
     authorize @genus
     if @genus.update(genus_params)
-      redirect_to admin_genera_path(@genus), notice: "Genus was successfully updated."
+      redirect_to admin_genus_path(@genus), notice: "Genus was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class Admin::GeneraController < Admin::ApplicationController
   def destroy
     authorize @genus
     @genus.destroy!
-    redirect_to admin_genera_index_path, notice: "Genus was successfully destroyed."
+    redirect_to admin_genera_path, notice: "Genus was successfully destroyed."
   end
 
   private
