@@ -50,6 +50,13 @@ class Admin::LookupItemsController < Admin::ApplicationController
     redirect_to admin_lookup_items_path, notice: "Lookup item deleted successfully."
   end
 
+  def versions
+    @lookup_item = LookupItem.find(params[:id])
+    # Show most recent first
+    @versions = @lookup_item.versions.order(created_at: :desc)
+    authorize @lookup_item # Pundit: restricts to admins
+  end
+
   private
 
   def set_lookup_item
@@ -57,6 +64,6 @@ class Admin::LookupItemsController < Admin::ApplicationController
   end
 
   def lookup_item_params
-    params.require(:lookup_item).permit(:name, :description, :comments, :mr_character_id, :lookup_type_id, :source_data_id)
+    params.require(:lookup_item).permit(:mr_character_id, :name, :description, :comments, :source_data_id)
   end
 end

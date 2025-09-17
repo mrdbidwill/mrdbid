@@ -1,6 +1,6 @@
 <%= form_with(model: [:admin, source_data_type], class: "contents") do |form| %>
   <% if source_data_type.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(source_data_type.errors.count, "error") %> prohibited this source_data_type from being saved:</h2>
 
       <ul class="list-disc ml-6">
@@ -13,24 +13,23 @@
 
   <div class="my-5">
     <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:name].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:name].any?}] %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:name].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:name].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :description %>
-    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:description].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:description].any?}] %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:description].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:description].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :comments %>
-    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:comments].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:comments].any?}] %>
+    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": source_data_type.errors[:comments].none?, "border-red-400 focus:outline-red-600": source_data_type.errors[:comments].any?}] %>
   </div>
 
-  <%# source_data_type.persisted? checks if source_data_type already exists in database %>
-  <div class="inline">
-    <%= form.submit(
-          source_data_type.persisted? ? "Update Source data type" : "Create Source data type",
-          class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer"
-        ) %>
-  </div>
+  <%= render "admin/shared/form_actions",
+             record: source_data_type,
+             back_path: admin_source_data_types_path,
+             submit_text: (source_data_type.persisted? ? "Update" : "Create"),
+             show_text: "Show this source data type",
+             back_text: "Back to source data types" %>
 <% end %>

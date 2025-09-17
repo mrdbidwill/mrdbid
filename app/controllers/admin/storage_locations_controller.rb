@@ -5,19 +5,16 @@ class Admin::StorageLocationsController < Admin::ApplicationController
   def index
     @storage_locations = policy_scope(StorageLocation)
     respond_to do |format|
-
       format.html
-      format.json { render json: @storage_locations }
     end
   end
 
   # GET /storage_locations/1 or /storage_locations/1.json
   def show
-    @storage_location = authorize current_user.storage_locations.find(params[:id])
+    @storage_location = StorageLocation.find(params[:id])
+    authorize @storage_location
     respond_to do |format|
-
       format.html
-      format.json { render json: @storage_locations }
     end
   end
 
@@ -36,21 +33,20 @@ class Admin::StorageLocationsController < Admin::ApplicationController
 
   # GET /storage_locations/1/edit
   def edit
-    @storage_location = authorize current_user.storage_locations.find(params[:id])
+    @storage_location = StorageLocation.find(params[:id])
+    authorize @storage_location
     respond_to do |format|
-
       format.html
-      format.json { render json: @storage_locations }
     end
   end
 
 
   # POST /storage_locations or /storage_locations.json
   def create
-    @storage_location = current_user.storage_locations.build(storage_location_params)
+    @storage_location = StorageLocation.new(storage_location_params)
     authorize @storage_location
     if @storage_location.save
-      redirect_to storage_location_url(@storage_location), notice: "StorageLocation was successfully created."
+      redirect_to admin_storage_location_path(@storage_location), notice: "Storage Location was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,9 +54,10 @@ class Admin::StorageLocationsController < Admin::ApplicationController
 
   # PATCH/PUT /storage_locations/1 or /storage_locations/1.json
   def update
-    @storage_location = authorize current_user.storage_locations.find(params[:id])
+    @storage_location = StorageLocation.find(params[:id])
+    authorize @storage_location
     if @storage_location.update(storage_location_params)
-      redirect_to @storage_location, notice: "StorageLocation was successfully updated."
+      redirect_to admin_storage_location_path(@storage_location), notice: "Storage Location was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -69,9 +66,10 @@ class Admin::StorageLocationsController < Admin::ApplicationController
 
   # DELETE /storage_locations/1 or /storage_locations/1.json
   def destroy
-    @storage_location = authorize current_user.storage_locations.find(params[:id])
+    @storage_location = StorageLocation.find(params[:id])
+    authorize @storage_location
     @storage_location.destroy!
-    redirect_to storage_locations_path, notice: "StorageLocation was successfully destroyed."
+    redirect_to admin_storage_locations_path, notice: "Storage Location was successfully destroyed."
   end
 
 

@@ -15,17 +15,17 @@
 
   <div class="my-5">
     <%= form.label :image_file, "Select an Image File" %>
-    <%= form.file_field :image_file, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_file].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_file].any?}] %>
+    <%= form.file_field :image_file, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_file].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_file].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :image_name %>
-    <%= form.text_field :image_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_name].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_name].any?}] %>
+    <%= form.text_field :image_name, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_name].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_name].any?}] %>
   </div>
 
   <div class="my-5">
     <%= form.label :part_id, "Part" %>
-    <%= form.collection_select :part_id, parts, :id, :name, { prompt: 'Select Part' }, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:part_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:part_id].any?}] %>
+    <%= form.collection_select :part_id, parts, :id, :name, { prompt: 'Select Part' }, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:part_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:part_id].any?}] %>
   </div>
 
   <div class="my-5">

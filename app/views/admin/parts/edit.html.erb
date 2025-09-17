@@ -1,10 +1,7 @@
 <% content_for :title, "Editing part" %>
 
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing part</h1>
+  <h1 class="font-bold text-2xl">Editing part</h1>
 
   <%= render "form", part: @part %>
-
-  <%= link_to "Show this part", admin_part_path(@part), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
-  <%= link_to "Back to parts", admin_parts_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
 </div>

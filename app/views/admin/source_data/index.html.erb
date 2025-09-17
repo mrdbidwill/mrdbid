@@ -1,19 +1,15 @@
 <% content_for :title, "Source data" %>
 
-<div>
-  <p>app/views/admin/source_data/index.html.erb</p>
-</div>
-
 <div class="w-full">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Source Data</h1>
+    <h1 class="font-bold text-2xl">Source Data</h1>
 
-    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-    <%= link_to "New Source Data", new_admin_source_datum_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "New Source Data", new_admin_source_datum_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
   <!-- Pagination links (Top) -->
   <% if @source_data.any? %>
@@ -32,6 +28,9 @@
       <% @source_data.each do |source_datum| %>
         <div class="pb-2">
           <%= render source_datum %>
+          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+            <%= render "admin/shared/resource_actions", record: source_datum, delete: false %>  <!-- show, edit, destroy (optional -->
+          </div>
         </div>
       <% end %>
     <% else %>

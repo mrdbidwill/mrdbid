@@ -1,6 +1,6 @@
 <%= form_with(model: mushroom, class: "contents") do |form| %>
   <% if mushroom.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(mushroom.errors.count, "error") %> prohibited this mushroom from being saved:</h2>
 
       <ul class="list-disc ml-6">
@@ -35,7 +35,7 @@
       <%= form.label :country_id, "Country" %>
       <%= form.collection_select :country_id, Country.all, :id, :name,
                                  { prompt: "Please select your country" },
-                                 { class: "block shadow-sm rounded-md border px-3 py-2 mt-1 w-full",
+                                 { class: "block shadow-sm rounded-md border px-2 py-1 mt-1 w-full",
                                    data: { action: "change->country-select#change",
                                            "country-select-target": "countrySelect"} } %>
 

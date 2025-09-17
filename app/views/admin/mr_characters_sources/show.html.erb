@@ -62,7 +62,7 @@
       <thead>
       <tr>
         <% @headers.each do |h| %>
-          <th class="px-3 py-2 text-left font-semibold border-b bg-gray-50 whitespace-nowrap"><%= h %></th>
+          <th class="px-2 py-1 text-left font-semibold border-b bg-gray-50 whitespace-nowrap"><%= h %></th>
         <% end %>
       </tr>
       </thead>
@@ -70,7 +70,7 @@
       <% @rows.each do |r| %>
         <tr class="odd:bg-white even:bg-gray-50">
           <% @headers.each do |h| %>
-            <td class="px-3 py-2 border-b align-top"><%= r[h] %></td>
+            <td class="px-2 py-1 border-b align-top"><%= r[h] %></td>
           <% end %>
         </tr>
       <% end %>
