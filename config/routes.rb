@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :lookup_types
     resources :mb_lists
     resources :mr_characters
-    resource :mr_characters_source, only: :show
+    resource  :mr_characters_source, only: :show
     resources :parts
     resources :permissions
     resources :plants
@@ -67,15 +67,15 @@ Rails.application.routes.draw do
     end
   end
 
+  get  "/contact", to: "contacts#new"
+  post "/contact", to: "contacts#create"
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-
-
   # Static pages
     root 'pages#home'
-    get 'contact', to: 'pages#contact'
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
