@@ -1,5 +1,9 @@
 <% content_for :title, @article.title %>
 
+<div class="flex gap-2 m-6">
+  <%= link_to "Back to articles", articles_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+</div>
+
 <div class="prose max-w-none">
   <h1 class="font-bold text-3xl"><%= @article.title %></h1>
   <div class="text-sm text-gray-500 mb-4">
@@ -17,4 +21,8 @@
   <% else %>
     <%= simple_format(@article.body) %>
   <% end %>
+
+  <div class="flex gap-2 m-6">
+    <%= link_to "Back to articles", articles_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+  </div>
 </div>
