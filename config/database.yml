@@ -54,7 +54,8 @@ production:
     <<: *default
     database: mrdbid_production
     username: mrdbid_user
-    password: <%= ENV["MRDBID_DATABASE_PASSWORD"] %>
+    password: uR!TxC4avEWp
+    host: 127.0.0.1
   cache:
     <<: *primary_production
     database: mrdbid_production_cache
