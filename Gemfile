@@ -51,6 +51,8 @@ gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
 
+gem 'roo' # Read Excel files
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
