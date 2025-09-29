@@ -1,8 +1,8 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      # Return only user-owned records
-      scope.where(user_id: user.id)
+      # Projects from all users are visible/selectable
+      scope.all
     end
   end
 

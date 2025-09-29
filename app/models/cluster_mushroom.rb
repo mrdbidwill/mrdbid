@@ -2,6 +2,8 @@ class ClusterMushroom < ApplicationRecord
   belongs_to :mushroom
   belongs_to :cluster
 
+  validates :cluster_id, uniqueness: { scope: :mushroom_id, message: "is already attached to this mushroom" }
+
   validate :ensure_same_user
 
   private

@@ -8,10 +8,50 @@
 
   <%= render @mushroom %>
 
+  <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
+  <% if images.any? %>
+    <div class="w-full">
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+        <% images.each do |image_mushroom| %>
+          <div class="border rounded-md overflow-hidden bg-gray-50 aspect-square">
+            <%# Use WebP with JPEG fallback, strip metadata, and lower quality %>
+            <picture>
+              <%= tag.source(
+                    srcset: url_for(
+                      image_mushroom.image_file.variant(
+                        resize_to_fill: [120, 120],
+                        format: :webp,
+                        saver: { strip: true, quality: 60, effort: 4 } # try 50–65 for tiny files
+                      ).processed
+                    ),
+                    type: "image/webp"
+                  ) %>
+              <%= image_tag(
+                    image_mushroom.image_file.variant(
+                      resize_to_fill: [120, 120],
+                      saver: { strip: true, quality: 72, optimize_coding: true } # try 65–75 for clarity vs. size
+                    ).processed,
+                    width: 120,
+                    height: 120,
+                    class: "w-full h-full object-cover block",
+                    loading: "lazy",
+                    decoding: "async",
+                    fetchpriority: "low",
+                    alt: image_mushroom.image_name.presence || @mushroom.name
+                  ) %>
+            </picture>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500">No images for this mushroom.</p>
+  <% end %>
+
+
   <!-- Characters, grouped by part -->
   <% character_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option]).order('parts.name ASC, mr_characters.name ASC') %>
   <% grouped = character_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
-
   <div class="mt-6 space-y-2">
     <% grouped.each do |part_name, rows| %>
       <details class="bg-white border rounded-md p-4" open>

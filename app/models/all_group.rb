@@ -3,7 +3,8 @@ class AllGroup < ApplicationRecord
   has_many :all_group_mushrooms, dependent: :destroy
   has_many :mushrooms, through: :all_group_mushrooms
 
-  # Allow deletion by default. Adjust logic if business rules require restrictions.
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id, case_sensitive: false }
+
   def can_be_deleted?
     true
   end
