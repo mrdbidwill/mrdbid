@@ -64,7 +64,10 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = current_user.projects.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to projects_path, alert: "Project not found. You can only edit or show your own projects."
   end
+
 
   # Only allow a list of trusted parameters through.
   def project_params
