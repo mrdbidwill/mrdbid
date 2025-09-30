@@ -25,7 +25,7 @@ class MushroomProjectsController < ApplicationController
     @mushroom = Mushroom.find_by(id: mushroom_project_params[:mushroom_id])
     @projects = policy_scope(Project)
     if @mushroom_project.save
-      redirect_to mushroom_project_path(@mushroom_project), notice: "All group mushroom was successfully created."
+      redirect_to mushrooms_path, notice: "Group was successfully added."
     else
       render :new, status: :unprocessable_entity
     end
@@ -47,7 +47,7 @@ class MushroomProjectsController < ApplicationController
 
   def destroy
     @mushroom_project.destroy
-    redirect_to mushroom_projects_path, notice: "All group mushroom was successfully destroyed."
+    redirect_to mushroom_path, notice: "The group was successfully removed."
   end
 
 

@@ -17,16 +17,24 @@ class ClusterMushroomsController < ApplicationController
   def new
     @mushroom = Mushroom.find(params[:mushroom_id]) if params[:mushroom_id]
     @cluster_mushroom = ClusterMushroom.new(mushroom: @mushroom)
-    @clusters = policy_scope(Cluster)
+    # Only clusters owned by the mushroom owner should be selectable
+    @clusters = if @mushroom
+                  Cluster.where(user_id: @mushroom.user_id)
+                else
+                  Cluster.none
+                end
   end
 
   def create
     @cluster_mushroom = ClusterMushroom.new(cluster_mushroom_params)
     @mushroom = Mushroom.find_by(id: cluster_mushroom_params[:mushroom_id])
-    @clusters = policy_scope(Cluster)
-    if @cluster_mushroom.save
+    # Only clusters owned by the mushroom owner should be selectable
+    @clusters = @mushroom ? Cluster.where(user_id: @mushroom.user_id) : Cluster.none
+    # Ownership guard: cluster must belong to the mushroom owner
+    if @mushroom && Cluster.where(id: @cluster_mushroom.cluster_id, user_id: @mushroom.user_id).exists? && @cluster_mushroom.save
       redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully created."
     else
+      @cluster_mushroom.errors.add(:cluster_id, "is not owned by the mushroom owner") if @mushroom && @cluster_mushroom.cluster_id.present? && !Cluster.where(id: @cluster_mushroom.cluster_id, user_id: @mushroom.user_id).exists?
       render :new, status: :unprocessable_entity
     end
   end
@@ -47,7 +55,7 @@ class ClusterMushroomsController < ApplicationController
 
   def destroy
     @cluster_mushroom.destroy
-    redirect_to cluster_mushrooms_path, notice: "Cluster mushroom was successfully destroyed."
+    redirect_to mushrooms_path, notice: "Cluster was successfully removed."
   end
 
 

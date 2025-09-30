@@ -26,6 +26,15 @@ class User < ApplicationRecord
     otp_secret.present? ? "otpauth://totp/#{issuer}:#{account}?secret=#{otp_secret}&issuer=#{issuer}" : nil
   end
 
+  def otp_backup_codes
+    value = super
+    value.is_a?(Array) ? value : []
+  end
+
+  def otp_backup_codes=(codes)
+    super(Array(codes))
+  end
+
   def admin?
     permission_id.present? && permission_id < 5
   end

@@ -14,8 +14,8 @@
   <% end %>
 
   <%# Hidden mushroom id (pre-set from the "Add to Group" entry), with display of mushroom name %>
-  <% preselected_mushroom = all_group_mushroom.mushroom || mushrooms.first %>
-  <%= form.hidden_field :mushroom_id, value: preselected_mushroom&.id %>
+  <% preselected_mushroom_id = all_group_mushroom.mushroom_id.presence || mushrooms.first&.id %>
+  <%= form.hidden_field :mushroom_id, value: preselected_mushroom_id %>
 
   <div class="my-5">
     <%= form.label :all_group_id, "Choose a Group" %>
@@ -37,6 +37,6 @@
   </div>
 
   <div class="inline">
-    <%= form.submit "Add to Group", class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit "Add to Mushroom", class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>

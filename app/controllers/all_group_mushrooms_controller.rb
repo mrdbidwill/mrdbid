@@ -17,21 +17,20 @@ class AllGroupMushroomsController < ApplicationController
   def new
     @mushroom = Mushroom.find(params[:mushroom_id]) if params[:mushroom_id]
     @all_group_mushroom = AllGroupMushroom.new(mushroom: @mushroom)
-    @all_groups = policy_scope(AllGroup)
+    @all_groups = @mushroom ? AllGroup.where(user_id: @mushroom.user_id) : AllGroup.none
+    render :new, locals: { all_group_mushroom: @all_group_mushroom, all_groups: @all_groups, mushrooms: @mushroom ? Mushroom.where(id: @mushroom.id) : Mushroom.none }
   end
 
   def create
     @all_group_mushroom = AllGroupMushroom.new(all_group_mushroom_params)
     @mushroom = Mushroom.find_by(id: all_group_mushroom_params[:mushroom_id])
-    @all_groups = policy_scope(AllGroup)
-    if @all_group_mushroom.save
+    @all_groups = @mushroom ? AllGroup.where(user_id: @mushroom.user_id) : AllGroup.none
+    if @mushroom && AllGroup.where(id: @all_group_mushroom.all_group_id, user_id: @mushroom.user_id).exists? && @all_group_mushroom.save
       redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity, locals: { all_group_mushroom: @all_group_mushroom, all_groups: @all_groups, mushrooms: @mushroom ? Mushroom.where(id: @mushroom.id) : Mushroom.none }
     end
   end
-
-
 
   def edit
   end
@@ -47,7 +46,7 @@ class AllGroupMushroomsController < ApplicationController
 
   def destroy
     @all_group_mushroom.destroy
-    redirect_to all_group_mushrooms_path, notice: "All group mushroom was successfully destroyed."
+    redirect_to mushrooms_path, notice: "That group was successfully removed."
   end
 
 
