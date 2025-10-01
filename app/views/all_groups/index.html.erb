@@ -1,4 +1,4 @@
-<% content_for :title, "All groups" %>
+<% content_for :title, "Groups" %>
 
 <div class="w-full">
   <% if notice.present? %>
@@ -6,8 +6,8 @@
   <% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-2xl">All groups</h1>
-    <%= link_to "New all group", new_all_group_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <h1 class="font-bold text-2xl">Groups</h1>
+    <%= link_to "New Group", new_all_group_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
   <div id="all_groups" class="min-w-full divide-y divide-gray-200 space-y-5">
@@ -23,7 +23,7 @@
         </div>
       <% end %>
     <% else %>
-      <p class="text-center my-10">No all groups found.</p>
+      <p class="text-center my-10">No Groups found.</p>
     <% end %>
   </div>
 </div>

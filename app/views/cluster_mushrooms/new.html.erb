@@ -1,5 +1,11 @@
 <h1 class="text-xl font-semibold mb-4">Add Mushroom to Cluster</h1>
 
+<% if @mushroom %>
+  <div class="mb-3 p-2 bg-gray-50">
+    Adding for mushroom: <span class="font-semibold"><%= @mushroom.name %></span>
+  </div>
+<% end %>
+
 <%= render "form",
            cluster_mushroom: @cluster_mushroom,
            clusters: (@clusters || []),
