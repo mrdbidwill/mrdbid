@@ -101,3 +101,5 @@ group :test do
   gem 'minitest-rails'             # Adds Minitest integration with Rails
   gem 'rails-controller-testing', '~> 1.0' # For controller tests if needed
 end
+
+gem "tailwindcss-ruby", "~> 4.1"
