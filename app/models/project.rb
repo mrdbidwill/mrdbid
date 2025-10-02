@@ -4,4 +4,9 @@ class Project < ApplicationRecord
   has_many :mushrooms, through: :mushroom_projects
 
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: false }
+
+  # Whether this project can be deleted
+  def can_be_deleted?
+    true
+  end
 end

@@ -2,7 +2,7 @@
 
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-1 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <div class="flex justify-between items-center">
@@ -11,11 +11,11 @@
     <%= link_to "New color", new_admin_color_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="colors" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="colors" class="min-w-full divide-y divide-gray-100 space-y-5">
     <% if @colors.any? %>
       <% @colors.each do |color| %>
         <div class="my-4">
-          <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col sm:flex-row gap-5 items-center">
+          <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-4 flex flex-col sm:flex-row gap-5 items-center">
             <div class="flex-shrink-0">
               <img src="<%= image_path("AMS_colors/banner_50x50/banner_#{color.id}.jpg") %>" alt="<%= color.latin_name %>" class="w-24 h-24 object-cover rounded-md border border-gray-100 shadow" />
             </div>
@@ -27,7 +27,7 @@
                   <div class="text-gray-600 text-sm mb-1"><b>Hex:</b> <%= color.hex %></div>
                   <div class="text-gray-600 text-sm"><b>Group:</b> <%= color.color_group %></div>
                 </div>
-                <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+                <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
                   <%= render "admin/shared/resource_actions", record: color, delete: true %>
                 </div>
               </div>

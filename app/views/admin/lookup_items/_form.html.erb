@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :name %>
     <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_item.errors[:name].none?, "border-red-400 focus:outline-red-600": lookup_item.errors[:name].any?}] %>
   </div>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :description %>
     <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_item.errors[:description].none?, "border-red-400 focus:outline-red-600": lookup_item.errors[:description].any?}] %>
   </div>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :comments %>
     <%= form.textarea :comments, rows: 4, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_item.errors[:comments].none?, "border-red-400 focus:outline-red-600": lookup_item.errors[:comments].any?}] %>
   </div>

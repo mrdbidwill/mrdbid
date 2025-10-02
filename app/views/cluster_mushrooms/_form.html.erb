@@ -24,7 +24,7 @@
   <div class="my-5">
     <%= form.label :cluster_id, "Choose a Cluster" %>
     <% if clusters.present? %>
-      <div class="mt-2 space-y-2">
+      <div class="mt-2 space-y-1">
         <% clusters.each do |c| %>
           <label class="flex items-center gap-2">
             <%= form.radio_button :cluster_id, c.id %>

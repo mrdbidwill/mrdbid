@@ -2,7 +2,7 @@
 
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-1 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <div class="flex justify-between items-center">
@@ -13,7 +13,7 @@
   </div>
   <!-- Pagination links (Top) -->
   <% if @source_data.any? %>
-    <div class="my-2">
+    <div class="my-1">
       <%= paginate @source_data,
                    theme: 'tailwind_bar',
                    params: request.query_parameters,
@@ -23,12 +23,12 @@
     </div>
   <% end %>
 
-  <div id="source_data" class="min-w-full divide-y divide-gray-200 space-y-2">
+  <div id="source_data" class="min-w-full divide-y divide-gray-100 space-y-1">
     <% if @source_data.any? %>
       <% @source_data.each do |source_datum| %>
         <div class="pb-2">
           <%= render source_datum %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
             <%= render "admin/shared/resource_actions", record: source_datum, delete: false %>  <!-- show, edit, destroy (optional -->
           </div>
         </div>
@@ -39,7 +39,7 @@
   </div>
   <!-- Pagination links (BOTTOM) -->
   <% if @source_data.any? %>
-    <div class="my-2">
+    <div class="my-1">
       <%= paginate @source_data,
                    theme: 'tailwind_bar',
                    params: request.query_parameters,

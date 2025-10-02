@@ -9,7 +9,7 @@
   <div class="mb-4">
     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
     <%= text_field_tag :name, nil, 
-          class: "w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none", 
+          class: "w-full border border-gray-300 rounded-lg px-4 py-1 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none",
           placeholder: "Enter your name" %>
   </div>
 
@@ -17,7 +17,7 @@
   <div class="mb-4">
     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
     <%= email_field_tag :email, nil, 
-          class: "w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none", 
+          class: "w-full border border-gray-300 rounded-lg px-4 py-1 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none",
           placeholder: "Enter your email" %>
   </div>
 
@@ -25,13 +25,13 @@
   <div class="mb-4">
     <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
     <%= text_area_tag :message, nil, 
-          class: "w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none", 
+          class: "w-full border border-gray-300 rounded-lg px-4 py-1 text-gray-800 focus:ring focus:ring-indigo-500 focus:outline-none",
           placeholder: "Enter your message", rows: 5 %>
   </div>
 
   <!-- Submit Button -->
   <div class="text-center">
     <%= submit_tag "Submit", 
-          class: "w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 active:bg-indigo-800 shadow hover:shadow-lg focus:outline-none focus:ring focus:ring-indigo-500" %>
+          class: "w-full bg-indigo-600 text-white font-medium py-1 px-4 rounded-lg hover:bg-indigo-700 active:bg-indigo-800 shadow hover:shadow-lg focus:outline-none focus:ring focus:ring-indigo-500" %>
   </div>
 <% end %>

@@ -8,7 +8,7 @@
     <%= link_to "New source data type", new_admin_source_data_type_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="source_data _types" class="min-w-full divide-y divide-gray-200 space-y-2">
+  <div id="source_data _types" class="min-w-full divide-y divide-gray-100 space-y-1">
     <% if @source_data_types.any? %>
       <% @source_data_types.each do |source_data_type| %>
         <div class="pb-2">

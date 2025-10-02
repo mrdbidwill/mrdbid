@@ -1,16 +1,13 @@
 <% content_for :title, "Showing mushroom" %>
 <div class="md:w-full w-full">
-  <% if notice.present? %>
-    <p class=" px-3 py-1 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
 
   <h1 class="font-bold text-2xl">Showing mushroom:</h1>
 
   <div class="flex flex-col pt-1 gap-2">
     <% if current_user&.admin? %>
-      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     <% end %>
-    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-3.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
   </div>
 
   <%= render @mushroom %>
@@ -59,7 +56,7 @@
   <!-- Characters, grouped by part -->
   <% character_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option]).order('parts.name ASC, mr_characters.name ASC') %>
   <% grouped = character_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
-  <div class="mt-6 space-y-2">
+  <div class="mt-6 space-y-1">
     <% grouped.each do |part_name, rows| %>
       <details class="bg-white border rounded-md p-4" open>
         <summary class="font-semibold cursor-pointer"><%= part_name %> (<%= rows.size %>)</summary>
@@ -90,8 +87,8 @@
 
   <div class="flex flex-col pt-1 gap-2">
     <% if current_user&.admin? %>
-      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-3.5 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     <% end %>
-    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-3.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
   </div>
     </div>
