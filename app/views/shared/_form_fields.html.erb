@@ -1,9 +1,9 @@
 <!-- app/views/shared/_form_fields.html.erb -->
 
-<div class="mb-4">
-  <%= form.label field, class: "block text-gray-700 font-bold mb-2" %>
-  <%= form.text_field field, class: "shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none" %>
+<div class="form-field">
+  <%= form.label field, class: "form-label" %>
+  <%= form.text_field field, class: "form-input" %>
   <% if form.object.errors[field].any? %>
-    <p class="text-red-500 text-xs italic"><%= form.object.errors[field].join(", ") %></p>
+    <p class="form-error"><%= form.object.errors[field].join(", ") %></p>
   <% end %>
 </div>

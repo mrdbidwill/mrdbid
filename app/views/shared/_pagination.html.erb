@@ -1,0 +1,6 @@
+<%# expects: collection %>
+<% if collection&.any? %>
+  <div class="pagination my-2">
+    <%= paginate collection, theme: 'tailwind_bar', params: request.query_parameters, window: 2, outer_window: 1 %>
+  </div>
+<% end %>

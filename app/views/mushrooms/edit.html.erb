@@ -10,6 +10,14 @@
     Mushroom ID: <span class="inline-block px-2 py-0.5 rounded bg-blue-50 border border-blue-200"><%= @mushroom.id %></span> <span class="block text-xs text-gray-500">This is the database table ID.</span>
   </div>
 
+  <div class="mt-4">
+    <% if defined?(policy) && policy(@mushroom).show? %>
+      <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
+
+    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+
   <%= render "form", mushroom: @mushroom %>
 
   <!-- Entered characters -->
@@ -153,6 +161,13 @@
   <% missing_color_chars = color_chars.reject { |c| set_color_char_ids.include?(c.id) } %>
 
   <% if missing_color_chars.any? %>
+    <div class="mt-4">
+      <% if defined?(policy) && policy(@mushroom).show? %>
+        <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
+
+      <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    </div>
     <div class="mt-10">
       <h2 class="text-2xl font-semibold mb-1">Color characters (not yet entered)</h2>
       <p class="text-xs text-gray-600 mb-3">Click on a color patch to set this character.</p>
@@ -190,7 +205,7 @@
     </div>
   <% end %>
 
-  <div class="mt-10">
+  <div class="mt-4">
   <% if defined?(policy) && policy(@mushroom).show? %>
     <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
