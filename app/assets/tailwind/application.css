@@ -1,6 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind v4 entry */
+@import "tailwindcss";
+
+/* Bring in utility classes so @apply knows them */
+@import "tailwindcss/utilities";
+
+/* Optional: base/forms/typography presets if you @apply from them too */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+/* Plugins (v4 style) */
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 
 /* Reusable UI primitives */
 @layer components {
@@ -9,7 +19,7 @@
     @apply rounded-md px-2 py-1 font-medium inline-flex items-center justify-center transition;
   }
   .btn-primary {
-    @apply btn bg-blue-600 hover:bg-blue-500 text-white;
+    @apply rounded-md bg-blue-600 hover:bg-blue-500 text-white;
   }
 
   /* Page action bar */
@@ -19,15 +29,15 @@
 
   /* Card shell and hover */
   .card {
-    @apply block rounded-lg border border-gray-100 hover:border-blue-300 hover:shadow-sm transition bg-white;
+    @apply block rounded-lg border border-6 border-gray-100 hover:border-blue-300 hover:shadow-sm transition bg-white;
   }
   .card-body {
     @apply p-2 flex flex-col gap-2;
   }
 
-  /* Group container with header (like a “section”) */
+  /* Group container with header (like a “section”) - in mushrooms/index this is around mushroom types*/
   .group-box {
-    @apply pt-1 border border-gray-300 rounded-md bg-white;
+    @apply pt-1 border-4 border-gray-300 rounded-md bg-white;
   }
   .group-header {
     @apply text-lg font-semibold text-gray-700 px-2 py-1 border-b border-gray-200;
@@ -35,10 +45,10 @@
 
   /* “Table-look” stacking rows (not actual table) */
   .stack-list {
-    @apply w-full min-w-full divide-y divide-gray-300 space-y-1;
+    @apply w-full min-w-full divide-y divide-gray-300  space-y-1;
   }
   .stack-row {
-    @apply card; /* aligns row + card look */
+    @apply block rounded-lg border-4 border-gray-100 hover:border-red-300 hover:shadow-sm transition bg-white; /* aligns row + card look */
   }
 
   /* Image grid cell */
