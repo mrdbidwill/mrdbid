@@ -313,8 +313,9 @@ CREATE TABLE `genera` (
   `name` varchar(255) DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_genera_on_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=34817 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `genus_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -325,7 +326,9 @@ CREATE TABLE `genus_mushrooms` (
   `mushroom_id` bigint NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `is_primary` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_genus_mushrooms_on_mushroom_id_and_genus_id` (`mushroom_id`,`genus_id`),
   KEY `index_genus_mushrooms_on_genus_id` (`genus_id`),
   KEY `index_genus_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8d2e9914c5` FOREIGN KEY (`genus_id`) REFERENCES `genera` (`id`),
@@ -509,6 +512,7 @@ CREATE TABLE `mushroom_species` (
   `mushroom_id` bigint NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `is_primary` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_mushroom_species_on_mushroom_id_and_species_id` (`mushroom_id`,`species_id`),
   KEY `index_mushroom_species_on_species_id` (`species_id`),
@@ -693,10 +697,10 @@ CREATE TABLE `species` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_species_on_name` (`name`),
+  UNIQUE KEY `index_species_on_genera_id_and_name` (`genera_id`,`name`),
   KEY `index_species_on_genera_id` (`genera_id`),
   CONSTRAINT `fk_rails_21d681ad0e` FOREIGN KEY (`genera_id`) REFERENCES `genera` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -822,7 +826,10 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251006000001'),
+('20251005121500'),
 ('20251005120000'),
+('20251005000001'),
 ('20250929000002'),
 ('20250929000001'),
 ('20250915000000'),
