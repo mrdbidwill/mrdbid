@@ -3,22 +3,26 @@
 <div class="w-full">
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-2xl">Groups</h1>
+    <h1 class="title-xl">Groups</h1>
     <%= link_to "New Group", new_all_group_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="all_groups" class="min-w-full divide-y divide-gray-100 space-y-5">
+  <div id="all_groups" class="stack-list">
     <p class="p-mrbid">You create <b>your</b> groups to use however you see fit. The goal is to help you organize your mushrooms and make it easier to find the ones you want.</p>
     <p class="p-mrbid">The original thought is a group relates to a place. However, you can use them however you see fit.</p>
     <% if @all_groups.any? %>
       <% @all_groups.each do |all_group| %>
-        <div class="flex flex-col sm:flex-row border border-green-600 justify-between items-center pb-5 sm:pb-0">
+        <div class="stack-row">
           <%= render all_group %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-            <%= link_to "Show", all_group, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
-            <%= link_to "Edit", edit_all_group_path(all_group), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
-            <%= button_to "Delete", all_group, method: :delete, class: "w-full sm:w-auto rounded-md px-2 py-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
+          <%= render "shared/page_actions",
+                     right: (
+                       (
+                         link_to("Show", all_group_path(all_group), class: "btn-primary") +
+                           link_to("Edit", edit_all_group_path(all_group), class: "btn-primary") +
+                           button_to("Delete", all_group_path(all_group), method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" })
+                       ).html_safe
+                     )
+          %>
         </div>
       <% end %>
     <% else %>

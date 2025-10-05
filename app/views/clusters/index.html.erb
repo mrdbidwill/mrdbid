@@ -3,22 +3,26 @@
 <div class="w-full">
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-2xl">Clusters</h1>
+    <h1 class="title-xl">Clusters</h1>
     <%= link_to "New cluster", new_cluster_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="clusters" class="min-w-full divide-y divide-gray-100 space-y-5">
+  <div id="clusters" class="stack-list">
     <p class="p-mrbid">You create <b>your</b> clusters to use however you see fit. The goal is to help you organize your mushrooms and make it easier to find the ones you want.</p>
     <p class="p-mrbid">The original thought is these mushroom specimens may end up being the same genus once the identification process is completed?</p>
     <% if @clusters.any? %>
       <% @clusters.each do |cluster| %>
-        <div class="flex flex-col sm:flex-row border border-green-600 justify-between items-center pb-5 sm:pb-0">
+        <div class="stack-row">
           <%= render cluster %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-            <%= link_to "Show", cluster, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
-            <%= link_to "Edit", edit_cluster_path(cluster), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
-            <%= button_to "Delete", cluster, method: :delete, class: "w-full sm:w-auto rounded-md px-2 py-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
+          <%= render "shared/page_actions",
+                     right: (
+                       (
+                         link_to("Show", cluster_path(cluster), class: "btn-primary") +
+                           link_to("Edit", edit_cluster_path(cluster), class: "btn-primary") +
+                           button_to("Delete", cluster_path(cluster), method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" })
+                       ).html_safe
+                     )
+          %>
         </div>
       <% end %>
     <% else %>
