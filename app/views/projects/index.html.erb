@@ -2,23 +2,28 @@
 
 <div class="w-full">
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-2xl">Projects</h1>
+  <div class="page-actions">
+    <h1 class="title-xl">Projects</h1>
     <%= link_to "New project", new_project_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
   <div id="projects" class="stack-list">
     <p class="p-mrbid">You create projects to use however you see fit.</p>
-    <p class="p-mrbid">Projects are different from Groups and Clusters in that your project, and all others, are available to you <b>and others.</b> Any registered user can join your projects and vice versa.</p>
+    <p class="p-mrbid">This page shows only <b>your projects</b> that you can edit or delete. Other users can attach your projects to their mushrooms, but cannot modify them.</p>
     <% if @projects.any? %>
       <% @projects.each do |project| %>
         <div class="stack-row">
           <%= render project %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-            <%= link_to "Show", project_path(project), class: "btn-primary" %>
-            <%= link_to "Edit", edit_project_path(project), class: "btn-primary" %>
-            <%= button_to "Delete", project_path(project), method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
+          <%= render "shared/page_actions",
+                     right: (
+                       (
+                         link_to("Show", project_path(project), class: "btn-primary") +
+                         link_to("Edit", edit_project_path(project), class: "btn-primary") +
+                         button_to("Delete", project_path(project), method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" })
+                       ).html_safe
+                     )
+          %>
+          
         </div>
       <% end %>
     <% else %>

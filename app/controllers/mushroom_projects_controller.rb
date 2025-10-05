@@ -17,13 +17,13 @@ class MushroomProjectsController < ApplicationController
   def new
     @mushroom = Mushroom.find(params[:mushroom_id]) if params[:mushroom_id]
     @mushroom_project = MushroomProject.new(mushroom: @mushroom)
-    @projects = policy_scope(Project) # all users’ projects (ProjectPolicy::Scope)
+    @projects = policy_scope(Project, policy_scope_class: ProjectPolicy::SelectionScope)
   end
 
   def create
     @mushroom_project = MushroomProject.new(mushroom_project_params)
     @mushroom = Mushroom.find_by(id: mushroom_project_params[:mushroom_id])
-    @projects = policy_scope(Project)
+    @projects = policy_scope(Project, policy_scope_class: ProjectPolicy::SelectionScope)
     if @mushroom_project.save
       redirect_to mushrooms_path, notice: "Group was successfully added."
     else

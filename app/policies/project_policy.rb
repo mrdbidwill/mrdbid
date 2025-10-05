@@ -1,7 +1,15 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      # Projects from all users are visible/selectable
+      # Users can only see their own projects in the index
+      scope.where(user_id: user.id)
+    end
+  end
+
+  # Scope for selecting projects to attach to mushrooms
+  class SelectionScope < Scope
+    def resolve
+      # All projects are available for attachment to mushrooms
       scope.all
     end
   end

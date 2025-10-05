@@ -18,6 +18,16 @@
     .p-mrdbid {
         @apply mt-3 text-lg leading-relaxed;
     }
+    .p-title {
+        @apply text-xl font-bold;
+    }
+    .p-title-red {
+        @apply font-bold text-sm text-red-600;
+    }
+    .p-mrdbid-description {
+        @apply text-base;
+    }
+    .p-mrdbid-link {}
 
   /* Buttons */
   .btn {

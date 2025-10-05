@@ -12,7 +12,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    authorize @project
+    @project = authorize current_user.projects.find(params[:id])
+    respond_to do |format|
+
+      format.html
+      format.json { render json: @projects }
+    end
   end
 
 
@@ -25,7 +30,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    authorize @project
+    @project = authorize current_user.projects.find(params[:id])
+    respond_to do |format|
+
+      format.html
+      format.json { render json: @projects }
+    end
   end
 
 
