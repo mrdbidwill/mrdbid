@@ -1,17 +1,13 @@
 <% content_for :title, "Mushrooms" %>
 <div class="w-full">
 
-  <%= render "shared/page_actions" do %>
-    <% content_for :left do %>
-      <h1 class="title-xl">Your Mushrooms</h1>
-    <% end %>
-    <% content_for :right do %>
-      <% if current_user&.admin? %>
-        <%= link_to "Back to Admin Dashboard", admin_root_path, class: "btn-primary" %>
-      <% end %>
-      <%= link_to "Add New Mushroom", new_mushroom_path, class: "btn-primary" %>
-    <% end %>
-  <% end %>
+  <%= render "shared/page_actions", 
+        left: content_tag(:h1, "Your Mushrooms", class: "title-xl"),
+        right: (
+          (current_user&.admin? ? link_to("Back to Admin Dashboard", admin_root_path, class: "btn-primary") : "") +
+          link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
+        ).html_safe
+  %>
 
   <%= render "shared/pagination", collection: @mushrooms %>
 
@@ -53,13 +49,11 @@
 
   <%= render "shared/pagination", collection: @mushrooms %>
 
-  <%= render "shared/page_actions" do %>
-    <% content_for :right do %>
-      <% if current_user&.admin? %>
-        <%= link_to "Back to Admin Dashboard", admin_root_path, class: "btn-primary" %>
-      <% end %>
-      <%= link_to "Add New Mushroom", new_mushroom_path, class: "btn-primary" %>
-    <% end %>
-  <% end %>
+  <%= render "shared/page_actions", 
+        right: (
+          (current_user&.admin? ? link_to("Back to Admin Dashboard", admin_root_path, class: "btn-primary") : "") +
+          link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
+        ).html_safe
+  %>
 
 </div>

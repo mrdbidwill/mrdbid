@@ -14,12 +14,20 @@
 
 /* Reusable UI primitives */
 @layer components {
+
+    .p-mrdbid {
+        @apply mt-3 text-lg leading-relaxed;
+    }
+
   /* Buttons */
   .btn {
     @apply rounded-md px-2 py-1 font-medium inline-flex items-center justify-center transition;
   }
   .btn-primary {
-    @apply rounded-md bg-blue-600 hover:bg-blue-500 text-white;
+    @apply rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium;
+  }
+  .btn-danger {
+    @apply w-full sm:w-auto rounded-md px-2 py-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer;
   }
 
   /* Page action bar */
@@ -48,7 +56,7 @@
     @apply w-full min-w-full divide-y divide-gray-300  space-y-1;
   }
   .stack-row {
-    @apply block rounded-lg border-4 border-gray-100 hover:border-red-300 hover:shadow-sm transition bg-white; /* aligns row + card look */
+    @apply block rounded-lg border-4 p-2 border-gray-100 hover:border-red-300 hover:shadow-sm transition bg-white; /* aligns row + card look */
   }
 
   /* Image grid cell */

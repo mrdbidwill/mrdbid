@@ -1,6 +1,8 @@
 <div class="page-actions">
-  <div><%= yield :left if content_for?(:left) %></div>
+  <div>
+    <%= local_assigns[:left] %>
+  </div>
   <div class="flex gap-2">
-    <%= yield :right if content_for?(:right) %>
+    <%= local_assigns[:right] %>
   </div>
 </div>
