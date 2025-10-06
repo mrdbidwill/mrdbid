@@ -48,7 +48,8 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1/edit
   def edit
-    @mushroom = Mushroom.includes(mr_characters: [:part, :lookup_type, :color, :source_data]).find(params[:id]) # The `@mushroom` variable is necessary for the view to reference the loaded mushroom.
+    @mushroom = Mushroom
+                  .includes(:genera, mr_characters: [:genera, :part, :lookup_type, :color, :source_data]).find(params[:id]) # The `@mushroom` variable is necessary for the view to reference the loaded mushroom.
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
@@ -63,6 +64,14 @@ class MushroomsController < ApplicationController
     if @mushroom.update(filtered_params)
       redirect_to @mushroom, notice: "Mushroom was successfully updated."
     else
+        # Reload with eager loading to avoid strict_loading violations in form
+        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
+        # Reload with eager loading to avoid strict_loading violations in form
+        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
+        # Reload with eager loading to avoid strict_loading violations in form
+        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
+      # Reload with eager loading to avoid strict_loading violations in form
+      @mushroom = Mushroom.includes(:genera, mr_characters: [:genera, :part, :lookup_type, :color, :source_data]).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
   end

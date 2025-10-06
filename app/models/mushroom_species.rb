@@ -1,4 +1,12 @@
 class MushroomSpecies < ApplicationRecord
+  belongs_to :mushroom
+  belongs_to :species
+  belongs_to :mushroom
+  belongs_to :species
+  belongs_to :mushroom
+  belongs_to :species
+  belongs_to :mushroom
+  belongs_to :species
   belongs_to :species
   belongs_to :mushroom
 

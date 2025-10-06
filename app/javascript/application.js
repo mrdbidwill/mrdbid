@@ -1,5 +1,5 @@
-// This is app/javascript/application.js NOTE there is also app/javascript/controllers/application.js
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import { Application } from "@hotwired/stimulus"
+import TokensController from "controllers/tokens_controller"
 
-import "@hotwired/turbo-rails"
-import "controllers"
+const application = Application.start()
+application.register("tokens", TokensController)

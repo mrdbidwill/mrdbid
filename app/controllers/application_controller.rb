@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   helper :all # This includes all helpers in view contexts
   helper MrCharactersHelper
+  helper RoutesHelper
 
   # Ensure authentication for all controllers
   before_action :authenticate_user!

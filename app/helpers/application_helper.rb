@@ -2,6 +2,7 @@
 
 # app/helpers/application_helper.rb
 module ApplicationHelper
+  include RoutesHelper
   # Include Pundit methods for use in views
   include Pundit::Authorization
 

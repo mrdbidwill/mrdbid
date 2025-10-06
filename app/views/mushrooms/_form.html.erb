@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <div class="w-full max-w-3xl mx-auto">  <!-- centers form -->
+  <div class="w-full max-w-5xl mx-auto">  <!-- expanded max width for longer organism names -->
 
   <div class="my-5">
     <%= form.label :name %>
@@ -66,74 +66,332 @@
                                { prompt: "Select a Fungus Type" },
                                { class: "block shadow-sm rounded-md border px-3 py-1 mt-2 w-full" } %>
   </div>
+  <script>
+    // Simple auto-inject for genus/species selection for "Add" button
+    document.addEventListener("DOMContentLoaded", () => {
+      // For both genera and species blocks
+      document.querySelectorAll('[data-controller="tokens"]').forEach(panel => {
+        const input = panel.querySelector('[data-tokens-target="input"]');
+        const dropdown = panel.querySelector('[data-tokens-target="dropdown"]');
+        // Hidden field for selected id
+        let selectedIdField = panel.querySelector('input[type="hidden"].selected_id');
+        if (!selectedIdField) {
+          selectedIdField = document.createElement("input");
+          selectedIdField.type = "hidden";
+          selectedIdField.className = "selected_id";
+          panel.appendChild(selectedIdField);
+        }
+        // Delegate clicks on dropdown to input and hidden
+        dropdown?.addEventListener("click", function(e) {
+          if (e.target.tagName === "LI" || e.target.closest("li")) {
+            const item = e.target.closest("li");
+            // For autocomplete dropdowns that use data attributes, e.g., data-id, data-value, etc.
+            const id = item.dataset.id || item.getAttribute('data-id');
+            const label = item.dataset.value || item.innerText;
+            if (label && id) {
+              input.value = label;
+              selectedIdField.value = id;
+              // Optional: visually mark selected?
+            }
+          }
+        });
 
-    <!-- Candidate Genera (multiple) -->
+        // Make the Add button work
+        const addBtn = panel.querySelector("button");
+        if (addBtn) {
+          addBtn.addEventListener("click", function() {
+            if (selectedIdField.value) {
+              // Optionally: submit via AJAX or show that an item was added
+              // For turbo/remote: you might submit the inner form or fire a fetch here
+              panel.closest("form").submit();
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+    <!-- Collapsible Candidate Genera/Species Selection -->
     <div class="my-5">
-      <label class="block text-sm font-medium text-gray-700">Candidate Genera</label>
-      <div data-controller="tokens"
-           data-tokens-url-value="<%= genera_autocomplete_path %>"
-           data-tokens-min-value="3"
-           data-tokens-mushroom-id-value="<%= mushroom.id %>"
-           data-tokens-kind-value="genera"
-           class="border rounded p-2">
-        <div class="mb-2">
-          <input type="text"
-                 placeholder="Type at least 3 letters..."
-                 class="w-full border rounded px-2 py-1"
-                 data-tokens-target="input"
-                 data-action="input->tokens#onInput">
-          <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto" data-tokens-target="dropdown"></ul>
-        </div>
-        <div class="flex flex-wrap gap-1" data-tokens-target="list">
+      <button type="button" 
+              class="bg-gray-100 border rounded px-3 py-1 mb-2 font-medium text-blue-700 hover:bg-blue-100 transition"
+              onclick="document.getElementById('candidate-panel').classList.toggle('hidden')">
+        <span id="panel-toggle-label">
+          <%= mushroom.genera.any? || mushroom.species.any? ? "Edit candidate genera/species" : "Select candidate genera and species (optional)" %>
+        </span>
+      </button>
+
+      <!-- Step/Process Guidance -->
+      <div class="mb-2 px-3 py-2 bg-gray-50 border border-blue-200 rounded text-sm text-gray-700">
+        <strong>How this works:</strong>
+        <ol class="list-decimal pl-5 my-1 text-xs">
+          <li>
+            <span class="text-blue-700 font-semibold">Step 1:</span> Add one or more 
+            <span class="bg-blue-200 px-1 rounded">genera</span> as candidates for identification by process-of-elimination. The genus name will appear with a <span class="bg-blue-200 px-1 rounded">blue</span> background.
+          </li>
+          <li>
+            <span class="text-yellow-700 font-semibold">Step 2:</span> After adding genera, select one or more 
+            <span class="bg-yellow-100 px-1 rounded">species</span> in those genera as candidates. The specie name will appear with a <span class="bg-yellow-100 px-1 rounded">yellow</span> background.
+          </li>
+          <li>
+            You can remove any genus or species at any time by clicking the <span class="font-bold">&times;</span> next to its name.
+          </li>
+          <li>
+            All selections are immediately saved and will be here if you return to editing this mushroom later.
+          </li>
+        </ol>
+      </div>
+
+      <!-- Summary pills outside panel -->
+      <div class="mb-2 flex flex-wrap gap-2 items-center">
+        <% if mushroom.genera.any? %>
+          <span class="text-xs text-blue-700 font-medium pr-2">Selected Genera:</span>
           <% mushroom.genera.order(:name).each do |g| %>
-            <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+            <span class="inline-flex items-center bg-blue-200 rounded px-2 py-0.5 text-xs">
               <%= g.name %>
-              <%= button_to "×",
-                            genus_mushroom_path(GenusMushroom.find_by(mushroom_id: mushroom.id, genus_id: g.id)),
-                            method: :delete,
-                            form: { data: { turbo_confirm: "Remove #{g.name}?" }, class: "inline" },
-                            class: "ml-1 text-gray-600 hover:text-red-600" %>
             </span>
           <% end %>
-        </div>
-        <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.genera.pluck(:id).join(',') %>">
-      </div>
-      <p class="text-xs text-gray-500 mt-1">You can add multiple genera for process-of-elimination.</p>
-    </div>
-
-    <!-- Candidate Species (multiple) -->
-    <div class="my-5">
-      <label class="block text-sm font-medium text-gray-700">Candidate Species</label>
-      <div data-controller="tokens"
-           data-tokens-url-value="<%= species_autocomplete_path %>"
-           data-tokens-min-value="3"
-           data-tokens-mushroom-id-value="<%= mushroom.id %>"
-           data-tokens-kind-value="species"
-           data-tokens-genus-id-value="<%= mushroom.genera.first&.id %>"
-           class="border rounded p-2">
-        <div class="mb-2">
-          <input type="text"
-                 placeholder="Type species epithet (min 3 letters)..."
-                 class="w-full border rounded px-2 py-1"
-                 data-tokens-target="input"
-                 data-action="input->tokens#onInput">
-          <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto" data-tokens-target="dropdown"></ul>
-        </div>
-        <div class="flex flex-wrap gap-1" data-tokens-target="list">
+        <% end %>
+        <% if mushroom.species.any? %>
+          <span class="text-xs text-amber-700 font-medium pl-2 pr-1">Selected Species:</span>
           <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |sp| %>
-            <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+            <span class="inline-flex items-center bg-yellow-100 rounded px-2 py-0.5 text-xs">
               <%= [sp.genus&.name, sp.name].compact.join(" ") %>
-              <%= button_to "×",
-                            mushroom_species_path(MushroomSpecies.find_by(mushroom_id: mushroom.id, species_id: sp.id)),
-                            method: :delete,
-                            form: { data: { turbo_confirm: "Remove #{[sp.genus&.name, sp.name].compact.join(' ')}?" }, class: "inline" },
-                            class: "ml-1 text-gray-600 hover:text-red-600" %>
             </span>
           <% end %>
-        </div>
-        <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.species.pluck(:id).join(',') %>">
+        <% end %>
       </div>
-      <p class="text-xs text-gray-500 mt-1">Select multiple species candidates; set one as primary later if desired.</p>
+
+      <div id="candidate-panel" class="hidden border border-blue-200 rounded p-4 bg-blue-50">
+        <div class="mb-3">
+          <span class="block text-sm font-medium text-gray-700 mb-2">
+            Candidate Genera & Species
+          </span>
+          <p class="text-xs text-blue-700 mb-1">
+            Add one or more genera you consider candidates (process-of-elimination). 
+            Then add one or more species for those genera. 
+            You can revisit this section later and your selections will be saved.
+          </p>
+        </div>
+        <!-- Candidate Genera Inner -->
+        <div class="mb-3">
+          <span class="block font-semibold text-blue-800 text-xs uppercase mb-0.5 tracking-wide">Step 1: Select Genera</span>
+          <label class="block text-xs font-semibold text-gray-700">Add Genera</label>
+          <p class="text-xs text-gray-600 mb-1">
+            Begin typing at least 3 letters, then select a genus from the dropdown. Each genus you choose will show up as a blue pill below.
+            You can select multiple genera as candidates for identification, and remove any of them by clicking ×.
+          </p>
+          <div data-controller="tokens"
+               data-tokens-url-value="<%= genera_autocomplete_path(format: :json) %>"
+               data-tokens-min-value="3"
+               data-tokens-mushroom-id-value="<%= mushroom.id %>"
+               data-tokens-kind-value="genera"
+               class="border rounded p-2 bg-white">
+            <div class="mb-2 flex items-center gap-2">
+              <input type="text"
+                     placeholder="Type at least 3 letters..."
+                     class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                     data-tokens-target="input"
+                     data-action="input->tokens#onInput"
+                     minlength="3"
+                     autocomplete="off">
+              <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                  data-tokens-target="dropdown"
+                  style="position: absolute; z-index: 40;"></ul>
+              <div data-tokens-target="loader" class="hidden text-xs text-blue-400 mt-1">Loading…</div>
+            </div>
+            <div class="flex flex-wrap gap-1" data-tokens-target="list">
+              <% mushroom.genera.order(:name).each do |g| %>
+                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                  <%= g.name %>
+                  <%= button_to "×",
+                                genus_mushroom_path(GenusMushroom.find_by(mushroom_id: mushroom.id, genus_id: g.id)),
+                                method: :delete,
+                                form: { data: { turbo_confirm: "Remove #{g.name}?" }, class: "inline" },
+                                class: "ml-1 text-gray-600 hover:text-red-600" %>
+                </span>
+              <% end %>
+            </div>
+            <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.genera.pluck(:id).join(',') %>">
+          </div>
+        </div>
+        <script>
+          // Simple auto-inject for genus/species selection for "Add" button
+          document.addEventListener("DOMContentLoaded", () => {
+            // For both genera and species blocks
+            document.querySelectorAll('[data-controller="tokens"]').forEach(panel => {
+              const input = panel.querySelector('[data-tokens-target="input"]');
+              const dropdown = panel.querySelector('[data-tokens-target="dropdown"]');
+              // Hidden field for selected id
+              let selectedIdField = panel.querySelector('input[type="hidden"].selected_id');
+              if (!selectedIdField) {
+                selectedIdField = document.createElement("input");
+                selectedIdField.type = "hidden";
+                selectedIdField.className = "selected_id";
+                panel.appendChild(selectedIdField);
+              }
+              // Delegate clicks on dropdown to input and hidden
+              dropdown?.addEventListener("click", function(e) {
+                if (e.target.tagName === "LI" || e.target.closest("li")) {
+                  const item = e.target.closest("li");
+                  // For autocomplete dropdowns that use data attributes, e.g., data-id, data-value, etc.
+                  const id = item.dataset.id || item.getAttribute('data-id');
+                  const label = item.dataset.value || item.innerText;
+                  if (label && id) {
+                    input.value = label;
+                    selectedIdField.value = id;
+                    // Optional: visually mark selected?
+                  }
+                }
+              });
+
+              // Make the Add button work
+              const addBtn = panel.querySelector("button");
+              if (addBtn) {
+                addBtn.addEventListener("click", function() {
+                  if (selectedIdField.value) {
+                    // Optionally: submit via AJAX or show that an item was added
+                    // For turbo/remote: you might submit the inner form or fire a fetch here
+                    panel.closest("form").submit();
+                  }
+                });
+              }
+            });
+          });
+        </script>
+        <script>
+          // Simple auto-inject for genus/species selection for "Add" button
+          document.addEventListener("DOMContentLoaded", () => {
+            // For both genera and species blocks
+            document.querySelectorAll('[data-controller="tokens"]').forEach(panel => {
+              const input = panel.querySelector('[data-tokens-target="input"]');
+              const dropdown = panel.querySelector('[data-tokens-target="dropdown"]');
+              // Hidden field for selected id
+              let selectedIdField = panel.querySelector('input[type="hidden"].selected_id');
+              if (!selectedIdField) {
+                selectedIdField = document.createElement("input");
+                selectedIdField.type = "hidden";
+                selectedIdField.className = "selected_id";
+                panel.appendChild(selectedIdField);
+              }
+              // Delegate clicks on dropdown to input and hidden
+              dropdown?.addEventListener("click", function(e) {
+                if (e.target.tagName === "LI" || e.target.closest("li")) {
+                  const item = e.target.closest("li");
+                  // For autocomplete dropdowns that use data attributes, e.g., data-id, data-value, etc.
+                  const id = item.dataset.id || item.getAttribute('data-id');
+                  const label = item.dataset.value || item.innerText;
+                  if (label && id) {
+                    input.value = label;
+                    selectedIdField.value = id;
+                    // Optional: visually mark selected?
+                  }
+                }
+              });
+
+              // Make the Add button work
+              const addBtn = panel.querySelector("button");
+              if (addBtn) {
+                addBtn.addEventListener("click", function() {
+                  if (selectedIdField.value) {
+                    // Optionally: submit via AJAX or show that an item was added
+                    // For turbo/remote: you might submit the inner form or fire a fetch here
+                    panel.closest("form").submit();
+                  }
+                });
+              }
+            });
+          });
+        </script>
+
+        <!-- Candidate Species Inner -->
+        <div class="mb-3">
+          <span class="block font-semibold text-amber-800 text-xs uppercase mb-0.5 tracking-wide">Step 2: Select Species (after adding genera)</span>
+          <label class="block text-xs font-semibold text-gray-700">Add Species</label>
+          <p class="text-xs text-gray-600 mb-1">
+            Type at least 3 letters, then choose a species in one of your selected genera from the dropdown. Each species you add will appear as a yellow pill below.
+            You can add and remove species candidates freely while editing this mushroom.
+          </p>
+          <div data-controller="tokens"
+               data-tokens-url-value="<%= species_autocomplete_path %>"
+               data-tokens-min-value="3"
+               data-tokens-mushroom-id-value="<%= mushroom.id %>"
+               data-tokens-kind-value="species"
+               data-tokens-genus-id-value="<%= mushroom.genera.first&.id %>"
+               class="border rounded p-2 bg-white">
+            <div class="mb-2 flex items-center gap-2">
+              <input type="text"
+                     placeholder="Type species epithet (min 3 letters)..."
+                     class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                     data-tokens-target="input"
+                     data-action="input->tokens#onInput"
+                     minlength="3"
+                     autocomplete="off">
+              <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                  data-tokens-target="dropdown"
+                  style="position: absolute; z-index: 40;"></ul>
+              <div data-tokens-target="loader" class="hidden text-xs text-blue-400 mt-1">Loading…</div>
+            </div>
+            <div class="flex flex-wrap gap-1" data-tokens-target="list">
+              <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |sp| %>
+                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                  <%= [sp.genus&.name, sp.name].compact.join(" ") %>
+                  <%= button_to "×",
+                                mushroom_species_path(MushroomSpecies.find_by(mushroom_id: mushroom.id, species_id: sp.id)),
+                                method: :delete,
+                                form: { data: { turbo_confirm: "Remove #{[sp.genus&.name, sp.name].compact.join(' ')}?" }, class: "inline" },
+                                class: "ml-1 text-gray-600 hover:text-red-600" %>
+                </span>
+              <% end %>
+            </div>
+            <script>
+              // Simple auto-inject for genus/species selection for "Add" button
+              document.addEventListener("DOMContentLoaded", () => {
+                // For both genera and species blocks
+                document.querySelectorAll('[data-controller="tokens"]').forEach(panel => {
+                  const input = panel.querySelector('[data-tokens-target="input"]');
+                  const dropdown = panel.querySelector('[data-tokens-target="dropdown"]');
+                  // Hidden field for selected id
+                  let selectedIdField = panel.querySelector('input[type="hidden"].selected_id');
+                  if (!selectedIdField) {
+                    selectedIdField = document.createElement("input");
+                    selectedIdField.type = "hidden";
+                    selectedIdField.className = "selected_id";
+                    panel.appendChild(selectedIdField);
+                  }
+                  // Delegate clicks on dropdown to input and hidden
+                  dropdown?.addEventListener("click", function(e) {
+                    if (e.target.tagName === "LI" || e.target.closest("li")) {
+                      const item = e.target.closest("li");
+                      // For autocomplete dropdowns that use data attributes, e.g., data-id, data-value, etc.
+                      const id = item.dataset.id || item.getAttribute('data-id');
+                      const label = item.dataset.value || item.innerText;
+                      if (label && id) {
+                        input.value = label;
+                        selectedIdField.value = id;
+                        // Optional: visually mark selected?
+                      }
+                    }
+                  });
+
+                  // Make the Add button work
+                  const addBtn = panel.querySelector("button");
+                  if (addBtn) {
+                    addBtn.addEventListener("click", function() {
+                      if (selectedIdField.value) {
+                        // Optionally: submit via AJAX or show that an item was added
+                        // For turbo/remote: you might submit the inner form or fire a fetch here
+                        panel.closest("form").submit();
+                      }
+                    });
+                  }
+                });
+              });
+            </script>
+            <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.species.pluck(:id).join(',') %>">
+          </div>
+        </div>
+      </div>
     </div>
 
   <div class="inline">

@@ -3,48 +3,31 @@
 class MushroomSpeciesController < ApplicationController
   before_action :authenticate_user!
 
+  # POST /mushroom_species.json
   def create
-    ms = MushroomSpecies.find_or_initialize_by(mushroom_id: params[:mushroom_id], species_id: params[:species_id])
-    ms.is_primary = ActiveModel::Type::Boolean.new.cast(params[:is_primary]) if params.key?(:is_primary)
-    if ms.save
-      respond_success(ms.mushroom, "Species added")
+    @ms = MushroomSpecies.new(mushroom_species_params)
+    authorize @ms if respond_to?(:authorize)
+    if @ms.save
+      render json: { success: true, id: @ms.id }, status: :created
     else
-      respond_error(ms.mushroom, ms.errors.full_messages.to_sentence)
+      render json: { success: false, errors: @ms.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  def update
-    ms = MushroomSpecies.find(params[:id])
-    ms.is_primary = ActiveModel::Type::Boolean.new.cast(params[:is_primary]) if params.key?(:is_primary)
-    if ms.save
-      respond_success(ms.mushroom, "Updated")
+  # DELETE /mushroom_species/destroy_by_relation.json
+  def destroy_by_relation
+    @ms = MushroomSpecies.find_by(mushroom_id: params[:mushroom_id], species_id: params[:species_id])
+    if @ms && (!respond_to?(:authorize) || authorize(@ms))
+      @ms.destroy
+      render json: { success: true }
     else
-      respond_error(ms.mushroom, ms.errors.full_messages.to_sentence)
+      render json: { success: false, message: "Not found" }, status: :not_found
     end
-  end
-
-  def destroy
-    ms = MushroomSpecies.find(params[:id])
-    mushroom = ms.mushroom
-    ms.destroy
-    respond_success(mushroom, "Species removed")
   end
 
   private
 
-  def respond_success(mushroom, notice)
-    respond_to do |format|
-      format.turbo_stream { redirect_back fallback_location: edit_mushroom_path(mushroom), notice:, status: :see_other }
-      format.html { redirect_back fallback_location: edit_mushroom_path(mushroom), notice: }
-      format.json { head :ok }
-    end
-  end
-
-  def respond_error(mushroom, alert)
-    respond_to do |format|
-      format.turbo_stream { redirect_back fallback_location: edit_mushroom_path(mushroom), alert:, status: :see_other }
-      format.html { redirect_back fallback_location: edit_mushroom_path(mushroom), alert: }
-      format.json { render json: { error: alert }, status: :unprocessable_entity }
-    end
+  def mushroom_species_params
+    params.require(:mushroom_species).permit(:mushroom_id, :species_id)
   end
 end

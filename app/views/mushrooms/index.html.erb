@@ -1,6 +1,6 @@
 <% content_for :title, "Mushrooms" %>
 <div class="w-full">
-
+  <%= genera_autocomplete_path rescue "helper_missing" %>
   <%= render "shared/page_actions", 
         left: content_tag(:h1, "Your Mushrooms", class: "title-xl"),
         right: (

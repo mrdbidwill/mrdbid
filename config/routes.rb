@@ -81,4 +81,13 @@ Rails.application.routes.draw do
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
+  get "autocomplete/genera",  to: "autocomplete#genera",  as: :genera_autocomplete, defaults: { format: :json }
+  get "autocomplete/species", to: "autocomplete#species", as: :species_autocomplete, defaults: { format: :json }
+
+  resources :genus_mushrooms, only: [:create], defaults: { format: :json } do
+    delete :destroy_by_relation, on: :collection
+  end
+  resources :mushroom_species, only: [:create], defaults: { format: :json } do
+    delete :destroy_by_relation, on: :collection
+  end
 end

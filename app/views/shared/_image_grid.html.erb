@@ -6,20 +6,22 @@
         <div class="image-cell">
           <picture>
             <%= tag.source(
-                  srcset: url_for(
-                    image_mushroom.image_file.variant(
-                      resize_to_fill: image_size || [120, 120],
-                      format: :webp,
-                      saver: { strip: true, quality: 60, effort: 4 }
-                    ).processed
-                  ),
-                  type: "image/webp"
-                ) %>
-            <%= image_tag(
-                  image_mushroom.image_file.variant(
-                    resize_to_fill: image_size || [120, 120],
-                    saver: { strip: true, quality: 72, optimize_coding: true }
-                  ).processed,
+                    srcset: rails_representation_url(
+                      image_mushroom.image_file.variant(
+                        resize_to_fill: image_size || [120, 120],
+                        format: :webp,
+                        saver: { strip: true, quality: 60, effort: 4 }
+                      ).processed, only_path: true
+                    ),
+                    type: "image/webp"
+                  ) %>
+              <%= image_tag(
+                    rails_representation_url(
+                      image_mushroom.image_file.variant(
+                        resize_to_fill: image_size || [120, 120],
+                        saver: { strip: true, quality: 72, optimize_coding: true }
+                      ).processed, only_path: true
+                    ),
                   width: (image_size || [120,120])[0],
                   height: (image_size || [120,120])[1],
                   class: "w-full h-full object-cover block",

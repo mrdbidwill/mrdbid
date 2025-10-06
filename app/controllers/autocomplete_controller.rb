@@ -3,43 +3,41 @@
 class AutocompleteController < ApplicationController
   before_action :authenticate_user!
 
+  # GET /autocomplete/genera.json?q=aga
   def genera
-    q = params[:q].to_s.strip
-    return render json: [] if q.length < 3
-
-    items = Genus.where("name LIKE ?", "#{sanitize_like(q)}%")
-                 .order(:name)
-                 .limit(20)
-                 .pluck(:id, :name)
-
-    render json: items.map { |id, name| { id: id, label: name, value: name } }
+    query = params[:q].to_s.strip
+    results = if query.length >= 3
+                Genus
+                  .where("name LIKE ?", "#{Genus.sanitize_sql_like(query)}%")
+                  .select(:id, :name)
+                  .order(:name)
+                  .limit(20)
+                  .map { |g| { id: g.id, name: g.name } }
+              else
+                []
+              end
+    render json: results
   end
 
+  # GET /autocomplete/species.json?q=placo&genus_id=1
   def species
-    q = params[:q].to_s.strip
-    return render json: [] if q.length < 3
-
-    scope = Species.order(:name)
-    if params[:genus_id].present?
-      scope = scope.where(genus_id: params[:genus_id])
-    elsif params[:genus_name].present?
-      if (g = Genus.find_by(name: params[:genus_name]))
-        scope = scope.where(genus_id: g.id)
-      end
-    end
-
-    items = scope.where("species.name LIKE ?", "#{sanitize_like(q)}%")
-                 .includes(:genus)
-                 .limit(20)
-                 .map { |sp| { id: sp.id, label: "#{sp.genus&.name} #{sp.name}".strip, value: sp.name } }
-
-    render json: items
-  end
-
-  private
-
-  # Escape % and _ for LIKE queries
-  def sanitize_like(term)
-    term.gsub(/[\\%_]/) { |m| "\\#{m}" }
+    query = params[:q].to_s.strip
+    genus_id = params[:genus_id]
+    results = if query.length >= 3
+                scope = Species.where("name LIKE ?", "#{Species.sanitize_sql_like(query)}%")
+                scope = scope.where(genera_id: genus_id) if genus_id.present?
+                scope
+                  .select(:id, :name, :genera_id)
+                  .order(:name)
+                  .limit(20)
+                  .map do |sp|
+                  genus = Genus.select(:name).find_by(id: sp.genera_id)
+                  genus_label = genus ? "#{genus.name} " : ""
+                  { id: sp.id, name: "#{genus_label}#{sp.name}" }
+                end
+              else
+                []
+              end
+    render json: results
   end
 end
