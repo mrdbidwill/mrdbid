@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app_development
+      MYSQL_USER: app
+      MYSQL_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    command: bin/rails server -b 0.0.0.0 -p 3000
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle # Optional, persistent gems
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: mysql2://app:password@db:3306/app_development
+      RAILS_ENV: development
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  bundle_data:
