@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, source_data_id, created_at, updated_at) VALUES  -- refer to mr_characters table
 (2, 'None',     '','',5, now(), now() ),                      -- 2 abundance
 (2, 'Low',      '','',5, now(), now() ),
@@ -503,3 +504,4 @@ INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, sourc
 (387,'Divergent (Bilateral) & Multi-Sized','','',44,now(),now() ),
 (387,'Convergent','','',44,now(),now() ),
 (387,'Subcellular','','',44,now(),now() );
+SET FOREIGN_KEY_CHECKS=1;

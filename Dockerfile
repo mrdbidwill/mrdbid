@@ -8,6 +8,7 @@ RUN apt-get update -qq && apt-get install -y \
   libvips-dev \
   libmariadb-dev-compat \
   libmariadb-dev \
+  default-mysql-client \
   nodejs \
   npm \
   && rm -rf /var/lib/apt/lists/*

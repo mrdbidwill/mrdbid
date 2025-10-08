@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  belongs_to :permission
+  belongs_to :permission, optional: true
 
   # Add default Devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable, and :omniauthable

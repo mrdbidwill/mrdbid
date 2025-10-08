@@ -1,3 +1,9 @@
+# Create default permissions
+Permission.find_or_create_by!(id: 1, name: 'Super Admin', description: 'Full system access')
+Permission.find_or_create_by!(id: 2, name: 'Admin', description: 'Administrative access')
+Permission.find_or_create_by!(id: 5, name: 'Editor', description: 'Can edit content')
+Permission.find_or_create_by!(id: 9, name: 'User', description: 'Standard user access')
+
 if Rails.env.test?
   Mushroom.delete_all
   Mushroom.create!(name: '07_30_2024_wrj_yellow_front_yard',

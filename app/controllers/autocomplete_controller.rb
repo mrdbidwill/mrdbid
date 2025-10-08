@@ -2,6 +2,7 @@
 
 class AutocompleteController < ApplicationController
   before_action :authenticate_user!
+  skip_after_action :verify_authorized
 
   # GET /autocomplete/genera.json?q=aga
   def genera

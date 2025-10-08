@@ -96,17 +96,7 @@
           }
         });
 
-        // Make the Add button work
-        const addBtn = panel.querySelector("button");
-        if (addBtn) {
-          addBtn.addEventListener("click", function() {
-            if (selectedIdField.value) {
-              // Optionally: submit via AJAX or show that an item was added
-              // For turbo/remote: you might submit the inner form or fire a fetch here
-              panel.closest("form").submit();
-            }
-          });
-        }
+        // Note: Add button removed - genus/species are added via autocomplete click
       });
     });
   </script>
@@ -204,11 +194,10 @@
               <% mushroom.genera.order(:name).each do |g| %>
                 <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
                   <%= g.name %>
-                  <%= button_to "×",
-                                genus_mushroom_path(GenusMushroom.find_by(mushroom_id: mushroom.id, genus_id: g.id)),
-                                method: :delete,
-                                form: { data: { turbo_confirm: "Remove #{g.name}?" }, class: "inline" },
-                                class: "ml-1 text-gray-600 hover:text-red-600" %>
+                  <%= link_to "×",
+                              genus_mushroom_path(GenusMushroom.find_by(mushroom_id: mushroom.id, genus_id: g.id)),
+                              data: { turbo_method: :delete, turbo_confirm: "Remove #{g.name}?" },
+                              class: "ml-1 text-gray-600 hover:text-red-600" %>
                 </span>
               <% end %>
             </div>
@@ -245,17 +234,7 @@
                 }
               });
 
-              // Make the Add button work
-              const addBtn = panel.querySelector("button");
-              if (addBtn) {
-                addBtn.addEventListener("click", function() {
-                  if (selectedIdField.value) {
-                    // Optionally: submit via AJAX or show that an item was added
-                    // For turbo/remote: you might submit the inner form or fire a fetch here
-                    panel.closest("form").submit();
-                  }
-                });
-              }
+              // Note: Add button removed - genus/species are added via autocomplete click
             });
           });
         </script>
@@ -289,17 +268,7 @@
                 }
               });
 
-              // Make the Add button work
-              const addBtn = panel.querySelector("button");
-              if (addBtn) {
-                addBtn.addEventListener("click", function() {
-                  if (selectedIdField.value) {
-                    // Optionally: submit via AJAX or show that an item was added
-                    // For turbo/remote: you might submit the inner form or fire a fetch here
-                    panel.closest("form").submit();
-                  }
-                });
-              }
+              // Note: Add button removed - genus/species are added via autocomplete click
             });
           });
         </script>
@@ -336,11 +305,10 @@
               <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |sp| %>
                 <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
                   <%= [sp.genus&.name, sp.name].compact.join(" ") %>
-                  <%= button_to "×",
-                                mushroom_species_path(MushroomSpecies.find_by(mushroom_id: mushroom.id, species_id: sp.id)),
-                                method: :delete,
-                                form: { data: { turbo_confirm: "Remove #{[sp.genus&.name, sp.name].compact.join(' ')}?" }, class: "inline" },
-                                class: "ml-1 text-gray-600 hover:text-red-600" %>
+                  <%= link_to "×",
+                              mushroom_species_path(MushroomSpecies.find_by(mushroom_id: mushroom.id, species_id: sp.id)),
+                              data: { turbo_method: :delete, turbo_confirm: "Remove #{[sp.genus&.name, sp.name].compact.join(' ')}?" },
+                              class: "ml-1 text-gray-600 hover:text-red-600" %>
                 </span>
               <% end %>
             </div>

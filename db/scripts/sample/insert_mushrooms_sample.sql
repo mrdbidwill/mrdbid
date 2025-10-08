@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO `mushrooms` VALUES
 ('0','User_2_Yellow Mushroom','Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed nubia nostra inceptos himenaeos. Lorem ipsum dolor', ' sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.','2','1','1','7',now(),now()),
 ('0', 'User_2_Purple Mushroom','Short Description','No comment', '2', '1','2','7', now(), now()),
@@ -19,3 +20,4 @@ INSERT INTO `mushrooms` VALUES
 ('0', ' User_1_9_6_2025__01_wrj','description 1','comment 1','1', '1', '3', '8' ,now(),now()),
 ('0', ' User_1_9_7_2025__01_wrj','description 1','comment 1','1', '1', '3', '7' ,now(),now()),
 ('0', ' User_1_9_8_2025__01_wrj','description 1','comment 1','1', '1', '3', '7' ,now(),now());
+SET FOREIGN_KEY_CHECKS=1;

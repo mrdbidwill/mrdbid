@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO `source_data` (`id`, `title`, `author`, `ref`, `item_code`, `source_data_type_id`, `comments`,`created_at`, `updated_at`) VALUES
 (1, 'Introductory Mycology', 'C. J. Alexopoulos, C. W. Mims,  M. Blackwell', NULL, 'https://amzn.to/4f8rMUJ', 2, 'I have Fourth Edition, Copyright 1996. Look for used.',  '2024-06-02 10:05:27', '2024-06-02 10:05:27'),
 (2, 'Ainsworth & Bisbys Dictionary of the Fungi 10th Edition', 'P. M. Kirk, P. F. Cannon, D. W. Minter and J. A. Stalpers', NULL, 'https://amzn.to/49ztFZf', 2, 'Not light reading. ',  '2024-06-02 10:05:27', '2024-06-02 10:05:27'),
@@ -41,3 +42,4 @@ INSERT INTO `source_data` (`id`, `title`, `author`, `ref`, `item_code`, `source_
 (42, 'Mushrooms Of Mississippi and Other Fungi and Protists', 'George H. Dukes Jr.', '', 'https://amzn.to/3ZQFwPz', 5, '',  now(), now() ),
 (43, 'Molecular Markers in Mycology', 'Bhim Pratap and Singh Vijai Kumar Gupta Editors', '', 'https://amzn.to/49yEbju', 5, '',    now(), now() ),
 (44, 'Observation List: Characters With Taxonomic Value For Stipitate-Lamellate Mushrooms ', 'Excited delirium [EXD]','', '''https://mushroomobserver.org/species_lists/1417?q=1mg6c', 5, '',    now(), now() );
+SET FOREIGN_KEY_CHECKS=1;

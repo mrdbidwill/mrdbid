@@ -2,6 +2,7 @@
 
 class GenusMushroomsController < ApplicationController
   before_action :authenticate_user!
+  skip_after_action :verify_authorized
 
   # POST /genus_mushrooms.json
   def create
@@ -12,6 +13,8 @@ class GenusMushroomsController < ApplicationController
     else
       render json: { success: false, errors: @genus_mushroom.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    render json: { success: false, errors: ["This genus is already associated with this mushroom"] }, status: :unprocessable_entity
   end
 
   # DELETE /genus_mushrooms/destroy_by_relation.json

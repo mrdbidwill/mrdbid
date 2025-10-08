@@ -1,8 +1,13 @@
 Order to run files:
 
 rails runner db/scripts/mblist/xlxs_to_csv.rb
+docker-compose exec web rails runner db/scripts/mblist/xlxs_to_csv.rb
+
 ruby db/scripts/mblist/sanitize_mblist_csv.rb
+docker-compose exec web rails runner db/scripts/mblist/sanitize_mblist_csv.rb
+
 rails runner db/scripts/mblist/load_mblists.rb --truncate db/scripts/mblist/output_sanitized.csv
+docker-compose exec web rails runner db/scripts/mblist/load_mblists.rb --truncate db/scripts/mblist/output_sanitized.csv
 
 Important! This version will truncate the table before loading. See notes below for other options.
 
@@ -18,11 +23,14 @@ Notes Below:
 
 1. Convert XLSX to CSV
 Run: rails runner db/scripts/mblist/xlxs_to_csv.rb
-Output: db/scripts/mblist/short_output.csv
+docker-compose exec web rails runner db/scripts/mblist/xlxs_to_csv.rb
+Output: db/scripts/mblist/output.csv
 
 2. Sanitize CSV (only if you still need extra guarantees)
-If you want consistent quoting/newlines and header stabilization regardless of the source, run: ruby db/scripts/mblist/sanitize_mblist_csv.rb
-Output: db/scripts/mblist/short_output_sanitized.csv
+If you want consistent quoting/newlines and header stabilization regardless of the source,
+ run: ruby db/scripts/mblist/sanitize_mblist_csv.rb
+ docker-compose exec web rails runner db/scripts/mblist/sanitize_mblist_csv.rb
+Output: db/scripts/mblist/output_sanitized.csv
 
 Is sanitize_mblist_csv.rb still needed?
 If xlxs_to_csv.rb now emits UTF‑8, force_quotes, correct column count, and clean newlines, you can skip sanitizing and use short_output.csv directly.
@@ -36,7 +44,8 @@ NO - Ensures local_infile is enabled.
 NO - Update the LOAD DATA path in db/scripts/mblist/import_mb_lists.sql to point at your actual CSV (short_output_sanitized.csv if you used the sanitizer; otherwise short_output.csv).
 NO - Run the SQL script from the MySQL client.
 
-rails runner db/scripts/mblist/load_mblists.rb --truncate db/scripts/mblist/short_output_sanitized.csv
+rails runner db/scripts/mblist/load_mblists.rb --truncate db/scripts/mblist/sanitize_mblist_csv.rb
+docker-compose exec web rails runner db/scripts/mblist/sanitize_mblist_csv.rb
 
 If you prefer to append without clearing, omit --truncate:
  rails runner db/scripts/mblist/load_mblists.rb db/scripts/mblist/short_output_sanitized.csv

@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   helper :all # This includes all helpers in view contexts
   helper MrCharactersHelper
-  helper RoutesHelper
 
   # Ensure authentication for all controllers
   before_action :authenticate_user!
@@ -28,8 +27,15 @@ class ApplicationController < ActionController::Base
   # In development/test, ensure actions are authorized and index actions are policy-scoped.
   # Skips Devise controllers to avoid noise in auth flows.
   if Rails.env.development? || Rails.env.test?
-    after_action :verify_authorized, except: [:index], unless: :devise_controller?
-    after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
+    after_action :verify_authorized, unless: -> { devise_controller? || action_name == 'index' }
+    after_action :verify_policy_scoped, unless: -> { devise_controller? || action_name != 'index' || !action_has_index? }
+  end
+
+  private
+
+  # Helper to determine if the current controller implements an :index action
+  def action_has_index?
+    self.class.action_methods.include?('index')
   end
 
 
