@@ -38,3 +38,6 @@
 
 /node_modulesdb/scripts/mblist/*.xlsx
 db/scripts/mblist/*.csv
+db/scripts/mblist/*.xlsx
+db/scripts/mblist/*.csv
+node_modules/
