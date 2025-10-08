@@ -11,6 +11,26 @@
           <dd class="font-medium"><%= mushroom.state&.name %> , <%= mushroom.country&.name %> <span class="text-sm text-gray-400">Fungus Type:</span> <%= mushroom.fungus_type&.name %></dd>
         </div>
 
+        <div class="md:col-span-2 border rounded-md p-2">
+          <span class="text-sm text-gray-400">Genus:</span>
+          <span class="text-gray-600">
+            <% if mushroom.genera.any? %>
+              <%= mushroom.genera.map(&:name).join(', ') %>
+            <% else %>
+              <span class="text-gray-400">Not assigned</span>
+            <% end %>
+          </span>
+          <br>
+          <span class="text-sm text-gray-400">Species:</span>
+          <span class="text-gray-600">
+            <% if mushroom.species.any? %>
+              <%= mushroom.species.map(&:name).join(', ') %>
+            <% else %>
+              <span class="text-gray-400">Not assigned</span>
+            <% end %>
+          </span>
+        </div>
+
         <!-- Full-width rows -->
         <% if mushroom.description.present? %>
           <div class="md:col-span-2 border rounded-md p-2">

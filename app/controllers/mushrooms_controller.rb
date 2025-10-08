@@ -87,7 +87,7 @@ class MushroomsController < ApplicationController
   private
   def set_mushroom
     @mushroom = Mushroom
-                  .includes(:country, :state, :fungus_type, image_mushrooms: { image_file_attachment: :blob })
+                  .includes(:country, :state, :fungus_type, :genera, :species, image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
