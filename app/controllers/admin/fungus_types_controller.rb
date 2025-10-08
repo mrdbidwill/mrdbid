@@ -48,7 +48,7 @@ class Admin::FungusTypesController < Admin::ApplicationController
   def destroy
     authorize @fungus_type
     @fungus_type.destroy!
-    redirect_to admin_fungus_types_path, notice: "Fungus type was successfully destroyed."
+    redirect_to admin_fungus_types_path, notice: "Fungus type was successfully deleted."
   end
 
   private

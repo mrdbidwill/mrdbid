@@ -48,7 +48,7 @@ class Admin::PermissionsController < Admin::ApplicationController
   def destroy
     authorize @permission
     @permission.destroy!
-    redirect_to admin_permissions_path, notice: "Camera make was successfully destroyed."
+    redirect_to admin_permissions_path, notice: "Camera make was successfully deleted."
   end
 
   private

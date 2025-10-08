@@ -71,7 +71,7 @@ class MbListsController < ApplicationController
   def destroy
     @mb_list = authorize current_user.mb_lists.find(params[:id])
     @mb_list.destroy!
-    redirect_to mb_lists_path, notice: "MbList was successfully destroyed."
+    redirect_to mb_lists_path, notice: "MbList was successfully deleted."
   end
 
 

@@ -48,7 +48,7 @@ class Admin::TreesController < Admin::ApplicationController
   def destroy
     authorize @tree
     @tree.destroy!
-    redirect_to admin_trees_path, notice: "Tree was successfully destroyed."
+    redirect_to admin_trees_path, notice: "Tree was successfully deleted."
   end
 
   private

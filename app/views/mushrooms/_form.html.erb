@@ -66,40 +66,6 @@
                                { prompt: "Select a Fungus Type" },
                                { class: "block shadow-sm rounded-md border px-3 py-1 mt-2 w-full" } %>
   </div>
-  <script>
-    // Simple auto-inject for genus/species selection for "Add" button
-    document.addEventListener("DOMContentLoaded", () => {
-      // For both genera and species blocks
-      document.querySelectorAll('[data-controller="tokens"]').forEach(panel => {
-        const input = panel.querySelector('[data-tokens-target="input"]');
-        const dropdown = panel.querySelector('[data-tokens-target="dropdown"]');
-        // Hidden field for selected id
-        let selectedIdField = panel.querySelector('input[type="hidden"].selected_id');
-        if (!selectedIdField) {
-          selectedIdField = document.createElement("input");
-          selectedIdField.type = "hidden";
-          selectedIdField.className = "selected_id";
-          panel.appendChild(selectedIdField);
-        }
-        // Delegate clicks on dropdown to input and hidden
-        dropdown?.addEventListener("click", function(e) {
-          if (e.target.tagName === "LI" || e.target.closest("li")) {
-            const item = e.target.closest("li");
-            // For autocomplete dropdowns that use data attributes, e.g., data-id, data-value, etc.
-            const id = item.dataset.id || item.getAttribute('data-id');
-            const label = item.dataset.value || item.innerText;
-            if (label && id) {
-              input.value = label;
-              selectedIdField.value = id;
-              // Optional: visually mark selected?
-            }
-          }
-        });
-
-        // Note: Add button removed - genus/species are added via autocomplete click
-      });
-    });
-  </script>
 
     <!-- Collapsible Candidate Genera/Species Selection -->
     <div class="my-5">
@@ -286,7 +252,6 @@
                data-tokens-min-value="3"
                data-tokens-mushroom-id-value="<%= mushroom.id %>"
                data-tokens-kind-value="species"
-               data-tokens-genus-id-value="<%= mushroom.genera.first&.id %>"
                class="border rounded p-2 bg-white">
             <div class="mb-2 flex items-center gap-2">
               <input type="text"

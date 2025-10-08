@@ -1,6 +1,7 @@
 class StatesController < ApplicationController
-  # If this must work for signed-out visitors, uncomment:
-  # skip_before_action :authenticate_user!, only: :index
+  skip_before_action :authenticate_user!, only: :index
+  skip_before_action :verify_authenticity_token, only: :index
+  skip_after_action :verify_policy_scoped, only: :index
 
   def index
     states = State.where(country_id: params[:country_id]).order(:name).select(:id, :name)

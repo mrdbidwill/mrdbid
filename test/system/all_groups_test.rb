@@ -40,6 +40,6 @@ class AllGroupsTest < ApplicationSystemTestCase
     visit all_group_url(@all_group)
     accept_confirm { click_on "Delete this all group", match: :first }
 
-    assert_text "All group was successfully destroyed"
+    assert_text "All group was successfully deleted"
   end
 end

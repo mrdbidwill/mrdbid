@@ -48,7 +48,7 @@ class Admin::RolesController < Admin::ApplicationController
   def destroy
     authorize @role
     @role.destroy!
-    redirect_to admin_roles_path, notice: "Role was successfully destroyed."
+    redirect_to admin_roles_path, notice: "Role was successfully deleted."
   end
 
   private

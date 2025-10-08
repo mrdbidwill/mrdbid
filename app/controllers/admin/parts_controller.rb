@@ -48,7 +48,7 @@ class Admin::PartsController < Admin::ApplicationController
   def destroy
     authorize @part
     @part.destroy!
-    redirect_to admin_parts_path, notice: "Part was successfully destroyed."
+    redirect_to admin_parts_path, notice: "Part was successfully deleted."
   end
 
   private

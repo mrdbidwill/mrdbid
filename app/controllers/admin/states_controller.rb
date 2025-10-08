@@ -56,7 +56,7 @@ class Admin::StatesController < Admin::ApplicationController
   def destroy
     authorize @state
     @state.destroy!
-    redirect_to admin_states_path, notice: "State was successfully destroyed."
+    redirect_to admin_states_path, notice: "State was successfully deleted."
   end
 
   private

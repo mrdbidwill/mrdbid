@@ -48,7 +48,7 @@ class Admin::LookupTypesController < Admin::ApplicationController
   def destroy
     authorize @lookup_type
     @lookup_type.destroy!
-    redirect_to admin_lookup_types_path, notice: "Lookup type was successfully destroyed."
+    redirect_to admin_lookup_types_path, notice: "Lookup type was successfully deleted."
   end
 
   private

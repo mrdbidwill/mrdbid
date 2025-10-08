@@ -57,7 +57,7 @@ class Admin::CountriesController < Admin::ApplicationController
     @country = Country.find(params[:id])
     authorize @country
     @country.destroy!
-    redirect_to admin_countries_path, notice: "Country was successfully destroyed."
+    redirect_to admin_countries_path, notice: "Country was successfully deleted."
   end
 
 

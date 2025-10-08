@@ -53,7 +53,7 @@ class AllGroupsController < ApplicationController
   def destroy
     @all_group = authorize current_user.all_groups.find(params[:id])
     @all_group.destroy!
-    redirect_to all_groups_path, notice: "Group was successfully destroyed."
+    redirect_to all_groups_path, notice: "Group was successfully deleted."
   end
 
 

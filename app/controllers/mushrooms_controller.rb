@@ -31,13 +31,13 @@ class MushroomsController < ApplicationController
   # GET /mushrooms/new
   def new
     @mushroom = Mushroom.new
-    authorize @mushroom if respond_to?(:authorize)
+    authorize @mushroom
   end
 
   # POST /mushrooms or /mushrooms.json
   def create
     @mushroom = current_user.mushrooms.build(mushroom_params.except(:user_id))
-    authorize @mushroom if respond_to?(:authorize) # Authorize before saving
+    authorize @mushroom # Authorize before saving
 
     if @mushroom.save
       redirect_to new_image_mushroom_path(mushroom_id: @mushroom.id), notice: "Mushroom was successfully created. Now add an image."

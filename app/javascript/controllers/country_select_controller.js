@@ -5,17 +5,21 @@ export default class extends Controller {
   static values = { url: String }
 
     connect() {
+        console.log("Country select controller connected")
+        console.log("Country value:", this.countrySelectTarget?.value)
+        console.log("URL value:", this.urlValue)
+        console.log("State select has options:", this.stateSelectTarget.options.length)
+
         // If a country is already selected (edit form, or prefill), populate states immediately.
-        if (this.countrySelectTarget?.value) {
+        if (this.countrySelectTarget?.value && this.countrySelectTarget.value !== "") {
             // If data-current is not provided, fall back to the select's current value (from server-rendered HTML)
             if (!this.stateSelectTarget.getAttribute("data-current")) {
                 const existing = this.stateSelectTarget.value
                 if (existing) this.stateSelectTarget.setAttribute("data-current", existing)
             }
             this.change()
-        } else {
-            this.disableStates("Select a country first")
         }
+        // Note: If no country is selected, the form already has the disabled state rendered from the server
     }
 
   async change() {
@@ -29,10 +33,21 @@ export default class extends Controller {
       this.stateSelectTarget.disabled = true
       this.setOptions([["", "Loading states…"]])
 
-      const response = await fetch(`${this.urlValue}?country_id=${encodeURIComponent(countryId)}`, {
-        headers: { "Accept": "application/json" }
+      const url = `${this.urlValue}?country_id=${encodeURIComponent(countryId)}`
+      console.log("Fetching states from:", url)
+
+      const response = await fetch(url, {
+        headers: { "Accept": "application/json" },
+        credentials: "same-origin"
       })
-      if (!response.ok) throw new Error("Failed to load states")
+
+      console.log("Response status:", response.status, "ok:", response.ok)
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("Error response:", errorText)
+        throw new Error(`Failed to load states: ${response.status}`)
+      }
 
       const states = await response.json() // Expect [{id, name}, ...]
       if (!Array.isArray(states) || states.length === 0) {
@@ -41,14 +56,16 @@ export default class extends Controller {
         return
       }
 
-        const options = [["", "Select a State"], ...states.map(s => [String(s.id), s.name])]
-        const current = this.stateSelectTarget.getAttribute("data-current") || this.stateSelectTarget.value
-        this.setOptions(options, current)
-        this.stateSelectTarget.disabled = false
+      const options = [["", "Select a State"], ...states.map(s => [String(s.id), s.name])]
+      const current = this.stateSelectTarget.getAttribute("data-current") || this.stateSelectTarget.value
+      this.setOptions(options, current)
+      // Clear the data-current attribute after first use
+      this.stateSelectTarget.removeAttribute("data-current")
+      this.stateSelectTarget.disabled = false
     } catch (e) {
       this.setOptions([["", "Could not load states"]])
       this.stateSelectTarget.disabled = true
-      // Optionally log error
+      console.error("Failed to load states:", e)
     }
   }
 

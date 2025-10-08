@@ -71,7 +71,7 @@ class ClustersController < ApplicationController
   def destroy
     @cluster = authorize current_user.clusters.find(params[:id])
     @cluster.destroy!
-    redirect_to clusters_path, notice: "Cluster was successfully destroyed."
+    redirect_to clusters_path, notice: "Cluster was successfully deleted."
   end
 
 

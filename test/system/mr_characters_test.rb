@@ -49,6 +49,6 @@ class MrCharactersTest < ApplicationSystemTestCase
       click_on "Destroy", match: :first
     end
 
-    assert_text "Mushroom Character was successfully destroyed"
+    assert_text "Mushroom Character was successfully deleted"
   end
 end

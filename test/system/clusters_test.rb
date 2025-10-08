@@ -40,6 +40,6 @@ class ClustersTest < ApplicationSystemTestCase
     visit cluster_url(@cluster)
     accept_confirm { click_on "Delete this cluster", match: :first }
 
-    assert_text "Cluster was successfully destroyed"
+    assert_text "Cluster was successfully deleted"
   end
 end

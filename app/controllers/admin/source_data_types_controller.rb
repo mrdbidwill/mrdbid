@@ -48,7 +48,7 @@ class Admin::SourceDataTypesController < Admin::ApplicationController
   def destroy
     authorize @source_data_type
     @source_data_type.destroy!
-    redirect_to admin_source_data_types_path, notice: "Source data  type was successfully destroyed."
+    redirect_to admin_source_data_types_path, notice: "Source data  type was successfully deleted."
   end
 
   private

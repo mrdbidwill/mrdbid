@@ -48,7 +48,7 @@ class Admin::ColorsController < Admin::ApplicationController
   def destroy
     authorize @color
     @color.destroy!
-    redirect_to admin_colors_path, notice: "Color was successfully destroyed."
+    redirect_to admin_colors_path, notice: "Color was successfully deleted."
   end
 
   private

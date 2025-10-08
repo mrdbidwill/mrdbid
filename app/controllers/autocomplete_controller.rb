@@ -20,13 +20,23 @@ class AutocompleteController < ApplicationController
     render json: results
   end
 
-  # GET /autocomplete/species.json?q=placo&genus_id=1
+  # GET /autocomplete/species.json?q=placo&mushroom_id=1
   def species
     query = params[:q].to_s.strip
-    genus_id = params[:genus_id]
+    mushroom_id = params[:mushroom_id]
+
     results = if query.length >= 3
                 scope = Species.where("name LIKE ?", "#{Species.sanitize_sql_like(query)}%")
-                scope = scope.where(genera_id: genus_id) if genus_id.present?
+
+                # Filter by selected genera for this mushroom
+                if mushroom_id.present?
+                  mushroom = Mushroom.find_by(id: mushroom_id)
+                  if mushroom && mushroom.genera.any?
+                    genera_ids = mushroom.genera.pluck(:id)
+                    scope = scope.where(genera_id: genera_ids)
+                  end
+                end
+
                 scope
                   .select(:id, :name, :genera_id)
                   .order(:name)

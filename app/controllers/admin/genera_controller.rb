@@ -48,7 +48,7 @@ class Admin::GeneraController < Admin::ApplicationController
   def destroy
     authorize @genus
     @genus.destroy!
-    redirect_to admin_genera_path, notice: "Genus was successfully destroyed."
+    redirect_to admin_genera_path, notice: "Genus was successfully deleted."
   end
 
   private

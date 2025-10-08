@@ -36,9 +36,13 @@ export default class extends Controller {
         this.showLoader()
         const url = new URL(this.data.get("urlValue"), window.location.origin)
         url.searchParams.append("q", query)
-        if(this.data.has("genusIdValue")) {
-            url.searchParams.append("genus_id", this.data.get("genusIdValue"))
+
+        // For species autocomplete, pass mushroom_id to filter by selected genera
+        const kind = this.data.get("kindValue")
+        if(kind === "species" && this.data.has("mushroomIdValue")) {
+            url.searchParams.append("mushroom_id", this.data.get("mushroomIdValue"))
         }
+
         fetch(url, { headers: {"Accept": "application/json"} })
             .then(r => r.json())
             .then(items => {
@@ -88,8 +92,9 @@ export default class extends Controller {
             return
         }
         this.createToken({id, label})
-        this.inputTarget.value = ""
         this.hideDropdown()
+        this.inputTarget.value = ""
+        this.inputTarget.focus()
         // Save via AJAX
         this.saveToken(id, label)
     }

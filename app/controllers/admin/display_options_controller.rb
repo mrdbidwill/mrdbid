@@ -62,7 +62,7 @@ class DisplayOptionsController < ApplicationController
   def destroy
     @display_option = DisplayOption.find(params[:id])
     @display_option.destroy!
-    redirect_to display_options_url, notice: "Display option was successfully destroyed."
+    redirect_to display_options_url, notice: "Display option was successfully deleted."
   end
 
   private

@@ -48,7 +48,7 @@ class Admin::PlantsController < Admin::ApplicationController
   def destroy
     authorize @plant
     @plant.destroy!
-    redirect_to admin_plants_path, notice: "Camera make was successfully destroyed."
+    redirect_to admin_plants_path, notice: "Camera make was successfully deleted."
   end
 
   private

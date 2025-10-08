@@ -41,6 +41,6 @@ class MushroomsTest < ApplicationSystemTestCase
       click_on "Destroy", match: :first
     end
 
-    assert_text "Mushroom was successfully destroyed"
+    assert_text "Mushroom was successfully deleted"
   end
 end

@@ -69,7 +69,7 @@ class Admin::StorageLocationsController < Admin::ApplicationController
     @storage_location = StorageLocation.find(params[:id])
     authorize @storage_location
     @storage_location.destroy!
-    redirect_to admin_storage_locations_path, notice: "Storage Location was successfully destroyed."
+    redirect_to admin_storage_locations_path, notice: "Storage Location was successfully deleted."
   end
 
 

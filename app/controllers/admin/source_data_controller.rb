@@ -52,7 +52,7 @@ class Admin::SourceDataController < Admin::ApplicationController
   def destroy
     authorize @source_data
     @source_data.destroy!
-    redirect_to admin_source_data_path, notice: "Source data was successfully destroyed."
+    redirect_to admin_source_data_path, notice: "Source data was successfully deleted."
   end
 
   private

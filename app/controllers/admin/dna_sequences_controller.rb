@@ -48,7 +48,7 @@ class Admin::DnaSequencesController < Admin::ApplicationController
   def destroy
     authorize @camera_make
     @camera_make.destroy!
-    redirect_to admin_dna_sequences_path, notice: "Camera make was successfully destroyed."
+    redirect_to admin_dna_sequences_path, notice: "Camera make was successfully deleted."
   end
 
   private
