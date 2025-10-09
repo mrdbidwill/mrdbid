@@ -1,4 +1,4 @@
-class MbListsController < ApplicationController
+class Admin::MbListsController < Admin::ApplicationController
   include Pundit::Authorization
 
   # GET /mb_lists or /mb_lists.json
