@@ -1,4 +1,4 @@
-class DisplayOptionsController < ApplicationController
+class Admin::DisplayOptionsController < Admin::ApplicationController
   include Pundit::Authorization
   # GET /display_options
   def index
