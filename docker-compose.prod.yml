@@ -64,9 +64,9 @@ services:
       - "443:443"
     volumes:
       - ./public:/app/public:ro
-      # Mount your SSL certificates here in production:
-      # - /etc/letsencrypt/live/yourdomain.com/fullchain.pem:/etc/nginx/ssl/cert.pem:ro
-      # - /etc/letsencrypt/live/yourdomain.com/privkey.pem:/etc/nginx/ssl/key.pem:ro
+      # Mount Let's Encrypt SSL certificates
+      - /opt/mrdbid/nginx/ssl/cert.pem:/etc/nginx/ssl/cert.pem:ro
+      - /opt/mrdbid/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem:ro
     depends_on:
       web:
         condition: service_healthy
