@@ -55,7 +55,7 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "mrbid.com"), protocol: "https" }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "mrdbid.com"), protocol: "https" }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -67,9 +67,9 @@ Rails.application.configure do
     enable_starttls_auto: Rails.application.credentials.dig(:smtp, :enable_starttls_auto) != false
   }
   config.action_mailer.default_options = {
-    from: Rails.application.credentials.dig(:smtp, :from) || "no-reply@mrbid.com"
+    from: Rails.application.credentials.dig(:smtp, :from) || "no-reply@mrdbid.com"
   }
-  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] || "mrbid.com", protocol: "https" }
+  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] || "mrdbid.com", protocol: "https" }
 
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -84,10 +84,10 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts = [
-    "mrbid.com",           # Production domain
-    "www.mrbid.com",       # WWW subdomain
-    /.*\.mrbid\.com/,      # All subdomains
-    "localhost"            # For health checks
+    "mrdbid.com",           # Production domain
+    "www.mrdbid.com",       # WWW subdomain
+    /.*\.mrdbid\.com/,      # All subdomains
+    "localhost"             # For health checks
   ]
 
   # Skip DNS rebinding protection for the default health check endpoint.
