@@ -1,16 +1,7 @@
-/* Tailwind v4 entry */
-@import "tailwindcss";
-
-/* Bring in utility classes so @apply knows them */
-@import "tailwindcss/utilities";
-
-/* Optional: base/forms/typography presets if you @apply from them too */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-
-/* Plugins (v4 style) */
-@plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Reusable UI primitives */
 @layer components {
