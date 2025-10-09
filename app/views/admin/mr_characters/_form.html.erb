@@ -21,8 +21,6 @@
                 class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" if mr_character.persisted? %>
     <%= link_to "Back to characters", admin_mr_characters_path,
                 class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-
-  <p class="text-sm text-red-600">&lt;After your changes, use the "Update Mushroom Character" button above or at the bottom of form to submit them.&gt;</p>
   </div>
 
   <% unless mr_character.name.to_s == "id" %>
