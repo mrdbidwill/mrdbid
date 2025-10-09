@@ -1,6 +1,6 @@
 # app/controllers/admin/dashboard_controller.rb
 class Admin::DashboardController < Admin::ApplicationController
-  skip_after_action :verify_policy_scoped, only: :index
+  skip_after_action :verify_policy_scoped, only: :index, raise: false
 
   def index
     @mr_character_count = MrCharacter.count

@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  skip_after_action :verify_authorized, only: %i[index show]
-  skip_after_action :verify_policy_scoped, only: [:index]
+  skip_after_action :verify_authorized, only: %i[index show], raise: false
+  skip_after_action :verify_policy_scoped, only: [:index], raise: false
 
   def index
     @subjects = Article.distinct.order(:subject).pluck(:subject).compact

@@ -1,6 +1,6 @@
 # File: app/controllers/contacts_controller.rb
 class ContactsController < ApplicationController
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   def new
   end

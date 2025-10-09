@@ -1,7 +1,7 @@
 class MrCharacterMushroomsController < ApplicationController
   # Add Pundit if you authorize mushrooms; ensure policy permits linking characters
   before_action :set_mushroom
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   def create
     # Upsert behavior: one value per mushroom+character, update if exists
