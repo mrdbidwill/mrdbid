@@ -36,9 +36,12 @@ COPY . .
 # This requires RAILS_MASTER_KEY to be set at build time
 ARG RAILS_MASTER_KEY
 ENV RAILS_ENV=production \
-    RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+    RAILS_MASTER_KEY=$RAILS_MASTER_KEY \
+    NODE_ENV=production
 
-RUN bundle exec rails assets:precompile
+# Build Tailwind CSS first, then precompile other assets
+RUN bundle exec rails tailwindcss:build && \
+    bundle exec rails assets:precompile
 
 # Final production image
 FROM ruby:3.4.3-slim
