@@ -7,6 +7,12 @@ export default class extends Controller {
     static targets = [
         "input", "dropdown", "list", "hiddenIds", "loader"
     ]
+    static values = {
+        url: String,
+        min: { type: Number, default: 3 },
+        mushroomId: String,
+        kind: String
+    }
 
     connect() {
         this.selected = new Map()
@@ -22,25 +28,34 @@ export default class extends Controller {
     onInput() {
         clearTimeout(this.debounceTimer)
         let query = this.inputTarget.value.trim()
+
+        // Show immediate feedback
+        if(query.length > 0 && query.length < (parseInt(this.inputTarget.getAttribute("minlength")) || 3)) {
+            this.dropdownTarget.innerHTML = `<li class='px-3 py-2 text-sm text-gray-400'>Type ${(parseInt(this.inputTarget.getAttribute("minlength")) || 3) - query.length} more character(s)...</li>`
+            this.dropdownTarget.classList.remove("hidden")
+            return
+        }
+
         if(query.length < (parseInt(this.inputTarget.getAttribute("minlength")) || 3)) {
             this.hideDropdown()
             return
         }
 
+        // Show loading immediately before debounce
+        this.showLoader()
         this.debounceTimer = setTimeout(() => {
             this.autocomplete(query)
-        }, 250)
+        }, 150)
     }
 
     autocomplete(query) {
         this.showLoader()
-        const url = new URL(this.data.get("urlValue"), window.location.origin)
+        const url = new URL(this.urlValue, window.location.origin)
         url.searchParams.append("q", query)
 
         // For species autocomplete, pass mushroom_id to filter by selected genera
-        const kind = this.data.get("kindValue")
-        if(kind === "species" && this.data.has("mushroomIdValue")) {
-            url.searchParams.append("mushroom_id", this.data.get("mushroomIdValue"))
+        if(this.kindValue === "species" && this.hasMushroomIdValue) {
+            url.searchParams.append("mushroom_id", this.mushroomIdValue)
         }
 
         fetch(url, { headers: {"Accept": "application/json"} })
@@ -132,8 +147,8 @@ export default class extends Controller {
 
     // AJAX save for genus or species association
     saveToken(id, label) {
-        const kind = this.data.get("kindValue")
-        const mushroomId = this.data.get("mushroomIdValue")
+        const kind = this.kindValue
+        const mushroomId = this.mushroomIdValue
         if(!kind || !mushroomId) return
         let route, body
         if(kind=="genera") {
@@ -160,8 +175,8 @@ export default class extends Controller {
     }
 
     deleteToken(id) {
-        const kind = this.data.get("kindValue")
-        const mushroomId = this.data.get("mushroomIdValue")
+        const kind = this.kindValue
+        const mushroomId = this.mushroomIdValue
         if(!kind || !mushroomId) return
         let route
         if(kind=="genera") {

@@ -2,7 +2,7 @@
 
 class MushroomSpeciesController < ApplicationController
   before_action :authenticate_user!
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   # POST /mushroom_species.json
   def create

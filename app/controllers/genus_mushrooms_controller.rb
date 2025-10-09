@@ -2,7 +2,7 @@
 
 class GenusMushroomsController < ApplicationController
   before_action :authenticate_user!
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   # POST /genus_mushrooms.json
   def create

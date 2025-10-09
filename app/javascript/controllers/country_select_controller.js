@@ -10,12 +10,12 @@ export default class extends Controller {
         console.log("URL value:", this.urlValue)
         console.log("State select has options:", this.stateSelectTarget.options.length)
 
-        // If a country is already selected (edit form, or prefill), populate states immediately.
+        // If a country is already selected (edit form), populate states immediately
         if (this.countrySelectTarget?.value && this.countrySelectTarget.value !== "") {
-            // If data-current is not provided, fall back to the select's current value (from server-rendered HTML)
-            if (!this.stateSelectTarget.getAttribute("data-current")) {
-                const existing = this.stateSelectTarget.value
-                if (existing) this.stateSelectTarget.setAttribute("data-current", existing)
+            // Save the current state value before we replace the dropdown options
+            const currentStateId = this.stateSelectTarget.value
+            if (currentStateId) {
+                this.stateSelectTarget.setAttribute("data-current", currentStateId)
             }
             this.change()
         }

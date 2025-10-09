@@ -2,7 +2,7 @@
 
 class AutocompleteController < ApplicationController
   before_action :authenticate_user!
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   # GET /autocomplete/genera.json?q=aga
   def genera
@@ -37,13 +37,15 @@ class AutocompleteController < ApplicationController
                   end
                 end
 
-                scope
+                # Use includes to eager load genera and avoid N+1 queries
+                species_results = scope
+                  .includes(:genus)
                   .select(:id, :name, :genera_id)
                   .order(:name)
                   .limit(20)
-                  .map do |sp|
-                  genus = Genus.select(:name).find_by(id: sp.genera_id)
-                  genus_label = genus ? "#{genus.name} " : ""
+
+                species_results.map do |sp|
+                  genus_label = sp.genus ? "#{sp.genus.name} " : ""
                   { id: sp.id, name: "#{genus_label}#{sp.name}" }
                 end
               else
