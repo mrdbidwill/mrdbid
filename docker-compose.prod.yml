@@ -14,34 +14,68 @@ services:
     # Don't expose port externally in production for security
     # ports:
     #   - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     command: bin/rails server -b 0.0.0.0 -p 3000
     volumes:
-      - ./public:/app/public
       - ./log:/app/log
       - ./tmp:/app/tmp
-      - bundle_data:/usr/local/bundle
-    ports:
-      - "3000:3000"
+    # Don't expose port externally - nginx handles this
+    # ports:
+    #   - "3000:3000"
     environment:
       DATABASE_URL: mysql2://${MYSQL_USER:-mrdbid_user}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE:-mrdbid_production}
       RAILS_ENV: production
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       OTP_SECRET_ENCRYPTION_KEY: ${OTP_SECRET_ENCRYPTION_KEY}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       APP_HOST: ${APP_HOST}
-      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_SERVE_STATIC_FILES: "false"
       RAILS_LOG_TO_STDOUT: "true"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./public:/app/public:ro
+      # Mount your SSL certificates here in production:
+      # - /etc/letsencrypt/live/yourdomain.com/fullchain.pem:/etc/nginx/ssl/cert.pem:ro
+      # - /etc/letsencrypt/live/yourdomain.com/privkey.pem:/etc/nginx/ssl/key.pem:ro
+    depends_on:
+      web:
+        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
 
 volumes:
   db-data:
-  bundle_data:
 
 networks:
   app-network:

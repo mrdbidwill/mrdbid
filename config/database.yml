@@ -13,9 +13,8 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: mrdbid_user
-  password: uR!TxC4avEWp
-
+  username: <%= ENV.fetch("MYSQL_USER") { "mrdbid_user" } %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD") { "devpassword" } %>
   host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
 
 development:
@@ -54,10 +53,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: mrdbid_production
-    username: mrdbid_user
-    password: uR!TxC4avEWp
-    host: 127.0.0.1
+    database: <%= ENV.fetch("MYSQL_DATABASE") { "mrdbid_production" } %>
+    url: <%= ENV['DATABASE_URL'] %>
   cache:
     <<: *primary_production
     database: mrdbid_production_cache

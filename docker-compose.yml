@@ -3,10 +3,10 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: nativeAzalea2025!
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-devpassword}
       MYSQL_DATABASE: mrdbid_development
-      MYSQL_USER: mrdbid_user
-      MYSQL_PASSWORD: uR!TxC4avEWp
+      MYSQL_USER: ${MYSQL_USER:-mrdbid_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-devpassword}
     volumes:
       - db-data:/var/lib/mysql
     ports:
@@ -21,7 +21,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: mysql2://mrdbid_user:uR!TxC4avEWp@db:3306/mrdbid_development
+      DATABASE_URL: mysql2://${MYSQL_USER:-mrdbid_user}:${MYSQL_PASSWORD:-devpassword}@db:3306/mrdbid_development
       RAILS_ENV: development
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       OTP_SECRET_ENCRYPTION_KEY: ${OTP_SECRET_ENCRYPTION_KEY}
