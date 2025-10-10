@@ -1,11 +1,11 @@
 class ContactMailer < ApplicationMailer
-  def contact_message(name:, email:, message:)
+  def contact_message(name:, email:, message:, recipient: "contact@mrdbid.com")
     @name = name
     @email = email
     @message = message
 
     mail(
-      to: ENV.fetch("CONTACT_RECIPIENT", "contact@mrdbid.com"),
+      to: recipient,
       reply_to: email,
       subject: "New contact form message from #{@name}"
     )

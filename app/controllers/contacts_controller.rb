@@ -9,14 +9,19 @@ class ContactsController < ApplicationController
     name = params[:name].to_s.strip
     email = params[:email].to_s.strip
     message = params[:message].to_s
+    recipient = params[:recipient].to_s.strip
 
     if name.blank? || email.blank? || message.blank?
       flash[:alert] = "Please provide your name, email, and a message."
       return redirect_to contact_path
     end
 
+    # Validate recipient is one of the allowed addresses
+    allowed_recipients = ['contact@mrdbid.com', 'webmaster@mrdbid.com', 'will@mrdbid.com']
+    recipient = 'contact@mrdbid.com' unless allowed_recipients.include?(recipient)
+
     begin
-      ContactMailer.contact_message(name:, email:, message:).deliver_now
+      ContactMailer.contact_message(name:, email:, message:, recipient:).deliver_now
       flash[:notice] = "Thanks! Your message has been sent."
     rescue => e
       Rails.logger.error("Contact mail failed: #{e.class} - #{e.message}")
