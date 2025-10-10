@@ -65,9 +65,12 @@ COPY --from=builder /usr/local/bundle /usr/local/bundle
 # Copy application code and precompiled assets from builder
 COPY --from=builder --chown=app:app /app /app
 
+# Keep a backup of precompiled assets before public is mounted
+RUN cp -r /app/public /app/public_precompiled
+
 # Create necessary directories
-RUN mkdir -p tmp/pids tmp/sockets log && \
-    chown -R app:app tmp log
+RUN mkdir -p tmp/pids tmp/sockets log public && \
+    chown -R app:app tmp log public
 
 # Switch to non-root user
 USER app

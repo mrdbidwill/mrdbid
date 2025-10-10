@@ -26,7 +26,9 @@ services:
       dockerfile: Dockerfile.prod
       args:
         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-    command: bin/rails server -b 0.0.0.0 -p 3000
+    command: >
+      sh -c "cp -r /app/public_precompiled/* /app/public/ &&
+             bin/rails server -b 0.0.0.0 -p 3000"
     volumes:
       - ./log:/app/log
       - ./tmp:/app/tmp
