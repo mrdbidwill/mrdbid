@@ -28,9 +28,9 @@ services:
         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     command: bin/rails server -b 0.0.0.0 -p 3000
     volumes:
-      - assets:/app/public/assets
       - ./log:/app/log
       - ./tmp:/app/tmp
+      - ./public:/app/public
     # Don't expose port externally - nginx handles this
     # ports:
     #   - "3000:3000"
@@ -64,7 +64,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - assets:/app/public/assets
       - ./public:/app/public:ro
       # Mount Let's Encrypt SSL certificates
       - /opt/mrdbid/nginx/ssl/cert.pem:/etc/nginx/ssl/cert.pem:ro
@@ -78,7 +77,6 @@ services:
 
 volumes:
   db-data:
-  assets:
 
 networks:
   app-network:
