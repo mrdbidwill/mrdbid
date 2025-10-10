@@ -9,7 +9,7 @@ set :branch, "main"
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/public_html/mrdbid/apps/#{fetch(:application)}"
+set :deploy_to, "/opt/mrdbid"
 
 set :rbenv_type, :user
 set :rbenv_ruby, '3.4.3'
@@ -25,7 +25,7 @@ set :rbenv_ruby, '3.4.3'
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/master.key", "config/credentials.yml.enc"
+append :linked_files, "config/master.key", ".env.production"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads"
