@@ -64,7 +64,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - assets:/app/public/assets:ro
+      - assets:/app/public/assets
       - ./public:/app/public:ro
       # Mount Let's Encrypt SSL certificates
       - /opt/mrdbid/nginx/ssl/cert.pem:/etc/nginx/ssl/cert.pem:ro
