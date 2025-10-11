@@ -9,10 +9,20 @@ set :branch, "main"
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/public_html/mrdbid/apps/#{fetch(:application)}"
+set :deploy_to, "/opt/mrdbid"
 
 set :rbenv_type, :user
 set :rbenv_ruby, '3.4.3'
+
+# Puma configuration
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_access_log, "#{shared_path}/log/puma_access.log"
+set :puma_error_log, "#{shared_path}/log/puma_error.log"
+set :puma_preload_app, true
+set :puma_worker_timeout, nil
+set :puma_init_active_record, true
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -25,10 +35,10 @@ set :rbenv_ruby, '3.4.3'
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/master.key", "config/credentials.yml.enc"
+append :linked_files, "config/master.key", "config/credentials.yml.enc", ".env"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "storage"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

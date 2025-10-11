@@ -1,351 +1,319 @@
-# Production Deployment Guide
+# Capistrano Deployment Guide
 
-## Prerequisites
+## Overview
 
-- Docker and Docker Compose installed on production server
-- Domain name pointing to your server
-- SSL certificates (Let's Encrypt recommended)
-- Access to server via SSH
+This application deploys to a Hostinger VPS using Capistrano. The deployment is automated and handles code updates, asset compilation, and database migrations.
 
-## Quick Start
+## Server Setup
 
-### 1. Clone Repository on Production Server
+### Prerequisites on VPS (root@85.31.233.192)
 
+1. **Ruby via rbenv**
+   ```bash
+   # Install rbenv
+   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+   git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+   # Add to ~/.bashrc
+   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+   echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+   source ~/.bashrc
+
+   # Install Ruby 3.4.3
+   rbenv install 3.4.3
+   rbenv global 3.4.3
+   ```
+
+2. **Node.js** (for asset compilation)
+   ```bash
+   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+   apt-get install -y nodejs
+   ```
+
+3. **MySQL 8.0**
+   ```bash
+   apt-get install -y mysql-server mysql-client libmysqlclient-dev
+
+   # Secure MySQL
+   mysql_secure_installation
+
+   # Create database and user
+   mysql -u root -p
+   CREATE DATABASE mrdbid_production;
+   CREATE USER 'mrdbid'@'localhost' IDENTIFIED BY 'your_secure_password';
+   GRANT ALL PRIVILEGES ON mrdbid_production.* TO 'mrdbid'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+
+4. **Nginx**
+   ```bash
+   apt-get install -y nginx
+
+   # Configuration will be in /etc/nginx/sites-available/mrdbid
+   ```
+
+5. **Create deployment directory**
+   ```bash
+   mkdir -p /opt/mrdbid
+   chown root:root /opt/mrdbid
+   ```
+
+## Local Setup
+
+### SSH Access
+
+Ensure you have SSH key access configured:
 ```bash
-git clone <your-repo-url> /var/www/mrdbid
-cd /var/www/mrdbid
+ssh root@85.31.233.192
 ```
 
-### 2. Set Up Environment Variables
+### Credentials
 
+1. **Master Key**: Must exist in `/opt/mrdbid/shared/config/master.key` on server
+2. **Credentials**: Must exist in `/opt/mrdbid/shared/config/credentials.yml.enc` on server
+
+Copy these files manually on first deployment:
 ```bash
-# Copy the example file
-cp .env.production.example .env.production
-
-# Edit with your actual values
-nano .env.production
+scp config/master.key root@85.31.233.192:/opt/mrdbid/shared/config/
+scp config/credentials.yml.enc root@85.31.233.192:/opt/mrdbid/shared/config/
 ```
 
-**Required environment variables:**
+## Deployment
+
+### First Deployment
 
 ```bash
-# Generate strong passwords
-MYSQL_ROOT_PASSWORD=$(openssl rand -base64 32)
-MYSQL_PASSWORD=$(openssl rand -base64 32)
+# Install Capistrano
+bundle install
 
-# Get from config/master.key
-RAILS_MASTER_KEY=$(cat config/master.key)
+# Set up directory structure on server
+cap production deploy:check
 
-# Generate new secret key base
-SECRET_KEY_BASE=$(docker-compose run --rm web rails secret)
-
-# Generate OTP encryption key
-OTP_SECRET_ENCRYPTION_KEY=$(openssl rand -hex 32)
-
-# Set your domain
-APP_HOST=mrbid.com
+# Deploy
+cap production deploy
 ```
 
-### 3. Configure SSL Certificates
+### Subsequent Deployments
 
-#### Option A: Use Let's Encrypt (Recommended)
+```bash
+cap production deploy
+```
+
+### Database Migrations
+
+Migrations run automatically during deployment. To disable:
+```bash
+# Remove from Capfile: require "capistrano/rails/migrations"
+```
+
+To run migrations manually:
+```bash
+cap production deploy:migrate
+```
+
+### Manual Backfill Scripts
+
+After deployment, you may need to run the backfill scripts manually:
+
+```bash
+ssh root@85.31.233.192
+cd /opt/mrdbid/current
+
+# Load mb_lists data
+mysql -u mrdbid -p mrdbid_production < db/scripts/mblist/import_mb_lists.sql
+
+# Backfill genera
+mysql -u mrdbid -p mrdbid_production < db/scripts/mblist/backfill_genera_table_from_mblist.sql
+
+# Backfill species
+mysql -u mrdbid -p mrdbid_production < db/scripts/mblist/backfill_species_table_from_mblist.sql
+```
+
+## Capistrano Tasks
+
+### View Available Tasks
+```bash
+cap -T
+```
+
+### Common Tasks
+
+- `cap production deploy` - Full deployment
+- `cap production deploy:restart` - Restart Puma
+- `cap production puma:start` - Start Puma
+- `cap production puma:stop` - Stop Puma
+- `cap production puma:status` - Check Puma status
+- `cap production logs:tail` - Tail production logs
+
+## Directory Structure on Server
+
+```
+/opt/mrdbid/
+├── current -> /opt/mrdbid/releases/20251011120000
+├── releases/
+│   ├── 20251011120000/
+│   ├── 20251011110000/
+│   └── ...
+├── shared/
+│   ├── config/
+│   │   ├── master.key
+│   │   └── credentials.yml.enc
+│   ├── log/
+│   ├── tmp/
+│   │   ├── pids/
+│   │   ├── cache/
+│   │   └── sockets/
+│   ├── public/
+│   │   ├── system/
+│   │   └── uploads/
+│   └── storage/
+└── repo/ (git repository cache)
+```
+
+## Nginx Configuration
+
+Create `/etc/nginx/sites-available/mrdbid`:
+
+```nginx
+upstream puma {
+  server unix:///opt/mrdbid/shared/tmp/sockets/puma.sock;
+}
+
+server {
+  listen 80;
+  server_name yourdomain.com www.yourdomain.com;
+
+  # Redirect HTTP to HTTPS (uncomment when SSL is set up)
+  # return 301 https://$server_name$request_uri;
+}
+
+server {
+  # listen 443 ssl http2;
+  listen 80;  # Change to 443 when SSL is set up
+  server_name yourdomain.com www.yourdomain.com;
+
+  root /opt/mrdbid/current/public;
+  access_log /opt/mrdbid/shared/log/nginx_access.log;
+  error_log /opt/mrdbid/shared/log/nginx_error.log info;
+
+  # SSL Configuration (uncomment when ready)
+  # ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+  # ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri @puma;
+
+  location @puma {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://puma;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 10M;
+  keepalive_timeout 10;
+}
+```
+
+Enable the site:
+```bash
+ln -s /etc/nginx/sites-available/mrdbid /etc/nginx/sites-enabled/
+nginx -t
+systemctl reload nginx
+```
+
+## SSL Setup (Optional but Recommended)
 
 ```bash
 # Install certbot
-sudo apt-get update
-sudo apt-get install certbot
+apt-get install -y certbot python3-certbot-nginx
 
-# Get certificates
-sudo certbot certonly --standalone -d mrbid.com -d www.mrbid.com
+# Get certificate
+certbot --nginx -d yourdomain.com -d www.yourdomain.com
 
-# Update docker-compose.prod.yml to mount real certificates
-# Uncomment these lines in the nginx service:
-# - /etc/letsencrypt/live/mrbid.com/fullchain.pem:/etc/nginx/ssl/cert.pem:ro
-# - /etc/letsencrypt/live/mrbid.com/privkey.pem:/etc/nginx/ssl/key.pem:ro
+# Auto-renewal is set up automatically via cron
 ```
 
-#### Option B: Use Self-Signed Certificates (Development/Testing Only)
+## Migration Notes
 
-The nginx container includes self-signed certificates for initial setup.
-**Do not use in production!**
+### Foreign Key Constraints
 
-### 4. Build and Start Services
+Migrations are already ordered correctly to respect foreign key dependencies. If you encounter issues during migration:
 
-```bash
-# Build all containers
-docker-compose -f docker-compose.prod.yml build --build-arg RAILS_MASTER_KEY=$(cat config/master.key)
+1. Check the error message for which foreign key is failing
+2. Ensure parent tables exist before child tables
+3. The migration order has been verified and should work correctly
 
-# Start services
-docker-compose -f docker-compose.prod.yml up -d
+### Backfill Scripts
 
-# Check status
-docker-compose -f docker-compose.prod.yml ps
-```
-
-### 5. Set Up Database
-
-```bash
-# Create databases
-docker-compose -f docker-compose.prod.yml exec web rails db:create
-
-# Run migrations
-docker-compose -f docker-compose.prod.yml exec web rails db:migrate
-
-# (Optional) Seed data
-docker-compose -f docker-compose.prod.yml exec web rails db:seed
-```
-
-### 6. Verify Deployment
-
-```bash
-# Check logs
-docker-compose -f docker-compose.prod.yml logs -f web
-
-# Test health endpoint
-curl https://your domain.com/up
-
-# Should return: "OK"
-```
-
-## Architecture
-
-```
-Internet
-    ↓
-Nginx (Port 80/443) - SSL Termination
-    ↓
-Rails App (Port 3000) - Internal
-    ↓
-MySQL (Port 3306) - Internal
-```
-
-### Services:
-
-- **nginx**: Reverse proxy with SSL termination
-- **web**: Rails application server
-- **db**: MySQL 8.0 database
-
-### Security Features:
-
-✅ SSL/TLS encryption (HTTPS)
-✅ Database passwords via environment variables
-✅ No exposed database ports
-✅ Health checks for all services
-✅ Non-root user in Rails container
-✅ Host authorization configured
-✅ Force SSL enabled
-
-## Common Tasks
-
-### View Logs
-
-```bash
-# All services
-docker-compose -f docker-compose.prod.yml logs -f
-
-# Specific service
-docker-compose -f docker-compose.prod.yml logs -f web
-docker-compose -f docker-compose.prod.yml logs -f nginx
-```
-
-### Run Rails Console
-
-```bash
-docker-compose -f docker-compose.prod.yml exec web rails console
-```
-
-### Run Database Migrations
-
-```bash
-docker-compose -f docker-compose.prod.yml exec web rails db:migrate
-```
-
-### Restart Services
-
-```bash
-# Restart all
-docker-compose -f docker-compose.prod.yml restart
-
-# Restart specific service
-docker-compose -f docker-compose.prod.yml restart web
-```
-
-### Update Application
-
-```bash
-# Pull latest code
-git pull origin main
-
-# Rebuild and restart
-docker-compose -f docker-compose.prod.yml build --build-arg RAILS_MASTER_KEY=$(cat config/master.key)
-docker-compose -f docker-compose.prod.yml up -d
-
-# Run migrations if needed
-docker-compose -f docker-compose.prod.yml exec web rails db:migrate
-```
-
-### Database Backup
-
-```bash
-# Backup
-docker-compose -f docker-compose.prod.yml exec db mysqldump -u root -p$MYSQL_ROOT_PASSWORD mrdbid_production > backup_$(date +%Y%m%d).sql
-
-# Restore
-docker-compose -f docker-compose.prod.yml exec -T db mysql -u root -p$MYSQL_ROOT_PASSWORD mrdbid_production < backup_20250101.sql
-```
-
-## Monitoring
-
-### Health Checks
-
-All services have health checks configured:
-
-```bash
-# Check service health
-docker-compose -f docker-compose.prod.yml ps
-```
-
-Services should show "healthy" status.
-
-### Application Health Endpoint
-
-```bash
-curl https://yourdomain.com/up
-```
-
-Should return: `OK`
+The backfill scripts in `db/scripts/mblist/` use `INSERT IGNORE` to prevent duplicate entries:
+- `backfill_genera_table_from_mblist.sql` - Safe to run multiple times
+- `backfill_species_table_from_mblist.sql` - Safe to run multiple times
 
 ## Troubleshooting
 
-### Service Won't Start
+### Deployment Fails
+
+```bash
+# Check Capistrano output for errors
+# Common issues:
+# - SSH access problems
+# - Missing master.key on server
+# - Database connection issues
+# - Asset compilation failures
+```
+
+### Puma Won't Start
 
 ```bash
 # Check logs
-docker-compose -f docker-compose.prod.yml logs web
+ssh root@85.31.233.192
+cd /opt/mrdbid/current
+tail -f /opt/mrdbid/shared/log/puma_error.log
 
-# Common issues:
-# - Missing environment variables
-# - Database connection failed
-# - Asset precompilation failed
+# Restart manually
+cap production puma:restart
 ```
 
 ### Database Connection Errors
 
 ```bash
-# Verify database is running
-docker-compose -f docker-compose.prod.yml ps db
-
-# Check database logs
-docker-compose -f docker-compose.prod.yml logs db
-
-# Test database connection
-docker-compose -f docker-compose.prod.yml exec web rails db:version
+# Verify database credentials in Rails credentials
+ssh root@85.31.233.192
+cd /opt/mrdbid/current
+RAILS_ENV=production bin/rails runner "puts ActiveRecord::Base.connection.execute('SELECT 1').to_a"
 ```
 
 ### Assets Not Loading
 
 ```bash
-# Verify assets were precompiled
-docker-compose -f docker-compose.prod.yml exec web ls -la public/assets
-
-# If missing, rebuild with asset precompilation
-docker-compose -f docker-compose.prod.yml build --no-cache
+# Recompile assets
+ssh root@85.31.233.192
+cd /opt/mrdbid/current
+RAILS_ENV=production bin/rails assets:precompile
+cap production deploy:restart
 ```
 
-### SSL Certificate Issues
+## Rollback
+
+If a deployment fails, Capistrano can rollback to the previous release:
 
 ```bash
-# Check nginx configuration
-docker-compose -f docker-compose.prod.yml exec nginx nginx -t
-
-# Verify certificates are mounted
-docker-compose -f docker-compose.prod.yml exec nginx ls -la /etc/nginx/ssl/
+cap production deploy:rollback
 ```
 
-## Security Checklist
-
-- [ ] Strong, unique passwords generated for all services
-- [ ] `.env.production` file created and secured (chmod 600)
-- [ ] SSL certificates installed and configured
-- [ ] Database port not exposed externally
-- [ ] Rails force_ssl enabled
-- [ ] Host authorization configured with your domain
-- [ ] `config/master.key` not in git repository
-- [ ] Regular backups configured
-- [ ] Monitoring/alerting set up
-- [ ] Log aggregation configured
-
-## Performance Optimization
-
-### Enable Redis Caching (Optional)
-
-Add Redis service to `docker-compose.prod.yml`:
-
-```yaml
-redis:
-  image: redis:7-alpine
-  restart: unless-stopped
-  volumes:
-    - redis-data:/data
-  networks:
-    - app-network
-```
-
-Update Rails config to use Redis cache.
-
-### Configure CDN (Optional)
-
-For better asset delivery, consider using a CDN like:
-- Cloudflare
-- AWS CloudFront
-- Fastly
-
-## Maintenance
-
-### Update Dependencies
-
-```bash
-# Update Ruby gems
-docker-compose -f docker-compose.prod.yml exec web bundle update
-
-# Update JavaScript packages
-docker-compose -f docker-compose.prod.yml exec web npm update
-
-# Rebuild and redeploy
-docker-compose -f docker-compose.prod.yml build
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-### Renew SSL Certificates
-
-Let's Encrypt certificates expire after 90 days:
-
-```bash
-# Renew certificates
-sudo certbot renew
-
-# Restart nginx to pick up new certificates
-docker-compose -f docker-compose.prod.yml restart nginx
-```
-
-Set up automatic renewal with cron:
-
-```bash
-# Add to crontab
-0 0 * * * certbot renew --quiet && docker-compose -f /var/www/mrdbid/docker-compose.prod.yml restart nginx
-```
-
-## Support
-
-For issues or questions:
-1. Check logs: `docker-compose -f docker-compose.prod.yml logs -f`
-2. Review this documentation
-3. Check application health: `curl https://yourdomain.com/up`
+This switches the `current` symlink back to the previous release directory.
 
 ## Version Info
 
 - Ruby: 3.4.3
 - Rails: 8.0+
 - MySQL: 8.0
-- Nginx: Alpine (latest)
-- Docker Compose: V2
+- Nginx: Latest stable
+- Puma: Managed by Capistrano

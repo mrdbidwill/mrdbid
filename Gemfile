@@ -24,6 +24,7 @@ gem 'kaminari' # pagination
 gem 'ruby-vips', '~> 2.1'
 gem "exifr" # EXIF parsing for JPEG/TIFF images
 gem "mini_exiftool"   # Robust fallback for HEIC/RAW via exiftool
+gem "dotenv-rails"
 gem "capistrano"
 gem "capistrano-rails"
 gem "capistrano-rbenv"
