@@ -31,18 +31,19 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 if ENV['RAILS_ENV'] == 'production'
-  bind "unix://#{ENV.fetch('PUMA_SOCKET', 'tmp/sockets/puma.sock')}"
+  # Use absolute paths in production
+  bind "unix://#{ENV['PUMA_SOCKET'] || '/opt/mrdbid/shared/tmp/sockets/puma.sock'}"
 
   # Daemonize in production
   daemonize true
 
   # Set up pid and state files
-  pidfile ENV.fetch('PUMA_PID', 'tmp/pids/puma.pid')
-  state_path ENV.fetch('PUMA_STATE', 'tmp/pids/puma.state')
+  pidfile ENV['PUMA_PID'] || '/opt/mrdbid/shared/tmp/pids/puma.pid'
+  state_path ENV['PUMA_STATE'] || '/opt/mrdbid/shared/tmp/pids/puma.state'
 
   # Logging
-  stdout_redirect ENV.fetch('PUMA_STDOUT', 'log/puma_stdout.log'),
-                  ENV.fetch('PUMA_STDERR', 'log/puma_stderr.log'), true
+  stdout_redirect ENV['PUMA_STDOUT'] || '/opt/mrdbid/shared/log/puma_stdout.log',
+                  ENV['PUMA_STDERR'] || '/opt/mrdbid/shared/log/puma_stderr.log', true
 else
   port ENV.fetch('PORT', 3000)
 end
