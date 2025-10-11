@@ -34,9 +34,6 @@ if ENV['RAILS_ENV'] == 'production'
   # Use absolute paths in production
   bind "unix://#{ENV['PUMA_SOCKET'] || '/opt/mrdbid/shared/tmp/sockets/puma.sock'}"
 
-  # Daemonize in production
-  daemonize true
-
   # Set up pid and state files
   pidfile ENV['PUMA_PID'] || '/opt/mrdbid/shared/tmp/pids/puma.pid'
   state_path ENV['PUMA_STATE'] || '/opt/mrdbid/shared/tmp/pids/puma.state'
