@@ -31,7 +31,13 @@ append :linked_files, "config/master.key", ".env.production"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads"
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, {
+  'MYSQL_USER' => 'mrdbid_user',
+  'MYSQL_PASSWORD' => 'uR!TxC4avEWp',
+  'MYSQL_DATABASE' => 'mrdbid_production',
+  'DB_HOST' => '127.0.0.1',
+  'DATABASE_URL' => 'mysql2://mrdbid_user:uR!TxC4avEWp@127.0.0.1/mrdbid_production'
+}
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
