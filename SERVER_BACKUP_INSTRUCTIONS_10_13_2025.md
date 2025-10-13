@@ -1,12 +1,12 @@
 # MRDBID Server Restoration Guide
-**Last Working Configuration: October 12, 2025**
+**Last Updated: October 13, 2025**
 
 ## Critical Information
 
-### Git Commit
-- **Working Commit**: `44560fe` - "Add production SMTP credentials and email confirmation setup"
+### Git Repository
+- **Current Commit**: `f3adad1` - "hostinger db tables populated with scripts - email sending online"
 - **Branch**: `main`
-- To restore: `git checkout 44560fe`
+- **Deployment Method**: Capistrano (NOT Docker/Kamal)
 
 ### VPS Server Details
 - **IP Address**: `85.31.233.192`
@@ -187,23 +187,63 @@ Key settings in `config/deploy.rb`:
 4. SMTP authentication requires the EXACT password (special characters matter)
 5. Database backups should be done regularly (not just when making changes)
 
-## Rollback to This Version
+## Routine Deployment (Minor Changes/Typo Fixes)
 
-If something breaks in the future:
+### From Local Machine:
 
 ```bash
-# Local
-git checkout 44560fe
+# 1. Make your changes locally
+# 2. Test locally if needed
+# 3. Commit changes
+git add .
+git commit -m "Fix typo in XYZ"
+git push origin main
+
+# 4. Deploy to production
 cap production deploy
+```
 
-# Server - restore credentials if needed
-./upload_credentials.sh
+That's it! Capistrano will:
+- Pull latest code from Git
+- Install any new gems
+- Precompile assets
+- Run migrations (if any)
+- Restart Puma gracefully
 
-# Restart
-ssh root@85.31.233.192 "kill -SIGUSR2 \$(cat /opt/mrdbid/shared/tmp/pids/puma.pid)"
+### Manual Server Restart (if needed):
+
+```bash
+ssh root@85.31.233.192
+kill -SIGUSR2 $(cat /opt/mrdbid/shared/tmp/pids/puma.pid)
+```
+
+## Server Maintenance
+
+### Purge Old MySQL Binary Logs (Run Monthly):
+
+```bash
+ssh root@85.31.233.192
+sudo mysql -e "PURGE BINARY LOGS BEFORE DATE_SUB(NOW(), INTERVAL 7 DAY);"
+```
+
+### Clean Old Docker Images (if Docker was used):
+
+```bash
+ssh root@85.31.233.192
+sudo docker system prune -a --volumes
+```
+
+### Check Disk Usage:
+
+```bash
+ssh root@85.31.233.192
+df -h
+sudo du -sh /var/lib/mysql
+sudo du -sh /opt/mrdbid
 ```
 
 ---
 **Created**: October 12, 2025
-**Status**: ✅ WORKING - Email confirmation functional
-**Last Test**: User registration with email confirmation successful
+**Updated**: October 13, 2025
+**Status**: ✅ WORKING - Production site operational
+**Deployment**: Capistrano to `/opt/mrdbid`
