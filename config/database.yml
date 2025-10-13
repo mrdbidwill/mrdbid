@@ -54,9 +54,9 @@ production:
   primary: &primary_production
     <<: *default
     database: <%= ENV.fetch("MYSQL_DATABASE") { "mrdbid_production" } %>
-    username: <%= Rails.application.credentials.dig(:database, :username) || ENV['MYSQL_USER'] %>
-    password: <%= Rails.application.credentials.dig(:database, :password) || ENV['MYSQL_PASSWORD'] %>
-    host: <%= Rails.application.credentials.dig(:database, :host) || ENV['DB_HOST'] || 'localhost' %>
+    username: <%= ENV.fetch("MYSQL_USER") { "mrdbid_user" } %>
+    password: <%= ENV.fetch("MYSQL_PASSWORD") { "password" } %>
+    host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
   cache:
     <<: *primary_production
     database: mrdbid_production_cache
