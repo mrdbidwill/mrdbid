@@ -7,19 +7,7 @@ module.exports = {
         './app/assets/stylesheets/**/*.css' // Stylesheets
     ],
     theme: {
-        extend: {
-            typography: {
-                DEFAULT: {
-                    css: {
-                        'p': {
-                            marginTop: '1.5em',
-                            marginBottom: '1.5em',
-                            lineHeight: '1.5',
-                        },
-                    },
-                },
-            },
-        },
+        extend: {},
     },
     plugins: [
         require('@tailwindcss/forms'),

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%= javascript_importmap_tags %>
+    <link rel="preload" href="<%= asset_path('application.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="<%= asset_path('application.css') %>"></noscript>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <link rel="preload" href="<%= asset_path('application.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-    <%# countering a FOUC (Flash of Unstyled Content) technique %>
     <style>
         html{visibility:visible}
         body{margin:0}
@@ -30,8 +30,6 @@
   </head>
 
   <body class="bg-gray-100 text-gray-800">
-  <article class="prose lg:prose-xl">
-
   <%= render 'shared/menu' %>
 
   <%# Dev/Test view origin banner %>
@@ -89,6 +87,5 @@
 
       <%= yield %>
     </main>
-  </article>
   </body>
 </html>
