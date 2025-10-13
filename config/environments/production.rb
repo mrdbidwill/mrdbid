@@ -58,17 +58,21 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "mrdbid.com"), protocol: "https" }
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              Rails.application.credentials.dig(:smtp, :address) || "localhost",
-    port:                 Rails.application.credentials.dig(:smtp, :port) || 25,
-    user_name:            Rails.application.credentials.dig(:smtp, :user_name),
-    password:             Rails.application.credentials.dig(:smtp, :password),
-    authentication:       Rails.application.credentials.dig(:smtp, :authentication) || "login",
-    enable_starttls_auto: Rails.application.credentials.dig(:smtp, :enable_starttls_auto) != false
-  }
-  config.action_mailer.default_options = {
-    from: Rails.application.credentials.dig(:smtp, :from) || "no-reply@mrdbid.com"
-  }
+
+  # Skip credentials during asset precompilation
+  unless defined?(Rails::Console) || File.basename($0) == "rake" && ARGV.include?("assets:precompile")
+    config.action_mailer.smtp_settings = {
+      address:              Rails.application.credentials.dig(:smtp, :address) || "localhost",
+      port:                 Rails.application.credentials.dig(:smtp, :port) || 25,
+      user_name:            Rails.application.credentials.dig(:smtp, :user_name),
+      password:             Rails.application.credentials.dig(:smtp, :password),
+      authentication:       Rails.application.credentials.dig(:smtp, :authentication) || "login",
+      enable_starttls_auto: Rails.application.credentials.dig(:smtp, :enable_starttls_auto) != false
+    }
+    config.action_mailer.default_options = {
+      from: Rails.application.credentials.dig(:smtp, :from) || "no-reply@mrdbid.com"
+    }
+  end
   config.action_mailer.default_url_options = { host: ENV["APP_HOST"] || "mrdbid.com", protocol: "https" }
 
 
