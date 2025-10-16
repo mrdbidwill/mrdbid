@@ -1,7 +1,3 @@
-import { Application } from "@hotwired/stimulus"
-import TokensController from "controllers/tokens_controller"
-import CountrySelectController from "controllers/country_select_controller"
-
-const application = Application.start()
-application.register("tokens", TokensController)
-application.register("country-select", CountrySelectController)
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import "@hotwired/turbo-rails"
+import "controllers"
