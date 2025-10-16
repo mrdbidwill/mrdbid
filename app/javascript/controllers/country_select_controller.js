@@ -50,18 +50,26 @@ export default class extends Controller {
       }
 
       const states = await response.json() // Expect [{id, name}, ...]
+      console.log("Received states:", states)
+      console.log("States is array:", Array.isArray(states), "Length:", states?.length)
+
       if (!Array.isArray(states) || states.length === 0) {
+        console.log("No states found, disabling dropdown")
         this.setOptions([["", "No states available"]])
         this.stateSelectTarget.disabled = true
         return
       }
 
       const options = [["", "Select a State"], ...states.map(s => [String(s.id), s.name])]
+      console.log("Setting options:", options.length, "options")
       const current = this.stateSelectTarget.getAttribute("data-current") || this.stateSelectTarget.value
+      console.log("Current state value:", current)
       this.setOptions(options, current)
+      console.log("Options set successfully, dropdown should now have", this.stateSelectTarget.options.length, "options")
       // Clear the data-current attribute after first use
       this.stateSelectTarget.removeAttribute("data-current")
       this.stateSelectTarget.disabled = false
+      console.log("State dropdown enabled")
     } catch (e) {
       this.setOptions([["", "Could not load states"]])
       this.stateSelectTarget.disabled = true
