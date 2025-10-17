@@ -13,9 +13,9 @@ class MushroomsController < ApplicationController
                      .includes(:user, :country, :state, :fungus_type, image_mushrooms: { image_file_attachment: :blob })
                      .left_joins(:fungus_type)
                      .order(
-                       Arel.sql("fungus_types.name IS NULL ASC"), # emulate NULLS LAST on MySQL
-                       FungusType.arel_table[:name].asc,
-                       Mushroom.arel_table[:name].asc
+                       Arel.sql("CASE WHEN fungus_types.name IS NULL THEN 1 ELSE 0 END"),
+                       Arel.sql("fungus_types.name"),
+                       Arel.sql("mushrooms.name")
                      )
                      .page(params[:page])
                      .per(5)

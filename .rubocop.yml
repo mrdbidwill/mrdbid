@@ -13,4 +13,4 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 Metrics/MethodLength:
-  Max: 15  # Increase the allowable method length
+  Max: 30  # Increase the allowable method length

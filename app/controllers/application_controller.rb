@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:display_name])
   end
 
+  def after_sign_in_path_for(resource)
+    mushrooms_path
+  end
+
   private
   def user_not_authorized
     respond_to do |format|
