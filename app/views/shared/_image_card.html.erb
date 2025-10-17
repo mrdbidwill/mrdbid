@@ -1,0 +1,30 @@
+<!-- app/views/shared/_image_card.html.erb -->
+<div class="card">
+  <div class="card-media">
+    <%= image_tag(
+          url_for(image_mushroom.image_file.variant(
+            resize_to_fill: [120, 120],
+            format: :webp,
+            saver: { strip: true, quality: 60, effort: 4 }
+          )),
+          alt: image_mushroom.part&.name.presence || mushroom_name || "Mushroom image",
+          loading: "lazy"
+        ) %>
+  </div>
+  <div class="card-body">
+    <p class="font-semibold"><%= image_mushroom.part&.name || "Part not set" %></p>
+    <%# Add other fields you’ve captured on ImageMushroom %>
+    <%# Example: %>
+    <% if image_mushroom.dimensions.present? %>
+      <p class="text-xs text-gray-600">Dimensions: <%= image_mushroom.dimensions %></p>
+    <% end %>
+    <% if image_mushroom.camera_model.present? %>
+      <p class="text-xs text-gray-600">Camera: <%= image_mushroom.camera_model %></p>
+    <% end %>
+    <% if image_mushroom.exposure.present? || image_mushroom.aperture.present? || image_mushroom.iso.present? %>
+      <p class="text-xs text-gray-600">
+        <%= [image_mushroom.exposure, image_mushroom.aperture, image_mushroom.iso&.then { "ISO #{_1}" }].compact.join(" · ") %>
+      </p>
+    <% end %>
+  </div>
+</div>

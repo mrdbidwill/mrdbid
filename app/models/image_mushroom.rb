@@ -23,6 +23,7 @@ class ImageMushroom < ApplicationRecord
 
   # Extract EXIF after create and when image_file changes
   after_commit :extract_exif_if_needed, on: [:create, :update]
+  after_commit :preprocess_thumbnail_variant, on: [:create, :update]
 
   private
 
@@ -169,4 +170,19 @@ class ImageMushroom < ApplicationRecord
     return nil if f <= 0
     "f/#{f.round(1)}"
   end
+
+  def preprocess_thumbnail_variant
+    return unless image_file.attached?
+    return unless attachment_changed? || previous_changes.key?("id")
+
+    # Pre-generate the commonly used thumbnail so views don't block on first access
+    image_file.variant(
+      resize_to_fill: [120, 120],
+      format: :webp,
+      saver: { strip: true, quality: 60, effort: 4 }
+    ).processed
+  rescue => e
+    Rails.logger.info("[ImageMushroom##{id}] Variant pre-process skipped: #{e.class} - #{e.message}")
+  end
+
 end

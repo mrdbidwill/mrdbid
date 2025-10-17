@@ -23,7 +23,11 @@
         <% grouped[ft_name].sort_by { |m| m.name.to_s.downcase }.each do |mushroom| %>
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
-            <%= render "shared/image_grid", images: images, image_size: [120,120], alt_fallback: (mushroom.name.presence || "Mushroom") %>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              <% images.each do |im| %>
+                <%= render "shared/image_card", image_mushroom: im, mushroom_name: (mushroom.name.presence || "Mushroom") %>
+              <% end %>
+            </div>
 
             <div class="well">
               <% country_name = mushroom.country&.name %>

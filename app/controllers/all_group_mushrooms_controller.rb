@@ -18,7 +18,7 @@ class AllGroupMushroomsController < ApplicationController
     @mushroom = Mushroom.find(params[:mushroom_id]) if params[:mushroom_id]
     @all_group_mushroom = AllGroupMushroom.new(mushroom: @mushroom)
     # Only groups owned by the mushroom owner should be selectable
-    @all_group = if @mushroom
+    @all_groups = if @mushroom
                    AllGroup.where(user_id: @mushroom.user_id)
                 else
                   AllGroup.none
