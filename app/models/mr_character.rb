@@ -10,6 +10,7 @@ class MrCharacter < ApplicationRecord
 
   has_many :mr_character_mushrooms, dependent: :destroy
   has_many :mushrooms, through: :mr_character_mushrooms
+  has_many :lookup_items, dependent: :destroy
 
   validates :name, presence: true
   validates :description, length: { maximum: 4096 }

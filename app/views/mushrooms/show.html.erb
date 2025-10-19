@@ -67,12 +67,29 @@
               <div>
                 <div class="text-sm text-gray-500"><%= c&.name %></div>
                 <div class="font-medium">
-                  <% if c&.display_option_id == 6 %>
-                    <% color_id = rc.character_value.to_i %>
-                    <span class="inline-flex items-center">
-                      <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg", alt: "Color #{color_id}", class: "w-6 h-6 mr-1 rounded border" %>
-                      <span>Color ID: <%= color_id %></span>
-                    </span>
+                  <% display_opt_name = c&.display_option&.name %>
+                  <% case display_opt_name %>
+                  <% when "color" %>
+                    <% color = Color.find_by(id: rc.character_value.to_i) %>
+                    <% if color %>
+                      <span class="inline-flex items-center">
+                        <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg", alt: color.latin_name, class: "w-6 h-6 mr-1 rounded border" %>
+                        <span><%= color.latin_name %> (<%= color.common_name %>)</span>
+                      </span>
+                    <% else %>
+                      <%= rc.character_value %>
+                    <% end %>
+                  <% when "radio", "drop-down" %>
+                    <% lookup_item = LookupItem.find_by(id: rc.character_value.to_i) %>
+                    <%= lookup_item&.name || rc.character_value %>
+                  <% when "boolean_yes_no" %>
+                    <%= rc.character_value.to_s.downcase == "true" ? "Yes" : "No" %>
+                  <% when "boolean_true_false" %>
+                    <%= rc.character_value.to_s.downcase == "true" ? "True" : "False" %>
+                  <% when "boolean_present_absent" %>
+                    <%= rc.character_value.to_s.downcase == "true" ? "Present" : "Absent" %>
+                  <% when "checkbox" %>
+                    <%= rc.character_value.to_s.downcase == "true" ? "✓ Yes" : "✗ No" %>
                   <% else %>
                     <%= rc.character_value %>
                   <% end %>
