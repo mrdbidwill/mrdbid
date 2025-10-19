@@ -58,7 +58,7 @@ class Admin::SourceDataController < Admin::ApplicationController
   private
 
   def set_source_data
-    @source_data = SourceData.includes(:source_data_type).find(params.expect(:id))
+    @source_data = SourceData.includes(:source_data_type).order("title").find(params.expect(:id))
   end
 
 

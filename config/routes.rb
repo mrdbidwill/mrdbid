@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :all_groups
   resources :all_group_mushrooms
   resources :articles, only: %i[index show]
+  resources :books, only: [:index]
   resources :clusters
   resources :cluster_mushrooms
   resources :mr_character_mushrooms, only: [:create]
