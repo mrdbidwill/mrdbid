@@ -6,7 +6,9 @@
     .p-mrdbid {
         margin-top: 0.75rem;
         font-size: 1.125rem;
-        line-height: 1.75rem;
+        line-height: 1.25rem;
+        padding-bottom: 0.25rem;
+        margin-bottom: .75rem;         /* Added for paragraph separation */
     }
     .p-title {
         font-size: 1.25rem;

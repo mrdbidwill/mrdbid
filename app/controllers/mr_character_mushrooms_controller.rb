@@ -9,7 +9,13 @@ class MrCharacterMushroomsController < ApplicationController
       mushroom_id: @mushroom.id,
       mr_character_id: params[:mr_character_id]
     )
-    @rc.character_value = params[:character_value]
+
+    raw_value = params[:character_value]
+    if booleanish_display_option?(params[:mr_character_id])
+      @rc.character_value = normalize_boolean_string(raw_value)
+    else
+      @rc.character_value = raw_value
+    end
 
     if @rc.save
       respond_to do |format|
@@ -28,5 +34,22 @@ class MrCharacterMushroomsController < ApplicationController
 
   def set_mushroom
     @mushroom = Mushroom.find(params[:mushroom_id])
+  end
+
+  # Boolean helpers
+
+  def booleanish_display_option?(mr_character_id)
+    mc = MrCharacter.includes(:display_option).find_by(id: mr_character_id)
+    return false unless mc&.display_option&.name
+    %w[boolean_yes_no boolean_true_false boolean_present_absent checkbox].include?(mc.display_option.name)
+  end
+
+  def normalize_boolean_string(value)
+    v = value.to_s.strip.downcase
+    return "true"  if %w[true yes present y on 1 checked].include?(v)
+    return "false" if %w[false no absent n off 0 unchecked].include?(v)
+    # Fallback: empty becomes false, anything else stays as-is to avoid data loss
+    return "false" if v.blank?
+    value.to_s
   end
 end
