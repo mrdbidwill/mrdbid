@@ -1,507 +1,505 @@
 SET FOREIGN_KEY_CHECKS=0;
-INSERT INTO `lookup_items` ( mr_character_id, name, description, comments, source_data_id, created_at, updated_at) VALUES  -- refer to mr_characters table
-(2, 'None',     '','',5, now(), now() ),                      -- 2 abundance
-(2, 'Low',      '','',5, now(), now() ),
-(2, 'Moderate', '','',5, now(), now() ),
-(2, 'High',     '','',5, now(), now() ),
-(3,'Button','very young','',1, now(), now() ),                 -- 3 mushroom_age
-(3,'Young','','',1, now(), now() ),
-(3,'Mature','','',1, now(), now() ),
-(3,'Past Prime','','',1, now(), now() ),
-(4,'None','','',5, now(), now() ),                              -- 4 odor
-(4,'Fruity','','',5, now(), now() ),
-(4,'Lemony','','',5, now(), now() ),
-(4,'Anise (licorice)','','',5, now(), now() ),
-(4,'Farinaceous (like fresh meal)','','',5, now(), now() ),
-(4,'Pungent','','',5, now(), now() ),
-(4,'Nauseous','','',5, now(), now() ),
-(4,'Nitrous','','',5, now(), now() ),
-(4,'Earthy','','',5, now(), now() ),
-(4,'Spermatic','','',5, now(), now() ),
-(4,'Garlic','','',4, now(), now() ),
-(4,'Maraschino cherries','','',4, now(), now() ),
-(4,'Sewer gas','','',4, now(), now() ),
-(4,'spicy - red hots - dirty socks','','',4, now(), now() ),
-(5,'None','','',5, now(), now() ),                                 -- 5 taste
-(5,'Mild','','',5, now(), now() ),
-(5,'Bitter','','',5, now(), now() ),
-(5,'Acrid (= puckery? astringent)/Peppery','','',5, now(), now() ),
-(5,'Agreeable','','',5, now(), now() ),
-(5,'Farinaceous (like fresh meal)','','',5, now(), now() ),
-(6,'Not Toxic','','',2, now(), now() ),                              -- 6 toxic
-(6,'Toxic','','',2, now(), now() ),
-(7,'Single, solitary','','',5, now(), now() ),                       -- 7 habit
-(7,'Scattered (1-2 feet apart)','','',5, now(), now() ),
-(7,'Gregarious (growing in a group)','','',5, now(), now() ),
-(7,'Caespitose (clustered, not joined)','','',5, now(), now() ),
-(7,'Connate (fused at base)','','',5, now(), now() ),
-(7,'Imbricate (overlapping)','','',5, now(), now() ),
-(7,'In troops or rings','','',5, now(), now() ),
-(10,'Convex','evenly rounded','',5, now(), now() ),                               -- 10 pileus_shape
-(10, 'Convex','evenly rounded','',5, now(), now() ),
-(10,'ovoid','egg','',5, now(), now() ),
-(10,'conic','cone','',5, now(), now() ),
-(10,'campanulate','bell-shaped.','vv',5, now(), now() ),
-(10,'parabolic','half-egg','',5, now(), now() ),
-(10,'pulvinate','cushion','',5, now(), now() ),
-(10,'cylindric','bullet','',5, now(), now() ),
-(10,'plane','flat','',5, now(), now() ),
-(10,'conchate','sea-shell','',5, now(), now() ),
-(10,'umbonate','w/bump','',5, now(), now() ),
-(10,'cuspidate','Umbonate with a pointy conical apex; Witch-hat shaped. also known as eye-tooth.','',5, now(), now() ),
-(10,'papillate','w/nipple','',5, now(), now() ),
-(10,'depressed','Saucer-shaped; The center is lower than the cap margin.','',5, now(), now() ),
-(10,'umbilicate','a navel-like depression in the center.','',5, now(), now() ),
-(10,'infundibuliform','funnel-shaped','',5, now(), now() ),
-(11,'Petaloid','petal','',5, now(), now() ),                                     -- 11 pileus_shape_top_view
-(11,'Spathulate','spatula','',5, now(), now() ),
-(11,'Dimidiate','1/2 circle','',5, now(), now() ),
-(11,'Flabelliform','fan-shaped','',5, now(), now() ),
-(20,'dry: Dull','','',5, now(), now() ),                                          -- 20 pileus_surface_dryness
-(20,'dry:  Silky','','',5, now(), now() ),
-(20,'Moist:  lubricous/greasy','','',5, now(), now() ),
-(20,'Moist: Glutinous (slimy)','','',5, now(), now() ),
-(20,'dry: Shiny','','',5, now(), now() ),
-(21,'Smooth','No defining features found on the surface.','',7, now(), now() ),                             -- 21 pileus_surface_texture
-(21,'Uneven','A bumpy surface.','',7, now(), now() ),
-(21,'Rugose','A wrinkled or rough surface.','',7, now(), now() ),
-(21,'Rugulose','A slightly wrinkled surface.','',7, now(), now() ),
-(21,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7, now(), now() ),
-(21,'Scrobiculate','A pitted or furrowed surface.','',7, now(), now() ),
-(21,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7, now(), now() ),
-(21,'Virgate','A streaked surface.','',7, now(), now() ),
-(21,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7, now(), now() ),
-(21,'Sericeous','A silky surface.','',7, now(), now() ),
-(21,'Fibrillose','A surface covered in thread-like filaments.','',7, now(), now() ),
-(21,'Squamose','A surface covered with scales.','',7, now(), now() ),
-(21,'Squarrose','A ragged surface covered with small scales.','',7, now(), now() ),
-(21,'Pruinose','A surface covered with a white powdery frostlike substance.','',7, now(), now() ),
-(21,'Pulverulent','A surface covered with fine dust or powder.','',7, now(), now() ),
-(21,'Granulose','A surface covered in salt-like granulates.','',7, now(), now() ),
-(21,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7, now(), now() ),
-(21,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7, now(), now() ),
-(21,'Areolate','A cracked surface resembling dried-mud or paint.','',7, now(), now() ),
-(21,'Rimose','A surface covered in cracks and crevices.','',7, now(), now() ),
-(21,'Laccate','A waxy or lacquered surface texture.','',7, now(), now() ),
-(21, 'Viscid -','A sticky glue-like surface texture.','',7, now(), now() ),
-(21,'Glutinous','A slimy surface.','',7, now(), now() ),
-(21,'Glabrous - Hairy','Hairy - a bald surface.','',7, now(), now() ),
-(21,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7, now(), now() ),
-(21,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7, now(), now() ),
-(21,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7, now(), now() ),
-(21,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7, now(), now() ),
-(21,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7, now(), now() ),
-(21,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7, now(), now() ),
-(21,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7, now(), now() ),
-(21,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7, now(), now() ),
-(21,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7, now(), now() ),
-(22,'Straight','The margins remain uniform and do not curve.','edited 3-8-2023',7, now(), now() ),                                         -- 22 pileus_margin_shape
-(22,'Decurved','The margins curve slightly downwards.','',7, now(), now() ),
-(22,'Incurved','The margins curve down and inwards.','',7, now(), now() ),
-(22,'Involute','The margins curve downwards and roll inwards. Also known as inrolled.','',7, now(), now() ),
-(22,'Arched','The margins curve upwards between the edge and stipe (stem).','',7, now(), now() ),
-(22,'Uplifted','The margins curve upwards. Also known as elevated.','',7, now(), now() ),
-(22,'Revolute','The margins curve inwards and also rolled back..','',7, now(), now() ),
-(22,'Exceeding','The margins extend past the gills.','',7, now(), now() ),
-(23,'Entire','There is a smooth transition from the top of the cap to its underside. No irregular attributes should be present on the edges. Also referred to as Smooth, Even, Seamless, Flush, or Regular.','',7, now(), now() ),   -- 23 pileus_margin_type
-(23,'Appendiculate','Remnants of a partial veil hang from the edge of the cap.','',7, now(), now() ),
-(23,'Striate','Fine and narrow stripes run parallel on the cap margins. The lines will often coincide with the gills underneath the cap. In some cases, the lines are only visible when the cap is wet. Also referred to as striped, furrowed, streaked, ribbed, lined,','',7, now(), now() ),
-(23,'Sulcate','Narrow parallel grooves that line the margins of the cap. Sulcate margins are more defined than striate but less ridged than plicated. Also referred to as plicate-striate.','',7, now(), now() ),
-(23,'Plicate','Parallel pleated margins. They are best described as fan-like or umbrella-like as if the surface of the cap were folded. Plicate margins are more defined and ridged than Striate or Sulcate. Also referred to as pleated or ridged.','',7, now(), now() ),
-(23,'Eroded','Deteriorated, gnawed, or eaten away. The disfigured margins are usually found in older specimens and are the result of insects or deliquescence (common with Ink Caps). Also referred to as gnawed or ragged.','',7, now(), now() ),
-(23,'Split','The edges of the cap are split apart or full of large crevices. Also referred to as cracked or rimose.','',7, now(), now() ),
-(23,'Lacerate','Many tears mark the edge of the cap. Similar to split margins, however, the cuts are smaller and more frequent. Also referred to as torn.','',7, now(), now() ),
-(23,'Undulating - Hairy','Hairy - The edges of the cap form a wave-like pattern as they rise and fall. Also referred to as wavy irregular or festoony.','',7, now(), now() ),
-(23,'Crenate - Hairy','Hairy - Semi-circle notches or round-toothed edges that are more blunted than serrate margins. Also referred to as scalloped.','',7, now(), now() ),
-(23,'Serrate - Hairy','Hairy - The edges of the cap appear jagged and saw-toothed. More pronounced than crenate margins.','',7, now(), now() ),
-(30,'Soft','','',5, now(), now() ),                                               -- 30 pileus_context_flesh_texture
-(30,'Spongy','','',5, now(), now() ),
-(30,'Firm','','',5, now(), now() ),
-(30,'Compact','','',5, now(), now() ),
-(30,'Rigid','','',5, now(), now() ),
-(30,'Brittle','','',5, now(), now() ),
-(30,'Corky','','',5, now(), now() ),
-(30,'Other','','',5, now(), now() ),
-(35,'Free - remote','','',5, now(), now() ),                                  -- 35 lamella_attachment
-(35,'Free - close','','',5, now(), now() ),
-(35,'Adnate - horizontal','','',5, now(), now() ),
-(35,'Adnate - ascending','','',5, now(), now() ),
-(35,'Adnexed (almost free)','','',5, now(), now() ),
-(35,'Sinuate','','',5, now(), now() ),
-(35,'Emarginate (notched)','','',5, now(), now() ),
-(35,'Decurrent - long','','',5, now(), now() ),
-(35,'Decurrent - short','','',5, now(), now() ),
-(35,'Seceding (breaking away)','','',5, now(), now() ),
-(35,'Uncinate (w/decurrent tooth)','','',5, now(), now() ),
-(35,'Collared','Gills are attached to a collar or ring that encircles the stipe.','',7, now(), now() ),
-(36,'Broad','','',5, now(), now() ),                     -- 36 lamella_breadth
-(36,'Free - close','','',5, now(), now() ),
-(36,'Ventricose','','',5, now(), now() ),
-(37,'Average','','',5, now(), now() ),      -- 37 lamella_thickness
-(37,'Thick','','',5, now(), now() ),
-(37,'Tapering','','',5, now(), now() ),
-(38,'Crowded','The Gills are tightly close together.','',7, now(), now() ),   -- 38 lamella_spacing
-(38,'Close','The Gills are close together.','',7, now(), now() ),
-(38,'Subdistant','The gills are spaced apart.','',7, now(), now() ),
-(38,'Distant','The gills are widely spaced apart.','',7, now(), now() ),
-(41,'Even - entire','','',5, now(), now() ),   -- 41 lamella_edge
-(41,'Serrate','','',5, now(), now() ),
-(41,'Serrulate','','',5, now(), now() ),
-(41,'Eroded (\"gnawed\")','','',5, now(), now() ),
-(41,'Fimbriate (fringed)','','',5, now(), now() ),
-(41,'Marginate (diff. color)','','',5, now(), now() ),
-(41,'Crenate (scalloped)','','',5, now(), now() ),
-(41,'Acute','','',5, now(), now() ),
-(41,'Obtuse (blunt)','','',5, now(), now() ),
-(41,'Crisped (crinkled)','','',5, now(), now() ),
-(41,'lamella_misc_waxy_y_n','','',4, now(), now() ),
-(41,'lamella_misc_arid_dry_y_n','','',4, now(), now() ),
-(41,'lamella_misc_deliquescent_y_n','','',4, now(), now() ),
-(45,'Central','','',5, now(), now() ),                            -- 45 stipe location
-(45,'Eccentric - off-center','','',5, now(), now() ),
-(45,'Lateral - attached at margin','','',5, now(), now() ),
-(45,'Sessile - missing','','',5, now(), now() ),
-(50,'Terete (round)','','',5, now(), now() ),                  -- 50 stipe shape
-(50,'Compressed (flattened)','','',5, now(), now() ),
-(50,'Equal','','',5, now(), now() ),
-(50,'Clavate (club)','','',5, now(), now() ),
-(50,'Radicating (w/\"root\")','','',5, now(), now() ),
-(50,'Flexous','','',5, now(), now() ),
-(50,'Ventricose Fusiform','','',5, now(), now() ),
-(50,'Tapering','','',5, now(), now() ),
-(50,'Abruptly bulbous','','',5, now(), now() ),
-(50,'Rounded','','',5, now(), now() ),
-(50,'Oblique (angle)','','',5, now(), now() ),
-(50,'Marginate','','',5, now(), now() ),
-(58,'Smooth','No defining features found on the surface.','',7, now(), now() ),   -- 58 stipe_surface
-(58,'Uneven','A bumpy surface.','',7, now(), now() ),
-(58,'Rugose','A wrinkled or rough surface.','',7, now(), now() ),
-(58,'Rugulose','A slightly wrinkled surface.','',7, now(), now() ),
-(58,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7, now(), now() ),
-(58,'Scrobiculate','A pitted or furrowed surface.','',7, now(), now() ),
-(58,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7, now(), now() ),
-(58,'Virgate','A streaked surface.','',7, now(), now() ),
-(58,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7, now(), now() ),
-(58,'Sericeous','A silky surface.','',7, now(), now() ),
-(58,'Fibrillose','A surface covered in thread-like filaments.','',7, now(), now() ),
-(58,'Squamose','A surface covered with scales.','',7, now(), now() ),
-(58,'Squarrose','A ragged surface covered with small scales.','',7, now(), now() ),
-(58,'Pruinose','A surface covered with a white powdery frostlike substance.','',7, now(), now() ),
-(58,'Pulverulent','A surface covered with fine dust or powder.','',7, now(), now() ),
-(58,'Granulose','A surface covered in salt-like granulates.','',7, now(), now() ),
-(58,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7, now(), now() ),
-(58,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7, now(), now() ),
-(58,'Areolate','A cracked surface resembling dried-mud or paint.','',7, now(), now() ),
-(58,'Rimose','A surface covered in cracks and crevices.','',7, now(), now() ),
-(58,'Laccate','A waxy or lacquered surface texture.','',7, now(), now() ),
-(58, 'Viscid -','A sticky glue-like surface texture.','',7, now(), now() ),
-(58,'Glutinous','A slimy surface.','',7, now(), now() ),
-(58,'Glabrous - Hairy','Hairy - a bald surface.','',7, now(), now() ),
-(58,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7, now(), now() ),
-(58,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7, now(), now() ),
-(58,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7, now(), now() ),
-(58,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7, now(), now() ),
-(58,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7, now(), now() ),
-(58,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7, now(), now() ),
-(58,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7, now(), now() ),
-(58,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7, now(), now() ),
-(58,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7, now(), now() ),
-(58,'Banded','','',5, now(), now() ),
-(58,'Peronate','','',5, now(), now() ),
-(58,'Fibrous','','',5, now(), now() ),
-(58,'Lacunose (w/dp.grooves)','','',5, now(), now() ),
-(58,'Longitudinally striate','','',5, now(), now() ),
-(58,'Ribbed/Costate','','',5, now(), now() ),
-(58,'Scabrous (scabby)','','',5, now(), now() ),
-(58,'Punctuate (w/small dots)','','',5, now(), now() ),
-(58,'Glanular-dotted (w/dark sticky dots)','','',5, now(), now() ),
-(58,'Reticulate (fishnet)','','',5, now(), now() ),
-(59,'Fragile','','',5, now(), now() ),                              -- 59 stipe_texture
-(59,'Pliable','','',5, now(), now() ),
-(59,'Chalky','','',5, now(), now() ),
-(59,'Rigid','','',5, now(), now() ),
-(59,'Fibrous (Fleshy-Fibrous)','usually rather thick, and when broken in two, leaves a ragged edge.','',5, now(), now() ),
-(59,'Cartilaginous','Common stipe, usually thin and breaks with a firm split when bent in two, similar to cartilage.','',13, now(), now() ),
-(59,'Firm','','',5, now(), now() ),
-(59,'Woody','','',13, now(), now() ),
-(59,'Corky','','',13, now(), now() ),
-(59,'Leathery (coriaceous)','','',13, now(), now() ),
-(59,'Chalky','feels and breaks like chalk in hand. When crushed, it breaks up into powder or chunks.','',13, now(), now() ),
-(59,'Breaking with a snap','','',5, now(), now() ),
-(60,  'Solid',             '','', 5, now(), now() ),            -- 60 stipe_interior
-(60,  'Hollow - fistulose','','', 5, now(), now() ),
-(60,  'Tubular',           '','', 5, now(), now() ),
-(60,  'Cavernous',         '','', 5, now(), now() ),
-(60,  'Stuffed with pith', '','', 5, now(), now() ),
-(61,'None','Does not have annulus ring','',5, now(), now() ),   -- 61 partial_inner_veil_annular_ring_position
-(61,'Superior','Near the cap','',5, now(), now() ),
-(61,'Apical','upper half','',5, now(), now() ),
-(61,'Median','in the middle','',5, now(), now() ),
-(61,'Inferior','Lower half','',5, now(), now() ),
-(61,'Basal','Near the base','',5, now(), now() ),
-(64,'Membranous (skin-like)','','',5, now(), now() ),   -- 64 partial_inner_veil_texture
-(64,'Cortinate (cobwebby)','','',5, now(), now() ),
-(64,'Fibillose (thready)','','',5, now(), now() ),
-(64,'Gelatinous (slimy)','','',5, now(), now() ),
-(65,'Disappearing - Evanescent','can only be detected in button stage','',4, now(), now() ),  -- 65 partial_inner_veil_fate
-(65,'Persistent','leaving remnants on cap','',4, now(), now() ),
-(67,'Two Rings (from 2 veils)','','',5, now(), now() ),  -- 67  partial_inner_veil_appearance
-(67,'Doubly-flared Ring','','',5, now(), now() ),
-(67,'\"Cogwheel\" Stellate','','',5, now(), now() ),
-(67,'Floccose (downy tuffs)','','',5, now(), now() ),
-(67,'Cortinate PV & Fibrillose Annular Zone','','',5, now(), now() ),
-(67,'Single Ring thick on edge','','',5, now(), now() ),
-(67,'Pendant (hanging)','','',5, now(), now() ),
-(67,'Subperonate','','',5, now(), now() ),
-(67,'Peronate (w/\"boot\")','','',5, now(), now() ),
-(70,'Napiform (turnip)','','',5, now(), now() ),                         -- 70 bulb_type
-(70,'Saccate','','',5, now(), now() ),
-(70,'Sheathing','','',5, now(), now() ),
-(70,'Collar','','',5, now(), now() ),
-(70,'Granular','','',5, now(), now() ),
-(70,'Concentric rings or scales','','',5, now(), now() ),
-(70,'Friable, disappearing','','',5, now(), now() ),
-(70,'Fusiform','','',5, now(), now() ),
-(70,'Marginate-depressed','','',5, now(), now() ),
-(70,'Cleft','','',5, now(), now() ),
-(76,'Terrestrial (on soil - bare )','','',5, now(), now() ),           -- 76 habitat
-(76,'Terrestrial (on soil - burned )','','',5, now(), now() ),
-(76,'Terrestrial (on soil - disturbed )','','',5, now(), now() ),
-(76,'Lignicolous (on wood) - what kind of tree?','','',5, now(), now() ),
-(76,'Humicolous (on humus, duff) - conifer, other?','','',5, now(), now() ),
-(76,'Coprophious (on dung) what kind?','','',5, now(), now() ),
-(76,'In grassy area - lawn, pasture, etc?','','',5, now(), now() ),
-(76,'In forest - conifer, hardwood, mixed?','','',5, now(), now() ),
-(76,'fungicolous','mushroom mycelia grow in other mushrooms','p 7, How to Identify Mushrooms to Genus I: Macroscopic Features - David L. Largent',13,'2023-03-16 21:46:17','2023-03-16 21:46:17'),
-(77,'Unknown','','',1, now(), now() ),                                  -- 77 soil_type
-(77,'Loam','','',1, now(), now() ),
-(83,'Ammonia (NH4OH, Ammonium Hydroxide)','','',8, now(), now() ),  -- 83 chem_reaction
-(83,'KOH (Potassium Hydroxide) - 3%','','',8, now(), now() ),
-(99,'Superior','Near the cap','',7, now(), now() ),      --  99 annulus_position
-(99,'Apical','upper half', '',   7, now(), now() ),
-(99,'Median','in the middle','', 7, now(), now() ),
-(99,'Inferior','Lower half','',  7, now(), now() ),
-(99,'Basal','Near the base','',  7, now(), now() ),
-(100,'Observation Only - No specimen collected','','',2, now(), now() ),              -- 100 mushroom_storage_location
-(100,'Specimen Collector','This is you, if you collected this specimen','',2, now(), now() ),
-(100,'Herbarium','','',2, now(), now() ),
-(105,'Lamella - Gills','','',1, now(), now() ),        -- 105 fungus_types
-(105,'Pores','','',1, now(), now() ),
-(105,'Teeth','','',1, now(), now() ),
-(105,'Cups','','',1, now(), now() ),
-(105,'Stinkhorn','','',1, now(), now() ),
-(106,'Two Rings (from 2 veils)','','',5, now(), now() ),               -- 106 universal_outer_veil_appearances
-(106,'Doubly-flared Ring','','',5, now(), now() ),
-(106,'\"Cogwheel\" Stellate','','',5, now(), now() ),
-(106,'Floccose (downy tuffs)','','',5, now(), now() ),
-(106,'Cortinate PV & Fibrillose Annular Zone','','',5, now(), now() ),
-(106,'Single Ring thick on edge','','',5, now(), now() ),
-(106,'Pendant (hanging)','','',5, now(), now() ),
-(106,'Subperonate','','',5, now(), now() ),
-(106,'Peronate (w/\"boot\")','','',5, now(), now() ),
-(107,'Disappearing','','',5, now(), now() ),                          -- 107 universal_outer_veil_fates
-(107,'Leaving fragments on cap','','',5, now(), now() ),
-(108,'Membranous (skin-like)','','',5, now(), now() ),                        -- 108  `universal_outer_veil_textures
-(108,'Cortinate (cobwebby)','','',5, now(), now() ),
-(108,'Fibillose (thready)','','',5, now(), now() ),
-(108,'Gelatinous (slimy)','','',5, now(), now() ),
-(109,'Flaring','The annulus is flaring upwards.','',7, now(), now() ),                                -- 109  veils
-(109,'Pendant','The veil is hanging downward from the stipe.','',7, now(), now() ),
-(109,'Double Rings','Two visible veils..','',7, now(), now() ),
-(109,'Ring Zone','The stipe is marked with the remnants of the annulus','',7, now(), now() ),
-(109,'Cortinate','The partial veil is cobweb-like or tread-like (Fibrillose)..','',7, now(), now() ),
-(109,'Stellate','The partial veil resembles a cogwheel.','',7, now(), now() ),
-(109,'Floccose','The partial veil is fluffy and down-like.','',7, now(), now() ),
-(109,'Peronate','The stipe resembles a sheath-like boot or stocking','',7, now(), now() ),
-(110,'epigeous','above-ground ','',2, now(), now() ),                                             -- 110 synonyms
-(110,'hypogeous','underground','',2, now(), now() ),
-(110,'mushroom','fruiting body of a fungus','',2, now(), now() ),
-(110,'basidiocarp','fruiting body','',2, now(), now() ),
-(110,'thallus','soma','entire body of fungus',2, now(), now() ),
-(110,'sporocarp','fruiting body','',2, now(), now() ),
-(110,'pileus','cap','',2, now(), now() ),
-(110,'Stipe','Stalk','',2, now(), now() ),
-(110,'Gills','Lamellae','',2, now(), now() ),
-(110,'Volva','cup','',2, now(), now() ),
-(110,'Annulus','ring','',2, now(), now() ),
-(110,'cone','conical','',5, now(), now() ),
-(110,'conic','conical','',5, now(), now() ),
-(110,'disc','center','',5, now(), now() ),
-(110,'margin','edge','',5, now(), now() ),
-(110,'ring','annulus','',5, now(), now() ),
-(110,'stem','stipe','',5, now(), now() ),
-(110,'volva','cup','',5, now(), now() ),
-(110,'convex','evenly rounded','',1, now(), now() ),
-(110,'ovoid','egg','',5, now(), now() ),
-(110,'campanulate','bell-shaped','',5, now(), now() ),
-(110,'parabolic','half-egg','',5, now(), now() ),
-(110,'pulvinate','cushion','',5, now(), now() ),
-(110,'cylindric','bullet','',5, now(), now() ),
-(110,'plane','flat','',5, now(), now() ),
-(112,'Convex','','',44,now(),now() ),     -- 112 pileus_shape_form
-(112,'Hemispherical','','',44,now(),now() ),
-(112,'Spherical','','',44,now(),now() ),
-(112,'Ovoid','','',44,now(),now() ),
-(112,'Conical','','',44,now(),now() ),
-(112,'Cylindric','','',44,now(),now() ),
-(112,'Flat','','',44,now(),now() ),
-(112,'Depressed','','',44,now(),now() ),
-(112,'Funnel-Shaped','','',44,now(),now() ),
-(112,'Companulate','','',44,now(),now() ),
-(112,'Cuspidate','','',44,now(),now() ),
-(112,'Umbonate','','',44,now(),now() ),
-(112,'Papillate','','',44,now(),now() ),
-(112,'Umbilicate','','',44,now(),now() ),
-(112,'Uplifted','','',44,now(),now() ),
-(112,'Parabolic','','',44,now(),now() ),
-(112,'Pulvinate','','',44,now(),now() ),
-(112,'Plane','','',44,now(),now() ),
-(112,'Infundibuliform','','',44,now(),now() ),
-(112,'Other','','',44,now(),now() ),
-(117,'Dry','','',44,now(),now() ),                      -- 117 pileus_surface_wetness
-(117,'Moist','','',44,now(),now() ),
-(117,'Glutinous','','',44,now(),now() ),
-(117,'Gelatinous','','',44,now(),now() ),
-(117,'Viscid','','',44,now(),now() ),
-(117,'Subviscid','','',44,now(),now() ),
-(117,'Other','','',44,now(),now() ),
-(120,'Indented','','',44,now(),now() ),                          -- 120 pileus_center
-(120,'Nearly perforated','','',44,now(),now() ),
-(120,'Perforated','','',44,now(),now() ),
-(121,'Darker','','',44,now(),now() ),                                 -- 121 pileus_central_disc_colored
-(121,'Lighter','','',44,now(),now() ),
-(124,'Glabrous smooth','','',44,now(),now() ),                      -- 124 pileus_surface_texture
-(124,'non-glabrous Downy-Wooly','','',44,now(),now() ),
-(124,'non-glabrous Matted-Fibrillose','','',44,now(),now() ),
-(124,'non-glabrous Furfuraceous','','',44,now(),now() ),
-(124,'non-glabrous Granulose','','',44,now(),now() ),
-(124,'non-glabrous Pruinose','','',44,now(),now() ),
-(124,'non-glabrous Squamose','','',44,now(),now() ),
-(124,'non-glabrous Squamulose','','',44,now(),now() ),
-(124,'non-glabrous Scaly','','',44,now(),now() ),
-(124,'non-glabrous Hairy','','',44,now(),now() ),
-(124,'Shaggy','','',44,now(),now() ),
-(124,'Bristled/Bristly','','',44,now(),now() ),
-(124,'Strigose','','',44,now(),now() ),
-(124,'Warted','','',44,now(),now() ),
-(124,'Appressed','','',44,now(),now() ),
-(124,'Appressed-Fibrillose','','',44,now(),now() ),
-(124,'Tomentose','','',44,now(),now() ),
-(124,'Virgate','','',44,now(),now() ),
-(124,'Scrobiculate','','',44,now(),now() ),
-(124,'Alveolate','','',44,now(),now() ),
-(124,'Lacunose','','',44,now(),now() ),
-(124,'Lacinate','','',44,now(),now() ),
-(124,'Areolate','','',44,now(),now() ),
-(124,'Atomate','','',44,now(),now() ),
-(124,'Micaceous','','',44,now(),now() ),
-(124,'Superficial','','',44,now(),now() ),
-(124,'Innate','','',44,now(),now() ),
-(124,'Venose','','',44,now(),now() ),
-(124,'non-glabrous Other','','',44,now(),now() ),
-(143,'Close','','',44,now(),now() ),                                       -- 143 lamellae_distance_spacing
-(143,'Crowded','','',44,now(),now() ),
-(143,'Distant','','',44,now(),now() ),
-(143,'Sub-Distant','','',44,now(),now() ),
-(143,'Other','','',44,now(),now() ),
-(144,'Average','','',44,now(),now() ),             -- 144 lamellae_thickness
-(144,'Thick','','',44,now(),now() ),
-(144,'Tapering','','',44,now(),now() ),
-(144,'Other','','',44,now(),now() ),
-(145,'Narrow','','',44,now(),now() ),              -- 145 lamellae_blade_breadth
-(145,'Broad','','',44,now(),now() ),
-(145,'Ventricose','','',44,now(),now() ),
-(147,'Adnate','','',44,now(),now() ),                                -- 147 lamellae_attachment
-(147,'Adnexed','','',44,now(),now() ),
-(147,'Sinuate','','',44,now(),now() ),
-(147,'Decurrent','','',44,now(),now() ),
-(147,'Collared','','',44,now(),now() ),
-(147,'Other','','',44,now(),now() ),
-(159,'Serrated','','',44,now(),now() ),                   -- 159 lamellae_margins_nuanced_texture_appearance
-(159,'Eroded','','',44,now(),now() ),
-(159,'Sinuate','','',44,now(),now() ),
-(159,'Wrinkled','','',44,now(),now() ),
-(159,'Other','','',44,now(),now() ),
-(174,'Smooth','','',44,now(),now() ),           -- 174 stipe_surface_texture
-(174,'Banded','','',44,now(),now() ),
-(174,'Peronate','','',44,now(),now() ),
-(174,'Fibrose','','',44,now(),now() ),
-(174,'Lacunose','','',44,now(),now() ),
-(174,'Longtidunally Striate','','',44,now(),now() ),
-(174,'Ribbed [Costate]','','',44,now(),now() ),
-(174,'Scabrous','','',44,now(),now() ),
-(174,'Pruinose [Powdery]','','',44,now(),now() ),
-(174,'Speckled','','',44,now(),now() ),
-(174,'Punctate','','',44,now(),now() ),
-(174,'Glandular-Dotted','','',44,now(),now() ),
-(174,'Reticulate','','',44,now(),now() ),
-(174,'Other','','',44,now(),now() ),
-(177,'Centrally solid','','',44,now(),now() ),                 -- 177 stipe_interior
-(177,'Stuffed (w/hyphae)','','',44,now(),now() ),
-(177,'hollow','','',44,now(),now() ),
-(177,'Fistulose','','',44,now(),now() ),
-(177,'Broadly fistulose','','',44,now(),now() ),
-(177,'Partially stuffed/partially hollow','','',44,now(),now() ),
-(177,'Chambered','','',44,now(),now() ),
-(198,'Flexuose','','',44,now(),now() ),                              -- 198 stipe_form
-(198,'Straight','','',44,now(),now() ),
-(198,'Extremely flexuose','','',44,now(),now() ),
-(198,'Somewhat flexuose','','',44,now(),now() ),
-(198,'Consistently Straight','','',44,now(),now() ),
-(198,'Other','','',44,now(),now() ),
-(234,'On soil','','',44,now(),now() ),                             -- 234 substrata
-(234,'Decaying wood','','',44,now(),now() ),
-(234,'Humus','','',44,now(),now() ),
-(234,'Duff','','',44,now(),now() ),
-(234,'Bryophytes','','',44,now(),now() ),
-(234,'Dung','','',44,now(),now() ),
-(234,'Grass','','',44,now(),now() ),
-(234,'Tree Cones','','',44,now(),now() ),
-(234,'Tree Needles','','',44,now(),now() ),
-(234,'Leaves','','',44,now(),now() ),
-(234,'Other','','',44,now(),now() ),
-(236,'Saprophytic','','',44,now(),now() ),                         -- 236 nutrition_mode
-(236,'Parasitic','','',44,now(),now() ),
-(236,'Endophytic','','',44,now(),now() ),
-(236,'Ectomycorrhizal','','',44,now(),now() ),
-(236,'Symbiotic','','',44,now(),now() ),
-(236,'Other','','',44,now(),now() ),
-(259,'Fragile','','',44,now(),now() ),                 -- 259 basidiocarps_fragile_normal_tough
-(259,'Normal','','',44,now(),now() ),
-(259,'Tough','','',44,now(),now() ),
-(260,'None','','',44,now(),now() ),    -- 260 handling_specimen_color_change
-(260,'Subtle','','',44,now(),now() ),
-(260,'Drastic','','',44,now(),now() ),
-(316,'Almond-like','','',44,now(),now() ),                              -- 316 aroma
-(316,'Bakery-like','','',44,now(),now() ),
-(316,'Dark cacao chocolate-like','','',44,now(),now() ),
-(316,'Apricot-like','','',44,now(),now() ),
-(316,'Frozen orange juice-like','','',44,now(),now() ),
-(316,'Normal/common','','',44,now(),now() ),
-(316,'Cucumber-like','','',44,now(),now() ),
-(316,'Anise-like','','',44,now(),now() ),
-(316,'Garlic-like','','',44,now(),now() ),
-(316,'Coal-tar-like','','',44,now(),now() ),
-(316,'Radish-like','','',44,now(),now() ),
-(316,'Cedar-like','','',44,now(),now() ),
-(316,'Bleach-like','','',44,now(),now() ),
-(316,'Spermatic','','',44,now(),now() ),
-(316,'Shrimp-like','','',44,now(),now() ),
-(316,'Maraschino-cherry_like','','',44,now(),now() ),
-(316,'Acrid','','',44,now(),now() ),
-(316,'Other','','',44,now(),now() ),
-(319,'Cutis','','',44,now(),now() ),        -- 319 pileus_pileipellis_pattern
-(319,'Dry Cutis','','',44,now(),now() ),
-(319,'Ixocutis','','',44,now(),now() ),
-(319,'Pluristratous Hymeniderm','','',44,now(),now() ),
-(319,'Hymeniform','','',44,now(),now() ),
-(319,'Trichoderm','','',44,now(),now() ),
-(319,'Other','','',44,now(),now() ),
-(387,'Parallel','','',44,now(),now() ),                  -- 387 lamellae_lamellae_trama_pattern
-(387,'Subregular','','',44,now(),now() ),
-(387,'Interwoven','','',44,now(),now() ),
-(387,'Divergent [Bilateral]','','',44,now(),now() ),
-(387,'Divergent (Bilateral) & Multi-Sized','','',44,now(),now() ),
-(387,'Convergent','','',44,now(),now() ),
-(387,'Subcellular','','',44,now(),now() );
+INSERT INTO `lookup_items` VALUES (1,2,'None','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (2,2,'Low','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (3,2,'Moderate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (4,2,'High','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (5,3,'Button','very young','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (6,3,'Young','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (7,3,'Mature','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (8,3,'Past Prime','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (9,316,'None','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (10,316,'Fruity','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (11,316,'Lemony','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (12,316,'Anise (licorice)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (13,316,'Farinaceous (like fresh meal)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (14,316,'Pungent','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (15,316,'Nauseous','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (16,316,'Nitrous','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (17,316,'Earthy','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (18,316,'Spermatic','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (19,316,'Garlic','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (20,316,'Maraschino cherries','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (21,316,'Sewer gas','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (22,316,'spicy - red hots - dirty socks','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (23,5,'None','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (24,5,'Mild','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (25,5,'Bitter','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (26,5,'Acrid (= puckery? astringent)/Peppery','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (27,5,'Agreeable','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (28,5,'Farinaceous (like fresh meal)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (29,6,'Not Toxic','','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (30,6,'Toxic','','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (31,7,'Single, solitary','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (32,7,'Scattered (1-2 feet apart)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (33,7,'Gregarious (growing in a group)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (34,7,'Caespitose (clustered, not joined)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (35,7,'Connate (fused at base)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (36,7,'Imbricate (overlapping)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (37,7,'In troops or rings','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (38,10,'Convex','evenly rounded','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (39,10,'Convex','evenly rounded','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (40,10,'ovoid','egg','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (41,10,'conic','cone','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (42,10,'campanulate','bell-shaped.','vv',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (43,10,'parabolic','half-egg','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (44,10,'pulvinate','cushion','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (45,10,'cylindric','bullet','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (46,10,'plane','flat','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (47,10,'conchate','sea-shell','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (48,10,'umbonate','w/bump','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (49,10,'cuspidate','Umbonate with a pointy conical apex; Witch-hat shaped. also known as eye-tooth.','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (50,10,'papillate','w/nipple','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (51,10,'depressed','Saucer-shaped; The center is lower than the cap margin.','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (52,10,'umbilicate','a navel-like depression in the center.','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (53,10,'infundibuliform','funnel-shaped','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (54,11,'Petaloid','petal','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (55,11,'Spathulate','spatula','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (56,11,'Dimidiate','1/2 circle','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (57,11,'Flabelliform','fan-shaped','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (58,20,'dry: Dull','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (59,20,'dry:  Silky','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (60,20,'Moist:  lubricous/greasy','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (61,20,'Moist: Glutinous (slimy)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (62,20,'dry: Shiny','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (63,21,'Smooth','No defining features found on the surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (64,21,'Uneven','A bumpy surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (65,21,'Rugose','A wrinkled or rough surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (66,21,'Rugulose','A slightly wrinkled surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (67,21,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (68,21,'Scrobiculate','A pitted or furrowed surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (69,21,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (70,21,'Virgate','A streaked surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (71,21,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (72,21,'Sericeous','A silky surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (73,21,'Fibrillose','A surface covered in thread-like filaments.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (74,21,'Squamose','A surface covered with scales.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (75,21,'Squarrose','A ragged surface covered with small scales.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (76,21,'Pruinose','A surface covered with a white powdery frostlike substance.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (77,21,'Pulverulent','A surface covered with fine dust or powder.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (78,21,'Granulose','A surface covered in salt-like granulates.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (79,21,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (80,21,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (81,21,'Areolate','A cracked surface resembling dried-mud or paint.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (82,21,'Rimose','A surface covered in cracks and crevices.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (83,21,'Laccate','A waxy or lacquered surface texture.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (84,21,'Viscid -','A sticky glue-like surface texture.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (85,21,'Glutinous','A slimy surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (86,21,'Glabrous - Hairy','Hairy - a bald surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (87,21,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (88,21,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (89,21,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (90,21,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (91,21,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (92,21,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (93,21,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (94,21,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (95,21,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (96,22,'Straight','The margins remain uniform and do not curve.','edited 3-8-2023',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (97,22,'Decurved','The margins curve slightly downwards.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (98,22,'Incurved','The margins curve down and inwards.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (99,22,'Involute','The margins curve downwards and roll inwards. Also known as inrolled.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (100,22,'Arched','The margins curve upwards between the edge and stipe (stem).','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (101,22,'Uplifted','The margins curve upwards. Also known as elevated.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (102,22,'Revolute','The margins curve inwards and also rolled back..','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (103,22,'Exceeding','The margins extend past the gills.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (104,23,'Entire','There is a smooth transition from the top of the cap to its underside. No irregular attributes should be present on the edges. Also referred to as Smooth, Even, Seamless, Flush, or Regular.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (105,23,'Appendiculate','Remnants of a partial veil hang from the edge of the cap.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (106,23,'Striate','Fine and narrow stripes run parallel on the cap margins. The lines will often coincide with the gills underneath the cap. In some cases, the lines are only visible when the cap is wet. Also referred to as striped, furrowed, streaked, ribbed, lined,','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (107,23,'Sulcate','Narrow parallel grooves that line the margins of the cap. Sulcate margins are more defined than striate but less ridged than plicated. Also referred to as plicate-striate.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (108,23,'Plicate','Parallel pleated margins. They are best described as fan-like or umbrella-like as if the surface of the cap were folded. Plicate margins are more defined and ridged than Striate or Sulcate. Also referred to as pleated or ridged.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (109,23,'Eroded','Deteriorated, gnawed, or eaten away. The disfigured margins are usually found in older specimens and are the result of insects or deliquescence (common with Ink Caps). Also referred to as gnawed or ragged.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (110,23,'Split','The edges of the cap are split apart or full of large crevices. Also referred to as cracked or rimose.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (111,23,'Lacerate','Many tears mark the edge of the cap. Similar to split margins, however, the cuts are smaller and more frequent. Also referred to as torn.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (112,23,'Undulating - Hairy','Hairy - The edges of the cap form a wave-like pattern as they rise and fall. Also referred to as wavy irregular or festoony.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (113,23,'Crenate - Hairy','Hairy - Semi-circle notches or round-toothed edges that are more blunted than serrate margins. Also referred to as scalloped.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (114,23,'Serrate - Hairy','Hairy - The edges of the cap appear jagged and saw-toothed. More pronounced than crenate margins.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (115,30,'Soft','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (116,30,'Spongy','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (117,30,'Firm','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (118,30,'Compact','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (119,30,'Rigid','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (120,30,'Brittle','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (121,30,'Corky','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (122,30,'Other','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (123,35,'Free - remote','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (124,35,'Free - close','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (125,35,'Adnate - horizontal','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (126,35,'Adnate - ascending','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (127,35,'Adnexed (almost free)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (128,35,'Sinuate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (129,35,'Emarginate (notched)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (130,35,'Decurrent - long','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (131,35,'Decurrent - short','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (132,35,'Seceding (breaking away)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (133,35,'Uncinate (w/decurrent tooth)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (134,35,'Collared','Gills are attached to a collar or ring that encircles the stipe.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (135,36,'Broad','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (136,36,'Free - close','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (137,36,'Ventricose','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (138,37,'Average','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (139,37,'Thick','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (140,37,'Tapering','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (141,38,'Crowded','The Gills are tightly close together.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (142,38,'Close','The Gills are close together.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (143,38,'Subdistant','The gills are spaced apart.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (144,38,'Distant','The gills are widely spaced apart.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (145,41,'Even - entire','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (146,41,'Serrate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (147,41,'Serrulate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (148,41,'Eroded (\"gnawed\")','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (149,41,'Fimbriate (fringed)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (150,41,'Marginate (diff. color)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (151,41,'Crenate (scalloped)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (152,41,'Acute','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (153,41,'Obtuse (blunt)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (154,41,'Crisped (crinkled)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (155,41,'lamella_misc_waxy_y_n','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (156,41,'lamella_misc_arid_dry_y_n','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (157,41,'lamella_misc_deliquescent_y_n','','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (158,45,'Central','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (159,45,'Eccentric - off-center','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (160,45,'Lateral - attached at margin','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (161,45,'Sessile - missing','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (162,50,'Terete (round)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (163,50,'Compressed (flattened)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (164,50,'Equal','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (165,50,'Clavate (club)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (166,50,'Radicating (w/\"root\")','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (167,50,'Flexous','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (168,50,'Ventricose Fusiform','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (169,50,'Tapering','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (170,50,'Abruptly bulbous','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (171,50,'Rounded','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (172,50,'Oblique (angle)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (173,50,'Marginate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (174,58,'Smooth','No defining features found on the surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (175,58,'Uneven','A bumpy surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (176,58,'Rugose','A wrinkled or rough surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (177,58,'Rugulose','A slightly wrinkled surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (178,58,'Rivulose','A thinly wrinkled surface of branching wavy or crooked lines.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (179,58,'Scrobiculate','A pitted or furrowed surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (180,58,'Warty','Remnants of the universal veil remain on the surface in small patches.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (181,58,'Virgate','A streaked surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (182,58,'Hygrophanous','A surface that is transparent when wet and opaque when dry.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (183,58,'Sericeous','A silky surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (184,58,'Fibrillose','A surface covered in thread-like filaments.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (185,58,'Squamose','A surface covered with scales.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (186,58,'Squarrose','A ragged surface covered with small scales.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (187,58,'Pruinose','A surface covered with a white powdery frostlike substance.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (188,58,'Pulverulent','A surface covered with fine dust or powder.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (189,58,'Granulose','A surface covered in salt-like granulates.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (190,58,'Furfuraceous','A surface covered in flaky bran-like particles; dandruff-like.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (191,58,'Zonate','A surface containing zones or bands that are distinguished by texture or color.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (192,58,'Areolate','A cracked surface resembling dried-mud or paint.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (193,58,'Rimose','A surface covered in cracks and crevices.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (194,58,'Laccate','A waxy or lacquered surface texture.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (195,58,'Viscid -','A sticky glue-like surface texture.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (196,58,'Glutinous','A slimy surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (197,58,'Glabrous - Hairy','Hairy - a bald surface.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (198,58,'Velvety - Hairy','Hairy - A surface covered with very fine and soft hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (199,58,'Pubescent - Hairy','Hairy - A surface cover with fuzz or fine hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (200,58,'Canescent - Hairy','Hairy - A surface covered in dense white or gray down-like hairs. Giving a frosted appearance.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (201,58,'Floccose - Hairy','Hairy - A surface covered in Wooly or cotton-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (202,58,'Tomentose - Hairy','Hairy - A surface covered densely with matted hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (203,58,'Hispid - Hairy','Hairy - A surface covered with straight bristle-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (204,58,'Hirsute - Hairy','Hairy - A surface covered with slightly stiff and shaggy hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (205,58,'Villose - Hairy','Hairy - A surface covered with long soft hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (206,58,'Strigose - Hairy','Hairy - A surface covered with long bristle-like hairs.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (207,58,'Banded','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (208,58,'Peronate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (209,58,'Fibrous','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (210,58,'Lacunose (w/dp.grooves)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (211,58,'Longitudinally striate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (212,58,'Ribbed/Costate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (213,58,'Scabrous (scabby)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (214,58,'Punctuate (w/small dots)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (215,58,'Glanular-dotted (w/dark sticky dots)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (216,58,'Reticulate (fishnet)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (217,59,'Fragile','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (218,59,'Pliable','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (219,59,'Chalky','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (220,59,'Rigid','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (221,59,'Fibrous (Fleshy-Fibrous)','usually rather thick, and when broken in two, leaves a ragged edge.','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (222,59,'Cartilaginous','Common stipe, usually thin and breaks with a firm split when bent in two, similar to cartilage.','',13,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (223,59,'Firm','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (224,59,'Woody','','',13,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (225,59,'Corky','','',13,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (226,59,'Leathery (coriaceous)','','',13,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (227,59,'Chalky','feels and breaks like chalk in hand. When crushed, it breaks up into powder or chunks.','',13,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (228,59,'Breaking with a snap','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (229,61,'None','Does not have annulus ring','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (230,61,'Superior','Near the cap','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (231,61,'Apical','upper half','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (232,61,'Median','in the middle','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (233,61,'Inferior','Lower half','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (234,61,'Basal','Near the base','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (235,64,'Membranous (skin-like)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (236,64,'Cortinate (cobwebby)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (237,64,'Fibillose (thready)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (238,64,'Gelatinous (slimy)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (239,65,'Disappearing - Evanescent','can only be detected in button stage','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (240,65,'Persistent','leaving remnants on cap','',4,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (241,67,'Two Rings (from 2 veils)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (242,67,'Doubly-flared Ring','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (243,67,'\"Cogwheel\" Stellate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (244,67,'Floccose (downy tuffs)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (245,67,'Cortinate PV & Fibrillose Annular Zone','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (246,67,'Single Ring thick on edge','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (247,67,'Pendant (hanging)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (248,67,'Subperonate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (249,67,'Peronate (w/\"boot\")','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (250,70,'Napiform (turnip)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (251,70,'Saccate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (252,70,'Sheathing','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (253,70,'Collar','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (254,70,'Granular','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (255,70,'Concentric rings or scales','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (256,70,'Friable, disappearing','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (257,70,'Fusiform','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (258,70,'Marginate-depressed','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (259,70,'Cleft','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (260,76,'Terrestrial (on soil - bare )','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (261,76,'Terrestrial (on soil - burned )','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (262,76,'Terrestrial (on soil - disturbed )','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (263,76,'Lignicolous (on wood) - what kind of tree?','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (264,76,'Humicolous (on humus, duff) - conifer, other?','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (265,76,'Coprophious (on dung) what kind?','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (266,76,'In grassy area - lawn, pasture, etc?','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (267,76,'In forest - conifer, hardwood, mixed?','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (268,76,'fungicolous','mushroom mycelia grow in other mushrooms','p 7, How to Identify Mushrooms to Genus I: Macroscopic Features - David L. Largent',13,'2023-03-16 21:46:17.000000','2023-03-16 21:46:17.000000');
+INSERT INTO `lookup_items` VALUES (269,77,'Unknown','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (270,77,'Loam','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (271,83,'Ammonia (NH4OH, Ammonium Hydroxide)','','',8,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (272,83,'KOH (Potassium Hydroxide) - 3%','','',8,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (273,99,'Superior','Near the cap','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (274,99,'Apical','upper half','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (275,99,'Median','in the middle','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (276,99,'Inferior','Lower half','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (277,99,'Basal','Near the base','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (278,100,'Observation Only - No specimen collected','','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (279,100,'Specimen Collector','This is you, if you collected this specimen','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (280,100,'Herbarium','','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (281,105,'Lamella - Gills','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (282,105,'Pores','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (283,105,'Teeth','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (284,105,'Cups','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (285,105,'Stinkhorn','','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (286,106,'Two Rings (from 2 veils)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (287,106,'Doubly-flared Ring','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (288,106,'\"Cogwheel\" Stellate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (289,106,'Floccose (downy tuffs)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (290,106,'Cortinate PV & Fibrillose Annular Zone','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (291,106,'Single Ring thick on edge','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (292,106,'Pendant (hanging)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (293,106,'Subperonate','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (294,106,'Peronate (w/\"boot\")','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (295,107,'Disappearing','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (296,107,'Leaving fragments on cap','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (297,108,'Membranous (skin-like)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (298,108,'Cortinate (cobwebby)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (299,108,'Fibillose (thready)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (300,108,'Gelatinous (slimy)','','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (301,109,'Flaring','The annulus is flaring upwards.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (302,109,'Pendant','The veil is hanging downward from the stipe.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (303,109,'Double Rings','Two visible veils..','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (304,109,'Ring Zone','The stipe is marked with the remnants of the annulus','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (305,109,'Cortinate','The partial veil is cobweb-like or tread-like (Fibrillose)..','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (306,109,'Stellate','The partial veil resembles a cogwheel.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (307,109,'Floccose','The partial veil is fluffy and down-like.','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (308,109,'Peronate','The stipe resembles a sheath-like boot or stocking','',7,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (309,110,'epigeous','above-ground ','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (310,110,'hypogeous','underground','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (311,110,'mushroom','fruiting body of a fungus','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (312,110,'basidiocarp','fruiting body','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (313,110,'thallus','soma','entire body of fungus',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (314,110,'sporocarp','fruiting body','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (315,110,'pileus','cap','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (316,110,'Stipe','Stalk','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (317,110,'Gills','Lamellae','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (318,110,'Volva','cup','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (319,110,'Annulus','ring','',2,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (320,110,'cone','conical','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (321,110,'conic','conical','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (322,110,'disc','center','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (323,110,'margin','edge','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (324,110,'ring','annulus','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (325,110,'stem','stipe','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (326,110,'volva','cup','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (327,110,'convex','evenly rounded','',1,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (328,110,'ovoid','egg','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (329,110,'campanulate','bell-shaped','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (330,110,'parabolic','half-egg','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (331,110,'pulvinate','cushion','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (332,110,'cylindric','bullet','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (333,110,'plane','flat','',5,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (334,112,'Convex','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (335,112,'Hemispherical','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (336,112,'Spherical','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (337,112,'Ovoid','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (338,112,'Conical','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (339,112,'Cylindric','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (340,112,'Flat','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (341,112,'Depressed','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (342,112,'Funnel-Shaped','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (343,112,'Companulate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (344,112,'Cuspidate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (345,112,'Umbonate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (346,112,'Papillate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (347,112,'Umbilicate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (348,112,'Uplifted','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (349,112,'Parabolic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (350,112,'Pulvinate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (351,112,'Plane','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (352,112,'Infundibuliform','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (353,112,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (354,117,'Dry','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (355,117,'Moist','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (356,117,'Glutinous','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (357,117,'Gelatinous','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (358,117,'Viscid','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (359,117,'Subviscid','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (360,117,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (361,120,'Indented','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (362,120,'Nearly perforated','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (363,120,'Perforated','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (364,121,'Darker','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (365,121,'Lighter','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (366,124,'Glabrous smooth','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (367,124,'non-glabrous Downy-Wooly','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (368,124,'non-glabrous Matted-Fibrillose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (369,124,'non-glabrous Furfuraceous','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (370,124,'non-glabrous Granulose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (371,124,'non-glabrous Pruinose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (372,124,'non-glabrous Squamose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (373,124,'non-glabrous Squamulose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (374,124,'non-glabrous Scaly','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (375,124,'non-glabrous Hairy','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (376,124,'Shaggy','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (377,124,'Bristled/Bristly','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (378,124,'Strigose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (379,124,'Warted','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (380,124,'Appressed','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (381,124,'Appressed-Fibrillose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (382,124,'Tomentose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (383,124,'Virgate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (384,124,'Scrobiculate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (385,124,'Alveolate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (386,124,'Lacunose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (387,124,'Lacinate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (388,124,'Areolate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (389,124,'Atomate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (390,124,'Micaceous','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (391,124,'Superficial','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (392,124,'Innate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (393,124,'Venose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (394,124,'non-glabrous Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (395,143,'Close','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (396,143,'Crowded','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (397,143,'Distant','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (398,143,'Sub-Distant','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (399,143,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (400,144,'Average','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (401,144,'Thick','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (402,144,'Tapering','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (403,144,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (404,145,'Narrow','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (405,145,'Broad','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (406,145,'Ventricose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (407,147,'Adnate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (408,147,'Adnexed','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (409,147,'Sinuate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (410,147,'Decurrent','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (411,147,'Collared','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (412,147,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (413,159,'Serrated','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (414,159,'Eroded','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (415,159,'Sinuate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (416,159,'Wrinkled','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (417,159,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (418,174,'Smooth','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (419,174,'Banded','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (420,174,'Peronate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (421,174,'Fibrose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (422,174,'Lacunose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (423,174,'Longtidunally Striate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (424,174,'Ribbed [Costate]','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (425,174,'Scabrous','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (426,174,'Pruinose [Powdery]','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (427,174,'Speckled','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (428,174,'Punctate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (429,174,'Glandular-Dotted','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (430,174,'Reticulate','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (431,174,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (432,177,'Centrally solid','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (433,177,'Stuffed (w/hyphae)','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (434,177,'hollow','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (435,177,'Fistulose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (436,177,'Broadly fistulose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (437,177,'Partially stuffed/partially hollow','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (438,177,'Chambered','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (439,198,'Flexuose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (440,198,'Straight','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (441,198,'Extremely flexuose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (442,198,'Somewhat flexuose','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (443,198,'Consistently Straight','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (444,198,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (445,234,'On soil','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (446,234,'Decaying wood','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (447,234,'Humus','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (448,234,'Duff','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (449,234,'Bryophytes','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (450,234,'Dung','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (451,234,'Grass','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (452,234,'Tree Cones','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (453,234,'Tree Needles','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (454,234,'Leaves','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (455,234,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (456,236,'Saprophytic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (457,236,'Parasitic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (458,236,'Endophytic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (459,236,'Ectomycorrhizal','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (460,236,'Symbiotic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (461,236,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (462,259,'Fragile','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (463,259,'Normal','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (464,259,'Tough','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (465,260,'None','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (466,260,'Subtle','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (467,260,'Drastic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (468,316,'Almond-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (469,316,'Bakery-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (470,316,'Dark cacao chocolate-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (471,316,'Apricot-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (472,316,'Frozen orange juice-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (473,316,'Normal/common','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (474,316,'Cucumber-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (475,316,'Anise-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (476,316,'Garlic-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (477,316,'Coal-tar-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (478,316,'Radish-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (479,316,'Cedar-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (480,316,'Bleach-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (481,316,'Spermatic','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (482,316,'Shrimp-like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (483,316,'Maraschino-cherry_like','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (484,316,'Acrid','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (485,316,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (486,319,'Cutis','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (487,319,'Dry Cutis','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (488,319,'Ixocutis','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (489,319,'Pluristratous Hymeniderm','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (490,319,'Hymeniform','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (491,319,'Trichoderm','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (492,319,'Other','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (493,387,'Parallel','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (494,387,'Subregular','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (495,387,'Interwoven','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (496,387,'Divergent [Bilateral]','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (497,387,'Divergent (Bilateral) & Multi-Sized','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (498,387,'Convergent','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (499,387,'Subcellular','','',44,'2025-09-23 11:46:02.000000','2025-09-23 11:46:02.000000');
+INSERT INTO `lookup_items` VALUES (500,5,'Gourmet','','',44,'2025-10-18 19:00:08.000000','2025-10-18 19:00:08.000000');
+INSERT INTO `lookup_items` VALUES (501,5,'Spicy','','',44,'2025-10-18 19:00:08.000000','2025-10-18 19:00:08.000000');
+INSERT INTO `lookup_items` VALUES (502,5,'Common','','',44,'2025-10-18 19:00:08.000000','2025-10-18 19:00:08.000000');
+INSERT INTO `lookup_items` VALUES (503,5,'Mushroom','','',44,'2025-10-18 19:00:08.000000','2025-10-18 19:00:08.000000');
 SET FOREIGN_KEY_CHECKS=1;
