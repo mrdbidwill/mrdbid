@@ -79,16 +79,25 @@ Rails.application.routes.draw do
 
   # Static pages
     root 'pages#home'
+    get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
   get "autocomplete/genera",  to: "autocomplete#genera",  as: :genera_autocomplete, defaults: { format: :json }
   get "autocomplete/species", to: "autocomplete#species", as: :species_autocomplete, defaults: { format: :json }
+  get "autocomplete/trees",   to: "autocomplete#trees",   as: :trees_autocomplete, defaults: { format: :json }
+  get "autocomplete/plants",  to: "autocomplete#plants",  as: :plants_autocomplete, defaults: { format: :json }
 
   resources :genus_mushrooms, only: [:create], defaults: { format: :json } do
     delete :destroy_by_relation, on: :collection
   end
   resources :mushroom_species, only: [:create], defaults: { format: :json } do
+    delete :destroy_by_relation, on: :collection
+  end
+  resources :mushroom_trees, only: [:create], defaults: { format: :json } do
+    delete :destroy_by_relation, on: :collection
+  end
+  resources :mushroom_plants, only: [:create], defaults: { format: :json } do
     delete :destroy_by_relation, on: :collection
   end
 end

@@ -8,6 +8,15 @@
     <%= link_to "New tree", new_admin_tree_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
+  <div class="rounded-md m-2 p-2 bg-blue-100 text-black block font-medium border-2 border-gray-700">
+    <p class="p-mrdbid">As of October 21, 2025, the current sources for trees are:</p>
+    <ul class="list-[square] space-y-2 pl-6">
+      <li> <b>Blakeley State Park Baldwin County, Alabama</b> <%= link_to "Trees of Blakeley Signs", trees_of_blakeley_signs_path, class: "text-blue-600 underline" %></li>
+      <li> <b>A Key to Common Native Trees of Alabama</b> Alabama A & M and Auburn Universities ANR-0509 <a href="https://www.aces.edu/blog/tag/anr-0509/" class="text-blue-600 underline">https://www.aces.edu/blog/tag/anr-0509/</a> or <a href="https://www.aces.edu/wp-content/uploads/2019/03/ANR-0509_KeyToNativeCommonTrees_042321L-REVISION.pdf" class="text-blue-600 underline">PDF</a></li>
+      <li> <b>Important Trees of Eastern Forests</b> U.S. Department o Agriculture - Forest Service Illustrations by Rebecca Merrilees From: Trees of North America a Golden Field Guide by C. Frank Brockman. Copyright 1968 by Western Publishing Company, Inc. Text compiled by: R. W. Neelands, Writer-Editor U.S.D.A. - Forest Service Southern Region, Atlanta</li>
+    </ul>
+  </div>
+
   <div id="trees" class="min-w-full divide-y divide-gray-100 space-y-5">
     <% if @trees.any? %>
       <% @trees.each do |tree| %>

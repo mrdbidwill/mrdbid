@@ -20,6 +20,166 @@
 
   <%= render "form", mushroom: @mushroom %>
 
+  <!-- Associated Trees Section -->
+  <div class="my-5">
+    <button type="button"
+            class="bg-gray-100 border rounded px-3 py-1 mb-2 font-medium text-green-700 hover:bg-green-100 transition"
+            onclick="document.getElementById('trees-panel').classList.toggle('hidden')">
+      <span>
+        <%= @mushroom.trees.any? ? "Edit associated trees (#{@mushroom.trees.count})" : "Add associated trees (optional)" %>
+      </span>
+    </button>
+
+    <!-- Summary pills outside panel -->
+    <% if @mushroom.trees.any? %>
+      <div class="mb-2 flex flex-wrap gap-2 items-center">
+        <span class="text-xs text-green-700 font-medium pr-2">Associated Trees:</span>
+        <% @mushroom.trees.order(:name).each do |t| %>
+          <span class="inline-flex items-center bg-green-200 rounded px-2 py-0.5 text-xs">
+            <%= t.name %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div id="trees-panel" class="hidden border border-green-200 rounded p-4 bg-green-50">
+      <div class="mb-3">
+        <span class="block text-sm font-medium text-gray-700 mb-2">
+          Associated Trees
+        </span>
+        <p class="text-xs text-green-700 mb-1">
+          Add trees that are associated with this mushroom (e.g., mycorrhizal partners or host trees).
+        </p>
+      </div>
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-gray-700">Add Trees</label>
+        <p class="text-xs text-gray-600 mb-1">
+          Begin typing at least 3 letters, then select a tree from the dropdown. Each tree you choose will show up as a green pill below.
+          You can select multiple trees and remove any of them by clicking ×.
+        </p>
+        <div data-controller="tokens"
+             data-tokens-url-value="<%= trees_autocomplete_path(format: :json) %>"
+             data-tokens-min-value="3"
+             data-tokens-mushroom-id-value="<%= @mushroom.id %>"
+             data-tokens-kind-value="trees"
+             class="border rounded p-2 bg-white">
+          <div class="mb-2 flex items-center gap-2">
+            <div class="relative w-full">
+              <input type="text"
+                     placeholder="Type at least 3 letters..."
+                     class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                     data-tokens-target="input"
+                     data-action="input->tokens#onInput"
+                     minlength="3"
+                     autocomplete="off">
+              <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+              <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl shadow-lg"
+                  data-tokens-target="dropdown"
+                  style="position: absolute; z-index: 40;"></ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-1" data-tokens-target="list">
+            <% @mushroom.trees.order(:name).each do |t| %>
+              <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                <%= t.name %>
+                <%= link_to "×",
+                            mushroom_trees_destroy_by_relation_path(mushroom_id: @mushroom.id, tree_id: t.id),
+                            data: { turbo_method: :delete, turbo_confirm: "Remove #{t.name}?" },
+                            class: "ml-1 text-gray-600 hover:text-red-600" %>
+              </span>
+            <% end %>
+          </div>
+          <input type="hidden" data-tokens-target="hiddenIds" value="<%= @mushroom.trees.pluck(:id).join(',') %>">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Associated Plants Section -->
+  <div class="my-5">
+    <button type="button"
+            class="bg-gray-100 border rounded px-3 py-1 mb-2 font-medium text-purple-700 hover:bg-purple-100 transition"
+            onclick="document.getElementById('plants-panel').classList.toggle('hidden')">
+      <span>
+        <%= @mushroom.plants.any? ? "Edit associated plants (#{@mushroom.plants.count})" : "Add associated plants (optional)" %>
+      </span>
+    </button>
+
+    <!-- Summary pills outside panel -->
+    <% if @mushroom.plants.any? %>
+      <div class="mb-2 flex flex-wrap gap-2 items-center">
+        <span class="text-xs text-purple-700 font-medium pr-2">Associated Plants:</span>
+        <% @mushroom.plants.order(:name).each do |p| %>
+          <span class="inline-flex items-center bg-purple-200 rounded px-2 py-0.5 text-xs">
+            <%= p.name %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div id="plants-panel" class="hidden border border-purple-200 rounded p-4 bg-purple-50">
+      <div class="mb-3">
+        <span class="block text-sm font-medium text-gray-700 mb-2">
+          Associated Plants
+        </span>
+        <p class="text-xs text-purple-700 mb-1">
+          Add plants that are associated with this mushroom (e.g., growing on or near specific plants).
+        </p>
+      </div>
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-gray-700">Add Plants</label>
+        <p class="text-xs text-gray-600 mb-1">
+          Begin typing at least 3 letters, then select a plant from the dropdown. Each plant you choose will show up as a purple pill below.
+          You can select multiple plants and remove any of them by clicking ×.
+        </p>
+        <div data-controller="tokens"
+             data-tokens-url-value="<%= plants_autocomplete_path(format: :json) %>"
+             data-tokens-min-value="3"
+             data-tokens-mushroom-id-value="<%= @mushroom.id %>"
+             data-tokens-kind-value="plants"
+             class="border rounded p-2 bg-white">
+          <div class="mb-2 flex items-center gap-2">
+            <div class="relative w-full">
+              <input type="text"
+                     placeholder="Type at least 3 letters..."
+                     class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
+                     data-tokens-target="input"
+                     data-action="input->tokens#onInput"
+                     minlength="3"
+                     autocomplete="off">
+              <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+              <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl shadow-lg"
+                  data-tokens-target="dropdown"
+                  style="position: absolute; z-index: 40;"></ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-1" data-tokens-target="list">
+            <% @mushroom.plants.order(:name).each do |p| %>
+              <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                <%= p.name %>
+                <%= link_to "×",
+                            mushroom_plants_destroy_by_relation_path(mushroom_id: @mushroom.id, plant_id: p.id),
+                            data: { turbo_method: :delete, turbo_confirm: "Remove #{p.name}?" },
+                            class: "ml-1 text-gray-600 hover:text-red-600" %>
+              </span>
+            <% end %>
+          </div>
+          <input type="hidden" data-tokens-target="hiddenIds" value="<%= @mushroom.plants.pluck(:id).join(',') %>">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Entered characters -->
   <% existing_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option, :source_data]).order('parts.name ASC, mr_characters.name ASC') %>
   <% color_rows = existing_rows.select { |rc| (rc.mr_character&.display_option&.name&.downcase == "color") || rc.mr_character&.display_option_id == 6 } %>

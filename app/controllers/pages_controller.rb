@@ -7,4 +7,7 @@ class PagesController < ApplicationController
 
   def contact
   end
+
+  def trees_of_blakeley_signs
+  end
 end

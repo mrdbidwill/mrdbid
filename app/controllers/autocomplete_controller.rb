@@ -53,4 +53,36 @@ class AutocompleteController < ApplicationController
               end
     render json: results
   end
+
+  # GET /autocomplete/trees.json?q=oak
+  def trees
+    query = params[:q].to_s.strip
+    results = if query.length >= 3
+                Tree
+                  .where("name LIKE ?", "%#{Tree.sanitize_sql_like(query)}%")
+                  .select(:id, :name)
+                  .order(:name)
+                  .limit(20)
+                  .map { |t| { id: t.id, name: t.name } }
+              else
+                []
+              end
+    render json: results
+  end
+
+  # GET /autocomplete/plants.json?q=fern
+  def plants
+    query = params[:q].to_s.strip
+    results = if query.length >= 3
+                Plant
+                  .where("name LIKE ?", "#{Plant.sanitize_sql_like(query)}%")
+                  .select(:id, :name)
+                  .order(:name)
+                  .limit(20)
+                  .map { |p| { id: p.id, name: p.name } }
+              else
+                []
+              end
+    render json: results
+  end
 end
