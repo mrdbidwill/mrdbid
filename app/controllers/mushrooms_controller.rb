@@ -19,7 +19,7 @@ class MushroomsController < ApplicationController
                        Arel.sql("mushrooms.name")
                      )
                      .page(params[:page])
-                     .per(5)
+                     .per(25)
     else
       @mushrooms = []
     end
@@ -49,8 +49,11 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1/edit
   def edit
+    # set_mushroom before_action already loads the mushroom with basic associations
+    # Reload with additional associations needed for edit view
     @mushroom = Mushroom
-                  .includes(:genera, :species, mr_characters: [:part, :lookup_type, :color, :source_data]).find(params[:id]) # The `@mushroom` variable is necessary for the view to reference the loaded mushroom.
+                  .includes(:genera, :species, :trees, :plants, mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
+                  .find(params[:id])
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
@@ -88,7 +91,7 @@ class MushroomsController < ApplicationController
   private
   def set_mushroom
     @mushroom = Mushroom
-                  .includes(:country, :state, :fungus_type, :genera, :species, image_mushrooms: { image_file_attachment: :blob })
+                  .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound

@@ -88,7 +88,7 @@
               <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
                 <%= t.name %>
                 <%= link_to "×",
-                            mushroom_trees_destroy_by_relation_path(mushroom_id: @mushroom.id, tree_id: t.id),
+                            destroy_by_relation_mushroom_trees_path(mushroom_id: @mushroom.id, tree_id: t.id),
                             data: { turbo_method: :delete, turbo_confirm: "Remove #{t.name}?" },
                             class: "ml-1 text-gray-600 hover:text-red-600" %>
               </span>
@@ -168,7 +168,7 @@
               <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
                 <%= p.name %>
                 <%= link_to "×",
-                            mushroom_plants_destroy_by_relation_path(mushroom_id: @mushroom.id, plant_id: p.id),
+                            destroy_by_relation_mushroom_plants_path(mushroom_id: @mushroom.id, plant_id: p.id),
                             data: { turbo_method: :delete, turbo_confirm: "Remove #{p.name}?" },
                             class: "ml-1 text-gray-600 hover:text-red-600" %>
               </span>
@@ -276,17 +276,29 @@
   </div>
 
   <!-- Not entered (non-colors only) -->
-  <% all_chars = MrCharacter.includes(:part, :display_option, :source_data).order('parts.name ASC, mr_characters.name ASC') %>
-  <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
-  <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
-  <% missing_chars = all_chars.reject { |c|
-        entered_ids.include?(c.id) ||
-        color_chars.include?(c) ||
-        ((c.display_option&.name&.downcase == "do not display") || c.display_option_id == 1)
-      } %>
-  <% missing_grouped = missing_chars.group_by { |c| c.part&.name || "Other" } %>
+  <%# PERFORMANCE FIX: Only load these if needed - uses cached version %>
+  <% if params[:show_all_characters] == "true" %>
+    <% all_chars = MrCharacter.cached_all_with_associations %>
+    <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
+    <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
+    <% missing_chars = all_chars.reject { |c|
+          entered_ids.include?(c.id) ||
+          color_chars.include?(c) ||
+          ((c.display_option&.name&.downcase == "do not display") || c.display_option_id == 1)
+        } %>
+    <% missing_grouped = missing_chars.group_by { |c| c.part&.name || "Other" } %>
+  <% else %>
+    <% missing_chars = [] %>
+    <% missing_grouped = {} %>
+  <% end %>
 
   <div class="mt-8">
+    <% if params[:show_all_characters] != "true" %>
+      <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-3">
+        <p class="text-sm text-gray-700 mb-2">To improve page load speed, the full list of available characters is hidden by default.</p>
+        <%= link_to "Load all available characters", edit_mushroom_path(@mushroom, show_all_characters: "true"), class: "rounded-md px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium text-sm" %>
+      </div>
+    <% end %>
     <h2 class="text-2xl font-semibold mb-3">Not yet entered</h2>
     <% if missing_chars.any? %>
       <% missing_grouped.each do |part_name, chars| %>
@@ -317,8 +329,12 @@
   </div>
 
   <!-- Color characters (not yet entered) with per-card swatch picker -->
-  <% set_color_char_ids = color_rows.map(&:mr_character_id).to_set %>
-  <% missing_color_chars = color_chars.reject { |c| set_color_char_ids.include?(c.id) } %>
+  <% if params[:show_all_characters] == "true" %>
+    <% set_color_char_ids = color_rows.map(&:mr_character_id).to_set %>
+    <% missing_color_chars = color_chars.reject { |c| set_color_char_ids.include?(c.id) } %>
+  <% else %>
+    <% missing_color_chars = [] %>
+  <% end %>
 
   <% if missing_color_chars.any? %>
     <div class="mt-4">

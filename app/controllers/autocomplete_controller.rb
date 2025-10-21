@@ -9,7 +9,7 @@ class AutocompleteController < ApplicationController
     query = params[:q].to_s.strip
     results = if query.length >= 3
                 Genus
-                  .where("name LIKE ?", "#{Genus.sanitize_sql_like(query)}%")
+                  .where("name LIKE ?", "%#{Genus.sanitize_sql_like(query)}%")
                   .select(:id, :name)
                   .order(:name)
                   .limit(20)
@@ -26,7 +26,7 @@ class AutocompleteController < ApplicationController
     mushroom_id = params[:mushroom_id]
 
     results = if query.length >= 3
-                scope = Species.where("name LIKE ?", "#{Species.sanitize_sql_like(query)}%")
+                scope = Species.where("name LIKE ?", "%#{Species.sanitize_sql_like(query)}%")
 
                 # Filter by selected genera for this mushroom
                 if mushroom_id.present?
@@ -75,7 +75,7 @@ class AutocompleteController < ApplicationController
     query = params[:q].to_s.strip
     results = if query.length >= 3
                 Plant
-                  .where("name LIKE ?", "#{Plant.sanitize_sql_like(query)}%")
+                  .where("name LIKE ?", "%#{Plant.sanitize_sql_like(query)}%")
                   .select(:id, :name)
                   .order(:name)
                   .limit(20)

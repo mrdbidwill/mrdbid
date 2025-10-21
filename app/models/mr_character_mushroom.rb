@@ -1,6 +1,6 @@
 class MrCharacterMushroom < ApplicationRecord
   belongs_to :mr_character
-  belongs_to :mushroom
+  belongs_to :mushroom, counter_cache: true
 
   before_validation :normalize_boolean_character_value, if: :booleanish_display_option?
 

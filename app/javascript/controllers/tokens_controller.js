@@ -145,7 +145,7 @@ export default class extends Controller {
         }
     }
 
-    // AJAX save for genus or species association
+    // AJAX save for genus, species, tree, or plant association
     saveToken(id, label) {
         const kind = this.kindValue
         const mushroomId = this.mushroomIdValue
@@ -157,6 +157,12 @@ export default class extends Controller {
         } else if (kind=="species") {
             route = `/mushroom_species.json`
             body = JSON.stringify({mushroom_species: {mushroom_id: mushroomId, species_id: id}})
+        } else if (kind=="trees") {
+            route = `/mushroom_trees.json`
+            body = JSON.stringify({mushroom_tree: {mushroom_id: mushroomId, tree_id: id}})
+        } else if (kind=="plants") {
+            route = `/mushroom_plants.json`
+            body = JSON.stringify({mushroom_plant: {mushroom_id: mushroomId, plant_id: id}})
         } else {
             return
         }
@@ -183,6 +189,10 @@ export default class extends Controller {
             route = `/genus_mushrooms/destroy_by_relation.json?mushroom_id=${mushroomId}&genus_id=${id}`
         } else if (kind=="species") {
             route = `/mushroom_species/destroy_by_relation.json?mushroom_id=${mushroomId}&species_id=${id}`
+        } else if (kind=="trees") {
+            route = `/mushroom_trees/destroy_by_relation.json?mushroom_id=${mushroomId}&tree_id=${id}`
+        } else if (kind=="plants") {
+            route = `/mushroom_plants/destroy_by_relation.json?mushroom_id=${mushroomId}&plant_id=${id}`
         } else {
             return
         }

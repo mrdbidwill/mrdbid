@@ -1,9 +1,8 @@
-/*M!999999\- enable the sandbox mode */ 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -12,7 +11,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 DROP TABLE IF EXISTS `active_storage_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `active_storage_attachments` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -24,11 +23,11 @@ CREATE TABLE `active_storage_attachments` (
   UNIQUE KEY `index_active_storage_attachments_uniqueness` (`record_type`,`record_id`,`name`,`blob_id`),
   KEY `index_active_storage_attachments_on_blob_id` (`blob_id`),
   CONSTRAINT `fk_rails_c3b3935057` FOREIGN KEY (`blob_id`) REFERENCES `active_storage_blobs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_blobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `active_storage_blobs` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `key` varchar(255) NOT NULL,
@@ -41,11 +40,11 @@ CREATE TABLE `active_storage_blobs` (
   `created_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_active_storage_blobs_on_key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_variant_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `active_storage_variant_records` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `blob_id` bigint NOT NULL,
@@ -53,11 +52,11 @@ CREATE TABLE `active_storage_variant_records` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_active_storage_variant_records_uniqueness` (`blob_id`,`variation_digest`),
   CONSTRAINT `fk_rails_993965df05` FOREIGN KEY (`blob_id`) REFERENCES `active_storage_blobs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `all_group_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `all_group_mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `all_group_id` bigint DEFAULT NULL,
@@ -69,11 +68,11 @@ CREATE TABLE `all_group_mushrooms` (
   KEY `index_all_group_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_bf88171658` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
   CONSTRAINT `fk_rails_f845056653` FOREIGN KEY (`all_group_id`) REFERENCES `all_groups` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `all_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `all_groups` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
@@ -86,11 +85,11 @@ CREATE TABLE `all_groups` (
   UNIQUE KEY `index_all_groups_on_user_id_and_lower_name` (`user_id`,`name`),
   KEY `index_all_groups_on_user_id` (`user_id`),
   CONSTRAINT `fk_rails_daa4ade1c1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
@@ -101,7 +100,7 @@ CREATE TABLE `ar_internal_metadata` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `articles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -121,7 +120,7 @@ CREATE TABLE `articles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `camera_makes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `camera_makes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -135,7 +134,7 @@ CREATE TABLE `camera_makes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `camera_models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `camera_models` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -149,7 +148,7 @@ CREATE TABLE `camera_models` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cameras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cameras` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -168,7 +167,7 @@ CREATE TABLE `cameras` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cluster_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cluster_mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `cluster_id` bigint DEFAULT NULL,
@@ -180,11 +179,11 @@ CREATE TABLE `cluster_mushrooms` (
   KEY `index_cluster_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_96b70e2520` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
   CONSTRAINT `fk_rails_ff0c33bdff` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `clusters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clusters` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
@@ -201,7 +200,7 @@ CREATE TABLE `clusters` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `colors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `colors` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `latin_name` varchar(255) NOT NULL,
@@ -227,7 +226,7 @@ CREATE TABLE `colors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comments` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `commentable_type` varchar(255) NOT NULL,
@@ -245,7 +244,7 @@ CREATE TABLE `comments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `countries` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -258,7 +257,7 @@ CREATE TABLE `countries` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `display_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `display_options` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -267,11 +266,11 @@ CREATE TABLE `display_options` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dna_sequences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dna_sequences` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mushroom_id` bigint DEFAULT NULL,
@@ -294,7 +293,7 @@ CREATE TABLE `dna_sequences` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fungus_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fungus_types` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -303,11 +302,11 @@ CREATE TABLE `fungus_types` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `genera`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genera` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mblist_id` varchar(255) DEFAULT NULL,
@@ -316,11 +315,11 @@ CREATE TABLE `genera` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_genera_on_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=34817 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20910 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `genus_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genus_mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `genus_id` bigint NOT NULL,
@@ -334,11 +333,11 @@ CREATE TABLE `genus_mushrooms` (
   KEY `index_genus_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8d2e9914c5` FOREIGN KEY (`genus_id`) REFERENCES `genera` (`id`),
   CONSTRAINT `fk_rails_ff6ffa05e8` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `image_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `image_mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mushroom_id` bigint DEFAULT NULL,
@@ -359,11 +358,11 @@ CREATE TABLE `image_mushrooms` (
   KEY `index_image_mushrooms_on_part_id` (`part_id`),
   CONSTRAINT `fk_rails_974ee9e8a8` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
   CONSTRAINT `fk_rails_acebcc46f8` FOREIGN KEY (`part_id`) REFERENCES `parts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lenses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lenses` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `make` varchar(255) DEFAULT NULL,
@@ -377,7 +376,7 @@ CREATE TABLE `lenses` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lookup_items` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mr_character_id` bigint DEFAULT NULL,
@@ -392,11 +391,11 @@ CREATE TABLE `lookup_items` (
   KEY `index_lookup_items_on_source_data_id` (`source_data_id`),
   CONSTRAINT `fk_rails_7986eea0da` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
   CONSTRAINT `fk_rails_d80ecc7a8c` FOREIGN KEY (`source_data_id`) REFERENCES `source_data` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1513 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1517 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lookup_types` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -409,7 +408,7 @@ CREATE TABLE `lookup_types` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mb_lists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mb_lists` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mblist_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs,
@@ -432,7 +431,7 @@ CREATE TABLE `mb_lists` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_character_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mr_character_mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mr_character_id` bigint DEFAULT NULL,
@@ -445,11 +444,11 @@ CREATE TABLE `mr_character_mushrooms` (
   KEY `index_mr_character_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_976623cbea` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
   CONSTRAINT `fk_rails_ba5a019ccc` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_characters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mr_characters` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -474,7 +473,7 @@ CREATE TABLE `mr_characters` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_plants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushroom_plants` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mushroom_id` bigint DEFAULT NULL,
@@ -486,11 +485,11 @@ CREATE TABLE `mushroom_plants` (
   KEY `index_mushroom_plants_on_plant_id` (`plant_id`),
   CONSTRAINT `fk_rails_1124497b59` FOREIGN KEY (`plant_id`) REFERENCES `plants` (`id`),
   CONSTRAINT `fk_rails_bf9b461fbf` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushroom_projects` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mushroom_id` bigint DEFAULT NULL,
@@ -502,11 +501,11 @@ CREATE TABLE `mushroom_projects` (
   KEY `index_mushroom_projects_on_project_id` (`project_id`),
   CONSTRAINT `fk_rails_41497fb7fc` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
   CONSTRAINT `fk_rails_8f62572610` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_species`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushroom_species` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `species_id` bigint NOT NULL,
@@ -520,11 +519,11 @@ CREATE TABLE `mushroom_species` (
   KEY `index_mushroom_species_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8833fee8ab` FOREIGN KEY (`species_id`) REFERENCES `species` (`id`),
   CONSTRAINT `fk_rails_c97af38f94` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_trees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushroom_trees` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mushroom_id` bigint DEFAULT NULL,
@@ -536,11 +535,11 @@ CREATE TABLE `mushroom_trees` (
   KEY `index_mushroom_trees_on_tree_id` (`tree_id`),
   CONSTRAINT `fk_rails_4aa8d80201` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
   CONSTRAINT `fk_rails_995b7eb943` FOREIGN KEY (`tree_id`) REFERENCES `trees` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mushrooms` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -552,6 +551,9 @@ CREATE TABLE `mushrooms` (
   `fungus_type_id` bigint DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `trees_count` int NOT NULL DEFAULT '0',
+  `plants_count` int NOT NULL DEFAULT '0',
+  `mr_character_mushrooms_count` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_mushrooms_on_user_id_and_name` (`user_id`,`name`),
   KEY `index_mushrooms_on_user_id` (`user_id`),
@@ -561,11 +563,11 @@ CREATE TABLE `mushrooms` (
   CONSTRAINT `fk_rails_0e85826c18` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
   CONSTRAINT `fk_rails_1d15355ab0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_rails_5f7cae6dda` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `parts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `parts` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -578,7 +580,7 @@ CREATE TABLE `parts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `permissions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -591,7 +593,7 @@ CREATE TABLE `permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `plants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plants` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -600,11 +602,11 @@ CREATE TABLE `plants` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `projects` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint DEFAULT NULL,
@@ -621,7 +623,7 @@ CREATE TABLE `projects` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `role_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_permissions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `role_id` bigint NOT NULL,
@@ -637,7 +639,7 @@ CREATE TABLE `role_permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -650,7 +652,7 @@ CREATE TABLE `roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   PRIMARY KEY (`version`)
@@ -658,7 +660,7 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `source_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `source_data` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
@@ -672,11 +674,11 @@ CREATE TABLE `source_data` (
   PRIMARY KEY (`id`),
   KEY `index_source_data_on_source_data_type_id` (`source_data_type_id`),
   CONSTRAINT `fk_rails_e2b6e4c854` FOREIGN KEY (`source_data_type_id`) REFERENCES `source_data_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `source_data_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `source_data_types` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -685,11 +687,11 @@ CREATE TABLE `source_data_types` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `species`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `species` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `mblist_id` varchar(255) DEFAULT NULL,
@@ -701,11 +703,11 @@ CREATE TABLE `species` (
   UNIQUE KEY `index_species_on_genera_id_and_name` (`genera_id`,`name`),
   KEY `index_species_on_genera_id` (`genera_id`),
   CONSTRAINT `fk_rails_21d681ad0e` FOREIGN KEY (`genera_id`) REFERENCES `genera` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=380669 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `states` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -721,7 +723,7 @@ CREATE TABLE `states` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `storage_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `storage_locations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -734,7 +736,7 @@ CREATE TABLE `storage_locations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `trees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trees` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -743,11 +745,11 @@ CREATE TABLE `trees` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_roles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
@@ -763,7 +765,7 @@ CREATE TABLE `user_roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL DEFAULT '',
@@ -803,7 +805,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `versions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `versions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `item_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -814,7 +816,7 @@ CREATE TABLE `versions` (
   `created_at` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_versions_on_item_type_and_item_id` (`item_type`,`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -827,6 +829,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251021175901'),
 ('20251006000001'),
 ('20251005121500'),
 ('20251005120000'),
