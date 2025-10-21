@@ -171,12 +171,16 @@ export default class extends Controller {
             headers: { "Content-Type": "application/json", "Accept": "application/json", "X-CSRF-Token": this.csrfToken() },
             body: body
         }).then(resp => {
-            if(!resp.ok) throw new Error("Save failed")
+            if(!resp.ok) {
+                return resp.json().then(data => {
+                    throw new Error(data.errors ? data.errors.join(", ") : "Save failed")
+                })
+            }
             // Optionally: visual feedback
-        }).catch(_err => {
+        }).catch(err => {
             // Remove pill if failed
             this.removePillById(id)
-            alert("Failed to add. Please try again.")
+            alert(err.message || "Failed to add. Please try again.")
         })
     }
 
