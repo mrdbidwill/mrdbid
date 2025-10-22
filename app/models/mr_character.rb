@@ -30,6 +30,7 @@ class MrCharacter < ApplicationRecord
     cache_key = ['mr_characters', 'all_with_associations', maximum(:updated_at)&.to_i || 0]
     Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       includes(:part, :display_option, :source_data)
+        .joins(:part)
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a
     end
