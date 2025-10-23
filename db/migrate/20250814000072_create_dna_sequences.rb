@@ -1,7 +1,7 @@
 class CreateDnaSequences < ActiveRecord::Migration[8.0]
   def change
   create_table :dna_sequences do |t|
-      t.references :mushroom, foreign_key: true
+      t.references :mushroom, null: false, foreign_key: true
       t.text :notes
       t.text :dna_barcode_its
       t.string :genbank_number_url

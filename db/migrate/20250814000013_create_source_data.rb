@@ -7,7 +7,7 @@ class CreateSourceData < ActiveRecord::Migration[8.0]
       t.string :author
       t.string :ref
       t.string :item_code
-      t.references :source_data_type, foreign_key: true
+      t.references :source_data_type, null: false, foreign_key: true
       t.text :comments
       t.timestamps
     end

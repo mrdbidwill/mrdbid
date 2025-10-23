@@ -9,10 +9,10 @@ class CreateMrCharacters < ActiveRecord::Migration[8.0]
       t.text :comments
       t.references :user, foreign_key: true
       t.references :tree, foreign_key: true
-      t.references :part, foreign_key: true 
-      t.references :lookup_type, foreign_key: true 
-      t.references :display_option, foreign_key: true 
-      t.references :source_data, foreign_key: true
+      t.references :part, null: false, foreign_key: true
+      t.references :lookup_type, null: false, foreign_key: true
+      t.references :display_option, null: false, foreign_key: true
+      t.references :source_data, null: false, foreign_key: true
       t.timestamps
     end
   end

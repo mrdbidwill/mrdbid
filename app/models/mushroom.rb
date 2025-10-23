@@ -8,9 +8,9 @@ class Mushroom < ApplicationRecord
   before_update :prevent_id_change
 
   belongs_to :user
-  belongs_to :country, optional: true
+  belongs_to :country
   belongs_to :state, optional: true
-  belongs_to :fungus_type, optional: true
+  belongs_to :fungus_type
   belongs_to :mushroom_storage_location, optional: true
 
   # Change all HABTM to has_many :through since you have join models

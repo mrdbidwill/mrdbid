@@ -6,10 +6,10 @@ class CreateMushrooms < ActiveRecord::Migration[8.0]
       t.string :name, null: false
       t.text :description
       t.text :comments
-      t.references :user, foreign_key: { on_delete: :cascade }
-      t.references :country, foreign_key: true
+      t.references :user, null: false, foreign_key: { on_delete: :cascade }
+      t.references :country, null: false, foreign_key: true
       t.references :state, foreign_key: true
-      t.references :fungus_type
+      t.references :fungus_type, null: false
       t.timestamps
   end
   add_index :mushrooms, [:user_id, :name], unique: true

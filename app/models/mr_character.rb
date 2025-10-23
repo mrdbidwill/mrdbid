@@ -2,10 +2,10 @@
 
 class MrCharacter < ApplicationRecord
   has_paper_trail
-  belongs_to :part, optional: true
-  belongs_to :lookup_type, optional: true
-  belongs_to :display_option, optional: true
-  belongs_to :source_data, optional: true
+  belongs_to :part
+  belongs_to :lookup_type
+  belongs_to :display_option
+  belongs_to :source_data
   belongs_to :color, optional: true
 
   has_many :mr_character_mushrooms, dependent: :destroy
