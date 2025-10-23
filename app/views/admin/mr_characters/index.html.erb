@@ -21,50 +21,36 @@
   </div>
 
   <!-- Filter card -->
-  <div class="mb-6 rounded-lg border border-gray-100 bg-white shadow-sm">
-    <div class="px-4 py-1 border-b border-gray-100">
-      <h2 class="text-lg font-semibold text-gray-900">Filter Mushroom Characters</h2>
-      <p class="mt-1 text-sm text-gray-600">Choose a Lookup Type and/or Part, then apply the filter. Use Reset to clear selections.</p>
+  <div class="group-box mb-6">
+    <div class="group-header">
+      Filter Mushroom Characters
+      <p class="hint mt-1">Start by selecting a Part to narrow Lookup Types, or choose both. Click Apply Filter to update results.</p>
     </div>
-    <div class="px-4 py-1">
-      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3" do |form| %>
-        <div>
-          <%= form.label :lookup_type_id, "Lookup Type", class: "block text-sm font-medium text-gray-900" %>
-          <div class="relative mt-1">
-            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-              <!-- Left chevron icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12.707 15.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L8.414 10l4.293 4.293z" clip-rule="evenodd"/>
-              </svg>
-            </span>
-            <%= form.select :lookup_type_id,
-                            LookupType.pluck(:name, :id),
-                            { include_blank: "All" },
-                            class: "block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 appearance-none pl-9 pr-8" %>
-          </div>
-          <p class="mt-1 text-xs text-gray-500">Select a category to narrow results by character type.</p>
+    <div class="px-4 py-4">
+      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-12" do |form| %>
+        <div class="form-field">
+          <%= form.label :part_id, "Part", class: "form-label" %>
+          <%= form.select :part_id,
+                          @parts,
+                          { include_blank: "All" },
+                          class: "form-input",
+                          style: "width: 70%; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Select a part first to filter lookup types.</p>
         </div>
 
-        <div>
-          <%= form.label :part_id, "Part", class: "block text-sm font-medium text-gray-900" %>
-          <div class="relative mt-1">
-            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-              <!-- Left chevron icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12.707 15.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L8.414 10l4.293 4.293z" clip-rule="evenodd"/>
-              </svg>
-            </span>
-            <%= form.select :part_id,
-                            @parts,
-                            { include_blank: "All" },
-                            class: "block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 appearance-none pl-9 pr-8" %>
-          </div>
-          <p class="mt-1 text-xs text-gray-500">Limit characters to a specific mushroom part.</p>
+        <div class="form-field">
+          <%= form.label :lookup_type_id, "Lookup Type", class: "form-label" %>
+          <%= form.select :lookup_type_id,
+                          @lookup_types,
+                          { include_blank: "All" },
+                          class: "form-input",
+                          style: "width: 85%; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Filtered by part selection above.</p>
         </div>
 
         <div class="flex items-end gap-2">
-          <%= form.submit "Apply Filter", class: "inline-flex items-center rounded-md px-4 py-1 bg-blue-600 text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1" %>
-          <%= link_to "Reset", admin_mr_characters_path, class: "inline-flex items-center rounded-md px-4 py-1 bg-gray-100 text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1" %>
+          <%= form.submit "Apply Filter", class: "btn-primary" %>
+          <%= link_to "Reset", admin_mr_characters_path, class: "btn" %>
         </div>
       <% end %>
     </div>
@@ -75,54 +61,52 @@
     <% part_name_by_id = (@parts || []).each_with_object({}) { |(name, id), h| h[id.to_s] = name } %>
     <% selected_part_name = params[:part_id].presence && part_name_by_id[params[:part_id].to_s] %>
 
-    <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
-      <% if params[:lookup_type_id].present? || params[:part_id].present? %>
+    <div class="well">
+      <% if params[:part_id].present? || params[:lookup_type_id].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Currently showing:</span>
-          <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
-            <span class="font-medium">Lookup Type:</span>
-            <span><%= selected_lookup_type&.name || "All" %></span>
-          </span>
           <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
             <span class="font-medium">Part:</span>
             <span><%= selected_part_name || "All" %></span>
           </span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
+            <span class="font-medium">Lookup Type:</span>
+            <span><%= selected_lookup_type&.name || "All" %></span>
+          </span>
           <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_mr_characters_path}\"]').scrollIntoView({behavior:'smooth'})" %>
         </div>
       <% else %>
-        <p class="text-sm text-gray-600">No filters applied. Showing all characters.</p>
+        <p class="muted">No filters applied. Showing all characters.</p>
       <% end %>
     </div>
   </div>
   <!-- End Filter card -->
 
   <!-- Search card -->
-  <div class="mb-6 rounded-lg border border-gray-100 bg-white shadow-sm">
-    <div class="px-4 py-3 border-b border-gray-100">
-      <h2 class="text-lg font-semibold text-gray-900">Search Characters</h2>
-      <p class="mt-1 text-sm text-gray-600">Search by name or ID. Press Enter or click Search.</p>
+  <div class="group-box mb-6">
+    <div class="group-header">
+      Search Characters
+      <p class="hint mt-1">Search by name or ID. Press Enter or click Search.</p>
     </div>
     <div class="px-4 py-1">
       <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3 items-end" do %>
         <%= hidden_field_tag :lookup_type_id, params[:lookup_type_id] if params[:lookup_type_id].present? %>
         <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
-        <div class="sm:col-span-2">
-          <label for="q" class="block text-sm font-medium text-gray-900">Name or ID</label>
-          <div class="relative mt-1">
-            <%= text_field_tag :q, params[:q], placeholder: "e.g. ‘Cap surface’ or 1234",
-                               class: "block w-full rounded-md border border-gray-300 ring-1 ring-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-300 bg-white shadow-lg appearance-none pl-9 pr-3 py-1 transition" %>
-          </div>
-          <p class="mt-1 text-xs text-gray-500">Partial matches allowed for names. Use a number to search by ID.</p>
+        <div class="form-field sm:col-span-2">
+          <label for="q" class="form-label">Name or ID</label>
+          <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 1234",
+                             class: "form-input" %>
+          <p class="form-help">Partial matches allowed for names. Use a number to search by ID.</p>
         </div>
         <div class="flex gap-2">
-          <%= submit_tag "Search", class: "inline-flex items-center rounded-md px-4 py-1 bg-blue-600 text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1" %>
-          <%= link_to "Reset", admin_mr_characters_path, class: "inline-flex items-center rounded-md px-4 py-1 bg-gray-100 text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1" %>
+          <%= submit_tag "Search", class: "btn-primary" %>
+          <%= link_to "Reset", admin_mr_characters_path, class: "btn" %>
         </div>
       <% end %>
     </div>
 
     <!-- Current search summary -->
-    <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
+    <div class="well">
       <% if params[:q].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Search:</span>
@@ -133,7 +117,7 @@
           <%= link_to "Clear", admin_mr_characters_path(request.query_parameters.except(:q)), class: "ml-auto text-blue-700 hover:underline" %>
         </div>
       <% else %>
-        <p class="text-sm text-gray-600">No search applied.</p>
+        <p class="muted">No search applied.</p>
       <% end %>
     </div>
   </div>

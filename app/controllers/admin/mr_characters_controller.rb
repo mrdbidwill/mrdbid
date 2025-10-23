@@ -10,8 +10,8 @@ class Admin::MrCharactersController < Admin::ApplicationController
         .order(:name)
     )
     # Apply filters
-    @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+    @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
 
     # Search by name or ID
     if params[:q].present?
@@ -27,16 +27,19 @@ class Admin::MrCharactersController < Admin::ApplicationController
     # Paginate (required for `paginate` helper)
     @mr_characters = @mr_characters.page(params[:page]).per(20)
 
-    # Populate parts dropdown
-    @parts =
-      if params[:lookup_type_id].present?
-        Part.joins(:mr_characters)
-            .where(mr_characters: { lookup_type_id: params[:lookup_type_id] })
-            .distinct
-            .order(:name)
-            .pluck(:name, :id)
+    # Populate parts dropdown (all parts)
+    @parts = Part.order(:name).pluck(:name, :id)
+
+    # Populate lookup_types dropdown (filtered by part if selected)
+    @lookup_types =
+      if params[:part_id].present?
+        LookupType.joins(:mr_characters)
+                  .where(mr_characters: { part_id: params[:part_id] })
+                  .distinct
+                  .order(:name)
+                  .pluck(:name, :id)
       else
-        Part.order(:name).pluck(:name, :id)
+        LookupType.order(:name).pluck(:name, :id)
       end
   end
 
