@@ -44,3 +44,4 @@ db/scripts/mblist/insert_genera.sql
 db/scripts/mblist/insert_species.sql
 node_modules/
 *.sql # Or this to ignore all SQL dumps
+backup_development_cache_*.sql
