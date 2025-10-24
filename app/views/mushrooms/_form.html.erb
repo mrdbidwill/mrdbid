@@ -10,61 +10,100 @@
     </div>
   <% end %>
 
-  <div class="w-full">  <!-- expanded max width for longer organism names -->
+  <div class="w-full">
+    <!-- Name -->
+    <div class="my-5">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:name].any?}] %>
+      <!-- per-field submit -->
+      <div class="mt-2">
+        <%= button_tag "Update name",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_name",
+                       class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:name].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:name].any?}] %>
-  </div>
+    <!-- Description -->
+    <div class="my-5">
+      <%= form.label :description %>
+      <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
+      <div class="mt-2">
+        <%= button_tag "Update description",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_description",
+                       class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
-  </div>
+    <!-- Comments -->
+    <div class="my-5">
+      <%= form.label :comments %>
+      <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
+      <div class="mt-2">
+        <%= button_tag "Update comments",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_comments",
+                       class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :comments %>
-    <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
-  </div>
-
-    <!-- Country -->
+    <!-- Country + State -->
     <div class="my-5" data-controller="country-select"
          data-country-select-url-value="<%= states_path %>">
-      <!-- Country Dropdown -->
       <%= form.label :country_id, "Country" %>
       <%= form.collection_select :country_id, Country.all, :id, :name,
                                  { prompt: "Please select your country" },
                                  { class: "block shadow-sm rounded-md border px-2 py-1 mt-1 w-full",
+                                   style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);",
                                    data: { action: "change->country-select#change",
                                            "country-select-target": "countrySelect"} } %>
 
-      <!-- States Dropdown -->
       <div id="state-select-container" class="mt-2">
         <select name="mushroom[state_id]"
                 id="mushroom_state_id"
                 class="block shadow-sm rounded-md border px-3 py-1 w-full"
+                style="width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
                 data-country-select-target="stateSelect"
                 <%= mushroom.country_id.present? ? "" : "disabled" %>>
           <% if mushroom.country_id.present? %>
             <% Country.find(mushroom.country_id).states.order(:name).each do |state| %>
               <option value="<%= state.id %>" <%= "selected" if state.id == mushroom.state_id %>><%= state.name %></option>
             <% end %>
-            <% else %>
-              <option value="">Select a country first</option>
-            <% end %>
-            </select>
-            </div>
-            </div>
+          <% else %>
+            <option value="">Select a country first</option>
+          <% end %>
+        </select>
+      </div>
 
+      <div class="mt-2 flex gap-2">
+        <%= button_tag "Update country/state",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_location",
+                       class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
+    </div>
 
+    <!-- Fungus Type -->
+    <div class="my-5">
+      <%= form.label :fungus_type_id, "Fungus Type" %>
+      <%= form.collection_select :fungus_type_id, FungusType.order(:name), :id, :name,
+                                 { prompt: "Select a Fungus Type" },
+                                 { class: "block shadow-sm rounded-md border px-3 py-1 mt-2 w-full",
+                                   style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" } %>
+      <div class="mt-2">
+        <%= button_tag "Update fungus type",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_fungus_type",
+                       class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+      </div>
+    </div>
 
-            <!-- Fungus Type -->
-  <div class="my-5">
-    <%= form.label :fungus_type_id, "Fungus Type" %>
-    <%= form.collection_select :fungus_type_id, FungusType.order(:name), :id, :name,
-                               { prompt: "Select a Fungus Type" },
-                               { class: "block shadow-sm rounded-md border px-3 py-1 mt-2 w-full" } %>
-  </div>
 
     <!-- Collapsible Candidate Genera/Species Selection -->
     <div class="my-5">
@@ -79,6 +118,7 @@
       <!-- Step/Process Guidance -->
       <div class="mb-2 px-3 py-2 bg-gray-50 border border-blue-200 rounded text-sm text-gray-700">
         <strong>How this works:</strong>
+        <p class="p class=text-xs">The idea here is at the beginning of the identification process, you may not have narrowed down the genus/species candidates. You can add several suspects and narrow them down in your process.</p>
         <ol class="list-decimal pl-5 my-1 text-xs">
           <li>
             <span class="text-blue-700 font-semibold">Step 1:</span> Add one or more 
@@ -227,10 +267,5 @@
         </div>
       </div>
     </div>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-    <p class="text-red-600">This button will update the above fields.</p>
-  </div>
   </div>
 <% end %>
