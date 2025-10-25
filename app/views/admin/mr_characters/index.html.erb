@@ -95,7 +95,8 @@
         <div class="form-field sm:col-span-2">
           <label for="q" class="form-label">Name or ID</label>
           <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 1234",
-                             class: "form-input" %>
+                             class: "form-input",
+                             style: "padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>%>
           <p class="form-help">Partial matches allowed for names. Use a number to search by ID.</p>
         </div>
         <div class="flex gap-2">

@@ -53,3 +53,43 @@ set :keep_releases, 5
 # set :ssh_options, verify_host_key: :secure
 
 after "deploy:published", "puma:restart"
+
+# Custom task to setup systemd service for Puma
+namespace :puma do
+  desc 'Install Puma systemd service'
+  task :install_service do
+    on roles(:app) do
+      execute :sudo, :cp, "#{release_path}/config/puma.service", "/etc/systemd/system/puma-mrdbid.service"
+      execute :sudo, :systemctl, "daemon-reload"
+      execute :sudo, :systemctl, "enable", "puma-mrdbid.service"
+    end
+  end
+
+  desc 'Start Puma via systemd'
+  task :systemd_start do
+    on roles(:app) do
+      execute :sudo, :systemctl, "start", "puma-mrdbid.service"
+    end
+  end
+
+  desc 'Stop Puma via systemd'
+  task :systemd_stop do
+    on roles(:app) do
+      execute :sudo, :systemctl, "stop", "puma-mrdbid.service"
+    end
+  end
+
+  desc 'Restart Puma via systemd'
+  task :systemd_restart do
+    on roles(:app) do
+      execute :sudo, :systemctl, "restart", "puma-mrdbid.service"
+    end
+  end
+
+  desc 'Check Puma systemd service status'
+  task :systemd_status do
+    on roles(:app) do
+      execute :sudo, :systemctl, "status", "puma-mrdbid.service"
+    end
+  end
+end

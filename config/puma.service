@@ -1,0 +1,32 @@
+[Unit]
+Description=Puma HTTP Server for mrdbid (production)
+After=network.target
+
+[Service]
+Type=notify
+User=root
+WorkingDirectory=/opt/mrdbid/current
+
+# Environment variables
+Environment=RAILS_ENV=production
+Environment=RBENV_ROOT=/root/.rbenv
+Environment=PATH=/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Puma-specific configuration from config/puma.rb will be used
+ExecStart=/root/.rbenv/shims/bundle exec puma -C /opt/mrdbid/current/config/puma.rb
+ExecReload=/bin/kill -USR1 $MAINPID
+
+# Process management
+Restart=always
+RestartSec=10
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Logging
+StandardOutput=append:/opt/mrdbid/shared/log/puma_stdout.log
+StandardError=append:/opt/mrdbid/shared/log/puma_stderr.log
+SyslogIdentifier=puma-mrdbid
+
+[Install]
+WantedBy=multi-user.target
