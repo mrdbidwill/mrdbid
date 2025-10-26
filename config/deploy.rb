@@ -52,10 +52,11 @@ set :keep_releases, 5
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-after "deploy:published", "puma:restart"
+# Use systemd to restart Puma instead of capistrano-puma's restart
+after "deploy:published", "systemd_puma:restart"
 
-# Custom task to setup systemd service for Puma
-namespace :puma do
+# Custom tasks to manage Puma via systemd
+namespace :systemd_puma do
   desc 'Install Puma systemd service'
   task :install_service do
     on roles(:app) do
@@ -66,30 +67,51 @@ namespace :puma do
   end
 
   desc 'Start Puma via systemd'
-  task :systemd_start do
+  task :start do
     on roles(:app) do
       execute :sudo, :systemctl, "start", "puma-mrdbid.service"
     end
   end
 
   desc 'Stop Puma via systemd'
-  task :systemd_stop do
+  task :stop do
     on roles(:app) do
       execute :sudo, :systemctl, "stop", "puma-mrdbid.service"
     end
   end
 
   desc 'Restart Puma via systemd'
-  task :systemd_restart do
+  task :restart do
     on roles(:app) do
       execute :sudo, :systemctl, "restart", "puma-mrdbid.service"
     end
   end
 
   desc 'Check Puma systemd service status'
-  task :systemd_status do
+  task :status do
     on roles(:app) do
       execute :sudo, :systemctl, "status", "puma-mrdbid.service"
+    end
+  end
+
+  desc 'Show Puma systemd service logs'
+  task :logs do
+    on roles(:app) do
+      execute :sudo, :journalctl, "-xeu", "puma-mrdbid.service", "--no-pager", "-n", "50"
+    end
+  end
+
+  desc 'Show Puma stderr log file'
+  task :stderr do
+    on roles(:app) do
+      execute :tail, "-n", "50", "#{shared_path}/log/puma_stderr.log"
+    end
+  end
+
+  desc 'Show Puma stdout log file'
+  task :stdout do
+    on roles(:app) do
+      execute :tail, "-n", "50", "#{shared_path}/log/puma_stdout.log"
     end
   end
 end
