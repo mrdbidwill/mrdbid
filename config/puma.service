@@ -13,15 +13,21 @@ Environment=RBENV_ROOT=/root/.rbenv
 Environment=PATH=/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Puma-specific configuration from config/puma.rb will be used
+ExecStartPre=/bin/rm -f /opt/mrdbid/shared/tmp/sockets/puma.sock
+ExecStartPre=/bin/rm -f /opt/mrdbid/shared/tmp/pids/puma.pid
+ExecStartPre=/bin/rm -f /opt/mrdbid/shared/tmp/pids/puma.state
 ExecStart=/root/.rbenv/shims/bundle exec puma -C /opt/mrdbid/current/config/puma.rb
 ExecReload=/bin/kill -USR1 $MAINPID
+ExecStop=/bin/kill -SIGTERM $MAINPID
 
 # Process management
-Restart=on-failure
+Restart=always
 RestartSec=10
 KillMode=mixed
 KillSignal=SIGTERM
 TimeoutStopSec=30
+StartLimitIntervalSec=300
+StartLimitBurst=5
 
 # Logging
 StandardOutput=append:/opt/mrdbid/shared/log/puma_stdout.log
