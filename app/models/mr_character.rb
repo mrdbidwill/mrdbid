@@ -20,12 +20,8 @@ class MrCharacter < ApplicationRecord
   validates :display_option_id, presence: true
   validates :source_data_id, presence: true
 
-  # Callbacks to expire cache when characters are modified
-  after_save :expire_character_cache
-  after_destroy :expire_character_cache
-
   # Cached version of all characters with associations
-  # Cache key automatically updates when any character is modified
+  # Cache key automatically updates when any character is modified via maximum(:updated_at)
   def self.cached_all_with_associations
     cache_key = ['mr_characters', 'all_with_associations', maximum(:updated_at)&.to_i || 0]
     Rails.cache.fetch(cache_key, expires_in: 24.hours) do
@@ -34,13 +30,6 @@ class MrCharacter < ApplicationRecord
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a
     end
-  end
-
-  private
-
-  def expire_character_cache
-    # Clear the cache when any character is modified
-    Rails.cache.delete_matched('mr_characters/all_with_associations/*')
   end
 end
 
