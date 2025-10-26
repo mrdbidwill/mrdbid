@@ -59,7 +59,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def edit
-    authorize MrCharacter
+    authorize @mr_character
   end
 
   def show
@@ -71,7 +71,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
 
 
   def update
-    authorize MrCharacter
+    authorize @mr_character
     if @mr_character.update(mr_character_params)
       redirect_to admin_mr_characters_path, notice: "Character updated successfully."
     else
