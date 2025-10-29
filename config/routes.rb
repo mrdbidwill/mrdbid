@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-  registrations: 'users/registrations'
-}
+    registrations: 'users/registrations'
+  }
+
+  # Two-Factor Authentication routes
+  namespace :users do
+    resource :two_factor_settings, only: [] do
+      post :enable
+      post :verify
+      delete :disable
+    end
+  end
 
   # Mushrooms and related nested relationships
   resources :mushrooms do

@@ -18,9 +18,6 @@ class ApplicationController < ActionController::Base
   helper :all # This includes all helpers in view contexts
   helper MrCharactersHelper
 
-  # Ensure authentication for all controllers
-  before_action :authenticate_user!
-
   # Configure permitted parameters for Devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 

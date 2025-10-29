@@ -7,7 +7,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
     @mr_characters = policy_scope(
       MrCharacter
         .includes( :part, :lookup_type, :display_option, :source_data)
-        .order(:id)  # change order from name to id for temp production db edit
+        .order(:name)  # change order here to modify default sort order
     )
     # Apply filters
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?

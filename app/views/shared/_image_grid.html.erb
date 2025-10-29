@@ -1,7 +1,7 @@
 <%# expects: images (collection of ActiveStorage attachments or wrapper objects), image_size: [w,h], alt_fallback: string %>
 <% if images.present? %>
   <div class="w-full">
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1">
       <% images.each do |image_mushroom| %>
         <div class="image-cell">
           <picture>
