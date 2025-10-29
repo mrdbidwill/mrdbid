@@ -19,7 +19,7 @@
     </div>
 
     <div class="my-4">
-      <%= f.label :password, class: "block font-medium" %> <i class="text-gray-600">(leave blank if you don't want to change it)</i>
+      <%= f.label :password, "New Password",  class: "block font-medium" %> <i class="text-gray-600">(leave blank if you don't want to change it)</i>
       <%= f.password_field :password, autocomplete: "new-password", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full" %>
       <% if @minimum_password_length %>
         <em class="text-sm text-gray-600"><%= @minimum_password_length %> characters minimum</em>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="my-4">
-      <%= f.label :password_confirmation, class: "block font-medium" %>
+      <%= f.label :password_confirmation,"New Password Confirmation", class: "block font-medium" %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full" %>
     </div>
 
