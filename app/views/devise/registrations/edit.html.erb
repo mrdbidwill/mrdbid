@@ -73,7 +73,7 @@
       <p class="text-sm text-gray-600 mb-4">Your account is protected with two-factor authentication.</p>
     </div>
 
-    <%= form_with url: users_two_factor_settings_path, method: :delete, local: true do |f| %>
+    <%= form_with url: disable_users_two_factor_settings_path, method: :delete, local: true do |f| %>
       <div class="my-4">
         <%= f.label :current_password, "Enter your password to disable 2FA:", class: "block font-medium mb-2" %>
         <%= f.password_field :current_password, required: true, autocomplete: "current-password", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full" %>
@@ -104,7 +104,7 @@
       </div>
     <% end %>
 
-    <%= form_with url: users_two_factor_settings_path, method: :delete, local: true, class: "mt-2" do |f| %>
+    <%= form_with url: disable_users_two_factor_settings_path, method: :delete, local: true, class: "mt-2" do |f| %>
       <%= f.submit "Cancel", class: "w-full rounded-md px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium cursor-pointer" %>
     <% end %>
 
