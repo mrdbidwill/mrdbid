@@ -9,15 +9,20 @@ class Users::TwoFactorSettingsController < ApplicationController
       return
     end
 
-    # Regenerate OTP secret for security
-    current_user.otp_secret = User.generate_otp_secret
+    begin
+      # Regenerate OTP secret for security
+      current_user.otp_secret = User.generate_otp_secret
 
-    if current_user.save
-      # Store that we're in setup mode
-      session[:enabling_otp] = true
-      redirect_to edit_user_registration_path, notice: 'Scan the QR code and enter a verification code to enable 2FA.'
-    else
-      redirect_to edit_user_registration_path, alert: 'Failed to enable 2FA.'
+      if current_user.save
+        # Store that we're in setup mode
+        session[:enabling_otp] = true
+        redirect_to edit_user_registration_path, notice: 'Scan the QR code and enter a verification code to enable 2FA.'
+      else
+        redirect_to edit_user_registration_path, alert: "Failed to enable 2FA: #{current_user.errors.full_messages.join(', ')}"
+      end
+    rescue StandardError => e
+      Rails.logger.error "2FA Enable Error: #{e.message}\n#{e.backtrace.join("\n")}"
+      redirect_to edit_user_registration_path, alert: "Failed to enable 2FA. Please contact support if this persists."
     end
   end
 
