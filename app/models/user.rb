@@ -44,7 +44,7 @@ class User < ApplicationRecord
   has_many :all_groups, dependent: :destroy
   has_many :clusters, dependent: :destroy
   has_many :projects, dependent: :destroy
-  has_many :user_roles
+  has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
 
 end
