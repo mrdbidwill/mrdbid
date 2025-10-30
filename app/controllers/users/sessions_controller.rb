@@ -19,8 +19,8 @@ class Users::SessionsController < Devise::SessionsController
         respond_with resource, location: after_sign_in_path_for(resource)
       else
         # 2FA required - store user ID and redirect to 2FA page
+        # Note: We don't sign in yet, just store ID for verification
         session[:otp_user_id] = resource.id
-        warden.logout  # Don't sign them in yet
         redirect_to user_two_factor_authentication_path
       end
     else
