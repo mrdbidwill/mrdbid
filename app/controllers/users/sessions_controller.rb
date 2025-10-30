@@ -8,20 +8,18 @@ class Users::SessionsController < Devise::SessionsController
       # Check if device is trusted (has valid cookie)
       if trusted_device?
         # Device is trusted - skip 2FA
-        set_flash_message!(:notice, :signed_in)
         sign_in(resource_name, resource)
-        respond_with resource, location: after_sign_in_path_for(resource)
+        redirect_to after_sign_in_path_for(resource), notice: 'Signed in successfully.'
       else
         # 2FA required - store user ID and redirect to 2FA page
         # Note: We don't sign in yet, just store ID for verification
         session[:otp_user_id] = resource.id
-        redirect_to user_two_factor_authentication_path, status: :see_other
+        redirect_to user_two_factor_authentication_path
       end
     else
       # No 2FA - sign in normally
-      set_flash_message!(:notice, :signed_in)
       sign_in(resource_name, resource)
-      respond_with resource, location: after_sign_in_path_for(resource)
+      redirect_to after_sign_in_path_for(resource), notice: 'Signed in successfully.'
     end
   end
 
