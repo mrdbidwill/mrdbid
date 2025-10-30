@@ -58,6 +58,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "mrdbid.com"), protocol: "https" }
 
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.deliver_later_queue_name = :mailers
+  config.action_mailer.perform_deliveries = true
 
   # Skip credentials during asset precompilation
   unless defined?(Rails::Console) || File.basename($0) == "rake" && ARGV.include?("assets:precompile")

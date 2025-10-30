@@ -3,4 +3,7 @@
 class ApplicationMailer < ActionMailer::Base
   default from: ENV.fetch("MAILER_FROM", "contact@mrdbid.com")
   layout "mailer"
+
+  # Use deliver_later by default for async email delivery
+  self.delivery_job = ActionMailer::MailDeliveryJob
 end

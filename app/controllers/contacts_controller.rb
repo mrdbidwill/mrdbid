@@ -17,7 +17,7 @@ class ContactsController < ApplicationController
     end
 
     begin
-      ContactMailer.contact_message(name:, email:, message:).deliver_now
+      ContactMailer.contact_message(name:, email:, message:).deliver_later
       flash[:notice] = "Thanks! Your message has been sent."
     rescue => e
       Rails.logger.error("Contact mail failed: #{e.class} - #{e.message}")
