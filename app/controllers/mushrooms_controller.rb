@@ -10,14 +10,9 @@ class MushroomsController < ApplicationController
   def index
     if user_signed_in?
       @mushrooms = policy_scope(Mushroom)
-                     .includes(:user, :country, :state, :fungus_type,
-                               image_mushrooms: [:part, { image_file_attachment: :blob }])
+                     .includes(:fungus_type)
                      .left_joins(:fungus_type)
-                     .order(
-                       Arel.sql("CASE WHEN fungus_types.name IS NULL THEN 1 ELSE 0 END"),
-                       Arel.sql("fungus_types.name"),
-                       Arel.sql("mushrooms.name")
-                     )
+                     .order('fungus_types.name NULLS LAST', 'mushrooms.name')
                      .page(params[:page])
                      .per(25)
     else
