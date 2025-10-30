@@ -19,7 +19,7 @@
     <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
     <% grouped.keys.sort.each do |ft_name| %>
       <%= render "shared/data_group", title: "Mushroom Type: #{ft_name}" do %>
-        <% grouped[ft_name].sort_by { |m| m.name.to_s.downcase }.each do |mushroom| %>
+        <% grouped[ft_name].each do |mushroom| %>
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
