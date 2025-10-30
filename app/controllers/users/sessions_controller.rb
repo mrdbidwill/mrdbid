@@ -24,10 +24,8 @@ class Users::SessionsController < Devise::SessionsController
         redirect_to user_two_factor_authentication_path
       end
     else
-      # No 2FA - regular login
-      sign_in(resource_name, resource)
-      set_flash_message!(:notice, :signed_in)
-      respond_with resource, location: after_sign_in_path_for(resource)
+      # No 2FA - use Devise's default behavior (handles Turbo properly)
+      super
     end
   end
 
