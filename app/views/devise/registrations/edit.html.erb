@@ -1,3 +1,17 @@
+<!-- Show backup codes at the very top if they exist -->
+<% if flash[:backup_codes].present? %>
+  <div class="w-full auto-margins max-w-md mb-8 p-6 bg-yellow-50 border-4 border-yellow-400 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-yellow-900 mb-4">🔐 Save Your Backup Codes!</h2>
+    <p class="font-semibold text-yellow-800 mb-3">Your two-factor authentication is now enabled. Save these backup codes in a secure location:</p>
+    <div class="bg-white p-4 rounded border-2 border-yellow-300 font-mono text-lg space-y-2">
+      <% flash[:backup_codes].each do |code| %>
+        <div class="py-1"><%= code %></div>
+      <% end %>
+    </div>
+    <p class="text-sm text-yellow-800 mt-4 font-medium">⚠️ You can use these codes to log in if you lose access to your authenticator app. Store them somewhere safe!</p>
+  </div>
+<% end %>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <div class="w-full auto-margins max-w-md">
     <h1 class="font-bold text-2xl mb-4">Edit <%= resource_name.to_s.humanize %></h1>
@@ -53,18 +67,6 @@
 <!-- Two-Factor Authentication Section -->
 <div class="w-full auto-margins max-w-md mt-8 p-6 bg-white rounded-lg shadow-md">
   <h3 class="text-xl font-bold mb-4">Two-Factor Authentication (2FA)</h3>
-
-  <% if flash[:backup_codes].present? %>
-    <div class="mb-6 p-4 bg-yellow-50 border border-yellow-300 rounded">
-      <p class="font-semibold text-yellow-800 mb-2">⚠️ Save these backup codes in a secure location:</p>
-      <div class="bg-white p-3 rounded border border-yellow-200 font-mono text-sm">
-        <% flash[:backup_codes].each do |code| %>
-          <div><%= code %></div>
-        <% end %>
-      </div>
-      <p class="text-sm text-yellow-700 mt-2">You can use these codes to log in if you lose access to your authenticator app.</p>
-    </div>
-  <% end %>
 
   <% if current_user.otp_required_for_login? %>
     <!-- 2FA is currently enabled -->
