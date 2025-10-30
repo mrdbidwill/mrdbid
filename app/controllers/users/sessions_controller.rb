@@ -2,30 +2,26 @@
 class Users::SessionsController < Devise::SessionsController
   def create
     # Authenticate user credentials (password)
-    self.resource = warden.authenticate(auth_options)
-
-    if resource.nil?
-      # Invalid credentials - show error
-      flash[:alert] = "Invalid email or password."
-      render :new and return
-    end
+    self.resource = warden.authenticate!(auth_options)
 
     if resource.otp_required_for_login?
       # Check if device is trusted (has valid cookie)
       if trusted_device?
         # Device is trusted - skip 2FA
-        sign_in(resource_name, resource)
         set_flash_message!(:notice, :signed_in)
+        sign_in(resource_name, resource)
         respond_with resource, location: after_sign_in_path_for(resource)
       else
         # 2FA required - store user ID and redirect to 2FA page
         # Note: We don't sign in yet, just store ID for verification
         session[:otp_user_id] = resource.id
-        redirect_to user_two_factor_authentication_path
+        redirect_to user_two_factor_authentication_path, status: :see_other
       end
     else
-      # No 2FA - use Devise's default behavior (handles Turbo properly)
-      super
+      # No 2FA - sign in normally
+      set_flash_message!(:notice, :signed_in)
+      sign_in(resource_name, resource)
+      respond_with resource, location: after_sign_in_path_for(resource)
     end
   end
 
