@@ -39,16 +39,16 @@ class Users::TwoFactorSettingsController < ApplicationController
       # Enable 2FA
       current_user.otp_required_for_login = true
 
-      # Generate backup codes
-      current_user.generate_otp_backup_codes!
+      # Generate backup codes and capture plain text versions before they're hashed
+      plain_codes = current_user.generate_otp_backup_codes!
 
       if current_user.save
         # Clear setup mode
         session.delete(:enabling_otp)
 
-        # Show backup codes
+        # Show backup codes (plain text versions)
         flash[:notice] = '2FA has been enabled successfully! Save these backup codes:'
-        flash[:backup_codes] = current_user.otp_backup_codes
+        flash[:backup_codes] = plain_codes
         redirect_to edit_user_registration_path
       else
         redirect_to edit_user_registration_path, alert: 'Failed to save 2FA settings.'
