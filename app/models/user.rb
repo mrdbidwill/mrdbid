@@ -35,6 +35,22 @@ class User < ApplicationRecord
     super(Array(codes))
   end
 
+  # Override to generate shorter, user-friendly backup codes
+  def generate_otp_backup_codes!
+    codes = []
+    10.times do
+      # Generate 8-character codes: 4 chars + dash + 4 chars (e.g., "a3k9-m2p7")
+      code = "#{SecureRandom.alphanumeric(4).downcase}-#{SecureRandom.alphanumeric(4).downcase}"
+      codes << code
+    end
+
+    # Hash and store the codes
+    self.otp_backup_codes = codes.map { |code| Devise::Encryptor.digest(self.class, code) }
+
+    # Return plain text codes for display to user
+    codes
+  end
+
   def admin?
     permission_id.present? && permission_id < 5
   end
