@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
 
   # Two-Factor Authentication routes
@@ -11,6 +12,9 @@ Rails.application.routes.draw do
       delete :disable
     end
   end
+
+  # 2FA login verification route
+  resource :user_two_factor_authentication, only: [:show, :update], controller: 'users/two_factor_authentication'
 
   # Mushrooms and related nested relationships
   resources :mushrooms do
