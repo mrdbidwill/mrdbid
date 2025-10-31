@@ -31,9 +31,21 @@ class MushroomsController < ApplicationController
   # GET /mushrooms
   def index
     if user_signed_in?
+      # ============================================================================
+      # EAGER LOADING - CRITICAL FOR RAILS 8 STRICT_LOADING
+      # ============================================================================
+      # Must include ALL associations used in views to prevent StrictLoadingViolationError
+      # - fungus_type: Used for grouping and display
+      # - country, state: Used for location display
+      # - image_mushrooms.image_file_attachment.blob: For rendering images
+      # - image_mushrooms.part: Used in _image_card partial (lines 10, 15) for alt text
+      #
+      # ⚠️  WARNING: Adding associations to views? Update this includes!
+      # Missing associations cause 500 errors in production due to strict_loading.
+      # ============================================================================
       @mushrooms = policy_scope(Mushroom)
                      .includes(:fungus_type, :country, :state,
-                               image_mushrooms: { image_file_attachment: :blob })
+                               image_mushrooms: { image_file_attachment: :blob, part: :none })
                      .left_joins(:fungus_type)
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
