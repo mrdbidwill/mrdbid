@@ -10,15 +10,9 @@
     Mushroom ID: <span class="inline-block px-2 py-0.5 rounded bg-blue-50 border border-blue-200"><%= @mushroom.id %></span> <span class="block text-xs text-gray-500">This is the database table ID.</span>
   </div>
 
-  <div class="mt-4">
-    <% if defined?(policy) && policy(@mushroom).show? %>
-      <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-    <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
+  <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at top of page -->
 
-    <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-
-  <%= render "form", mushroom: @mushroom %>
+  <%= render 'form', mushroom: @mushroom %>
 
   <!-- Associated Trees Section -->
   <div class="my-5">
@@ -381,13 +375,7 @@
       </div>
     </div>
   <% end %>
-
   <div class="mt-4">
-  <% if defined?(policy) && policy(@mushroom).show? %>
-    <%= link_to "Show this mushroom", @mushroom, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  <% end %> <p class="text-blue-600">"Show this mushroom" will display all of "set" characters without form options.</p>
-
-  <%= link_to "Back to mushrooms", mushrooms_path, class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at bottom of page -->
   </div>
-  </div>
-
+</div>

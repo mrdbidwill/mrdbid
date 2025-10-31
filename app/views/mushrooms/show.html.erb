@@ -3,11 +3,8 @@
 
   <h1 class="font-bold text-2xl">Showing mushroom:</h1>
 
-  <div class="flex flex-col pt-1 gap-2">
-    <% if current_user&.admin? %>
-      <%= link_to "Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-    <% end %>
-    <%= link_to "Your Mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+  <div class="mt-4">
+    <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at top of page -->
   </div>
 
   <%= render @mushroom %>
@@ -133,10 +130,7 @@
     <% end %>
   </div>
 
-  <div class="flex flex-col pt-1 gap-2">
-    <% if current_user&.admin? %>
-      <%= link_to "Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-    <% end %>
-    <%= link_to "Your Mushrooms", mushrooms_path, class: "w-full text-center rounded-md px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium" %>
+  <div class="mt-4">
+    <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at bottom of page -->
   </div>
     </div>

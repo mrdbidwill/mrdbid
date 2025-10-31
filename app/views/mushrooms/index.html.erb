@@ -7,7 +7,6 @@
           link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
         ).html_safe
   %>
-
   <%= render "shared/pagination", collection: @mushrooms %>
 
   <div class="page-actions">
@@ -52,7 +51,7 @@
 
   <%= render "shared/pagination", collection: @mushrooms %>
 
-  <%= render "shared/page_actions", 
+  <%= render "shared/page_actions",
         right: (
           (current_user&.admin? ? link_to("Back to Admin Dashboard", admin_root_path, class: "btn-primary") : "") +
           link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
