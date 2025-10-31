@@ -45,7 +45,7 @@ class MushroomsController < ApplicationController
       # ============================================================================
       @mushrooms = policy_scope(Mushroom)
                      .includes(:fungus_type, :country, :state,
-                               image_mushrooms: { image_file_attachment: :blob, part: :none })
+                               image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
