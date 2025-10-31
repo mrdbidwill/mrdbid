@@ -427,7 +427,7 @@ CREATE TABLE `mb_lists` (
   KEY `index_mblists_on_taxon_name` (`taxon_name`(255)),
   KEY `index_mblists_on_rank_name` (`rank_name`(255)),
   KEY `index_mblists_on_name_status` (`name_status`(255))
-) ENGINE=InnoDB AUTO_INCREMENT=537708 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
+) ENGINE=InnoDB AUTO_INCREMENT=1075217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_character_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -565,7 +565,7 @@ CREATE TABLE `mushrooms` (
   CONSTRAINT `fk_rails_0e85826c18` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
   CONSTRAINT `fk_rails_1d15355ab0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_rails_5f7cae6dda` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `parts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -604,7 +604,7 @@ CREATE TABLE `plants` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -803,7 +803,7 @@ CREATE TABLE `users` (
   KEY `index_users_on_permission_id` (`permission_id`),
   KEY `index_users_on_otp_required_for_login` (`otp_required_for_login`),
   CONSTRAINT `fk_rails_1dc7d54aa4` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `versions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -831,21 +831,17 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251030232300'),
 ('20251021185144'),
 ('20251021185141'),
 ('20251021175901'),
 ('20251006000001'),
 ('20251005121500'),
-('20251005120000'),
 ('20251005000001'),
 ('20250929000002'),
 ('20250929000001'),
-('20250915000000'),
-('20250914193147'),
-('20250914000002'),
 ('20250902000002'),
 ('20250902000001'),
-('20250901000001'),
 ('20250831000001'),
 ('20250822201733'),
 ('20250819000001'),

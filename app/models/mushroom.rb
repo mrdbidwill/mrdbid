@@ -13,7 +13,6 @@ class Mushroom < ApplicationRecord
   belongs_to :fungus_type
   belongs_to :mushroom_storage_location, optional: true
 
-  # Change all HABTM to has_many :through since you have join models
   has_many :all_group_mushrooms, dependent: :destroy
   has_many :all_groups, through: :all_group_mushrooms
 
