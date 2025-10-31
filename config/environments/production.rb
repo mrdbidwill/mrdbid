@@ -51,8 +51,35 @@ Rails.application.configure do
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :solid_cache_store
 
-  # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :async
+  # ============================================================================
+  # SOLID QUEUE CONFIGURATION - CRITICAL FOR PRODUCTION
+  # ============================================================================
+  # IMPORTANT: This application uses Solid Queue (DB-backed job queue) in production.
+  #
+  # REQUIRED DATABASES (must exist and be migrated):
+  # - mrdbid_production_queue: Stores background jobs (see database.yml:64-67)
+  # - mrdbid_production_cache: Stores cached data (see database.yml:60-63)
+  # - mrdbid_production_cable: Stores ActionCable data (see database.yml:68-71)
+  #
+  # ⚠️  CRITICAL - DO NOT CHANGE TO :async OR :sidekiq
+  # Using :async (in-memory queue) will cause 500 errors because the config below
+  # tries to connect to the queue database. Mismatch = initialization failure.
+  #
+  # SYMPTOMS OF MISCONFIGURATION:
+  # - 500 Internal Server Error on all pages
+  # - "ActiveRecord::ConnectionNotEstablished" errors
+  # - Puma fails to start or crashes on first request
+  #
+  # TO VERIFY CORRECT SETUP ON PRODUCTION:
+  # 1. Check databases exist: mysql -e "SHOW DATABASES LIKE 'mrdbid_production_%';"
+  # 2. Check queue tables: mysql mrdbid_production_queue -e "SHOW TABLES;"
+  # 3. Should see 13 solid_queue_* tables
+  #
+  # TROUBLESHOOTING:
+  # - If queue DB missing: RAILS_ENV=production rails solid_queue:install
+  # - If tables missing: RAILS_ENV=production rails db:migrate:queue
+  # ============================================================================
+  config.active_job.queue_adapter = :solid_queue  # CRITICAL: Must be :solid_queue (not :async)
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "mrdbid.com"), protocol: "https" }

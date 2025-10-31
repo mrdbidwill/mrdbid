@@ -1,54 +1,88 @@
 # frozen_string_literal: true
+# ============================================================================
+# PUMA WEB SERVER CONFIGURATION
+# ============================================================================
+# This file configures Puma, the Rails application server.
+# Documentation: https://puma.io/puma/Puma/DSL.html
+#
+# PRODUCTION DEPLOYMENT:
+# - Managed by systemd service: /etc/systemd/system/puma-mrdbid.service
+# - Socket: /opt/mrdbid/shared/tmp/sockets/puma.sock
+# - PID file: /opt/mrdbid/shared/tmp/pids/puma.pid
+# - Logs: /opt/mrdbid/shared/log/puma_stdout.log and puma_stderr.log
+#
+# TROUBLESHOOTING PRODUCTION ISSUES:
+# - Check service status: sudo systemctl status puma-mrdbid.service
+# - View logs: sudo journalctl -xeu puma-mrdbid.service
+# - Restart: sudo systemctl restart puma-mrdbid.service
+# - Check stderr: tail -f /opt/mrdbid/shared/log/puma_stderr.log
+#
+# ⚠️  CRITICAL: Puma is controlled by systemd in production (not Capistrano)
+# See config/deploy.rb lines 56-117 for systemd management tasks
+# ============================================================================
 
-# This configuration file will be evaluated by Puma. The top-level methods that
-# are invoked here are part of Puma's configuration DSL. For more information
-# about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
+# ============================================================================
+# THREADING CONFIGURATION
+# ============================================================================
+# Puma uses threads to handle concurrent requests within each process.
 #
-# Puma starts a configurable number of processes (workers) and each process
-# serves each request in a thread from an internal thread pool.
+# IMPORTANT: Database connection pool MUST be >= thread count
+# See config/database.yml line 15: pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 #
-# You can control the number of workers using ENV["WEB_CONCURRENCY"]. You
-# should only set this value when you want to run 2 or more workers. The
-# default is already 1.
+# Production uses 3 threads per worker as a balance between:
+# - Throughput (more threads = more concurrent requests)
+# - Latency (too many threads = GVL contention in CRuby)
 #
-# The ideal number of threads per worker depends both on how much time the
-# application spends waiting for IO operations and on how much you wish to
-# prioritize throughput over latency.
-#
-# As a rule of thumb, increasing the number of threads will increase how much
-# traffic a given process can handle (throughput), but due to CRuby's
-# Global VM Lock (GVL) it has diminishing returns and will degrade the
-# response time (latency) of the application.
-#
-# The default is set to 3 threads as it's deemed a decent compromise between
-# throughput and latency for the average Rails application.
-#
-# Any libraries that use a connection pool or another resource pool should
-# be configured to provide at least as many connections as the number of
-# threads. This includes Active Record's `pool` parameter in `database.yml`.
+# ⚠️  WARNING: If you increase threads, also increase database pool size
+# ============================================================================
 threads_count = ENV.fetch('RAILS_MAX_THREADS', 3)
 threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+# ============================================================================
+# PRODUCTION vs DEVELOPMENT CONFIGURATION
+# ============================================================================
+# Production: Uses Unix socket (faster, more secure)
+# Development: Uses TCP port 3000 (easier debugging)
+# ============================================================================
 if ENV['RAILS_ENV'] == 'production'
-  # Use absolute paths in production
+  # Use absolute paths in production - required by systemd service
   bind "unix://#{ENV['PUMA_SOCKET'] || '/opt/mrdbid/shared/tmp/sockets/puma.sock'}"
 
-  # Set up pid and state files
+  # Set up pid and state files for process management
   pidfile ENV['PUMA_PID'] || '/opt/mrdbid/shared/tmp/pids/puma.pid'
   state_path ENV['PUMA_STATE'] || '/opt/mrdbid/shared/tmp/pids/puma.state'
 
-  # Logging
+  # Logging - redirects stdout/stderr to log files
   stdout_redirect ENV['PUMA_STDOUT'] || '/opt/mrdbid/shared/log/puma_stdout.log',
                   ENV['PUMA_STDERR'] || '/opt/mrdbid/shared/log/puma_stderr.log', true
 else
   port ENV.fetch('PORT', 3000)
 end
 
-# Allow puma to be restarted by `bin/rails restart` command.
+# ============================================================================
+# RESTART PLUGIN
+# ============================================================================
+# Allows `bin/rails restart` command to work by touching tmp/restart.txt
+# Puma monitors this file and gracefully restarts when it changes
+# ============================================================================
 plugin :tmp_restart
 
-# Run the Solid Queue supervisor inside of Puma for single-server deployments
+# ============================================================================
+# SOLID QUEUE PLUGIN - OPTIONAL
+# ============================================================================
+# Runs the Solid Queue background job supervisor inside Puma process.
+# This is for single-server deployments where you don't want a separate process.
+#
+# ⚠️  CRITICAL: Only enable if ENV['SOLID_QUEUE_IN_PUMA'] is set
+# Default: DISABLED (Solid Queue runs separately or not at all)
+#
+# TO ENABLE ON PRODUCTION:
+# 1. Add to /opt/mrdbid/shared/.env: SOLID_QUEUE_IN_PUMA=true
+# 2. Restart Puma: sudo systemctl restart puma-mrdbid.service
+# 3. Verify in logs: grep "solid_queue" /opt/mrdbid/shared/log/puma_stdout.log
+#
+# NOTE: This requires Solid Queue database to be set up (see production.rb)
+# ============================================================================
 plugin :solid_queue if ENV['SOLID_QUEUE_IN_PUMA']
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.

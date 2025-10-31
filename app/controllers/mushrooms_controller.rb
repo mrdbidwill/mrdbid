@@ -1,4 +1,26 @@
 class MushroomsController < ApplicationController
+  # ============================================================================
+  # MUSHROOMS CONTROLLER - User's Personal Mushroom Collection Management
+  # ============================================================================
+  # This controller manages CRUD operations for mushrooms owned by individual users.
+  # Each mushroom belongs to a single user (see app/models/mushroom.rb).
+  #
+  # AUTHENTICATION & AUTHORIZATION:
+  # - Uses Devise for authentication (authenticate_user!)
+  # - Uses Pundit for authorization (see app/policies/mushroom_policy.rb)
+  # - Users can only view/edit/delete their own mushrooms
+  #
+  # PERFORMANCE NOTES:
+  # - Uses eager loading to prevent N+1 queries
+  # - Index action uses pagination (25 items per page via Kaminari)
+  # - All queries include necessary associations to avoid multiple DB calls
+  #
+  # ⚠️  CRITICAL AUTHORIZATION FLOW:
+  # 1. authenticate_user! runs first (except index - allows public viewing of empty list)
+  # 2. set_mushroom loads the record for show/edit/update/destroy
+  # 3. authorize_mushroom checks Pundit policy (user must own the mushroom)
+  # ============================================================================
+
   # Pundit setup
   include Pundit::Authorization
 
@@ -58,19 +80,32 @@ class MushroomsController < ApplicationController
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
   def update
-    # Ensure that user_id cannot be modified by removing it from params
+    # ============================================================================
+    # SECURITY: Prevent mass assignment of user_id
+    # ============================================================================
+    # Users should only be able to update their own mushrooms (enforced by Pundit policy).
+    # This line ensures user_id cannot be changed via form tampering.
     filtered_params = mushroom_params.except(:user_id)
 
     if @mushroom.update(filtered_params)
       redirect_to @mushroom, notice: "Mushroom was successfully updated."
     else
-        # Reload with eager loading to avoid strict_loading violations in form
-        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
-        # Reload with eager loading to avoid strict_loading violations in form
-        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
-        # Reload with eager loading to avoid strict_loading violations in form
-        @mushroom = Mushroom.includes(:genera).find(@mushroom.id)
-      # Reload with eager loading to avoid strict_loading violations in form
+      # ============================================================================
+      # PERFORMANCE: Reload with eager loading to avoid N+1 queries in edit form
+      # ============================================================================
+      # When validation fails, we need to re-render the edit form. The form uses
+      # associations (genera, mr_characters, etc.) that trigger strict_loading violations
+      # if not preloaded. This single query fetches all required associations.
+      #
+      # ⚠️  WARNING: Do NOT add duplicate queries here (was causing performance issues)
+      # This one comprehensive query replaces 4 duplicate queries that were here before.
+      #
+      # ASSOCIATIONS LOADED:
+      # - genera: For genus selection dropdown
+      # - mr_characters: Character traits assigned to this mushroom
+      # - mr_characters.genera: Genus associations for each character
+      # - mr_characters.part, lookup_type, color, source_data: Character metadata
+      # ============================================================================
       @mushroom = Mushroom.includes(:genera, mr_characters: [:genera, :part, :lookup_type, :color, :source_data]).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
@@ -85,6 +120,23 @@ class MushroomsController < ApplicationController
   end
 
   private
+
+  # ============================================================================
+  # set_mushroom - Loads mushroom with all necessary associations
+  # ============================================================================
+  # Called by before_action for: show, edit, update, destroy
+  #
+  # ASSOCIATIONS PRELOADED (prevents N+1 queries):
+  # - country, state, fungus_type: Basic metadata
+  # - genera, species: Taxonomic classification
+  # - trees, plants: Associated flora
+  # - image_mushrooms: Photos attached to this mushroom
+  # - image_mushrooms.image_file_attachment.blob: Active Storage blob data
+  #
+  # SECURITY: Pundit authorization runs after loading to verify user ownership
+  #
+  # ERROR HANDLING: Redirects to index if mushroom doesn't exist (not 404)
+  # ============================================================================
   def set_mushroom
     @mushroom = Mushroom
                   .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
@@ -94,12 +146,33 @@ class MushroomsController < ApplicationController
     redirect_to mushrooms_path, alert: "Mushroom not found."
   end
 
-
-  # Only allow a list of trusted parameters through.
+  # ============================================================================
+  # mushroom_params - Strong parameters for mass assignment protection
+  # ============================================================================
+  # SECURITY NOTES:
+  # - :user_id is permitted here BUT is filtered out in create/update actions
+  # - This prevents users from assigning mushrooms to other users
+  # - Country, state, fungus_type are foreign keys (validated by model)
+  #
+  # ⚠️  WARNING: Do NOT remove :user_id from the permit list - it's intentionally
+  # filtered in the controller actions (see create and update methods)
+  # ============================================================================
   def mushroom_params
     params.require(:mushroom).permit(:name, :description, :comments, :user_id, :country_id, :state_id, :fungus_type_id)
   end
 
+  # ============================================================================
+  # authorize_mushroom - Pundit authorization check
+  # ============================================================================
+  # Ensures the current user has permission to perform the requested action.
+  # Called by before_action for: show, edit, update, destroy
+  #
+  # POLICY RULES (see app/policies/mushroom_policy.rb):
+  # - Users can only view/edit/delete their own mushrooms
+  # - Admin users have additional privileges (if implemented)
+  #
+  # ERRORS: Pundit::NotAuthorizedError is rescued by ApplicationController
+  # ============================================================================
   def authorize_mushroom
     authorize @mushroom if respond_to?(:authorize)
   end
