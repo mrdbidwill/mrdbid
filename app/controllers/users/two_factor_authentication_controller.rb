@@ -6,6 +6,10 @@ class Users::TwoFactorAuthenticationController < ApplicationController
   def show
     # Show the OTP form
     @user = User.find(session[:otp_user_id])
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def update
