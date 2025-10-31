@@ -94,6 +94,38 @@ bin/rails runner "puts SolidQueue::Job.count" -e production
   ```
 
 ## Current Setup
-**Status**: Using Option A (SOLID_QUEUE_IN_PUMA)
+**Status**: ~~Using Option A (SOLID_QUEUE_IN_PUMA)~~ **DISABLED DUE TO BUG**
+**Bug**: Solid Queue 1.2.1 has strict_loading incompatibility with Rails 8
 **Configured**: 2025-10-30
+**Disabled**: 2025-10-31 (see Known Issues below)
 **Purpose**: Async email delivery for registration confirmations, password resets, 2FA, etc.
+
+## Known Issues
+
+### ⚠️ Solid Queue 1.2.1 + Rails 8 Strict Loading Bug
+
+**Symptom**: 500 errors on all pages, Puma crashes during boot
+**Error**: `ActiveRecord::StrictLoadingViolationError` in `SolidQueue::Process`
+**Cause**: Solid Queue's internal models marked for strict_loading cannot lazy load associations
+
+**Full Error**:
+```
+`SolidQueue::Process` is marked for strict_loading.
+The SolidQueue::Process association named `:supervisees` cannot be lazily loaded.
+```
+
+**Impact**: When `SOLID_QUEUE_IN_PUMA=1` is set, Puma plugin tries to start Solid Queue supervisor, which crashes before accepting any web requests.
+
+**Workarounds**:
+1. **Disable plugin** (recommended until bug fixed):
+   - Remove `Environment="SOLID_QUEUE_IN_PUMA=1"` from `/etc/systemd/system/puma-mrdbid.service`
+   - Restart Puma: `sudo systemctl daemon-reload && sudo systemctl restart puma-mrdbid.service`
+
+2. **Use separate Solid Queue service** (Option B above) - doesn't trigger bug
+
+3. **Wait for upstream fix** - Monitor https://github.com/rails/solid_queue/issues
+
+**Status**: Bug reported in Solid Queue 1.2.1, check for updates in future versions
+
+**Date Discovered**: 2025-10-31
+**Last Checked**: 2025-10-31
