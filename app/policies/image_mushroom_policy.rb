@@ -7,10 +7,17 @@ class ImageMushroomPolicy < ApplicationPolicy
   end
 
   def index?;   user&.admin?; end
-  def show?;    user&.admin?; end
-  def new?;     user&.admin?; end
-  def create?;  user&.admin?; end
-  def edit?;    user&.admin?; end
-  def update?;  user&.admin?; end
-  def destroy?; user&.admin?; end
+  def show?;    owner_or_admin?; end
+  def new?;     owner_or_admin?; end
+  def create?;  owner_or_admin?; end
+  def edit?;    owner_or_admin?; end
+  def update?;  owner_or_admin?; end
+  def destroy?; owner_or_admin?; end
+
+  private
+
+  def owner_or_admin?
+    return false unless user
+    user.admin? || record.mushroom.user_id == user.id
+  end
 end

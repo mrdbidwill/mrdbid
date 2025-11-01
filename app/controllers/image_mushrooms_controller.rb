@@ -76,7 +76,7 @@ class ImageMushroomsController < ApplicationController
     authorize @image_mushroom
     parent_id = @image_mushroom.mushroom_id
     @image_mushroom.destroy
-    redirect_to image_mushrooms_path, notice: 'Image Mushroom was successfully deleted.'
+    redirect_to mushroom_path(parent_id), notice: 'Image was successfully deleted.'
   end
 
   private

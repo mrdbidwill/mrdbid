@@ -14,7 +14,7 @@
     <div class="w-full">
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
         <% images.each do |image_mushroom| %>
-          <div class="border rounded-md overflow-hidden bg-gray-50 aspect-square">
+          <%= link_to image_mushroom_path(image_mushroom), class: "block border rounded-md overflow-hidden bg-gray-50 aspect-square hover:shadow-lg hover:border-blue-400 transition-all" do %>
             <%# Use WebP with JPEG fallback, strip metadata, and lower quality %>
             <picture>
               <%= tag.source(
@@ -41,7 +41,7 @@
                     alt: image_mushroom.image_name.presence || @mushroom.name
                   ) %>
             </picture>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
