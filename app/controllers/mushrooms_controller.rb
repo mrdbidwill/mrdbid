@@ -82,7 +82,9 @@ class MushroomsController < ApplicationController
     # set_mushroom before_action already loads the mushroom with basic associations
     # Reload with additional associations needed for edit view
     @mushroom = Mushroom
-                  .includes(:genera, :species, :trees, :plants, mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
+                  .includes(:genera, :species, :trees, :plants,
+                            image_mushrooms: [:part, { image_file_attachment: :blob }],
+                            mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
                   .find(params[:id])
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
