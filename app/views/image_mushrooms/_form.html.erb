@@ -13,22 +13,28 @@
   <%# Always submit the parent as a hidden field; no selector %>
   <%= form.hidden_field :mushroom_id, value: image_mushroom.mushroom_id %>
 
-  <div class="my-5">
-    <%= form.label :image_file, "Select an Image File" %>
-    <%= form.file_field :image_file, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_file].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_file].any?}] %>
-  </div>
+  <!-- Show current image as preview -->
+  <% if image_mushroom.image_file.attached? %>
+    <div class="my-5">
+      <label class="block font-medium text-gray-700 mb-2">Current Image</label>
+      <div class="border rounded-md p-4 bg-gray-50 inline-block">
+        <%= image_tag image_mushroom.image_file.variant(resize_to_limit: [300, 300]),
+                      class: "max-w-xs rounded shadow",
+                      alt: image_mushroom.image_name.presence || "Current image" %>
+        <% if image_mushroom.image_name.present? %>
+          <p class="text-sm text-gray-600 mt-2"><strong>Name:</strong> <%= image_mushroom.image_name %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="my-5">
-    <%= form.label :image_name %>
-    <%= form.text_field :image_name, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:image_name].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:image_name].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :part_id, "Part" %>
+    <%= form.label :part_id, "Mushroom Part (editable)" %>
     <%= form.collection_select :part_id, parts, :id, :name, { prompt: 'Select Part' }, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @image_mushroom.errors[:part_id].none?, "border-red-400 focus:outline-red-600": @image_mushroom.errors[:part_id].any?}] %>
+    <p class="text-xs text-gray-600 mt-1">Select which part of the mushroom this image shows (cap, stem, gills, etc.)</p>
   </div>
 
   <div class="my-5">
-    <%= form.submit class: 'bg-blue-500 text-white px-4 py-1' %>
+    <%= form.submit "Update Part", class: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium' %>
   </div>
 <% end %>

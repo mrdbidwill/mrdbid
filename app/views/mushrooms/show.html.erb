@@ -12,6 +12,9 @@
   <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
   <% if images.any? %>
     <div class="w-full">
+      <h2 class="text-lg font-semibold mb-3 text-gray-700">
+        Images (<%= images.count %>) — <span class="text-sm font-normal text-gray-600">Click any image to view full size</span>
+      </h2>
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
         <% images.each do |image_mushroom| %>
           <%= link_to image_mushroom_path(image_mushroom), class: "block border rounded-md overflow-hidden bg-gray-50 aspect-square hover:shadow-lg hover:border-blue-400 transition-all" do %>
