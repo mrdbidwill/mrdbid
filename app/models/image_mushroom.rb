@@ -76,9 +76,9 @@ class ImageMushroom < ApplicationRecord
       # Only fill blanks to preserve any manual overrides
       self.image_width  ||= data[:image_width]
       self.image_height ||= data[:image_height]
-      self.camera_make  ||= data[:camera_make]
-      self.camera_model ||= data[:camera_model]
-      self.lens         ||= data[:lens]
+      self.exif_make    ||= data[:camera_make]
+      self.exif_model   ||= data[:camera_model]
+      self.exif_lens    ||= data[:lens]
       self.exposure     ||= data[:exposure]
       self.aperture     ||= data[:aperture]
       self.iso          ||= data[:iso]

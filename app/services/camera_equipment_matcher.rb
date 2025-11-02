@@ -7,7 +7,15 @@ class CameraEquipmentMatcher
 
     normalized = normalize_string(exif_make_string)
 
-    CameraMake.find_by("LOWER(REPLACE(name, ' ', '')) = ?", normalized)
+    # Try exact match first
+    match = CameraMake.find_by("LOWER(REPLACE(name, ' ', '')) = ?", normalized)
+    return match if match
+
+    # Try partial match (e.g., "NIKON CORPORATION" contains "nikon")
+    CameraMake.find do |make|
+      make_normalized = normalize_string(make.name)
+      normalized.include?(make_normalized) || make_normalized.include?(normalized)
+    end
   end
 
   # Match camera model from EXIF string (e.g., "NIKON Z 6_2" -> Z6 II)
