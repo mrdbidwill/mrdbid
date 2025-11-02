@@ -73,6 +73,10 @@
                     <%= image_mushroom.image_name %>
                   </p>
                 <% end %>
+                <%= link_to "Change Part",
+                            edit_mushroom_image_mushroom_path(@mushroom, image_mushroom),
+                            class: "mt-2 block text-center text-xs px-2 py-1 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded border border-yellow-300",
+                            title: "Only the Part field is editable" %>
               </div>
             </div>
           <% end %>

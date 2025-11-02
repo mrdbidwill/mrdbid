@@ -93,7 +93,8 @@ class ImageMushroomsController < ApplicationController
       :mushroom_id,
       :part_id,
       :image_name,
-      :image_file
+      :image_file,
+      :comments
     )
   end
 end
