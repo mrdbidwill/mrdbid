@@ -1,11 +1,15 @@
 class ImageMushroom < ApplicationRecord
   belongs_to :mushroom
   belongs_to :part, optional: true
+  belongs_to :camera_make, optional: true
+  belongs_to :camera_model, optional: true
+  belongs_to :lens, optional: true
 
   # Attachments and presence validations
   has_one_attached :image_file
 
   validates :image_file, presence: { message: "An image file must be selected" }
+  validate :unique_file_per_mushroom
 
   # Ensure the Mushroom is associated with the correct user if needed
   def user_id
@@ -26,6 +30,25 @@ class ImageMushroom < ApplicationRecord
   after_commit :preprocess_thumbnail_variant, on: [:create, :update]
 
   private
+
+  def unique_file_per_mushroom
+    return unless image_file.attached?
+
+    # Get the blob checksum for the attached file
+    blob_checksum = image_file.blob.checksum
+
+    # Check if another image_mushroom for this mushroom has the same blob
+    duplicate = ImageMushroom
+      .joins(image_file_attachment: :blob)
+      .where(mushroom_id: mushroom_id)
+      .where.not(id: id) # Exclude self when editing
+      .where(active_storage_blobs: { checksum: blob_checksum })
+      .exists?
+
+    if duplicate
+      errors.add(:image_file, "has already been uploaded for this mushroom")
+    end
+  end
 
   def extract_exif_if_needed
     return unless image_file.attached?
@@ -59,6 +82,22 @@ class ImageMushroom < ApplicationRecord
       self.exposure     ||= data[:exposure]
       self.aperture     ||= data[:aperture]
       self.iso          ||= data[:iso]
+
+      # Auto-match EXIF strings to database records (only if foreign keys not set)
+      if camera_make_id.nil? && data[:camera_make].present?
+        matched_make = CameraEquipmentMatcher.match_camera_make(data[:camera_make])
+        self.camera_make_id = matched_make.id if matched_make
+      end
+
+      if camera_model_id.nil? && data[:camera_model].present?
+        matched_model = CameraEquipmentMatcher.match_camera_model(data[:camera_model])
+        self.camera_model_id = matched_model.id if matched_model
+      end
+
+      if lens_id.nil? && data[:lens].present?
+        matched_lens = CameraEquipmentMatcher.match_lens(data[:lens])
+        self.lens_id = matched_lens.id if matched_lens
+      end
 
       save(validate: false)
     end

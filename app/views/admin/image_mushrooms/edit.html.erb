@@ -32,12 +32,6 @@
     <%= form.collection_select(:part_id, @parts, :id, :name, { selected: @image_mushroom.part_id, prompt: "Select a Part" }) %>
   </div>
 
-  <!-- Camera Dropdown -->
-  <div class="field">
-    <%= form.label :camera_id, "Camera" %>
-    <%= form.collection_select(:camera_id, @cameras, :id, :name, { selected: @image_mushroom.camera_id, prompt: "Select a Camera" }) %>
-  </div>
-
   <!-- Lens Dropdown -->
   <div class="field">
     <%= form.label :lens, "Lens" %>
@@ -52,6 +46,12 @@
   <div class="iso">
     <%= form.label :iso, "ISO" %>
     <%= form.text_field :iso %>
+  </div>
+
+  <!-- Camera Dropdown -->
+  <div class="field">
+    <%= form.label :camera_id, "Camera" %>
+    <%= form.collection_select(:camera_id, @cameras, :id, :name, { selected: @image_mushroom.camera_id, prompt: "Select a Camera" }) %>
   </div>
 
 

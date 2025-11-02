@@ -87,7 +87,9 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
       :lens,
       :exposure,
       :aperture,
-      :iso
+      :iso,
+      :camera_make,
+      :camera_model
     )
   end
 end

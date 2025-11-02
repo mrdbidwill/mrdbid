@@ -1,8 +1,23 @@
 # Create default permissions
-Permission.find_or_create_by!(id: 1, name: 'Super Admin', description: 'Full system access')
-Permission.find_or_create_by!(id: 2, name: 'Admin', description: 'Administrative access')
-Permission.find_or_create_by!(id: 5, name: 'Editor', description: 'Can edit content')
-Permission.find_or_create_by!(id: 9, name: 'User', description: 'Standard user access')
+Permission.find_or_create_by!(id: 1) do |p|
+  p.name = 'Super Admin'
+  p.description = 'Full system access'
+end
+Permission.find_or_create_by!(id: 2) do |p|
+  p.name = 'Admin'
+  p.description = 'Administrative access'
+end
+Permission.find_or_create_by!(id: 5) do |p|
+  p.name = 'Editor'
+  p.description = 'Can edit content'
+end
+Permission.find_or_create_by!(id: 9) do |p|
+  p.name = 'User'
+  p.description = 'Standard user access'
+end
+
+# Load camera equipment data (makes, models, lenses)
+require_relative 'seeds/camera_equipment_seeds'
 
 if Rails.env.test?
   Mushroom.delete_all

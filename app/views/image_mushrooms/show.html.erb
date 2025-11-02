@@ -68,19 +68,25 @@
       <!-- Camera Make -->
       <div class="border-b pb-2">
         <span class="text-sm text-gray-600 font-medium">Camera Make</span>
-        <p class="text-base text-gray-900"><%= @image_mushroom.camera_make.presence || 'N/A' %></p>
+        <p class="text-base text-gray-900">
+          <%= @image_mushroom.camera_make&.name || @image_mushroom.camera_make.presence || 'N/A' %>
+        </p>
       </div>
 
       <!-- Camera Model -->
       <div class="border-b pb-2">
         <span class="text-sm text-gray-600 font-medium">Camera Model</span>
-        <p class="text-base text-gray-900"><%= @image_mushroom.camera_model.presence || 'N/A' %></p>
+        <p class="text-base text-gray-900">
+          <%= @image_mushroom.camera_model&.name || @image_mushroom.camera_model.presence || 'N/A' %>
+        </p>
       </div>
 
       <!-- Lens -->
       <div class="border-b pb-2">
         <span class="text-sm text-gray-600 font-medium">Lens</span>
-        <p class="text-base text-gray-900"><%= @image_mushroom.lens.presence || 'N/A' %></p>
+        <p class="text-base text-gray-900">
+          <%= @image_mushroom.lens ? "#{@image_mushroom.lens.make} #{@image_mushroom.lens.model}" : @image_mushroom.lens.presence || 'N/A' %>
+        </p>
       </div>
 
       <!-- Exposure -->

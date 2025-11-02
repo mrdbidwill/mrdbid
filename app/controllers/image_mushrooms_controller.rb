@@ -83,7 +83,7 @@ class ImageMushroomsController < ApplicationController
 
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
-    @image_mushroom = ImageMushroom.includes(:mushroom, :part).find(params[:id])
+    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera_make, :camera_model, :lens).find(params[:id])
     @image_mushroom.strict_loading!(false) if @image_mushroom.respond_to?(:strict_loading!)
   end
 
@@ -93,8 +93,19 @@ class ImageMushroomsController < ApplicationController
       :mushroom_id,
       :part_id,
       :image_name,
+      :image_width,
+      :image_height,
       :image_file,
-      :comments
+      :lens,
+      :exposure,
+      :aperture,
+      :iso,
+      :camera_make,
+      :camera_model,
+      :comments,
+      :camera_make_id,
+      :camera_model_id,
+      :lens_id
     )
   end
 end
