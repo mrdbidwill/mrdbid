@@ -59,15 +59,17 @@ class ImageMushroomsController < ApplicationController
     authorize @image_mushroom
     begin
       if @image_mushroom.update(image_mushroom_params)
-        parent = Mushroom.new(id: @image_mushroom.mushroom_id)
-        redirect_to [parent, @image_mushroom], notice: 'Image Mushroom was successfully updated.'
+        mushroom = Mushroom.find(@image_mushroom.mushroom_id)
+        redirect_to edit_mushroom_path(mushroom), notice: 'Image was successfully updated.'
       else
-        parent = Mushroom.new(id: @image_mushroom.mushroom_id)
-        redirect_to [parent, @image_mushroom], alert: 'Changes could not be applied.'
+        @mushrooms = Mushroom.all
+        @parts = Part.all
+        render :edit, status: :unprocessable_entity
       end
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
-      parent = Mushroom.new(id: @image_mushroom.mushroom_id)
-      redirect_to [parent, @image_mushroom], alert: 'Invalid change ignored.'
+      @mushrooms = Mushroom.all
+      @parts = Part.all
+      render :edit, status: :unprocessable_entity, alert: 'Invalid change ignored.'
     end
   end
 
