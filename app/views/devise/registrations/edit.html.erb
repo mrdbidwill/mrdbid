@@ -51,7 +51,7 @@
     </div>
 
     <div class="mt-6">
-      <%= f.submit "Update", class: "w-full sm:w-auto rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <%= f.submit "Update", class: "btn-primary btn-responsive" %>
     </div>
   </div>
 <% end %>
@@ -59,10 +59,10 @@
 <div class="w-full auto-margins max-w-md mt-6">
   <h3 class="font-bold text-xl mb-2">Cancel my account</h3>
   <p class="text-sm text-gray-600 mb-3">Unhappy? You can permanently delete your account.</p>
-  <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure you want to delete your account? This cannot be undone.", turbo_confirm: "Are you sure you want to delete your account? This cannot be undone." }, method: :delete, class: "rounded-md px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium" %>
+  <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure you want to delete your account? This cannot be undone.", turbo_confirm: "Are you sure you want to delete your account? This cannot be undone." }, method: :delete, class: "btn-danger" %>
 </div>
 
-<%= link_to "Back", :back, class: "mt-2 inline-block rounded-md px-2 py-1 bg-gray-100 hover:bg-gray-50 font-medium" %>
+<%= link_to "Back", :back, class: "mt-2 inline-block btn-secondary" %>
 
 <!-- Two-Factor Authentication Section -->
 <div class="w-full auto-margins max-w-md mt-8 p-6 bg-white rounded-lg shadow-md">
@@ -81,7 +81,7 @@
         <%= f.password_field :current_password, required: true, autocomplete: "current-password", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full" %>
       </div>
       <div class="mt-4">
-        <%= f.submit "Disable 2FA", data: { confirm: "Are you sure you want to disable two-factor authentication?" }, class: "rounded-md px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium cursor-pointer" %>
+        <%= f.submit "Disable 2FA", data: { confirm: "Are you sure you want to disable two-factor authentication?" }, class: "btn-danger" %>
       </div>
     <% end %>
 
@@ -102,12 +102,12 @@
         <%= f.text_field :otp_attempt, required: true, maxlength: 6, placeholder: "000000", autocomplete: "off", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full font-mono text-center text-2xl tracking-widest" %>
       </div>
       <div class="mt-4">
-        <%= f.submit "Verify and Enable 2FA", class: "w-full rounded-md px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium cursor-pointer" %>
+        <%= f.submit "Verify and Enable 2FA", class: "btn-primary btn-responsive" %>
       </div>
     <% end %>
 
     <%= form_with url: disable_users_two_factor_settings_path, method: :delete, local: true, class: "mt-2" do |f| %>
-      <%= f.submit "Cancel", class: "w-full rounded-md px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium cursor-pointer" %>
+      <%= f.submit "Cancel", class: "btn-secondary btn-responsive" %>
     <% end %>
 
   <% else %>
@@ -119,7 +119,7 @@
 
     <%= form_with url: enable_users_two_factor_settings_path, method: :post, local: true do |f| %>
       <div class="mt-4">
-        <%= f.submit "Enable 2FA", class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium cursor-pointer" %>
+        <%= f.submit "Enable 2FA", class: "btn-primary" %>
       </div>
     <% end %>
   <% end %>

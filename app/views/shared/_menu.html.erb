@@ -10,21 +10,21 @@
       <!-- Home -->
       <% unless current_page?(root_path) %>
         <li>
-          <%= link_to "Home", root_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-white text-black font-semibold shadow ring-2 ring-green-400 hover:bg-green-200 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Home", root_path, class: "btn-nav bg-white text-black ring-2 ring-green-400 hover:bg-green-200 hover:ring-green-700 focus:outline-none focus:ring-4" %>
         </li>
       <% end %>
 
       <!-- Contact -->
       <% unless current_page?(contact_path) %>
         <li>
-          <%= link_to "Contact", contact_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Contact", contact_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4" %>
         </li>
       <% end %>
 
       <!-- Books -->
       <% unless current_page?(books_path) %>
         <li>
-          <%= link_to "Books", books_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Books", books_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4" %>
         </li>
       <% end %>
 
@@ -32,73 +32,73 @@
         <!-- Articles (new public section) -->
         <% unless current_page?(articles_path) %>
           <li>
-            <%= link_to "Articles", articles_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-blue-600 text-white font-semibold shadow ring-2 ring-blue-300 hover:bg-blue-500 hover:ring-blue-600 focus:outline-none focus:ring-4 transition duration-150" %>
+            <%= link_to "Articles", articles_path, class: "btn-nav bg-blue-600 text-white ring-2 ring-blue-300 hover:bg-blue-500 hover:ring-blue-600 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 
         <!-- Mushrooms -->
         <% unless controller_name == 'mushrooms' %>  <!-- matches index, show, new, edit -->
           <li>
-            <%= link_to "Mushrooms", mushrooms_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-400 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
+            <%= link_to "Mushrooms", mushrooms_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-400 hover:ring-green-700 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 
         <!-- Manage Clusters -->
         <% unless controller_name == 'clusters' %>
         <li>
-          <%= link_to "Manage Clusters", clusters_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Manage Clusters", clusters_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
         </li>
         <% end %>
 
         <!-- Manage Groups -->
         <% unless controller_name == 'all_groups' %>
         <li>
-          <%= link_to "Manage Groups", all_groups_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Manage Groups", all_groups_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
         </li>
         <% end %>
 
         <!-- Manage Projects -->
         <% unless controller_name == 'projects' %>
         <li>
-          <%= link_to "Manage Projects", projects_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-gray-600 text-white font-semibold shadow ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Manage Projects", projects_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
         </li>
           <% end %>
 
         <!-- Admin -->
         <% if current_user&.admin? %>
           <li>
-          <%= link_to "Admin", admin_root_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-red-600 text-white font-semibold shadow ring-2 ring-red-400 hover:bg-red-700 hover:ring-red-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to "Admin", admin_root_path, class: "btn-nav bg-red-600 text-white ring-2 ring-red-400 hover:bg-red-700 hover:ring-red-700 focus:outline-none focus:ring-4" %>
           </li>
 
           <!-- Manage Mushroom Characters -->
           <li>
-            <%= link_to "Characters", admin_mr_characters_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-green-600 text-white font-semibold shadow ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4 transition duration-150" %>
+            <%= link_to "Characters", admin_mr_characters_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 
         <!-- Account -->
         <% unless current_page?(edit_user_registration_path) %>
         <li>
-          <%= link_to 'Account', edit_user_registration_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-orange-600 text-white font-semibold shadow ring-2 ring-orange-400 hover:bg-orange-700 hover:ring-orange-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= link_to 'Account', edit_user_registration_path, class: "btn-nav bg-orange-600 text-white ring-2 ring-orange-400 hover:bg-orange-700 hover:ring-orange-700 focus:outline-none focus:ring-4" %>
         </li>
           <% end %>
 
         <!-- Logout -->
         <li>
-          <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-yellow-600 text-white font-semibold shadow ring-2 ring-yellow-400 hover:bg-yellow-700 hover:ring-yellow-700 focus:outline-none focus:ring-4 transition duration-150" %>
+          <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "btn-nav bg-yellow-600 text-white ring-2 ring-yellow-400 hover:bg-yellow-700 hover:ring-yellow-700 focus:outline-none focus:ring-4" %>
         </li>
       <% else %>
         <!-- Login -->
         <% unless current_page?(new_user_session_path) %>
           <li>
-            <%= link_to "Login", new_user_session_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-white text-gray-800 font-semibold shadow hover:bg-gray-100 focus:outline-none focus:ring-4 transition duration-150" %>
+            <%= link_to "Login", new_user_session_path, class: "btn-nav bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 
         <!-- Sign Up -->
         <% unless current_page?(new_user_registration_path) %>
           <li>
-            <%= link_to "Sign Up", new_user_registration_path, class: "inline-block px-3 py-1 md:px-4 md:py-1 rounded bg-white text-gray-800 font-semibold shadow hover:bg-gray-100 focus:outline-none focus:ring-4 transition duration-150" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "btn-nav bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
     <% end %>

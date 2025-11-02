@@ -14,15 +14,15 @@
 
 <div class="mt-4 flex flex-col sm:flex-row gap-2 mx-1 my-1">
   <%= submit_tag(local_assigns[:submit_text] || "Save",
-                 class: "inline-flex items-center justify-center h-10 rounded-md px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer") %>
+                 class: "btn-primary btn-responsive") %>
 
   <% if show %>
     <%= link_to (local_assigns[:show_text] || "Show this #{record.model_name.human.downcase}"),
                 [:admin, record],
-                class: "inline-flex items-center justify-center h-10 rounded-md px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+                class: "btn-primary btn-responsive" %>
   <% end %>
 
   <%= link_to (local_assigns[:back_text] || "Back"),
               back_path,
-              class: "inline-flex items-center justify-center h-10 rounded-md px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>
+              class: "btn-secondary btn-responsive" %>
 </div>
