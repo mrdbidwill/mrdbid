@@ -13,7 +13,7 @@ class LookupItemTest < ActiveSupport::TestCase
   test "should require name" do
     lookup_item = LookupItem.new
     assert_not lookup_item.valid?
-    assert_includes lookup_item.errors[:name], "can't be blank"
+    assert_includes lookup_item.errors[:name], "Name cannot be blank."
   end
 
   test "should have paper_trail versioning" do

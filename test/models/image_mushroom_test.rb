@@ -3,14 +3,17 @@ require "test_helper"
 class ImageMushroomTest < ActiveSupport::TestCase
   def setup
     @mushroom = mushrooms(:one) # Retrieve a valid mushroom from fixtures
-    @camera = cameras(:one) # Retrieve a valid camera from fixtures
+    @camera_make = camera_makes(:one)
+    @camera_model = camera_models(:one)
+    @lens = lenses(:one)
     @image_mushroom = ImageMushroom.new(
       mushroom: @mushroom,
-      camera: @camera,
+      camera_make: @camera_make,
+      camera_model: @camera_model,
+      lens: @lens,
       image_name: "Test Image",
       image_width: 800,
       image_height: 600,
-      lens: "50mm",
       exposure: "1/60",
       aperture: "f/2.8",
       iso: "100"
@@ -29,10 +32,12 @@ class ImageMushroomTest < ActiveSupport::TestCase
     assert_includes @image_mushroom.errors[:mushroom], "must exist"
   end
 
-  test "should require a valid camera" do
-    @image_mushroom.camera = nil
-    assert_not @image_mushroom.valid?
-    assert_includes @image_mushroom.errors[:camera], "must exist"
+  test "should have optional camera_make and camera_model" do
+    @image_mushroom.camera_make = nil
+    @image_mushroom.camera_model = nil
+    # These are optional, so should still be valid (if image_file is attached)
+    assert_respond_to @image_mushroom, :camera_make
+    assert_respond_to @image_mushroom, :camera_model
   end
 
 

@@ -59,7 +59,7 @@ class MushroomTest < ActiveSupport::TestCase
   test "name should not exceed 255 characters" do
     @mushroom.name = "a" * 256
     assert_not @mushroom.valid?, "Mushroom name should not exceed the character limit"
-    assert_includes @mushroom.errors[:name], "is too long (maximum is 255 characters)"
+    assert_includes @mushroom.errors[:name], "Mushroom Name must not exceed 255 characters."
   end
 
   test "should require country" do
@@ -87,7 +87,7 @@ class MushroomTest < ActiveSupport::TestCase
   test "comments should not exceed 4096 characters" do
     @mushroom.comments = "a" * 4097
     assert_not @mushroom.valid?
-    assert_includes @mushroom.errors[:comments], "is too long (maximum is 4096 characters)"
+    assert_includes @mushroom.errors[:comments], "Mushroom Comments must not exceed 4096 characters."
   end
 
   test "state is optional" do
@@ -96,7 +96,7 @@ class MushroomTest < ActiveSupport::TestCase
   end
 
   test "mushroom_storage_location is optional" do
-    @mushroom.mushroom_storage_location = nil
+    @mushroom.storage_location = nil
     assert @mushroom.valid?, "Mushroom should be valid without storage location"
   end
 
@@ -110,7 +110,7 @@ class MushroomTest < ActiveSupport::TestCase
   test "should not be valid without a user" do
     @mushroom.user = nil
     assert_not @mushroom.valid?
-    assert_includes @mushroom.errors[:user], "User cannot be blank."
+    assert_includes @mushroom.errors[:user], "must exist"
   end
 
   test "should belong to country" do
@@ -213,7 +213,8 @@ class MushroomTest < ActiveSupport::TestCase
     all_group = @mushroom.user.all_groups.create!(name: "Test Group")
     @mushroom.all_group_mushrooms.create!(all_group: all_group)
 
-    assert_difference "AllGroupMushroom.count", -1 do
+    initial_count = @mushroom.all_group_mushrooms.count
+    assert_difference "AllGroupMushroom.count", -initial_count do
       @mushroom.destroy
     end
   end
@@ -271,10 +272,9 @@ class MushroomTest < ActiveSupport::TestCase
 
   test "should prevent id change" do
     original_id = @mushroom.id
-    @mushroom.id = original_id + 1
-
-    assert_not @mushroom.save
-    assert_includes @mushroom.errors[:id], "cannot be changed"
+    assert_raises(ActiveRecord::ReadonlyAttributeError) do
+      @mushroom.id = original_id + 1
+    end
   end
 
   test "id should be readonly" do

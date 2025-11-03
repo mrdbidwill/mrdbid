@@ -35,10 +35,8 @@ class AllGroupMushroomTest < ActiveSupport::TestCase
   end
 
   test "should enforce uniqueness of all_group per mushroom" do
-    AllGroupMushroom.create!(mushroom: @mushroom, all_group: @all_group)
-    # First create the association
-    AllGroupMushroom.create!(mushroom: @mushroom, all_group: @all_group)
-    # Then test duplicate
+    # all_group_mushrooms(:one) already exists with mushroom:one + all_group:one
+    # Try to create a duplicate
     duplicate = AllGroupMushroom.new(mushroom: @mushroom, all_group: @all_group)
     assert_not duplicate.valid?
     assert_includes duplicate.errors[:base], "This group is already attached to this mushroom"

@@ -27,7 +27,8 @@ class MushroomPlantTest < ActiveSupport::TestCase
   end
 
   test "should enforce uniqueness of plant per mushroom" do
-    MushroomPlant.create!(plant: @plant, mushroom: @mushroom)
+    # mushroom_plants(:one) already exists with mushroom:one + plant:one
+    # Try to create a duplicate
     duplicate = MushroomPlant.new(plant: @plant, mushroom: @mushroom)
     assert_not duplicate.valid?
     assert_includes duplicate.errors[:plant_id], "is already associated with this mushroom"
