@@ -1279,6 +1279,10 @@
 │   ├── fixtures
 │   │   ├── all_group_mushrooms.yml
 │   │   ├── all_groups.yml
+│   │   ├── articles.yml
+│   │   ├── camera_makes.yml
+│   │   ├── camera_models.yml
+│   │   ├── cameras.yml
 │   │   ├── cluster_mushrooms.yml
 │   │   ├── clusters.yml
 │   │   ├── colors.yml
@@ -1290,6 +1294,8 @@
 │   │   ├── genera.yml
 │   │   ├── genus_mushrooms.yml
 │   │   ├── image_mushrooms.yml
+│   │   ├── lenses.yml
+│   │   ├── lookup_items.yml
 │   │   ├── lookup_types.yml
 │   │   ├── mb_lists.yml
 │   │   ├── mr_character_mushrooms.yml
@@ -1316,24 +1322,48 @@
 │   ├── models
 │   │   ├── all_group_mushroom_test.rb
 │   │   ├── all_group_test.rb
+│   │   ├── article_test.rb
+│   │   ├── camera_make_test.rb
+│   │   ├── camera_model_test.rb
+│   │   ├── camera_test.rb
 │   │   ├── cluster_mushroom_test.rb
 │   │   ├── cluster_test.rb
+│   │   ├── color_test.rb
+│   │   ├── country_test.rb
 │   │   ├── display_option_test.rb
+│   │   ├── fungus_type_test.rb
+│   │   ├── genus_mushroom_test.rb
 │   │   ├── genus_test.rb
 │   │   ├── image_mushroom_test.rb
+│   │   ├── lens_test.rb
+│   │   ├── lookup_item_test.rb
 │   │   ├── lookup_type_test.rb
 │   │   ├── mb_list_test.rb
+│   │   ├── mr_character_mushroom_test.rb
 │   │   ├── mr_character_test.rb
+│   │   ├── mushroom_plant_test.rb
 │   │   ├── mushroom_plants_test.rb
+│   │   ├── mushroom_project_test.rb
 │   │   ├── mushroom_projects_test.rb
 │   │   ├── mushroom_species_test.rb
 │   │   ├── mushroom_test.rb
+│   │   ├── mushroom_tree_test.rb
 │   │   ├── mushroom_trees_test.rb
 │   │   ├── part_test.rb
+│   │   ├── permission_test.rb
+│   │   ├── plant_test.rb
+│   │   ├── project_test.rb
+│   │   ├── role_permission_test.rb
+│   │   ├── role_test.rb
 │   │   ├── search_by_name_test.rb
 │   │   ├── source_data_test.rb
 │   │   ├── source_data_type_test.rb
-│   │   └── tree_test.rb
+│   │   ├── species_test.rb
+│   │   ├── state_test.rb
+│   │   ├── storage_location_test.rb
+│   │   ├── tree_test.rb
+│   │   ├── user_role_test.rb
+│   │   └── user_test.rb
 │   ├── policies
 │   │   └── mushroom_policy_test.rb
 │   ├── system
@@ -1344,4 +1374,4 @@
 │   └── test_helper.rb
 └── upload_credentials.sh
 
-421 directories, 924 files
+421 directories, 954 files

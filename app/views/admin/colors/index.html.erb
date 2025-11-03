@@ -7,8 +7,12 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-2xl">Colors</h1>
+
+    <p class="text-gray-600 text-sm">
+      These colors are set using color patches stored in the <code>AMS_colors</code> folder. I understand that <strong>MILLIONS</strong> of colors are out there, but I'm not going to add them all.
+    </p>
     <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-gray-600 hover:bg-gray-500 text-white block font-medium" %>
-    <%= link_to "New color", new_admin_color_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <% # link_to "New color", new_admin_color_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
   <div id="colors" class="min-w-full divide-y divide-gray-100 space-y-5">
@@ -27,9 +31,11 @@
                   <div class="text-gray-600 text-sm mb-1"><b>Hex:</b> <%= color.hex %></div>
                   <div class="text-gray-600 text-sm"><b>Group:</b> <%= color.color_group %></div>
                 </div>
+      <%#
                 <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-                  <%= render "admin/shared/resource_actions", record: color, delete: true %>
+                  <%= render "admin/shared/resource_actions", record: color, delete: false %>   <!-- No DELETE action for colors -->
                 </div>
+       %>
               </div>
             </div>
           </div>
