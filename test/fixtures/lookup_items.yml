@@ -1,0 +1,9 @@
+one:
+  name: "Test Lookup Item"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
+
+two:
+  name: "Another Lookup Item"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>

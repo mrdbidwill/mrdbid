@@ -13,7 +13,7 @@ class CameraMakeTest < ActiveSupport::TestCase
   test "should require name" do
     camera_make = CameraMake.new
     assert_not camera_make.valid?
-    assert_includes camera_make.errors[:name], "can't be blank"
+    assert_includes camera_make.errors[:name], "Name cannot be blank."
   end
 
   test "should require unique name" do

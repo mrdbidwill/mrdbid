@@ -13,13 +13,13 @@ class ColorTest < ActiveSupport::TestCase
   test "should require latin_name" do
     color = Color.new(common_name: "Test Color")
     assert_not color.valid?
-    assert_includes color.errors[:latin_name], "can't be blank"
+    assert_includes color.errors[:latin_name], "Latin name cannot be blank."
   end
 
   test "should require common_name" do
     color = Color.new(latin_name: "Test Latin")
     assert_not color.valid?
-    assert_includes color.errors[:common_name], "can't be blank"
+    assert_includes color.errors[:common_name], "Common name cannot be blank."
   end
 
   test "should have by_sequence scope" do

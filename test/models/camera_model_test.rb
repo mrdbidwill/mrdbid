@@ -13,7 +13,7 @@ class CameraModelTest < ActiveSupport::TestCase
   test "should require name" do
     camera_model = CameraModel.new
     assert_not camera_model.valid?
-    assert_includes camera_model.errors[:name], "can't be blank"
+    assert_includes camera_model.errors[:name], "Name cannot be blank."
   end
 
   test "should have many cameras" do

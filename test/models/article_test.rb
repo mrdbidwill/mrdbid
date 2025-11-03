@@ -16,11 +16,10 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes article.errors[:title], "can't be blank"
   end
 
-  test "should require slug" do
-    article = Article.new(title: "Test", body: "Test body")
-    article.slug = nil
-    assert_not article.valid?
-    assert_includes article.errors[:slug], "can't be blank"
+  test "should auto-generate slug from title if blank" do
+    article = Article.new(title: "Test Title", body: "Test body", slug: nil)
+    article.valid?
+    assert_equal "test-title", article.slug
   end
 
   test "should require body" do

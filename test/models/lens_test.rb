@@ -13,13 +13,13 @@ class LensTest < ActiveSupport::TestCase
   test "should require make" do
     lens = Lens.new(model: "Test Model")
     assert_not lens.valid?
-    assert_includes lens.errors[:make], "can't be blank"
+    assert_includes lens.errors[:make], "Make cannot be blank."
   end
 
   test "should require model" do
     lens = Lens.new(make: "Test Make")
     assert_not lens.valid?
-    assert_includes lens.errors[:model], "can't be blank"
+    assert_includes lens.errors[:model], "Model cannot be blank."
   end
 
   test "should have timestamps" do
