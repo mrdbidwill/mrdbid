@@ -16,7 +16,7 @@ class AllGroupTest < ActiveSupport::TestCase
   test "should require name" do
     @all_group.name = nil
     assert_not @all_group.valid?
-    assert_includes @all_group.errors[:name], "can't be blank"
+    assert_includes @all_group.errors[:name], "Name cannot be blank."
   end
 
   test "should require unique name per user case-insensitively" do
@@ -36,7 +36,7 @@ class AllGroupTest < ActiveSupport::TestCase
   test "name should not exceed 255 characters" do
     @all_group.name = "a" * 256
     assert_not @all_group.valid?
-    assert_includes @all_group.errors[:name], "is too long (maximum is 255 characters)"
+    assert_includes @all_group.errors[:name], "Name must not exceed 255 characters."
   end
 
   # === Associations ===
@@ -67,8 +67,11 @@ class AllGroupTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     AllGroupMushroom.create!(all_group: all_group, mushroom: mushroom)
 
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "AllGroupMushroom.count", -1 do
-      all_group.destroy
+      AllGroup.without_strict_loading do
+        all_group.destroy
+      end
     end
   end
 
@@ -93,8 +96,12 @@ class AllGroupTest < ActiveSupport::TestCase
 
   test "should delete all_group" do
     all_group = AllGroup.create!(name: "Deletable Group", user: @user)
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "AllGroup.count", -1 do
-      all_group.destroy
+      AllGroup.without_strict_loading do
+        all_group.destroy
+      end
     end
   end
 

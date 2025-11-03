@@ -15,7 +15,7 @@ class FungusTypeTest < ActiveSupport::TestCase
   test "should require name" do
     @fungus_type.name = nil
     assert_not @fungus_type.valid?
-    assert_includes @fungus_type.errors[:name], "can't be blank"
+    assert_includes @fungus_type.errors[:name], "Name cannot be blank."
   end
 
   test "should require unique name" do
@@ -67,6 +67,7 @@ class FungusTypeTest < ActiveSupport::TestCase
   test "should handle empty name" do
     @fungus_type.name = ""
     assert_not @fungus_type.valid?
+    assert_includes @fungus_type.errors[:name], "Name cannot be blank."
   end
 
   test "should handle whitespace-only name" do

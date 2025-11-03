@@ -36,6 +36,9 @@ class ClusterMushroomTest < ActiveSupport::TestCase
 
   test "should enforce unique cluster per mushroom" do
     ClusterMushroom.create!(mushroom: @mushroom, cluster: @cluster)
+    # First create the association
+    ClusterMushroom.create!(mushroom: @mushroom, cluster: @cluster)
+    # Then test duplicate
     duplicate = ClusterMushroom.new(mushroom: @mushroom, cluster: @cluster)
     assert_not duplicate.valid?
     assert_includes duplicate.errors[:cluster_id], "is already attached to this mushroom"

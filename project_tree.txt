@@ -1,0 +1,1347 @@
+.
+├── app
+│   ├── assets
+│   │   ├── builds
+│   │   │   ├── tailwind
+│   │   │   └── tailwind.css
+│   │   ├── images
+│   │   │   ├── AMS
+│   │   │   │   └── AMS_Field_Data_Sheet_400x298.png
+│   │   │   ├── AMS_colors
+│   │   │   │   ├── banner_50x50
+│   │   │   │   │   ├── banner_1.jpg
+│   │   │   │   │   ├── banner_10.jpg
+│   │   │   │   │   ├── banner_11.jpg
+│   │   │   │   │   ├── banner_12.jpg
+│   │   │   │   │   ├── banner_13.jpg
+│   │   │   │   │   ├── banner_14.jpg
+│   │   │   │   │   ├── banner_15.jpg
+│   │   │   │   │   ├── banner_16.jpg
+│   │   │   │   │   ├── banner_17.jpg
+│   │   │   │   │   ├── banner_18.jpg
+│   │   │   │   │   ├── banner_19.jpg
+│   │   │   │   │   ├── banner_2.jpg
+│   │   │   │   │   ├── banner_20.jpg
+│   │   │   │   │   ├── banner_21.jpg
+│   │   │   │   │   ├── banner_22.jpg
+│   │   │   │   │   ├── banner_23.jpg
+│   │   │   │   │   ├── banner_24.jpg
+│   │   │   │   │   ├── banner_25.jpg
+│   │   │   │   │   ├── banner_26.jpg
+│   │   │   │   │   ├── banner_27.jpg
+│   │   │   │   │   ├── banner_28.jpg
+│   │   │   │   │   ├── banner_29.jpg
+│   │   │   │   │   ├── banner_3.jpg
+│   │   │   │   │   ├── banner_30.jpg
+│   │   │   │   │   ├── banner_31.jpg
+│   │   │   │   │   ├── banner_32.jpg
+│   │   │   │   │   ├── banner_33.jpg
+│   │   │   │   │   ├── banner_34.jpg
+│   │   │   │   │   ├── banner_35.jpg
+│   │   │   │   │   ├── banner_36.jpg
+│   │   │   │   │   ├── banner_37.jpg
+│   │   │   │   │   ├── banner_38.jpg
+│   │   │   │   │   ├── banner_39.jpg
+│   │   │   │   │   ├── banner_4.jpg
+│   │   │   │   │   ├── banner_40.jpg
+│   │   │   │   │   ├── banner_41.jpg
+│   │   │   │   │   ├── banner_42.jpg
+│   │   │   │   │   ├── banner_43.jpg
+│   │   │   │   │   ├── banner_44.jpg
+│   │   │   │   │   ├── banner_45.jpg
+│   │   │   │   │   ├── banner_46.jpg
+│   │   │   │   │   ├── banner_47.jpg
+│   │   │   │   │   ├── banner_48.jpg
+│   │   │   │   │   ├── banner_49.jpg
+│   │   │   │   │   ├── banner_5.jpg
+│   │   │   │   │   ├── banner_50.jpg
+│   │   │   │   │   ├── banner_6.jpg
+│   │   │   │   │   ├── banner_7.jpg
+│   │   │   │   │   ├── banner_8.jpg
+│   │   │   │   │   └── banner_9.jpg
+│   │   │   │   └── color_big
+│   │   │   │       ├── color_big_1.jpg
+│   │   │   │       ├── color_big_10.jpg
+│   │   │   │       ├── color_big_11.jpg
+│   │   │   │       ├── color_big_12.jpg
+│   │   │   │       ├── color_big_13.jpg
+│   │   │   │       ├── color_big_14.jpg
+│   │   │   │       ├── color_big_15.jpg
+│   │   │   │       ├── color_big_16.jpg
+│   │   │   │       ├── color_big_17.jpg
+│   │   │   │       ├── color_big_18.jpg
+│   │   │   │       ├── color_big_19.jpg
+│   │   │   │       ├── color_big_2.jpg
+│   │   │   │       ├── color_big_20.jpg
+│   │   │   │       ├── color_big_21.jpg
+│   │   │   │       ├── color_big_22.jpg
+│   │   │   │       ├── color_big_23.jpg
+│   │   │   │       ├── color_big_24.jpg
+│   │   │   │       ├── color_big_25.jpg
+│   │   │   │       ├── color_big_26.jpg
+│   │   │   │       ├── color_big_27.jpg
+│   │   │   │       ├── color_big_28.jpg
+│   │   │   │       ├── color_big_29.jpg
+│   │   │   │       ├── color_big_3.jpg
+│   │   │   │       ├── color_big_30.jpg
+│   │   │   │       ├── color_big_31.jpg
+│   │   │   │       ├── color_big_32.jpg
+│   │   │   │       ├── color_big_33.jpg
+│   │   │   │       ├── color_big_34.jpg
+│   │   │   │       ├── color_big_35.jpg
+│   │   │   │       ├── color_big_36.jpg
+│   │   │   │       ├── color_big_37.jpg
+│   │   │   │       ├── color_big_38.jpg
+│   │   │   │       ├── color_big_39.jpg
+│   │   │   │       ├── color_big_4.jpg
+│   │   │   │       ├── color_big_40.jpg
+│   │   │   │       ├── color_big_41.jpg
+│   │   │   │       ├── color_big_42.jpg
+│   │   │   │       ├── color_big_43.jpg
+│   │   │   │       ├── color_big_44.jpg
+│   │   │   │       ├── color_big_45.jpg
+│   │   │   │       ├── color_big_46.jpg
+│   │   │   │       ├── color_big_47.jpg
+│   │   │   │       ├── color_big_48.jpg
+│   │   │   │       ├── color_big_49.jpg
+│   │   │   │       ├── color_big_5.jpg
+│   │   │   │       ├── color_big_50.jpg
+│   │   │   │       ├── color_big_6.jpg
+│   │   │   │       ├── color_big_7.jpg
+│   │   │   │       ├── color_big_8.jpg
+│   │   │   │       └── color_big_9.jpg
+│   │   │   ├── favicon-16x16.png
+│   │   │   ├── favicon-32x32.png
+│   │   │   ├── mrdbid_logo.svg
+│   │   │   ├── plants
+│   │   │   └── trees
+│   │   │       ├── bigleaf_magnolia_sign.jpg
+│   │   │       ├── sweetbay_magnolia_sign.jpg
+│   │   │       └── sweetgum_sign.jpg
+│   │   ├── stylesheets
+│   │   │   └── application.css
+│   │   └── tailwind
+│   │       └── application.css
+│   ├── controllers
+│   │   ├── admin
+│   │   │   ├── application_controller.rb
+│   │   │   ├── articles_controller.rb
+│   │   │   ├── colors_controller.rb
+│   │   │   ├── countries_controller.rb
+│   │   │   ├── dashboard_controller.rb
+│   │   │   ├── display_options_controller.rb
+│   │   │   ├── dna_sequences_controller.rb
+│   │   │   ├── fungus_types_controller.rb
+│   │   │   ├── genera_controller.rb
+│   │   │   ├── image_mushrooms_controller.rb
+│   │   │   ├── lenses_controller.rb
+│   │   │   ├── lookup_items_controller.rb
+│   │   │   ├── lookup_types_controller.rb
+│   │   │   ├── mb_lists_controller.rb
+│   │   │   ├── mr_characters_controller.rb
+│   │   │   ├── mr_characters_sources_controller.rb
+│   │   │   ├── parts_controller.rb
+│   │   │   ├── permissions_controller.rb
+│   │   │   ├── plants_controller.rb
+│   │   │   ├── roles_controller.rb
+│   │   │   ├── source_data_controller.rb
+│   │   │   ├── source_data_types_controller.rb
+│   │   │   ├── species_controller.rb
+│   │   │   ├── states_controller.rb
+│   │   │   ├── storage_locations_controller.rb
+│   │   │   ├── trees_controller.rb
+│   │   │   └── utility_controller.rb
+│   │   ├── all_group_mushrooms_controller.rb
+│   │   ├── all_groups_controller.rb
+│   │   ├── application_controller.rb
+│   │   ├── articles_controller.rb
+│   │   ├── autocomplete_controller.rb
+│   │   ├── books_controller.rb
+│   │   ├── cluster_mushrooms_controller.rb
+│   │   ├── clusters_controller.rb
+│   │   ├── concerns
+│   │   ├── contacts_controller.rb
+│   │   ├── genus_mushrooms_controller.rb
+│   │   ├── home_controller.rb
+│   │   ├── image_mushrooms_controller.rb
+│   │   ├── mr_character_mushrooms_controller.rb
+│   │   ├── mushroom_plants_controller.rb
+│   │   ├── mushroom_projects_controller.rb
+│   │   ├── mushroom_species_controller.rb
+│   │   ├── mushroom_trees_controller.rb
+│   │   ├── mushrooms_controller.rb
+│   │   ├── pages_controller.rb
+│   │   ├── projects_controller.rb
+│   │   ├── states_controller.rb
+│   │   ├── users
+│   │   │   ├── registrations_controller.rb
+│   │   │   ├── sessions_controller.rb
+│   │   │   ├── two_factor_authentication_controller.rb
+│   │   │   └── two_factor_settings_controller.rb
+│   │   └── users_controller.rb
+│   ├── helpers
+│   │   ├── all_group_mushrooms_helper.rb
+│   │   ├── all_groups_helper.rb
+│   │   ├── application_helper.rb
+│   │   ├── cluster_mushrooms_helper.rb
+│   │   ├── clusters_helper.rb
+│   │   ├── colors_helper.rb
+│   │   ├── dna_sequences_helper.rb
+│   │   ├── image_mushrooms_helper.rb
+│   │   ├── lens_helper.rb
+│   │   ├── mr_characters_helper.rb
+│   │   ├── mushrooms_helper.rb
+│   │   ├── permissions_helper.rb
+│   │   ├── plant_associations_helper.rb
+│   │   ├── roles_helper.rb
+│   │   ├── source_data_helper.rb
+│   │   └── tree_associations_helper.rb
+│   ├── javascript
+│   │   ├── application.js
+│   │   ├── controllers
+│   │   │   ├── application.js
+│   │   │   ├── color_picker_controller.js
+│   │   │   ├── country_select_controller.js
+│   │   │   ├── hello_controller.js
+│   │   │   ├── image_exif_controller.js
+│   │   │   ├── index.js
+│   │   │   ├── lookup_controller.js
+│   │   │   └── tokens_controller.js
+│   │   └── stylesheets
+│   │       └── application.css
+│   ├── jobs
+│   │   └── application_job.rb
+│   ├── mailers
+│   │   ├── application_mailer.rb
+│   │   ├── contact_mailer.rb
+│   │   └── devise_mailer.rb
+│   ├── models
+│   │   ├── all_group_mushroom.rb
+│   │   ├── all_group.rb
+│   │   ├── application_record.rb
+│   │   ├── article.rb
+│   │   ├── camera_make.rb
+│   │   ├── camera_model.rb
+│   │   ├── camera.rb
+│   │   ├── cluster_mushroom.rb
+│   │   ├── cluster.rb
+│   │   ├── color.rb
+│   │   ├── concerns
+│   │   ├── country.rb
+│   │   ├── display_option.rb
+│   │   ├── dna_sequence.rb
+│   │   ├── fungus_type.rb
+│   │   ├── genus_mushroom.rb
+│   │   ├── genus.rb
+│   │   ├── image_mushroom.rb
+│   │   ├── lens.rb
+│   │   ├── lookup_item.rb
+│   │   ├── lookup_type.rb
+│   │   ├── mb_list.rb
+│   │   ├── mr_character_mushroom.rb
+│   │   ├── mr_character.rb
+│   │   ├── mushroom_plant.rb
+│   │   ├── mushroom_project.rb
+│   │   ├── mushroom_species.rb
+│   │   ├── mushroom_storage_location.rb
+│   │   ├── mushroom_tree.rb
+│   │   ├── mushroom.rb
+│   │   ├── part.rb
+│   │   ├── permission.rb
+│   │   ├── plant.rb
+│   │   ├── project.rb
+│   │   ├── role_permission.rb
+│   │   ├── role.rb
+│   │   ├── source_data_type.rb
+│   │   ├── source_data.rb
+│   │   ├── species.rb
+│   │   ├── state.rb
+│   │   ├── storage_location.rb
+│   │   ├── tree.rb
+│   │   ├── user_role.rb
+│   │   └── user.rb
+│   ├── policies
+│   │   ├── admin_policy.rb
+│   │   ├── all_group_mushroom_policy.rb
+│   │   ├── all_group_policy.rb
+│   │   ├── application_policy.rb
+│   │   ├── article_policy.rb
+│   │   ├── cluster_mushroom_policy.rb
+│   │   ├── cluster_policy.rb
+│   │   ├── color_policy.rb
+│   │   ├── country_policy.rb
+│   │   ├── display_option_policy.rb
+│   │   ├── dna_sequence_policy.rb
+│   │   ├── fungus_type_policy.rb
+│   │   ├── genus_policy.rb
+│   │   ├── image_mushroom_policy.rb
+│   │   ├── lens_policy.rb
+│   │   ├── lookup_item_policy.rb
+│   │   ├── lookup_type_policy.rb
+│   │   ├── mr_character_policy.rb
+│   │   ├── mushroom_policy.rb
+│   │   ├── mushroom_project_policy.rb
+│   │   ├── part_policy.rb
+│   │   ├── permission_policy.rb
+│   │   ├── plant_policy.rb
+│   │   ├── project_policy.rb
+│   │   ├── role_policy.rb
+│   │   ├── source_data_policy.rb
+│   │   ├── source_data_type_policy.rb
+│   │   ├── species_policy.rb
+│   │   ├── state_policy.rb
+│   │   ├── storage_location_policy.rb
+│   │   └── tree_policy.rb
+│   ├── services
+│   │   └── camera_equipment_matcher.rb
+│   └── views
+│       ├── admin
+│       │   ├── articles
+│       │   │   ├── _form.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   ├── preview.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── colors
+│       │   │   ├── _color.html.erb
+│       │   │   ├── _form.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── countries
+│       │   │   ├── _country.html.erb
+│       │   │   ├── _form.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── dashboard
+│       │   │   └── index.html.erb
+│       │   ├── dna_sequences
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── fungus_types
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _fungus_type.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── genera
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _genus.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── image_mushrooms
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _image_mushroom.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── lenses
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _lens.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── lookup_items
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _lookup_item.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── lookup_types
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _lookup_type.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── mb_lists
+│       │   │   ├── _cluster.html.erb
+│       │   │   ├── _cluster.json.jbuilder
+│       │   │   ├── _form.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── index.json.jbuilder
+│       │   │   ├── new.html.erb
+│       │   │   ├── show.html.erb
+│       │   │   └── show.json.jbuilder
+│       │   ├── mr_characters
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _mr_character.html.erb
+│       │   │   ├── _parts_dropdown.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   ├── show.html.erb
+│       │   │   └── versions.html.erb
+│       │   ├── mr_characters_sources
+│       │   │   └── show.html.erb
+│       │   ├── parts
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _part.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── permissions
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _permission.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── plants
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _plant.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── roles
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _role.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── shared
+│       │   │   ├── _form_actions.html.erb
+│       │   │   └── _resource_actions.html.erb
+│       │   ├── source_data
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _source_data.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── source_data_types
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _source_data_type.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── species
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _species.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── states
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _select.html.erb
+│       │   │   ├── _state.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   ├── storage_locations
+│       │   │   ├── _form.html.erb
+│       │   │   ├── _storage_location.html.erb
+│       │   │   ├── edit.html.erb
+│       │   │   ├── index.html.erb
+│       │   │   ├── new.html.erb
+│       │   │   └── show.html.erb
+│       │   └── trees
+│       │       ├── _form.html.erb
+│       │       ├── _tree.html.erb
+│       │       ├── edit.html.erb
+│       │       ├── index.html.erb
+│       │       ├── new.html.erb
+│       │       └── show.html.erb
+│       ├── all_group_mushrooms
+│       │   ├── _all_group_mushroom.html.erb
+│       │   ├── _form.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── all_groups
+│       │   ├── _all_group.html.erb
+│       │   ├── _form.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── articles
+│       │   ├── index.html.erb
+│       │   └── show.html.erb
+│       ├── books
+│       │   └── index.html.erb
+│       ├── cluster_mushrooms
+│       │   ├── _cluster_mushroom.html.erb
+│       │   ├── _form.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── clusters
+│       │   ├── _cluster.html.erb
+│       │   ├── _form.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── contact_mailer
+│       │   ├── contact_message.html.erb
+│       │   └── contact_message.text.erb
+│       ├── contacts
+│       │   └── new.html.erb
+│       ├── devise
+│       │   ├── confirmations
+│       │   │   └── new.html.erb
+│       │   ├── mailer
+│       │   │   ├── confirmation_instructions.html.erb
+│       │   │   ├── email_changed.html.erb
+│       │   │   ├── password_change.html.erb
+│       │   │   ├── reset_password_instructions.html.erb
+│       │   │   └── unlock_instructions.html.erb
+│       │   ├── passwords
+│       │   │   ├── edit.html.erb
+│       │   │   └── new.html.erb
+│       │   ├── registrations
+│       │   │   ├── edit.html.erb
+│       │   │   └── new.html.erb
+│       │   ├── sessions
+│       │   │   └── new.html.erb
+│       │   ├── shared
+│       │   │   ├── _error_messages.html.erb
+│       │   │   └── _links.html.erb
+│       │   └── unlocks
+│       │       └── new.html.erb
+│       ├── home
+│       │   └── index.html.erb
+│       ├── image_mushrooms
+│       │   ├── _form.html.erb
+│       │   ├── _image_mushroom.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── kaminari
+│       │   └── tailwind_bar
+│       │       ├── _first_page.html.erb
+│       │       ├── _gap.html.erb
+│       │       ├── _last_page.html.erb
+│       │       ├── _next_page.html.erb
+│       │       ├── _page.html.erb
+│       │       ├── _paginator.html.erb
+│       │       └── _prev_page.html.erb
+│       ├── layouts
+│       │   ├── application.html.erb
+│       │   ├── mailer.html.erb
+│       │   ├── mailer.text.erb
+│       │   └── NOT_admin.html.erb
+│       ├── lookup_items
+│       │   └── versions.html.erb
+│       ├── mushroom_projects
+│       │   ├── _form.html.erb
+│       │   ├── _mushroom_project.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── mushrooms
+│       │   ├── _character_input.html.erb
+│       │   ├── _form.html.erb
+│       │   ├── _mushroom.html.erb
+│       │   ├── _new_form.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── pages
+│       │   ├── home_original.html.erb
+│       │   ├── home.html.erb
+│       │   └── trees_of_blakeley_signs.html.erb
+│       ├── projects
+│       │   ├── _form.html.erb
+│       │   ├── _project.html.erb
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       ├── pwa
+│       │   ├── manifest.json.erb
+│       │   └── service-worker.js
+│       ├── shared
+│       │   ├── _card.html.erb
+│       │   ├── _data_group.html.erb
+│       │   ├── _flash.html.erb
+│       │   ├── _form_fields.html.erb
+│       │   ├── _image_card.html.erb
+│       │   ├── _image_grid.html.erb
+│       │   ├── _logo_TEXT.html.erb
+│       │   ├── _logo.html.erb
+│       │   ├── _lookup_form.html.erb
+│       │   ├── _menu.html.erb
+│       │   ├── _mushroom_menu.html.erb
+│       │   ├── _notice_row.html.erb
+│       │   ├── _page_actions.html.erb
+│       │   └── _pagination.html.erb
+│       └── users
+│           └── two_factor_authentication
+│               └── show.html.erb
+├── bin
+│   ├── brakeman
+│   ├── bundle
+│   ├── dev
+│   ├── docker-entrypoint
+│   ├── importmap
+│   ├── jobs
+│   ├── kamal
+│   ├── rails
+│   ├── rake
+│   ├── rubocop
+│   ├── setup
+│   └── thrust
+├── CAMERA_EQUIPMENT_SUMMARY.md
+├── CAMERA_INTEGRATION_COMPLETE.md
+├── Capfile
+├── config
+│   ├── application.rb
+│   ├── boot.rb
+│   ├── cable.yml
+│   ├── cache.yml
+│   ├── credentials
+│   │   ├── production.key
+│   │   └── production.yml.enc
+│   ├── credentials.yml.enc
+│   ├── credentials.yml.enc.bak
+│   ├── database.yml
+│   ├── deploy
+│   │   ├── production.rb
+│   │   └── staging.rb
+│   ├── deploy.rb
+│   ├── environment.rb
+│   ├── environments
+│   │   ├── development.rb
+│   │   ├── production.rb
+│   │   └── test.rb
+│   ├── importmap.rb
+│   ├── initializers
+│   │   ├── assets.rb
+│   │   ├── content_security_policy.rb
+│   │   ├── devise_authentication.rb
+│   │   ├── devise.rb
+│   │   ├── filter_parameter_logging.rb
+│   │   ├── inflections.rb
+│   │   ├── kaminari_config.rb
+│   │   └── view_debug.rb
+│   ├── locales
+│   │   ├── devise.en.yml
+│   │   └── en.yml
+│   ├── master.key
+│   ├── puma.rb
+│   ├── puma.service
+│   ├── queue.yml
+│   ├── recurring.yml
+│   ├── routes.rb
+│   ├── storage.yml
+│   └── tailwindcss.yml
+├── config.ru
+├── db
+│   ├── cable_migrate
+│   ├── cable_schema.rb
+│   ├── cache_migrate
+│   ├── cache_schema.rb
+│   ├── migrate
+│   │   ├── 20250813000001_create_permissions.rb
+│   │   ├── 20250814000001_devise_create_users.rb
+│   │   ├── 20250814000002_create_all_groups.rb
+│   │   ├── 20250814000003_create_clusters.rb
+│   │   ├── 20250814000004_create_countries.rb
+│   │   ├── 20250814000005_create_states.rb
+│   │   ├── 20250814000006_create_fungus_types.rb
+│   │   ├── 20250814000008_create_colors.rb
+│   │   ├── 20250814000009_create_parts.rb
+│   │   ├── 20250814000010_create_lookup_types.rb
+│   │   ├── 20250814000011_create_display_options.rb
+│   │   ├── 20250814000012_create_source_data_types.rb
+│   │   ├── 20250814000013_create_source_data.rb
+│   │   ├── 20250814000014_create_mushrooms.rb
+│   │   ├── 20250814000015_create_plants.rb
+│   │   ├── 20250814000017_create_trees.rb
+│   │   ├── 20250814000020_create_projects.rb
+│   │   ├── 20250814000022_create_mushroom_projects.rb
+│   │   ├── 20250814000024_create_mushroom_trees.rb
+│   │   ├── 20250814000026_create_mushroom_plants.rb
+│   │   ├── 20250814000034_create_roles.rb
+│   │   ├── 20250814000038_create_user_roles.rb
+│   │   ├── 20250814000040_create_role_permissions.rb
+│   │   ├── 20250814000044_create_all_group_mushrooms.rb
+│   │   ├── 20250814000048_create_cluster_mushrooms.rb
+│   │   ├── 20250814000052_create_camera_makes.rb
+│   │   ├── 20250814000056_create_camera_models.rb
+│   │   ├── 20250814000060_create_cameras.rb
+│   │   ├── 20250814000064_create_lenses.rb
+│   │   ├── 20250814000068_create_image_mushrooms.rb
+│   │   ├── 20250814000072_create_dna_sequences.rb
+│   │   ├── 20250814000074_create_mr_characters.rb
+│   │   ├── 20250814000076_create_mr_character_mushrooms.rb
+│   │   ├── 20250814000078_create_lookup_items.rb
+│   │   ├── 20250814000080_create_genera.rb
+│   │   ├── 20250814000084_create_species.rb
+│   │   ├── 20250814000088_create_genus_mushrooms.rb
+│   │   ├── 20250814000092_create_mushroom_species.rb
+│   │   ├── 20250814000108_create_active_storage_tables.active_storage.rb
+│   │   ├── 20250814000109_create_mb_lists.rb
+│   │   ├── 20250819000001_create_storage_locations.rb
+│   │   ├── 20250822201733_create_versions.rb
+│   │   ├── 20250831000001_create_articles.rb
+│   │   ├── 20250902000001_create_comments.rb
+│   │   ├── 20250902000002_create_descriptions.rb
+│   │   ├── 20250929000001_add_unique_indexes_to_group_cluster_project_names.rb
+│   │   ├── 20250929000002_add_otp_backup_codes_to_users.rb
+│   │   ├── 20251005000001_add_indexes_and_constraints_to_genera_and_species.rb
+│   │   ├── 20251005121500_add_is_primary_to_join_tables.rb
+│   │   ├── 20251006000001_update_species_unique_index.rb
+│   │   ├── 20251021175901_add_counter_caches_to_mushrooms.rb
+│   │   ├── 20251021185141_add_unique_index_to_mushroom_trees.rb
+│   │   ├── 20251021185144_add_unique_index_to_mushroom_plants.rb
+│   │   ├── 20251030232300_add_fungus_type_index_to_mushrooms.rb
+│   │   ├── 20251102150009_add_comments_to_image_mushrooms.rb
+│   │   ├── 20251102163524_add_lens_reference_to_image_mushrooms.rb
+│   │   ├── 20251102182005_add_camera_foreign_keys_to_image_mushrooms.rb
+│   │   └── 20251102203058_rename_exif_string_columns_in_image_mushrooms.rb
+│   ├── queue_migrate
+│   ├── queue_schema.rb
+│   ├── scripts
+│   │   ├── create_solid_cache_tables.sql
+│   │   ├── create_solid_queue_tables.sql
+│   │   ├── insert_articles.sql
+│   │   ├── insert_colors.sql
+│   │   ├── insert_countries.sql
+│   │   ├── insert_display_options.sql
+│   │   ├── insert_fungus_types.sql
+│   │   ├── insert_lenses.sql
+│   │   ├── insert_lookup_items.sql
+│   │   ├── insert_lookup_types.sql
+│   │   ├── insert_mr_characters.sql
+│   │   ├── insert_parts.sql
+│   │   ├── insert_permissions.sql
+│   │   ├── insert_plants.sql
+│   │   ├── insert_source_data_types.sql
+│   │   ├── insert_source_data.sql
+│   │   ├── insert_states.sql
+│   │   ├── insert_trees.sql
+│   │   └── sample
+│   │       ├── insert_all_groups_sample.sql
+│   │       ├── insert_articles_sample.sql
+│   │       ├── insert_clusters_sample.sql
+│   │       ├── insert_mushrooms_sample.sql
+│   │       └── insert_projects_sample.sql
+│   ├── seeds
+│   │   ├── camera_equipment_seeds.rb
+│   │   └── README_CAMERA_SEEDS.md
+│   ├── seeds.rb
+│   └── structure.sql
+├── DEPLOYMENT_TROUBLESHOOTING.md
+├── DEPLOYMENT.md
+├── FIX_INSTRUCTIONS_FOR_SERVER.txt
+├── Gemfile
+├── Gemfile.lock
+├── lib
+│   ├── capistrano
+│   │   └── tasks
+│   └── tasks
+│       ├── advanced_taxonomic_extraction.rake
+│       ├── extract_taxonomic_data.rake
+│       └── solid_queue_setup.rake
+├── OPTIMIZATION_SUMMARY.md
+├── package.json
+├── PERFORMANCE_OPTIMIZATION_PLAN.md
+├── postcss.config.js
+├── Procfile.dev
+├── PRODUCTION_500_ERROR_FIX_ACTUAL.md
+├── PRODUCTION_500_ERROR_FIX.md
+├── project_tree.txt
+├── public
+│   ├── 400.html
+│   ├── 404.html
+│   ├── 406-unsupported-browser.html
+│   ├── 422.html
+│   ├── 500.html
+│   ├── docs
+│   │   ├── mr_characters_source_ORIGINAL.csv
+│   │   ├── mr_characters_source_parts.csv
+│   │   ├── mr_characters_source.csv
+│   │   ├── parts.csv
+│   │   └── types.csv
+│   ├── icon.png
+│   ├── icon.svg
+│   └── robots.txt
+├── rails
+├── Rakefile
+├── README.md
+├── script
+├── SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md
+├── SOLID_QUEUE_SETUP.md
+├── storage
+│   ├── 07
+│   │   └── 1s
+│   │       └── 071s9icqgdsx8c9j8mwjfdeb46t4
+│   ├── 0i
+│   │   └── 0b
+│   │       └── 0i0br9gtmoap6mdnb06wz89sspx4
+│   ├── 0m
+│   │   └── n2
+│   │       └── 0mn2ubw1zvhxl9nz9mqespb0ej99
+│   ├── 0o
+│   │   └── 83
+│   │       └── 0o83q05iymernxbwipo8txv4qsvv
+│   ├── 0u
+│   │   └── fi
+│   │       └── 0ufi84bgktxpmmi003pge9m8fn3t
+│   ├── 0z
+│   │   └── zt
+│   │       └── 0zztwphkd3ube0s09ydcxk9v2o39
+│   ├── 1a
+│   │   └── e4
+│   │       └── 1ae4u5zalgwzkvpemj9xinv5qmp3
+│   ├── 1n
+│   │   └── ax
+│   │       └── 1nax0v4w8o8qekb3303uonm5dm3t
+│   ├── 2f
+│   │   └── e9
+│   │       └── 2fe9014xdtmvkj4z9vg2nyqdycx8
+│   ├── 2r
+│   │   └── dr
+│   │       └── 2rdr3dnnd6kuiccgktppggf50mri
+│   ├── 31
+│   │   └── ix
+│   │       └── 31ixqqete93k60nwlhr5r9qf8q7m
+│   ├── 3h
+│   │   └── uk
+│   │       └── 3hukjo3kexvsmwgxvvlkzesvmauz
+│   ├── 3j
+│   │   └── 7u
+│   │       └── 3j7urypvp91xtxbummla96wdl4zj
+│   ├── 3q
+│   │   └── 0e
+│   │       └── 3q0eq73lm6cq8o2fkiibllv4fx8g
+│   ├── 3v
+│   │   └── ne
+│   │       └── 3vne9rx4a2orqlu4d9ui6x0duq2v
+│   ├── 3x
+│   │   ├── 43
+│   │   │   └── 3x434x1y0sn65st5xypxkpse0vo7
+│   │   └── ij
+│   │       └── 3xijbixhj84m3lvcb6hnq5dud0lx
+│   ├── 4f
+│   │   └── 08
+│   │       └── 4f08ylrncu21y2nzmacwr5m5v5js
+│   ├── 59
+│   │   └── ei
+│   │       └── 59eiz47y61of1ipev31u5in3zrdw
+│   ├── 5r
+│   │   └── lt
+│   │       └── 5rltwp2iklv6heiud1cof17xwssr
+│   ├── 69
+│   │   └── 4s
+│   │       └── 694sjefgrbz0262tuqexum8ro7g9
+│   ├── 6x
+│   │   └── yk
+│   │       └── 6xykh32yjfv3j5rtlgfuatqkghbm
+│   ├── 72
+│   │   ├── vg
+│   │   │   └── 72vge51tvp01mlfmcvtx3a1kgju8
+│   │   └── xg
+│   │       └── 72xgfzwc24jdcti67lwx6k5f3wof
+│   ├── 7b
+│   │   └── uk
+│   │       └── 7bukwufygkj0ce5jn0n3o8yb906d
+│   ├── 7e
+│   │   └── ws
+│   │       └── 7ewsdo0gu8u1q6ybeplpcf3y80hd
+│   ├── 7j
+│   │   └── cf
+│   │       └── 7jcfqkepbv3fk4r0ahftwx6c3e0d
+│   ├── 7t
+│   │   └── r3
+│   │       └── 7tr3qpjfhkid6rff88jltt1mxin8
+│   ├── 85
+│   │   └── rm
+│   │       └── 85rmulab21s4r2lkirhyyyephxtm
+│   ├── 8c
+│   │   └── ey
+│   │       └── 8ceyw5n0lc4vshgpgurws2ehbqnm
+│   ├── 8k
+│   │   └── 7q
+│   │       └── 8k7qv53aev08nmexntsosmpmqdf4
+│   ├── 8l
+│   │   └── 2p
+│   │       └── 8l2px7lkjv3r4l6u5fyiocno1w3l
+│   ├── 91
+│   │   └── o4
+│   │       └── 91o4cdjx9aoh3pt8r73w3x1lncai
+│   ├── 92
+│   │   └── ev
+│   │       └── 92evldk85204r1rbh5shv5duv91p
+│   ├── 98
+│   │   └── vu
+│   │       └── 98vulgrboikaxso3etcbtt5xdjeh
+│   ├── 99
+│   │   └── pc
+│   │       └── 99pc6qbs1a9ab2p26j7fyhvqotjm
+│   ├── 9m
+│   │   └── tw
+│   │       └── 9mtwruip2olw6vjoy3hrtxl3bldz
+│   ├── 9q
+│   │   └── hj
+│   │       └── 9qhj3ua4sqj2sa7cu0o39bc7pkaa
+│   ├── 9r
+│   │   └── kn
+│   │       └── 9rkn3q71qqu902jexdigdbvlkyeg
+│   ├── 9w
+│   │   └── f1
+│   │       └── 9wf1wcag3n7s3u36vnaluq0x948p
+│   ├── ac
+│   │   └── 1m
+│   │       └── ac1meiczb1tep6mp0fon4vxr8lug
+│   ├── al
+│   │   └── mb
+│   │       └── almb5n8et7z5b6c97o2h47jpkdd5
+│   ├── am
+│   │   └── t1
+│   │       └── amt1enlomg6apd1tdfiy2umsqnne
+│   ├── ar
+│   │   └── o7
+│   │       └── aro7wmdq63zygelh35nxdowobcxk
+│   ├── b4
+│   │   └── mt
+│   │       └── b4mt871lwrpbxfsrw2l1lef9kuqe
+│   ├── be
+│   │   └── hc
+│   │       └── behcwh9qm7ej7y4vf2nf6njys0ff
+│   ├── bq
+│   │   └── fw
+│   │       └── bqfwbw3gsv6esqokf4x15u17ex60
+│   ├── c3
+│   │   └── dh
+│   │       └── c3dht8z24kb6xnhcktiawp8ugcdp
+│   ├── c4
+│   │   └── i9
+│   │       └── c4i9xvj1nembqa4kegeh4oummndc
+│   ├── cb
+│   │   └── gm
+│   │       └── cbgmy14noevd1wpztakzmahl9p2e
+│   ├── d6
+│   │   └── 36
+│   │       └── d636u8qimt7ou9f4wg89fnp3lgwk
+│   ├── d9
+│   │   └── gq
+│   │       └── d9gqazwwqpwipta7zrsgtmkctqr7
+│   ├── di
+│   │   └── sk
+│   │       └── diskcva9semskz53v597gku7p8pt
+│   ├── do
+│   │   └── mg
+│   │       └── domgiasozj8jgevg5gm4rhq8d9t2
+│   ├── ds
+│   │   └── vg
+│   │       └── dsvge1grkv2w93c1vkd7b8xl75n6
+│   ├── dy
+│   │   └── 7b
+│   │       └── dy7bzilkm7hnou0neo6pwnicbyde
+│   ├── e0
+│   │   └── cx
+│   │       └── e0cxkty7sw6c6pvnp24p0k9tlepd
+│   ├── ea
+│   │   └── qo
+│   │       └── eaqod2d1dezd6zfvhzyl0uj4qpsj
+│   ├── ed
+│   │   └── le
+│   │       └── edlecold9p23e81gdchxj65ecp8l
+│   ├── er
+│   │   └── t5
+│   │       └── ert52x56rlx8vulodm1hnkg41vh3
+│   ├── fd
+│   │   └── fm
+│   │       └── fdfm1mlg37cftucykhpmtf6gnnch
+│   ├── ff
+│   │   └── vx
+│   │       └── ffvx1zgr5mypk1fkgcikz0bcjrhg
+│   ├── fj
+│   │   └── px
+│   │       └── fjpxt1q4ea4ok333sxlou58n0ar6
+│   ├── fm
+│   │   └── 0u
+│   │       └── fm0ujdns0oalp3lpk9k9rbjrkdm7
+│   ├── fo
+│   │   ├── 3p
+│   │   │   └── fo3ptcjzozmns7fmw5y4qgc9cki4
+│   │   └── bi
+│   │       └── fobi9bpc8pewiqtl0sqr4wnj60k6
+│   ├── fq
+│   │   └── fr
+│   │       └── fqfrvkn8gshmufzyql03u3sdr9sm
+│   ├── g3
+│   │   └── gs
+│   │       └── g3gs54b40fjwxlan8n2i3g14m56g
+│   ├── gk
+│   │   └── 43
+│   │       └── gk43uvmnovbhtlfixvqns2cq82z6
+│   ├── gl
+│   │   └── 7d
+│   │       └── gl7dtlqa95w1l1qzh4lzr70p17lw
+│   ├── gy
+│   │   └── 2c
+│   │       └── gy2c6pnp7t2vq7diuunyah5zewtm
+│   ├── h0
+│   │   └── fn
+│   │       └── h0fn761xivs3lcs00j9abj0ffbck
+│   ├── h3
+│   │   └── et
+│   │       └── h3etffxmsq0dvgg352zr5db9761x
+│   ├── h8
+│   │   └── 80
+│   │       └── h8804m40u3iybmfajt07vpo5307c
+│   ├── hc
+│   │   └── dm
+│   │       └── hcdmgoxozuweg7hvx8obxjdm98vf
+│   ├── hv
+│   │   └── m4
+│   │       └── hvm4i9u5a5t6sgqwaixz8p04hsg4
+│   ├── i2
+│   │   ├── ei
+│   │   │   └── i2eipr70c7bq6wgg59l6by3ge91i
+│   │   └── vr
+│   │       └── i2vrl1oa8isqzv719c3ceekouef8
+│   ├── i4
+│   │   └── x5
+│   │       └── i4x5vq83cc9k5tqem0zc0ceuk39w
+│   ├── ia
+│   │   └── 0v
+│   │       └── ia0v3joqb02mzgtuk1q6kgpv1eud
+│   ├── ii
+│   │   └── m5
+│   │       └── iim52xwsbh44uh87ydif7qp7iehn
+│   ├── ir
+│   │   └── 97
+│   │       └── ir97eku6f9n50a2tm3qdqc53gtx0
+│   ├── jf
+│   │   └── 40
+│   │       └── jf4013p5lpxnw1h8a9c22qiivr4l
+│   ├── ji
+│   │   └── 8v
+│   │       └── ji8vb7y22x4vzn2uvmsz1sazv7hz
+│   ├── jn
+│   │   └── jb
+│   │       └── jnjbcvh2lalb77nzmp0j320ghoj6
+│   ├── jp
+│   │   └── u0
+│   │       └── jpu07sroqdmp6o2nxnqd5mub033t
+│   ├── jx
+│   │   └── bj
+│   │       └── jxbjmkbnhnsaw80ixjb6lvuy9of0
+│   ├── k0
+│   │   ├── hd
+│   │   │   └── k0hdue4gsifzs212w33fpa0t92r0
+│   │   └── rf
+│   │       └── k0rfwear1zh5akyzwnr0banp1azg
+│   ├── kf
+│   │   └── b4
+│   │       └── kfb404ma5708pqjxvigop2hmhrfj
+│   ├── kg
+│   │   └── xh
+│   │       └── kgxhy56uu0gl1croxyi8abay60sc
+│   ├── kh
+│   │   ├── 3c
+│   │   │   └── kh3ceusy2b806r1bl669xqtgdoiz
+│   │   └── fl
+│   │       └── khflrvbe4ekenr3y8ow3bb1y3jik
+│   ├── ks
+│   │   └── mc
+│   │       └── ksmcufp1p21p6nl4o2blhdgtauh3
+│   ├── l2
+│   │   └── b2
+│   │       └── l2b283y3f5jptirrd8184vfj888n
+│   ├── lg
+│   │   └── n4
+│   │       └── lgn4sd78ywwnox2l6vnwvv2jymp0
+│   ├── ln
+│   │   └── hv
+│   │       └── lnhvyyyb00c1a1bnrg8xlmik0xuf
+│   ├── m6
+│   │   └── 1v
+│   │       └── m61vjttefvf4jnuv3vozepzjfag0
+│   ├── m8
+│   │   └── w6
+│   │       └── m8w67tysi3nntv1211f6tlqeu65z
+│   ├── ma
+│   │   └── 08
+│   │       └── ma08rz76xqhhfx3v8sgytqlq8z9w
+│   ├── me
+│   │   └── rm
+│   │       └── mermzd8hkmcldualyw4f5ekcrid9
+│   ├── mh
+│   │   └── d8
+│   │       └── mhd8cdxgt0ql0h8o0ehu8rucgu7z
+│   ├── n8
+│   │   └── 6z
+│   │       └── n86zmexz1k5rzfprz80xstyyg12z
+│   ├── nc
+│   │   └── d6
+│   │       └── ncd64077wusz81w8qqcei455zmzr
+│   ├── ng
+│   │   └── 0d
+│   │       └── ng0d2bhsisyqira3xcsm1xycjww2
+│   ├── o2
+│   │   └── ol
+│   │       └── o2ol2b4dnylcey25twm9bwl9plmt
+│   ├── o4
+│   │   └── cb
+│   │       └── o4cbb5jx0f7ycfimuj0y6p1b3t55
+│   ├── o6
+│   │   └── z8
+│   │       └── o6z8guc37w93bw822f3ue7j4db6e
+│   ├── oa
+│   │   └── xe
+│   │       └── oaxegvc8g1m4779c63n7r03secxs
+│   ├── og
+│   │   └── fk
+│   │       └── ogfk13q7reh5ua5fa9cznem9s87k
+│   ├── ot
+│   │   └── 3m
+│   │       └── ot3mhi5mkdqluohj7yrryll13n4w
+│   ├── p9
+│   │   └── kl
+│   │       └── p9kl6ltz2slc4sdv4i6tmg8ajg3i
+│   ├── q6
+│   │   └── h3
+│   │       └── q6h3zj50g6aexwmyuhd7d0gk3ob2
+│   ├── q7
+│   │   └── ui
+│   │       └── q7uihw4fxufu38ky98eab0mgqvbg
+│   ├── qh
+│   │   └── 3t
+│   │       └── qh3t9k63vw0pg8zy0tha7pc7oumb
+│   ├── qp
+│   │   └── ti
+│   │       └── qptizi67np28jgbnm0vuu1kc562s
+│   ├── r4
+│   │   └── qf
+│   │       └── r4qf8ibmm7j16z44cbzwtuhbli9r
+│   ├── r8
+│   │   └── mx
+│   │       └── r8mxtpoie15gzuc718f4r1czmiut
+│   ├── rg
+│   │   └── fd
+│   │       └── rgfdtbwd3vq74pg2hbteg4mo2qhv
+│   ├── rw
+│   │   └── hd
+│   │       └── rwhdqp3rq0ln2szaofx51z5zmnao
+│   ├── s2
+│   │   └── wp
+│   │       └── s2wp15vxxgbcyyh0rkf1t35znobv
+│   ├── s5
+│   │   └── o0
+│   │       └── s5o07ijm4duz5p1gf8lprxrxqy7v
+│   ├── sm
+│   │   └── v7
+│   │       └── smv7qt6eiirsnnv8v0m5ti1p7qyx
+│   ├── so
+│   │   └── t5
+│   │       └── sot5ral57d9a3xgz8d5x41095c7d
+│   ├── su
+│   │   └── uu
+│   │       └── suuubiengw9o8nlczctqvrufeaj5
+│   ├── sw
+│   │   └── v8
+│   │       └── swv8xuza037imxk3rpgv00bgesvp
+│   ├── t4
+│   │   └── 4q
+│   │       └── t44qmmtj3isijfmh2jwwnwkcgleg
+│   ├── t7
+│   │   └── tk
+│   │       └── t7tkkprpeneky2qceni7xyvedqgu
+│   ├── tq
+│   │   └── 6q
+│   │       └── tq6q3742p42qr96vpdvtmp672a9y
+│   ├── u3
+│   │   └── mv
+│   │       └── u3mvy9q5brmcfgnq2jb468xjewdn
+│   ├── uc
+│   │   └── bv
+│   │       └── ucbvcjjlr130jv88cyvmq2p0gniy
+│   ├── ud
+│   │   └── ci
+│   │       └── udcic3fxf2y4gr9gev7jm24jynz8
+│   ├── ui
+│   │   └── ej
+│   │       └── uiejszxn74n4qwlolt9ifk05cusc
+│   ├── v4
+│   │   └── xr
+│   │       └── v4xre6ftd8k78bjb4xse46vfjywn
+│   ├── vg
+│   │   └── dm
+│   │       └── vgdmlyzqojoop8t0qyqhhs3bdmwz
+│   ├── vm
+│   │   └── ec
+│   │       └── vmecu43pf1o6c82oipd78vkjujjr
+│   ├── vu
+│   │   └── 8e
+│   │       └── vu8ergoujq36jnrhif9hwisxhwrd
+│   ├── w8
+│   │   └── jk
+│   │       └── w8jk4m7e0rnuaqeqzzw5mql1u5ym
+│   ├── wn
+│   │   └── 91
+│   │       └── wn91kdvstbim0okdcyjfn84kiduf
+│   ├── wv
+│   │   └── gm
+│   │       └── wvgmmjons4ytx4kh5yes8p69dux4
+│   ├── ww
+│   │   └── 6l
+│   │       └── ww6l4ky32fqzw387udzxwq2o95zm
+│   ├── x0
+│   │   └── x1
+│   │       └── x0x1h21v8g9qatffjex6li4numfu
+│   ├── xm
+│   │   └── gh
+│   │       └── xmghuogeqt6vop2m2mykwztpx653
+│   ├── xv
+│   │   └── 35
+│   │       └── xv35myw87js2sk4wk0ud4jstcx31
+│   ├── yb
+│   │   └── tn
+│   │       └── ybtngzfjpmdhtbpilvcdlh6608oi
+│   ├── ym
+│   │   └── ld
+│   │       └── ymldaom0ze34gfsuh85ohz2xoxpx
+│   ├── yn
+│   │   └── rj
+│   │       └── ynrjehvlos0n602t6ea4jgiz5v57
+│   ├── yu
+│   │   └── j7
+│   │       └── yuj7g8fqe10zcw7lu78ulzwezo61
+│   ├── yv
+│   │   ├── pz
+│   │   │   └── yvpzlz52a8kjyk108df44pbb1l6j
+│   │   └── sx
+│   │       └── yvsxtcoxd96t5mfbixrk4r1hdnxq
+│   ├── zi
+│   │   └── q7
+│   │       └── ziq7bmby5gramxqlkev94k8ki1j6
+│   ├── zq
+│   │   ├── wl
+│   │   │   └── zqwloejfzpokasb299z862izctlo
+│   │   └── yq
+│   │       └── zqyqb1spuqg95rjt0g1dvqrudozg
+│   ├── zv
+│   │   └── 0k
+│   │       └── zv0k9i6vyd09nyecegomv92lugqc
+│   ├── zw
+│   │   └── df
+│   │       └── zwdfnlcojke7xmmd2gm0innm87i4
+│   └── zy
+│       └── sr
+│           └── zysreioau7kyt3zp1yo6nqf3zwnn
+├── tailwind.config.js
+├── test
+│   ├── application_system_test_case.rb
+│   ├── controllers
+│   │   ├── admin
+│   │   │   ├── colors_controller_test.rb
+│   │   │   ├── countries_controller_test.rb
+│   │   │   ├── display_options_controller_test.rb
+│   │   │   ├── genera_controller_test.rb
+│   │   │   ├── genus_mushrooms_controller_test.rb
+│   │   │   ├── image_mushrooms_controller_test.rb
+│   │   │   ├── lookup_types_controller_test.rb
+│   │   │   ├── parts_controller_test.rb
+│   │   │   ├── plants_controller_test.rb
+│   │   │   ├── projects_controller_test.rb
+│   │   │   ├── source_data_controller_test.rb
+│   │   │   ├── species_controller_test.rb
+│   │   │   └── trees_controller_test.rb
+│   │   ├── all_group_mushrooms_controller_test.rb
+│   │   ├── all_groups_controller_test.rb
+│   │   ├── cluster_mushrooms_controller_test.rb
+│   │   ├── clusters_controller_test.rb
+│   │   ├── mr_characters_controller_test.rb
+│   │   ├── mushroom_plants_controller_test.rb
+│   │   ├── mushroom_trees_controller_test.rb
+│   │   └── mushrooms_controller_test.rb
+│   ├── fixtures
+│   │   ├── all_group_mushrooms.yml
+│   │   ├── all_groups.yml
+│   │   ├── cluster_mushrooms.yml
+│   │   ├── clusters.yml
+│   │   ├── colors.yml
+│   │   ├── countries.yml
+│   │   ├── display_options.yml
+│   │   ├── files
+│   │   │   └── test_image.jpg
+│   │   ├── fungus_types.yml
+│   │   ├── genera.yml
+│   │   ├── genus_mushrooms.yml
+│   │   ├── image_mushrooms.yml
+│   │   ├── lookup_types.yml
+│   │   ├── mb_lists.yml
+│   │   ├── mr_character_mushrooms.yml
+│   │   ├── mr_characters.yml
+│   │   ├── mushroom_plants.yml
+│   │   ├── mushroom_projects.yml
+│   │   ├── mushroom_species.yml
+│   │   ├── mushroom_trees.yml
+│   │   ├── mushrooms.yml
+│   │   ├── parts.yml
+│   │   ├── permissions.yml
+│   │   ├── plants.yml
+│   │   ├── projects.yml
+│   │   ├── roles.yml
+│   │   ├── source_data_type.yml
+│   │   ├── source_data.yml
+│   │   ├── species.yml
+│   │   ├── states.yml
+│   │   ├── trees.yml
+│   │   ├── user_roles.yml
+│   │   └── users.yml
+│   ├── integration
+│   │   └── mushroom_authorization_test.rb
+│   ├── models
+│   │   ├── all_group_mushroom_test.rb
+│   │   ├── all_group_test.rb
+│   │   ├── cluster_mushroom_test.rb
+│   │   ├── cluster_test.rb
+│   │   ├── display_option_test.rb
+│   │   ├── genus_test.rb
+│   │   ├── image_mushroom_test.rb
+│   │   ├── lookup_type_test.rb
+│   │   ├── mb_list_test.rb
+│   │   ├── mr_character_test.rb
+│   │   ├── mushroom_plants_test.rb
+│   │   ├── mushroom_projects_test.rb
+│   │   ├── mushroom_species_test.rb
+│   │   ├── mushroom_test.rb
+│   │   ├── mushroom_trees_test.rb
+│   │   ├── part_test.rb
+│   │   ├── search_by_name_test.rb
+│   │   ├── source_data_test.rb
+│   │   ├── source_data_type_test.rb
+│   │   └── tree_test.rb
+│   ├── policies
+│   │   └── mushroom_policy_test.rb
+│   ├── system
+│   │   ├── all_groups_test.rb
+│   │   ├── clusters_test.rb
+│   │   ├── mr_characters_test.rb
+│   │   └── mushrooms_test.rb
+│   └── test_helper.rb
+└── upload_credentials.sh
+
+421 directories, 924 files

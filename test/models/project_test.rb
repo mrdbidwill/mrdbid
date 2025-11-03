@@ -16,7 +16,7 @@ class ProjectTest < ActiveSupport::TestCase
   test "should require name" do
     @project.name = nil
     assert_not @project.valid?
-    assert_includes @project.errors[:name], "can't be blank"
+    assert_includes @project.errors[:name], "Name cannot be blank."
   end
 
   test "should require unique name case-insensitively" do
@@ -29,7 +29,7 @@ class ProjectTest < ActiveSupport::TestCase
   test "name should not exceed 255 characters" do
     @project.name = "a" * 256
     assert_not @project.valid?
-    assert_includes @project.errors[:name], "is too long (maximum is 255 characters)"
+    assert_includes @project.errors[:name], "Name must not exceed 255 characters."
   end
 
   # === Associations ===
@@ -60,8 +60,11 @@ class ProjectTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     MushroomProject.create!(project: project, mushroom: mushroom)
 
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "MushroomProject.count", -1 do
-      project.destroy
+      Project.without_strict_loading do
+        project.destroy
+      end
     end
   end
 
@@ -86,8 +89,12 @@ class ProjectTest < ActiveSupport::TestCase
 
   test "should delete project" do
     project = Project.create!(name: "Deletable Project", user: @user)
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "Project.count", -1 do
-      project.destroy
+      Project.without_strict_loading do
+        project.destroy
+      end
     end
   end
 

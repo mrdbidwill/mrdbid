@@ -45,7 +45,7 @@ class CountryTest < ActiveSupport::TestCase
   end
 
   test "should allow deletion when mushrooms exist" do
-    country = Country.create!(name: "Test Country", code: "TC")
+    country = Country.create!(name: "Test Country")
     user = users(:one)
     mushroom = Mushroom.create!(
       name: "Test Mushroom",
@@ -66,8 +66,8 @@ class CountryTest < ActiveSupport::TestCase
     assert_not_nil @country.name
   end
 
-  test "should have code attribute" do
-    assert_respond_to @country, :code
+  test "should have description attribute" do
+    assert_respond_to @country, :description
   end
 
   test "should have timestamps" do
@@ -79,7 +79,7 @@ class CountryTest < ActiveSupport::TestCase
 
   test "should create new country" do
     assert_difference "Country.count", 1 do
-      Country.create!(name: "New Country", code: "NC")
+      Country.create!(name: "New Country")
     end
   end
 
@@ -89,7 +89,7 @@ class CountryTest < ActiveSupport::TestCase
   end
 
   test "should delete country" do
-    country = Country.create!(name: "Deletable Country", code: "DC")
+    country = Country.create!(name: "Deletable Country")
     assert_difference "Country.count", -1 do
       country.destroy
     end
@@ -98,9 +98,9 @@ class CountryTest < ActiveSupport::TestCase
   # === Business Logic ===
 
   test "should allow multiple states per country" do
-    country = Country.create!(name: "Multi-State Country", code: "MS")
-    state1 = State.create!(name: "State 1", code: "S1", country: country)
-    state2 = State.create!(name: "State 2", code: "S2", country: country)
+    country = Country.create!(name: "Multi-State Country")
+    state1 = State.create!(name: "State 1", country: country)
+    state2 = State.create!(name: "State 2", country: country)
 
     assert_equal 2, country.states.count
     assert_includes country.states, state1
@@ -109,7 +109,7 @@ class CountryTest < ActiveSupport::TestCase
 
   test "should allow multiple mushrooms per country" do
     user = users(:one)
-    country = Country.create!(name: "Multi-Mushroom Country", code: "MM")
+    country = Country.create!(name: "Multi-Mushroom Country")
 
     mushroom1 = Mushroom.create!(
       name: "Mushroom 1",
@@ -131,12 +131,12 @@ class CountryTest < ActiveSupport::TestCase
   # === Edge Cases ===
 
   test "should handle country with no states" do
-    country = Country.create!(name: "Stateless Country", code: "SL")
+    country = Country.create!(name: "Stateless Country")
     assert_empty country.states
   end
 
   test "should handle country with no mushrooms" do
-    country = Country.create!(name: "Mushroomless Country", code: "ML")
+    country = Country.create!(name: "Mushroomless Country")
     assert_empty country.mushrooms
   end
 end

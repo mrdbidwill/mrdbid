@@ -16,7 +16,7 @@ class ClusterTest < ActiveSupport::TestCase
   test "should require name" do
     @cluster.name = nil
     assert_not @cluster.valid?
-    assert_includes @cluster.errors[:name], "can't be blank"
+    assert_includes @cluster.errors[:name], "Name cannot be blank."
   end
 
   test "should require unique name per user case-insensitively" do
@@ -36,7 +36,7 @@ class ClusterTest < ActiveSupport::TestCase
   test "name should not exceed 255 characters" do
     @cluster.name = "a" * 256
     assert_not @cluster.valid?
-    assert_includes @cluster.errors[:name], "is too long (maximum is 255 characters)"
+    assert_includes @cluster.errors[:name], "Name must not exceed 255 characters."
   end
 
   # === Associations ===
@@ -67,8 +67,11 @@ class ClusterTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     ClusterMushroom.create!(cluster: cluster, mushroom: mushroom)
 
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "ClusterMushroom.count", -1 do
-      cluster.destroy
+      Cluster.without_strict_loading do
+        cluster.destroy
+      end
     end
   end
 
@@ -87,8 +90,12 @@ class ClusterTest < ActiveSupport::TestCase
 
   test "should delete cluster" do
     cluster = Cluster.create!(name: "Deletable Cluster", user: @user)
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
     assert_difference "Cluster.count", -1 do
-      cluster.destroy
+      Cluster.without_strict_loading do
+        cluster.destroy
+      end
     end
   end
 

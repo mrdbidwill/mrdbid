@@ -1,11 +1,11 @@
 one:
-  user_id: 1
+  user: one
   name: "PlantA"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
-  user_id: 1
+  user: one
   name: "PlantB"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
