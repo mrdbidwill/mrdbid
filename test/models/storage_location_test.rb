@@ -15,7 +15,7 @@ class StorageLocationTest < ActiveSupport::TestCase
   test "should require name" do
     storage_location = StorageLocation.new(name: nil)
     assert_not storage_location.valid?
-    assert_includes storage_location.errors[:name], "can't be blank"
+    assert_includes storage_location.errors[:name], "Name cannot be blank."
   end
 
   # === Associations ===

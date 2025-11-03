@@ -1,11 +1,11 @@
 one:
-  mushroom_id: one
-  project_id: one
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  project_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
-  mushroom_id: one
-  project_id: two
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  project_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

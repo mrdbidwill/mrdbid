@@ -46,15 +46,14 @@ class RoleTest < ActiveSupport::TestCase
 
   # === Dependent Associations ===
 
-  test "should not destroy role when user_roles exist" do
+  test "should not destroy role when user_roles exist due to foreign key constraint" do
     user = users(:one)
     UserRole.create!(user: user, role: @role)
 
-    # By default, dependent destroy is not set, so this tests the behavior
-    initial_count = Role.count
-    @role.destroy
-    # If dependent: :destroy was set, this would change
-    assert_equal initial_count, Role.count if UserRole.where(role_id: @role.id).any?
+    # Foreign key constraint should prevent deletion
+    assert_raises(ActiveRecord::InvalidForeignKey) do
+      @role.destroy
+    end
   end
 
   # === Business Logic ===
