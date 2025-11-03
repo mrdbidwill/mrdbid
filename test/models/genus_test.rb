@@ -38,11 +38,11 @@ class GenusTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     GenusMushroom.create!(genus: genus, mushroom: mushroom)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations before destroy to satisfy strict_loading
+    genus.reload
+    genus.genus_mushrooms.load
     assert_difference "GenusMushroom.count", -1 do
-      Genus.without_strict_loading do
-        genus.destroy
-      end
+      genus.destroy
     end
   end
 
@@ -50,11 +50,11 @@ class GenusTest < ActiveSupport::TestCase
     genus = Genus.create!(name: "Test Genus 2")
     Species.create!(name: "Test Species", genus: genus)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations before destroy to satisfy strict_loading
+    genus.reload
+    genus.species.load
     assert_difference "Species.count", -1 do
-      Genus.without_strict_loading do
-        genus.destroy
-      end
+      genus.destroy
     end
   end
 
@@ -74,11 +74,12 @@ class GenusTest < ActiveSupport::TestCase
   test "should delete genus" do
     genus = Genus.create!(name: "Deletable Genus")
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations before destroy to satisfy strict_loading
+    genus.reload
+    genus.genus_mushrooms.load
+    genus.species.load
     assert_difference "Genus.count", -1 do
-      Genus.without_strict_loading do
-        genus.destroy
-      end
+      genus.destroy
     end
   end
 
