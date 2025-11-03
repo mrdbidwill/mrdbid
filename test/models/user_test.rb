@@ -76,12 +76,20 @@ class UserTest < ActiveSupport::TestCase
       fungus_type: fungus_types(:one)
     )
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    # (production code uses eager loading patterns to avoid this)
+    # Preload all associations to satisfy strict_loading before destroy
+    user.reload
+    user.mushrooms.each do |m|
+      m.all_group_mushrooms.load
+      m.cluster_mushrooms.load
+      m.mushroom_projects.load
+      m.genus_mushrooms.load
+      m.mushroom_trees.load
+      m.mushroom_plants.load
+      m.mr_character_mushrooms.load
+    end
+
     assert_difference "Mushroom.count", -1 do
-      User.without_strict_loading do
-        user.destroy
-      end
+      user.destroy
     end
   end
 
@@ -93,12 +101,21 @@ class UserTest < ActiveSupport::TestCase
     user = User.create!(email: "test2@example.com", password: "password", confirmed_at: Time.current)
     user.all_groups.create!(name: "Test Group")
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    # (production code uses eager loading patterns to avoid this)
+    # Preload all associations to satisfy strict_loading before destroy
+    user.reload
+    user.all_groups.each { |g| g.all_group_mushrooms.load }
+    user.mushrooms.each do |m|
+      m.all_group_mushrooms.load
+      m.cluster_mushrooms.load
+      m.mushroom_projects.load
+      m.genus_mushrooms.load
+      m.mushroom_trees.load
+      m.mushroom_plants.load
+      m.mr_character_mushrooms.load
+    end
+
     assert_difference "AllGroup.count", -1 do
-      User.without_strict_loading do
-        user.destroy
-      end
+      user.destroy
     end
   end
 
@@ -110,12 +127,21 @@ class UserTest < ActiveSupport::TestCase
     user = User.create!(email: "test3@example.com", password: "password", confirmed_at: Time.current)
     user.clusters.create!(name: "Test Cluster")
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    # (production code uses eager loading patterns to avoid this)
+    # Preload all associations to satisfy strict_loading before destroy
+    user.reload
+    user.clusters.each { |c| c.cluster_mushrooms.load }
+    user.mushrooms.each do |m|
+      m.all_group_mushrooms.load
+      m.cluster_mushrooms.load
+      m.mushroom_projects.load
+      m.genus_mushrooms.load
+      m.mushroom_trees.load
+      m.mushroom_plants.load
+      m.mr_character_mushrooms.load
+    end
+
     assert_difference "Cluster.count", -1 do
-      User.without_strict_loading do
-        user.destroy
-      end
+      user.destroy
     end
   end
 
@@ -127,12 +153,21 @@ class UserTest < ActiveSupport::TestCase
     user = User.create!(email: "test4@example.com", password: "password", confirmed_at: Time.current)
     user.projects.create!(name: "Test Project")
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    # (production code uses eager loading patterns to avoid this)
+    # Preload all associations to satisfy strict_loading before destroy
+    user.reload
+    user.projects.each { |p| p.mushroom_projects.load }
+    user.mushrooms.each do |m|
+      m.all_group_mushrooms.load
+      m.cluster_mushrooms.load
+      m.mushroom_projects.load
+      m.genus_mushrooms.load
+      m.mushroom_trees.load
+      m.mushroom_plants.load
+      m.mr_character_mushrooms.load
+    end
+
     assert_difference "Project.count", -1 do
-      User.without_strict_loading do
-        user.destroy
-      end
+      user.destroy
     end
   end
 
