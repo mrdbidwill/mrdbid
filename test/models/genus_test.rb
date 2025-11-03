@@ -1,3 +1,4 @@
+# test/models/genus_test.rb
 require "test_helper"
 
 class GenusTest < ActiveSupport::TestCase
@@ -5,11 +6,92 @@ class GenusTest < ActiveSupport::TestCase
     @genus = genera(:one)
   end
 
+  # === Validations ===
+
   test "should be valid with valid attributes" do
     assert @genus.valid?
   end
 
-  test "should have many mushrooms" do
+  test "should have name attribute" do
+    assert_respond_to @genus, :name
+  end
+
+  # === Associations ===
+
+  test "should have many genus_mushrooms" do
+    assert_respond_to @genus, :genus_mushrooms
+  end
+
+  test "should have many mushrooms through genus_mushrooms" do
     assert_respond_to @genus, :mushrooms
+    assert_instance_of Mushroom, @genus.mushrooms.first if @genus.mushrooms.any?
+  end
+
+  test "should have many species" do
+    assert_respond_to @genus, :species
+  end
+
+  # === Dependent Associations ===
+
+  test "should destroy associated genus_mushrooms when genus is destroyed" do
+    genus = Genus.create!(name: "Test Genus")
+    mushroom = mushrooms(:one)
+    GenusMushroom.create!(genus: genus, mushroom: mushroom)
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
+    assert_difference "GenusMushroom.count", -1 do
+      Genus.without_strict_loading do
+        genus.destroy
+      end
+    end
+  end
+
+  test "should destroy associated species when genus is destroyed" do
+    genus = Genus.create!(name: "Test Genus 2")
+    Species.create!(name: "Test Species", genus: genus)
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
+    assert_difference "Species.count", -1 do
+      Genus.without_strict_loading do
+        genus.destroy
+      end
+    end
+  end
+
+  # === CRUD Operations ===
+
+  test "should create new genus" do
+    assert_difference "Genus.count", 1 do
+      Genus.create!(name: "New Genus")
+    end
+  end
+
+  test "should update genus attributes" do
+    @genus.update(name: "Updated Genus")
+    assert_equal "Updated Genus", @genus.reload.name
+  end
+
+  test "should delete genus" do
+    genus = Genus.create!(name: "Deletable Genus")
+
+    # Disable strict_loading temporarily to allow destroy cascade in test
+    assert_difference "Genus.count", -1 do
+      Genus.without_strict_loading do
+        genus.destroy
+      end
+    end
+  end
+
+  # === Timestamps ===
+
+  test "should have timestamps" do
+    assert_not_nil @genus.created_at
+    assert_not_nil @genus.updated_at
+  end
+
+  # === Table Name ===
+
+  test "should use genera table name" do
+    assert_equal "genera", Genus.table_name
   end
 end
