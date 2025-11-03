@@ -21,7 +21,7 @@ class AllGroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create all_group" do
     assert_difference("AllGroup.count") do
-      post all_groups_url, params: { all_group: { comments: @all_group.comments, description: @all_group.description, name: @all_group.name } }
+      post all_groups_url, params: { all_group: { comments: "New comment", description: "New description", name: "New All Group Name" } }
     end
 
     assert_redirected_to all_group_url(AllGroup.last)

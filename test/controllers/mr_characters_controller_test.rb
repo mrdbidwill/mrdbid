@@ -4,49 +4,72 @@ class MrCharacterControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @user = users(:one) # Reference your user fixture
+    @user.permission_id = 2 # Set admin permission
     @mr_character = mr_characters(:one) # Reference your mr_character fixture
     sign_in @user # Devise helper to sign in the user
   end
 
 
   test "should get index" do
-    get mr_characters_url
+    get admin_mr_characters_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_mr_character_url
+    get new_admin_mr_character_url
     assert_response :success
   end
 
   test "should create mr_character" do
+    # Get valid IDs from database
+    part = Part.first
+    lookup_type = LookupType.first
+    display_option = DisplayOption.first
+    source_data = SourceData.first
+
     assert_difference("MrCharacter.count") do
-      post mr_characters_url, params: { mr_character: { comments: @mr_character.comments, description: @mr_character.description, name: @mr_character.name } }
+      post admin_mr_characters_url, params: { mr_character: {
+        name: "New Character #{Time.now.to_i}",
+        description: "New description",
+        comments: "New comment",
+        part_id: part.id,
+        lookup_type_id: lookup_type.id,
+        display_option_id: display_option.id,
+        source_data_id: source_data.id
+      } }
     end
 
-    assert_redirected_to mr_character_url(MrCharacter.last)
+    assert_redirected_to admin_mr_characters_url
   end
 
   test "should show mr_character" do
-    get mr_character_url(@mr_character)
+    get admin_mr_character_url(@mr_character)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_mr_character_url(@mr_character)
+    get edit_admin_mr_character_url(@mr_character)
     assert_response :success
   end
 
   test "should update mr_character" do
-    patch mr_character_url(@mr_character), params: { mr_character: { comments: @mr_character.comments, description: @mr_character.description, name: @mr_character.name } }
-    assert_redirected_to mr_character_url(@mr_character)
+    patch admin_mr_character_url(@mr_character), params: { mr_character: {
+      name: @mr_character.name,
+      description: @mr_character.description,
+      comments: @mr_character.comments,
+      part_id: @mr_character.part_id,
+      lookup_type_id: @mr_character.lookup_type_id,
+      display_option_id: @mr_character.display_option_id,
+      source_data_id: @mr_character.source_data_id
+    } }
+    assert_redirected_to admin_mr_characters_url
   end
 
   test "should destroy mr_character" do
     assert_difference("MrCharacter.count", -1) do
-      delete mr_character_url(@mr_character)
+      delete admin_mr_character_url(@mr_character)
     end
 
-    assert_redirected_to mr_character_url
+    assert_redirected_to admin_mr_characters_url
   end
 end

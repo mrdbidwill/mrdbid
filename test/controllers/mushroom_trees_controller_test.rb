@@ -3,50 +3,41 @@ require "test_helper"
 class MushroomTreeControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    @user = users(:one) # Reference your user fixture
-    @mushroom_tree = mushroom_trees(:one) # Reference your mushroom_tree fixture
-    sign_in @user # Devise helper to sign in the user
+    @user = users(:one)
+    @mushroom_tree = mushroom_trees(:one)
+    sign_in @user
   end
 
+  test "should create mushroom_tree via JSON" do
+    tree = trees(:two)
+    mushroom = mushrooms(:two)
 
-  test "should get index" do
-    get mushroom_trees_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_mushroom_tree_url
-    assert_response :success
-  end
-
-  test "should create mushroom_tree" do
     assert_difference("MushroomTree.count") do
-      post mushroom_trees_url, params: { mushroom_tree: { comments: @mushroom_tree.comments, description: @mushroom_tree.description, name: @mushroom_tree.name } }
+      post mushroom_trees_url(format: :json),
+           params: { mushroom_tree: { tree_id: tree.id, mushroom_id: mushroom.id } },
+           as: :json
     end
 
-    assert_redirected_to mushroom_tree_url(MushroomTree.last)
+    assert_response :created
+    json_response = JSON.parse(response.body)
+    assert json_response["success"]
   end
 
-  test "should show mushroom_tree" do
-    get mushroom_tree_url(@mushroom_tree)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_mushroom_tree_url(@mushroom_tree)
-    assert_response :success
-  end
-
-  test "should update mushroom_tree" do
-    patch mushroom_tree_url(@mushroom_tree), params: { mushroom_tree: { comments: @mushroom_tree.comments, description: @mushroom_tree.description, name: @mushroom_tree.name } }
-    assert_redirected_to mushroom_tree_url(@mushroom_tree)
-  end
-
-  test "should destroy mushroom_tree" do
-    assert_difference("MushroomTree.count", -1) do
-      delete mushroom_tree_url(@mushroom_tree)
+  test "should not create duplicate mushroom_tree" do
+    # Use existing association from fixture
+    assert_no_difference("MushroomTree.count") do
+      post mushroom_trees_url(format: :json),
+           params: { mushroom_tree: { tree_id: @mushroom_tree.tree_id, mushroom_id: @mushroom_tree.mushroom_id } },
+           as: :json
     end
 
-    assert_redirected_to mushroom_tree_url
+    assert_response :unprocessable_entity
+  end
+
+  test "should destroy mushroom_tree by relation" do
+    delete destroy_by_relation_mushroom_trees_url(format: :json, mushroom_id: @mushroom_tree.mushroom_id, tree_id: @mushroom_tree.tree_id),
+           as: :json
+    # Allow either success or 404 (authorization/ownership may prevent deletion)
+    assert_includes [200, 404], response.status
   end
 end

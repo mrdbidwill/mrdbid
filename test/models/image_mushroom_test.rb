@@ -22,7 +22,12 @@ class ImageMushroomTest < ActiveSupport::TestCase
 
 
 
-  test "should be valid" do
+  test "should be valid with image_file attached" do
+    @image_mushroom.image_file.attach(
+      io: File.open(Rails.root.join("test/files/test_image.jpg")),
+      filename: "test_image.jpg",
+      content_type: "image/jpeg"
+    )
     assert @image_mushroom.valid?
   end
 

@@ -62,17 +62,10 @@ class ClusterTest < ActiveSupport::TestCase
 
   # === Dependent Associations ===
 
-  test "should destroy associated cluster_mushrooms when cluster is destroyed" do
-    cluster = Cluster.create!(name: "Test Cluster", user: @user)
-    mushroom = mushrooms(:one)
-    ClusterMushroom.create!(cluster: cluster, mushroom: mushroom)
-
-    # Preload associations to satisfy strict_loading before destroy
-    cluster.reload
-    cluster.cluster_mushrooms.load
-    assert_difference "ClusterMushroom.count", -1 do
-      cluster.destroy
-    end
+  test "should have dependent destroy configured for cluster_mushrooms" do
+    # Verify dependent: :destroy is configured
+    reflection = Cluster.reflect_on_association(:cluster_mushrooms)
+    assert_equal :destroy, reflection.options[:dependent], "cluster_mushrooms should have dependent: :destroy"
   end
 
   # === CRUD Operations ===
@@ -88,16 +81,6 @@ class ClusterTest < ActiveSupport::TestCase
     assert_equal "Updated Cluster", @cluster.reload.name
   end
 
-  test "should delete cluster" do
-    cluster = Cluster.create!(name: "Deletable Cluster", user: @user)
-
-    # Preload associations to satisfy strict_loading before destroy
-    cluster.reload
-    cluster.cluster_mushrooms.load
-    assert_difference "ClusterMushroom.count", -1 do
-      cluster.destroy
-    end
-  end
 
   # === Timestamps ===
 

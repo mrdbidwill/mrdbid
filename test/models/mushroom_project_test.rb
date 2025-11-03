@@ -27,6 +27,8 @@ class MushroomProjectTest < ActiveSupport::TestCase
   end
 
   test "should enforce unique project per mushroom" do
+    # Clean up any existing associations from fixtures
+    MushroomProject.where(mushroom: @mushroom, project: @project).destroy_all
     MushroomProject.create!(mushroom: @mushroom, project: @project)
     duplicate = MushroomProject.new(mushroom: @mushroom, project: @project)
     assert_not duplicate.valid?

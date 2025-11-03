@@ -17,9 +17,9 @@
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
           <%= render species %>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-            <%= link_to "Show", species, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+            <%= link_to "Show", admin_species_path(species), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
             <%= link_to "Edit", edit_admin_species_path(species), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-            <%= button_to "Delete", species, method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" } %>
+            <%= button_to "Delete", admin_species_path(species), method: :delete, class: "btn-danger", data: { turbo_confirm: "Are you sure?" } %>
           </div>
         </div>
       <% end %>

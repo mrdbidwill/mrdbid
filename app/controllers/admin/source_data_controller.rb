@@ -27,7 +27,7 @@ class Admin::SourceDataController < Admin::ApplicationController
     @source_data = SourceData.new(source_data_params)
     authorize @source_data
     if @source_data.save
-      redirect_to admin_source_data_path(@source_data), notice: "Source data was successfully created."
+      redirect_to admin_source_datum_path(@source_data), notice: "Source data was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,7 +42,7 @@ class Admin::SourceDataController < Admin::ApplicationController
   def update
     authorize @source_data
     if @source_data.update(source_data_params)
-      redirect_to admin_source_data_path(@source_data), notice: "Source data was successfully updated."
+      redirect_to admin_source_datum_path(@source_data), notice: "Source data was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

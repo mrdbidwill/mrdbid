@@ -4,11 +4,11 @@
     <%= species.name %>
   </div>
   <div>
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= species.description %>
+    <strong class="block font-medium mb-1">Genus:</strong>
+    <%= species.genus.name if species.genus %>
   </div>
   <div>
-    <strong class="block font-medium mb-1">Comments:</strong>
-    <%= species.comments %>
+    <strong class="block font-medium mb-1">MB List ID:</strong>
+    <%= species.mblist_id %>
   </div>
 </div>

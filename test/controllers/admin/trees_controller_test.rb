@@ -10,43 +10,43 @@ class TreesControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should get index" do
-    get trees_url
+    get admin_trees_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_tree_url
+    get new_admin_tree_url
     assert_response :success
   end
 
   test "should create tree" do
     assert_difference("Tree.count") do
-      post trees_url, params: { tree: { comments: @tree.comments, description: @tree.description, name: @tree.name } }
+      post admin_trees_url, params: { tree: { comments: @tree.comments, description: @tree.description, name: @tree.name } }
     end
 
-    assert_redirected_to tree_url(Tree.last)
+    assert_redirected_to admin_tree_url(Tree.last)
   end
 
   test "should show tree" do
-    get tree_url(@tree)
+    get admin_tree_url(@tree)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_tree_url(@tree)
+    get edit_admin_tree_url(@tree)
     assert_response :success
   end
 
   test "should update tree" do
-    patch tree_url(@tree), params: { tree: { comments: @tree.comments, description: @tree.description, name: @tree.name } }
-    assert_redirected_to tree_url(@tree)
+    patch admin_tree_url(@tree), params: { tree: { comments: @tree.comments, description: @tree.description, name: @tree.name } }
+    assert_redirected_to admin_tree_url(@tree)
   end
 
   test "should destroy tree" do
     assert_difference("Tree.count", -1) do
-      delete tree_url(@tree)
+      delete admin_tree_url(@tree)
     end
 
-    assert_redirected_to trees_url
+    assert_redirected_to admin_trees_url
   end
 end

@@ -4,7 +4,7 @@ class Admin::GeneraController < Admin::ApplicationController
   # GET /genera
   def index
     authorize Genus
-    @genera = policy_scope(Genus.order(:taxon_name))
+    @genera = policy_scope(Genus.order(:name))
   end
 
   # GET /genera/1
@@ -54,10 +54,10 @@ class Admin::GeneraController < Admin::ApplicationController
   private
 
   def set_genus
-    @genus = Genus.find(params.expect(:id))
+    @genus = Genus.includes(:genus_mushrooms, :species).find(params.expect(:id))
   end
 
   def genus_params
-    params.expect(genus: [:mblist_id, :taxon_name])
+    params.expect(genus: [:mblist_id, :name])
   end
 end

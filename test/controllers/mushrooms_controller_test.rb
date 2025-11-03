@@ -27,7 +27,8 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       }
       }
     end
-    assert_redirected_to mushroom_path(Mushroom.last)
+    # Controller redirects to image_mushrooms/new to add images to the new mushroom
+    assert_redirected_to new_image_mushroom_path(mushroom_id: Mushroom.last.id)
   end
 
 

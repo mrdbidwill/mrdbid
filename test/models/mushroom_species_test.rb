@@ -5,7 +5,9 @@ class MushroomSpeciesTest < ActiveSupport::TestCase
   def setup
     @mushroom = mushrooms(:one)
     @species = species(:one)
-    @mushroom_species = mushroom_species(:one)
+    # Don't load from fixtures, create fresh for each test
+    MushroomSpecies.where(mushroom: @mushroom, species: @species).destroy_all
+    @mushroom_species = MushroomSpecies.create!(mushroom: @mushroom, species: @species)
   end
 
   # === Validations ===
@@ -17,13 +19,13 @@ class MushroomSpeciesTest < ActiveSupport::TestCase
   test "should require mushroom" do
     mushroom_species = MushroomSpecies.new(species: @species)
     assert_not mushroom_species.valid?
-    assert_includes mushroom_species.errors[:mushroom_id], "can't be blank"
+    assert_includes mushroom_species.errors[:mushroom_id], "Mushroom cannot be blank."
   end
 
   test "should require species" do
     mushroom_species = MushroomSpecies.new(mushroom: @mushroom)
     assert_not mushroom_species.valid?
-    assert_includes mushroom_species.errors[:species_id], "can't be blank"
+    assert_includes mushroom_species.errors[:species_id], "Species cannot be blank."
   end
 
   # === Associations ===

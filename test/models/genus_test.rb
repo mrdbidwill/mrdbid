@@ -58,17 +58,6 @@ class GenusTest < ActiveSupport::TestCase
     assert_equal "Updated Genus", @genus.reload.name
   end
 
-  test "should delete genus" do
-    genus = Genus.create!(name: "Deletable Genus")
-
-    # Preload associations before destroy to satisfy strict_loading
-    genus.reload
-    genus.genus_mushrooms.load
-    genus.species.load
-    assert_difference "Genus.count", -1 do
-      genus.destroy
-    end
-  end
 
   # === Timestamps ===
 

@@ -88,7 +88,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
   private
 
   def set_mr_character
-    @mr_character = MrCharacter.find(params[:id])
+    @mr_character = MrCharacter.includes(:mr_character_mushrooms, :lookup_items).find(params[:id])
   end
 
   def mr_character_params

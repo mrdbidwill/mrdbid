@@ -27,6 +27,8 @@ class MushroomTreeTest < ActiveSupport::TestCase
   end
 
   test "should enforce uniqueness of tree per mushroom" do
+    # Clean up any existing associations from fixtures
+    MushroomTree.where(tree: @tree, mushroom: @mushroom).destroy_all
     MushroomTree.create!(tree: @tree, mushroom: @mushroom)
     duplicate = MushroomTree.new(tree: @tree, mushroom: @mushroom)
     assert_not duplicate.valid?

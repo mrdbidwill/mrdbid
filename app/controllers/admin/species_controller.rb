@@ -4,7 +4,7 @@ class Admin::SpeciesController < Admin::ApplicationController
   # GET /species
   def index
     authorize Species
-    @species = policy_scope(Species.order(:taxon_name))
+    @species = policy_scope(Species.includes(:genus).order(:name))
   end
 
   # GET /speciess/1
@@ -54,10 +54,10 @@ class Admin::SpeciesController < Admin::ApplicationController
   private
 
   def set_species
-    @species = Species.find(params.expect(:id))
+    @species = Species.includes(:mushroom_species, :genus).find(params.expect(:id))
   end
 
   def species_params
-    params.expect(species: [:mb_list_id, :taxon_name, :genera_id])
+    params.expect(species: [:mblist_id, :name, :genera_id])
   end
 end

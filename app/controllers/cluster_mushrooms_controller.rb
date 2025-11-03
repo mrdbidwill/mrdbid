@@ -28,6 +28,10 @@ class ClusterMushroomsController < ApplicationController
   def create
     @cluster_mushroom = ClusterMushroom.new(cluster_mushroom_params)
     @mushroom = Mushroom.find_by(id: cluster_mushroom_params[:mushroom_id])
+    # Disable strict_loading for error rendering
+    @cluster_mushroom.strict_loading!(false)
+    # Assign mushroom association to avoid strict_loading violations in view
+    @cluster_mushroom.mushroom = @mushroom if @mushroom
     # Only clusters owned by the mushroom owner should be selectable
     @clusters = @mushroom ? Cluster.where(user_id: @mushroom.user_id) : Cluster.none
     # Ownership guard: cluster must belong to the mushroom owner

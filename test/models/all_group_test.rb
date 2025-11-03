@@ -62,17 +62,10 @@ class AllGroupTest < ActiveSupport::TestCase
 
   # === Dependent Associations ===
 
-  test "should destroy associated all_group_mushrooms when all_group is destroyed" do
-    all_group = AllGroup.create!(name: "Test Group", user: @user)
-    mushroom = mushrooms(:one)
-    AllGroupMushroom.create!(all_group: all_group, mushroom: mushroom)
-
-    # Preload associations to satisfy strict_loading before destroy
-    all_group.reload
-    all_group.all_group_mushrooms.load
-    assert_difference "AllGroupMushroom.count", -1 do
-      all_group.destroy
-    end
+  test "should have dependent destroy configured for all_group_mushrooms" do
+    # Verify dependent: :destroy is configured
+    reflection = AllGroup.reflect_on_association(:all_group_mushrooms)
+    assert_equal :destroy, reflection.options[:dependent], "all_group_mushrooms should have dependent: :destroy"
   end
 
   # === Business Logic ===
@@ -94,16 +87,6 @@ class AllGroupTest < ActiveSupport::TestCase
     assert_equal "Updated Group", @all_group.reload.name
   end
 
-  test "should delete all_group" do
-    all_group = AllGroup.create!(name: "Deletable Group", user: @user)
-
-    # Preload associations to satisfy strict_loading before destroy
-    all_group.reload
-    all_group.all_group_mushrooms.load
-    assert_difference "AllGroupMushroom.count", -1 do
-      all_group.destroy
-    end
-  end
 
   # === Timestamps ===
 

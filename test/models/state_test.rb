@@ -63,9 +63,13 @@ class StateTest < ActiveSupport::TestCase
   # === Callbacks ===
 
   test "should set default country on create if conditions met" do
-    # This tests the set_default_country callback
-    # The callback sets country_id to 1 if country_id is nil and certain conditions
-    skip "Complex callback requiring specific mr_character_id setup"
+    # The set_default_country callback checks country&.mr_character_id == 101
+    # but Country model doesn't have mr_character_id field, so this will always be nil
+    # Test that the callback doesn't break normal state creation
+    state = State.new(name: "Test State Callback")
+    state.country = countries(:one)
+    assert state.save
+    assert_equal countries(:one).id, state.country_id
   end
 
   # === Timestamps ===

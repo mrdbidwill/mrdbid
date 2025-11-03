@@ -1,11 +1,11 @@
 one:
-  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
-  species_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:one, :mushrooms) %>
+  species_id: <%= ActiveRecord::FixtureSet.identify(:one, :species) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
-  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
-  species_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  mushroom_id: <%= ActiveRecord::FixtureSet.identify(:two, :mushrooms) %>
+  species_id: <%= ActiveRecord::FixtureSet.identify(:two, :species) %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

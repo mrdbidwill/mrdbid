@@ -17,7 +17,7 @@ end
 
 class ActiveSupport::TestCase
   # Ensure Users are loaded before all others
-  self.fixtures :users, :all_groups, :clusters, :cluster_mushrooms, :mushrooms
+  self.fixtures :users, :all_groups, :clusters, :cluster_mushrooms, :mushrooms, :mushroom_species, :source_data
 end
 
 

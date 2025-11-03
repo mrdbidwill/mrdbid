@@ -35,13 +35,17 @@ class CountryTest < ActiveSupport::TestCase
   # === Dependent Behavior ===
 
   test "should nullify mushrooms when country is destroyed" do
-    mushroom = @country.mushrooms.first
-    if mushroom
-      @country.destroy
-      assert_nil mushroom.reload.country_id
-    else
-      skip "No mushrooms associated with country fixture"
-    end
+    # Create a mushroom associated with this country for testing
+    user = users(:one)
+    mushroom = Mushroom.create!(
+      name: "Test Mushroom for Country",
+      user: user,
+      country: @country,
+      fungus_type: fungus_types(:one)
+    )
+
+    @country.destroy
+    assert_nil mushroom.reload.country_id
   end
 
   test "should allow deletion when mushrooms exist" do

@@ -54,7 +54,7 @@ class Admin::TreesController < Admin::ApplicationController
   private
 
   def set_tree
-    @tree = Tree.find(params.expect(:id))
+    @tree = Tree.includes(:mushroom_trees).find(params.expect(:id))
   end
 
   def tree_params

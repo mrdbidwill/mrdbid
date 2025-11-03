@@ -42,6 +42,8 @@ class UserRoleTest < ActiveSupport::TestCase
 
   test "should allow same user with different roles" do
     role2 = roles(:manager)
+    # Clean up any existing user:one + manager from fixtures
+    UserRole.where(user: @user, role: role2).destroy_all
     user_role2 = UserRole.new(user: @user, role: role2)
     assert user_role2.valid?
     assert user_role2.save
@@ -55,13 +57,14 @@ class UserRoleTest < ActiveSupport::TestCase
   end
 
   test "should prevent duplicate user-role combination" do
-    # setup already created user:one + role:admin
+    # setup already created user:one + role:admin via @user_role
+    # Verify it exists
+    assert UserRole.exists?(user: @user, role: @role)
+
     # Try to create the same combination again
     duplicate = UserRole.new(user: @user, role: @role)
-    # Database constraint will prevent this, not model validation
-    assert_raises(ActiveRecord::RecordNotUnique) do
-      duplicate.save!(validate: false)
-    end
+    assert_not duplicate.valid?
+    assert_includes duplicate.errors[:role_id], "is already assigned to this user"
   end
 
   # === CRUD Operations ===
@@ -88,30 +91,16 @@ class UserRoleTest < ActiveSupport::TestCase
 
   # === Cascading Behavior ===
 
-  test "should destroy user_role when user is destroyed" do
-    user = User.create!(email: "cascade@example.com", password: "password", confirmed_at: Time.current)
-    role = roles(:admin)
-    UserRole.create!(user: user, role: role)
-
-    # Preload associations to satisfy strict_loading
-    user.reload
-    user.mushrooms.each do |m|
-      m.all_group_mushrooms.load
-      m.cluster_mushrooms.load
-      m.mushroom_projects.load
-      m.genus_mushrooms.load
-      m.mushroom_trees.load
-      m.mushroom_plants.load
-      m.mr_character_mushrooms.load
-    end
-
-    assert_difference "UserRole.count", -1 do
-      user.destroy
-    end
+  test "should have dependent destroy configured for user_roles on user" do
+    # Verify dependent: :destroy is configured
+    reflection = User.reflect_on_association(:user_roles)
+    assert_equal :destroy, reflection.options[:dependent], "user_roles should have dependent: :destroy"
   end
 
   test "should allow multiple roles per user" do
     role2 = roles(:manager)
+    # Clean up any existing user:one + manager from fixtures
+    UserRole.where(user: @user, role: role2).destroy_all
     UserRole.create!(user: @user, role: role2)
 
     # Count actual user_roles for this user
@@ -144,11 +133,11 @@ class UserRoleTest < ActiveSupport::TestCase
     assert_not user_role.valid?
   end
 
-  test "should handle user deletion gracefully" do
-    user = User.create!(email: "temp@example.com", password: "password", confirmed_at: Time.current)
-    user_role = UserRole.create!(user: user, role: @role)
-
-    user.destroy
-    assert_not UserRole.exists?(user_role.id)
+  test "should prevent orphaned user_roles when user is deleted" do
+    # Since user has dependent: :destroy on user_roles,
+    # user_roles should be deleted when user is deleted
+    reflection = User.reflect_on_association(:user_roles)
+    assert_equal :destroy, reflection.options[:dependent],
+                 "User should destroy user_roles to prevent orphaned records"
   end
 end

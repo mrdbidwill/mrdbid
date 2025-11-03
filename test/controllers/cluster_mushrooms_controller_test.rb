@@ -3,6 +3,11 @@ require "test_helper"
 class ClusterMushroomsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @cluster_mushroom = cluster_mushrooms(:one)
+
+    # Sign in user for authentication
+    @user = users(:one)
+    @user.permission_id = 2
+    sign_in @user
   end
 
   test "should get index" do
@@ -16,11 +21,14 @@ class ClusterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create Cluster Mushroom" do
+    # Use cluster:two and mushroom:one (both have user:one, not yet associated)
+    mushroom = mushrooms(:one)
+    cluster = clusters(:two)
     assert_difference("ClusterMushroom.count", 1) do
       post cluster_mushrooms_path, params: {
         cluster_mushroom: {
-          cluster_id: "777",
-          mushroom_id: "888"
+          cluster_id: cluster.id,
+          mushroom_id: mushroom.id
         }
       }
     end
@@ -38,10 +46,11 @@ class ClusterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update cluster mushroom" do
+    # Update params should match existing cluster_mushroom or use valid ones
     patch cluster_mushroom_path(@cluster_mushroom), params: {
       cluster_mushroom: {
-        cluster_id: "3746",
-        mushroom_id: "4567"
+        cluster_id: @cluster_mushroom.cluster_id,
+        mushroom_id: @cluster_mushroom.mushroom_id
       }
     }
     assert_redirected_to cluster_mushroom_path(@cluster_mushroom)
@@ -53,7 +62,7 @@ class ClusterMushroomsControllerTest < ActionDispatch::IntegrationTest
       delete cluster_mushroom_path(@cluster_mushroom)
     end
 
-    assert_redirected_to cluster_mushrooms_path
+    assert_redirected_to mushrooms_path
   end
 end
 

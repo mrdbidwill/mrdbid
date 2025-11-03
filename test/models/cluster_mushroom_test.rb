@@ -35,7 +35,8 @@ class ClusterMushroomTest < ActiveSupport::TestCase
   end
 
   test "should enforce unique cluster per mushroom" do
-    ClusterMushroom.create!(mushroom: @mushroom, cluster: @cluster)
+    # Clean up any existing associations from fixtures
+    ClusterMushroom.where(mushroom: @mushroom, cluster: @cluster).destroy_all
     # First create the association
     ClusterMushroom.create!(mushroom: @mushroom, cluster: @cluster)
     # Then test duplicate

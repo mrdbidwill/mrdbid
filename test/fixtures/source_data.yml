@@ -1,9 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
 one:
   title: "Field Guide of Fungi"
   author: "Author One"
   ref: "123456789"
   item_code: "123456789"
-  source_data_type_id: one # Reference to source_data_type.yml
+  source_data_type_id: 1
   comments: "Comments One"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
@@ -13,7 +15,7 @@ two:
   author: "Author Two"
   ref: "987654321"
   item_code: "987654321"
-  source_data_type_id: two # Reference to source_data_type.yml
+  source_data_type_id: 2
   comments: "Comments Two"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
@@ -23,7 +25,7 @@ three:
   author: "Author Three"
   ref: "098765432"
   item_code: "098765432"
-  source_data_type_id: three # Reference to source_data_type.yml
+  source_data_type_id: 3
   comments: "Comments Three"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

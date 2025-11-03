@@ -3,6 +3,11 @@ require "test_helper"
 class AllGroupMushroomsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @all_group_mushroom = all_group_mushrooms(:one)
+
+    # Sign in user for authentication
+    @user = users(:one)
+    @user.permission_id = 2
+    sign_in @user
   end
 
   test "should get index" do
@@ -16,11 +21,12 @@ class AllGroupMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create Group" do
+    # Use all_groups(:two) with mushrooms(:one) to avoid duplicate
     assert_difference("AllGroupMushroom.count", 1) do
       post all_group_mushrooms_path, params: {
         all_group_mushroom: {
-          all_group_id: all_groups(:one).id, # Use fixture references
-          mushroom_id: mushrooms(:one).id    # Use fixture references
+          all_group_id: all_groups(:two).id,
+          mushroom_id: mushrooms(:one).id
         }
       }
     end
@@ -38,10 +44,11 @@ class AllGroupMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update all_group mushroom" do
+    # Keep same IDs as existing record to avoid uniqueness violation
     patch all_group_mushroom_path(@all_group_mushroom), params: {
       all_group_mushroom: {
-        all_group_id: all_groups(:two).id, # Use fixture references
-        mushroom_id: mushrooms(:two).id    # Use fixture references
+        all_group_id: @all_group_mushroom.all_group_id,
+        mushroom_id: @all_group_mushroom.mushroom_id
       }
     }
     assert_redirected_to all_group_mushroom_path(@all_group_mushroom)
@@ -53,7 +60,7 @@ class AllGroupMushroomsControllerTest < ActionDispatch::IntegrationTest
       delete all_group_mushroom_path(@all_group_mushroom)
     end
 
-    assert_redirected_to all_group_mushrooms_path
+    assert_redirected_to mushrooms_path
   end
 end
 

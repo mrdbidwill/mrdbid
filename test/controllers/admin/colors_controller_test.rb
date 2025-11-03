@@ -4,22 +4,27 @@ class ColorsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @color = colors(:one) # Reference your color fixture
+
+    # Sign in user for authentication
+    @user = users(:one)
+    @user.permission_id = 2
+    sign_in @user
   end
 
 
   test "should get index" do
-    get colors_url
+    get admin_colors_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_color_url
+    get new_admin_color_url
     assert_response :success
   end
 
   test "should create color" do
     assert_difference("Color.count", 1) do
-      post colors_url, params: {
+      post admin_colors_url, params: {
         color: {
           latin_name: "Unique Latin Name #{SecureRandom.hex(4)}",
           common_name: "Some Common Name",
@@ -39,30 +44,30 @@ class ColorsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to color_url(Color.last)
+    assert_redirected_to admin_color_url(Color.last)
   end
 
 
   test "should show color" do
-    get color_url(@color)
+    get admin_color_url(@color)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_color_url(@color)
+    get edit_admin_color_url(@color)
     assert_response :success
   end
 
   test "should update color" do
-    patch color_url(@color), params: { color: { latin_name: @color.latin_name, common_name: @color.common_name, color_group: @color.color_group } }
-    assert_redirected_to color_url(@color)
+    patch admin_color_url(@color), params: { color: { latin_name: @color.latin_name, common_name: @color.common_name, color_group: @color.color_group } }
+    assert_redirected_to admin_color_url(@color)
   end
 
   test "should destroy color" do
     assert_difference("Color.count", -1) do
-      delete color_url(@color)
+      delete admin_color_url(@color)
     end
 
-    assert_redirected_to colors_url
+    assert_redirected_to admin_colors_url
   end
 end

@@ -3,9 +3,11 @@ require "test_helper"
 class SearchByNameTest < ActiveSupport::TestCase
   def setup
     @user = users(:one)
-    @mushroom1 = Mushroom.create!(name: "Agaricus bisporus", user: @user)
-    @mushroom2 = Mushroom.create!(name: "Boletus edulis", user: @user)
-    @mushroom3 = Mushroom.create!(name: "Cantharellus cibarius", user: @user)
+    @country = countries(:one)
+    @fungus_type = fungus_types(:one)
+    @mushroom1 = Mushroom.create!(name: "Agaricus bisporus", user: @user, country: @country, fungus_type: @fungus_type)
+    @mushroom2 = Mushroom.create!(name: "Boletus edulis", user: @user, country: @country, fungus_type: @fungus_type)
+    @mushroom3 = Mushroom.create!(name: "Cantharellus cibarius", user: @user, country: @country, fungus_type: @fungus_type)
   end
 
   test "search_by_name scope should find mushrooms with matching names" do

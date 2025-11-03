@@ -21,7 +21,7 @@ class ClustersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create cluster" do
     assert_difference("Cluster.count") do
-      post clusters_url, params: { cluster: { comments: @cluster.comments, description: @cluster.description, name: @cluster.name } }
+      post clusters_url, params: { cluster: { comments: "New comment", description: "New description", name: "New Cluster Name #{Time.now.to_i}" } }
     end
 
     assert_redirected_to cluster_url(Cluster.last)

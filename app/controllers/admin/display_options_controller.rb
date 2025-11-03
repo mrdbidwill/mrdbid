@@ -11,7 +11,7 @@ class Admin::DisplayOptionsController < Admin::ApplicationController
 
   # GET /display_options/1
   def show
-    @display_option = authorize current_user.display_options.find(params[:id])
+    @display_option = authorize DisplayOption.find(params[:id])
     respond_to do |format|
       format.html
       format.json { render json: @display_option }
@@ -31,7 +31,7 @@ class Admin::DisplayOptionsController < Admin::ApplicationController
 
   # GET /display_options/1/edit
   def edit
-    @display_option = authorize current_user.display_options.find(params[:id])
+    @display_option = authorize DisplayOption.find(params[:id])
     respond_to do |format|
       format.html
       format.json { render json: @display_options }
@@ -41,8 +41,9 @@ class Admin::DisplayOptionsController < Admin::ApplicationController
   # POST /display_options
   def create
     @display_option = DisplayOption.new(display_option_params)
+    authorize @display_option
     if @display_option.save
-      redirect_to display_option_url(@display_option), notice: "Display option was successfully created."
+      redirect_to admin_display_option_url(@display_option), notice: "Display option was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -50,9 +51,9 @@ class Admin::DisplayOptionsController < Admin::ApplicationController
 
   # PATCH/PUT /display_options/1
   def update
-    @display_option = DisplayOption.find(params[:id])
+    @display_option = authorize DisplayOption.find(params[:id])
     if @display_option.update(display_option_params)
-      redirect_to display_option_url(@display_option), notice: "Display option was successfully updated."
+      redirect_to admin_display_option_url(@display_option), notice: "Display option was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,9 +61,9 @@ class Admin::DisplayOptionsController < Admin::ApplicationController
 
   # DELETE /display_options/1
   def destroy
-    @display_option = DisplayOption.find(params[:id])
+    @display_option = authorize DisplayOption.find(params[:id])
     @display_option.destroy!
-    redirect_to display_options_url, notice: "Display option was successfully deleted."
+    redirect_to admin_display_options_url, notice: "Display option was successfully deleted."
   end
 
   private

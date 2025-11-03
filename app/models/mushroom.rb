@@ -40,7 +40,10 @@ class Mushroom < ApplicationRecord
   has_many :image_mushrooms, dependent: :destroy
   has_many :images, through: :image_mushrooms
 
-  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id }
+  # Scopes
+  scope :search_by_name, ->(query) { where("name LIKE ?", "%#{query}%") }
+
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id, message: :unique }
   validates :country_id, presence: true
   validates :fungus_type_id, presence: true
   validates :description, length: { maximum: 4096 }
