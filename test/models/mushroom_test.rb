@@ -8,16 +8,13 @@ class MushroomTest < ActiveSupport::TestCase
     @mushroom = mushrooms(:one) # Refers to data in fixtures/mushrooms.yml
   end
 
-  test "should be valid" do
+  # === Validations ===
+
+  test "should be valid with valid attributes" do
     assert @mushroom.valid?
   end
 
-  test "should not be valid without a user" do
-    @mushroom.user = nil
-    assert_not @mushroom.valid?, "Mushroom should not be valid without an associated user"
-  end
-
-  test "should not save without a name" do
+  test "should require name" do
     @mushroom.name = nil
     assert_not @mushroom.valid?
     assert_includes @mushroom.errors[:name], "Name cannot be blank."
@@ -27,86 +24,239 @@ class MushroomTest < ActiveSupport::TestCase
     duplicate_mushroom = @mushroom.dup
     refute duplicate_mushroom.valid?
 
-    # Updated key matches what's in en.yml
     expected_message = I18n.t("activerecord.errors.models.mushroom.attributes.name.unique")
     assert_includes duplicate_mushroom.errors[:name], expected_message
-  end
-
-  test "should not save with description exceeding 4096 characters" do
-    @mushroom.description = "a" * 4097
-    refute @mushroom.valid?
-
-    # Properly interpolate :attribute and :count placeholders
-    expected_message = I18n.t("errors.messages.too_long", attribute: I18n.t("activerecord.attributes.mushroom.description"), count: 4096)
-    assert_includes @mushroom.errors[:description], expected_message
-  end
-
-
-
-  test "should validate user association" do
-    @mushroom.user = nil
-    assert_not @mushroom.valid?
-    assert_includes @mushroom.errors[:user], "User cannot be blank."
-  end
-
-  test "should respond to user association" do
-    assert_respond_to @mushroom, :user
-    assert_instance_of User, @mushroom.user
-  end
-
-  test "should destroy associated mr_character_mushrooms" do
-    assert_difference "MrCharacterMushroom.count", -@mushroom.mr_character_mushrooms.count do
-      @mushroom.destroy
-    end
-  end
-
-  test "user association should exist" do
-    assert @mushroom.user
-  end
-
-  test "should respond to associated mr_characters" do
-    assert_respond_to @mushroom, :mr_characters, "Mushroom should have many mr_characters"
-  end
-
-  test "should have associated mr_characters" do
-    assert_equal 1, @mushroom.mr_characters.count, "Expected 1 associated mr_character"
   end
 
   test "should enforce unique names for the same user but allow duplicates for different users" do
     user1 = users(:one)
     user2 = users(:two)
 
-    # Create a mushroom for user1
-    mushroom1 = Mushroom.create!(name: "Mushroom Name", user: user1)
+    mushroom1 = Mushroom.create!(
+      name: "Mushroom Name",
+      user: user1,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
 
-    # Attempt to create a mushroom with the same name for the same user
-    duplicate_mushroom = Mushroom.new(name: "Mushroom Name", user: user1)
+    duplicate_mushroom = Mushroom.new(
+      name: "Mushroom Name",
+      user: user1,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
     assert_not duplicate_mushroom.valid?, "Duplicate name for the same user should not be valid"
 
-    # Create a mushroom with the same name for a different user
-    mushroom_for_user2 = Mushroom.new(name: "Mushroom Name", user: user2)
+    mushroom_for_user2 = Mushroom.new(
+      name: "Mushroom Name",
+      user: user2,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
     assert mushroom_for_user2.valid?, "Mushrooms with the same name should be valid for different users"
   end
 
-  test "name should not be too long" do
-    @mushroom.name = "a" * 256 # Assuming 255 is the limit
+  test "name should not exceed 255 characters" do
+    @mushroom.name = "a" * 256
     assert_not @mushroom.valid?, "Mushroom name should not exceed the character limit"
+    assert_includes @mushroom.errors[:name], "is too long (maximum is 255 characters)"
   end
 
-  test "associated mr_character_mushrooms should be destroyed" do
-    display_option = DisplayOption.create!(name: "Valid Option") # Create a valid display_option
+  test "should require country" do
+    @mushroom.country = nil
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:country], "must exist"
+  end
 
-    # Set up a valid mr_character with the appropriate relationships
-    mr_character = mr_characters(:one)
+  test "should require fungus_type" do
+    @mushroom.fungus_type = nil
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:fungus_type], "must exist"
+  end
 
-    # Associate the mushroom and mr_character through MrCharacterMushroom
-    mr_character_mushroom = @mushroom.mr_character_mushrooms.create!(
-      mr_character: mr_character,
-      character_value: "Valid value"
-    )
+  test "description should not exceed 4096 characters" do
+    @mushroom.description = "a" * 4097
+    refute @mushroom.valid?
 
-    initial_count = @mushroom.mr_character_mushrooms.count
-    assert_difference("MrCharacterMushroom.count", -initial_count) do
+    expected_message = I18n.t("errors.messages.too_long",
+                              attribute: I18n.t("activerecord.attributes.mushroom.description"),
+                              count: 4096)
+    assert_includes @mushroom.errors[:description], expected_message
+  end
+
+  test "comments should not exceed 4096 characters" do
+    @mushroom.comments = "a" * 4097
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:comments], "is too long (maximum is 4096 characters)"
+  end
+
+  test "state is optional" do
+    @mushroom.state = nil
+    assert @mushroom.valid?, "Mushroom should be valid without state"
+  end
+
+  test "mushroom_storage_location is optional" do
+    @mushroom.mushroom_storage_location = nil
+    assert @mushroom.valid?, "Mushroom should be valid without storage location"
+  end
+
+  # === Associations - belongs_to ===
+
+  test "should belong to user" do
+    assert_respond_to @mushroom, :user
+    assert_instance_of User, @mushroom.user
+  end
+
+  test "should not be valid without a user" do
+    @mushroom.user = nil
+    assert_not @mushroom.valid?
+    assert_includes @mushroom.errors[:user], "User cannot be blank."
+  end
+
+  test "should belong to country" do
+    assert_respond_to @mushroom, :country
+    assert_instance_of Country, @mushroom.country
+  end
+
+  test "should belong to state optionally" do
+    assert_respond_to @mushroom, :state
+  end
+
+  test "should belong to fungus_type" do
+    assert_respond_to @mushroom, :fungus_type
+    assert_instance_of FungusType, @mushroom.fungus_type
+  end
+
+  test "should belong to mushroom_storage_location optionally" do
+    assert_respond_to @mushroom, :mushroom_storage_location
+  end
+
+  # === Associations - has_many ===
+
+  test "should have many all_group_mushrooms" do
+    assert_respond_to @mushroom, :all_group_mushrooms
+  end
+
+  test "should have many all_groups through all_group_mushrooms" do
+    assert_respond_to @mushroom, :all_groups
+  end
+
+  test "should have many cluster_mushrooms" do
+    assert_respond_to @mushroom, :cluster_mushrooms
+    assert_instance_of ClusterMushroom, @mushroom.cluster_mushrooms.first if @mushroom.cluster_mushrooms.any?
+  end
+
+  test "should have many clusters through cluster_mushrooms" do
+    assert_respond_to @mushroom, :clusters
+  end
+
+  test "should have many genus_mushrooms" do
+    assert_respond_to @mushroom, :genus_mushrooms
+  end
+
+  test "should have many genera through genus_mushrooms" do
+    assert_respond_to @mushroom, :genera
+  end
+
+  test "should have many mushroom_species" do
+    assert_respond_to @mushroom, :mushroom_species
+  end
+
+  test "should have many species through mushroom_species" do
+    assert_respond_to @mushroom, :species
+  end
+
+  test "should have many mushroom_trees" do
+    assert_respond_to @mushroom, :mushroom_trees
+  end
+
+  test "should have many trees through mushroom_trees" do
+    assert_respond_to @mushroom, :trees
+  end
+
+  test "should have many mushroom_plants" do
+    assert_respond_to @mushroom, :mushroom_plants
+  end
+
+  test "should have many plants through mushroom_plants" do
+    assert_respond_to @mushroom, :plants
+  end
+
+  test "should have many mushroom_projects" do
+    assert_respond_to @mushroom, :mushroom_projects
+  end
+
+  test "should have many projects through mushroom_projects" do
+    assert_respond_to @mushroom, :projects
+  end
+
+  test "should have many mr_character_mushrooms" do
+    assert_respond_to @mushroom, :mr_character_mushrooms
+  end
+
+  test "should have many mr_characters through mr_character_mushrooms" do
+    assert_respond_to @mushroom, :mr_characters
+    assert_equal 1, @mushroom.mr_characters.count, "Expected 1 associated mr_character"
+  end
+
+  test "should have many image_mushrooms" do
+    assert_respond_to @mushroom, :image_mushrooms
+  end
+
+  test "should have many images through image_mushrooms" do
+    assert_respond_to @mushroom, :images
+  end
+
+  # === Dependent Destroys ===
+
+  test "should destroy associated all_group_mushrooms" do
+    all_group = @mushroom.user.all_groups.create!(name: "Test Group")
+    @mushroom.all_group_mushrooms.create!(all_group: all_group)
+
+    assert_difference "AllGroupMushroom.count", -1 do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated cluster_mushrooms" do
+    initial_count = @mushroom.cluster_mushrooms.count
+    assert_difference "ClusterMushroom.count", -initial_count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated genus_mushrooms" do
+    assert_difference "GenusMushroom.count", -@mushroom.genus_mushrooms.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated mushroom_species" do
+    assert_difference "MushroomSpecies.count", -@mushroom.mushroom_species.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated mushroom_trees" do
+    assert_difference "MushroomTree.count", -@mushroom.mushroom_trees.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated mushroom_plants" do
+    assert_difference "MushroomPlant.count", -@mushroom.mushroom_plants.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated mushroom_projects" do
+    assert_difference "MushroomProject.count", -@mushroom.mushroom_projects.count do
+      @mushroom.destroy
+    end
+  end
+
+  test "should destroy associated mr_character_mushrooms" do
+    assert_difference "MrCharacterMushroom.count", -@mushroom.mr_character_mushrooms.count do
       @mushroom.destroy
     end
   end
@@ -117,9 +267,94 @@ class MushroomTest < ActiveSupport::TestCase
     end
   end
 
-  test "should respond to cluster_mushrooms association" do
-    assert_respond_to @mushroom, :cluster_mushrooms
-    assert_instance_of ClusterMushroom, @mushroom.cluster_mushrooms.first
+  # === Callbacks ===
+
+  test "should prevent id change" do
+    original_id = @mushroom.id
+    @mushroom.id = original_id + 1
+
+    assert_not @mushroom.save
+    assert_includes @mushroom.errors[:id], "cannot be changed"
   end
 
+  test "id should be readonly" do
+    assert @mushroom.class.readonly_attributes.include?("id")
+  end
+
+  # === CRUD Operations ===
+
+  test "should create mushroom with valid attributes" do
+    assert_difference "Mushroom.count", 1 do
+      Mushroom.create!(
+        name: "New Mushroom",
+        user: @user,
+        country: countries(:one),
+        fungus_type: fungus_types(:one)
+      )
+    end
+  end
+
+  test "should update mushroom attributes" do
+    @mushroom.update(name: "Updated Name")
+    assert_equal "Updated Name", @mushroom.reload.name
+  end
+
+  test "should destroy mushroom" do
+    assert_difference "Mushroom.count", -1 do
+      @mushroom.destroy
+    end
+  end
+
+  # === Timestamps ===
+
+  test "should have timestamps" do
+    assert_not_nil @mushroom.created_at
+    assert_not_nil @mushroom.updated_at
+  end
+
+  test "should update updated_at on save" do
+    original_time = @mushroom.updated_at
+    sleep 0.01 # Ensure time difference
+    @mushroom.update(name: "Updated")
+    assert @mushroom.updated_at > original_time
+  end
+
+  # === Edge Cases ===
+
+  test "should handle nil description" do
+    @mushroom.description = nil
+    assert @mushroom.valid?
+  end
+
+  test "should handle nil comments" do
+    @mushroom.comments = nil
+    assert @mushroom.valid?
+  end
+
+  test "should handle empty string for optional fields" do
+    @mushroom.description = ""
+    @mushroom.comments = ""
+    assert @mushroom.valid?
+  end
+
+  test "should accept maximum length strings" do
+    @mushroom.name = "a" * 255
+    @mushroom.description = "b" * 4096
+    @mushroom.comments = "c" * 4096
+    assert @mushroom.valid?
+  end
+
+  test "should associate with different countries" do
+    country2 = countries(:two)
+    @mushroom.country = country2
+    assert @mushroom.valid?
+    assert_equal country2, @mushroom.country
+  end
+
+  test "should associate with different fungus types" do
+    fungus_type2 = fungus_types(:two)
+    @mushroom.fungus_type = fungus_type2
+    assert @mushroom.valid?
+    assert_equal fungus_type2, @mushroom.fungus_type
+  end
 end

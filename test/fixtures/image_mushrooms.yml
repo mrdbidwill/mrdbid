@@ -2,11 +2,10 @@ one:
   image_name: "One Image"
   mushroom: one
   part: one
-  lens: "50mm"
+  lens_id: 1
   exposure: "1/60"
   aperture: "f/2.8"
   iso: "100"
-  camera: one
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -14,10 +13,9 @@ two:
   image_name: "Two Image"
   mushroom: two
   part: one
-  lens: "35mm"
+  lens_id: 1
   exposure: "1/125"
   aperture: "f/4.0"
   iso: "200"
-  camera: two
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

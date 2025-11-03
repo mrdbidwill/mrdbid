@@ -1,11 +1,11 @@
 one:
   mblist_id: "1"
-  taxon_name: "GenusAlpha"
+  name: "GenusAlpha"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
 two:
   mblist_id: "2"
-  taxon_name: "GenusBeta"
+  name: "GenusBeta"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
