@@ -67,11 +67,11 @@ class AllGroupTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     AllGroupMushroom.create!(all_group: all_group, mushroom: mushroom)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations to satisfy strict_loading before destroy
+    all_group.reload
+    all_group.all_group_mushrooms.load
     assert_difference "AllGroupMushroom.count", -1 do
-      AllGroup.without_strict_loading do
-        all_group.destroy
-      end
+      all_group.destroy
     end
   end
 
@@ -97,11 +97,11 @@ class AllGroupTest < ActiveSupport::TestCase
   test "should delete all_group" do
     all_group = AllGroup.create!(name: "Deletable Group", user: @user)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    assert_difference "AllGroup.count", -1 do
-      AllGroup.without_strict_loading do
-        all_group.destroy
-      end
+    # Preload associations to satisfy strict_loading before destroy
+    all_group.reload
+    all_group.all_group_mushrooms.load
+    assert_difference "AllGroupMushroom.count", -1 do
+      all_group.destroy
     end
   end
 

@@ -67,11 +67,11 @@ class ClusterTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     ClusterMushroom.create!(cluster: cluster, mushroom: mushroom)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations to satisfy strict_loading before destroy
+    cluster.reload
+    cluster.cluster_mushrooms.load
     assert_difference "ClusterMushroom.count", -1 do
-      Cluster.without_strict_loading do
-        cluster.destroy
-      end
+      cluster.destroy
     end
   end
 
@@ -91,11 +91,11 @@ class ClusterTest < ActiveSupport::TestCase
   test "should delete cluster" do
     cluster = Cluster.create!(name: "Deletable Cluster", user: @user)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
-    assert_difference "Cluster.count", -1 do
-      Cluster.without_strict_loading do
-        cluster.destroy
-      end
+    # Preload associations to satisfy strict_loading before destroy
+    cluster.reload
+    cluster.cluster_mushrooms.load
+    assert_difference "ClusterMushroom.count", -1 do
+      cluster.destroy
     end
   end
 

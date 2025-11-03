@@ -95,10 +95,7 @@ class MushroomTest < ActiveSupport::TestCase
     assert @mushroom.valid?, "Mushroom should be valid without state"
   end
 
-  test "mushroom_storage_location is optional" do
-    @mushroom.storage_location = nil
-    assert @mushroom.valid?, "Mushroom should be valid without storage location"
-  end
+  # Note: storage_location association removed from model
 
   # === Associations - belongs_to ===
 

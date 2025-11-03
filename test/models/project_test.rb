@@ -60,11 +60,11 @@ class ProjectTest < ActiveSupport::TestCase
     mushroom = mushrooms(:one)
     MushroomProject.create!(project: project, mushroom: mushroom)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations to satisfy strict_loading before destroy
+    project.reload
+    project.mushroom_projects.load
     assert_difference "MushroomProject.count", -1 do
-      Project.without_strict_loading do
-        project.destroy
-      end
+      project.destroy
     end
   end
 
@@ -90,11 +90,11 @@ class ProjectTest < ActiveSupport::TestCase
   test "should delete project" do
     project = Project.create!(name: "Deletable Project", user: @user)
 
-    # Disable strict_loading temporarily to allow destroy cascade in test
+    # Preload associations to satisfy strict_loading before destroy
+    project.reload
+    project.mushroom_projects.load
     assert_difference "Project.count", -1 do
-      Project.without_strict_loading do
-        project.destroy
-      end
+      project.destroy
     end
   end
 

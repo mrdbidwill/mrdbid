@@ -15,7 +15,7 @@ class MrCharacterMushroomTest < ActiveSupport::TestCase
   test "should require character_value" do
     mcm = MrCharacterMushroom.new(mr_character: @mr_character, mushroom: @mushroom)
     assert_not mcm.valid?
-    assert_includes mcm.errors[:character_value], "can't be blank"
+    assert_includes mcm.errors[:character_value], "Character value cannot be blank."
   end
 
   test "should belong to mr_character" do
