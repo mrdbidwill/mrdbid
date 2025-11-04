@@ -31,10 +31,10 @@ Rails.application.routes.draw do
   resources :clusters
   resources :cluster_mushrooms
   resources :mr_character_mushrooms, only: [:create]
-  resources :mushroom_trees
-  resources :mushroom_plants
+  resources :mushroom_trees, except: [:destroy]
+  resources :mushroom_plants, except: [:destroy]
   resources :mushroom_projects
-  resources :mushroom_species
+  resources :mushroom_species, except: [:destroy]
   resources :projects
   resources :genus_mushrooms, except: [:destroy]
   resources :states, only: [:index] # main use is for states in the dropdown
