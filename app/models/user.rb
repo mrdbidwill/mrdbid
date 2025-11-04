@@ -62,5 +62,22 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
+  has_many :trusted_devices, dependent: :destroy
+
+  # Trusted device methods
+  def trust_device!(fingerprint)
+    # Remove any existing trusted device for this fingerprint
+    trusted_devices.where(device_fingerprint: fingerprint).destroy_all
+
+    # Create new trusted device
+    trusted_devices.create!(device_fingerprint: fingerprint)
+  end
+
+  def device_trusted?(device_token, fingerprint)
+    trusted_devices.active.exists?(
+      device_token: device_token,
+      device_fingerprint: fingerprint
+    )
+  end
 
 end
