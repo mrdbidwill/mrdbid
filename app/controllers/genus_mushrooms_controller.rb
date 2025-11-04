@@ -20,12 +20,15 @@ class GenusMushroomsController < ApplicationController
   # DELETE /genus_mushrooms/destroy_by_relation.json
   def destroy_by_relation
     @genus_mushroom = GenusMushroom.find_by(mushroom_id: params[:mushroom_id], genus_id: params[:genus_id])
-    if @genus_mushroom && ( !respond_to?(:authorize) || authorize(@genus_mushroom) )
+    if @genus_mushroom
+      authorize @genus_mushroom if respond_to?(:authorize)
       @genus_mushroom.destroy
       render json: { success: true }
     else
       render json: { success: false, message: "Not found" }, status: :not_found
     end
+  rescue StandardError => e
+    render json: { success: false, message: e.message }, status: :internal_server_error
   end
 
   private

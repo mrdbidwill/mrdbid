@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   resources :mushroom_projects
   resources :mushroom_species
   resources :projects
-  resources :genus_mushrooms
+  resources :genus_mushrooms, except: [:destroy]
   resources :states, only: [:index] # main use is for states in the dropdown
 
   # Expose public ImageMushrooms index/show to match controller
@@ -102,15 +102,15 @@ Rails.application.routes.draw do
   get "autocomplete/plants",  to: "autocomplete#plants",  as: :plants_autocomplete, defaults: { format: :json }
 
   resources :genus_mushrooms, only: [:create], defaults: { format: :json } do
-    delete :destroy_by_relation, on: :collection
+    delete :destroy_by_relation, on: :collection, defaults: { format: :json }
   end
   resources :mushroom_species, only: [:create], defaults: { format: :json } do
-    delete :destroy_by_relation, on: :collection
+    delete :destroy_by_relation, on: :collection, defaults: { format: :json }
   end
   resources :mushroom_trees, only: [:create], defaults: { format: :json } do
-    delete :destroy_by_relation, on: :collection
+    delete :destroy_by_relation, on: :collection, defaults: { format: :json }
   end
   resources :mushroom_plants, only: [:create], defaults: { format: :json } do
-    delete :destroy_by_relation, on: :collection
+    delete :destroy_by_relation, on: :collection, defaults: { format: :json }
   end
 end

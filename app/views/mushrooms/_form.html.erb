@@ -204,12 +204,9 @@
             </div>
             <div class="flex flex-wrap gap-1" data-tokens-target="list">
               <% mushroom.genera.order(:name).each do |g| %>
-                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= g.id %>">
                   <%= g.name %>
-                  <%= link_to "×",
-                              genus_mushroom_path(GenusMushroom.find_by(mushroom_id: mushroom.id, genus_id: g.id)),
-                              data: { turbo_method: :delete, turbo_confirm: "Remove #{g.name}?" },
-                              class: "ml-1 text-gray-600 hover:text-red-600" %>
+                  <button type="button" class="ml-1 text-gray-600 hover:text-red-600" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= g.id %>">&times;</button>
                 </span>
               <% end %>
             </div>
@@ -253,12 +250,9 @@
             </div>
             <div class="flex flex-wrap gap-1" data-tokens-target="list">
               <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |sp| %>
-                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1">
+                <span class="inline-flex items-center bg-gray-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= sp.id %>">
                   <%= [sp.genus&.name, sp.name].compact.join(" ") %>
-                  <%= link_to "×",
-                              mushroom_species_path(MushroomSpecies.find_by(mushroom_id: mushroom.id, species_id: sp.id)),
-                              data: { turbo_method: :delete, turbo_confirm: "Remove #{[sp.genus&.name, sp.name].compact.join(' ')}?" },
-                              class: "ml-1 text-gray-600 hover:text-red-600" %>
+                  <button type="button" class="ml-1 text-gray-600 hover:text-red-600" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= sp.id %>">&times;</button>
                 </span>
               <% end %>
             </div>

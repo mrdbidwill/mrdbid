@@ -185,13 +185,17 @@
   .card {
     display: block;
     border-radius: 0.5rem;
-    border: 2px solid #f3f4f6;
+    border: 3px solid #F54927;   /* red is F54927  light-gray is F3F4F6*/
+    padding: 0.5rem;
+    margin-bottom: 1rem;
     transition: all 0.15s;
     background-color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
   .card:hover {
-    border-color: #93c5fd;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-color: #93c5fd;     /* blue is 93C5FD  light-gray is F3F4F6*/
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
   }
   .card-body {
     padding: 0.1rem;
@@ -203,7 +207,7 @@
   /* Group container with header */
   .group-box {
     padding-top: 0.1rem;
-    border: 4px solid #d1d5db;
+    border: 4px solid #FFBC01;   /* FFBC01 is light-yellow orangy */
     border-radius: 0.2rem;
     background-color: white;
   }

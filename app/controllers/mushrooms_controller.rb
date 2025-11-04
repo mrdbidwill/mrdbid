@@ -37,6 +37,7 @@ class MushroomsController < ApplicationController
       # Must include ALL associations used in views to prevent StrictLoadingViolationError
       # - fungus_type: Used for grouping and display
       # - country, state: Used for location display
+      # - genera, species: Used for scientific name display
       # - image_mushrooms.image_file_attachment.blob: For rendering images
       # - image_mushrooms.part: Used in _image_card partial (lines 10, 15) for alt text
       #
@@ -44,7 +45,7 @@ class MushroomsController < ApplicationController
       # Missing associations cause 500 errors in production due to strict_loading.
       # ============================================================================
       @mushrooms = policy_scope(Mushroom)
-                     .includes(:fungus_type, :country, :state,
+                     .includes(:fungus_type, :country, :state, :genera, :species,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')

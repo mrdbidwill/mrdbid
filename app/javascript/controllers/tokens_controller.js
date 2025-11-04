@@ -131,12 +131,23 @@ export default class extends Controller {
 
     removeToken(e) {
         const id = e.target.dataset.id
-        this.selected.delete(id)
         const pill = this.listTarget.querySelector(`[data-token-id="${id}"]`)
-        if(pill) pill.remove()
-        this.updateHiddenIds()
-        // Remove via AJAX
-        this.deleteToken(id)
+        const itemName = pill ? pill.textContent.trim().replace('×', '').trim() : 'this item'
+
+        // Show confirmation dialog
+        if (!confirm(`Remove ${itemName}?`)) {
+            return
+        }
+
+        // Remove via AJAX first, then update UI on success
+        this.deleteToken(id, () => {
+            // Success callback
+            this.selected.delete(id)
+            if(pill) pill.remove()
+            this.updateHiddenIds()
+        }, () => {
+            // Error callback - pill stays in place
+        })
     }
 
     updateHiddenIds() {
@@ -184,10 +195,13 @@ export default class extends Controller {
         })
     }
 
-    deleteToken(id) {
+    deleteToken(id, onSuccess, onError) {
         const kind = this.kindValue
         const mushroomId = this.mushroomIdValue
-        if(!kind || !mushroomId) return
+        if(!kind || !mushroomId) {
+            if(onError) onError()
+            return
+        }
         let route
         if(kind=="genera") {
             route = `/genus_mushrooms/destroy_by_relation.json?mushroom_id=${mushroomId}&genus_id=${id}`
@@ -198,17 +212,34 @@ export default class extends Controller {
         } else if (kind=="plants") {
             route = `/mushroom_plants/destroy_by_relation.json?mushroom_id=${mushroomId}&plant_id=${id}`
         } else {
+            if(onError) onError()
             return
         }
         fetch(route, {
             method: "DELETE",
             headers: {"Accept": "application/json", "X-CSRF-Token": this.csrfToken()}
         }).then(resp => {
-            if(!resp.ok) throw new Error("Delete failed")
-            // Optionally: visual feedback
-        }).catch(_err => {
-            alert("Failed to remove. Please try again.")
-            // Could re-add pill if needed
+            if(!resp.ok) {
+                // Try to get the response text to see what's actually being returned
+                return resp.text().then(text => {
+                    console.error('Delete failed. Status:', resp.status, 'Response:', text)
+                    try {
+                        const data = JSON.parse(text)
+                        throw new Error(data.message || `Delete failed (${resp.status})`)
+                    } catch(e) {
+                        throw new Error(`Delete failed (${resp.status}): ${text.substring(0, 100)}`)
+                    }
+                })
+            }
+            return resp.json()
+        }).then(_data => {
+            // Success
+            console.log('Delete successful')
+            if(onSuccess) onSuccess()
+        }).catch(err => {
+            console.error('Delete error:', err)
+            alert(err.message || "Failed to remove. Please try again.")
+            if(onError) onError()
         })
     }
 

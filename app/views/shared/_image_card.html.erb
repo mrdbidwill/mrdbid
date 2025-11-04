@@ -11,20 +11,4 @@
           loading: "lazy"
         ) %>
   </div>
-  <div class="card-body">
-    <p class="font-semibold"><%= image_mushroom.part&.name || "Part not set" %></p>
-    <%# Add other fields you’ve captured on ImageMushroom %>
-    <%# Example: %>
-    <% if image_mushroom.dimensions.present? %>
-      <p class="text-xs text-gray-600">Dimensions: <%= image_mushroom.dimensions %></p>
-    <% end %>
-    <% if image_mushroom.camera_model.present? %>
-      <p class="text-xs text-gray-600">Camera: <%= image_mushroom.camera_model %></p>
-    <% end %>
-    <% if image_mushroom.exposure.present? || image_mushroom.aperture.present? || image_mushroom.iso.present? %>
-      <p class="text-xs text-gray-600">
-        <%= [image_mushroom.exposure, image_mushroom.aperture, image_mushroom.iso&.then { "ISO #{_1}" }].compact.join(" · ") %>
-      </p>
-    <% end %>
-  </div>
 </div>

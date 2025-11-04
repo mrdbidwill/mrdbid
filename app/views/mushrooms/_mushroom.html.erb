@@ -8,6 +8,10 @@
         <!-- First row: 4 inline items -->
         <div class="md:col-span-2 border rounded-md p-2">
           <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span>
+          <% if mushroom.genera.any? && mushroom.species.any? %>
+            <br>
+            <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>
+          <% end %>
           <dd class="font-medium"><%= mushroom.state&.name %> , <%= mushroom.country&.name %> <span class="text-sm text-gray-400">Fungus Type:</span> <%= mushroom.fungus_type&.name %></dd>
         </div>
 
@@ -15,7 +19,7 @@
           <span class="text-sm text-gray-400">Genus:</span>
           <span class="text-gray-600">
             <% if mushroom.genera.any? %>
-              <%= mushroom.genera.map(&:name).join(', ') %>
+              <em><%= mushroom.genera.map(&:name).join(', ') %></em>
             <% else %>
               <span class="text-gray-400">Not assigned</span>
             <% end %>
@@ -24,7 +28,7 @@
           <span class="text-sm text-gray-400">Species:</span>
           <span class="text-gray-600">
             <% if mushroom.species.any? %>
-              <%= mushroom.species.map(&:name).join(', ') %>
+              <em><%= mushroom.species.map(&:name).join(', ') %></em>
             <% else %>
               <span class="text-gray-400">Not assigned</span>
             <% end %>

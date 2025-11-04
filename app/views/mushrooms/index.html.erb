@@ -34,6 +34,10 @@
               <% description = truncate(mushroom.description.to_s, length: 100) %>
               <% comments = truncate(mushroom.comments.to_s, length: 100) %>
               <p class="text-sm text-gray-800">
+                <% if mushroom.genera.any? && mushroom.species.any? %>
+                  <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>
+                  <br>
+                <% end %>
                 <span class="font-semibold"><%= mushroom.name.presence || "Unnamed" %></span>
                 <% if location.present? %><span class="muted"> <%= location %></span><% end %>
                 <% if description.present? %><span class="text-gray-700"> <%= description %></span><% end %>
