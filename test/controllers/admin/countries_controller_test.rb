@@ -44,8 +44,11 @@ class CountriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy country" do
+    # Create a country without states to avoid foreign key constraint
+    country = Country.create!(name: "Deletable Country")
+
     assert_difference("Country.count", -1) do
-      delete admin_country_url(@country)
+      delete admin_country_url(country)
     end
 
     assert_redirected_to admin_countries_url

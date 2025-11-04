@@ -23,28 +23,39 @@ class CountryTest < ActiveSupport::TestCase
   end
 
   test "should return associated states" do
-    state = states(:one)
-    assert_includes @country.states, state if @country.states.any?
+    # countries(:one) should have states(:one) and states(:two) based on fixtures
+    state_one = states(:one)
+    state_two = states(:two)
+
+    # Verify the country has the expected states
+    assert_includes @country.states, state_one, "Country should include state one"
+    assert_includes @country.states, state_two, "Country should include state two"
+    assert_equal 2, @country.states.count, "Country should have exactly 2 states"
   end
 
   test "should return associated mushrooms" do
-    mushroom = mushrooms(:one)
-    assert_includes @country.mushrooms, mushroom if @country.mushrooms.any?
+    # countries(:one) should have mushrooms(:one) based on fixtures
+    mushroom_one = mushrooms(:one)
+
+    # Verify the country has the expected mushroom
+    assert_includes @country.mushrooms, mushroom_one, "Country should include mushroom one"
+    assert_operator @country.mushrooms.count, :>=, 1, "Country should have at least 1 mushroom"
   end
 
   # === Dependent Behavior ===
 
   test "should nullify mushrooms when country is destroyed" do
-    # Create a mushroom associated with this country for testing
+    # Create a country without states to avoid foreign key constraints
+    country = Country.create!(name: "Test Country for Deletion")
     user = users(:one)
     mushroom = Mushroom.create!(
       name: "Test Mushroom for Country",
       user: user,
-      country: @country,
+      country: country,
       fungus_type: fungus_types(:one)
     )
 
-    @country.destroy
+    country.destroy
     assert_nil mushroom.reload.country_id
   end
 
