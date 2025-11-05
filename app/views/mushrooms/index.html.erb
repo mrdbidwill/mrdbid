@@ -10,18 +10,18 @@
   <%= render "shared/pagination", collection: @mushrooms %>
 
   <div class="page-actions">
-    <p class="p-title-red">Click on a mushroom to view details.</p>
+    <p class="p-title-red">Click on a mushroom to view details.</p>  <!-- Displays before the list of mushrooms -->
   </div>
 
   <div id="mushrooms" class="stack-list">
   <% if @mushrooms&.any? %>
     <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
     <% grouped.keys.sort.each do |ft_name| %>
-      <%= render "shared/data_group", title: "Mushroom Type: #{ft_name}" do %>
+      <%= render "shared/data_group", title: "Mushroom Type: #{ft_name}" do %>   <!-- Displays inside list border - outside list of mushroom -->
         <% grouped[ft_name].each do |mushroom| %>
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
               <% images.each do |im| %>
                 <%= render "shared/image_card", image_mushroom: im, mushroom_name: (mushroom.name.presence || "Mushroom") %>
               <% end %>
