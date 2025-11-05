@@ -5,9 +5,9 @@
 
   <div class="mt-3 flex items-center gap-2 text-sm">
     <span>Filter by subject:</span>
-    <%= link_to "All", articles_path, class: "px-2 py-1 rounded border #{'bg-gray-100' unless @subject}" %>
+    <%= link_to "All", articles_path, class: "px-2 py-1 rounded border #{@subject ? 'bg-white hover:bg-gray-50' : 'bg-indigo-600 text-white font-semibold border-indigo-600'}" %>
     <% @subjects.each do |s| %>
-      <%= link_to s, articles_path(subject: s), class: "px-2 py-1 rounded border #{'bg-blue-50' if s == @subject}" %>
+      <%= link_to s, articles_path(subject: s), class: "px-2 py-1 rounded border #{s == @subject ? 'bg-indigo-600 text-white font-semibold border-indigo-600' : 'bg-white hover:bg-gray-50'}" %>
     <% end %>
   </div>
 
