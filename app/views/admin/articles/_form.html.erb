@@ -22,7 +22,12 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     <div>
       <%= f.label :subject, class: "block text-sm font-medium" %>
-      <%= f.text_field :subject, class: "border rounded px-2 py-1 w-full" %>
+      <%= f.text_field :subject, list: "subjects-datalist", class: "border rounded px-2 py-1 w-full" %>
+      <datalist id="subjects-datalist">
+        <% Article.distinct.pluck(:subject).compact.sort.each do |s| %>
+          <option value="<%= s %>">
+        <% end %>
+      </datalist>
     </div>
     <div>
       <%= f.label :published_at, class: "block text-sm font-medium" %>
