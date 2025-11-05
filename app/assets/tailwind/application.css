@@ -10,6 +10,14 @@
         padding-bottom: 0.25rem;
         margin-bottom: .75rem;         /* Added for paragraph separation */
     }
+    .p-mrdbid-orange {
+        margin-top: 0.75rem;
+        font-size: 1.125rem;
+        line-height: 1.25rem;
+        padding-bottom: 0.25rem;
+        margin-bottom: .75rem;         /* Added for paragraph separation */
+        color: #E55300;
+    }
     .p-title {
         font-size: 1.25rem;
         font-weight: 700;
