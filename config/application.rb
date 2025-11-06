@@ -41,8 +41,17 @@ module Mrdbid
     # Force Rails to use structure.sql instead of schema.rb
     config.active_record.schema_format = :sql
     # Force Rails to raise errors on unknown database attributes
-    # Disabled for Solid Queue compatibility - workers need to lazily load associations
-    config.active_record.strict_loading_by_default = false
+    config.active_record.strict_loading_by_default = true
+
+    # Relax strict loading for background jobs (Solid Queue compatibility)
+    # Jobs need to lazily load associations, so we temporarily allow it during job execution
+    config.active_job.around_perform do |_job, block|
+      original_mode = ActiveRecord.strict_loading_mode
+      ActiveRecord.strict_loading_mode = :n_plus_one_only
+      block.call
+    ensure
+      ActiveRecord.strict_loading_mode = original_mode
+    end
 
     # Enable built-in I18n fallbacks
     config.i18n.fallbacks = true
