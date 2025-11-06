@@ -96,12 +96,15 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
         raise "Database export produced empty file. stderr: #{stderr}"
       end
 
-      # Move temp file to public tmp directory for nginx to serve
-      public_tmp_dir = Rails.root.join('public', 'tmp', 'exports')
-      FileUtils.mkdir_p(public_tmp_dir)
+      # Move temp file to shared tmp directory for nginx to serve
+      # Use shared path so files persist across deployments
+      shared_tmp_dir = Rails.root.join('..', '..', 'shared', 'public', 'tmp', 'exports')
+      FileUtils.mkdir_p(shared_tmp_dir)
 
-      final_path = public_tmp_dir.join(filename)
+      final_path = shared_tmp_dir.join(filename)
       FileUtils.mv(temp_file.path, final_path)
+      # Set permissions so nginx can read the file
+      FileUtils.chmod(0644, final_path)
       temp_file.close(true) # Close without unlinking since we moved it
 
       Rails.logger.info "Database export file moved to: #{final_path}"
