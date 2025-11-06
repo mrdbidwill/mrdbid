@@ -1,9 +1,13 @@
 # app/controllers/admin/database_exports_controller.rb
+require 'open3'
+
 class Admin::DatabaseExportsController < Admin::ApplicationController
   skip_after_action :verify_policy_scoped, only: :export
 
   def export
     authorize :database_export, :export?
+
+    Rails.logger.info "Database export started by user #{current_user.id}"
 
     # Tables to exclude for security reasons
     excluded_tables = [
@@ -38,6 +42,8 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
     password = config[:password]
     host = config[:host] || 'localhost'
 
+    Rails.logger.info "Exporting database: #{database} from host: #{host}"
+
     # Build mysqldump command with excluded tables
     ignore_tables = excluded_tables.map { |table| "--ignore-table=#{database}.#{table}" }.join(' ')
 
@@ -45,19 +51,49 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
     timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
     filename = "mrdbid_export_#{timestamp}.sql"
 
-    # Create temporary file
+    # Create temporary files
     temp_file = Tempfile.new([filename, '.sql'])
+    config_file = Tempfile.new(['mysql_config', '.cnf'])
 
     begin
-      # Build mysqldump command
-      password_option = password.present? ? "-p#{password}" : ""
-      command = "mysqldump -h #{host} -u #{username} #{password_option} #{ignore_tables} #{database} > #{temp_file.path}"
+      # Write MySQL config file with credentials (more secure than command line)
+      config_file.write("[client]\n")
+      config_file.write("user=#{username}\n")
+      config_file.write("password=#{password}\n") if password.present?
+      config_file.write("host=#{host}\n")
+      config_file.close
 
-      # Execute mysqldump
-      system(command)
+      Rails.logger.info "MySQL config file created at: #{config_file.path}"
 
-      unless $?.success?
-        raise "Database export failed"
+      # Build mysqldump command using config file
+      command = [
+        'mysqldump',
+        "--defaults-file=#{config_file.path}",
+        *ignore_tables.split(' '),
+        database
+      ]
+
+      Rails.logger.info "Executing mysqldump command (excluding #{excluded_tables.length} tables)"
+
+      # Execute mysqldump and capture output
+      stdout, stderr, status = Open3.capture3(*command)
+
+      unless status.success?
+        error_msg = "mysqldump failed with exit code #{status.exitstatus}: #{stderr}"
+        Rails.logger.error error_msg
+        raise error_msg
+      end
+
+      # Write output to temp file
+      temp_file.write(stdout)
+      temp_file.close
+
+      file_size = File.size(temp_file.path)
+      Rails.logger.info "Database export completed. File size: #{file_size} bytes"
+
+      # Validate file size
+      if file_size == 0
+        raise "Database export produced empty file. stderr: #{stderr}"
       end
 
       # Send file to user
@@ -65,13 +101,21 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
                 filename: filename,
                 type: 'application/sql',
                 disposition: 'attachment'
+
+      Rails.logger.info "Database export file sent to user #{current_user.id}"
     rescue => e
-      Rails.logger.error "Database export error: #{e.message}"
+      Rails.logger.error "Database export error: #{e.class.name} - #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
       redirect_to admin_root_path, alert: "Failed to export database: #{e.message}"
     ensure
-      # Clean up temp file after sending
-      temp_file.close
-      temp_file.unlink
+      # Clean up temp files
+      begin
+        config_file.unlink if config_file
+        temp_file.unlink if temp_file
+        Rails.logger.info "Temp files cleaned up"
+      rescue => cleanup_error
+        Rails.logger.error "Error cleaning up temp files: #{cleanup_error.message}"
+      end
     end
   end
 end
