@@ -2,6 +2,7 @@
 <p class="text-center text-red-800">You are in the Admin section. The links below are to various tables and tools for improving the mushroom identification process.</p>
 <nav class="admin-dashboard-nav">
   <ul>
+    <li><%= link_to "Download Database Backup", admin_database_export_path, data: { turbo: false }, class: "font-bold" %></li>
     <li><%= link_to "Articles", admin_articles_path %></li>
     <li><%= link_to "Colors", admin_colors_path %></li>
     <li><%= link_to "Countries", admin_countries_path %></li>
