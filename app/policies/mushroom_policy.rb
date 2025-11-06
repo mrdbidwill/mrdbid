@@ -25,9 +25,9 @@ class MushroomPolicy < ApplicationPolicy
     user.present?
   end
 
-  # Only show mushrooms owned by the current user
+  # Allow any signed-in user to view any mushroom (public viewing)
   def show?
-    owner?
+    user.present?
   end
   def edit?
     owner?

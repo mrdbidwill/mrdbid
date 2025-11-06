@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     resources :image_mushrooms, only: [:new, :create, :edit, :update, :destroy]
     resources :mushroom_species, only: [:index, :new, :create, :destroy]
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
+    resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
   end
+
+  # Standalone comparison show route (not nested under mushroom)
+  resources :mushroom_comparisons, only: [:show]
 
   # Generic resources
   resources :all_groups

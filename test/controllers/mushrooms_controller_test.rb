@@ -19,7 +19,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Mushroom.where(user_id: @user.id).count") do
       post mushrooms_path, params: {
         mushroom: {
-          name: "Portobello",
+          name: "Oyster Mushroom",
           description: "A healthy mushroom",
           country_id: countries(:one).id,
           state_id: states(:one).id,
@@ -34,6 +34,16 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show mushroom" do
     get mushroom_path(@mushroom)
+    assert_response :success
+  end
+
+  test "should allow any user to view mushroom owned by another user" do
+    # mushroom two belongs to user two
+    other_mushroom = mushrooms(:two)
+    assert_not_equal @user.id, other_mushroom.user_id
+
+    # user one should be able to view user two's mushroom
+    get mushroom_path(other_mushroom)
     assert_response :success
   end
 

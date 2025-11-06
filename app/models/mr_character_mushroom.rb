@@ -3,6 +3,8 @@ class MrCharacterMushroom < ApplicationRecord
   belongs_to :mushroom, counter_cache: true
 
   before_validation :normalize_boolean_character_value, if: :booleanish_display_option?
+  after_save :invalidate_mushroom_comparisons
+  after_destroy :invalidate_mushroom_comparisons
 
   validates :character_value, presence: true
 
@@ -51,6 +53,11 @@ class MrCharacterMushroom < ApplicationRecord
         errors.add(:character_value, "must be a valid color ID")
       end
     end
+  end
+
+  def invalidate_mushroom_comparisons
+    # When a character is added/updated/deleted, invalidate all comparisons involving this mushroom
+    MushroomComparison.involving_mushroom(mushroom_id).destroy_all
   end
 end
 
