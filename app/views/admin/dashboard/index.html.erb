@@ -3,11 +3,30 @@
 <nav class="admin-dashboard-nav">
   <ul>
     <li>
-      <%= link_to "Download Database Backup", admin_database_export_path, data: { turbo: false }, class: "font-bold" %>
+      <span id="db-export-link">
+        <%= link_to "Download Database Backup", admin_database_export_path, data: { turbo: false }, class: "font-bold" %>
+      </span>
+      <span id="db-export-mobile-warning" style="display: none;">
+        <strong>Download Database Backup</strong> (Desktop Only)
+      </span>
       <br>
       <small class="text-gray-600" style="font-size: 0.85em;">
-        ⚠️ Large file (~420MB). Download may take 10-30 seconds. Excludes user & security tables.
+        <span id="db-export-desktop-warning">
+          ⚠️ Large file (~420MB). Download may take 10-30 seconds. Excludes user & security tables.
+        </span>
+        <span id="db-export-mobile-msg" style="display: none; color: #d97706;">
+          ⚠️ Not available on mobile devices. Please use a desktop computer to download this 420MB file.
+        </span>
       </small>
+      <script>
+        // Detect if user is on mobile device
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          document.getElementById('db-export-link').style.display = 'none';
+          document.getElementById('db-export-mobile-warning').style.display = 'inline';
+          document.getElementById('db-export-desktop-warning').style.display = 'none';
+          document.getElementById('db-export-mobile-msg').style.display = 'inline';
+        }
+      </script>
     </li>
     <li><%= link_to "Articles", admin_articles_path %></li>
     <li><%= link_to "Colors", admin_colors_path %></li>
