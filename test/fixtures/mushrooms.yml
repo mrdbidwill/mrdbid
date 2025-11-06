@@ -24,3 +24,16 @@ two:
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
+three:
+  id:  "398765432"
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  name: "Portobello"
+  description: "Large brown mushroom"
+  comments: "Great for grilling"
+  user: one
+  country: one
+  state: one
+  fungus_type: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+

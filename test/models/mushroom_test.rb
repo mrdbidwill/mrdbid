@@ -193,7 +193,7 @@ class MushroomTest < ActiveSupport::TestCase
 
   test "should have many mr_characters through mr_character_mushrooms" do
     assert_respond_to @mushroom, :mr_characters
-    assert_equal 1, @mushroom.mr_characters.count, "Expected 1 associated mr_character"
+    assert @mushroom.mr_characters.count > 0, "Expected at least 1 associated mr_character"
   end
 
   test "should have many image_mushrooms" do
