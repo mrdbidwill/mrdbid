@@ -96,22 +96,38 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
         raise "Database export produced empty file. stderr: #{stderr}"
       end
 
-      # Send file to user
-      send_file temp_file.path,
-                filename: filename,
-                type: 'application/sql',
-                disposition: 'attachment'
+      # Move temp file to public tmp directory for nginx to serve
+      public_tmp_dir = Rails.root.join('public', 'tmp', 'exports')
+      FileUtils.mkdir_p(public_tmp_dir)
 
-      Rails.logger.info "Database export file sent to user #{current_user.id}"
+      final_path = public_tmp_dir.join(filename)
+      FileUtils.mv(temp_file.path, final_path)
+      temp_file.close(true) # Close without unlinking since we moved it
+
+      Rails.logger.info "Database export file moved to: #{final_path}"
+
+      # Use X-Accel-Redirect for nginx to handle large file download
+      # This prevents Rails timeout issues with large files
+      response.headers['Content-Type'] = 'application/sql'
+      response.headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+      response.headers['X-Accel-Redirect'] = "/tmp/exports/#{filename}"
+      response.headers['X-Accel-Buffering'] = 'no'
+
+      # Schedule cleanup after 1 hour
+      CleanupExportJob.set(wait: 1.hour).perform_later(final_path.to_s) if defined?(CleanupExportJob)
+
+      Rails.logger.info "Database export file sent to user #{current_user.id} via X-Accel-Redirect"
+
+      render body: nil
     rescue => e
       Rails.logger.error "Database export error: #{e.class.name} - #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
       redirect_to admin_root_path, alert: "Failed to export database: #{e.message}"
     ensure
-      # Clean up temp files
+      # Clean up temp files (but not the moved export file)
       begin
         config_file.unlink if config_file
-        temp_file.unlink if temp_file
+        # Don't unlink temp_file here as it was moved to public/tmp/exports
         Rails.logger.info "Temp files cleaned up"
       rescue => cleanup_error
         Rails.logger.error "Error cleaning up temp files: #{cleanup_error.message}"
