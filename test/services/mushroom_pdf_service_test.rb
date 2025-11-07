@@ -108,11 +108,64 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
   end
 
   test "handles mushroom with characters" do
-    skip "Requires fixture setup - tested via controller integration tests"
+    # Find or create required records
+    text_display = DisplayOption.find_or_create_by!(name: "text_box_string") do |d|
+      d.description = "Text box for strings"
+    end
+    source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
+    lookup_type = LookupType.first || LookupType.create!(name: "Test Type")
+
+    mr_character = MrCharacter.create!(
+      name: "Test Text Character",
+      part: parts(:one),
+      display_option: text_display,
+      source_data: source,
+      lookup_type: lookup_type
+    )
+
+    MrCharacterMushroom.create!(
+      mushroom: @mushroom,
+      mr_character: mr_character,
+      character_value: "test value"
+    )
+
+    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
+    service = MushroomPdfService.new(@mushroom)
+    pdf = service.generate
+
+    assert_not_nil pdf
+    pdf_string = pdf.render
+    assert pdf_string.length > 0
+    assert pdf_string.start_with?("%PDF")
   end
 
   test "formats boolean character values correctly" do
-    skip "Requires fixture setup - tested via controller integration tests"
+    # Find or create required records
+    boolean_display = DisplayOption.find_or_create_by!(name: "boolean_yes_no") do |d|
+      d.description = "Boolean Yes/No"
+    end
+    source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
+    lookup_type = LookupType.first || LookupType.create!(name: "Test Type")
+
+    mr_character = MrCharacter.create!(
+      name: "Test Boolean Character",
+      part: parts(:one),
+      display_option: boolean_display,
+      source_data: source,
+      lookup_type: lookup_type
+    )
+
+    char_mushroom = MrCharacterMushroom.create!(
+      mushroom: @mushroom,
+      mr_character: mr_character,
+      character_value: "true"
+    )
+
+    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
+    service = MushroomPdfService.new(@mushroom)
+    formatted_value = service.send(:format_character_value, char_mushroom)
+
+    assert_equal "Yes", formatted_value
   end
 
   test "handles PDF generation errors gracefully" do
