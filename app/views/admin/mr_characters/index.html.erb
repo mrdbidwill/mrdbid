@@ -18,11 +18,13 @@
     <p class="text-sm text-red-600 border-l-4 border-red-600 p-2">
       The character's form still needs some work, but it is important they be seen by expert users so that you can fix any mistakes and add more information.
     </p>
-    <p class="p-mrdbid">Be sure you understand what you are doing.</p>
+    <p class="p-mrdbid">Only Admin users view this page. Be sure you understand what you are doing.</p>
 
-    <p class="p-mrdbid">Any character that is not visible in characters, and if it is necessary, you can create it here. If the value can be communicated in one text field, then choose the right display option and you are done. For a single value form field, you should select one of the text box or boolean display options.</p>
+    <p class="p-mrdbid">Any character that is not visible in characters, and if it is necessary, you can create it here. Use "New Mushroom Character" button below the search area. If the value can be communicated in one text field, then choose the right display option and you are done. For a single value form field, you should select one of the text box or boolean display options.</p>
 
-    <p class="p-mrdbid">If the new character needs a list to choose from, you can create it one at a time in the lookup_items table using the link on the admin dashboard. If this is the case, choose radio or drop-down for most. Choose color if you have a color value and want the color chart.</p>
+    <p class="p-mrdbid">If the new character needs a list to choose from, you can create it one value at a time in the lookup_items table using the link on the admin dashboard. Choose radio or drop-down for most. Choose color if you have a color value and want the color chart.</p>
+
+    <p class="p-mrdbid">Please provide a source for your information. If your source has not already been entered into Source Data, you should add it before you create the character.</p>
 
     <p class="p-mrdbid">If you are unsure, or you have much data to enter, send an email and assistance will be provided.</p>
 
@@ -107,7 +109,7 @@
           <label for="q" class="form-label">Name or ID</label>
           <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 1234",
                              class: "form-input",
-                             style: "padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>%>
+                             style: "padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
           <p class="form-help">Partial matches allowed for names. Use a number to search by ID.</p>
         </div>
         <div class="flex gap-2">
