@@ -19,6 +19,7 @@ class MushroomsTest < ApplicationSystemTestCase
 
     fill_in "Name", with: "New Mushroom"
     fill_in "Description", with: "Detailed description for the new mushroom"
+    fill_in "Collection date", with: 3.days.ago.to_date
     click_on "Create Mushroom"
 
     assert_text "Mushroom was successfully created"

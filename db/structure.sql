@@ -609,6 +609,7 @@ CREATE TABLE `mushrooms` (
   `trees_count` int NOT NULL DEFAULT '0',
   `plants_count` int NOT NULL DEFAULT '0',
   `mr_character_mushrooms_count` int NOT NULL DEFAULT '0',
+  `collection_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_mushrooms_on_user_id_and_name` (`user_id`,`name`),
   KEY `index_mushrooms_on_user_id` (`user_id`),
@@ -903,6 +904,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251107204901'),
 ('20251107125052'),
 ('20251107121443'),
 ('20251106124555'),

@@ -8,6 +8,7 @@ one:
   country: one
   state: one
   fungus_type: one
+  collection_date: <%= 7.days.ago.to_date %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -21,6 +22,7 @@ two:
   country: two
   state: two
   fungus_type: two
+  collection_date: <%= 14.days.ago.to_date %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -34,6 +36,6 @@ three:
   country: one
   state: one
   fungus_type: one
+  collection_date: <%= Date.today %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-

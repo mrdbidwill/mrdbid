@@ -217,7 +217,7 @@ class MushroomsController < ApplicationController
   # filtered in the controller actions (see create and update methods)
   # ============================================================================
   def mushroom_params
-    params.require(:mushroom).permit(:name, :description, :comments, :user_id, :country_id, :state_id, :fungus_type_id)
+    params.require(:mushroom).permit(:name, :description, :comments, :user_id, :country_id, :state_id, :fungus_type_id, :collection_date)
   end
 
   # ============================================================================

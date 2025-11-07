@@ -341,6 +341,30 @@ class MushroomTest < ActiveSupport::TestCase
     assert @mushroom.valid?
   end
 
+  # === Collection Date ===
+
+  test "collection_date is optional" do
+    @mushroom.collection_date = nil
+    assert @mushroom.valid?, "Mushroom should be valid without collection_date"
+  end
+
+  test "should accept valid past collection_date" do
+    @mushroom.collection_date = 30.days.ago.to_date
+    assert @mushroom.valid?
+    assert_equal 30.days.ago.to_date, @mushroom.collection_date
+  end
+
+  test "should accept today as collection_date" do
+    @mushroom.collection_date = Date.today
+    assert @mushroom.valid?
+    assert_equal Date.today, @mushroom.collection_date
+  end
+
+  test "should handle blank collection_date" do
+    @mushroom.collection_date = ""
+    assert @mushroom.valid?
+  end
+
   test "should associate with different countries" do
     country2 = countries(:two)
     @mushroom.country = country2

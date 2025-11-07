@@ -23,12 +23,14 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
           description: "A healthy mushroom",
           country_id: countries(:one).id,
           state_id: states(:one).id,
-          fungus_type_id: fungus_types(:one).id
+          fungus_type_id: fungus_types(:one).id,
+          collection_date: 5.days.ago.to_date
       }
       }
     end
     # Controller redirects to image_mushrooms/new to add images to the new mushroom
     assert_redirected_to new_image_mushroom_path(mushroom_id: Mushroom.last.id)
+    assert_equal 5.days.ago.to_date, Mushroom.last.collection_date
   end
 
 
@@ -51,10 +53,14 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     patch mushroom_path(@mushroom), params: {
       mushroom: {
         name: "Updated Name",
-        description: "Updated description"
+        description: "Updated description",
+        collection_date: Date.today
       }
     }
     assert_redirected_to mushroom_path(@mushroom)
+    @mushroom.reload
+    assert_equal "Updated Name", @mushroom.name
+    assert_equal Date.today, @mushroom.collection_date
   end
 
   test "should destroy mushroom and associated image_mushrooms" do
