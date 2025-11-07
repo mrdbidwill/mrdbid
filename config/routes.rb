@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "dashboard#index"
     get 'database/export', to: 'database_exports#export', as: :database_export
+    resources :admin_todos
     resources :articles
     resources :colors
     resources :countries
