@@ -26,7 +26,7 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index] # Ensure user is authenticated first, except for index
   before_action :set_mushroom, only: %i[show edit update destroy]
-  before_action :authorize_mushroom, except: %i[index new create]
+  before_action :authorize_mushroom, except: %i[index new create export_pdf]
 
   # GET /mushrooms
   def index
@@ -132,6 +132,50 @@ class MushroomsController < ApplicationController
     @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
     @mushroom.destroy
     redirect_to mushrooms_path, notice: "Mushroom was successfully deleted."
+  end
+
+  # GET /mushrooms/export.pdf or /mushrooms/:id/export.pdf
+  def export_pdf
+    # Determine which mushrooms to export
+    if params[:id].present?
+      # Single mushroom export
+      mushroom = Mushroom
+                   .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
+                             image_mushrooms: { image_file_attachment: :blob },
+                             mr_character_mushrooms: { mr_character: [:part, :display_option] })
+                   .find(params[:id])
+      authorize mushroom
+      mushrooms = [mushroom]
+      filename = "#{mushroom.name.parameterize}-#{Date.today}.pdf"
+    elsif params[:ids].present?
+      # Multiple specific mushrooms
+      mushrooms = policy_scope(Mushroom)
+                    .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
+                              image_mushrooms: { image_file_attachment: :blob },
+                              mr_character_mushrooms: { mr_character: [:part, :display_option] })
+                    .where(id: params[:ids])
+                    .order(:name)
+      filename = "mushrooms-export-#{Date.today}.pdf"
+    else
+      # All user's mushrooms
+      mushrooms = policy_scope(Mushroom)
+                    .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
+                              image_mushrooms: { image_file_attachment: :blob },
+                              mr_character_mushrooms: { mr_character: [:part, :display_option] })
+                    .order(:name)
+      filename = "all-mushrooms-#{Date.today}.pdf"
+    end
+
+    # Generate PDF
+    pdf = MushroomPdfService.new(mushrooms).generate
+
+    # Send PDF
+    send_data pdf.render,
+              filename: filename,
+              type: 'application/pdf',
+              disposition: 'attachment'
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mushrooms_path, alert: 'Mushroom not found.'
   end
 
   private

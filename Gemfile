@@ -54,6 +54,10 @@ gem 'solid_queue'
 
 gem 'roo' # Read Excel files
 
+# PDF generation
+gem 'prawn'
+gem 'prawn-table'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 

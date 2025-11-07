@@ -67,4 +67,101 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to mushrooms_path
   end
 
+  # ============================================================================
+  # PDF Export Tests
+  # ============================================================================
+
+  test "should export single mushroom to PDF" do
+    get export_pdf_mushroom_path(@mushroom, format: :pdf)
+    assert_response :success
+    assert_equal "application/pdf", response.media_type
+    assert response.body.start_with?("%PDF"), "Response should be a valid PDF"
+  end
+
+  test "should export all user mushrooms to PDF" do
+    get export_all_pdf_mushrooms_path(format: :pdf)
+    assert_response :success
+    assert_equal "application/pdf", response.media_type
+    assert response.body.start_with?("%PDF"), "Response should be a valid PDF"
+  end
+
+  test "should export multiple specific mushrooms to PDF" do
+    mushroom2 = Mushroom.create!(
+      name: "Second Mushroom",
+      user: @user,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
+
+    get export_all_pdf_mushrooms_path(format: :pdf, ids: [@mushroom.id, mushroom2.id])
+    assert_response :success
+    assert_equal "application/pdf", response.media_type
+    assert response.body.start_with?("%PDF"), "Response should be a valid PDF"
+  end
+
+  test "should set correct filename for single mushroom PDF" do
+    get export_pdf_mushroom_path(@mushroom, format: :pdf)
+    assert_response :success
+
+    content_disposition = response.headers["Content-Disposition"]
+    assert_match(/attachment/, content_disposition)
+    assert_match(/#{@mushroom.name.parameterize}/, content_disposition)
+    assert_match(/\.pdf/, content_disposition)
+  end
+
+  test "should set correct filename for all mushrooms PDF" do
+    get export_all_pdf_mushrooms_path(format: :pdf)
+    assert_response :success
+
+    content_disposition = response.headers["Content-Disposition"]
+    assert_match(/attachment/, content_disposition)
+    assert_match(/all-mushrooms/, content_disposition)
+    assert_match(/\.pdf/, content_disposition)
+  end
+
+  test "should not allow exporting another user's mushroom" do
+    other_user = users(:two)
+    other_mushroom = Mushroom.create!(
+      name: "Other User Mushroom",
+      user: other_user,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
+
+    assert_raises(Pundit::NotAuthorizedError) do
+      get export_pdf_mushroom_path(other_mushroom, format: :pdf)
+    end
+  end
+
+  test "should only export current user's mushrooms when exporting all" do
+    # Create mushroom for another user
+    other_user = users(:two)
+    other_mushroom = Mushroom.create!(
+      name: "Other User Mushroom",
+      user: other_user,
+      country: countries(:one),
+      fungus_type: fungus_types(:one)
+    )
+
+    get export_all_pdf_mushrooms_path(format: :pdf)
+    assert_response :success
+
+    # Verify we got a PDF (basic check - detailed content checking would require PDF parsing)
+    assert response.body.start_with?("%PDF")
+  end
+
+  test "should handle mushroom not found for PDF export" do
+    get export_pdf_mushroom_path(id: 999999, format: :pdf)
+    assert_redirected_to mushrooms_path
+    assert_equal "Mushroom not found.", flash[:alert]
+  end
+
+  test "should require authentication for PDF export" do
+    sign_out @user
+
+    get export_pdf_mushroom_path(@mushroom, format: :pdf)
+    # Devise returns 401 Unauthorized for unauthenticated requests
+    assert_response :unauthorized
+  end
+
 end

@@ -1,0 +1,221 @@
+# frozen_string_literal: true
+
+# Service to generate PDF exports of mushroom data including images and characters
+class MushroomPdfService
+  require 'prawn'
+  require 'prawn/table'
+
+  def initialize(mushrooms)
+    @mushrooms = Array(mushrooms)
+  end
+
+  def generate
+    Prawn::Document.new(page_size: 'LETTER', margin: 40) do |pdf|
+      @mushrooms.each_with_index do |mushroom, index|
+        # Add page break between mushrooms (except for first one)
+        pdf.start_new_page if index > 0
+
+        render_mushroom(pdf, mushroom)
+      end
+    end
+  end
+
+  private
+
+  def render_mushroom(pdf, mushroom)
+    # Title
+    pdf.font_size(20) do
+      pdf.text mushroom.name, style: :bold, color: '333333'
+    end
+    pdf.move_down 10
+
+    # Basic Information
+    render_basic_info(pdf, mushroom)
+    pdf.move_down 15
+
+    # Images Section
+    if mushroom.image_mushrooms.any? { |im| im.image_file.attached? }
+      render_images(pdf, mushroom)
+      pdf.move_down 15
+    end
+
+    # Characters Section
+    if mushroom.mr_character_mushrooms.any?
+      render_characters(pdf, mushroom)
+    end
+
+    # Trees and Plants
+    render_associations(pdf, mushroom)
+  end
+
+  def render_basic_info(pdf, mushroom)
+    pdf.font_size(10) do
+      info_data = []
+
+      info_data << ['Fungus Type:', mushroom.fungus_type&.name || 'N/A']
+      info_data << ['Location:', location_text(mushroom)]
+      info_data << ['Description:', mushroom.description.presence || 'N/A'] if mushroom.description.present?
+      info_data << ['Comments:', mushroom.comments.presence || 'N/A'] if mushroom.comments.present?
+
+      # Taxonomy
+      if mushroom.genera.any?
+        genera_names = mushroom.genera.map(&:name).join(', ')
+        info_data << ['Genera:', genera_names]
+      end
+      if mushroom.species.any?
+        species_names = mushroom.species.map(&:name).join(', ')
+        info_data << ['Species:', species_names]
+      end
+
+      pdf.table(info_data,
+                cell_style: { borders: [], padding: [2, 5, 2, 5] },
+                column_widths: [100, 400]) do |table|
+        table.columns(0).font_style = :bold
+      end
+    end
+  end
+
+  def render_images(pdf, mushroom)
+    pdf.font_size(14) do
+      pdf.text 'Images', style: :bold, color: '555555'
+    end
+    pdf.move_down 5
+
+    images = mushroom.image_mushrooms.select { |im| im.image_file.attached? }
+
+    # Display up to 6 images per mushroom to keep PDF size reasonable
+    images.first(6).each_slice(3) do |row_images|
+      image_data = []
+
+      row_images.each do |image_mushroom|
+        begin
+          # Download image to temp file
+          image_mushroom.image_file.open do |file|
+            # Add image with max width/height
+            img_cell = pdf.make_cell(
+              image: file.path,
+              fit: [150, 150],
+              position: :center,
+              vposition: :center
+            )
+            image_data << img_cell
+          end
+        rescue => e
+          # If image fails to load, add placeholder text
+          image_data << pdf.make_cell(content: '[Image unavailable]',
+                                       align: :center,
+                                       valign: :center,
+                                       height: 150,
+                                       width: 150)
+          Rails.logger.error("PDF image error for ImageMushroom##{image_mushroom.id}: #{e.message}")
+        end
+      end
+
+      # Fill remaining cells in row if less than 3 images
+      while image_data.length < 3
+        image_data << pdf.make_cell(content: '', borders: [])
+      end
+
+      pdf.table([image_data], cell_style: { padding: 5, align: :center })
+      pdf.move_down 5
+    end
+
+    if images.count > 6
+      pdf.font_size(8) do
+        pdf.text "(Showing 6 of #{images.count} images)", color: '999999'
+      end
+    end
+  end
+
+  def render_characters(pdf, mushroom)
+    pdf.font_size(14) do
+      pdf.text 'Characters', style: :bold, color: '555555'
+    end
+    pdf.move_down 5
+
+    character_rows = mushroom.mr_character_mushrooms
+                             .includes(mr_character: [:part, :display_option])
+                             .order('parts.name ASC, mr_characters.name ASC')
+
+    grouped = character_rows.group_by { |rc| rc.mr_character&.part&.name || 'Other' }
+
+    grouped.each do |part_name, rows|
+      pdf.font_size(12) do
+        pdf.text part_name, style: :bold, color: '666666'
+      end
+      pdf.move_down 3
+
+      table_data = rows.map do |rc|
+        [
+          rc.mr_character&.name || 'Unknown',
+          format_character_value(rc)
+        ]
+      end
+
+      pdf.font_size(9) do
+        pdf.table(table_data,
+                  cell_style: { borders: [:bottom], border_color: 'DDDDDD', padding: [3, 5, 3, 5] },
+                  column_widths: [200, 300]) do |table|
+          table.columns(0).font_style = :bold
+        end
+      end
+      pdf.move_down 8
+    end
+  end
+
+  def render_associations(pdf, mushroom)
+    associations = []
+
+    if mushroom.trees.any?
+      tree_names = mushroom.trees.order(:name).pluck(:name).join(', ')
+      associations << ['Associated Trees:', tree_names]
+    end
+
+    if mushroom.plants.any?
+      plant_names = mushroom.plants.order(:name).pluck(:name).join(', ')
+      associations << ['Associated Plants:', plant_names]
+    end
+
+    if associations.any?
+      pdf.move_down 10
+      pdf.font_size(10) do
+        pdf.table(associations,
+                  cell_style: { borders: [], padding: [2, 5, 2, 5] },
+                  column_widths: [120, 380]) do |table|
+          table.columns(0).font_style = :bold
+        end
+      end
+    end
+  end
+
+  def location_text(mushroom)
+    parts = []
+    parts << mushroom.country&.name if mushroom.country
+    parts << mushroom.state&.name if mushroom.state
+    parts.any? ? parts.join(', ') : 'N/A'
+  end
+
+  def format_character_value(rc)
+    c = rc.mr_character
+    display_opt_name = c&.display_option&.name
+
+    case display_opt_name
+    when 'color'
+      color = Color.find_by(id: rc.character_value.to_i)
+      color ? "#{color.latin_name} (#{color.common_name})" : rc.character_value
+    when 'radio', 'drop-down'
+      lookup_item = LookupItem.find_by(id: rc.character_value.to_i)
+      lookup_item&.name || rc.character_value
+    when 'boolean_yes_no'
+      rc.character_value.to_s.downcase == 'true' ? 'Yes' : 'No'
+    when 'boolean_true_false'
+      rc.character_value.to_s.downcase == 'true' ? 'True' : 'False'
+    when 'boolean_present_absent'
+      rc.character_value.to_s.downcase == 'true' ? 'Present' : 'Absent'
+    when 'checkbox'
+      rc.character_value.to_s.downcase == 'true' ? 'Yes' : 'No'
+    else
+      rc.character_value
+    end
+  end
+end

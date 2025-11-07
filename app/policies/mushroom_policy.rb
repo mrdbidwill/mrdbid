@@ -67,4 +67,9 @@ class MushroomPolicy < ApplicationPolicy
     owner?
   end
 
+  # Allow PDF export if user owns the mushroom
+  def export_pdf?
+    owner?
+  end
+
 end

@@ -1,9 +1,10 @@
 <% content_for :title, "Mushrooms" %>
 <div class="w-full">
-  <%= render "shared/page_actions", 
+  <%= render "shared/page_actions",
         left: content_tag(:h1, "Your Mushrooms", class: "title-xl"),
         right: (
           (current_user&.admin? ? link_to("Back to Admin Dashboard", admin_root_path, class: "btn-primary") : "") +
+          (@mushrooms&.any? ? link_to("Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf), class: "btn-secondary", data: { turbo_confirm: "This will export all #{@mushrooms.total_count} of your mushrooms to PDF. Large exports may take some time. Continue?" }) : "") +
           link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
         ).html_safe
   %>
@@ -58,6 +59,7 @@
   <%= render "shared/page_actions",
         right: (
           (current_user&.admin? ? link_to("Back to Admin Dashboard", admin_root_path, class: "btn-primary") : "") +
+          (@mushrooms&.any? ? link_to("Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf), class: "btn-secondary", data: { turbo_confirm: "This will export all #{@mushrooms.total_count} of your mushrooms to PDF. Large exports may take some time. Continue?" }) : "") +
           link_to("Add New Mushroom", new_mushroom_path, class: "btn-primary")
         ).html_safe
   %>

@@ -22,6 +22,12 @@ Rails.application.routes.draw do
     resources :mushroom_species, only: [:index, :new, :create, :destroy]
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
     resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
+    member do
+      get 'export', to: 'mushrooms#export_pdf', as: :export_pdf, defaults: { format: :pdf }
+    end
+    collection do
+      get 'export', to: 'mushrooms#export_pdf', as: :export_all_pdf, defaults: { format: :pdf }
+    end
   end
 
   # Standalone comparison show route (not nested under mushroom)
