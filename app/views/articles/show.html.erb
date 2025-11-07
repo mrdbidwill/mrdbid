@@ -17,7 +17,7 @@
 
   <%# Body can be HTML; otherwise use simple_format for plain text %>
   <% if @article.body.to_s.strip.starts_with?("<") %>
-    <%= sanitize(@article.body, tags: %w[p br ul ol li h2 h3 h4 strong em a blockquote code pre img], attributes: %w[href src alt title class]) %>
+    <%= sanitize(@article.body, tags: %w[div p br ul ol li h1 h2 h3 h4 strong em a blockquote code pre img table thead tbody tr th td b u i], attributes: %w[href src alt title class]) %>
   <% else %>
     <%= simple_format(@article.body) %>
   <% end %>
