@@ -24,14 +24,24 @@ class LookupItemTest < ActiveSupport::TestCase
     assert_equal :_type_disabled, LookupItem.inheritance_column.to_sym
   end
 
-  test "should belong to source_data optionally" do
+  test "should belong to source_data" do
     assert_respond_to @lookup_item, :source_data
-    lookup_item = LookupItem.new(name: "Test")
-    assert lookup_item.valid? || !lookup_item.errors[:source_data].include?("must exist")
   end
 
-  test "should belong to mr_character optionally" do
+  test "should belong to mr_character" do
     assert_respond_to @lookup_item, :mr_character
+  end
+
+  test "should require mr_character_id" do
+    lookup_item = LookupItem.new(name: "Test", source_data_id: SourceData.first.id)
+    assert_not lookup_item.valid?
+    assert_includes lookup_item.errors[:mr_character_id], "Mr character cannot be blank."
+  end
+
+  test "should require source_data_id" do
+    lookup_item = LookupItem.new(name: "Test", mr_character_id: MrCharacter.first.id)
+    assert_not lookup_item.valid?
+    assert_includes lookup_item.errors[:source_data_id], "Source data cannot be blank."
   end
 
   test "should have by_lookup_type_name scope" do

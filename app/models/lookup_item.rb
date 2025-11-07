@@ -5,11 +5,13 @@
    has_paper_trail
    self.inheritance_column = :_type_disabled  # stop rails from using default type column STI
 
-   belongs_to :source_data, optional: true
-   belongs_to :mr_character, optional: true # Add this for clarity
+   belongs_to :source_data
+   belongs_to :mr_character
 
    # Ensure the name and parent combination is unique
    validates :name, presence: true, uniqueness: { scope: :id }
+   validates :mr_character_id, presence: true
+   validates :source_data_id, presence: true
 
    # Delegate name of lookup_type for convenience
    delegate :name, to: :lookup_type, prefix: true, allow_nil: true
