@@ -1,4 +1,4 @@
-# MRDBID - Mushroom Research Database Identification
+# MRDBID - Mushroom Database Identification
 
 A comprehensive Rails application for mushroom identification, cataloging, and research. This system provides detailed character tracking, image management, and taxonomic organization for mycological research.
 
