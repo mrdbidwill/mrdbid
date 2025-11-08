@@ -92,8 +92,15 @@ class AutocompleteController < ApplicationController
     mushroom_id = params[:mushroom_id]
 
     results = if query.length >= 3
-                # Use cached characters for speed
-                all_chars = MrCharacter.cached_all_with_associations
+                # Get mushroom's fungus_type to filter characters
+                mushroom = Mushroom.find_by(id: mushroom_id) if mushroom_id.present?
+
+                # Use cached characters for speed, filtered by fungus_type
+                if mushroom&.fungus_type_id.present?
+                  all_chars = MrCharacter.cached_for_fungus_type(mushroom.fungus_type_id)
+                else
+                  all_chars = MrCharacter.cached_all_with_associations
+                end
 
                 # Filter already-entered characters for this mushroom
                 if mushroom_id.present?

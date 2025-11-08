@@ -364,10 +364,15 @@
     <% end %>
   </div>
 
-  <!-- Not entered (non-colors only) -->
+  <!-- Not entered (non-colors only) %>
   <%# PERFORMANCE FIX: Only load these if needed - uses cached version %>
+  <%# FUNGUS TYPE FILTERING: Only show characters for this mushroom's fungus type %>
   <% if params[:show_all_characters] == "true" || params[:show_part].present? %>
-    <% all_chars = MrCharacter.cached_all_with_associations %>
+    <% if @mushroom.fungus_type_id.present? %>
+      <% all_chars = MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id) %>
+    <% else %>
+      <% all_chars = MrCharacter.cached_all_with_associations %>
+    <% end %>
     <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
     <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
     <% missing_chars = all_chars.reject { |c|
@@ -394,9 +399,17 @@
   <!-- Character Search -->
   <div class="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-md p-4 mb-4">
     <h3 class="text-lg font-semibold text-gray-800 mb-2">🔍 Search for a Character</h3>
-    <p class="text-sm text-gray-600 mb-3">
-      Can't find what you're looking for? Search across all <%= MrCharacter.count %> characters by name.
-    </p>
+    <% if @mushroom.fungus_type_id.present? %>
+      <% char_count = MrCharacter.for_fungus_type(@mushroom.fungus_type_id).count %>
+      <p class="text-sm text-gray-600 mb-3">
+        Can't find what you're looking for? Search across <%= char_count %> characters for <%= @mushroom.fungus_type.name %> mushrooms.
+      </p>
+    <% else %>
+      <p class="text-sm text-amber-700 bg-amber-50 border border-amber-300 rounded px-3 py-2 mb-3">
+        ⚠️ <strong>Tip:</strong> Set your mushroom's <strong>Fungus Type</strong> in "Edit Basic Mushroom Data" above to see only relevant characters for your fungus type.
+        Currently showing all <%= MrCharacter.count %> characters.
+      </p>
+    <% end %>
 
     <div class="relative" data-controller="character-search"
          data-character-search-mushroom-id-value="<%= @mushroom.id %>">

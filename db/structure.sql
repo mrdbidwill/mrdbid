@@ -488,13 +488,16 @@ CREATE TABLE `mr_characters` (
   `source_data_id` bigint DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `fungus_type_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_mr_characters_on_part_id` (`part_id`),
   KEY `index_mr_characters_on_lookup_type_id` (`lookup_type_id`),
   KEY `index_mr_characters_on_display_option_id` (`display_option_id`),
   KEY `index_mr_characters_on_source_data_id` (`source_data_id`),
+  KEY `index_mr_characters_on_fungus_type_id` (`fungus_type_id`),
   CONSTRAINT `fk_rails_4452ee2843` FOREIGN KEY (`display_option_id`) REFERENCES `display_options` (`id`),
   CONSTRAINT `fk_rails_97936aa437` FOREIGN KEY (`part_id`) REFERENCES `parts` (`id`),
+  CONSTRAINT `fk_rails_bbdf126be9` FOREIGN KEY (`fungus_type_id`) REFERENCES `fungus_types` (`id`),
   CONSTRAINT `fk_rails_f1528c1890` FOREIGN KEY (`lookup_type_id`) REFERENCES `lookup_types` (`id`),
   CONSTRAINT `fk_rails_f919b11cf9` FOREIGN KEY (`source_data_id`) REFERENCES `source_data` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=676 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -904,6 +907,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251108194116'),
 ('20251107204901'),
 ('20251107125052'),
 ('20251107121443'),
