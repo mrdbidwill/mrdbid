@@ -96,7 +96,18 @@
     <% end %>
   </div>
 
-  <%= render 'form', mushroom: @mushroom %>
+  <!-- Basic Mushroom Data Section -->
+  <div class="my-5">
+    <button type="button"
+            class="bg-gray-100 border rounded px-3 py-1 mb-2 font-medium text-indigo-700 hover:bg-indigo-100 transition"
+            onclick="document.getElementById('basic-data-panel').classList.toggle('hidden')">
+      <span>Edit Basic Mushroom Data</span>
+    </button>
+
+    <div id="basic-data-panel" class="hidden border border-indigo-200 rounded p-4 bg-indigo-50">
+      <%= render 'form', mushroom: @mushroom %>
+    </div>
+  </div>
 
   <!-- Associated Trees Section -->
   <div class="my-5">
@@ -355,7 +366,7 @@
 
   <!-- Not entered (non-colors only) -->
   <%# PERFORMANCE FIX: Only load these if needed - uses cached version %>
-  <% if params[:show_all_characters] == "true" %>
+  <% if params[:show_all_characters] == "true" || params[:show_part].present? %>
     <% all_chars = MrCharacter.cached_all_with_associations %>
     <% entered_ids = existing_rows.map(&:mr_character_id).to_set %>
     <% color_chars = all_chars.select { |c| (c.display_option&.name&.downcase == "color") || c.display_option_id == 6 } %>
@@ -364,6 +375,16 @@
           color_chars.include?(c) ||
           ((c.display_option&.name&.downcase == "do not display") || c.display_option_id == 1)
         } %>
+
+    <%# Filter by part if show_part parameter is present %>
+    <% if params[:show_part].present? && params[:show_part] != "Other" %>
+      <% missing_chars = missing_chars.select { |c| c.part&.name == params[:show_part] } %>
+    <% elsif params[:show_part] == "Other" %>
+      <%# "Other" includes all parts with fewer characters %>
+      <% other_parts = ["Mycelium", "Veil", "Spores", "Habitat", "Location", "Identification", "Admin", "Rhizomorph", "Color", "Storage"] %>
+      <% missing_chars = missing_chars.select { |c| other_parts.include?(c.part&.name) } %>
+    <% end %>
+
     <% missing_grouped = missing_chars.group_by { |c| c.part&.name || "Other" } %>
   <% else %>
     <% missing_chars = [] %>
@@ -371,10 +392,18 @@
   <% end %>
 
   <div class="mt-8">
-    <% if params[:show_all_characters] != "true" %>
+    <% if params[:show_all_characters] != "true" && params[:show_part].blank? %>
       <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-3">
-        <p class="text-sm text-gray-700 mb-2">To improve page load speed, the full list of available characters is hidden by default.</p>
-        <%= link_to "Load all available characters", edit_mushroom_path(@mushroom, show_all_characters: "true"), class: "rounded-md px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium text-sm" %>
+        <p class="text-sm text-gray-700 mb-3">To improve page load speed, character lists are hidden by default. Load characters by part as needed:</p>
+        <div class="flex flex-wrap gap-2">
+          <%= link_to "Load Micro (203)", edit_mushroom_path(@mushroom, show_part: "Micro"), class: "rounded-md px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load Stem (133)", edit_mushroom_path(@mushroom, show_part: "Stem - Stipe"), class: "rounded-md px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load Gills (77)", edit_mushroom_path(@mushroom, show_part: "Gills - Lamellae"), class: "rounded-md px-3 py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load Cap (70)", edit_mushroom_path(@mushroom, show_part: "Cap - Pileus"), class: "rounded-md px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load Basic (68)", edit_mushroom_path(@mushroom, show_part: "Basic"), class: "rounded-md px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load Other Parts", edit_mushroom_path(@mushroom, show_part: "Other"), class: "rounded-md px-3 py-1.5 bg-gray-600 hover:bg-gray-500 text-white inline-block font-medium text-sm" %>
+          <%= link_to "Load All Characters", edit_mushroom_path(@mushroom, show_all_characters: "true"), class: "rounded-md px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white inline-block font-medium text-sm" %>
+        </div>
       </div>
     <% end %>
     <h2 class="text-2xl font-semibold mb-3">Not yet entered</h2>
@@ -402,14 +431,28 @@
         </details>
       <% end %>
     <% else %>
-      <p class="text-gray-500">All non-color characters are entered.</p>
+      <% if params[:show_all_characters] == "true" %>
+        <p class="text-gray-500">All non-color characters are entered.</p>
+      <% elsif params[:show_part].present? %>
+        <p class="text-gray-500">All non-color characters for <%= params[:show_part] %> are entered.</p>
+      <% else %>
+        <p class="text-gray-500">Click a "Load" button above to view available characters.</p>
+      <% end %>
     <% end %>
   </div>
 
   <!-- Color characters (not yet entered) with per-card swatch picker -->
-  <% if params[:show_all_characters] == "true" %>
+  <% if params[:show_all_characters] == "true" || params[:show_part].present? %>
     <% set_color_char_ids = color_rows.map(&:mr_character_id).to_set %>
     <% missing_color_chars = color_chars.reject { |c| set_color_char_ids.include?(c.id) } %>
+
+    <%# Filter by part if show_part parameter is present %>
+    <% if params[:show_part].present? && params[:show_part] != "Other" %>
+      <% missing_color_chars = missing_color_chars.select { |c| c.part&.name == params[:show_part] } %>
+    <% elsif params[:show_part] == "Other" %>
+      <% other_parts = ["Mycelium", "Veil", "Spores", "Habitat", "Location", "Identification", "Admin", "Rhizomorph", "Color", "Storage"] %>
+      <% missing_color_chars = missing_color_chars.select { |c| other_parts.include?(c.part&.name) } %>
+    <% end %>
   <% else %>
     <% missing_color_chars = [] %>
   <% end %>

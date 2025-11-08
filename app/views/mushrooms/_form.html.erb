@@ -124,35 +124,13 @@
 
     <!-- Collapsible Candidate Genera/Species Selection -->
     <div class="my-5">
-      <button type="button" 
+      <button type="button"
               class="bg-gray-100 border rounded px-3 py-1 mb-2 font-medium text-blue-700 hover:bg-blue-100 transition"
               onclick="document.getElementById('candidate-panel').classList.toggle('hidden')">
         <span id="panel-toggle-label">
           <%= mushroom.genera.any? || mushroom.species.any? ? "Edit candidate genera/species" : "Select candidate genera and species (optional)" %>
         </span>
       </button>
-
-      <!-- Step/Process Guidance -->
-      <div class="mb-2 px-3 py-2 bg-gray-50 border border-blue-200 rounded text-sm text-gray-700">
-        <strong>How this works:</strong>
-        <p class="p class=text-xs">The idea here is at the beginning of the identification process, you may not have narrowed down the genus/species candidates. You can add several suspects and narrow them down in your process.</p>
-        <ol class="list-decimal pl-5 my-1 text-xs">
-          <li>
-            <span class="text-blue-700 font-semibold">Step 1:</span> Add one or more 
-            <span class="bg-blue-200 px-1 rounded">genera</span> as candidates for identification by process-of-elimination. The genus name will appear with a <span class="bg-blue-200 px-1 rounded">blue</span> background.
-          </li>
-          <li>
-            <span class="text-yellow-700 font-semibold">Step 2:</span> After adding genera, select one or more 
-            <span class="bg-yellow-100 px-1 rounded">species</span> in those genera as candidates. The specie name will appear with a <span class="bg-yellow-100 px-1 rounded">yellow</span> background.
-          </li>
-          <li>
-            You can remove any genus or species at any time by clicking the <span class="font-bold">&times;</span> next to its name.
-          </li>
-          <li>
-            All selections are immediately saved and will be here if you return to editing this mushroom later.
-          </li>
-        </ol>
-      </div>
 
       <!-- Summary pills outside panel -->
       <div class="mb-2 flex flex-wrap gap-2 items-center">
@@ -175,13 +153,35 @@
       </div>
 
       <div id="candidate-panel" class="hidden border border-blue-200 rounded p-4 bg-blue-50">
+        <!-- Step/Process Guidance -->
+        <div class="mb-4 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-gray-700">
+          <strong>How this works:</strong>
+          <p class="text-xs mt-1">The idea here is at the beginning of the identification process, you may not have narrowed down the genus/species candidates. You can add several suspects and narrow them down in your process.</p>
+          <ol class="list-decimal pl-5 my-1 text-xs">
+            <li>
+              <span class="text-blue-700 font-semibold">Step 1:</span> Add one or more
+              <span class="bg-blue-200 px-1 rounded">genera</span> as candidates for identification by process-of-elimination. The genus name will appear with a <span class="bg-blue-200 px-1 rounded">blue</span> background.
+            </li>
+            <li>
+              <span class="text-yellow-700 font-semibold">Step 2:</span> After adding genera, select one or more
+              <span class="bg-yellow-100 px-1 rounded">species</span> in those genera as candidates. The specie name will appear with a <span class="bg-yellow-100 px-1 rounded">yellow</span> background.
+            </li>
+            <li>
+              You can remove any genus or species at any time by clicking the <span class="font-bold">&times;</span> next to its name.
+            </li>
+            <li>
+              All selections are immediately saved and will be here if you return to editing this mushroom later.
+            </li>
+          </ol>
+        </div>
+
         <div class="mb-3">
           <span class="block text-sm font-medium text-gray-700 mb-2">
             Candidate Genera & Species
           </span>
           <p class="text-xs text-blue-700 mb-1">
-            Add one or more genera you consider candidates (process-of-elimination). 
-            Then add one or more species for those genera. 
+            Add one or more genera you consider candidates (process-of-elimination).
+            Then add one or more species for those genera.
             You can revisit this section later and your selections will be saved.
           </p>
         </div>
