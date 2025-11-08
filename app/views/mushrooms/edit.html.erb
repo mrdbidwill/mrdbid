@@ -442,11 +442,11 @@
     <h2 class="text-2xl font-semibold mb-3">Not yet entered</h2>
     <% if missing_chars.any? %>
       <% missing_grouped.each do |part_name, chars| %>
-        <details class="bg-white border rounded-md p-4 mb-3">
+        <details class="bg-white border rounded-md p-4 mb-3" <%= 'open' if params[:show_part].present? %>>
           <summary class="font-semibold cursor-pointer"><%= part_name %> (<%= chars.size %>)</summary>
           <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
             <% chars.each do |c| %>
-              <div class="flex items-start justify-between border rounded p-2 gap-2">
+              <div class="flex items-start justify-between border rounded p-2 gap-2" data-character-id="<%= c.id %>">
                 <div class="min-w-0">
                   <div class="text-sm text-gray-700 break-words"><%= c.name.to_s.tr("_", " ") %></div>
                 </div>
@@ -538,4 +538,41 @@
   <div class="mt-4">
     <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at bottom of page -->
   </div>
+
+  <!-- Scroll to character from search -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const characterId = sessionStorage.getItem('scrollToCharacter');
+      if (characterId) {
+        // Find the character row by data attribute
+        const characterRow = document.querySelector(`[data-character-id="${characterId}"]`);
+
+        if (characterRow) {
+          // Wait a brief moment for the details section to fully render
+          setTimeout(() => {
+            // Scroll to the character with smooth animation
+            characterRow.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+
+            // Add highlight if requested
+            if (sessionStorage.getItem('highlightCharacter')) {
+              // Add yellow ring and background
+              characterRow.classList.add('ring-4', 'ring-yellow-400', 'bg-yellow-50');
+
+              // Remove highlight after 3 seconds
+              setTimeout(() => {
+                characterRow.classList.remove('ring-4', 'ring-yellow-400', 'bg-yellow-50');
+              }, 3000);
+            }
+          }, 300); // Small delay to ensure details is open
+        }
+
+        // Clear sessionStorage after use
+        sessionStorage.removeItem('scrollToCharacter');
+        sessionStorage.removeItem('highlightCharacter');
+      }
+    });
+  </script>
 </div>
