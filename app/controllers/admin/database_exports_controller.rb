@@ -7,10 +7,12 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
   def export
     authorize :database_export, :export?
 
-    Rails.logger.info "Database export started by user #{current_user.id}"
+    export_type = params[:export_type] || 'lookup_tables'
 
-    # Tables to exclude for security reasons
-    excluded_tables = [
+    Rails.logger.info "Database export started by user #{current_user.id} - type: #{export_type}"
+
+    # Base tables to always exclude for security reasons
+    base_excluded_tables = [
       'users',
       'trusted_devices',
       'user_roles',
@@ -35,6 +37,37 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
       'ar_internal_metadata'
     ]
 
+    # User input tables to exclude for lookup table exports
+    user_input_tables = [
+      'all_group_mushrooms',
+      'articles',
+      'cluster_mushrooms',
+      'image_mushrooms',
+      'mushroom_projects',
+      'mushrooms'
+    ]
+
+    # Configure export based on type
+    case export_type
+    when 'lookup_tables'
+      # Option 1: Lookup tables only (exclude user data and user input)
+      excluded_tables = base_excluded_tables + user_input_tables
+      include_only_tables = nil
+      filename_prefix = 'mrdbid_lookup_tables'
+    when 'lookup_no_mblist'
+      # Option 2: Lookup tables without the large mb_lists table
+      excluded_tables = base_excluded_tables + user_input_tables + ['mb_lists']
+      include_only_tables = nil
+      filename_prefix = 'mrdbid_lookup_no_mblist'
+    when 'mblist_only'
+      # Option 3: Only the mb_lists table
+      excluded_tables = []
+      include_only_tables = ['mb_lists']
+      filename_prefix = 'mrdbid_mblist_only'
+    else
+      raise "Invalid export_type: #{export_type}"
+    end
+
     # Database configuration
     config = ActiveRecord::Base.connection_db_config.configuration_hash
     database = config[:database]
@@ -44,12 +77,21 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
 
     Rails.logger.info "Exporting database: #{database} from host: #{host}"
 
-    # Build mysqldump command with excluded tables
-    ignore_tables = excluded_tables.map { |table| "--ignore-table=#{database}.#{table}" }.join(' ')
+    # Build mysqldump command options based on export type
+    if include_only_tables
+      # For mblist_only: only export specified tables
+      table_options = include_only_tables.join(' ')
+      Rails.logger.info "Including only tables: #{include_only_tables.join(', ')}"
+    else
+      # For other exports: exclude specified tables
+      ignore_tables = excluded_tables.map { |table| "--ignore-table=#{database}.#{table}" }.join(' ')
+      table_options = ignore_tables
+      Rails.logger.info "Excluding #{excluded_tables.length} tables"
+    end
 
     # Create filename with timestamp
     timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
-    filename = "mrdbid_export_#{timestamp}.sql"
+    filename = "#{filename_prefix}_#{timestamp}.sql"
 
     # Create temporary files
     temp_file = Tempfile.new([filename, '.sql'])
@@ -66,14 +108,25 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
       Rails.logger.info "MySQL config file created at: #{config_file.path}"
 
       # Build mysqldump command using config file
-      command = [
-        'mysqldump',
-        "--defaults-file=#{config_file.path}",
-        *ignore_tables.split(' '),
-        database
-      ]
+      if include_only_tables
+        # For include_only: specify tables directly after database name
+        command = [
+          'mysqldump',
+          "--defaults-file=#{config_file.path}",
+          database,
+          *include_only_tables
+        ]
+      else
+        # For exclusions: use --ignore-table options
+        command = [
+          'mysqldump',
+          "--defaults-file=#{config_file.path}",
+          *table_options.split(' '),
+          database
+        ]
+      end
 
-      Rails.logger.info "Executing mysqldump command (excluding #{excluded_tables.length} tables)"
+      Rails.logger.info "Executing mysqldump command for export type: #{export_type}"
 
       # Execute mysqldump and capture output
       stdout, stderr, status = Open3.capture3(*command)
