@@ -391,6 +391,39 @@
     <% missing_grouped = {} %>
   <% end %>
 
+  <!-- Character Search -->
+  <div class="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-md p-4 mb-4">
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">🔍 Search for a Character</h3>
+    <p class="text-sm text-gray-600 mb-3">
+      Can't find what you're looking for? Search across all <%= MrCharacter.count %> characters by name.
+    </p>
+
+    <div class="relative" data-controller="character-search"
+         data-character-search-mushroom-id-value="<%= @mushroom.id %>">
+      <input type="text"
+             placeholder="Type at least 3 characters (e.g., 'pileus', 'color', 'taste', 'shape')..."
+             class="w-full border border-purple-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
+             data-character-search-target="input"
+             minlength="3"
+             autocomplete="off">
+
+      <div data-character-search-target="loader" class="hidden absolute right-3 top-1/2 transform -translate-y-1/2">
+        <svg class="animate-spin h-5 w-5 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+
+      <ul class="hidden border border-purple-300 rounded-lg mt-2 bg-white max-h-96 overflow-auto shadow-xl"
+          data-character-search-target="dropdown"
+          style="position: absolute; z-index: 50; width: 100%;"></ul>
+    </div>
+
+    <p class="text-xs text-gray-500 mt-2">
+      💡 Tip: Search results will load the relevant part section and show the character.
+    </p>
+  </div>
+
   <div class="mt-8">
     <% if params[:show_all_characters] != "true" && params[:show_part].blank? %>
       <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-3">

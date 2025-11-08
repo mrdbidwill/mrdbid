@@ -85,4 +85,45 @@ class AutocompleteController < ApplicationController
               end
     render json: results
   end
+
+  # GET /autocomplete/mr_characters.json?q=pileus&mushroom_id=1
+  def mr_characters
+    query = params[:q].to_s.strip.downcase
+    mushroom_id = params[:mushroom_id]
+
+    results = if query.length >= 3
+                # Use cached characters for speed
+                all_chars = MrCharacter.cached_all_with_associations
+
+                # Filter already-entered characters for this mushroom
+                if mushroom_id.present?
+                  entered_ids = MrCharacterMushroom
+                    .where(mushroom_id: mushroom_id)
+                    .pluck(:mr_character_id)
+                    .to_set
+                  all_chars = all_chars.reject { |c| entered_ids.include?(c.id) }
+                end
+
+                # Search by name (case-insensitive)
+                # Exclude "do not display" and "color" characters (handled separately)
+                all_chars
+                  .select { |c|
+                    c.name.downcase.include?(query) &&
+                    c.display_option_id != 1 && # exclude "do not display"
+                    c.display_option_id != 6    # exclude "color" (has special UI)
+                  }
+                  .first(20)
+                  .map { |c|
+                    {
+                      id: c.id,
+                      name: "[#{c.part&.name}] #{c.name.tr('_', ' ')}",
+                      part_name: c.part&.name
+                    }
+                  }
+              else
+                []
+              end
+
+    render json: results
+  end
 end
