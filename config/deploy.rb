@@ -4,7 +4,7 @@ lock "~> 3.19.2"
 set :application, "mrdbid"
 set :repo_url, "git@github.com:mrdbidwill/mrdbid.git"
 
-set :branch, "main"
+set :branch, ENV.fetch('BRANCH', 'new_look')  # Temporarily set to new_look for testing
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
