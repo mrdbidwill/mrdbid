@@ -1,0 +1,162 @@
+<% content_for :title, "Edit #{@part.name} Characters - #{@lookup_type.name}" %>
+
+<div class="w-full auto-margins">
+  <!-- Back to Grid Link -->
+  <div class="mb-4">
+    <%= link_to edit_mushroom_path(@mushroom),
+                class: "inline-flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span>Back to Character Grid</span>
+    <% end %>
+  </div>
+
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mb-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">
+      <%= @mushroom.name %>
+    </h1>
+    <div class="flex flex-wrap items-center gap-3 text-sm">
+      <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
+        <span>📁 <%= @lookup_type.name %></span>
+      </span>
+      <span class="text-gray-400">→</span>
+      <span class="inline-flex items-center gap-1 bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium">
+        <span>🧩 <%= @part.name %></span>
+      </span>
+      <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+        <span><%= @characters.size %> characters</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Characters Entry Section -->
+  <% if @characters.any? %>
+    <!-- Already Entered Characters -->
+    <% entered_character_ids = @mushroom.mr_character_mushrooms.pluck(:mr_character_id) %>
+    <% entered_chars = @characters.select { |c| entered_character_ids.include?(c.id) } %>
+    <% unentered_chars = @characters.reject { |c| entered_character_ids.include?(c.id) } %>
+
+    <% if entered_chars.any? %>
+      <details class="bg-white border border-green-200 rounded-lg p-4 mb-4" open>
+        <summary class="font-bold text-lg text-green-800 cursor-pointer mb-3">
+          ✓ Already Entered (<%= entered_chars.size %>)
+        </summary>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
+          <% entered_chars.each do |character| %>
+            <% char_mushroom = @mushroom.mr_character_mushrooms.find_by(mr_character_id: character.id) %>
+            <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
+            <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
+
+            <div class="flex flex-col border border-gray-200 rounded-lg p-3 bg-green-50 hover:shadow-md transition">
+              <div class="flex-1 min-w-0 mb-2">
+                <div class="text-sm font-semibold text-gray-800 break-words">
+                  <%= character.name.to_s.tr("_", " ") %>
+                </div>
+                <% if character.description.present? %>
+                  <div class="text-xs text-gray-500 mt-1">
+                    <%= truncate(character.description, length: 80) %>
+                  </div>
+                <% end %>
+
+                <!-- Display current value -->
+                <% if is_color %>
+                  <% color_id = char_mushroom.character_value.to_i %>
+                  <% current_color = Color.find_by(id: color_id) %>
+                  <div class="flex items-center mt-2 text-sm">
+                    <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
+                                  alt: "Color #{color_id}",
+                                  class: "w-6 h-6 mr-2 rounded border" %>
+                    <% if current_color %>
+                      <span><%= current_color.latin_name %> (<%= current_color.common_name %>)</span>
+                    <% else %>
+                      <span class="text-gray-600">Color ID: <%= color_id %></span>
+                    <% end %>
+                  </div>
+                <% elsif do_not_display %>
+                  <div class="mt-2 text-sm bg-gray-100 px-2 py-1 rounded">
+                    <span class="text-gray-600">Value: <%= char_mushroom.character_value.presence || "(hidden)" %></span>
+                  </div>
+                <% else %>
+                  <div class="mt-2 text-sm bg-white px-2 py-1 rounded border">
+                    <span class="font-medium text-gray-700">Current: <%= char_mushroom.character_value %></span>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- Update Form -->
+              <% unless do_not_display %>
+                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                  <%= hidden_field_tag :mr_character_id, character.id %>
+                  <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+                  <div class="flex items-center gap-2">
+                    <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: char_mushroom.character_value } %>
+                    <%= f.submit "Update", class: "rounded px-3 py-1.5 text-sm bg-green-600 hover:bg-green-700 text-white font-medium transition" %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+
+    <!-- Not Yet Entered Characters -->
+    <% if unentered_chars.any? %>
+      <details class="bg-white border border-blue-200 rounded-lg p-4 mb-4" open>
+        <summary class="font-bold text-lg text-blue-800 cursor-pointer mb-3">
+          ➕ Add New Characters (<%= unentered_chars.size %>)
+        </summary>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
+          <% unentered_chars.each do |character| %>
+            <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
+            <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
+
+            <div class="flex flex-col border border-gray-200 rounded-lg p-3 bg-blue-50 hover:shadow-md transition">
+              <div class="flex-1 min-w-0 mb-2">
+                <div class="text-sm font-semibold text-gray-800 break-words">
+                  <%= character.name.to_s.tr("_", " ") %>
+                </div>
+                <% if character.description.present? %>
+                  <div class="text-xs text-gray-500 mt-1">
+                    <%= truncate(character.description, length: 80) %>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- Add Form -->
+              <% unless do_not_display %>
+                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                  <%= hidden_field_tag :mr_character_id, character.id %>
+                  <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+                  <div class="flex items-center gap-2">
+                    <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: nil } %>
+                    <%= f.submit "Add", class: "rounded px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium transition" %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  <% else %>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+      <p class="text-yellow-800">No characters found for this combination of lookup type and part.</p>
+    </div>
+  <% end %>
+
+  <!-- Back to Grid Link (bottom) -->
+  <div class="mt-6 pt-4 border-t">
+    <%= link_to edit_mushroom_path(@mushroom),
+                class: "inline-flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span>Back to Character Grid</span>
+    <% end %>
+  </div>
+</div>

@@ -25,7 +25,7 @@ class MushroomsController < ApplicationController
   include Pundit::Authorization
 
   before_action :authenticate_user!, except: [:index] # Ensure user is authenticated first, except for index
-  before_action :set_mushroom, only: %i[show edit update destroy]
+  before_action :set_mushroom, only: %i[show edit update destroy edit_characters]
   before_action :authorize_mushroom, except: %i[index new create export_pdf]
 
   # GET /mushrooms
@@ -90,6 +90,31 @@ class MushroomsController < ApplicationController
     authorize @mushroom
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
+
+  # GET /mushrooms/1/edit_characters?lookup_type_id=X&part_id=Y
+  def edit_characters
+    @lookup_type = LookupType.find(params[:lookup_type_id])
+    @part = Part.find(params[:part_id])
+
+    # Get all characters for this lookup_type + part combination
+    # Filter by fungus_type if set
+    if @mushroom.fungus_type_id.present?
+      @characters = MrCharacter
+                      .for_fungus_type(@mushroom.fungus_type_id)
+                      .where(lookup_type: @lookup_type, part: @part)
+                      .includes(:display_option, :source_data, :lookup_items)
+                      .order(:name)
+    else
+      @characters = MrCharacter
+                      .where(lookup_type: @lookup_type, part: @part)
+                      .includes(:display_option, :source_data, :lookup_items)
+                      .order(:name)
+    end
+
+    authorize @mushroom
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to edit_mushroom_path(@mushroom), alert: "#{e.message}"
   end
 
 

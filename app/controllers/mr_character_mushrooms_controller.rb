@@ -17,15 +17,18 @@ class MrCharacterMushroomsController < ApplicationController
       @rc.character_value = raw_value
     end
 
+    # Determine where to redirect after save (back to grid or edit page)
+    redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+
     if @rc.save
       respond_to do |format|
-        format.turbo_stream { redirect_to edit_mushroom_path(@mushroom), notice: "Character saved.", status: :see_other }
-        format.html { redirect_to edit_mushroom_path(@mushroom), notice: "Character saved." }
+        format.turbo_stream { redirect_to redirect_path, notice: "Character saved.", status: :see_other }
+        format.html { redirect_to redirect_path, notice: "Character saved." }
       end
     else
       respond_to do |format|
-        format.turbo_stream { redirect_to edit_mushroom_path(@mushroom), alert: @rc.errors.full_messages.to_sentence, status: :see_other }
-        format.html { redirect_to edit_mushroom_path(@mushroom), alert: @rc.errors.full_messages.to_sentence }
+        format.turbo_stream { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence, status: :see_other }
+        format.html { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence }
       end
     end
   end

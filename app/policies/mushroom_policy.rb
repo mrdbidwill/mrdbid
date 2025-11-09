@@ -33,6 +33,11 @@ class MushroomPolicy < ApplicationPolicy
     owner?
   end
 
+  # Allow editing characters if the mushroom is owned by the current user
+  def edit_characters?
+    owner?
+  end
+
   # Allow create if the user is signed in
   def create?
     user.present?

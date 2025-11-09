@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
     member do
       get 'export', to: 'mushrooms#export_pdf', as: :export_pdf, defaults: { format: :pdf }
+      get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
     end
     collection do
       get 'export', to: 'mushrooms#export_pdf', as: :export_all_pdf, defaults: { format: :pdf }
