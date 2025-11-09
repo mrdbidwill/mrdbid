@@ -87,14 +87,39 @@
 
               <!-- Update Form -->
               <% unless do_not_display %>
-                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
-                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                  <%= hidden_field_tag :mr_character_id, character.id %>
-                  <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
-                  <div class="flex items-center gap-2">
-                    <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: char_mushroom.character_value } %>
-                    <%= f.submit "Update", class: "rounded px-3 py-1.5 text-sm bg-green-600 hover:bg-green-700 text-white font-medium transition" %>
-                  </div>
+                <% if is_color %>
+                  <%# Color picker for already-entered color characters %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                    <%= hidden_field_tag :mr_character_id, character.id %>
+                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+
+                    <p class="text-xs text-gray-600 mb-2">Click a color to update:</p>
+                    <div class="grid grid-cols-10 gap-1 mt-2">
+                      <% (1..50).each do |cid| %>
+                        <button type="submit"
+                                name="character_value"
+                                value="<%= cid %>"
+                                title="Color <%= cid %>"
+                                class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500 hover:ring-2 hover:ring-green-300 transition">
+                          <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
+                                        alt: "Color #{cid}",
+                                        class: "w-full h-auto rounded border" %>
+                        </button>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%# Regular form for non-color characters %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                    <%= hidden_field_tag :mr_character_id, character.id %>
+                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+                    <div class="flex items-center gap-2">
+                      <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: char_mushroom.character_value } %>
+                      <%= f.submit "Update", class: "rounded px-3 py-1.5 text-sm bg-green-600 hover:bg-green-700 text-white font-medium transition" %>
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
             </div>
@@ -128,14 +153,39 @@
 
               <!-- Add Form -->
               <% unless do_not_display %>
-                <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
-                  <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                  <%= hidden_field_tag :mr_character_id, character.id %>
-                  <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
-                  <div class="flex items-center gap-2">
-                    <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: nil } %>
-                    <%= f.submit "Add", class: "rounded px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium transition" %>
-                  </div>
+                <% if is_color %>
+                  <%# Color picker for new color characters %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                    <%= hidden_field_tag :mr_character_id, character.id %>
+                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+
+                    <p class="text-xs text-gray-600 mb-2">Click a color to add:</p>
+                    <div class="grid grid-cols-10 gap-1 mt-2">
+                      <% (1..50).each do |cid| %>
+                        <button type="submit"
+                                name="character_value"
+                                value="<%= cid %>"
+                                title="Color <%= cid %>"
+                                class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition">
+                          <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
+                                        alt: "Color #{cid}",
+                                        class: "w-full h-auto rounded border" %>
+                        </button>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%# Regular form for non-color characters %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
+                    <%= hidden_field_tag :mr_character_id, character.id %>
+                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, lookup_type_id: @lookup_type.id, part_id: @part.id) %>
+                    <div class="flex items-center gap-2">
+                      <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: nil } %>
+                      <%= f.submit "Add", class: "rounded px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium transition" %>
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
             </div>
