@@ -65,7 +65,8 @@ class GenusMushroomTest < ActiveSupport::TestCase
       name: "Another Mushroom",
       user: @mushroom.user,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     genus_mushroom2 = GenusMushroom.new(genus: @genus, mushroom: mushroom2)
     assert genus_mushroom2.valid?

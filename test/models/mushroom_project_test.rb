@@ -74,7 +74,8 @@ class MushroomProjectTest < ActiveSupport::TestCase
       name: "Another Mushroom",
       user: @mushroom.user,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     mushroom_project2 = MushroomProject.new(mushroom: mushroom2, project: @project)
     assert mushroom_project2.valid?

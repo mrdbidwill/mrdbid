@@ -84,7 +84,8 @@ class ClusterMushroomTest < ActiveSupport::TestCase
       name: "Another Mushroom",
       user: @mushroom.user,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     cluster_mushroom2 = ClusterMushroom.new(mushroom: mushroom2, cluster: @cluster)
     assert cluster_mushroom2.valid?

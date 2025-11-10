@@ -36,14 +36,16 @@ class MushroomTest < ActiveSupport::TestCase
       name: "Mushroom Name",
       user: user1,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
 
     duplicate_mushroom = Mushroom.new(
       name: "Mushroom Name",
       user: user1,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     assert_not duplicate_mushroom.valid?, "Duplicate name for the same user should not be valid"
 
@@ -51,7 +53,8 @@ class MushroomTest < ActiveSupport::TestCase
       name: "Mushroom Name",
       user: user2,
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     assert mushroom_for_user2.valid?, "Mushrooms with the same name should be valid for different users"
   end
@@ -286,7 +289,8 @@ class MushroomTest < ActiveSupport::TestCase
         name: "New Mushroom",
         user: @user,
         country: countries(:one),
-        fungus_type: fungus_types(:one)
+        fungus_type: fungus_types(:one),
+        date_found: Date.today
       )
     end
   end

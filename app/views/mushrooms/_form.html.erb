@@ -51,18 +51,36 @@
       </div>
     </div>
 
+    <!-- Date Found -->
+    <div class="my-5">
+      <%= form.label :date_found, "Date Found" %>
+      <%= form.date_field :date_found,
+                          class: "block shadow-sm rounded-md border px-3 py-1 mt-2",
+                          style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);",
+                          max: Date.today %>
+      <p class="text-xs text-gray-500 mt-1">When was this mushroom specimen found?</p>
+      <div class="mt-2">
+        <%= button_tag "Update date found",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_date_found",
+                       class: "btn-primary" %>
+      </div>
+    </div>
+
     <!-- Country + State -->
     <div class="my-5" data-controller="country-select"
          data-country-select-url-value="<%= states_path %>">
-      <%= form.label :country_id, "Country" %>
+      <%= form.label :country_id, "Country where specimen was found" %>
       <%= form.collection_select :country_id, Country.all, :id, :name,
-                                 { prompt: "Please select your country" },
+                                 { prompt: "Please select country where found" },
                                  { class: "block shadow-sm rounded-md border px-2 py-1 mt-1 w-full",
                                    style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);",
                                    data: { action: "change->country-select#change",
                                            "country-select-target": "countrySelect"} } %>
 
       <div id="state-select-container" class="mt-2">
+        <%= form.label :state_id, "State/Province where specimen was found" %>
         <select name="mushroom[state_id]"
                 id="mushroom_state_id"
                 class="block shadow-sm rounded-md border px-3 py-1 w-full"

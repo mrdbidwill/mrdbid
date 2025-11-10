@@ -54,7 +54,8 @@ class MushroomTreeTest < ActiveSupport::TestCase
       name: "Test Mushroom",
       user: users(:one),
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     initial_count = mushroom.trees_count || 0
 
@@ -69,7 +70,8 @@ class MushroomTreeTest < ActiveSupport::TestCase
       name: "Test Mushroom 2",
       user: users(:one),
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     tree2 = Tree.create!(name: "Tree for counting")
     mushroom_tree = MushroomTree.create!(mushroom: mushroom, tree: tree2)
@@ -107,7 +109,8 @@ class MushroomTreeTest < ActiveSupport::TestCase
       name: "Mushroom 2",
       user: users(:one),
       country: countries(:one),
-      fungus_type: fungus_types(:one)
+      fungus_type: fungus_types(:one),
+      date_found: Date.today
     )
     mushroom_tree2 = MushroomTree.new(tree: @tree, mushroom: mushroom2)
     assert mushroom_tree2.valid?

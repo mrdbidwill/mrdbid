@@ -40,7 +40,8 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
       name: "Test Mushroom #{Time.now.to_i}",
       description: "Test",
       country: country,
-      fungus_type: fungus_type
+      fungus_type: fungus_type,
+      date_found: Date.today
     )
     image_file = fixture_file_upload("test_image.jpg", "image/jpeg")
 
