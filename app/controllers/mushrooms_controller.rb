@@ -98,7 +98,7 @@ class MushroomsController < ApplicationController
     @part = Part.find(params[:part_id])
 
     # Get all characters for this lookup_type + part combination
-    # Filter by fungus_type if set
+    # Filter by fungus_type if set (includes universal characters with fungus_type_id = NULL)
     if @mushroom.fungus_type_id.present?
       @characters = MrCharacter
                       .for_fungus_type(@mushroom.fungus_type_id)

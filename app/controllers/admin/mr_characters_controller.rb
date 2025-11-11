@@ -6,12 +6,21 @@ class Admin::MrCharactersController < Admin::ApplicationController
     authorize MrCharacter
     @mr_characters = policy_scope(
       MrCharacter
-        .includes( :part, :lookup_type, :display_option, :source_data)
+        .includes( :part, :lookup_type, :display_option, :source_data, :fungus_type)
         .order(:name)  # change order here to modify default sort order
     )
     # Apply filters
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
     @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
+
+    # Filter by fungus type
+    if params[:fungus_type_id].present?
+      if params[:fungus_type_id] == 'universal'
+        @mr_characters = @mr_characters.where(fungus_type_id: nil)
+      else
+        @mr_characters = @mr_characters.where(fungus_type_id: params[:fungus_type_id])
+      end
+    end
 
     # Search by name or ID
     if params[:q].present?
@@ -41,6 +50,9 @@ class Admin::MrCharactersController < Admin::ApplicationController
       else
         LookupType.order(:name).pluck(:name, :id)
       end
+
+    # Populate fungus_types dropdown
+    @fungus_types = FungusType.order(:name).pluck(:name, :id)
   end
 
   def new
@@ -92,6 +104,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def mr_character_params
-    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id)
+    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id, :fungus_type_id)
   end
 end

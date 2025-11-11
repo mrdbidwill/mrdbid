@@ -37,10 +37,10 @@
   <div class="group-box mb-6">
     <div class="group-header">
       Filter Mushroom Characters
-      <p class="hint mt-1">Start by selecting a Part to narrow Lookup Types, or choose both. Click Apply Filter to update results.</p>
+      <p class="hint mt-1">Filter by Part, Lookup Type, and/or Fungus Type. Click Apply Filter to update results.</p>
     </div>
     <div class="px-4 py-4">
-      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-12" do |form| %>
+      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6" do |form| %>
         <div class="form-field">
           <%= form.label :part_id, "Part", class: "form-label" %>
           <%= form.select :part_id,
@@ -61,7 +61,17 @@
           <p class="form-help">Filtered by part selection above.</p>
         </div>
 
-        <div class="flex items-end gap-2">
+        <div class="form-field">
+          <%= form.label :fungus_type_id, "Fungus Type", class: "form-label" %>
+          <%= form.select :fungus_type_id,
+                          [['Universal (All Types)', 'universal']] + @fungus_types,
+                          { include_blank: "All" },
+                          class: "form-input",
+                          style: "width: 85%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Filter characters by fungus type or universal.</p>
+        </div>
+
+        <div class="lg:col-span-3 flex gap-2">
           <%= form.submit "Apply Filter", class: "btn-primary" %>
           <%= link_to "Reset", admin_mr_characters_path, class: "btn" %>
         </div>
@@ -75,7 +85,7 @@
     <% selected_part_name = params[:part_id].presence && part_name_by_id[params[:part_id].to_s] %>
 
     <div class="well">
-      <% if params[:part_id].present? || params[:lookup_type_id].present? %>
+      <% if params[:part_id].present? || params[:lookup_type_id].present? || params[:fungus_type_id].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Currently showing:</span>
           <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
@@ -85,6 +95,10 @@
           <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
             <span class="font-medium">Lookup Type:</span>
             <span><%= selected_lookup_type&.name || "All" %></span>
+          </span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 text-purple-700 px-2.5 py-1">
+            <span class="font-medium">Fungus Type:</span>
+            <span><%= params[:fungus_type_id] == 'universal' ? 'Universal' : (FungusType.find_by(id: params[:fungus_type_id])&.name || "All") %></span>
           </span>
           <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_mr_characters_path}\"]').scrollIntoView({behavior:'smooth'})" %>
         </div>
@@ -105,6 +119,7 @@
       <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3 items-end" do %>
         <%= hidden_field_tag :lookup_type_id, params[:lookup_type_id] if params[:lookup_type_id].present? %>
         <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
+        <%= hidden_field_tag :fungus_type_id, params[:fungus_type_id] if params[:fungus_type_id].present? %>
         <div class="form-field sm:col-span-2">
           <label for="q" class="form-label">Name or ID</label>
           <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 1234",

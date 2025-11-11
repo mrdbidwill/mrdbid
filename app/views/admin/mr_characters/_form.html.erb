@@ -91,6 +91,16 @@
         </div>
       </div>
 
+  <div class="my-5">
+    <%= form.label :fungus_type_id, "Fungus Type" %>
+    <p class="text-sm text-gray-600 mb-2">
+      Leave blank for universal characters that apply to all fungus types.
+    </p>
+    <%= form.select :fungus_type_id,
+                    FungusType.order(:name).pluck(:name, :id),
+                    { include_blank: "Universal (applies to all types)" },
+                    class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
+  </div>
 
 
   <%# mr_character.persisted? checks if mr_character already exists in database %>
