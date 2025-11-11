@@ -116,11 +116,29 @@
             const datalist = document.getElementById('source-data-list');
 
             if (input && hidden && datalist) {
-              input.addEventListener('input', function() {
+              // Function to update hidden field
+              const updateHiddenField = function() {
                 const options = Array.from(datalist.options);
                 const match = options.find(opt => opt.value === this.value);
                 hidden.value = match ? match.getAttribute('data-id') : '';
-              });
+
+                // Visual feedback
+                if (match) {
+                  input.style.borderColor = '#10b981'; // green
+                  input.style.borderWidth = '2px';
+                } else if (this.value) {
+                  input.style.borderColor = '#ef4444'; // red
+                  input.style.borderWidth = '2px';
+                } else {
+                  input.style.borderColor = '#9ca3af'; // gray
+                  input.style.borderWidth = '1px';
+                }
+              };
+
+              // Listen to both input and change events
+              input.addEventListener('input', updateHiddenField);
+              input.addEventListener('change', updateHiddenField);
+              input.addEventListener('blur', updateHiddenField);
             }
           });
         </script>

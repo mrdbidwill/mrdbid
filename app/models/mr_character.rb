@@ -13,6 +13,9 @@ class MrCharacter < ApplicationRecord
   has_many :mushrooms, through: :mr_character_mushrooms
   has_many :lookup_items, dependent: :destroy
 
+  # Virtual attribute for autocomplete
+  attr_accessor :source_data_title
+
   validates :name, presence: true
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
@@ -20,6 +23,18 @@ class MrCharacter < ApplicationRecord
   validates :lookup_type_id, presence: true
   validates :display_option_id, presence: true
   validates :source_data_id, presence: true
+
+  # Set source_data_id from source_data_title before validation
+  before_validation :set_source_data_from_title
+
+  private
+
+  def set_source_data_from_title
+    if source_data_title.present? && source_data_id.blank?
+      found = SourceData.find_by(title: source_data_title)
+      self.source_data_id = found.id if found
+    end
+  end
 
   # Scope: Return characters for a specific fungus type
   # NULL fungus_type_id means the character applies to ALL fungus types

@@ -104,6 +104,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def mr_character_params
-    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id, :fungus_type_id)
+    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id, :source_data_title, :fungus_type_id)
   end
 end
