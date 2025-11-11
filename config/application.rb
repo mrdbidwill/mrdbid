@@ -56,5 +56,9 @@ module Mrdbid
     # Enable built-in I18n fallbacks
     config.i18n.fallbacks = true
 
+    # Set default locale and available locales
+    config.i18n.default_locale = :en
+    config.i18n.available_locales = [:en, :es, :fr, :de, :pt, :it, :ja, :'zh-CN', :ru]
+
   end
 end

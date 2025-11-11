@@ -258,11 +258,49 @@ bundle exec cap production deploy
 
 ## Contributing
 
+We welcome contributions from the community! Here are some ways you can help:
+
+### Code Contributions
+
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Translation Contributions
+
+Help make MRDBID accessible to users worldwide by contributing translations!
+
+**Supported Languages:**
+- English (en) ✅
+- Spanish (es)
+- French (fr)
+- German (de)
+- Portuguese (pt)
+- Italian (it)
+- Japanese (ja)
+- Chinese Simplified (zh-CN)
+- Russian (ru)
+
+**How to contribute translations:**
+
+1. **Read the translation guide**: See [docs/I18N.md](docs/I18N.md) for detailed instructions
+2. **Choose a language**: Pick a language file from `config/locales/` (e.g., `es.yml` for Spanish)
+3. **Translate**: Use `config/locales/en.yml` as reference and fill in the empty strings
+4. **Submit**: Create a pull request with your translations
+
+Example:
+```yaml
+# config/locales/es.yml
+es:
+  views:
+    mr_characters:
+      new:
+        title: "Nuevo Carácter de Hongo"
+```
+
+Even partial translations are valuable! See [docs/I18N.md](docs/I18N.md) for complete guidelines.
 
 ## License
 
