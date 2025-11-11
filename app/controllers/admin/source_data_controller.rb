@@ -7,7 +7,7 @@ class Admin::SourceDataController < Admin::ApplicationController
     @source_data = policy_scope(
       SourceData
         .includes(:source_data_type).order("title") # eager load to satisfy strict_loading
-    ).page(params[:page]).per(10)
+    ).page(params[:page]).per(20)
   end
 
 

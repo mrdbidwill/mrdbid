@@ -23,13 +23,15 @@
     </div>
   <% end %>
 
-  <div id="source_data" class="min-w-full divide-y divide-gray-100 space-y-1">
+  <div id="source_data" class="min-w-full divide-y divide-gray-100 space-y-2">
     <% if @source_data.any? %>
       <% @source_data.each do |source_datum| %>
-        <div class="pb-2">
-          <%= render source_datum %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-            <%= render "admin/shared/resource_actions", record: source_datum, delete: false %>  <!-- show, edit, destroy (optional -->
+        <div class="flex items-start gap-3">
+          <div class="flex-1">
+            <%= render source_datum %>
+          </div>
+          <div class="shrink-0">
+            <%= render "admin/shared/resource_actions", record: source_datum, delete: false, btn_class: "btn-primary text-xs px-2 py-1" %>
           </div>
         </div>
       <% end %>
