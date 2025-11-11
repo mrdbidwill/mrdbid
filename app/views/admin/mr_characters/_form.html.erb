@@ -93,8 +93,9 @@
       <div class="my-5">
         <%= form.label :source_data_id, "Source Data" %>
         <p class="text-sm text-gray-600 mb-2">
-          Type to search existing sources. If your source doesn't exist,
-          <%= link_to "create it first", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>.
+          Type to search existing sources.
+          <%= link_to "View all sources", admin_source_data_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %> |
+          <%= link_to "Create new source", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>
         </p>
         <% current_source = mr_character.source_data %>
         <%= form.text_field :source_data_title,
