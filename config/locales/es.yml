@@ -48,11 +48,12 @@ es:
         title: ""
         delete_button: ""
 
-    mr_characters:
-      new:
-        title: ""
-        description: ""
-        back_link: ""
+    admin:
+      mr_characters:
+        new:
+          title: ""
+          description: ""
+          back_link: ""
 
   generic:
     buttons:

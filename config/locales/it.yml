@@ -11,7 +11,7 @@ it:
             name:
               blank: ""
               unique: ""
-            description:
+              description:
               too_long: ""
             comments:
               too_long: ""
@@ -19,7 +19,7 @@ it:
     attributes:
       mushroom:
         name: ""
-        description: ""
+          description: ""
         comments: ""
 
   errors:
@@ -33,26 +33,27 @@ it:
   views:
     mushrooms:
       index:
-        title: ""
+          title: ""
         button_add: ""
         no_mushrooms: ""
-      new:
-        title: ""
+        new:
+          title: ""
         instructions: ""
         submit_button: ""
       edit:
-        title: ""
+          title: ""
         instructions: ""
         submit_button: ""
       show:
-        title: ""
+          title: ""
         delete_button: ""
 
-    mr_characters:
-      new:
-        title: ""
-        description: ""
-        back_link: ""
+    admin:
+      mr_characters:
+        new:
+          title: ""
+          description: ""
+          back_link: ""
 
   generic:
     buttons:

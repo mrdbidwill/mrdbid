@@ -73,11 +73,12 @@ en: # Language identifier
         title: "Details for %{name}"
         delete_button: "Delete Mushroom"
 
-    mr_characters:
-      new:
-        title: "New Mushroom Character"
-        description: "I know. Maybe it should be \"New Fungus Character\" or \"New Stinkhorn Character\" or \"New Lichen Character\", but you get the message?"
-        back_link: "Back to Mushroom Characters"
+    admin:
+      mr_characters:
+        new:
+          title: "New Mushroom Character"
+          description: "I know. Maybe it should be \"New Fungus Character\" or \"New Stinkhorn Character\" or \"New Lichen Character\", but you get the message?"
+          back_link: "Back to Mushroom Characters"
 
   generic: # Common reusable UI strings
     buttons:
