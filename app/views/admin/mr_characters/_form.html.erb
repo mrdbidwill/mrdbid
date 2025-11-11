@@ -40,6 +40,17 @@
     <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mr_character.errors[:comments].none?, "border-red-400 focus:outline-red-600": mr_character.errors[:comments].any?}] %>
   </div>
 
+  <div class="my-5">
+    <%= form.label :fungus_type_id, "Fungus Type" %>
+    <p class="text-sm text-gray-600 mb-2">
+      Leave blank for universal characters that apply to all fungus types.
+    </p>
+    <%= form.select :fungus_type_id,
+                    FungusType.order(:name).pluck(:name, :id),
+                    { include_blank: "Universal (applies to all types)" },
+                    class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
+  </div>
+
   <div class="my-1">
   <%= form.label :part_id, "Part" %>
   <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -81,26 +92,38 @@
 
       <div class="my-5">
         <%= form.label :source_data_id, "Source Data" %>
-        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <%= form.collection_radio_buttons :source_data_id, SourceData.order(:title), :id, :title do |b| %>
-            <label class="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-gray-50">
-              <%= b.radio_button(class: "text-blue-600 focus:ring-blue-600") %>
-              <span><%= b.text %></span>
-            </label>
+        <p class="text-sm text-gray-600 mb-2">
+          Type to search existing sources. If your source doesn't exist,
+          <%= link_to "create it first", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>.
+        </p>
+        <% current_source = mr_character.source_data %>
+        <%= form.text_field :source_data_title,
+                            value: current_source&.title,
+                            list: "source-data-list",
+                            placeholder: "Start typing to search sources...",
+                            class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
+        <datalist id="source-data-list">
+          <% SourceData.order(:title).each do |sd| %>
+            <option value="<%= sd.title %>" data-id="<%= sd.id %>">
           <% end %>
-        </div>
-      </div>
+        </datalist>
+        <%= form.hidden_field :source_data_id, id: "mr_character_source_data_id_hidden" %>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const input = document.querySelector('input[list="source-data-list"]');
+            const hidden = document.getElementById('mr_character_source_data_id_hidden');
+            const datalist = document.getElementById('source-data-list');
 
-  <div class="my-5">
-    <%= form.label :fungus_type_id, "Fungus Type" %>
-    <p class="text-sm text-gray-600 mb-2">
-      Leave blank for universal characters that apply to all fungus types.
-    </p>
-    <%= form.select :fungus_type_id,
-                    FungusType.order(:name).pluck(:name, :id),
-                    { include_blank: "Universal (applies to all types)" },
-                    class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
-  </div>
+            if (input && hidden && datalist) {
+              input.addEventListener('input', function() {
+                const options = Array.from(datalist.options);
+                const match = options.find(opt => opt.value === this.value);
+                hidden.value = match ? match.getAttribute('data-id') : '';
+              });
+            }
+          });
+        </script>
+      </div>
 
 
   <%# mr_character.persisted? checks if mr_character already exists in database %>
