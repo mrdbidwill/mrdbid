@@ -2,6 +2,7 @@
 
 A comprehensive Rails application for mushroom identification, cataloging, and research. This system provides detailed character tracking, image management, and taxonomic organization for mycological research.
 
+Thanks, AI, for all the hard work! But this is stall a work in progress, and there is much left for humans to do.
 ## Live Demo
 
 Visit [https://mrdbid.com](https://mrdbid.com) to see the application in action.
