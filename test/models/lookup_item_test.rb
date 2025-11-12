@@ -44,8 +44,8 @@ class LookupItemTest < ActiveSupport::TestCase
     assert_includes lookup_item.errors[:source_data_id], "Source data cannot be blank."
   end
 
-  test "should have by_lookup_type_name scope" do
-    assert_respond_to LookupItem, :by_lookup_type_name
+  test "should have by_observation_method_name scope" do
+    assert_respond_to LookupItem, :by_observation_method_name
   end
 
   test "should have countries scope" do

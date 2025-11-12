@@ -6,12 +6,12 @@ class Admin::MrCharactersController < Admin::ApplicationController
     authorize MrCharacter
     @mr_characters = policy_scope(
       MrCharacter
-        .includes( :part, :lookup_type, :display_option, :source_data, :fungus_type)
+        .includes( :part, :observation_method, :display_option, :source_data, :fungus_type)
         .order(:name)  # change order here to modify default sort order
     )
     # Apply filters
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
-    @mr_characters = @mr_characters.where(lookup_type_id: params[:lookup_type_id]) if params[:lookup_type_id].present?
+    @mr_characters = @mr_characters.where(observation_method_id: params[:observation_method_id]) if params[:observation_method_id].present?
 
     # Filter by fungus type
     if params[:fungus_type_id].present?
@@ -39,16 +39,16 @@ class Admin::MrCharactersController < Admin::ApplicationController
     # Populate parts dropdown (all parts)
     @parts = Part.order(:name).pluck(:name, :id)
 
-    # Populate lookup_types dropdown (filtered by part if selected)
-    @lookup_types =
+    # Populate observation_methods dropdown (filtered by part if selected)
+    @observation_methods =
       if params[:part_id].present?
-        LookupType.joins(:mr_characters)
+        ObservationMethod.joins(:mr_characters)
                   .where(mr_characters: { part_id: params[:part_id] })
                   .distinct
                   .order(:name)
                   .pluck(:name, :id)
       else
-        LookupType.order(:name).pluck(:name, :id)
+        ObservationMethod.order(:name).pluck(:name, :id)
       end
 
     # Populate fungus_types dropdown
@@ -76,7 +76,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
 
   def show
     @mr_character = MrCharacter
-                      .includes(:part, :lookup_type, :display_option, :source_data)
+                      .includes(:part, :observation_method, :display_option, :source_data)
                       .find(params.expect(:id))
     authorize @mr_character
   end
@@ -104,6 +104,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def mr_character_params
-    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :lookup_type_id, :display_option_id, :source_data_id, :source_data_title, :fungus_type_id)
+    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :observation_method_id, :display_option_id, :source_data_id, :source_data_title, :fungus_type_id)
   end
 end

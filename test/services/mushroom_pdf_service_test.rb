@@ -116,14 +116,14 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
       d.description = "Text box for strings"
     end
     source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
-    lookup_type = LookupType.first || LookupType.create!(name: "Test Type")
+    observation_method = ObservationMethod.first || ObservationMethod.create!(name: "Test Type")
 
     mr_character = MrCharacter.create!(
       name: "Test Text Character",
       part: parts(:one),
       display_option: text_display,
       source_data: source,
-      lookup_type: lookup_type
+      observation_method: observation_method
     )
 
     MrCharacterMushroom.create!(
@@ -148,14 +148,14 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
       d.description = "Boolean Yes/No"
     end
     source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
-    lookup_type = LookupType.first || LookupType.create!(name: "Test Type")
+    observation_method = ObservationMethod.first || ObservationMethod.create!(name: "Test Type")
 
     mr_character = MrCharacter.create!(
       name: "Test Boolean Character",
       part: parts(:one),
       display_option: boolean_display,
       source_data: source,
-      lookup_type: lookup_type
+      observation_method: observation_method
     )
 
     char_mushroom = MrCharacterMushroom.create!(

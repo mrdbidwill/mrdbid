@@ -3,7 +3,7 @@
 class MrCharacter < ApplicationRecord
   has_paper_trail
   belongs_to :part
-  belongs_to :lookup_type
+  belongs_to :observation_method
   belongs_to :display_option
   belongs_to :source_data
   belongs_to :color, optional: true
@@ -20,7 +20,7 @@ class MrCharacter < ApplicationRecord
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
   validates :part_id, presence: true
-  validates :lookup_type_id, presence: true
+  validates :observation_method_id, presence: true
   validates :display_option_id, presence: true
   validates :source_data_id, presence: true
 

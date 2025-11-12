@@ -2,7 +2,7 @@
   <div>
     <% unless mr_character.name.to_s == "id" %>
     <span class="text-xl font-bold text-green-600">
-      <%= mr_character.name %> - </span> <span class="text-sm">Part:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.part&.name %></span> <span class="text-sm">Lookup Type:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.lookup_type&.name %></span> <span class="text-sm">Display Option:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.display_option&.name %></span> <span class="text-sm">Fungus Type:</span> <span class="text-lg font-bold text-purple-600"><%= mr_character.fungus_type&.name || "Universal" %></span> <span class="block"><span class="text-sm">Source Data:</span> <span class="text-lg"><%= mr_character.source_data&.title %></span></span>
+      <%= mr_character.name %> - </span> <span class="text-sm">Part:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.part&.name %></span> <span class="text-sm">Observation Method:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.observation_method&.name %></span> <span class="text-sm">Display Option:</span> <span class="text-lg font-bold text-orange-600"><%= mr_character.display_option&.name %></span> <span class="text-sm">Fungus Type:</span> <span class="text-lg font-bold text-purple-600"><%= mr_character.fungus_type&.name || "Universal" %></span> <span class="block"><span class="text-sm">Source Data:</span> <span class="text-lg"><%= mr_character.source_data&.title %></span></span>
     <% if (desc = mr_character.description.presence) %>
       <span class="block text-sm">Description: <%= desc %></span>
     <% end %>

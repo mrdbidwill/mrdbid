@@ -1,7 +1,7 @@
 one:
   name: "Cap Color"
   part: one # References parts.yml
-  lookup_type: one # References lookup_types.yml
+  observation_method: one # References observation_methods.yml
   display_option: one # References display_options.yml
   source_data: one # References source_data.yml
   created_at: <%= Time.current %>
@@ -11,7 +11,7 @@ one:
 two:
   name: "Bruise Reaction"
   part: two # References parts.yml
-  lookup_type: two # References lookup_types.yml
+  observation_method: two # References observation_methods.yml
   display_option: two # References display_options.yml
   source_data: two # References source_data.yml
   created_at: <%= Time.current %>

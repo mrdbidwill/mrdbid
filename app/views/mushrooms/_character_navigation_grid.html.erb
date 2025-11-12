@@ -5,30 +5,30 @@
   </p>
 
   <%
-    # Build the grid data: lookup_types with their associated parts
-    @lookup_type_parts = LookupType.order(:name).map do |lt|
+    # Build the grid data: observation_methods with their associated parts
+    @observation_method_parts = ObservationMethod.order(:name).map do |om|
       parts_with_counts = Part.order(:name).map do |part|
-        count = MrCharacter.where(lookup_type: lt, part: part).count
+        count = MrCharacter.where(observation_method: om, part: part).count
         next unless count > 0
         { part: part, count: count }
       end.compact
       next if parts_with_counts.empty?
-      { lookup_type: lt, parts: parts_with_counts }
+      { observation_method: om, parts: parts_with_counts }
     end.compact
   %>
 
   <div class="space-y-3">
-    <% @lookup_type_parts.each do |data| %>
-      <% lt = data[:lookup_type] %>
+    <% @observation_method_parts.each do |data| %>
+      <% om = data[:observation_method] %>
       <% parts = data[:parts] %>
 
       <div class="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
-          <!-- Lookup Type Name -->
+          <!-- Observation Method Name -->
           <div class="md:col-span-1">
-            <h3 class="font-semibold text-gray-800 text-lg"><%= lt.name %></h3>
-            <% if lt.description.present? %>
-              <p class="text-xs text-gray-500"><%= truncate(lt.description, length: 60) %></p>
+            <h3 class="font-semibold text-gray-800 text-lg"><%= om.name %></h3>
+            <% if om.description.present? %>
+              <p class="text-xs text-gray-500"><%= truncate(om.description, length: 60) %></p>
             <% end %>
           </div>
 
@@ -38,7 +38,7 @@
               <% parts.each do |part_data| %>
                 <% part = part_data[:part] %>
                 <% count = part_data[:count] %>
-                <%= link_to edit_characters_mushroom_path(@mushroom, lookup_type_id: lt.id, part_id: part.id),
+                <%= link_to edit_characters_mushroom_path(@mushroom, observation_method_id: om.id, part_id: part.id),
                             class: "inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium transition shadow-sm hover:shadow" do %>
                   <span><%= part.name %></span>
                   <span class="bg-white/20 rounded-full px-2 py-0.5 text-xs"><%= count %></span>

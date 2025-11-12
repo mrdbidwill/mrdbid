@@ -320,7 +320,7 @@ CREATE TABLE `fungus_types` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `genera`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -421,19 +421,6 @@ CREATE TABLE `lookup_items` (
   CONSTRAINT `fk_rails_d80ecc7a8c` FOREIGN KEY (`source_data_id`) REFERENCES `source_data` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1518 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `lookup_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `lookup_types` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text,
-  `comments` text,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mb_lists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -483,7 +470,7 @@ CREATE TABLE `mr_characters` (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'Human-readable description of the character',
   `comments` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'Internal notes/comments for the character (text field)',
   `part_id` bigint DEFAULT NULL,
-  `lookup_type_id` bigint DEFAULT NULL,
+  `observation_method_id` bigint DEFAULT NULL,
   `display_option_id` bigint DEFAULT NULL,
   `source_data_id` bigint DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
@@ -491,16 +478,16 @@ CREATE TABLE `mr_characters` (
   `fungus_type_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_mr_characters_on_part_id` (`part_id`),
-  KEY `index_mr_characters_on_lookup_type_id` (`lookup_type_id`),
+  KEY `index_mr_characters_on_observation_method_id` (`observation_method_id`),
   KEY `index_mr_characters_on_display_option_id` (`display_option_id`),
   KEY `index_mr_characters_on_source_data_id` (`source_data_id`),
   KEY `index_mr_characters_on_fungus_type_id` (`fungus_type_id`),
   CONSTRAINT `fk_rails_4452ee2843` FOREIGN KEY (`display_option_id`) REFERENCES `display_options` (`id`),
   CONSTRAINT `fk_rails_97936aa437` FOREIGN KEY (`part_id`) REFERENCES `parts` (`id`),
   CONSTRAINT `fk_rails_bbdf126be9` FOREIGN KEY (`fungus_type_id`) REFERENCES `fungus_types` (`id`),
-  CONSTRAINT `fk_rails_f1528c1890` FOREIGN KEY (`lookup_type_id`) REFERENCES `lookup_types` (`id`),
+  CONSTRAINT `fk_rails_f1528c1890` FOREIGN KEY (`observation_method_id`) REFERENCES `observation_methods` (`id`),
   CONSTRAINT `fk_rails_f919b11cf9` FOREIGN KEY (`source_data_id`) REFERENCES `source_data` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=676 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=677 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_comparisons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -625,6 +612,19 @@ CREATE TABLE `mushrooms` (
   CONSTRAINT `fk_rails_5f7cae6dda` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `observation_methods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `observation_methods` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `comments` text,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `parts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -734,7 +734,7 @@ CREATE TABLE `source_data` (
   PRIMARY KEY (`id`),
   KEY `index_source_data_on_source_data_type_id` (`source_data_type_id`),
   CONSTRAINT `fk_rails_e2b6e4c854` FOREIGN KEY (`source_data_type_id`) REFERENCES `source_data_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `source_data_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -895,7 +895,7 @@ CREATE TABLE `versions` (
   `created_at` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_versions_on_item_type_and_item_id` (`item_type`,`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -908,6 +908,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251112170255'),
 ('20251110191731'),
 ('20251108194116'),
 ('20251107204901'),

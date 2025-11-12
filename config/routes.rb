@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     resources :lenses
     resources :lookup_items
     resources :lookup_tables
-    resources :lookup_types
+    resources :observation_methods
     resources :mb_lists
     resources :mr_characters
     resource  :mr_characters_source, only: :show

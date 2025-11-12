@@ -92,22 +92,22 @@ class MushroomsController < ApplicationController
       redirect_to mushrooms_path, alert: "Mushroom not found."
   end
 
-  # GET /mushrooms/1/edit_characters?lookup_type_id=X&part_id=Y
+  # GET /mushrooms/1/edit_characters?observation_method_id=X&part_id=Y
   def edit_characters
-    @lookup_type = LookupType.find(params[:lookup_type_id])
+    @observation_method = ObservationMethod.find(params[:observation_method_id])
     @part = Part.find(params[:part_id])
 
-    # Get all characters for this lookup_type + part combination
+    # Get all characters for this observation_method + part combination
     # Filter by fungus_type if set (includes universal characters with fungus_type_id = NULL)
     if @mushroom.fungus_type_id.present?
       @characters = MrCharacter
                       .for_fungus_type(@mushroom.fungus_type_id)
-                      .where(lookup_type: @lookup_type, part: @part)
+                      .where(observation_method: @observation_method, part: @part)
                       .includes(:display_option, :source_data, :lookup_items)
                       .order(:name)
     else
       @characters = MrCharacter
-                      .where(lookup_type: @lookup_type, part: @part)
+                      .where(observation_method: @observation_method, part: @part)
                       .includes(:display_option, :source_data, :lookup_items)
                       .order(:name)
     end
@@ -144,9 +144,9 @@ class MushroomsController < ApplicationController
       # - genera: For genus selection dropdown
       # - mr_characters: Character traits assigned to this mushroom
       # - mr_characters.genera: Genus associations for each character
-      # - mr_characters.part, lookup_type, color, source_data: Character metadata
+      # - mr_characters.part, observation_method, color, source_data: Character metadata
       # ============================================================================
-      @mushroom = Mushroom.includes(:genera, mr_characters: [:genera, :part, :lookup_type, :color, :source_data]).find(@mushroom.id)
+      @mushroom = Mushroom.includes(:genera, mr_characters: [:genera, :part, :observation_method, :color, :source_data]).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
   end

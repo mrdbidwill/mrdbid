@@ -1,5 +1,5 @@
-# app/policies/lookup_type_policy.rb
-class LookupTypePolicy < ApplicationPolicy
+# app/policies/observation_method_policy.rb
+class ObservationMethodPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       user&.admin? ? scope.all : scope.none

@@ -1,4 +1,4 @@
-INSERT INTO `lookup_types` VALUES
+INSERT INTO `observation_methods` VALUES
 (1, 'Macro','', '',now(), now() ),
 (2, 'Low Magnification','', '',now(), now() ),
 (3, 'Macrochemical','', '',now(), now() ),

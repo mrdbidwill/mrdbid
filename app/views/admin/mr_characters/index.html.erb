@@ -54,9 +54,9 @@
         </div>
 
         <div class="form-field">
-          <%= form.label :lookup_type_id, "Lookup Type", class: "form-label" %>
-          <%= form.select :lookup_type_id,
-                          @lookup_types,
+          <%= form.label :observation_method_id, "Observation Method", class: "form-label" %>
+          <%= form.select :observation_method_id,
+                          @observation_methods,
                           { include_blank: "All" },
                           class: "form-input",
                           style: "width: 85%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
@@ -82,12 +82,12 @@
 
     <!-- Current filter summary -->
     <%# Safely compute human-friendly names for summary %>
-    <% selected_lookup_type = params[:lookup_type_id].presence && LookupType.find_by(id: params[:lookup_type_id]) %>
+    <% selected_observation_method = params[:observation_method_id].presence && ObservationMethod.find_by(id: params[:observation_method_id]) %>
     <% part_name_by_id = (@parts || []).each_with_object({}) { |(name, id), h| h[id.to_s] = name } %>
     <% selected_part_name = params[:part_id].presence && part_name_by_id[params[:part_id].to_s] %>
 
     <div class="well">
-      <% if params[:part_id].present? || params[:lookup_type_id].present? || params[:fungus_type_id].present? %>
+      <% if params[:part_id].present? || params[:observation_method_id].present? || params[:fungus_type_id].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Currently showing:</span>
           <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
@@ -95,8 +95,8 @@
             <span><%= selected_part_name || "All" %></span>
           </span>
           <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
-            <span class="font-medium">Lookup Type:</span>
-            <span><%= selected_lookup_type&.name || "All" %></span>
+            <span class="font-medium">Observation Method:</span>
+            <span><%= selected_observation_method&.name || "All" %></span>
           </span>
           <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 text-purple-700 px-2.5 py-1">
             <span class="font-medium">Fungus Type:</span>
@@ -119,7 +119,7 @@
     </div>
     <div class="px-4 py-1">
       <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3 items-end" do %>
-        <%= hidden_field_tag :lookup_type_id, params[:lookup_type_id] if params[:lookup_type_id].present? %>
+        <%= hidden_field_tag :observation_method_id, params[:observation_method_id] if params[:observation_method_id].present? %>
         <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
         <%= hidden_field_tag :fungus_type_id, params[:fungus_type_id] if params[:fungus_type_id].present? %>
         <div class="form-field sm:col-span-2">

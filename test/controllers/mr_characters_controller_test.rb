@@ -23,7 +23,7 @@ class MrCharacterControllerTest < ActionDispatch::IntegrationTest
   test "should create mr_character" do
     # Get valid IDs from database
     part = Part.first
-    lookup_type = LookupType.first
+    observation_method = ObservationMethod.first
     display_option = DisplayOption.first
     source_data = SourceData.first
 
@@ -33,7 +33,7 @@ class MrCharacterControllerTest < ActionDispatch::IntegrationTest
         description: "New description",
         comments: "New comment",
         part_id: part.id,
-        lookup_type_id: lookup_type.id,
+        observation_method_id: observation_method.id,
         display_option_id: display_option.id,
         source_data_id: source_data.id
       } }
@@ -58,7 +58,7 @@ class MrCharacterControllerTest < ActionDispatch::IntegrationTest
       description: @mr_character.description,
       comments: @mr_character.comments,
       part_id: @mr_character.part_id,
-      lookup_type_id: @mr_character.lookup_type_id,
+      observation_method_id: @mr_character.observation_method_id,
       display_option_id: @mr_character.display_option_id,
       source_data_id: @mr_character.source_data_id
     } }
