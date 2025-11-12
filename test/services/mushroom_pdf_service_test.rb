@@ -13,7 +13,7 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
       user: @user,
       country: @country,
       fungus_type: @fungus_type,
-      date_found: Date.today
+      collection_date: Date.today
     )
   end
 
@@ -39,7 +39,7 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
       user: @user,
       country: @country,
       fungus_type: @fungus_type,
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     # Disable strict loading for tests
@@ -85,7 +85,7 @@ class MushroomPdfServiceTest < ActiveSupport::TestCase
       user: @user,
       country: @country,
       fungus_type: @fungus_type,
-      date_found: Date.today
+      collection_date: Date.today
     )
     minimal_mushroom.strict_loading!(false) if minimal_mushroom.respond_to?(:strict_loading!)
 

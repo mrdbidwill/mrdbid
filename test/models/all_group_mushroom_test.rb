@@ -82,7 +82,7 @@ class AllGroupMushroomTest < ActiveSupport::TestCase
       user: @mushroom.user,
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     all_group_mushroom2 = AllGroupMushroom.new(mushroom: mushroom2, all_group: @all_group)
     assert all_group_mushroom2.valid?

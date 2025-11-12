@@ -8,8 +8,7 @@ one:
   country: one
   state: one
   fungus_type: one
-  collection_date: <%= 7.days.ago.to_date %>
-  date_found: <%= 7.days.ago.to_date %>
+  collection_date: <%= 14.days.ago.to_date %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -24,7 +23,6 @@ two:
   state: two
   fungus_type: two
   collection_date: <%= 14.days.ago.to_date %>
-  date_found: <%= 14.days.ago.to_date %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -39,6 +37,5 @@ three:
   state: one
   fungus_type: one
   collection_date: <%= Date.today %>
-  date_found: <%= Date.today %>
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>

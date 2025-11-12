@@ -32,7 +32,7 @@ class MrCharacterMushroomTest < ActiveSupport::TestCase
       user: users(:one),
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     initial_count = mushroom.mr_character_mushrooms_count || 0
 

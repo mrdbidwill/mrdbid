@@ -69,7 +69,7 @@ class MushroomSpeciesTest < ActiveSupport::TestCase
       user: @mushroom.user,
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     mushroom_species2 = MushroomSpecies.new(mushroom: mushroom2, species: @species)
     assert mushroom_species2.valid?

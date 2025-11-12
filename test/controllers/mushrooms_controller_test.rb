@@ -25,7 +25,6 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
           state_id: states(:one).id,
           fungus_type_id: fungus_types(:one).id,
           collection_date: 5.days.ago.to_date,
-          date_found: 5.days.ago.to_date
       }
       }
     end
@@ -98,7 +97,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       user: @user,
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     get export_all_pdf_mushrooms_path(format: :pdf, ids: [@mushroom.id, mushroom2.id])
@@ -134,7 +133,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       user: other_user,
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     assert_raises(Pundit::NotAuthorizedError) do
@@ -150,7 +149,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       user: other_user,
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     get export_all_pdf_mushrooms_path(format: :pdf)

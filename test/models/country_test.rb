@@ -53,7 +53,7 @@ class CountryTest < ActiveSupport::TestCase
       user: user,
       country: country,
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     country.destroy
@@ -68,7 +68,7 @@ class CountryTest < ActiveSupport::TestCase
       user: user,
       country: country,
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     assert_nothing_raised do
@@ -133,7 +133,7 @@ class CountryTest < ActiveSupport::TestCase
       user: user,
       country: country,
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     mushroom2 = Mushroom.create!(
@@ -141,7 +141,7 @@ class CountryTest < ActiveSupport::TestCase
       user: user,
       country: country,
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
 
     assert_equal 2, country.mushrooms.count

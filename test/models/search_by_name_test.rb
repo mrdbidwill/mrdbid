@@ -5,9 +5,9 @@ class SearchByNameTest < ActiveSupport::TestCase
     @user = users(:one)
     @country = countries(:one)
     @fungus_type = fungus_types(:one)
-    @mushroom1 = Mushroom.create!(name: "Agaricus bisporus", user: @user, country: @country, fungus_type: @fungus_type, date_found: Date.today)
-    @mushroom2 = Mushroom.create!(name: "Boletus edulis", user: @user, country: @country, fungus_type: @fungus_type, date_found: Date.today)
-    @mushroom3 = Mushroom.create!(name: "Cantharellus cibarius", user: @user, country: @country, fungus_type: @fungus_type, date_found: Date.today)
+    @mushroom1 = Mushroom.create!(name: "Agaricus bisporus", user: @user, country: @country, fungus_type: @fungus_type, collection_date: Date.today)
+    @mushroom2 = Mushroom.create!(name: "Boletus edulis", user: @user, country: @country, fungus_type: @fungus_type, collection_date: Date.today)
+    @mushroom3 = Mushroom.create!(name: "Cantharellus cibarius", user: @user, country: @country, fungus_type: @fungus_type, collection_date: Date.today)
   end
 
   test "search_by_name scope should find mushrooms with matching names" do

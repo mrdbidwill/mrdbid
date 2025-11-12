@@ -54,7 +54,7 @@ class MushroomPlantTest < ActiveSupport::TestCase
       user: users(:one),
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     initial_count = mushroom.plants_count || 0
 
@@ -70,7 +70,7 @@ class MushroomPlantTest < ActiveSupport::TestCase
       user: users(:one),
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     plant2 = Plant.create!(name: "Plant for counting")
     mushroom_plant = MushroomPlant.create!(mushroom: mushroom, plant: plant2)
@@ -109,7 +109,7 @@ class MushroomPlantTest < ActiveSupport::TestCase
       user: users(:one),
       country: countries(:one),
       fungus_type: fungus_types(:one),
-      date_found: Date.today
+      collection_date: Date.today
     )
     mushroom_plant2 = MushroomPlant.new(plant: @plant, mushroom: mushroom2)
     assert mushroom_plant2.valid?

@@ -55,8 +55,6 @@ class Mushroom < ApplicationRecord
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id, message: :unique }
   validates :country_id, presence: true
   validates :fungus_type_id, presence: true
-  validates :date_found, presence: true, on: :create
-  validates :date_found, presence: true, on: :update, if: -> { date_found_changed? || date_found.present? }
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
 
