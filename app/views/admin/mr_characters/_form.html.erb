@@ -98,50 +98,25 @@
           <%= link_to "Create new source", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>
         </p>
         <% current_source = mr_character.source_data %>
-        <%= form.text_field :source_data_title,
-                            value: current_source&.title,
-                            list: "source-data-list",
-                            placeholder: "Start typing to search sources...",
-                            class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
-        <datalist id="source-data-list">
-          <% SourceData.order(:title).each do |sd| %>
-            <option value="<%= sd.title %>" data-id="<%= sd.id %>">
-          <% end %>
-        </datalist>
-        <%= form.hidden_field :source_data_id, id: "mr_character_source_data_id_hidden" %>
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const input = document.querySelector('input[list="source-data-list"]');
-            const hidden = document.getElementById('mr_character_source_data_id_hidden');
-            const datalist = document.getElementById('source-data-list');
-
-            if (input && hidden && datalist) {
-              // Function to update hidden field
-              const updateHiddenField = function() {
-                const options = Array.from(datalist.options);
-                const match = options.find(opt => opt.value === this.value);
-                hidden.value = match ? match.getAttribute('data-id') : '';
-
-                // Visual feedback
-                if (match) {
-                  input.style.borderColor = '#10b981'; // green
-                  input.style.borderWidth = '2px';
-                } else if (this.value) {
-                  input.style.borderColor = '#ef4444'; // red
-                  input.style.borderWidth = '2px';
-                } else {
-                  input.style.borderColor = '#9ca3af'; // gray
-                  input.style.borderWidth = '1px';
-                }
-              };
-
-              // Listen to both input and change events
-              input.addEventListener('input', updateHiddenField);
-              input.addEventListener('change', updateHiddenField);
-              input.addEventListener('blur', updateHiddenField);
-            }
-          });
-        </script>
+        <% sources_json = SourceData.order(:title).map { |sd| { id: sd.id, title: sd.title } }.to_json %>
+        <div data-controller="source-data-autocomplete"
+             data-source-data-autocomplete-sources-value='<%= sources_json %>'
+             class="relative">
+          <%= form.text_field :source_data_title,
+                              value: current_source&.title,
+                              placeholder: "Start typing to search sources...",
+                              class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600",
+                              data: {
+                                source_data_autocomplete_target: "input",
+                                action: "input->source-data-autocomplete#onInput"
+                              },
+                              autocomplete: "off" %>
+          <ul class="hidden absolute z-10 w-full border rounded mt-1 bg-white max-h-60 overflow-auto shadow-lg"
+              data-source-data-autocomplete-target="dropdown">
+          </ul>
+          <%= form.hidden_field :source_data_id,
+                                data: { source_data_autocomplete_target: "hiddenField" } %>
+        </div>
       </div>
 
 
