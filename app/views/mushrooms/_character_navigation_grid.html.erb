@@ -6,9 +6,19 @@
 
   <%
     # Build the grid data: observation_methods with their associated parts
+    # Filter to only show characters for this mushroom's fungus_type or universal characters
     @observation_method_parts = ObservationMethod.order(:name).map do |om|
       parts_with_counts = Part.order(:name).map do |part|
-        count = MrCharacter.where(observation_method: om, part: part).count
+        # Count characters that match this observation_method + part combination
+        # AND either match the mushroom's fungus_type OR are universal (fungus_type_id IS NULL)
+        if @mushroom.fungus_type_id.present?
+          count = MrCharacter.where(observation_method: om, part: part)
+                            .where('fungus_type_id IS NULL OR fungus_type_id = ?', @mushroom.fungus_type_id)
+                            .count
+        else
+          # If mushroom has no fungus_type, show all characters
+          count = MrCharacter.where(observation_method: om, part: part).count
+        end
         next unless count > 0
         { part: part, count: count }
       end.compact
@@ -55,5 +65,10 @@
     <p class="text-xs text-gray-500">
       💡 <strong>Workflow:</strong> Click a part button → Add/edit characters → Automatically return to this grid → Continue with next category
     </p>
+    <% if @mushroom.fungus_type_id.present? %>
+      <p class="text-xs text-gray-600 mt-2">
+        📌 Showing only characters for <strong><%= @mushroom.fungus_type.name %></strong> and universal characters
+      </p>
+    <% end %>
   </div>
 </div>
