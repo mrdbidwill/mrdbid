@@ -29,6 +29,7 @@
             </div>
 
             <div class="well">
+
               <% country_name = mushroom.country&.name %>
               <% state_name = mushroom.state&.name %>
               <% location = [state_name, country_name].compact.join(", ") %>
@@ -39,7 +40,8 @@
                   <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>
                   <br>
                 <% end %>
-                <span class="font-semibold"><%= mushroom.name.presence || "Unnamed" %></span>
+                <span class="font-semibold"><%= mushroom.name.presence || "Unnamed" %> </span>
+                <% if mushroom.collection_date.present? %><span class="text-gray-600"> <%= mushroom.collection_date.strftime('%Y-%m-%d') %></span><% end %>
                 <% if location.present? %><span class="muted"> <%= location %></span><% end %>
                 <% if description.present? %><span class="text-gray-700"> <%= description %></span><% end %>
                 <% if comments.present? %><span class="hint"> <%= comments %></span><% end %>
