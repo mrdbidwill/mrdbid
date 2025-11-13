@@ -41,7 +41,7 @@
                   <br>
                 <% end %>
                 <span class="font-semibold"><%= mushroom.name.presence || "Unnamed" %> </span>
-                <% if mushroom.collection_date.present? %><span class="text-gray-600"> <%= mushroom.collection_date.strftime('%Y-%m-%d') %></span><% end %>
+                <% if mushroom.collection_date.present? %><span class="text-gray-600"> <%= mushroom.collection_date.strftime('%m-%d-%Y') %></span><% end %>
                 <% if location.present? %><span class="muted"> <%= location %></span><% end %>
                 <% if description.present? %><span class="text-gray-700"> <%= description %></span><% end %>
                 <% if comments.present? %><span class="hint"> <%= comments %></span><% end %>
