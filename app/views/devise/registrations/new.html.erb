@@ -30,6 +30,12 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block shadow-sm rounded-md border px-2 py-1 mt-2 w-full" %>
     </div>
 
+    <!-- Honeypot field for bot detection -->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+      <%= f.label :website_url, "Website" %>
+      <%= f.text_field :website_url, tabindex: "-1", autocomplete: "off" %>
+    </div>
+
     <div class="mt-6">
       <%= f.submit "Sign up", class: "btn-primary btn-responsive" %>
     </div>
