@@ -74,7 +74,7 @@ class MushroomsController < ApplicationController
     if @mushroom.save
       redirect_to new_image_mushroom_path(mushroom_id: @mushroom.id), notice: "Mushroom was successfully created. Now add an image."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
