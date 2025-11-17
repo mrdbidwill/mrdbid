@@ -1,12 +1,12 @@
 <div id="<%= dom_id mushroom %>" class="w-full my-5">
 
   <!-- Data + Actions in same vertical plane -->
-  <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
-    <!-- Left: data spans 4 columns on md+ -->
-    <div class="md:col-span-3">
-      <dl class="grid grid-cols-1 md:grid-cols-4 gap-2">
+  <div class="w-full">
+    <!-- Data section -->
+    <div class="w-full">
+      <dl class="grid grid-cols-1 gap-2">
         <!-- First row: 4 inline items -->
-        <div class="md:col-span-2 border rounded-md p-2">
+        <div class="border rounded-md p-2">
           <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span><% if mushroom.collection_date.present? %> Collection Date: <span class="text-gray-600"> <%= mushroom.collection_date.strftime('%m-%d-%Y') %></span><% end %>
           <% if mushroom.genera.any? && mushroom.species.any? %>
             <br>
@@ -15,7 +15,7 @@
           <dd class="font-medium"><%= mushroom.state&.name %> , <%= mushroom.country&.name %> <span class="text-sm text-gray-400">Fungus Type:</span> <%= mushroom.fungus_type&.name %></dd>
         </div>
 
-        <div class="md:col-span-2 border rounded-md p-2">
+        <div class="border rounded-md p-2">
           <span class="text-sm text-gray-400">Genus:</span>
           <span class="text-gray-600">
             <% if mushroom.genera.any? %>
@@ -37,14 +37,14 @@
 
         <!-- Full-width rows -->
         <% if mushroom.description.present? %>
-          <div class="md:col-span-2 border rounded-md p-2">
+          <div class="border rounded-md p-2">
             <dt class="text-sm text-gray-500">Description</dt>
             <dd class="whitespace-pre-wrap"><%= mushroom.description %></dd>
           </div>
         <% end %>
 
         <% if mushroom.comments.present? %>
-          <div class="md:col-span-2 border rounded-md p-2">
+          <div class="border rounded-md p-2">
             <dt class="text-sm text-gray-500">Comments</dt>
             <dd class="whitespace-pre-wrap"><%= mushroom.comments %></dd>
           </div>
