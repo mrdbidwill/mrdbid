@@ -7,7 +7,7 @@
       <dl class="grid grid-cols-1 md:grid-cols-4 gap-2">
         <!-- First row: 4 inline items -->
         <div class="md:col-span-2 border rounded-md p-2">
-          <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span>
+          <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span><% if mushroom.collection_date.present? %> Collection Date: <span class="text-gray-600"> <%= mushroom.collection_date.strftime('%m-%d-%Y') %></span><% end %>
           <% if mushroom.genera.any? && mushroom.species.any? %>
             <br>
             <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>

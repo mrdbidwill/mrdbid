@@ -9,7 +9,8 @@ class AutocompleteController < ApplicationController
     query = params[:q].to_s.strip
     results = if query.length >= 3
                 Genus
-                  .where("name LIKE ?", "%#{Genus.sanitize_sql_like(query)}%")
+                # For genus only use wildcard on end of name not this  "%#{Genus.sanitize_sql_like(query)}%
+                  .where("name LIKE ?", "#{Genus.sanitize_sql_like(query)}%")
                   .select(:id, :name)
                   .order(:name)
                   .limit(20)
