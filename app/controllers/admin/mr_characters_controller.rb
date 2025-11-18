@@ -27,7 +27,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
       term_raw = params[:q].to_s.strip
       term = ActiveRecord::Base.sanitize_sql_like(term_raw)
       if term_raw =~ /\A\d+\z/
-        @mr_characters = @mr_characters.where("mr_characters.id = ? OR mr_characters.name LIKE ?", term_raw.to_i, "%#{term}%")
+        @mr_characters = @mr_characters.where("mr_characters.id = ?", term_raw.to_i)
       else
         @mr_characters = @mr_characters.where("mr_characters.name LIKE ?", "%#{term}%")
       end
