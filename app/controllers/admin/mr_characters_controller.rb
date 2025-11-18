@@ -9,28 +9,8 @@ class Admin::MrCharactersController < Admin::ApplicationController
         .includes( :part, :observation_method, :display_option, :source_data, :fungus_type)
         .order(:name)  # change order here to modify default sort order
     )
-    # Apply filters
-    @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
 
-    # Filter by observation method
-    if params[:observation_method_id].present?
-      if params[:observation_method_id] == 'universal'
-        @mr_characters = @mr_characters.where(observation_method_id: nil)
-      else
-        @mr_characters = @mr_characters.where(observation_method_id: params[:observation_method_id])
-      end
-    end
-
-    # Filter by fungus type
-    if params[:fungus_type_id].present?
-      if params[:fungus_type_id] == 'universal'
-        @mr_characters = @mr_characters.where(fungus_type_id: nil)
-      else
-        @mr_characters = @mr_characters.where(fungus_type_id: params[:fungus_type_id])
-      end
-    end
-
-    # Search by name or ID
+    # Search by name or ID (independent of filters)
     if params[:q].present?
       term_raw = params[:q].to_s.strip
       term = ActiveRecord::Base.sanitize_sql_like(term_raw)
@@ -38,6 +18,27 @@ class Admin::MrCharactersController < Admin::ApplicationController
         @mr_characters = @mr_characters.where("mr_characters.id = ?", term_raw.to_i)
       else
         @mr_characters = @mr_characters.where("mr_characters.name LIKE ?", "%#{term}%")
+      end
+    else
+      # Apply filters only when NOT searching
+      @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
+
+      # Filter by observation method
+      if params[:observation_method_id].present?
+        if params[:observation_method_id] == 'universal'
+          @mr_characters = @mr_characters.where(observation_method_id: nil)
+        else
+          @mr_characters = @mr_characters.where(observation_method_id: params[:observation_method_id])
+        end
+      end
+
+      # Filter by fungus type
+      if params[:fungus_type_id].present?
+        if params[:fungus_type_id] == 'universal'
+          @mr_characters = @mr_characters.where(fungus_type_id: nil)
+        else
+          @mr_characters = @mr_characters.where(fungus_type_id: params[:fungus_type_id])
+        end
       end
     end
 

@@ -39,7 +39,7 @@
   <div class="group-box mb-6">
     <div class="group-header">
       Filter Mushroom Characters
-      <p class="hint mt-1">Filter by Part, Lookup Type, and/or Fungus Type. Click Apply Filter to update results.</p>
+      <p class="hint mt-1">Browse characters by Part, Observation Method, and/or Fungus Type. Does not affect search below.</p>
     </div>
     <div class="px-4 py-4">
       <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6" do |form| %>
@@ -112,26 +112,23 @@
   <!-- End Filter card -->
 
   <!-- Search card -->
-  <div class="group-box mb-6">
-    <div class="group-header">
-      Search Characters
-      <p class="hint mt-1">Search by name or ID. Press Enter or click Search.</p>
+  <div class="group-box mb-6" style="border: 2px solid #9333ea;">
+    <div class="group-header" style="background-color: #f3e8ff;">
+      Search for a Specific Character
+      <p class="hint mt-1"><strong>Search ignores all filters above.</strong> Enter a character name (partial match) or ID number to find it directly.</p>
     </div>
     <div class="px-4 py-1">
       <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3 items-end" do %>
-        <%= hidden_field_tag :observation_method_id, params[:observation_method_id] if params[:observation_method_id].present? %>
-        <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
-        <%= hidden_field_tag :fungus_type_id, params[:fungus_type_id] if params[:fungus_type_id].present? %>
         <div class="form-field sm:col-span-2">
           <label for="q" class="form-label">Name or ID</label>
-          <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 1234",
+          <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Cap surface' or 3",
                              class: "form-input",
                              style: "padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
-          <p class="form-help">Partial matches allowed for names. Use a number to search by ID.</p>
+          <p class="form-help">Searches all characters regardless of filters. Partial name matches OK. Enter number for exact ID match.</p>
         </div>
         <div class="flex gap-2">
           <%= submit_tag "Search", class: "btn-primary" %>
-          <%= link_to "Reset", admin_mr_characters_path, class: "btn" %>
+          <%= link_to "Clear Search", admin_mr_characters_path, class: "btn" %>
         </div>
       <% end %>
     </div>
