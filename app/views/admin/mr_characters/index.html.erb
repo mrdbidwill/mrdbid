@@ -56,7 +56,7 @@
         <div class="form-field">
           <%= form.label :observation_method_id, "Observation Method", class: "form-label" %>
           <%= form.select :observation_method_id,
-                          @observation_methods,
+                          [['Universal', 'universal']] + @observation_methods,
                           { include_blank: "All" },
                           class: "form-input",
                           style: "width: 85%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
@@ -96,7 +96,7 @@
           </span>
           <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
             <span class="font-medium">Observation Method:</span>
-            <span><%= selected_observation_method&.name || "All" %></span>
+            <span><%= params[:observation_method_id] == 'universal' ? 'Universal' : (selected_observation_method&.name || "All") %></span>
           </span>
           <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 text-purple-700 px-2.5 py-1">
             <span class="font-medium">Fungus Type:</span>

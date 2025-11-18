@@ -10,7 +10,7 @@ class CreateMrCharacters < ActiveRecord::Migration[8.0]
       t.references :user, foreign_key: true
       t.references :tree, foreign_key: true
       t.references :part, null: false, foreign_key: true
-      t.references :lookup_type, null: false, foreign_key: true
+      t.references :observation_method, null: false, foreign_key: true
       t.references :display_option, null: false, foreign_key: true
       t.references :source_data, null: false, foreign_key: true
       t.timestamps

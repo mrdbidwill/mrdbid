@@ -11,7 +11,15 @@ class Admin::MrCharactersController < Admin::ApplicationController
     )
     # Apply filters
     @mr_characters = @mr_characters.where(part_id: params[:part_id]) if params[:part_id].present?
-    @mr_characters = @mr_characters.where(observation_method_id: params[:observation_method_id]) if params[:observation_method_id].present?
+
+    # Filter by observation method
+    if params[:observation_method_id].present?
+      if params[:observation_method_id] == 'universal'
+        @mr_characters = @mr_characters.where(observation_method_id: nil)
+      else
+        @mr_characters = @mr_characters.where(observation_method_id: params[:observation_method_id])
+      end
+    end
 
     # Filter by fungus type
     if params[:fungus_type_id].present?

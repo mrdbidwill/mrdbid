@@ -8,7 +8,7 @@ class MrCharactersTest < ApplicationSystemTestCase
 
     # Use fixture records
     @part = parts(:one)
-    @lookup_type = lookup_types(:one)
+    @observation_method = observation_methods(:one)
     @display_option = display_options(:one)
     @source_data = SourceData.find_by(title: "Field Guide of Fungi")
   end
@@ -24,7 +24,7 @@ class MrCharactersTest < ApplicationSystemTestCase
 
     fill_in "Name", with: "New Character Name"
     fill_in "Part", with: @part.id
-    fill_in "Lookup Type", with: @lookup_type.id
+    fill_in "Observation Method", with: @observation_method.id
     fill_in "Display Option", with: @display_option.id
     fill_in "Source Data", with: @source_data.id
     click_on "Create Mushroom Character"
