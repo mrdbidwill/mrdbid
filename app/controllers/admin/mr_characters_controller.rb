@@ -84,7 +84,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
 
   def show
     @mr_character = MrCharacter
-                      .includes(:part, :observation_method, :display_option, :source_data)
+                      .includes(:part, :observation_method, :display_option, :fungus_type,:source_data)
                       .find(params.expect(:id))
     authorize @mr_character
   end
@@ -108,7 +108,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
   private
 
   def set_mr_character
-    @mr_character = MrCharacter.includes(:mr_character_mushrooms, :lookup_items, :source_data).find(params[:id])
+    @mr_character = MrCharacter.includes(:mr_character_mushrooms, :fungus_type, :lookup_items, :source_data).find(params[:id])
   end
 
   def mr_character_params
