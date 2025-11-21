@@ -16,6 +16,11 @@ class MrCharacter < ApplicationRecord
   # Virtual attribute for autocomplete
   attr_accessor :source_data_title
 
+  # Serialize properties as JSON (MySQL stores as JSON, Rails handles conversion)
+  # Properties hash stores fungus_type-specific metadata
+  # Example: { gill_attachment_required: true, valid_spacings: ['close', 'crowded'] }
+  attribute :properties, :json, default: {}
+
   validates :name, presence: true
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
@@ -27,7 +32,14 @@ class MrCharacter < ApplicationRecord
   # Set source_data_id from source_data_title before validation
   before_validation :set_source_data_from_title
 
+  # Initialize properties as empty hash if nil
+  after_initialize :initialize_properties
+
   private
+
+  def initialize_properties
+    self.properties ||= {}
+  end
 
   def set_source_data_from_title
     if source_data_title.present? && source_data_id.blank?
@@ -64,6 +76,35 @@ class MrCharacter < ApplicationRecord
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a
     end
+  end
+
+  public
+
+  # Convenience methods for accessing properties
+  # These provide a clean API for fungus_type-specific metadata
+
+  # Get a property value
+  # Example: character.property(:gill_attachment_required) => true
+  def property(key)
+    properties[key.to_s]
+  end
+
+  # Set a property value
+  # Example: character.set_property(:gill_attachment_required, true)
+  def set_property(key, value)
+    self.properties = (properties || {}).merge(key.to_s => value)
+  end
+
+  # Check if a property exists
+  # Example: character.property?(:gill_attachment_required) => true
+  def property?(key)
+    (properties || {}).key?(key.to_s)
+  end
+
+  # Get all property keys
+  # Example: character.property_keys => ['gill_attachment_required', 'valid_spacings']
+  def property_keys
+    (properties || {}).keys
   end
 end
 
