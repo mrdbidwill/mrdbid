@@ -53,6 +53,14 @@
           placeholder: "Enter your message", rows: 5 %>
   </div>
 
+  <!-- Honeypot Field (hidden from humans, visible to bots) -->
+  <div class="hidden-field" style="position: absolute; left: -9999px;">
+    <label for="website_url">Website</label>
+    <%= text_field_tag :website_url, nil,
+          tabindex: -1,
+          autocomplete: "off" %>
+  </div>
+
   <!-- Submit Button -->
   <div class="text-center">
     <%= submit_tag "Submit",

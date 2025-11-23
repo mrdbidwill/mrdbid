@@ -7,6 +7,13 @@ class ContactsController < ApplicationController
   end
 
   def create
+    # Honeypot check - reject if the hidden field is filled
+    if params[:website_url].present?
+      Rails.logger.warn("Honeypot triggered: website_url filled - possible spam")
+      flash[:notice] = "Thanks! Your message has been sent."
+      return redirect_to contact_path
+    end
+
     name = params[:name].to_s.strip
     email = params[:email].to_s.strip
     subject = params[:subject].to_s.strip
