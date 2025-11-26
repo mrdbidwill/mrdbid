@@ -88,27 +88,14 @@
               <!-- Update Form -->
               <% unless do_not_display %>
                 <% if is_color %>
-                  <%# Color picker for already-entered color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
-                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                    <%= hidden_field_tag :mr_character_id, character.id %>
-                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
-
-                    <p class="text-xs text-gray-600 mb-2">Click a color to update:</p>
-                    <div class="grid grid-cols-10 gap-1 mt-2">
-                      <% (1..50).each do |cid| %>
-                        <button type="submit"
-                                name="character_value"
-                                value="<%= cid %>"
-                                title="Color <%= cid %>"
-                                class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500 hover:ring-2 hover:ring-green-300 transition">
-                          <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
-                                        alt: "Color #{cid}",
-                                        class: "w-full h-auto rounded border" %>
-                        </button>
-                      <% end %>
-                    </div>
-                  <% end %>
+                  <%# Color picker modal for already-entered color characters %>
+                  <div class="mt-2">
+                    <%= render "shared/color_picker_modal",
+                               character: character,
+                               mushroom_id: @mushroom.id,
+                               current_color_id: char_mushroom.character_value.to_i,
+                               redirect_path: edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
+                  </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
                   <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
@@ -154,27 +141,14 @@
               <!-- Add Form -->
               <% unless do_not_display %>
                 <% if is_color %>
-                  <%# Color picker for new color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
-                    <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                    <%= hidden_field_tag :mr_character_id, character.id %>
-                    <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
-
-                    <p class="text-xs text-gray-600 mb-2">Click a color to add:</p>
-                    <div class="grid grid-cols-10 gap-1 mt-2">
-                      <% (1..50).each do |cid| %>
-                        <button type="submit"
-                                name="character_value"
-                                value="<%= cid %>"
-                                title="Color <%= cid %>"
-                                class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition">
-                          <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
-                                        alt: "Color #{cid}",
-                                        class: "w-full h-auto rounded border" %>
-                        </button>
-                      <% end %>
-                    </div>
-                  <% end %>
+                  <%# Color picker modal for new color characters %>
+                  <div class="mt-2">
+                    <%= render "shared/color_picker_modal",
+                               character: character,
+                               mushroom_id: @mushroom.id,
+                               current_color_id: nil,
+                               redirect_path: edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
+                  </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
                   <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>

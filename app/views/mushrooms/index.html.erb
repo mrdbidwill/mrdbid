@@ -22,11 +22,16 @@
         <% grouped[ft_name].each do |mushroom| %>
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-              <% images.each do |im| %>
-                <%= render "shared/image_card", image_mushroom: im, mushroom_name: (mushroom.name.presence || "Mushroom") %>
-              <% end %>
-            </div>
+            <% if images.any? %>
+              <div class="relative">
+                <%= render "shared/image_card", image_mushroom: images.first, mushroom_name: (mushroom.name.presence || "Mushroom") %>
+                <% if images.size > 1 %>
+                  <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full">
+                    +<%= images.size - 1 %> more
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
 
             <div class="well">
 

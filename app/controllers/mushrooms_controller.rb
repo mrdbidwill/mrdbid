@@ -50,9 +50,16 @@ class MushroomsController < ApplicationController
                      .left_joins(:fungus_type)
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
-                     .per(25)
+                     .per(12)
     else
-      @mushrooms = []
+      # Show user_id 1's mushrooms to public visitors to demonstrate the site
+      @mushrooms = Mushroom.where(user_id: 1)
+                     .includes(:fungus_type, :country, :state, :genera, :species,
+                               image_mushrooms: [:part, { image_file_attachment: :blob }])
+                     .left_joins(:fungus_type)
+                     .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
+                     .page(params[:page])
+                     .per(12)
     end
   end
 
