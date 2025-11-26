@@ -1,6 +1,26 @@
 <% content_for :title, "Showing mushroom" %>
 <div class="md:w-full w-full">
 
+  <% unless user_signed_in? %>
+    <!-- Demo Mode Banner -->
+    <div class="mb-4 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+      <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="flex-1">
+          <p class="font-semibold text-blue-900 mb-1">Demo Mode - Read Only</p>
+          <p class="text-sm text-blue-800">
+            You're viewing a specimen from the demo collection.
+            <%= link_to "Sign in", new_user_session_path, class: "underline font-medium" %> or
+            <%= link_to "create an account", new_user_registration_path, class: "underline font-medium" %>
+            to add your own mushroom specimens and use all features.
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <h1 class="font-bold text-2xl">Showing mushroom:</h1>
 
   <div class="mt-4">

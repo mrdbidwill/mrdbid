@@ -24,7 +24,7 @@ class MushroomsController < ApplicationController
   # Pundit setup
   include Pundit::Authorization
 
-  before_action :authenticate_user!, except: [:index] # Ensure user is authenticated first, except for index
+  before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters]
   before_action :authorize_mushroom, except: %i[index new create export_pdf]
 
