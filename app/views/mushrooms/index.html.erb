@@ -63,8 +63,8 @@
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
             <% if images.any? %>
-              <div class="relative inline-block">
-                <div class="w-32 h-32 overflow-hidden rounded-lg border border-gray-300">
+              <div class="relative w-32 h-32 flex-shrink-0">
+                <div class="w-full h-full overflow-hidden rounded-lg border border-gray-300">
                   <%= image_tag(
                         url_for(images.first.image_file.variant(
                           resize_to_fill: [128, 128],
