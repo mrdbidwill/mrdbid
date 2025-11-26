@@ -94,7 +94,7 @@ class Admin::MrCharactersController < Admin::ApplicationController
   def update
     authorize @mr_character
     if @mr_character.update(mr_character_params)
-      redirect_to admin_mr_characters_path, notice: "Character updated successfully."
+      redirect_to admin_mr_characters_path(page: params[:page]), notice: "Character updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end
