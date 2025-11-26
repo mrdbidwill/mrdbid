@@ -15,7 +15,7 @@ class MushroomPolicy < ApplicationPolicy
 
   # Shared logic to check if the current user owns the mushroom
   def owner?
-    record.user_id == user.id
+    user.present? && record.user_id == user.id
   end
 
 
