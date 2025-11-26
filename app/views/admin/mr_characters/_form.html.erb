@@ -1,4 +1,5 @@
 <%= form_with(model: [:admin, mr_character], class: "contents") do |form| %>
+  <%= hidden_field_tag :page, params[:page] if params[:page].present? %>
   <% if mr_character.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(mr_character.errors.count, "error") %> prohibited this Mushroom Character from being saved:</h2>
