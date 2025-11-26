@@ -43,6 +43,13 @@
           </li>
         <% end %>
 
+        <!-- Advanced Search -->
+        <% unless controller_name == 'mushroom_search' %>
+          <li>
+            <%= link_to "🔍 Search", mushroom_search_index_path, class: "btn-nav bg-purple-600 text-white ring-2 ring-purple-400 hover:bg-purple-500 hover:ring-purple-700 focus:outline-none focus:ring-4" %>
+          </li>
+        <% end %>
+
         <!-- Manage Clusters -->
         <% unless controller_name == 'clusters' %>
         <li>

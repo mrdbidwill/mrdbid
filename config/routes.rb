@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "mushroom_search/index"
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions'
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
     member do
       get 'export', to: 'mushrooms#export_pdf', as: :export_pdf, defaults: { format: :pdf }
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
+      post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
     collection do
       get 'export', to: 'mushrooms#export_pdf', as: :export_all_pdf, defaults: { format: :pdf }

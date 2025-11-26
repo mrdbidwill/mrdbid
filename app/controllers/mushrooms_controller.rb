@@ -25,8 +25,8 @@ class MushroomsController < ApplicationController
   include Pundit::Authorization
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
-  before_action :set_mushroom, only: %i[show edit update destroy edit_characters]
-  before_action :authorize_mushroom, except: %i[index new create export_pdf]
+  before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
+  before_action :authorize_mushroom, except: %i[index new create export_pdf clone_characters]
 
   # GET /mushrooms
   def index
@@ -208,6 +208,36 @@ class MushroomsController < ApplicationController
               disposition: 'attachment'
   rescue ActiveRecord::RecordNotFound
     redirect_to mushrooms_path, alert: 'Mushroom not found.'
+  end
+
+  # POST /mushrooms/:id/clone_characters
+  def clone_characters
+    authorize @mushroom
+
+    source_id = params[:source_mushroom_id]
+    if source_id.blank?
+      redirect_to edit_mushroom_path(@mushroom), alert: 'Please select a mushroom to clone from.'
+      return
+    end
+
+    source_mushroom = Mushroom.find(source_id)
+
+    # Check if source is accessible (either user's own or a template)
+    unless source_mushroom.user_id == current_user.id || source_mushroom.is_template?
+      redirect_to edit_mushroom_path(@mushroom), alert: 'You do not have permission to clone from that mushroom.'
+      return
+    end
+
+    if @mushroom.clone_characters_from(source_mushroom)
+      character_count = source_mushroom.mr_character_mushrooms.count
+      redirect_to edit_mushroom_path(@mushroom),
+                  notice: "Successfully cloned #{character_count} characters from #{source_mushroom.name}."
+    else
+      redirect_to edit_mushroom_path(@mushroom),
+                  alert: 'Failed to clone characters. Please try again.'
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to edit_mushroom_path(@mushroom), alert: 'Source mushroom not found.'
   end
 
   private

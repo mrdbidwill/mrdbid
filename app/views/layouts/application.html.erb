@@ -20,8 +20,8 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%# PWA manifest for installable progressive web app %>
+    <link rel="manifest" href="/manifest.json">
 
     <%# Ignore the warning for favicons and app in next 6 lines  %>
     <link rel="icon" href="<%= asset_path('favicon-32x32.png') %>" type="image/png">

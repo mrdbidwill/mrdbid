@@ -12,6 +12,9 @@
 
   <%= render 'unified_actions_grid', mushroom: @mushroom %>
 
+  <!-- Clone Characters Panel -->
+  <%= render 'clone_characters_panel', mushroom: @mushroom %>
+
   <!-- Images Section -->
   <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
   <div class="my-5">

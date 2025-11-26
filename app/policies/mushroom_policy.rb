@@ -77,4 +77,9 @@ class MushroomPolicy < ApplicationPolicy
     owner?
   end
 
+  # Allow cloning characters if user owns the mushroom
+  def clone_characters?
+    owner?
+  end
+
 end

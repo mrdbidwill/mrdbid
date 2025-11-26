@@ -51,6 +51,35 @@ class Mushroom < ApplicationRecord
       .having('COUNT(mr_character_mushrooms.id) >= ?', min_count)
   }
   scope :search_by_name, ->(query) { where("name LIKE ?", "%#{query}%") }
+  scope :templates, -> { where(is_template: true) }
+  scope :non_templates, -> { where(is_template: false) }
+  scope :templates_for_fungus_type, ->(fungus_type_id) {
+    where(is_template: true, fungus_type_id: fungus_type_id)
+  }
+
+  # Advanced search using MySQL full-text search
+  scope :fulltext_search, ->(query) {
+    return none if query.blank?
+    where("MATCH(name, description, comments) AGAINST(? IN NATURAL LANGUAGE MODE)", query)
+  }
+
+  # Search by character values
+  scope :with_character, ->(character_id, value = nil) {
+    joins(:mr_character_mushrooms)
+      .where(mr_character_mushrooms: { mr_character_id: character_id })
+      .then { |relation| value.present? ? relation.where(mr_character_mushrooms: { character_value: value }) : relation }
+  }
+
+  # Filter by multiple characters (AND logic)
+  scope :with_characters, ->(character_filters) {
+    return all if character_filters.blank?
+
+    relation = all
+    character_filters.each do |char_id, value|
+      relation = relation.with_character(char_id, value)
+    end
+    relation
+  }
 
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :user_id, message: :unique }
   validates :country_id, presence: true
@@ -61,6 +90,38 @@ class Mushroom < ApplicationRecord
   # Instance method to trigger comparison recalculation
   def recalculate_comparisons
     CompareMushroomsJob.perform_later(id) if mr_character_mushrooms.count >= CompareMushroomsJob::MINIMUM_CHARACTERS
+  end
+
+  # Clone character data from another mushroom or template
+  def clone_characters_from(source_mushroom)
+    return false unless source_mushroom.is_a?(Mushroom)
+
+    ActiveRecord::Base.transaction do
+      source_mushroom.mr_character_mushrooms.each do |source_char_mushroom|
+        # Skip if this mushroom already has this character
+        next if mr_character_mushrooms.exists?(mr_character_id: source_char_mushroom.mr_character_id)
+
+        # Create a new character entry for this mushroom
+        mr_character_mushrooms.create!(
+          mr_character_id: source_char_mushroom.mr_character_id,
+          character_value: source_char_mushroom.character_value
+        )
+      end
+    end
+
+    true
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error("Failed to clone characters: #{e.message}")
+    false
+  end
+
+  # Make this mushroom a template
+  def make_template!(name, description = nil)
+    update!(
+      is_template: true,
+      template_name: name,
+      template_description: description
+    )
   end
 
   private
