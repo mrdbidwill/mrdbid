@@ -4,7 +4,7 @@ class MushroomSearchController < ApplicationController
   def index
     @query = params[:q]
     @fungus_type_id = params[:fungus_type_id]
-    @character_filters = params[:characters]&.to_h || {}
+    @character_filters = params[:characters]&.to_unsafe_h || {}
 
     # Start with user's mushrooms
     @mushrooms = current_user.mushrooms.non_templates
