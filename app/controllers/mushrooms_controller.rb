@@ -220,13 +220,16 @@ class MushroomsController < ApplicationController
       return
     end
 
-    source_mushroom = Mushroom.find(source_id)
+    source_mushroom = Mushroom.includes(:mr_character_mushrooms).find(source_id)
 
     # Check if source is accessible (either user's own or a template)
     unless source_mushroom.user_id == current_user.id || source_mushroom.is_template?
       redirect_to edit_mushroom_path(@mushroom), alert: 'You do not have permission to clone from that mushroom.'
       return
     end
+
+    # Temporarily disable strict loading for the cloning operation
+    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
 
     if @mushroom.clone_characters_from(source_mushroom)
       character_count = source_mushroom.mr_character_mushrooms.count
