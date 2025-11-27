@@ -63,7 +63,7 @@
           <%= render "shared/card", href: mushroom_path(mushroom) do %>
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
             <% if images.any? %>
-              <div class="relative w-32 h-32 flex-shrink-0">
+              <div class="relative flex-shrink-0" style="width: 128px; height: 128px; max-width: 128px; max-height: 128px;">
                 <div class="w-full h-full overflow-hidden rounded-lg border border-gray-300">
                   <%= image_tag(
                         url_for(images.first.image_file.variant(
@@ -73,7 +73,10 @@
                         )),
                         alt: images.first.part&.name.presence || mushroom.name || "Mushroom image",
                         loading: "lazy",
-                        class: "w-full h-full object-cover"
+                        width: 128,
+                        height: 128,
+                        style: "max-width: 128px; max-height: 128px;",
+                        class: "object-cover"
                       ) %>
                 </div>
                 <% if images.size > 1 %>
