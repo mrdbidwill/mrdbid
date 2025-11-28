@@ -49,8 +49,8 @@
             <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
             <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
 
-            <div class="flex flex-col border border-gray-200 rounded-lg p-3 bg-green-50 hover:shadow-md transition">
-              <div class="flex-1 min-w-0 mb-2">
+            <div class="border-2 border-green-300 rounded-lg p-3 bg-green-50 hover:shadow-lg hover:border-green-400 transition">
+              <div class="min-w-0 mb-2">
                 <div class="text-sm font-semibold text-gray-800 break-words">
                   <%= character.name.to_s.tr("_", " ") %>
                 </div>
@@ -89,7 +89,7 @@
               <% unless do_not_display %>
                 <% if is_color %>
                   <%# Color picker modal for already-entered color characters %>
-                  <div class="mt-2">
+                  <div>
                     <%= render "shared/color_picker_modal",
                                character: character,
                                mushroom_id: @mushroom.id,
@@ -98,7 +98,7 @@
                   </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true } do |f| %>
                     <%= hidden_field_tag :mushroom_id, @mushroom.id %>
                     <%= hidden_field_tag :mr_character_id, character.id %>
                     <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
@@ -126,8 +126,8 @@
             <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
             <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
 
-            <div class="flex flex-col border border-gray-200 rounded-lg p-3 bg-blue-50 hover:shadow-md transition">
-              <div class="flex-1 min-w-0 mb-2">
+            <div class="border-2 border-blue-300 rounded-lg p-3 bg-blue-50 hover:shadow-lg hover:border-blue-400 transition">
+              <div class="min-w-0 mb-2">
                 <div class="text-sm font-semibold text-gray-800 break-words">
                   <%= character.name.to_s.tr("_", " ") %>
                 </div>
@@ -142,7 +142,7 @@
               <% unless do_not_display %>
                 <% if is_color %>
                   <%# Color picker modal for new color characters %>
-                  <div class="mt-2">
+                  <div>
                     <%= render "shared/color_picker_modal",
                                character: character,
                                mushroom_id: @mushroom.id,
@@ -151,7 +151,7 @@
                   </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-2" } do |f| %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true } do |f| %>
                     <%= hidden_field_tag :mushroom_id, @mushroom.id %>
                     <%= hidden_field_tag :mr_character_id, character.id %>
                     <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>

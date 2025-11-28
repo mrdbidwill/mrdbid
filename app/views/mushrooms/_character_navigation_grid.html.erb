@@ -5,11 +5,12 @@
   </p>
 
   <%
-    # Build the grid data: observation_methods with their associated parts
+    # Build the grid data: parts with their associated observation_methods
     # Filter to only show characters for this mushroom's fungus_type or universal characters
-    @observation_method_parts = ObservationMethod.order(:name).map do |om|
-      parts_with_counts = Part.order(:name).map do |part|
-        # Count characters that match this observation_method + part combination
+    # SORTED BY PART FIRST, then by observation_method
+    @part_observation_methods = Part.order(:name).map do |part|
+      observation_methods_with_counts = ObservationMethod.order(:name).map do |om|
+        # Count characters that match this part + observation_method combination
         # AND either match the mushroom's fungus_type OR are universal (fungus_type_id IS NULL)
         if @mushroom.fungus_type_id.present?
           count = MrCharacter.where(observation_method: om, part: part)
@@ -20,37 +21,37 @@
           count = MrCharacter.where(observation_method: om, part: part).count
         end
         next unless count > 0
-        { part: part, count: count }
+        { observation_method: om, count: count }
       end.compact
-      next if parts_with_counts.empty?
-      { observation_method: om, parts: parts_with_counts }
+      next if observation_methods_with_counts.empty?
+      { part: part, observation_methods: observation_methods_with_counts }
     end.compact
   %>
 
   <div class="space-y-3">
-    <% @observation_method_parts.each do |data| %>
-      <% om = data[:observation_method] %>
-      <% parts = data[:parts] %>
+    <% @part_observation_methods.each do |data| %>
+      <% part = data[:part] %>
+      <% observation_methods = data[:observation_methods] %>
 
       <div class="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
-          <!-- Observation Method Name -->
+          <!-- Part Name -->
           <div class="md:col-span-1">
-            <h3 class="font-semibold text-gray-800 text-lg"><%= om.name %></h3>
-            <% if om.description.present? %>
-              <p class="text-xs text-gray-500"><%= truncate(om.description, length: 60) %></p>
+            <h3 class="font-semibold text-gray-800 text-lg"><%= part.name %></h3>
+            <% if part.description.present? %>
+              <p class="text-xs text-gray-500"><%= truncate(part.description, length: 60) %></p>
             <% end %>
           </div>
 
-          <!-- Parts Links -->
+          <!-- Observation Methods Links -->
           <div class="md:col-span-3">
             <div class="flex flex-wrap gap-2">
-              <% parts.each do |part_data| %>
-                <% part = part_data[:part] %>
-                <% count = part_data[:count] %>
+              <% observation_methods.each do |om_data| %>
+                <% om = om_data[:observation_method] %>
+                <% count = om_data[:count] %>
                 <%= link_to edit_characters_mushroom_path(@mushroom, observation_method_id: om.id, part_id: part.id),
                             class: "inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium transition shadow-sm hover:shadow" do %>
-                  <span><%= part.name %></span>
+                  <span><%= om.name %></span>
                   <span class="bg-white/20 rounded-full px-2 py-0.5 text-xs"><%= count %></span>
                 <% end %>
               <% end %>

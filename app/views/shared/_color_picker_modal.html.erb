@@ -1,18 +1,22 @@
-<%# Color Picker Modal Component
-    Usage:
-    <%= render "shared/color_picker_modal",
-               character: character,
-               mushroom_id: @mushroom.id,
-               current_color_id: color_id,
-               redirect_path: edit_characters_mushroom_path(@mushroom, ...) %>
+<%#
+  Color Picker Modal Component
+  Usage:
+    render "shared/color_picker_modal",
+           character: character,
+           mushroom_id: @mushroom.id,
+           current_color_id: color_id,
+           redirect_path: edit_characters_mushroom_path(@mushroom, ...)
+%>
 <% character_id = character.id %>
 <% current_color_id ||= nil %>
 <% redirect_path ||= nil %>
 
-<!-- Modal Trigger Button -->
-<button type="button"
-        onclick="openColorPicker(<%= character_id %>)"
-        class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition">
+<div data-controller="color-picker">
+  <!-- Modal Trigger Button -->
+  <button type="button"
+          data-action="click->color-picker#open"
+          data-character-id="<%= character_id %>"
+          class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition">
   <% if current_color_id %>
     <%= image_tag "AMS_colors/banner_50x50/banner_#{current_color_id}.jpg",
                   alt: "Current color",
@@ -24,15 +28,16 @@
     </svg>
     <span>Choose Color</span>
   <% end %>
-</button>
+  </button>
 
-<!-- Modal Backdrop and Container -->
-<div id="colorPickerModal<%= character_id %>"
-     class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-     onclick="if(event.target === this) closeColorPicker(<%= character_id %>)">
+  <!-- Modal Backdrop and Container -->
+  <div id="colorPickerModal<%= character_id %>"
+       class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+       data-character-id="<%= character_id %>"
+       data-action="click->color-picker#closeOnBackdrop">
 
   <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-       onclick="event.stopPropagation()">
+       data-action="click->color-picker#stopPropagation">
 
     <!-- Modal Header -->
     <div class="sticky top-0 bg-white border-b px-6 py-4 flex items-start justify-between">
@@ -45,7 +50,7 @@
         <% end %>
       </div>
       <button type="button"
-              onclick="closeColorPicker(<%= character_id %>)"
+              data-action="click->color-picker#close"
               class="ml-4 text-gray-400 hover:text-gray-600 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -73,7 +78,7 @@
                     value="<%= color_id %>"
                     title="<%= color ? "#{color.latin_name} (#{color.common_name})" : "Color #{color_id}" %>"
                     class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg <%= current_color_id == color_id ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-300 hover:border-blue-400' %>"
-                    onclick="closeColorPicker(<%= character_id %>)">
+                    data-action="click->color-picker#close">
               <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
                             alt: "Color #{color_id}",
                             class: "w-full h-full object-cover rounded-md" %>
@@ -102,46 +107,11 @@
     <!-- Modal Footer -->
     <div class="sticky bottom-0 bg-gray-50 border-t px-6 py-4">
       <button type="button"
-              onclick="closeColorPicker(<%= character_id %>)"
+              data-action="click->color-picker#close"
               class="w-full sm:w-auto px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition">
         Cancel
       </button>
     </div>
   </div>
+  </div>
 </div>
-
-<script>
-  // Define functions globally only once
-  if (typeof window.openColorPicker === 'undefined') {
-    window.openColorPicker = function(characterId) {
-      const modal = document.getElementById(`colorPickerModal${characterId}`);
-      if (modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      } else {
-        console.error('Modal not found for character:', characterId);
-      }
-    };
-
-    window.closeColorPicker = function(characterId) {
-      const modal = document.getElementById(`colorPickerModal${characterId}`);
-      if (modal) {
-        modal.classList.add('hidden');
-        document.body.style.overflow = '';
-      }
-    };
-
-    // Close on Escape key - only attach once
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        const modals = document.querySelectorAll('[id^="colorPickerModal"]');
-        modals.forEach(modal => {
-          if (!modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = '';
-          }
-        });
-      }
-    });
-  }
-</script>
