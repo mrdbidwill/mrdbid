@@ -12,13 +12,21 @@
       observation_methods_with_counts = ObservationMethod.order(:name).map do |om|
         # Count characters that match this part + observation_method combination
         # AND either match the mushroom's fungus_type OR are universal (fungus_type_id IS NULL)
+        # EXCLUDE: display_option_id = 1 (Do Not Display), part_id = 1 (Admin), observation_method_id = 9 (Admin)
         if @mushroom.fungus_type_id.present?
           count = MrCharacter.where(observation_method: om, part: part)
                             .where('fungus_type_id IS NULL OR fungus_type_id = ?', @mushroom.fungus_type_id)
+                            .where.not(display_option_id: 1)
+                            .where.not(part_id: 1)
+                            .where.not(observation_method_id: 9)
                             .count
         else
           # If mushroom has no fungus_type, show all characters
-          count = MrCharacter.where(observation_method: om, part: part).count
+          count = MrCharacter.where(observation_method: om, part: part)
+                            .where.not(display_option_id: 1)
+                            .where.not(part_id: 1)
+                            .where.not(observation_method_id: 9)
+                            .count
         end
         next unless count > 0
         { observation_method: om, count: count }
