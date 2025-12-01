@@ -95,6 +95,13 @@ class MushroomsController < ApplicationController
                             mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
                   .find(params[:id])
     authorize @mushroom
+
+    # Check if fungus_type exists (data integrity check)
+    if @mushroom.fungus_type.nil?
+      Rails.logger.error("Mushroom #{@mushroom.id} has invalid fungus_type_id: #{@mushroom.fungus_type_id}")
+      redirect_to mushrooms_path, alert: "Cannot edit mushroom: invalid fungus type. Please contact an administrator."
+      return
+    end
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
   end
