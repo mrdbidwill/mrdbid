@@ -3,6 +3,8 @@
       url: source_data.persisted? ? admin_source_datum_path(source_data) : admin_source_data_path,
       class: "contents"
     ) do |form| %>
+  <%= hidden_field_tag :source_data_type_id, params[:source_data_type_id] if params[:source_data_type_id].present? %>
+
   <% if source_data.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(source_data.errors.count, "error") %> prohibited this source_datum from being saved:</h2>

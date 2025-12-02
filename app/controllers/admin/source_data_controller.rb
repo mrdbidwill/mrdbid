@@ -5,9 +5,17 @@ class Admin::SourceDataController < Admin::ApplicationController
   def index
     authorize SourceData
     @source_data = policy_scope(
-      SourceData
-        .includes(:source_data_type).order("title") # eager load to satisfy strict_loading
-    ).page(params[:page]).per(20)
+      SourceData.includes(:source_data_type).order("title")
+    )
+
+    # Apply source_data_type filter if present
+    @source_data = @source_data.where(source_data_type_id: params[:source_data_type_id]) if params[:source_data_type_id].present?
+
+    # Populate source_data_types dropdown - only those that have source_data
+    @source_data_types = SourceDataType
+                          .where(id: SourceData.select(:source_data_type_id).distinct)
+                          .order(:name)
+                          .pluck(:name, :id)
   end
 
 
@@ -42,7 +50,9 @@ class Admin::SourceDataController < Admin::ApplicationController
   def update
     authorize @source_data
     if @source_data.update(source_data_params)
-      redirect_to admin_source_datum_path(@source_data), notice: "Source data was successfully updated."
+      # Return to filtered view if source_data_type_id is present
+      redirect_to admin_source_data_path(source_data_type_id: params[:source_data_type_id]),
+                  notice: "Source data was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
