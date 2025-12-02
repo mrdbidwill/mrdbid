@@ -23,6 +23,15 @@
           <p class="form-help">Select a source type to filter source data.</p>
         </div>
 
+        <div class="form-field">
+          <%= form.label :q, "Search by Title or Author", class: "form-label" %>
+          <%= text_field_tag :q, params[:q],
+                             placeholder: "e.g. 'Mushrooms of' or author name",
+                             class: "form-input",
+                             style: "width: 70%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Optional: narrow results by searching title or author. Works with or without type filter.</p>
+        </div>
+
         <div class="flex gap-2">
           <%= form.submit "Apply Filter", class: "btn-primary" %>
           <%= link_to "Reset", admin_source_data_path, class: "btn" %>
@@ -32,23 +41,31 @@
 
     <!-- Current filter summary -->
     <div class="well">
-      <% if params[:source_data_type_id].present? %>
+      <% if params[:source_data_type_id].present? || params[:q].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Currently showing:</span>
-          <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
-            <span class="font-medium">Type:</span>
-            <span><%= SourceDataType.find_by(id: params[:source_data_type_id])&.name %></span>
-          </span>
+          <% if params[:source_data_type_id].present? %>
+            <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
+              <span class="font-medium">Type:</span>
+              <span><%= SourceDataType.find_by(id: params[:source_data_type_id])&.name %></span>
+            </span>
+          <% end %>
+          <% if params[:q].present? %>
+            <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-700 px-2.5 py-1">
+              <span class="font-medium">Search:</span>
+              <span><%= params[:q] %></span>
+            </span>
+          <% end %>
           <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_source_data_path}\"]').scrollIntoView({behavior:'smooth'})" %>
         </div>
       <% else %>
-        <p class="muted">No type selected. Please choose one above.</p>
+        <p class="muted">No filters applied. Please select a type or search above.</p>
       <% end %>
     </div>
   </div>
   <!-- End Filter card -->
 
-  <% if params[:source_data_type_id].present? %>
+  <% if params[:source_data_type_id].present? || params[:q].present? %>
     <div class="flex justify-between items-center">
       <h1 class="font-bold text-2xl">Source Data</h1>
 
@@ -65,17 +82,17 @@
             </div>
             <div class="shrink-0">
               <%= link_to "Show", admin_source_datum_path(source_datum), class: "btn-primary text-xs px-2 py-1" %>
-              <%= link_to "Edit", edit_admin_source_datum_path(source_datum, source_data_type_id: params[:source_data_type_id]), class: "btn-primary text-xs px-2 py-1" %>
+              <%= link_to "Edit", edit_admin_source_datum_path(source_datum, source_data_type_id: params[:source_data_type_id], q: params[:q]), class: "btn-primary text-xs px-2 py-1" %>
             </div>
           </div>
         <% end %>
       <% else %>
-        <p class="text-center my-10 text-2xl text-red-600">No source data found for this type.</p>
+        <p class="text-center my-10 text-2xl text-red-600">No source data found matching your filters.</p>
       <% end %>
     </div>
   <% else %>
     <div class="text-center my-10">
-      <p class="text-xl text-gray-600">Please select a source data type from the dropdown above to view and edit source data.</p>
+      <p class="text-xl text-gray-600">Please select a source data type or use the search to view and edit source data.</p>
     </div>
   <% end %>
 </div>

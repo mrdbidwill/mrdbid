@@ -4,6 +4,7 @@
       class: "contents"
     ) do |form| %>
   <%= hidden_field_tag :source_data_type_id, params[:source_data_type_id] if params[:source_data_type_id].present? %>
+  <%= hidden_field_tag :q, params[:q] if params[:q].present? %>
 
   <% if source_data.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
