@@ -1,4 +1,6 @@
 <%= form_with(model: [:admin, @lookup_item], class: "contents") do |form| %>
+  <%= hidden_field_tag :mr_character_id, params[:mr_character_id] if params[:mr_character_id].present? %>
+
   <% if lookup_item.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(lookup_item.errors.count, "error") %> prohibited this lookup_item from being saved:</h2>

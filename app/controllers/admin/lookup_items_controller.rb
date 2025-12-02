@@ -4,10 +4,21 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def index
     authorize LookupItem
-    # @lookup_items = LookupItem.includes(:observation_method, :source_data).order(:mr_character_id, :name)
     @lookup_items = policy_scope(
-      LookupItem.includes(:mr_character, :source_data).order("mr_character_id, name")
-    ).page(params[:page]).per(20)
+      LookupItem.includes(:mr_character, :source_data)
+        .joins(:mr_character)
+        .order("mr_characters.name, lookup_items.name")  # Sort by character name, then item name
+    )
+
+    # Apply character filter if present
+    @lookup_items = @lookup_items.where(mr_character_id: params[:mr_character_id]) if params[:mr_character_id].present?
+
+    # Populate mr_characters dropdown - only those that have lookup_items
+    @mr_characters = MrCharacter
+                      .joins(:lookup_items)
+                      .distinct
+                      .order(:name)
+                      .pluck(:name, :id)
   end
 
   def new
@@ -38,7 +49,9 @@ class Admin::LookupItemsController < Admin::ApplicationController
   def update
     authorize @lookup_item
     if @lookup_item.update(lookup_item_params)
-      redirect_to admin_lookup_items_path, notice: "Lookup item updated successfully."
+      # Return to filtered view if mr_character_id is present
+      redirect_to admin_lookup_items_path(mr_character_id: params[:mr_character_id]),
+                  notice: "Lookup item updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end

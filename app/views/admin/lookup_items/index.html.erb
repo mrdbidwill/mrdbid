@@ -4,70 +4,100 @@
   <% if notice.present? %>
     <p class="px-2 py-1 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-2xl">Lookup Items</h1>
-    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-gray-600 hover:bg-gray-500 text-white block font-medium" %>
-    <%= link_to "New Lookup Item", new_admin_lookup_item_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-  </div>
 
-  <% if @lookup_items.any? %>
-    <div class="my-4">
-      <%= paginate @lookup_items,
-                   theme: 'tailwind_bar',
-                   params: request.query_parameters,
-                   window: 2,        # how many pages around current
-                   outer_window: 1   # how many pages at the ends
-      %>
+  <!-- Filter card -->
+  <div class="group-box mb-6">
+    <div class="group-header">
+      Filter Lookup Items by Character
+      <p class="hint mt-1">Select a character to view and edit its lookup items.</p>
     </div>
-  <% end %>
+    <div class="px-4 py-4">
+      <%= form_with url: admin_lookup_items_path, method: :get, local: true, class: "grid grid-cols-1 gap-4" do |form| %>
+        <div class="form-field">
+          <%= form.label :mr_character_id, "Mushroom Character", class: "form-label" %>
+          <%= form.select :mr_character_id,
+                          @mr_characters,
+                          { include_blank: "Select a character..." },
+                          class: "form-input",
+                          style: "width: 70%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Select a character to filter lookup items.</p>
+        </div>
 
-  <div id="lookup_items" class="min-w-full divide-y divide-gray-100 space-y-5">
-    <% if @lookup_items.any? %>
-      <% @lookup_items.group_by(&:mr_character).each do |mr_character, items| %>
-        <div class="my-10">
-          <h2 class="font-bold text-2xl mb-2">
-            <%= mr_character&.name || 'Unassigned Character' %>
-          </h2>
-          <div class="overflow-x-auto">
-            <table class="min-w-full table-auto border border-gray-100 mb-8">
-              <thead>
-              <tr>
-                <th class="px-2 py-1">Name</th>
-                <th class="px-2 py-1">Description</th>
-                <th class="px-2 py-1">Comments</th>
-                <th class="px-2 py-1">Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% items.each do |lookup_item| %>
-                <tr id="<%= dom_id lookup_item %>">
-                  <td class="border px-2 py-1"><%= lookup_item.name %></td>
-                  <td class="border px-2 py-1"><%= lookup_item.description %></td>
-                  <td class="border px-2 py-1"><%= lookup_item.comments %></td>
-                  <td class="border px-2 py-1 whitespace-nowrap">
-                    <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-1">
-                      <%= render "admin/shared/resource_actions", record: lookup_item, delete: false %>  <!-- show, edit, destroy (optional -->
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
+        <div class="flex gap-2">
+          <%= form.submit "Apply Filter", class: "btn-primary" %>
+          <%= link_to "Reset", admin_lookup_items_path, class: "btn" %>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-center my-10">No lookup items found.</p>
-    <% end %>
+    </div>
+
+    <!-- Current filter summary -->
+    <div class="well">
+      <% if params[:mr_character_id].present? %>
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <span class="text-gray-700 font-medium">Currently showing:</span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
+            <span class="font-medium">Character:</span>
+            <span><%= MrCharacter.find_by(id: params[:mr_character_id])&.name %></span>
+          </span>
+          <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_lookup_items_path}\"]').scrollIntoView({behavior:'smooth'})" %>
+        </div>
+      <% else %>
+        <p class="muted">No character selected. Please choose one above.</p>
+      <% end %>
+    </div>
   </div>
-  <% if @lookup_items.any? %>
-    <div class="my-4">
-      <%= paginate @lookup_items,
-                   theme: 'tailwind_bar',
-                   params: request.query_parameters,
-                   window: 2,        # how many pages around current
-                   outer_window: 1   # how many pages at the ends
-      %>
+  <!-- End Filter card -->
+
+  <% if params[:mr_character_id].present? %>
+    <div class="flex justify-between items-center">
+      <h1 class="font-bold text-2xl">Lookup Items</h1>
+      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-gray-600 hover:bg-gray-500 text-white block font-medium" %>
+      <%= link_to "New Lookup Item", new_admin_lookup_item_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    </div>
+
+    <div id="lookup_items" class="min-w-full divide-y divide-gray-100 space-y-5">
+      <% if @lookup_items.any? %>
+        <% @lookup_items.group_by(&:mr_character).each do |mr_character, items| %>
+          <div class="my-10">
+            <h2 class="font-bold text-2xl mb-2">
+              <%= mr_character&.name || 'Unassigned Character' %>
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full table-auto border border-gray-100 mb-8">
+                <thead>
+                <tr>
+                  <th class="px-2 py-1">Name</th>
+                  <th class="px-2 py-1">Description</th>
+                  <th class="px-2 py-1">Comments</th>
+                  <th class="px-2 py-1">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% items.each do |lookup_item| %>
+                  <tr id="<%= dom_id lookup_item %>">
+                    <td class="border px-2 py-1"><%= lookup_item.name %></td>
+                    <td class="border px-2 py-1"><%= lookup_item.description %></td>
+                    <td class="border px-2 py-1"><%= lookup_item.comments %></td>
+                    <td class="border px-2 py-1 whitespace-nowrap">
+                      <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
+                        <%= link_to "Show", admin_lookup_item_path(lookup_item), class: "btn-primary btn-responsive" %>
+                        <%= link_to "Edit", edit_admin_lookup_item_path(lookup_item, mr_character_id: params[:mr_character_id]), class: "btn-primary btn-responsive" %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-center my-10 text-2xl text-red-600">No lookup items found for this character.</p>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center my-10">
+      <p class="text-xl text-gray-600">Please select a character from the dropdown above to view and edit its lookup items.</p>
     </div>
   <% end %>
 </div>
