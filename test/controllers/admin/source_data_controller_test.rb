@@ -65,7 +65,7 @@ class SourceDataControllerTest < ActionDispatch::IntegrationTest
       comments: @source_data.comments,
       source_data_type_id: @source_data.source_data_type_id
     } }
-    assert_redirected_to admin_source_datum_path(@source_data)
+    assert_redirected_to admin_source_data_path
   end
 
   test "should destroy source_data" do
