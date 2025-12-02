@@ -66,6 +66,10 @@ class MrCharacterControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy mr_character" do
+    # Change user to Owner permission for delete
+    @user.permission_id = 1
+    @user.save!
+
     assert_difference("MrCharacter.count", -1) do
       delete admin_mr_character_url(@mr_character)
     end
