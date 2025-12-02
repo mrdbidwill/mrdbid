@@ -58,6 +58,10 @@ class User < ApplicationRecord
     permission_id.present? && permission_id < 5  # Owner-1, Admin-2, Expert-3, Scholar-4, Author-5, Editor-6, Contributor-7, Developer-8, Member-9
   end
 
+  def owner?
+    permission_id.present? && permission_id == 1  # Owner-1
+  end
+
   # Association with mushrooms
   has_many :mushrooms, dependent: :destroy
   has_many :all_groups, dependent: :destroy
