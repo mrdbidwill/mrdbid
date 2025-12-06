@@ -11,32 +11,59 @@
   <span class="text-xs text-gray-500">Use color picker below</span>
 
 <% when "radio", "9" %>
-  <% options = LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id) %>
-  <% if options.blank? %>
+  <% lookup_items = LookupItem.where(mr_character_id: character.id).order(:name) %>
+  <% if lookup_items.blank? %>
     <span class="text-xs text-gray-500">No options</span>
   <% else %>
     <div class="flex flex-col gap-1">
-      <% options.each do |label, value| %>
-        <% id = "#{character.id}-#{value}" %>
-        <label for="<%= id %>" class="inline-flex items-center gap-2">
-          <%= f.radio_button(:character_value, value, id: id, checked: existing == value.to_s.downcase) %>
-          <span class="text-sm"><%= label.to_s %></span>
-        </label>
+      <% lookup_items.each do |item| %>
+        <% id = "#{character.id}-#{item.id}" %>
+        <div class="flex flex-col">
+          <label for="<%= id %>" class="inline-flex items-center gap-2">
+            <%= f.radio_button(:character_value, item.id, id: id, checked: existing == item.id.to_s.downcase) %>
+            <span class="text-sm"><%= item.name.to_s %></span>
+          </label>
+          <% if item.description.present? %>
+            <div class="text-xs text-gray-600 ml-6 mt-0.5">
+              <%= item.description %>
+            </div>
+          <% end %>
+          <% if item.comments.present? %>
+            <div class="text-xs text-gray-500 italic ml-6 mt-0.5">
+              <%= item.comments %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
 
 <% when "drop-down", "10" %>
-  <% options = LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id) %>
-  <% if options.blank? %>
+  <% lookup_items = LookupItem.where(mr_character_id: character.id).order(:name) %>
+  <% if lookup_items.blank? %>
     <span class="text-xs text-gray-500">No options</span>
   <% else %>
-    <%= f.select(
-          :character_value,
-          options_for_select(options, current_value),
-          { include_blank: "Select..." },
-          class: "border rounded px-2 py-1 text-sm w-full max-w-xs"
-        ) %>
+    <div class="flex flex-col gap-2">
+      <%= f.select(
+            :character_value,
+            options_for_select(lookup_items.pluck(:name, :id), current_value),
+            { include_blank: "Select..." },
+            class: "border rounded px-2 py-1 text-sm w-full max-w-xs"
+          ) %>
+      <% if current_value.present? %>
+        <% selected_item = lookup_items.find_by(id: current_value) %>
+        <% if selected_item&.description.present? || selected_item&.comments.present? %>
+          <div class="text-xs bg-gray-50 border rounded px-2 py-1.5">
+            <% if selected_item.description.present? %>
+              <div class="text-gray-700"><%= selected_item.description %></div>
+            <% end %>
+            <% if selected_item.comments.present? %>
+              <div class="text-gray-500 italic mt-0.5"><%= selected_item.comments %></div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
 
 <% when "text_box_number_mm", "text_box_number_um", "text_box_number", "2", "3", "4" %>
