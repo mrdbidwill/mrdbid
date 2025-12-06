@@ -1,0 +1,74 @@
+<aside class="w-64 flex-shrink-0 bg-gray-50 border-r border-gray-300 p-4">
+  <!-- Title -->
+  <div class="mb-4">
+    <h2 class="text-lg font-bold text-gray-900">MRDBID</h2>
+    <p class="text-xs text-gray-600">MushRoom DataBase IDentification</p>
+  </div>
+
+  <!-- Current URL -->
+  <div class="mb-6 p-3 bg-white border border-gray-300 rounded text-xs break-all">
+    <strong class="block mb-1 text-gray-700">Current Page:</strong>
+    <span class="text-blue-600"><%= request.original_url %></span>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="space-y-1">
+    <% if user_signed_in? %>
+      <!-- Mushrooms -->
+      <%= link_to "Your Mushrooms", mushrooms_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "🔍 Search Mushrooms", mushroom_search_index_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
+
+      <!-- Clusters -->
+      <%= link_to "Manage Clusters", clusters_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
+
+      <!-- Groups -->
+      <%= link_to "Manage Groups", all_groups_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
+
+      <!-- Projects -->
+      <%= link_to "Manage Projects", projects_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
+
+      <!-- Articles -->
+      <%= link_to "Articles", articles_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <!-- Books -->
+      <%= link_to "Books", books_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <!-- Contact -->
+      <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <% if current_user&.admin? %>
+        <!-- Admin -->
+        <%= link_to "Admin Dashboard", admin_root_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
+
+        <%= link_to "Characters", admin_mr_characters_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
+      <% end %>
+
+      <!-- Account -->
+      <%= link_to "Account", edit_user_registration_path, class: "block px-3 py-2 rounded bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium transition" %>
+
+      <!-- Logout -->
+      <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left px-3 py-2 rounded bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium transition" %>
+    <% else %>
+      <!-- Not signed in -->
+      <%= link_to "Home", root_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Books", books_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Sign In", new_user_session_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Create Account", new_user_registration_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+
+      <!-- Demo Mode Info -->
+      <div class="mt-6 p-3 bg-blue-50 border border-blue-200 rounded text-xs">
+        <p class="font-semibold text-blue-900 mb-2">👋 Demo Mode</p>
+        <p class="text-blue-800 mb-2">You're viewing demonstration mushroom specimens.</p>
+        <p class="text-blue-700">Sign in to add your own collection and use the full feature set.</p>
+      </div>
+    <% end %>
+  </nav>
+</aside>

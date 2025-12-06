@@ -1,153 +1,101 @@
 <% content_for :title, "Mushrooms" %>
 
-<!-- Override container padding for full-width layout -->
-<style>
-  main.container {
-    max-width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-</style>
+<h1 class="text-3xl font-bold text-gray-900 mb-4">
+  <%= user_signed_in? ? "Your Mushrooms" : "Demo Collection" %>
+</h1>
 
-<!-- Two-column layout: sidebar + main content -->
-<div class="flex gap-0 w-full">
-  <!-- Left Sidebar -->
-  <aside class="w-64 flex-shrink-0 bg-gray-50 border-r border-gray-300 p-4">
-    <!-- Title -->
-    <div class="mb-4">
-      <h2 class="text-lg font-bold text-gray-900">MRDBID</h2>
-      <p class="text-xs text-gray-600">MushRoom DataBase IDentification</p>
-    </div>
+<!-- Page-specific actions -->
+<% if user_signed_in? && @mushrooms&.any? %>
+  <div class="mb-4">
+    <%= link_to "Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
+        class: "inline-block px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition",
+        data: { turbo_confirm: "This will export all #{@mushrooms.total_count} of your mushrooms to PDF. Large exports may take some time. Continue?" } %>
+  </div>
+<% end %>
 
-    <!-- Current URL -->
-    <div class="mb-6 p-3 bg-gray-50 border border-gray-300 rounded text-xs break-all">
-      <strong class="block mb-1 text-gray-700">Current Page:</strong>
-      <span class="text-blue-600"><%= request.original_url %></span>
-    </div>
+<%= render "shared/pagination", collection: @mushrooms %>
 
-    <!-- Navigation Links -->
-    <nav class="space-y-1">
-      <% if user_signed_in? %>
-        <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+<% if @mushrooms&.any? %>
+  <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
+  <% grouped.keys.sort.each do |ft_name| %>
+    <!-- Fungus Type Header -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3 pb-2 border-b-2 border-gray-300">
+        <%= ft_name %>
+      </h2>
 
-        <% if @mushrooms&.any? %>
-          <%= link_to "Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-              class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition",
-              data: { turbo_confirm: "This will export all #{@mushrooms.total_count} of your mushrooms to PDF. Large exports may take some time. Continue?" } %>
-        <% end %>
-
-        <%= link_to "🔍 Search Mushrooms", mushroom_search_index_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
-
-        <% if current_user&.admin? %>
-          <%= link_to "Admin Dashboard", admin_root_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
-        <% end %>
-      <% else %>
-        <%= link_to "Sign In", new_user_session_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
-        <%= link_to "Create Account", new_user_registration_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
-      <% end %>
-    </nav>
-
-    <% unless user_signed_in? %>
-      <!-- Demo Mode Info -->
-      <div class="mt-6 p-3 bg-blue-50 border border-blue-200 rounded text-xs">
-        <p class="font-semibold text-blue-900 mb-2">👋 Demo Mode</p>
-        <p class="text-blue-800 mb-2">You're viewing demonstration mushroom specimens.</p>
-        <p class="text-blue-700">Sign in to add your own collection and use the full feature set.</p>
-      </div>
-    <% end %>
-  </aside>
-
-  <!-- Main Content Area -->
-  <main class="flex-1 px-6 py-4">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">
-      <%= user_signed_in? ? "Your Mushrooms" : "Demo Collection" %>
-    </h1>
-
-    <%= render "shared/pagination", collection: @mushrooms %>
-
-    <% if @mushrooms&.any? %>
-      <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
-      <% grouped.keys.sort.each do |ft_name| %>
-        <!-- Fungus Type Header -->
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-3 pb-2 border-b-2 border-gray-300">
-            <%= ft_name %>
-          </h2>
-
-          <!-- 4-column grid of mushrooms -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <% grouped[ft_name].each do |mushroom| %>
-              <%= link_to mushroom_path(mushroom), class: "block border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg transition bg-white" do %>
-                <!-- Image -->
-                <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
-                <% if images.any? %>
-                  <div class="relative w-full" style="height: 200px;">
-                    <%= image_tag(
-                          url_for(images.first.image_file.variant(
-                            resize_to_fill: [300, 300],
-                            format: :webp,
-                            saver: { strip: true, quality: 70, effort: 4 }
-                          )),
-                          alt: mushroom.name || "Mushroom image",
-                          loading: "lazy",
-                          class: "w-full h-full object-cover"
-                        ) %>
-                    <% if images.size > 1 %>
-                      <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-                        +<%= images.size - 1 %>
-                      </span>
-                    <% end %>
-                  </div>
-                <% else %>
-                  <!-- Placeholder if no image -->
-                  <div class="w-full bg-gray-200 flex items-center justify-center" style="height: 200px;">
-                    <span class="text-gray-400 text-sm">No image</span>
-                  </div>
+      <!-- 4-column grid of mushrooms -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <% grouped[ft_name].each do |mushroom| %>
+          <%= link_to mushroom_path(mushroom), class: "block border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg transition bg-white" do %>
+            <!-- Image -->
+            <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
+            <% if images.any? %>
+              <div class="relative w-full" style="height: 200px;">
+                <%= image_tag(
+                      url_for(images.first.image_file.variant(
+                        resize_to_fill: [300, 300],
+                        format: :webp,
+                        saver: { strip: true, quality: 70, effort: 4 }
+                      )),
+                      alt: mushroom.name || "Mushroom image",
+                      loading: "lazy",
+                      class: "w-full h-full object-cover"
+                    ) %>
+                <% if images.size > 1 %>
+                  <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                    +<%= images.size - 1 %>
+                  </span>
                 <% end %>
-
-                <!-- Text content below image -->
-                <div class="p-3">
-                  <% if mushroom.genera.any? && mushroom.species.any? %>
-                    <p class="text-sm italic text-gray-600 mb-1">
-                      <%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %>
-                    </p>
-                  <% end %>
-
-                  <p class="font-semibold text-gray-900 mb-1">
-                    <%= mushroom.name.presence || "Unnamed" %>
-                  </p>
-
-                  <% if mushroom.collection_date.present? %>
-                    <p class="text-xs text-gray-600">
-                      <%= mushroom.collection_date.strftime('%m-%d-%Y') %>
-                    </p>
-                  <% end %>
-
-                  <% country_name = mushroom.country&.name %>
-                  <% state_name = mushroom.state&.name %>
-                  <% location = [state_name, country_name].compact.join(", ") %>
-                  <% if location.present? %>
-                    <p class="text-xs text-gray-500">
-                      <%= location %>
-                    </p>
-                  <% end %>
-
-                  <% description = truncate(mushroom.description.to_s, length: 80) %>
-                  <% if description.present? %>
-                    <p class="text-xs text-gray-700 mt-2">
-                      <%= description %>
-                    </p>
-                  <% end %>
-                </div>
-              <% end %>
+              </div>
+            <% else %>
+              <!-- Placeholder if no image -->
+              <div class="w-full bg-gray-200 flex items-center justify-center" style="height: 200px;">
+                <span class="text-gray-400 text-sm">No image</span>
+              </div>
             <% end %>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-center text-gray-600 my-8">No mushrooms found.</p>
-    <% end %>
 
-    <%= render "shared/pagination", collection: @mushrooms %>
-  </main>
-</div>
+            <!-- Text content below image -->
+            <div class="p-3">
+              <% if mushroom.genera.any? && mushroom.species.any? %>
+                <p class="text-sm italic text-gray-600 mb-1">
+                  <%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %>
+                </p>
+              <% end %>
+
+              <p class="font-semibold text-gray-900 mb-1">
+                <%= mushroom.name.presence || "Unnamed" %>
+              </p>
+
+              <% if mushroom.collection_date.present? %>
+                <p class="text-xs text-gray-600">
+                  <%= mushroom.collection_date.strftime('%m-%d-%Y') %>
+                </p>
+              <% end %>
+
+              <% country_name = mushroom.country&.name %>
+              <% state_name = mushroom.state&.name %>
+              <% location = [state_name, country_name].compact.join(", ") %>
+              <% if location.present? %>
+                <p class="text-xs text-gray-500">
+                  <%= location %>
+                </p>
+              <% end %>
+
+              <% description = truncate(mushroom.description.to_s, length: 80) %>
+              <% if description.present? %>
+                <p class="text-xs text-gray-700 mt-2">
+                  <%= description %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-center text-gray-600 my-8">No mushrooms found.</p>
+<% end %>
+
+<%= render "shared/pagination", collection: @mushrooms %>
