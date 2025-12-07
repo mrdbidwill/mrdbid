@@ -235,18 +235,50 @@
         document.body.appendChild(loadingOverlay);
 
         // Change button text
+        const originalButtonContent = this.innerHTML;
         this.innerHTML = '⏳ Exporting...';
         this.classList.remove('hover:bg-indigo-700');
         this.classList.add('opacity-75', 'cursor-not-allowed');
         this.style.pointerEvents = 'none';
 
-        // Auto-remove overlay after PDF download completes (or 60 seconds timeout)
-        setTimeout(function() {
-          const overlay = document.getElementById('pdf-loading-overlay');
-          if (overlay) {
-            overlay.remove();
+        // Detect when download completes by checking window focus
+        let focusCheckCount = 0;
+        const downloadCheckInterval = setInterval(function() {
+          focusCheckCount++;
+          // Check if window has regained focus (happens when download dialog closes)
+          if (document.hasFocus() && focusCheckCount > 5) { // Wait at least 5 checks (1.5 sec) before considering focus
+            clearInterval(downloadCheckInterval);
+            // Give it a moment for the download to complete, then remove overlay
+            setTimeout(function() {
+              const overlay = document.getElementById('pdf-loading-overlay');
+              if (overlay) {
+                overlay.remove();
+              }
+              // Reset button
+              if (exportPdfLink) {
+                exportPdfLink.innerHTML = originalButtonContent;
+                exportPdfLink.classList.add('hover:bg-indigo-700');
+                exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+                exportPdfLink.style.pointerEvents = '';
+              }
+            }, 1000); // 1 second delay after focus returns
           }
-        }, 60000); // 60 second timeout
+
+          // Stop checking after 100 attempts (30 seconds)
+          if (focusCheckCount > 100) {
+            clearInterval(downloadCheckInterval);
+            const overlay = document.getElementById('pdf-loading-overlay');
+            if (overlay) {
+              overlay.remove();
+            }
+            if (exportPdfLink) {
+              exportPdfLink.innerHTML = originalButtonContent;
+              exportPdfLink.classList.add('hover:bg-indigo-700');
+              exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+              exportPdfLink.style.pointerEvents = '';
+            }
+          }
+        }, 300); // Check every 300ms
       });
     }
   });
