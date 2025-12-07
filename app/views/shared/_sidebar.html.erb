@@ -102,7 +102,13 @@
       <%= link_to "🔍 Search Mushrooms", mushroom_search_index_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
 
       <!-- Export All -->
-      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf), class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition", data: { turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?" } %>
+      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
+          class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
+          id: "export-all-pdf-link",
+          data: {
+            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
+            turbo: false
+          } %>
 
       <div class="my-2 border-t border-gray-400"></div>
 
@@ -195,5 +201,53 @@
         }
       });
     });
+
+    // Handle PDF export with loading indicator
+    const exportPdfLink = document.getElementById('export-all-pdf-link');
+    if (exportPdfLink) {
+      exportPdfLink.addEventListener('click', function(e) {
+        // Only show loading if user confirms (if confirm dialog exists)
+        const confirmMessage = this.dataset.turboConfirm;
+        if (confirmMessage) {
+          if (!confirm(confirmMessage)) {
+            e.preventDefault();
+            return;
+          }
+        }
+
+        // Show loading overlay
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.id = 'pdf-loading-overlay';
+        loadingOverlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+        loadingOverlay.innerHTML = `
+          <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+            <div class="mb-4">
+              <svg class="animate-spin h-16 w-16 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Generating PDF...</h3>
+            <p class="text-gray-600 mb-4">Please wait while we export your mushrooms to PDF. This may take a minute or two depending on the number of mushrooms.</p>
+            <p class="text-sm text-gray-500">Do not close this window or navigate away.</p>
+          </div>
+        `;
+        document.body.appendChild(loadingOverlay);
+
+        // Change button text
+        this.innerHTML = '⏳ Exporting...';
+        this.classList.remove('hover:bg-indigo-700');
+        this.classList.add('opacity-75', 'cursor-not-allowed');
+        this.style.pointerEvents = 'none';
+
+        // Auto-remove overlay after PDF download completes (or 60 seconds timeout)
+        setTimeout(function() {
+          const overlay = document.getElementById('pdf-loading-overlay');
+          if (overlay) {
+            overlay.remove();
+          }
+        }, 60000); // 60 second timeout
+      });
+    }
   });
 </script>
