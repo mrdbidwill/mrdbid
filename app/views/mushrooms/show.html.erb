@@ -23,10 +23,6 @@
 
   <h1 class="font-bold text-2xl">Showing mushroom:</h1>
 
-  <div class="mt-4">
-    <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at top of page -->
-  </div>
-
   <%= render @mushroom %>
 
   <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
@@ -152,8 +148,4 @@
       </details>
     <% end %>
   </div>
-
-  <div class="mt-4">
-    <%= render 'shared/mushroom_menu', mushroom: @mushroom %>  <!-- at bottom of page -->
-  </div>
-    </div>
+</div>

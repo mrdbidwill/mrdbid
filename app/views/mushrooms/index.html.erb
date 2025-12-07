@@ -4,15 +4,6 @@
   <%= user_signed_in? ? "Your Mushrooms" : "Demo Collection" %>
 </h1>
 
-<!-- Page-specific actions -->
-<% if user_signed_in? && @mushrooms&.any? %>
-  <div class="mb-4">
-    <%= link_to "Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-        class: "inline-block px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition",
-        data: { turbo_confirm: "This will export all #{@mushrooms.total_count} of your mushrooms to PDF. Large exports may take some time. Continue?" } %>
-  </div>
-<% end %>
-
 <%= render "shared/pagination", collection: @mushrooms %>
 
 <% if @mushrooms&.any? %>

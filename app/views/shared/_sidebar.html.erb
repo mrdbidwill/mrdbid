@@ -1,15 +1,88 @@
-<aside class="w-64 flex-shrink-0 bg-gray-50 border-r border-gray-300 p-4">
-  <!-- Title -->
-  <div class="mb-4">
-    <h2 class="text-lg font-bold text-gray-900">MRDBID</h2>
-    <p class="text-xs text-gray-600">MushRoom DataBase IDentification</p>
+<!-- Mobile hamburger button -->
+<button id="sidebar-toggle" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded-md shadow-lg">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+  </svg>
+</button>
+
+<!-- Sidebar overlay for mobile -->
+<div id="sidebar-overlay" class="lg:hidden hidden fixed inset-0 bg-black bg-opacity-50 z-30"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="w-64 flex-shrink-0 bg-gray-50 border-r border-gray-300 p-4 fixed lg:static h-full overflow-y-auto z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+  <!-- Close button for mobile -->
+  <button id="sidebar-close" class="lg:hidden absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <!-- Logo/Title - Clickable -->
+  <div class="mb-4 mt-8 lg:mt-0">
+    <%= link_to root_path, class: "block hover:opacity-80 transition" do %>
+      <%= image_tag "mrdbid_logo.svg",
+                    alt: "MRDBID — MushRoom DataBase Identification",
+                    class: "block h-10 w-auto select-none mb-2",
+                    draggable: false %>
+      <p class="text-xs text-gray-600">MushRoom DataBase IDentification</p>
+    <% end %>
   </div>
 
-  <!-- Current URL -->
-  <div class="mb-6 p-3 bg-white border border-gray-300 rounded text-xs break-all">
+  <!-- Current URL (hidden on mobile for space) -->
+  <div class="mb-6 p-3 bg-white border border-gray-300 rounded text-xs break-all hidden lg:block">
     <strong class="block mb-1 text-gray-700">Current Page:</strong>
     <span class="text-blue-600"><%= request.original_url %></span>
   </div>
+
+  <!-- Context-aware section for current mushroom -->
+  <% if defined?(@mushroom) && @mushroom.present? %>
+    <div class="mb-4 p-3 bg-blue-50 border border-blue-300 rounded">
+      <div class="text-xs font-semibold text-blue-900 mb-2">Current Mushroom:</div>
+      <div class="text-sm font-medium text-blue-800 mb-3"><%= @mushroom.name || "Unnamed" %></div>
+
+      <div class="space-y-1">
+        <!-- Edit/View toggle -->
+        <% if current_page?(controller: 'mushrooms', action: 'show', id: @mushroom.id) %>
+          <%= link_to "Edit - Add Characters", edit_mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-green-600 hover:bg-green-700 text-white font-medium transition text-center" %>
+        <% elsif current_page?(controller: 'mushrooms', action: 'edit', id: @mushroom.id) %>
+          <%= link_to "View Mushroom", mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-700 text-white font-medium transition text-center" %>
+        <% end %>
+
+        <!-- Upload Image -->
+        <%= link_to "Upload Image", new_mushroom_image_mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-sky-600 hover:bg-sky-700 text-white font-medium transition text-center" %>
+
+        <!-- Compare -->
+        <%= link_to "Compare", mushroom_mushroom_comparisons_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-purple-600 hover:bg-purple-700 text-white font-medium transition text-center" %>
+
+        <!-- Add to Group -->
+        <% groups_count = @mushroom.all_group_mushrooms.size %>
+        <%= link_to new_all_group_mushroom_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition text-center" do %>
+          <%= groups_count > 0 ? "Add to Group (#{groups_count})" : "Add to Group" %>
+        <% end %>
+
+        <!-- Add to Cluster -->
+        <% clusters_count = @mushroom.cluster_mushrooms.size %>
+        <%= link_to new_cluster_mushroom_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-amber-600 hover:bg-amber-700 text-white font-medium transition text-center" do %>
+          <%= clusters_count > 0 ? "Add to Cluster (#{clusters_count})" : "Add to Cluster" %>
+        <% end %>
+
+        <!-- Add to Project -->
+        <% projects_count = @mushroom.mushroom_projects.size %>
+        <%= link_to new_mushroom_project_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-cyan-600 hover:bg-cyan-700 text-white font-medium transition text-center" do %>
+          <%= projects_count > 0 ? "Add to Project (#{projects_count})" : "Add to Project" %>
+        <% end %>
+
+        <!-- Delete -->
+        <% if user_signed_in? && @mushroom.user_id == current_user.id %>
+          <%= button_to "Delete Mushroom", mushroom_path(@mushroom), method: :delete,
+              class: "w-full px-2 py-1.5 text-xs rounded bg-red-600 hover:bg-red-700 text-white font-medium transition text-center",
+              data: { turbo_confirm: "Are you sure you want to delete this mushroom?" } %>
+        <% end %>
+      </div>
+    </div>
+
+    <hr class="my-4 border-gray-300">
+  <% end %>
 
   <!-- Navigation Links -->
   <nav class="space-y-1">
@@ -21,6 +94,11 @@
 
       <%= link_to "🔍 Search Mushrooms", mushroom_search_index_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
 
+      <!-- Export All -->
+      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf), class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition", data: { turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?" } %>
+
+      <div class="my-2 border-t border-gray-400"></div>
+
       <!-- Clusters -->
       <%= link_to "Manage Clusters", clusters_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
 
@@ -29,6 +107,8 @@
 
       <!-- Projects -->
       <%= link_to "Manage Projects", projects_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
+
+      <div class="my-2 border-t border-gray-400"></div>
 
       <!-- Articles -->
       <%= link_to "Articles", articles_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
@@ -39,11 +119,15 @@
       <!-- Contact -->
       <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 
+      <div class="my-2 border-t border-gray-400"></div>
+
       <% if current_user&.admin? %>
         <!-- Admin -->
         <%= link_to "Admin Dashboard", admin_root_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
 
         <%= link_to "Characters", admin_mr_characters_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
+
+        <div class="my-2 border-t border-gray-400"></div>
       <% end %>
 
       <!-- Account -->
@@ -72,3 +156,39 @@
     <% end %>
   </nav>
 </aside>
+
+<!-- JavaScript for sidebar toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarClose = document.getElementById('sidebar-close');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+      sidebarOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      sidebarOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking a link on mobile
+    const sidebarLinks = sidebar.querySelectorAll('a, button[type="submit"]');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth < 1024) {
+          closeSidebar();
+        }
+      });
+    });
+  });
+</script>
