@@ -64,12 +64,15 @@
                 </p>
               <% end %>
 
-              <% country_name = mushroom.country&.name %>
-              <% state_name = mushroom.state&.name %>
-              <% location = [state_name, country_name].compact.join(", ") %>
-              <% if location.present? %>
+              <% location_parts = [
+                mushroom.city,
+                (mushroom.county.present? ? "#{mushroom.county} County" : nil),
+                mushroom.state&.name,
+                mushroom.country&.name
+              ].compact.reject(&:blank?) %>
+              <% if location_parts.any? %>
                 <p class="text-xs text-gray-500">
-                  <%= location %>
+                  <%= location_parts.join(", ") %>
                 </p>
               <% end %>
 

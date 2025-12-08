@@ -13,7 +13,12 @@
             <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>
           <% end %>
           <dd class="font-medium">
-            <% location_parts = [mushroom.city, mushroom.county, mushroom.state&.name, mushroom.country&.name].compact.reject(&:blank?) %>
+            <% location_parts = [
+              mushroom.city,
+              (mushroom.county.present? ? "#{mushroom.county} County" : nil),
+              mushroom.state&.name,
+              mushroom.country&.name
+            ].compact.reject(&:blank?) %>
             <%= location_parts.join(', ') %>
             <span class="text-sm text-gray-400">Fungus Type:</span> <%= mushroom.fungus_type&.name %>
           </dd>
