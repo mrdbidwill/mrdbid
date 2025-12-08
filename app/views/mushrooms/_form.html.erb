@@ -80,8 +80,18 @@
         </select>
       </div>
 
+      <div class="mt-2">
+        <%= form.label :city, "City where specimen was found" %>
+        <%= form.text_field :city, class: "block shadow-sm rounded-md border px-3 py-1 mt-1 w-full", style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" %>
+      </div>
+
+      <div class="mt-2">
+        <%= form.label :county, "County where specimen was found" %>
+        <%= form.text_field :county, class: "block shadow-sm rounded-md border px-3 py-1 mt-1 w-full", style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" %>
+      </div>
+
       <div class="mt-2 flex gap-2">
-        <%= button_tag "Update country/state",
+        <%= button_tag "Update location",
                        type: "submit",
                        name: "commit",
                        value: "update_location",

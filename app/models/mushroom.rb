@@ -86,6 +86,8 @@ class Mushroom < ApplicationRecord
   validates :fungus_type_id, presence: true
   validates :description, length: { maximum: 4096 }
   validates :comments, length: { maximum: 4096 }
+  validates :city, length: { maximum: 255 }
+  validates :county, length: { maximum: 255 }
 
   # Instance method to trigger comparison recalculation
   def recalculate_comparisons
