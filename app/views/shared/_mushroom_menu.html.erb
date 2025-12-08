@@ -12,11 +12,6 @@
     </div>
 
     <!-- Action Buttons Grid -->
-    <%# Precompute counts %>
-    <% groups_count   = mushroom.all_group_mushrooms.size %>
-    <% clusters_count = mushroom.cluster_mushrooms.size %>
-    <% projects_count = mushroom.mushroom_projects.size %>
-
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
       <%# Edit - Add Characters %>
       <% if (!defined?(policy) || policy(mushroom)&.edit?) && !current_page?(edit_mushroom_path(mushroom)) %>
@@ -37,78 +32,6 @@
       <%# Export to PDF %>
       <%= link_to "Export PDF", export_pdf_mushroom_path(mushroom, format: :pdf),
           class: "px-3 py-2 rounded bg-teal-600 text-white font-medium hover:bg-teal-500 transition text-center" %>
-
-      <%# Add to Group with hover/tap details %>
-      <% if !defined?(policy) || policy(mushroom)&.all_group_mushroom? %>
-        <div class="relative group">
-          <%= link_to "Add to Group (#{groups_count})",
-              new_all_group_mushroom_path(mushroom_id: mushroom.id),
-              class: "block px-3 py-2 rounded bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition text-center" %>
-          <div class="hidden group-hover:block absolute left-0 mt-1 z-30 min-w-56 max-w-xs bg-white border rounded shadow p-2">
-            <div class="text-sm text-gray-700 font-semibold mb-1">Groups (<%= groups_count %>)</div>
-            <% if groups_count.positive? %>
-              <ul class="list-disc ml-5 text-sm text-gray-800 max-h-56 overflow-auto">
-                <% mushroom.all_groups.order(:name).limit(20).each do |g| %>
-                  <li><%= g.name %></li>
-                <% end %>
-              </ul>
-              <% if mushroom.all_groups.count > 20 %>
-                <div class="text-xs text-gray-500 mt-1">and more…</div>
-              <% end %>
-            <% else %>
-              <div class="text-sm text-gray-500">No groups yet.</div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
-      <%# Add to Cluster with hover/tap details %>
-      <% if !defined?(policy) || policy(mushroom)&.mushroom_cluster? %>
-        <div class="relative group">
-          <%= link_to "Add to Cluster (#{clusters_count})",
-              new_cluster_mushroom_path(mushroom_id: mushroom.id),
-              class: "block px-3 py-2 rounded bg-amber-600 text-white font-medium hover:bg-amber-500 transition text-center" %>
-          <div class="hidden group-hover:block absolute left-0 mt-1 z-30 min-w-56 max-w-xs bg-white border rounded shadow p-2">
-            <div class="text-sm text-gray-700 font-semibold mb-1">Clusters (<%= clusters_count %>)</div>
-            <% if clusters_count.positive? %>
-              <ul class="list-disc ml-5 text-sm text-gray-800 max-h-56 overflow-auto">
-                <% mushroom.clusters.order(:name).limit(20).each do |c| %>
-                  <li><%= c.name %></li>
-                <% end %>
-              </ul>
-              <% if mushroom.clusters.count > 20 %>
-                <div class="text-xs text-gray-500 mt-1">and more…</div>
-              <% end %>
-            <% else %>
-              <div class="text-sm text-gray-500">No clusters yet.</div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
-      <%# Add to Project with hover/tap details %>
-      <% if !defined?(policy) || policy(mushroom)&.mushroom_project? %>
-        <div class="relative group">
-          <%= link_to "Add to Project (#{projects_count})",
-              new_mushroom_project_path(mushroom_id: mushroom.id),
-              class: "block px-3 py-2 rounded bg-cyan-600 text-white font-medium hover:bg-cyan-500 transition text-center" %>
-          <div class="hidden group-hover:block absolute left-0 mt-1 z-30 min-w-56 max-w-xs bg-white border rounded shadow p-2">
-            <div class="text-sm text-gray-700 font-semibold mb-1">Projects (<%= projects_count %>)</div>
-            <% if projects_count.positive? %>
-              <ul class="list-disc ml-5 text-sm text-gray-800 max-h-56 overflow-auto">
-                <% mushroom.projects.order(:name).limit(20).each do |p| %>
-                  <li><%= p.name %></li>
-                <% end %>
-              </ul>
-              <% if mushroom.projects.count > 20 %>
-                <div class="text-xs text-gray-500 mt-1">and more…</div>
-              <% end %>
-            <% else %>
-              <div class="text-sm text-gray-500">No projects yet.</div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
 
       <%# Delete %>
       <% if user_signed_in? && (defined?(policy) ? policy(mushroom)&.destroy? : (current_user && mushroom.user == current_user)) %>

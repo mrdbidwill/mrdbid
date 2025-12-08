@@ -50,27 +50,6 @@
           </li>
         <% end %>
 
-        <!-- Manage Clusters -->
-        <% unless controller_name == 'clusters' %>
-        <li>
-          <%= link_to "Manage Clusters", clusters_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
-        </li>
-        <% end %>
-
-        <!-- Manage Groups -->
-        <% unless controller_name == 'all_groups' %>
-        <li>
-          <%= link_to "Manage Groups", all_groups_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
-        </li>
-        <% end %>
-
-        <!-- Manage Projects -->
-        <% unless controller_name == 'projects' %>
-        <li>
-          <%= link_to "Manage Projects", projects_path, class: "btn-nav bg-gray-600 text-white ring-2 ring-gray-400 hover:bg-gray-400 hover:ring-gray-700 focus:outline-none focus:ring-4" %>
-        </li>
-          <% end %>
-
         <!-- Admin -->
         <% if current_user&.admin? %>
           <li>

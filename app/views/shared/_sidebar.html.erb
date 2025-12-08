@@ -61,24 +61,6 @@
         <!-- Compare -->
         <%= link_to "Compare", mushroom_mushroom_comparisons_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-purple-600 hover:bg-purple-700 text-white font-medium transition text-center" %>
 
-        <!-- Add to Group -->
-        <% groups_count = @mushroom.all_group_mushrooms.size %>
-        <%= link_to new_all_group_mushroom_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition text-center" do %>
-          <%= groups_count > 0 ? "Add to Group (#{groups_count})" : "Add to Group" %>
-        <% end %>
-
-        <!-- Add to Cluster -->
-        <% clusters_count = @mushroom.cluster_mushrooms.size %>
-        <%= link_to new_cluster_mushroom_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-amber-600 hover:bg-amber-700 text-white font-medium transition text-center" do %>
-          <%= clusters_count > 0 ? "Add to Cluster (#{clusters_count})" : "Add to Cluster" %>
-        <% end %>
-
-        <!-- Add to Project -->
-        <% projects_count = @mushroom.mushroom_projects.size %>
-        <%= link_to new_mushroom_project_path(mushroom_id: @mushroom.id), class: "block px-2 py-1.5 text-xs rounded bg-cyan-600 hover:bg-cyan-700 text-white font-medium transition text-center" do %>
-          <%= projects_count > 0 ? "Add to Project (#{projects_count})" : "Add to Project" %>
-        <% end %>
-
         <!-- Delete -->
         <% if user_signed_in? && @mushroom.user_id == current_user.id %>
           <%= button_to "Delete Mushroom", mushroom_path(@mushroom), method: :delete,
@@ -109,17 +91,6 @@
             turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
             turbo: false
           } %>
-
-      <div class="my-2 border-t border-gray-400"></div>
-
-      <!-- Clusters -->
-      <%= link_to "Manage Clusters", clusters_path(mushroom_id: (defined?(@mushroom) && @mushroom.persisted? ? @mushroom.id : nil)), class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
-
-      <!-- Groups -->
-      <%= link_to "Manage Groups", all_groups_path(mushroom_id: (defined?(@mushroom) && @mushroom.persisted? ? @mushroom.id : nil)), class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
-
-      <!-- Projects -->
-      <%= link_to "Manage Projects", projects_path(mushroom_id: (defined?(@mushroom) && @mushroom.persisted? ? @mushroom.id : nil)), class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
 
       <div class="my-2 border-t border-gray-400"></div>
 
