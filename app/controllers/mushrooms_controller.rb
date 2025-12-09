@@ -45,6 +45,26 @@ class MushroomsController < ApplicationController
       # Missing associations cause 500 errors in production due to strict_loading.
       # ============================================================================
       @mushrooms = policy_scope(Mushroom)
+
+      # Search by name, description, comments, city, genus (minimum 3 characters)
+      if params[:q].present? && params[:q].strip.length >= 3
+        term_raw = params[:q].to_s.strip
+        term = ActiveRecord::Base.sanitize_sql_like(term_raw)
+        if term_raw =~ /\A\d+\z/
+          # Exact ID match
+          @mushrooms = @mushrooms.where("mushrooms.id = ?", term_raw.to_i)
+        else
+          # Search across multiple fields
+          @mushrooms = @mushrooms
+            .left_joins(:genera)
+            .where(
+              "mushrooms.name LIKE ? OR mushrooms.description LIKE ? OR mushrooms.comments LIKE ? OR mushrooms.city LIKE ? OR genera.name LIKE ?",
+              "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%"
+            )
+        end
+      end
+
+      @mushrooms = @mushrooms
                      .includes(:fungus_type, :country, :state, :genera, :species,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
@@ -54,6 +74,26 @@ class MushroomsController < ApplicationController
     else
       # Show user_id 1's mushrooms to public visitors to demonstrate the site
       @mushrooms = Mushroom.where(user_id: 1)
+
+      # Search by name, description, comments, city, genus (minimum 3 characters)
+      if params[:q].present? && params[:q].strip.length >= 3
+        term_raw = params[:q].to_s.strip
+        term = ActiveRecord::Base.sanitize_sql_like(term_raw)
+        if term_raw =~ /\A\d+\z/
+          # Exact ID match
+          @mushrooms = @mushrooms.where("mushrooms.id = ?", term_raw.to_i)
+        else
+          # Search across multiple fields
+          @mushrooms = @mushrooms
+            .left_joins(:genera)
+            .where(
+              "mushrooms.name LIKE ? OR mushrooms.description LIKE ? OR mushrooms.comments LIKE ? OR mushrooms.city LIKE ? OR genera.name LIKE ?",
+              "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%"
+            )
+        end
+      end
+
+      @mushrooms = @mushrooms
                      .includes(:fungus_type, :country, :state, :genera, :species,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)

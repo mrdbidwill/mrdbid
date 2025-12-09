@@ -4,6 +4,47 @@
   <%= user_signed_in? ? "Your Mushrooms" : "Demo Collection" %>
 </h1>
 
+<!-- Search card -->
+<div class="group-box mb-6" style="border: 2px solid #9333ea;">
+  <div class="group-header" style="background-color: #f3e8ff;">
+    Search for a Specific Mushroom
+    <p class="hint mt-1">Search across name, description, comments, city, and genus. Minimum 3 characters required.</p>
+  </div>
+  <div class="px-4 py-3">
+    <%= form_with url: mushrooms_path, method: :get, local: true, class: "grid grid-cols-1 gap-2 sm:grid-cols-3 items-end" do %>
+      <div class="form-field sm:col-span-2">
+        <label for="q" class="form-label">Search Term</label>
+        <%= text_field_tag :q, params[:q], placeholder: "e.g. 'Chanterelle', 'Austin', 'cap red'",
+                           minlength: 3,
+                           class: "form-input",
+                           style: "padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+        <p class="form-help">Searches name, description, comments, city, and genus. Partial matches OK. Min 3 characters.</p>
+      </div>
+      <div class="flex gap-2">
+        <%= submit_tag "Search", class: "btn-primary" %>
+        <%= link_to "Clear Search", mushrooms_path, class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Current search summary -->
+  <div class="well">
+    <% if params[:q].present? %>
+      <div class="flex flex-wrap items-center gap-2 text-sm">
+        <span class="text-gray-700 font-medium">Search:</span>
+        <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 text-purple-700 px-2.5 py-1">
+          <span class="font-medium">Query:</span>
+          <span><%= params[:q] %></span>
+        </span>
+        <%= link_to "Clear", mushrooms_path, class: "ml-auto text-blue-700 hover:underline" %>
+      </div>
+    <% else %>
+      <p class="muted">No search applied.</p>
+    <% end %>
+  </div>
+</div>
+<!-- End Search card -->
+
 <%= render "shared/pagination", collection: @mushrooms %>
 
 <% if @mushrooms&.any? %>

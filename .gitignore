@@ -43,8 +43,12 @@ db/scripts/mblist/*.csv
 db/scripts/mblist/insert_genera.sql
 db/scripts/mblist/insert_species.sql
 node_modules/
-*.sql # Or this to ignore all SQL dumps
-backup_development_cache_*.sql
+
+# Ignore database dumps (but not migration SQL if you create any)
+/tmp/dumps/*.sql
+/backup_development_cache_*.sql
+*.dump
+*.backup
 
 # Ignore SQLite database files
 *.sqlite3
