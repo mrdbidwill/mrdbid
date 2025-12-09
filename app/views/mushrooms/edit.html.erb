@@ -80,8 +80,8 @@
 
   <!-- Basic Mushroom Data Section -->
   <div class="my-5">
-    <details class="border border-indigo-200 rounded p-4 bg-indigo-50">
-      <summary class="font-semibold cursor-pointer text-lg text-indigo-900 mb-2">Edit Basic Mushroom Data</summary>
+    <details class="border border-blue-200 rounded p-4 bg-blue-50 lg:bg-blue-100">
+      <summary class="font-semibold cursor-pointer text-lg text-blue-900 mb-2">Edit Basic Mushroom Data</summary>
       <%= render 'form', mushroom: @mushroom %>
     </details>
   </div>
@@ -191,8 +191,8 @@
   <% end %>
 
   !-- Character Search -->
-  <div class="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-md p-4 mb-4">
-    <h3 class="text-lg font-semibold text-gray-800 mb-2">🔍 Search for a Character</h3>
+  <div class="mt-8 bg-purple-50 lg:bg-purple-100 border border-purple-400 rounded-md p-4 mb-4">
+    <h3 class="text-lg font-semibold text-black-900 mb-2">🔍 Search for a Character</h3>
     <% if @mushroom.fungus_type_id.present? %>
       <% char_count = MrCharacter.for_fungus_type(@mushroom.fungus_type_id).count %>
       <p class="text-sm text-gray-600 mb-3">
