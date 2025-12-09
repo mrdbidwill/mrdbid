@@ -89,10 +89,18 @@
 
             <!-- Text content below image -->
             <div class="p-3">
-              <% if mushroom.genera.any? && mushroom.species.any? %>
-                <p class="text-sm italic text-gray-600 mb-1">
-                  <%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %>
-                </p>
+              <% identifications = mushroom.ranked_identifications %>
+              <% if identifications.any? %>
+                <div class="text-xs italic text-gray-600 mb-1 space-y-0.5">
+                  <% identifications.each do |id| %>
+                    <div>
+                      <% if id[:fully_primary] %>
+                        <span class="text-green-600">✓</span>
+                      <% end %>
+                      <em><%= id[:genus]&.name&.capitalize || '?' %> <%= id[:species]&.name || '?' %></em>
+                    </div>
+                  <% end %>
+                </div>
               <% end %>
 
               <p class="font-semibold text-gray-900 mb-1">

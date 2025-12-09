@@ -7,10 +7,9 @@
       <dl class="grid grid-cols-1 gap-2">
         <!-- First row: 4 inline items -->
         <div class="border rounded-md p-2">
-          <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span><% if mushroom.collection_date.present? %> Collection Date: <span class="text-gray-600"> <%= mushroom.collection_date.strftime('%m-%d-%Y') %></span><% end %>
-          <% if mushroom.genera.any? && mushroom.species.any? %>
-            <br>
-            <em class="text-gray-600"><%= mushroom.genera.first.name.capitalize %> <%= mushroom.species.first.name %></em>
+          <span class="text-sm text-gray-400">Name:</span> <span class="text-lg text-gray-600"><%= mushroom.name %></span>
+          <% if mushroom.collection_date.present? %>
+            <span class="text-sm text-gray-400">Collection Date:</span> <span class="text-gray-600"><%= mushroom.collection_date.strftime('%m-%d-%Y') %></span>
           <% end %>
           <dd class="font-medium">
             <% location_parts = [
@@ -25,23 +24,39 @@
         </div>
 
         <div class="border rounded-md p-2">
-          <span class="text-sm text-gray-400">Genus:</span>
-          <span class="text-gray-600">
-            <% if mushroom.genera.any? %>
-              <em><%= mushroom.genera.map(&:name).join(', ') %></em>
+          <span class="text-sm text-gray-400">Identification(s):</span>
+          <div class="mt-1">
+            <% identifications = mushroom.ranked_identifications %>
+            <% if identifications.any? %>
+              <ol class="list-decimal list-inside space-y-0.5">
+                <% identifications.each_with_index do |id, index| %>
+                  <li>
+                    <% if id[:fully_primary] %>
+                      <span class="inline-flex items-center gap-1">
+                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <em class="text-gray-700 font-medium">
+                          <%= id[:genus]&.name&.capitalize || '?' %> <%= id[:species]&.name || '?' %>
+                        </em>
+                      </span>
+                    <% else %>
+                      <em class="text-gray-600">
+                        <%= id[:genus]&.name&.capitalize || '?' %> <%= id[:species]&.name || '?' %>
+                      </em>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ol>
+              <% if user_signed_in? && current_user.id == mushroom.user_id %>
+                <p class="text-xs text-gray-500 mt-2 italic">
+                  <%= link_to "Edit genus species", edit_mushroom_path(mushroom, anchor: 'identification-section', open_panel: 'true'), class: "text-blue-600 hover:underline font-medium" %> to remove invalid identifications.
+                </p>
+              <% end %>
             <% else %>
-              <span class="text-gray-400">Not assigned</span>
+              <span class="text-gray-400">Not identified</span>
             <% end %>
-          </span>
-          <br>
-          <span class="text-sm text-gray-400">Species:</span>
-          <span class="text-gray-600">
-            <% if mushroom.species.any? %>
-              <em><%= mushroom.species.map(&:name).join(', ') %></em>
-            <% else %>
-              <span class="text-gray-400">Not assigned</span>
-            <% end %>
-          </span>
+          </div>
         </div>
 
         <!-- Full-width rows -->

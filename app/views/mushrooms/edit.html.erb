@@ -13,6 +13,48 @@
   <!-- Clone Characters Panel -->
   <%= render 'clone_characters_panel', mushroom: @mushroom %>
 
+  <!-- Identification Management Section (Prominent) -->
+  <div id="identification-section" class="my-5 border-2 border-purple-300 rounded-lg p-4 bg-purple-50">
+    <h2 class="text-lg font-semibold text-purple-900 mb-2">🔍 Manage Identifications</h2>
+    <% identifications = @mushroom.ranked_identifications %>
+    <% if identifications.any? %>
+      <div class="mb-3">
+        <span class="text-sm text-gray-700 font-medium">Current candidates:</span>
+        <div class="mt-2 flex flex-wrap gap-2">
+          <% identifications.each_with_index do |id, index| %>
+            <span class="inline-flex items-center gap-1 bg-white border border-purple-300 rounded px-3 py-1.5 text-sm shadow-sm">
+              <span class="font-mono text-purple-600 font-bold"><%= index + 1 %>.</span>
+              <em class="text-gray-800">
+                <%= id[:genus]&.name&.capitalize || '?' %> <%= id[:species]&.name || '?' %>
+              </em>
+              <% if id[:fully_primary] %>
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-xs text-green-700 font-semibold">PRIMARY</span>
+              <% end %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+      <button type="button"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 rounded shadow transition"
+              onclick="document.getElementById('basic-data-section').open = true; document.getElementById('candidate-panel').classList.remove('hidden'); document.getElementById('candidate-panel').scrollIntoView({behavior: 'smooth', block: 'center'});">
+        Edit Candidate Genera/Species
+      </button>
+      <p class="text-xs text-gray-600 mt-2">
+        <strong>Tip:</strong> Remove incorrect candidates to narrow down to your final identification.
+      </p>
+    <% else %>
+      <p class="text-gray-600 mb-3">No identifications added yet. Start by selecting potential genus/species combinations below.</p>
+      <button type="button"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 rounded shadow transition"
+              onclick="document.getElementById('basic-data-section').open = true; document.getElementById('candidate-panel').classList.remove('hidden'); document.getElementById('candidate-panel').scrollIntoView({behavior: 'smooth', block: 'center'});">
+        Add Genus/Species Candidates
+      </button>
+    <% end %>
+  </div>
+
   <!-- Images Section -->
   <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
   <div class="my-5">
@@ -80,7 +122,7 @@
 
   <!-- Basic Mushroom Data Section -->
   <div class="my-5">
-    <details class="border border-blue-200 rounded p-4 bg-blue-50 lg:bg-blue-100">
+    <details id="basic-data-section" class="border border-blue-200 rounded p-4 bg-blue-50 lg:bg-blue-100">
       <summary class="font-semibold cursor-pointer text-lg text-blue-900 mb-2">Edit Basic Mushroom Data</summary>
       <%= render 'form', mushroom: @mushroom %>
     </details>
@@ -314,5 +356,20 @@
         console.error('Panel not found:', panelId);
       }
     }
+
+    // Auto-open candidate panel if URL parameter is present
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('open_panel') === 'true') {
+        // Open the details section
+        document.getElementById('basic-data-section').open = true;
+        // Show the candidate panel
+        document.getElementById('candidate-panel').classList.remove('hidden');
+        // Scroll to the candidate panel
+        setTimeout(() => {
+          document.getElementById('candidate-panel').scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
+      }
+    });
   </script>
 </div>

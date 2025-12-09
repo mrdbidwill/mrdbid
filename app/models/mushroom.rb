@@ -126,7 +126,60 @@ class Mushroom < ApplicationRecord
     )
   end
 
+  # Returns genus/species combinations ranked by is_primary status
+  # Primary identifications come first, then ordered by creation date
+  # Returns array of hashes: [{ genus: Genus, species: Species, genus_primary: bool, species_primary: bool }, ...]
+  def ranked_identifications
+    # Get genus_mushrooms with their is_primary status, ordered by primary first, then creation
+    genus_records = genus_mushrooms
+                      .includes(:genus)
+                      .order(Arel.sql('CASE WHEN is_primary = true THEN 0 ELSE 1 END'), :created_at)
+
+    # Get mushroom_species with their is_primary status, ordered by primary first, then creation
+    species_records = mushroom_species
+                        .includes(:species)
+                        .order(Arel.sql('CASE WHEN is_primary = true THEN 0 ELSE 1 END'), :created_at)
+
+    # Pair them up (genus[0] with species[0], genus[1] with species[1], etc.)
+    max_count = [genus_records.size, species_records.size].max
+    identifications = []
+
+    max_count.times do |i|
+      genus_record = genus_records[i]
+      species_record = species_records[i]
+
+      # Only add if at least one exists
+      if genus_record || species_record
+        identifications << {
+          genus: genus_record&.genus,
+          species: species_record&.species,
+          genus_primary: genus_record&.is_primary || false,
+          species_primary: species_record&.is_primary || false,
+          fully_primary: (genus_record&.is_primary && species_record&.is_primary) || false
+        }
+      end
+    end
+
+    identifications
+  end
+
   private
+
+  def prevent_id_change
+    if will_save_change_to_id?
+      errors.add(:id, "cannot be changed")
+      throw :abort
+    end
+  end
+
+  def invalidate_comparisons_on_character_change
+    # Delete existing comparisons involving this mushroom to force recalculation
+    # This is triggered when the mushroom is saved, but we only want to invalidate
+    # if character data might have changed (which happens via mr_character_mushrooms)
+    # Note: This is a simple approach. For optimization, you could check if
+    # mr_character_mushrooms changed before invalidating.
+    MushroomComparison.involving_mushroom(id).destroy_all if saved_change_to_updated_at?
+  end
 
   def prevent_id_change
     if will_save_change_to_id?
