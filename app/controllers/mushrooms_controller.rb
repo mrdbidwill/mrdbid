@@ -111,6 +111,9 @@ class MushroomsController < ApplicationController
   def new
     @mushroom = Mushroom.new
 
+    # Set collection date to today by default
+    @mushroom.collection_date = Date.today
+
     # If copying location from another mushroom, use that mushroom's location
     if params[:copy_location_from].present?
       source_mushroom = current_user.mushrooms.find_by(id: params[:copy_location_from])
