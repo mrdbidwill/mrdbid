@@ -141,7 +141,7 @@
 
 <!-- JavaScript for sidebar toggle -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initializeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebarClose = document.getElementById('sidebar-close');
@@ -159,12 +159,22 @@
       document.body.style.overflow = '';
     }
 
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
+    // Remove old listeners if they exist to prevent duplicates
+    sidebarToggle.replaceWith(sidebarToggle.cloneNode(true));
+    sidebarClose.replaceWith(sidebarClose.cloneNode(true));
+    sidebarOverlay.replaceWith(sidebarOverlay.cloneNode(true));
+
+    // Get fresh references after cloning
+    const newSidebarToggle = document.getElementById('sidebar-toggle');
+    const newSidebarClose = document.getElementById('sidebar-close');
+    const newSidebarOverlay = document.getElementById('sidebar-overlay');
+
+    newSidebarToggle.addEventListener('click', openSidebar);
+    newSidebarClose.addEventListener('click', closeSidebar);
+    newSidebarOverlay.addEventListener('click', closeSidebar);
 
     // Close sidebar when clicking a link on mobile
-    const sidebarLinks = sidebar.querySelectorAll('a, button[type="submit"]');
+    const sidebarLinks = document.getElementById('sidebar').querySelectorAll('a, button[type="submit"]');
     sidebarLinks.forEach(link => {
       link.addEventListener('click', function() {
         if (window.innerWidth < 1024) {
@@ -172,6 +182,9 @@
         }
       });
     });
+
+    // Ensure sidebar is closed on mobile after navigation
+    closeSidebar();
 
     // Handle PDF export with loading indicator
     const exportPdfLink = document.getElementById('export-all-pdf-link');
@@ -251,6 +264,23 @@
           }
         }, 300); // Check every 300ms
       });
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initializeSidebar);
+
+  // Re-initialize on Turbo navigation
+  document.addEventListener('turbo:load', initializeSidebar);
+
+  // Also reset sidebar state before Turbo caches the page
+  document.addEventListener('turbo:before-cache', function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    if (sidebar && sidebarOverlay) {
+      sidebar.classList.add('-translate-x-full');
+      sidebarOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
     }
   });
 </script>
