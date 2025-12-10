@@ -21,8 +21,19 @@
     <!-- Country + State (Required) -->
     <div class="my-5" data-controller="country-select"
          data-country-select-url-value="<%= states_path %>">
-      <%= form.label :country_id, "Country where specimen was found" %>
-      <span class="text-red-500">*</span>
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <%= form.label :country_id, "Country where specimen was found" %>
+          <span class="text-red-500">*</span>
+        </div>
+        <% last_mushroom = current_user.mushrooms.order(created_at: :desc).first %>
+        <% if last_mushroom&.country_id.present? %>
+          <%= link_to "📋 Copy from last mushroom",
+                      new_mushroom_path(copy_location_from: last_mushroom.id),
+                      class: "text-xs px-2 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded border border-blue-300 transition",
+                      title: "Copy location from: #{last_mushroom.name}" %>
+        <% end %>
+      </div>
       <%= form.collection_select :country_id, Country.all, :id, :name,
                                  { prompt: "Please select country where found" },
                                  { class: "block shadow-sm rounded-md border px-2 py-1 mt-1 w-full",
@@ -47,6 +58,16 @@
           <% end %>
         </select>
       </div>
+
+      <div class="mt-2">
+        <%= form.label :city, "City where specimen was found" %>
+        <%= form.text_field :city, class: "block shadow-sm rounded-md border px-3 py-1 mt-1 w-full", style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" %>
+      </div>
+
+      <div class="mt-2">
+        <%= form.label :county, "County where specimen was found" %>
+        <%= form.text_field :county, class: "block shadow-sm rounded-md border px-3 py-1 mt-1 w-full", style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" %>
+      </div>
     </div>
 
     <!-- Fungus Type (Required) -->
@@ -62,12 +83,11 @@
     <!-- Collection Date -->
     <div class="my-5">
       <%= form.label :collection_date, "Collection Date" %>
-      <span class="text-sm text-gray-500">(optional)</span>
       <%= form.date_field :collection_date,
                           class: "block shadow-sm rounded-md border px-3 py-1 mt-2",
                           style: "width: 40%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);",
                           max: Date.today %>
-      <p class="text-xs text-gray-500 mt-1">When was this specimen collected? (Leave blank if unknown)</p>
+      <p class="text-xs text-gray-500 mt-1">When was this specimen collected?</p>
     </div>
 
     <!-- Description (Optional) -->

@@ -71,6 +71,13 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles
   has_many :trusted_devices, dependent: :destroy
 
+  # Default location preferences
+  belongs_to :default_country, class_name: 'Country', optional: true
+  belongs_to :default_state, class_name: 'State', optional: true
+
+  validates :default_city, length: { maximum: 255 }
+  validates :default_county, length: { maximum: 255 }
+
   # Trusted device methods
   def trust_device!(fingerprint)
     # Remove any existing trusted device for this fingerprint

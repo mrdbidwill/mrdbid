@@ -351,7 +351,7 @@ CREATE TABLE `genus_mushrooms` (
   KEY `index_genus_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8d2e9914c5` FOREIGN KEY (`genus_id`) REFERENCES `genera` (`id`),
   CONSTRAINT `fk_rails_ff6ffa05e8` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `image_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -564,7 +564,7 @@ CREATE TABLE `mushroom_species` (
   KEY `index_mushroom_species_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_8833fee8ab` FOREIGN KEY (`species_id`) REFERENCES `species` (`id`),
   CONSTRAINT `fk_rails_c97af38f94` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mushroom_trees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1016,7 +1016,7 @@ CREATE TABLE `trusted_devices` (
   KEY `index_trusted_devices_on_user_id` (`user_id`),
   KEY `index_trusted_devices_on_user_id_and_device_fingerprint` (`user_id`,`device_fingerprint`),
   CONSTRAINT `fk_rails_96c1dacf00` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1064,6 +1064,10 @@ CREATE TABLE `users` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `otp_backup_codes` json DEFAULT NULL,
+  `default_country_id` bigint DEFAULT NULL,
+  `default_state_id` bigint DEFAULT NULL,
+  `default_city` varchar(255) DEFAULT NULL,
+  `default_county` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`),
@@ -1071,7 +1075,11 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
   KEY `index_users_on_permission_id` (`permission_id`),
   KEY `index_users_on_otp_required_for_login` (`otp_required_for_login`),
-  CONSTRAINT `fk_rails_1dc7d54aa4` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`)
+  KEY `index_users_on_default_country_id` (`default_country_id`),
+  KEY `index_users_on_default_state_id` (`default_state_id`),
+  CONSTRAINT `fk_rails_1dc7d54aa4` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
+  CONSTRAINT `fk_rails_cf1db3f966` FOREIGN KEY (`default_country_id`) REFERENCES `countries` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `fk_rails_fa46210d28` FOREIGN KEY (`default_state_id`) REFERENCES `states` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `versions`;
@@ -1100,6 +1108,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251210114118'),
 ('20251208163813'),
 ('20251201142731'),
 ('20251201142049'),

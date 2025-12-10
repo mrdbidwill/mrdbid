@@ -110,6 +110,24 @@ class MushroomsController < ApplicationController
   # GET /mushrooms/new
   def new
     @mushroom = Mushroom.new
+
+    # If copying location from another mushroom, use that mushroom's location
+    if params[:copy_location_from].present?
+      source_mushroom = current_user.mushrooms.find_by(id: params[:copy_location_from])
+      if source_mushroom
+        @mushroom.country_id = source_mushroom.country_id
+        @mushroom.state_id = source_mushroom.state_id
+        @mushroom.city = source_mushroom.city
+        @mushroom.county = source_mushroom.county
+      end
+    # Otherwise, pre-populate with user's default location preferences if set
+    elsif current_user.default_country_id.present?
+      @mushroom.country_id = current_user.default_country_id
+      @mushroom.state_id = current_user.default_state_id if current_user.default_state_id.present?
+      @mushroom.city = current_user.default_city if current_user.default_city.present?
+      @mushroom.county = current_user.default_county if current_user.default_county.present?
+    end
+
     authorize @mushroom
   end
 
