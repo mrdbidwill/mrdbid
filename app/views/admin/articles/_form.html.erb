@@ -22,12 +22,11 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     <div>
       <%= f.label :subject, class: "block text-sm font-medium" %>
-      <%= f.text_field :subject, list: "subjects-datalist", class: "border rounded px-2 py-1 w-full" %>
-      <datalist id="subjects-datalist">
-        <% Article.distinct.pluck(:subject).compact.sort.each do |s| %>
-          <option value="<%= s %>">
-        <% end %>
-      </datalist>
+      <%= f.select :subject,
+                   options_for_select(Article::SUBJECTS, @article.subject),
+                   { include_blank: "(none)" },
+                   class: "border rounded px-2 py-1 w-full" %>
+      <p class="text-xs text-gray-500 mt-1">Choose a predefined subject to keep articles organized.</p>
     </div>
     <div>
       <%= f.label :published_at, class: "block text-sm font-medium" %>
