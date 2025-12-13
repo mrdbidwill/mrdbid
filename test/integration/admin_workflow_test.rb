@@ -15,7 +15,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   test "admin can access admin dashboard" do
     sign_in @admin_user
 
-    get admin_path
+    get admin_root_path
 
     assert_response :success
     assert_select "h1, .page-title", text: /admin|dashboard/i
@@ -24,7 +24,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   test "regular user cannot access admin dashboard" do
     sign_in @regular_user
 
-    get admin_path
+    get admin_root_path
 
     assert_response :redirect
     assert_redirected_to root_path
@@ -33,7 +33,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "guest cannot access admin dashboard" do
-    get admin_path
+    get admin_root_path
 
     assert_redirected_to new_user_session_path
   end
@@ -41,7 +41,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   test "admin dashboard shows statistics" do
     sign_in @admin_user
 
-    get admin_path
+    get admin_root_path
 
     assert_response :success
     # Should show counts for characters, lookup items, source data
@@ -631,7 +631,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   test "admin dashboard shows user statistics" do
     sign_in @admin_user
 
-    get admin_path
+    get admin_root_path
 
     assert_response :success
     # Dashboard should show user counts
@@ -697,7 +697,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     sign_in @admin_user
 
     # Step 1: Access dashboard
-    get admin_path
+    get admin_root_path
     assert_response :success
 
     # Step 2: Create a new genus
@@ -730,7 +730,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     assert_not Species.exists?(species.id)
 
     # Step 7: Return to dashboard
-    get admin_path
+    get admin_root_path
     assert_response :success
   end
 

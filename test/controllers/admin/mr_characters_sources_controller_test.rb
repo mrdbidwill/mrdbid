@@ -19,7 +19,7 @@ class Admin::MrCharactersSourcesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect index to show" do
-    get admin_mr_characters_sources_url
+    get admin_mr_characters_source_url  # Route is singular
     assert_redirected_to action: :show
   end
 

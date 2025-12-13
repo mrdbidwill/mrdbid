@@ -8,7 +8,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create contact message with valid params" do
     assert_enqueued_emails 1 do
-      post contacts_url, params: {
+      post contact_url, params: {
         name: "Test User",
         email: "test@example.com",
         subject: "Test Subject",
@@ -23,7 +23,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should reject submission with honeypot filled" do
     assert_no_enqueued_emails do
-      post contacts_url, params: {
+      post contact_url, params: {
         name: "Bot",
         email: "bot@example.com",
         subject: "Spam",
@@ -38,7 +38,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should reject submission with missing required fields" do
     assert_no_enqueued_emails do
-      post contacts_url, params: {
+      post contact_url, params: {
         name: "",
         email: "test@example.com",
         subject: "Test",
@@ -52,7 +52,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should use default recipient for invalid recipient" do
     assert_enqueued_emails 1 do
-      post contacts_url, params: {
+      post contact_url, params: {
         name: "Test User",
         email: "test@example.com",
         subject: "Test Subject",
@@ -69,7 +69,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
     valid_recipients.each do |recipient|
       assert_enqueued_emails 1 do
-        post contacts_url, params: {
+        post contact_url, params: {
           name: "Test User",
           email: "test@example.com",
           subject: "Test Subject",

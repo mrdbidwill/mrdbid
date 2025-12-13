@@ -466,7 +466,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
     skip "No Species fixtures available" unless species
 
     assert_difference("MushroomSpecies.count", 1) do
-      post mushroom_species_index_path, params: {
+      post mushroom_species_path, params: {
         mushroom_species: {
           mushroom_id: @mushroom.id,
           species_id: species.id
