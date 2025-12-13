@@ -4,7 +4,8 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
     @mushroom = mushrooms(:one)
-    @species = mushroom_species(:one)
+    @species = species(:one)
+    @other_species = species(:two)
     sign_in @user
   end
 
@@ -13,7 +14,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
       post mushroom_species_index_url, params: {
         mushroom_species: {
           mushroom_id: @mushroom.id,
-          species_id: @species.id
+          species_id: @other_species.id  # Use other_species to avoid fixture duplication
         }
       }, as: :json
     end
@@ -25,8 +26,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should handle duplicate mushroom_species" do
-    # Create first association
-    MushroomSpecies.create!(mushroom_id: @mushroom.id, species_id: @species.id)
+    # Fixtures already have mushroom:one with species:one, try to create duplicate
 
     # Try to create duplicate
     post mushroom_species_index_url, params: {
@@ -45,13 +45,13 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   test "should destroy mushroom_species by relation" do
     mushroom_species = MushroomSpecies.create!(
       mushroom_id: @mushroom.id,
-      species_id: @species.id
+      species_id: @other_species.id  # Use other_species to avoid fixture duplication
     )
 
     assert_difference("MushroomSpecies.count", -1) do
       delete destroy_by_relation_mushroom_species_index_url, params: {
         mushroom_id: @mushroom.id,
-        species_id: @species.id
+        species_id: @other_species.id
       }, as: :json
     end
 
@@ -87,7 +87,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   test "should handle invalid params" do
     post mushroom_species_index_url, params: {
       mushroom_species: {
-        mushroom_id: nil,
+        mushroom_id: @mushroom.id,
         species_id: nil
       }
     }, as: :json

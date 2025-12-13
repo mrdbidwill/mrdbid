@@ -74,9 +74,7 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
   test "create genus_mushroom with duplicate association returns error" do
     sign_in @user
 
-    # Create first association
-    GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
-
+    # Fixtures already have mushroom:one with genus:one
     # Attempt to create duplicate
     assert_no_difference("GenusMushroom.count") do
       post genus_mushrooms_path(format: :json),
@@ -164,10 +162,11 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "destroy genus_mushroom requires authentication" do
-    genus_mushroom = GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
+    # Use fixture that already exists
+    genus_mushroom = genus_mushrooms(:one)
 
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
-           params: { mushroom_id: @mushroom.id, genus_id: @genus.id }
+           params: { mushroom_id: genus_mushroom.mushroom.id, genus_id: genus_mushroom.genus.id }
 
     assert_response :redirect
     assert_redirected_to new_user_session_path
@@ -176,11 +175,12 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy genus_mushroom with valid params returns success" do
     sign_in @user
-    genus_mushroom = GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
+    # Use other_genus to avoid fixture duplication
+    genus_mushroom = GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @other_genus.id)
 
     assert_difference("GenusMushroom.count", -1) do
       delete destroy_by_relation_genus_mushrooms_path(format: :json),
-             params: { mushroom_id: @mushroom.id, genus_id: @genus.id }
+             params: { mushroom_id: @mushroom.id, genus_id: @other_genus.id }
     end
 
     assert_response :success
@@ -191,10 +191,11 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy genus_mushroom returns proper JSON structure" do
     sign_in @user
-    GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
+    # Use fixture that already exists
+    genus_mushroom = genus_mushrooms(:one)
 
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
-           params: { mushroom_id: @mushroom.id, genus_id: @genus.id }
+           params: { mushroom_id: genus_mushroom.mushroom.id, genus_id: genus_mushroom.genus.id }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -238,10 +239,11 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy genus_mushroom with string IDs works" do
     sign_in @user
-    GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
+    # Use other_genus to avoid fixture duplication
+    GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @other_genus.id)
 
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
-           params: { mushroom_id: @mushroom.id.to_s, genus_id: @genus.id.to_s }
+           params: { mushroom_id: @mushroom.id.to_s, genus_id: @other_genus.id.to_s }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -265,10 +267,11 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
   test "user can delete genus_mushroom for their own mushroom" do
     sign_in @user
     my_mushroom = @user.mushrooms.first
-    genus_mushroom = GenusMushroom.create!(mushroom_id: my_mushroom.id, genus_id: @genus.id)
+    # Use other_genus to avoid fixture duplication
+    genus_mushroom = GenusMushroom.create!(mushroom_id: my_mushroom.id, genus_id: @other_genus.id)
 
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
-           params: { mushroom_id: my_mushroom.id, genus_id: @genus.id }
+           params: { mushroom_id: my_mushroom.id, genus_id: @other_genus.id }
 
     assert_response :success
   end
@@ -299,10 +302,11 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy genus_mushroom returns JSON content type" do
     sign_in @user
-    GenusMushroom.create!(mushroom_id: @mushroom.id, genus_id: @genus.id)
+    # Use fixture that already exists
+    genus_mushroom = genus_mushrooms(:one)
 
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
-           params: { mushroom_id: @mushroom.id, genus_id: @genus.id }
+           params: { mushroom_id: genus_mushroom.mushroom.id, genus_id: genus_mushroom.genus.id }
 
     assert_response :success
     assert_match(/application\/json/, response.content_type)
