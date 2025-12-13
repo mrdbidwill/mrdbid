@@ -524,7 +524,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user can export all their mushrooms to PDF" do
     sign_in @user
 
-    get export_pdf_mushrooms_path(format: :pdf)
+    get export_all_pdf_mushrooms_path(format: :pdf)
 
     assert_response :success
     assert_equal "application/pdf", response.content_type
@@ -539,7 +539,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
       fungus_type_id: @fungus_type.id
     )
 
-    get export_pdf_mushrooms_path(ids: [@mushroom.id, mushroom2.id], format: :pdf)
+    get export_all_pdf_mushrooms_path(ids: [@mushroom.id, mushroom2.id], format: :pdf)
 
     assert_response :success
     assert_equal "application/pdf", response.content_type

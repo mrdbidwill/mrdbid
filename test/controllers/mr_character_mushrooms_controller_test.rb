@@ -11,7 +11,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create mr_character_mushroom" do
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "test value",
       redirect_to: edit_mushroom_path(@mushroom)
@@ -29,7 +30,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
       character_value: "initial value"
     )
 
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "updated value"
     }
@@ -41,7 +43,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
 
   test "should handle boolean values" do
     # Assuming display_option is set up for boolean
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "yes"
     }
@@ -51,7 +54,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
 
   test "should normalize boolean strings" do
     ['true', 'yes', 'present', '1', 'on', 'checked'].each do |value|
-      post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+      post mr_character_mushrooms_url, params: {
+        mushroom_id: @mushroom.id,
         mr_character_id: @mr_character.id,
         character_value: value
       }
@@ -69,7 +73,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   test "should use custom redirect path" do
     custom_path = mushrooms_path
 
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "test",
       redirect_to: custom_path
@@ -79,7 +84,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should handle turbo stream format" do
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "test"
     }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
@@ -107,7 +113,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   test "should require authentication" do
     sign_out @user
 
-    post mushroom_mr_character_mushrooms_url(@mushroom), params: {
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "test"
     }
