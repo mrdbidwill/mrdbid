@@ -4,8 +4,27 @@ class AllGroupMushroomPolicyTest < ActiveSupport::TestCase
   setup do
     @user = users(:one)
     @other_user = users(:two)
-    @all_group_mushroom = AllGroupMushroom.new(all_group_id: 1, mushroom_id: 1)
-    @other_all_group_mushroom = AllGroupMushroom.new(all_group_id: 2, mushroom_id: 2)
+
+    # Create mushrooms owned by users
+    @mushroom = mushrooms(:one)
+    @mushroom.user = @user
+    @mushroom.save!
+
+    @other_mushroom = mushrooms(:two)
+    @other_mushroom.user = @other_user
+    @other_mushroom.save!
+
+    # Create all_groups
+    @all_group = all_groups(:one)
+    @all_group.user = @user
+    @all_group.save!
+
+    @other_all_group = all_groups(:two)
+    @other_all_group.user = @other_user
+    @other_all_group.save!
+
+    @all_group_mushroom = AllGroupMushroom.new(all_group: @all_group, mushroom: @mushroom)
+    @other_all_group_mushroom = AllGroupMushroom.new(all_group: @other_all_group, mushroom: @other_mushroom)
   end
 
   test "should authorize index for any user" do

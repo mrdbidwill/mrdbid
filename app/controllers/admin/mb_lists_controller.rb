@@ -13,11 +13,12 @@ class Admin::MbListsController < Admin::ApplicationController
 
   # GET /mb_lists/1 or /mb_lists/1.json
   def show
-    @mb_list = authorize current_user.mb_lists.find(params[:id])
+    @mb_list = MbList.find(params[:id])
+    authorize @mb_list
     respond_to do |format|
 
       format.html
-      format.json { render json: @mb_lists }
+      format.json { render json: @mb_list }
     end
   end
 
@@ -36,21 +37,22 @@ class Admin::MbListsController < Admin::ApplicationController
 
   # GET /mb_lists/1/edit
   def edit
-    @mb_list = authorize current_user.mb_lists.find(params[:id])
+    @mb_list = MbList.find(params[:id])
+    authorize @mb_list
     respond_to do |format|
 
       format.html
-      format.json { render json: @mb_lists }
+      format.json { render json: @mb_list }
     end
   end
 
 
   # POST /mb_lists or /mb_lists.json
   def create
-    @mb_list = current_user.mb_lists.build(mb_list_params)
+    @mb_list = MbList.new(mb_list_params)
     authorize @mb_list
     if @mb_list.save
-      redirect_to mb_list_url(@mb_list), notice: "MbList was successfully created."
+      redirect_to admin_mb_list_url(@mb_list), notice: "MbList was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,9 +60,10 @@ class Admin::MbListsController < Admin::ApplicationController
 
   # PATCH/PUT /mb_lists/1 or /mb_lists/1.json
   def update
-    @mb_list = authorize current_user.mb_lists.find(params[:id])
+    @mb_list = MbList.find(params[:id])
+    authorize @mb_list
     if @mb_list.update(mb_list_params)
-      redirect_to @mb_list, notice: "MbList was successfully updated."
+      redirect_to admin_mb_list_url(@mb_list), notice: "MbList was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -69,15 +72,20 @@ class Admin::MbListsController < Admin::ApplicationController
 
   # DELETE /mb_lists/1 or /mb_lists/1.json
   def destroy
-    @mb_list = authorize current_user.mb_lists.find(params[:id])
+    @mb_list = MbList.find(params[:id])
+    authorize @mb_list
     @mb_list.destroy!
-    redirect_to mb_lists_path, notice: "MbList was successfully deleted."
+    redirect_to admin_mb_lists_path, notice: "MbList was successfully deleted."
   end
 
 
   private
   # Only allow a list of trusted parameters through.
   def mb_list_params
-    params.expect(mb_list: [ :name, :description, :comments ])
+    params.expect(mb_list: [
+      :mblist_id, :taxon_name, :authors, :rank_name,
+      :year_of_effective_publication, :name_status, :mycobank_number,
+      :hyperlink, :classification, :current_name, :synonymy
+    ])
   end
 end

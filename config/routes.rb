@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
+  # User management routes (for admin/user profile management)
+  resources :users
+
   # Two-Factor Authentication routes
   namespace :users do
     resource :two_factor_settings, only: [] do

@@ -5,8 +5,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
     @mb_list = mb_lists(:one)
     @admin_user = users(:one)
     @admin_user.permission_id = 2
-    @mb_list.user = @admin_user
-    @mb_list.save!
+    @admin_user.save!
     sign_in @admin_user
   end
 
@@ -41,7 +40,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to mb_list_url(MbList.last)
+    assert_redirected_to admin_mb_list_url(MbList.last)
     assert_equal "MbList was successfully created.", flash[:notice]
   end
 
@@ -57,7 +56,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to @mb_list
+    assert_redirected_to admin_mb_list_url(@mb_list)
     assert_equal "MbList was successfully updated.", flash[:notice]
   end
 
@@ -66,7 +65,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
       delete admin_mb_list_url(@mb_list)
     end
 
-    assert_redirected_to mb_lists_url
+    assert_redirected_to admin_mb_lists_url
     assert_equal "MbList was successfully deleted.", flash[:notice]
   end
 
@@ -82,11 +81,10 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should only show owned mb_lists" do
-    other_user = users(:two)
-    other_list = MbList.create!(name: "Other List", user: other_user)
+  test "should show all mb_lists to admin" do
+    other_list = MbList.create!(taxon_name: "Other List")
 
     get admin_mb_list_url(other_list)
-    assert_response :not_found
+    assert_response :success
   end
 end

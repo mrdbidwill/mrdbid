@@ -6,10 +6,12 @@ class Admin::DnaSequencesControllerTest < ActionDispatch::IntegrationTest
     @admin_user.permission_id = 2
     sign_in @admin_user
 
-    # Create a test DNA sequence
+    @mushroom = mushrooms(:one)
+    # Create a test DNA sequence with actual valid attributes
     @dna_sequence = DnaSequence.create!(
-      name: "Test Sequence",
-      description: "Test description"
+      mushroom: @mushroom,
+      notes: "Test notes",
+      dna_barcode_its: "ATCGATCG"
     )
   end
 
@@ -26,14 +28,15 @@ class Admin::DnaSequencesControllerTest < ActionDispatch::IntegrationTest
   test "should create dna_sequence" do
     assert_difference("DnaSequence.count") do
       post admin_dna_sequences_url, params: {
-        camera_make: {
-          name: "New Sequence",
-          description: "New description"
+        dna_sequence: {
+          mushroom_id: @mushroom.id,
+          notes: "New notes",
+          dna_barcode_its: "GCTAGCTA"
         }
       }
     end
 
-    assert_redirected_to admin_camera_make_url(DnaSequence.last)
+    assert_redirected_to admin_dna_sequence_url(DnaSequence.last)
   end
 
   test "should show dna_sequence" do
@@ -48,12 +51,12 @@ class Admin::DnaSequencesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update dna_sequence" do
     patch admin_dna_sequence_url(@dna_sequence), params: {
-      camera_make: {
-        name: "Updated Sequence"
+      dna_sequence: {
+        notes: "Updated notes"
       }
     }
 
-    assert_redirected_to admin_camera_make_url(@dna_sequence)
+    assert_redirected_to admin_dna_sequence_url(@dna_sequence)
   end
 
   test "should destroy dna_sequence" do

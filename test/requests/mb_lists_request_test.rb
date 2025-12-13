@@ -26,6 +26,8 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
 
   setup do
     @user = users(:one)
+    @user.permission_id = 2  # Make admin
+    @user.save!
     @mb_list = mb_lists(:one)
   end
 
