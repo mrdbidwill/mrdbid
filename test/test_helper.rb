@@ -39,9 +39,9 @@ require 'devise'
 Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |file| require file }
 
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified number of workers
-  # Note: Start with 2 workers, increase gradually after confirming test isolation
-  parallelize(workers: 2)
+  # Disable parallel testing temporarily due to DRb connection issues
+  # Can be re-enabled after verifying test isolation
+  # parallelize(workers: 2)
 
   include Pundit::Authorization # Include Pundit explicitly in tests
   include FactoryBot::Syntax::Methods # FactoryBot syntax
