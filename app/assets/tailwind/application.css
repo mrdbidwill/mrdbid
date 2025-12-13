@@ -18,6 +18,23 @@
         margin-bottom: .75rem;         /* Added for paragraph separation */
         color: #E55300;
     }
+
+    /* Inline text colors for articles - use with <span> */
+    .text-orange {
+        color: #E55300 !important;
+    }
+    .text-red {
+        color: #dc2626 !important; /* red-600 */
+    }
+    .text-blue {
+        color: #2563eb !important; /* blue-600 */
+    }
+    .text-green {
+        color: #16a34a !important; /* green-600 */
+    }
+    .text-purple {
+        color: #9333ea !important; /* purple-600 */
+    }
     .p-title {
         font-size: 1.25rem;
         font-weight: 700;

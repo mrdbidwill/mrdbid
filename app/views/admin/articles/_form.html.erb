@@ -42,7 +42,29 @@
   <div>
     <%= f.label :body, class: "block text-sm font-medium" %>
     <%= f.text_area :body, rows: 12, class: "border rounded px-2 py-1 w-full font-mono" %>
-    <p class="text-xs text-gray-500 mt-1">You can paste HTML or plain text. Basic tags will be sanitized when rendering.</p>
+    <details class="text-xs text-gray-700 mt-2 bg-gray-50 p-3 rounded border">
+      <summary class="cursor-pointer font-semibold text-gray-800 hover:text-blue-600">💡 Click for HTML styling guide</summary>
+      <div class="mt-2 space-y-2">
+        <p><strong>Allowed HTML tags:</strong> div, p, span, br, ul, ol, li, h1-h4, strong, em, a, blockquote, code, pre, img, table, b, u, i</p>
+
+        <p><strong>Text colors (use with &lt;span&gt;):</strong></p>
+        <ul class="list-disc ml-4">
+          <li><code>class="text-orange"</code> - <span style="color: #E55300;">Orange (brand color)</span></li>
+          <li><code>class="text-red"</code> - <span style="color: #dc2626;">Red</span></li>
+          <li><code>class="text-blue"</code> - <span style="color: #2563eb;">Blue</span></li>
+          <li><code>class="text-green"</code> - <span style="color: #16a34a;">Green</span></li>
+          <li><code>class="text-purple"</code> - <span style="color: #9333ea;">Purple</span></li>
+        </ul>
+
+        <p><strong>Examples:</strong></p>
+        <code class="block bg-white p-2 rounded text-xs">
+          &lt;p&gt;&lt;span class="text-orange"&gt;Important text&lt;/span&gt; regular text&lt;/p&gt;<br>
+          &lt;h2&gt;Section Title&lt;/h2&gt;<br>
+          &lt;ul&gt;&lt;li&gt;Bullet point&lt;/li&gt;&lt;/ul&gt;<br>
+          &lt;a href="URL" class="text-blue-600 underline"&gt;Link text&lt;/a&gt;
+        </code>
+      </div>
+    </details>
   </div>
 
   <div class="flex items-center gap-3">
