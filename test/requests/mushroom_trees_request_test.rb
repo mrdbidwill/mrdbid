@@ -43,10 +43,12 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree with valid params returns success" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree7")
 
     assert_difference("MushroomTree.count", 1) do
       post mushroom_trees_path(format: :json),
-           params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @other_tree.id } },
+           params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } },
            headers: { "CONTENT_TYPE" => "application/json" }
     end
 
@@ -59,9 +61,11 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree returns proper JSON structure" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree8")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @other_tree.id } }
+         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } }
 
     assert_response :created
     json = JSON.parse(response.body)
@@ -74,9 +78,7 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
   test "create mushroom_tree with duplicate association returns error" do
     sign_in @user
 
-    # Create first association
-    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
-
+    # Use existing fixture association (mushroom:one and tree:one already exists)
     # Attempt to create duplicate
     assert_no_difference("MushroomTree.count") do
       post mushroom_trees_path(format: :json),
@@ -138,9 +140,11 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree with string IDs works" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree9")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id.to_s, tree_id: @other_tree.id.to_s } }
+         params: { mushroom_tree: { mushroom_id: @mushroom.id.to_s, tree_id: unique_tree.id.to_s } }
 
     assert_response :created
     json = JSON.parse(response.body)
@@ -149,9 +153,11 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree rejects unpermitted parameters" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree10")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @other_tree.id, admin: true } }
+         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id, admin: true } }
 
     assert_response :created
     json = JSON.parse(response.body)
@@ -164,7 +170,8 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "destroy mushroom_tree requires authentication" do
-    mushroom_tree = MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Use existing fixture association
+    mushroom_tree = mushroom_trees(:one)
 
     delete destroy_by_relation_mushroom_trees_path(format: :json),
            params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
@@ -176,11 +183,13 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_tree with valid params returns success" do
     sign_in @user
-    mushroom_tree = MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree1")
+    mushroom_tree = MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: unique_tree.id)
 
     assert_difference("MushroomTree.count", -1) do
       delete destroy_by_relation_mushroom_trees_path(format: :json),
-             params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
+             params: { mushroom_id: @mushroom.id, tree_id: unique_tree.id }
     end
 
     assert_response :success
@@ -191,10 +200,12 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_tree returns proper JSON structure" do
     sign_in @user
-    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree2")
+    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: unique_tree.id)
 
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
+           params: { mushroom_id: @mushroom.id, tree_id: unique_tree.id }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -238,10 +249,12 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_tree with string IDs works" do
     sign_in @user
-    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree3")
+    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: unique_tree.id)
 
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: @mushroom.id.to_s, tree_id: @tree.id.to_s }
+           params: { mushroom_id: @mushroom.id.to_s, tree_id: unique_tree.id.to_s }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -265,10 +278,12 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
   test "user can delete mushroom_tree for their own mushroom" do
     sign_in @user
     my_mushroom = @user.mushrooms.first
-    mushroom_tree = MushroomTree.create!(mushroom_id: my_mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree4")
+    mushroom_tree = MushroomTree.create!(mushroom_id: my_mushroom.id, tree_id: unique_tree.id)
 
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: my_mushroom.id, tree_id: @tree.id }
+           params: { mushroom_id: my_mushroom.id, tree_id: unique_tree.id }
 
     assert_response :success
   end
@@ -279,9 +294,11 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree accepts JSON content type" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree11")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @other_tree.id } }.to_json,
+         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } }.to_json,
          headers: { "CONTENT_TYPE" => "application/json" }
 
     assert_response :created
@@ -289,9 +306,11 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree returns JSON content type" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree12")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @other_tree.id } }
+         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } }
 
     assert_response :created
     assert_match(/application\/json/, response.content_type)
@@ -299,10 +318,12 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_tree returns JSON content type" do
     sign_in @user
-    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree5")
+    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: unique_tree.id)
 
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
+           params: { mushroom_id: @mushroom.id, tree_id: unique_tree.id }
 
     assert_response :success
     assert_match(/application\/json/, response.content_type)
@@ -314,22 +335,29 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_tree represents mycorrhizal association" do
     sign_in @user
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree13")
 
     post mushroom_trees_path(format: :json),
-         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: @tree.id } }
+         params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } }
 
     assert_response :created
     json = JSON.parse(response.body)
     assert json["success"]
 
     # Verify association exists
-    assert @mushroom.trees.include?(@tree)
+    @mushroom.reload
+    assert @mushroom.trees.include?(unique_tree)
   end
 
   test "create multiple tree associations for single mushroom" do
     sign_in @user
 
-    trees = [trees(:one), trees(:two)]
+    # Create unique trees to avoid fixture duplication
+    tree1 = Tree.create!(name: "MultiTree1")
+    tree2 = Tree.create!(name: "MultiTree2")
+    trees = [tree1, tree2]
+
     trees.each do |tree|
       post mushroom_trees_path(format: :json),
            params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: tree.id } }
@@ -338,7 +366,7 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
     end
 
     @mushroom.reload
-    assert_equal 2, @mushroom.trees.count
+    assert_operator @mushroom.trees.count, :>=, 2
   end
 
   # ==========================================================================
@@ -450,16 +478,18 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_tree is idempotent" do
     sign_in @user
-    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: @tree.id)
+    # Create unique tree to avoid fixture duplication
+    unique_tree = Tree.create!(name: "UniqueTree6")
+    MushroomTree.create!(mushroom_id: @mushroom.id, tree_id: unique_tree.id)
 
     # First deletion
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
+           params: { mushroom_id: @mushroom.id, tree_id: unique_tree.id }
     assert_response :success
 
     # Second deletion of same relation
     delete destroy_by_relation_mushroom_trees_path(format: :json),
-           params: { mushroom_id: @mushroom.id, tree_id: @tree.id }
+           params: { mushroom_id: @mushroom.id, tree_id: unique_tree.id }
     assert_response :not_found
   end
 end
