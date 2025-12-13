@@ -113,7 +113,7 @@ class NPlusOneTest < ActiveSupport::TestCase
       MrCharacterMushroom.limit(5).each do |mcm|
         mcm.mr_character.name
         mcm.lookup_item&.name
-        mcm.mushroom.common_name
+        mcm.mushroom.name
       end
     end
 
@@ -121,7 +121,7 @@ class NPlusOneTest < ActiveSupport::TestCase
       MrCharacterMushroom.includes(:mr_character, :lookup_item, :mushroom).limit(5).each do |mcm|
         mcm.mr_character.name
         mcm.lookup_item&.name
-        mcm.mushroom.common_name
+        mcm.mushroom.name
       end
     end
 
@@ -147,7 +147,7 @@ class NPlusOneTest < ActiveSupport::TestCase
 
     with_eager = count_queries do
       Cluster.includes(:cluster_mushrooms, :mushrooms).where(user: user).limit(5).each do |cluster|
-        cluster.mushrooms.each { |m| m.common_name }
+        cluster.mushrooms.each { |m| m.name }
       end
     end
 
@@ -176,7 +176,7 @@ class NPlusOneTest < ActiveSupport::TestCase
         im.lens&.make
         im.camera&.name
         im.part&.name
-        im.mushroom.common_name
+        im.mushroom.name
       end
     end
 
@@ -185,7 +185,7 @@ class NPlusOneTest < ActiveSupport::TestCase
         im.lens&.make
         im.camera&.name
         im.part&.name
-        im.mushroom.common_name
+        im.mushroom.name
       end
     end
 
@@ -225,8 +225,8 @@ class NPlusOneTest < ActiveSupport::TestCase
       MushroomComparison.includes(:mushroom, :compared_mushroom, :mr_character_mushrooms)
                         .limit(5)
                         .each do |comp|
-        comp.mushroom.common_name
-        comp.compared_mushroom.common_name
+        comp.mushroom.name
+        comp.compared_mushroom.name
         comp.mr_character_mushrooms.count
       end
     end

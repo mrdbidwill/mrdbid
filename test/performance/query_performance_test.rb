@@ -7,7 +7,7 @@ class QueryPerformanceTest < ActiveSupport::TestCase
   test "mushroom search by name should be fast" do
     start_time = Time.now
 
-    Mushroom.where("common_name LIKE ?", "%test%").limit(100).to_a
+    Mushroom.where("name LIKE ?", "%test%").limit(100).to_a
 
     elapsed = Time.now - start_time
     assert elapsed < 1.0, "Mushroom search took too long: #{elapsed}s"
@@ -177,7 +177,7 @@ class QueryPerformanceTest < ActiveSupport::TestCase
             .limit(500)
             .find_each(batch_size: 100) do |mushroom|
       # Process each mushroom
-      mushroom.common_name
+      mushroom.name
     end
 
     elapsed = Time.now - start_time

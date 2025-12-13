@@ -11,12 +11,12 @@ class DatabaseIndexingTest < ActiveSupport::TestCase
     assert user_id_indexed, "mushrooms.user_id should be indexed for performance"
   end
 
-  test "mushrooms table should have index on common_name for searches" do
+  test "mushrooms table should have index on name for searches" do
     indexes = ActiveRecord::Base.connection.indexes('mushrooms')
-    name_indexed = indexes.any? { |idx| idx.columns.include?('common_name') }
+    name_indexed = indexes.any? { |idx| idx.columns.include?('name') }
 
     # If not indexed, searches will be slow
-    skip "common_name not indexed - consider adding for search performance" unless name_indexed
+    skip "name not indexed - consider adding for search performance" unless name_indexed
   end
 
   test "mushrooms table should have index on collected_on for date filtering" do
