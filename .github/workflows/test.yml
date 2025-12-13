@@ -1,0 +1,205 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, test-suite-refactoring ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  RAILS_ENV: test
+  DATABASE_URL: mysql2://root:password@127.0.0.1:3306/mrdbid_test
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mrdbid_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libvips42 libvips-dev libmysqlclient-dev
+
+    - name: Setup database
+      run: |
+        bin/rails db:create
+        bin/rails db:schema:load
+
+    - name: Run tests
+      run: bundle exec rails test
+
+    - name: Upload coverage reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: coverage/
+
+  policy_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mrdbid_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libvips42 libvips-dev libmysqlclient-dev
+
+    - name: Setup database
+      run: |
+        bin/rails db:create
+        bin/rails db:schema:load
+
+    - name: Run policy tests
+      run: bundle exec rails test test/policies/
+
+  integration_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mrdbid_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libvips42 libvips-dev libmysqlclient-dev
+
+    - name: Setup database
+      run: |
+        bin/rails db:create
+        bin/rails db:schema:load
+
+    - name: Run integration tests
+      run: bundle exec rails test test/integration/
+
+  system_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mrdbid_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libvips42 libvips-dev libmysqlclient-dev chromium-chromedriver
+
+    - name: Setup database
+      run: |
+        bin/rails db:create
+        bin/rails db:schema:load
+
+    - name: Run system tests
+      run: bundle exec rails test:system
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Run Brakeman
+      run: bundle exec brakeman --no-pager --format plain
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.3'
+        bundler-cache: true
+
+    - name: Run RuboCop
+      run: bundle exec rubocop --parallel
