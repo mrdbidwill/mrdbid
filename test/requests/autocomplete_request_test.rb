@@ -127,7 +127,8 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     sign_in @user
     genus = genera(:one)
     mushroom = @mushroom
-    GenusMushroom.create!(mushroom: mushroom, genus: genus)
+    # Fixtures already have mushroom:one with genus:one
+    GenusMushroom.find_or_create_by!(mushroom: mushroom, genus: genus)
 
     species_in_genus = Species.create!(name: "SpeciesInGenus", genera_id: genus.id, mblist_id: 200)
     species_out_genus = Species.create!(name: "SpeciesOutGenus", genera_id: genera(:two).id, mblist_id: 201)
