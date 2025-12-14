@@ -87,7 +87,7 @@ class Users::SessionsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     delete destroy_user_session_url
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   test "guest should access new session" do

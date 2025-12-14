@@ -30,11 +30,12 @@ class ImageMushroomPolicyTest < ActiveSupport::TestCase
 
   test "should not authorize non-owner to show" do
     # Create a new mushroom owned by a different user
-    other_mushroom = Mushroom.new(user_id: @non_owner.id)
+    other_mushroom = Mushroom.new(user_id: @owner.id)
     other_image = ImageMushroom.new
     other_image.mushroom = other_mushroom
 
-    assert_not Pundit.policy(@owner, other_image).show?
+    # Regular user (non-owner, non-admin) should not be able to show another user's image
+    assert_not Pundit.policy(@regular_user, other_image).show?
   end
 
   test "should authorize owner to new" do

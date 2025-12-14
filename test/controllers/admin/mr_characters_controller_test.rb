@@ -47,7 +47,7 @@ class Admin::MrCharactersControllerTest < ActionDispatch::IntegrationTest
     assert_difference("MrCharacter.count") do
       post admin_mr_characters_url, params: {
         mr_character: {
-          name: "New Character",
+          name: "New Character #{Time.now.to_i}",
           part_id: @mr_character.part_id,
           observation_method_id: @mr_character.observation_method_id,
           display_option_id: @mr_character.display_option_id,
