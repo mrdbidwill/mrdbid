@@ -224,11 +224,11 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "user can reset password with valid token" do
-    @user.send_reset_password_instructions
+    raw_token = @user.send_reset_password_instructions
 
     put user_password_path, params: {
       user: {
-        reset_password_token: @user.reset_password_token,
+        reset_password_token: raw_token,
         password: "newpassword123",
         password_confirmation: "newpassword123"
       }
@@ -308,7 +308,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "user cannot enable 2FA with invalid code" do
     sign_in @user
 
-    post user_two_factor_authentication_path, params: {
+    patch user_two_factor_authentication_path, params: {
       code: "000000" # Invalid code
     }
 
@@ -403,7 +403,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     @user.update!(otp_secret: User.generate_otp_secret)
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
 
-    post user_two_factor_authentication_path, params: {
+    patch user_two_factor_authentication_path, params: {
       code: otp_code
     }
 
