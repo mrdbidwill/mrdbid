@@ -48,7 +48,6 @@ class Admin::MrCharactersControllerTest < ActionDispatch::IntegrationTest
       post admin_mr_characters_url, params: {
         mr_character: {
           name: "New Character",
-          description: "Test description",
           part_id: @mr_character.part_id,
           observation_method_id: @mr_character.observation_method_id,
           display_option_id: @mr_character.display_option_id,
