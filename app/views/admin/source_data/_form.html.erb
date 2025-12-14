@@ -7,7 +7,7 @@
   <%= hidden_field_tag :q, params[:q] if params[:q].present? %>
 
   <% if source_data.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="error alert bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(source_data.errors.count, "error") %> prohibited this source_datum from being saved:</h2>
 
       <ul class="list-disc ml-6">

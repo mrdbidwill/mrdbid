@@ -1,7 +1,7 @@
 <%# locals: (mushroom_project: MushroomProject, mushrooms: ActiveRecord::Relation, projects: ActiveRecord::Relation) %>
 <%= form_with(model: mushroom_project, class: "contents") do |form| %>
   <% if mushroom_project.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="error alert bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(mushroom_project.errors.count, "error") %> prohibited this mushroom_project from being saved:</h2>
       <ul class="list-disc ml-6">
         <% mushroom_project.errors.each do |error| %>
