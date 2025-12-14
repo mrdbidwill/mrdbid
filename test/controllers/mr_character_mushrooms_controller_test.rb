@@ -23,10 +23,13 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update existing mr_character_mushroom" do
+    # Need to load mr_character with display_option to avoid strict_loading violations
+    @mr_character = MrCharacter.includes(:display_option).find(@mr_character.id)
+
     # Create initial record
     rcm = MrCharacterMushroom.create!(
-      mushroom_id: @mushroom.id,
-      mr_character_id: @mr_character.id,
+      mushroom: @mushroom,
+      mr_character: @mr_character,
       character_value: "initial value"
     )
 
