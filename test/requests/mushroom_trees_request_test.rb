@@ -47,8 +47,8 @@ class MushroomTreesRequestTest < ActionDispatch::IntegrationTest
     unique_tree = Tree.create!(name: "UniqueTree7")
 
     assert_difference("MushroomTree.count", 1) do
-      post mushroom_trees_path(format: :json),
-           params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } },
+      post mushroom_trees_path,
+           params: { mushroom_tree: { mushroom_id: @mushroom.id, tree_id: unique_tree.id } }.to_json,
            headers: { "CONTENT_TYPE" => "application/json" }
     end
 

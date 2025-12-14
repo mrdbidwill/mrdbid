@@ -45,8 +45,8 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_difference("GenusMushroom.count", 1) do
-      post genus_mushrooms_path(format: :json),
-           params: { genus_mushroom: { mushroom_id: @mushroom.id, genus_id: @other_genus.id } },
+      post genus_mushrooms_path,
+           params: { genus_mushroom: { mushroom_id: @mushroom.id, genus_id: @other_genus.id } }.to_json,
            headers: { "CONTENT_TYPE" => "application/json" }
     end
 
