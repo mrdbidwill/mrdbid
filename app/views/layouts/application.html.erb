@@ -89,6 +89,11 @@
           <%= flash[:notice] %>
         </div>
       <% end %>
+      <% if flash[:error].present? %>
+        <div class="error bg-red-50 border border-red-200 text-red-700 font-bold text-lg md:text-xl px-4 py-3 rounded mb-4">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
 
       <%= yield %>
     </main>
