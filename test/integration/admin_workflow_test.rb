@@ -209,7 +209,8 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
       post admin_colors_path, params: {
         color: {
           latin_name: "Test Latin Color",
-          common_name: "Test Common Color"
+          common_name: "Test Common Color",
+          hex: "#FF0000"
         }
       }
     end
@@ -237,7 +238,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can delete color" do
     sign_in @admin_user
-    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common")
+    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common", hex: "#000000")
 
     assert_difference("Color.count", -1) do
       delete admin_color_path(color)
@@ -590,7 +591,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can publish article" do
     sign_in @admin_user
-    article = Article.create!(title: "Draft", content: "Content", published: false)
+    article = Article.create!(title: "Draft", body: "Content", published: false)
 
     patch admin_article_path(article), params: {
       article: {
@@ -604,7 +605,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can delete article" do
     sign_in @admin_user
-    article = Article.create!(title: "To Delete", content: "Content")
+    article = Article.create!(title: "To Delete", body: "Content")
 
     assert_difference("Article.count", -1) do
       delete admin_article_path(article)
