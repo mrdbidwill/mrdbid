@@ -40,8 +40,12 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to edit_mushroom_path(@mushroom)
-    rcm.reload
-    assert_equal "updated value", rcm.character_value
+    # Re-fetch the record to ensure we get the updated value
+    updated_rcm = MrCharacterMushroom.find_by(
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id
+    )
+    assert_equal "updated value", updated_rcm.character_value
   end
 
   test "should handle boolean values" do
