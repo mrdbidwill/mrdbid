@@ -140,10 +140,13 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
   test "admin can create new species" do
     sign_in @admin_user
 
+    genus = genera(:one)
+
     assert_difference("Species.count", 1) do
       post admin_species_index_path, params: {
         species: {
-          name: "testSpecies"
+          name: "testSpecies",
+          genera_id: genus.id
         }
       }
     end
@@ -457,7 +460,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to admin_mr_character_path(MrCharacter.last)
+    assert_redirected_to admin_mr_characters_path
   end
 
   test "admin can update character" do
@@ -506,7 +509,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to admin_lookup_item_path(LookupItem.last)
+    assert_redirected_to admin_lookup_items_path
   end
 
   # ==============================================================================
@@ -546,6 +549,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
       post admin_articles_path, params: {
         article: {
           title: "Test Article",
+          slug: "test-article-#{Time.now.to_i}",
           subject: "Mycology",
           body: "Article content here",
           published: false
@@ -660,7 +664,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to admin_admin_todo_path(AdminTodo.last)
+    assert_redirected_to admin_admin_todos_path
   end
 
   test "admin can mark todo as complete" do
