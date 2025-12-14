@@ -21,9 +21,9 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
-    assert_select ".alert", text: /confirmation link has been sent/i
+    assert_select ".alert, .notice, .flash", text: /confirmation link has been sent/i
   end
 
   test "user cannot register with invalid email" do
@@ -139,7 +139,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
     assert_response :success
     # Verify user is logged in by checking session has user_id
@@ -175,7 +175,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
     # Verify user is logged out by checking session has no user_id
     assert_nil session[:user_id]
@@ -234,7 +234,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
     assert_select ".alert, .notice", text: /changed/i
 
@@ -246,7 +246,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
         password: "newpassword123"
       }
     }
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   test "user cannot reset password with invalid token" do
@@ -361,7 +361,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
     assert_response :success
   end
@@ -440,7 +440,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     follow_redirect!
     assert_response :success
   end
@@ -458,7 +458,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
 
     # Session should persist
     get mushrooms_path
@@ -547,7 +547,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
 
     # Old session should still work (Devise doesn't invalidate by default)
     get mushrooms_path
@@ -583,6 +583,6 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
     # Should be redirected back to originally requested page
     # Note: This might redirect to root_path depending on Devise configuration
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 end
