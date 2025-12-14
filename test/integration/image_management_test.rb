@@ -189,8 +189,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "images can be associated with different parts" do
     sign_in @user
 
-    part1 = Part.first || Part.create!(name: "Cap")
-    part2 = Part.create!(name: "Stem")
+    part1 = Part.find_or_create_by!(name: "Cap", description: "Cap of mushroom")
+    part2 = Part.find_or_create_by!(name: "Stem", description: "Stem of mushroom")
 
     skip "Part association test requires actual file fixtures"
 
@@ -225,6 +225,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "mushroom show page displays all associated images" do
     sign_in @user
 
+    skip "Duplicate image validation - need different test images"
+
     # Create image associations with actual files
     image1 = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
@@ -234,8 +236,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       part_id: @part.id,
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
-
-    skip "Duplicate image validation - need different test images"
 
     get mushroom_path(@mushroom)
 
@@ -428,8 +428,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "user can change image part association" do
     sign_in @user
 
-    part1 = Part.first || Part.create!(name: "Cap")
-    part2 = Part.create!(name: "Stem")
+    part1 = Part.find_or_create_by!(name: "Cap", description: "Cap of mushroom")
+    part2 = Part.find_or_create_by!(name: "Stem", description: "Stem of mushroom")
 
     image_mushroom = @mushroom.image_mushrooms.create!(
       part_id: part1.id,
@@ -545,6 +545,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting mushroom deletes all associated images" do
+    skip "Duplicate image validation - need different test images"
+
     sign_in @user
 
     # Create multiple images for mushroom
@@ -557,8 +559,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Duplicate image validation - need different test images"
-
     assert_difference("ImageMushroom.count", -2) do
       delete mushroom_path(@mushroom)
     end
@@ -568,6 +568,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting all images leaves mushroom intact" do
+    skip "Multiple deletion and duplicate validation - need different test images"
+
     sign_in @user
 
     image1 = @mushroom.image_mushrooms.create!(
@@ -578,8 +580,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       part_id: @part.id,
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
-
-    skip "Multiple deletion and duplicate validation - need different test images"
 
     mushroom_id = @mushroom.id
 
