@@ -57,7 +57,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     @user.reload
     assert_equal "Updated Name", @user.display_name
   end
@@ -74,7 +74,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   test "should update location preferences" do
@@ -92,7 +92,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     @user.reload
     assert_equal country.id, @user.default_country_id
   end

@@ -56,6 +56,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def after_update_path_for(resource)
+    mushrooms_path
+  end
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
   end

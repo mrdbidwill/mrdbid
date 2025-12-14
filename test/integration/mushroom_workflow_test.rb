@@ -442,7 +442,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user can associate mushroom with genus" do
     sign_in @user
 
-    genus = genera(:one) if Genus.exists?
+    genus = genera(:two) if Genus.exists?
     skip "No Genus fixtures available" unless genus
 
     assert_difference("GenusMushroom.count", 1) do
@@ -458,7 +458,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user can associate mushroom with species" do
     sign_in @user
 
-    species = species(:one) if Species.exists?
+    species = species(:two) if Species.exists?
     skip "No Species fixtures available" unless species
 
     assert_difference("MushroomSpecies.count", 1) do
@@ -474,8 +474,8 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user can associate mushroom with trees" do
     sign_in @user
 
-    tree = trees(:one) if Tree.exists?
-    skip "No Tree fixtures available" unless tree
+    # Create a new tree to avoid duplicate association
+    tree = Tree.create!(name: "New Tree", description: "Test tree for association")
 
     assert_difference("MushroomTree.count", 1) do
       post mushroom_trees_path, params: {
@@ -490,7 +490,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user can associate mushroom with plants" do
     sign_in @user
 
-    plant = plants(:one) if Plant.exists?
+    plant = plants(:two) if Plant.exists?
     skip "No Plant fixtures available" unless plant
 
     assert_difference("MushroomPlant.count", 1) do

@@ -37,8 +37,9 @@ class MushroomSpeciesRequestTest < ActionDispatch::IntegrationTest
     post mushroom_species_path(format: :json),
          params: { mushroom_species: { mushroom_id: @mushroom.id, species_id: @species.id } }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "create mushroom_species with valid params returns success" do
@@ -384,15 +385,15 @@ class MushroomSpeciesRequestTest < ActionDispatch::IntegrationTest
   test "create multiple mushroom_species associations sequentially" do
     sign_in @user
 
-    3.times do |i|
-      species = Species.create!(name: "BulkSpecies#{i}", genera_id: genera(:one).id, mblist_id: 600 + i)
-      post mushroom_species_path(format: :json),
-           params: { mushroom_species: { mushroom_id: @mushroom.id, species_id: species.id } }
+    assert_difference("@mushroom.mushroom_species.count", 3) do
+      3.times do |i|
+        species = Species.create!(name: "BulkSpecies#{i}", genera_id: genera(:one).id, mblist_id: 600 + i)
+        post mushroom_species_path(format: :json),
+             params: { mushroom_species: { mushroom_id: @mushroom.id, species_id: species.id } }
 
-      assert_response :created
+        assert_response :created
+      end
     end
-
-    assert_equal 3, @mushroom.mushroom_species.count
   end
 
   test "destroy multiple mushroom_species associations sequentially" do

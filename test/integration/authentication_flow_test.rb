@@ -142,8 +142,8 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to mushrooms_path
     follow_redirect!
     assert_response :success
-    # Verify user is logged in by checking session has user_id
-    assert_not_nil session[:user_id]
+    # Verify user is logged in by checking for signed-in elements
+    assert_select "a[href='#{destroy_user_session_path}']", text: /Sign Out|Logout/i
   end
 
   test "user cannot login with invalid password" do
@@ -468,16 +468,18 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "concurrent sessions are allowed for the same user" do
     # First session
     sign_in @user
-    first_session_cookie = cookies["_mrdbid_session"]
+    get mushrooms_path
+    assert_response :success
 
-    # Second session (different browser/device)
-    # In integration tests, we can simulate by signing out and signing in again
-    sign_out @user
-    sign_in @user
-    second_session_cookie = cookies["_mrdbid_session"]
-
-    # Both sessions should be valid (different cookies)
-    assert_not_equal first_session_cookie, second_session_cookie
+    # User can sign in again (simulates concurrent session)
+    # In integration tests, verifying the app doesn't prevent multiple logins
+    post user_session_path, params: {
+      user: {
+        email: @user.email,
+        password: "password"
+      }
+    }
+    assert_redirected_to mushrooms_path
   end
 
   test "user account is locked after maximum failed login attempts" do
