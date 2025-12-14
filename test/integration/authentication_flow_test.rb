@@ -294,10 +294,10 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     # Verify with valid OTP code
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
     post verify_users_two_factor_settings_path, params: {
-      code: otp_code
+      otp_attempt: otp_code
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to edit_user_registration_path
     follow_redirect!
     assert_select ".alert, .notice", text: /enabled/i
 
@@ -313,11 +313,12 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
     # Try to verify with invalid code
     post verify_users_two_factor_settings_path, params: {
-      code: "000000" # Invalid code
+      otp_attempt: "000000" # Invalid code
     }
 
-    assert_response :unprocessable_entity
-    assert_select ".alert, .error"
+    assert_redirected_to edit_user_registration_path
+    follow_redirect!
+    assert_select ".alert", text: /invalid/i
     assert_not @user.reload.otp_required_for_login
   end
 
@@ -390,10 +391,10 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     delete disable_users_two_factor_settings_path, params: {
-      password: "password"
+      current_password: "password"
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to edit_user_registration_path
     follow_redirect!
     assert_select ".alert, .notice", text: /disabled/i
 
@@ -408,15 +409,16 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     @user.reload
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
 
-    # Verify with valid code - should display backup codes
+    # Verify with valid code - should display backup codes in flash
     post verify_users_two_factor_settings_path, params: {
-      code: otp_code
+      otp_attempt: otp_code
     }
 
-    # Should redirect after showing backup codes, or show success page with codes
-    # Depending on implementation, adjust assertion
-    assert_response :success
-    assert_select ".backup-code", minimum: 1
+    # Redirects to edit page with backup codes in flash
+    assert_redirected_to edit_user_registration_path
+    assert flash[:backup_codes].present?
+    assert flash[:backup_codes].is_a?(Array)
+    assert_equal 10, flash[:backup_codes].length
   end
 
   test "user can login with backup code when 2FA enabled" do
