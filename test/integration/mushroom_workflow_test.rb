@@ -341,7 +341,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           mr_character_id: mr_character.id,
           character_value: "5.0"
         }
-      }
+      }, as: :json
     end
   end
 
@@ -451,7 +451,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           mushroom_id: @mushroom.id,
           genus_id: genus.id
         }
-      }
+      }, as: :json
     end
   end
 
@@ -467,7 +467,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           mushroom_id: @mushroom.id,
           species_id: species.id
         }
-      }
+      }, as: :json
     end
   end
 
@@ -483,7 +483,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           mushroom_id: @mushroom.id,
           tree_id: tree.id
         }
-      }
+      }, as: :json
     end
   end
 
@@ -499,7 +499,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           mushroom_id: @mushroom.id,
           plant_id: plant.id
         }
-      }
+      }, as: :json
     end
   end
 
