@@ -247,7 +247,8 @@ class StatesRequestTest < ActionDispatch::IntegrationTest
     # This endpoint should skip CSRF token verification for API usage
     post states_path(format: :json, country_id: @country.id)
     # POST should fail (only GET supported) but not due to CSRF
-    # Just verify the endpoint doesn't error on CSRF
+    # Just verify the endpoint doesn't error on CSRF - should return 404 not 422
+    assert_response :not_found, "Should return 404 for unsupported POST, not 422 (CSRF error)"
   end
 
   test "states index handles SQL injection attempt in country_id" do

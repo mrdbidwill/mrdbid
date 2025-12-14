@@ -16,7 +16,11 @@ class DatabaseIndexingTest < ActiveSupport::TestCase
     name_indexed = indexes.any? { |idx| idx.columns.include?('name') }
 
     # If not indexed, searches will be slow
-    skip "name not indexed - consider adding for search performance" unless name_indexed
+    if name_indexed
+      assert true, "mushrooms.name is indexed"
+    else
+      skip "name not indexed - consider adding for search performance"
+    end
   end
 
   test "mushrooms table should have index on collected_on for date filtering" do
