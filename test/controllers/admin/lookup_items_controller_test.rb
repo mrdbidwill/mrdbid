@@ -29,12 +29,15 @@ class Admin::LookupItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create lookup_item" do
+    mr_char = mr_characters(:one)
+    source = SourceData.first || SourceData.create!(title: "Test Source")
+
     assert_difference("LookupItem.count") do
       post admin_lookup_items_url, params: {
         lookup_item: {
-          mr_character_id: @lookup_item.mr_character_id,
-          source_data_id: @lookup_item.source_data_id,
-          name: "New Lookup Item",
+          mr_character_id: mr_char.id,
+          source_data_id: source.id,
+          name: "Completely New Lookup Item #{Time.now.to_i}",
           description: "Test description"
         }
       }
@@ -72,6 +75,9 @@ class Admin::LookupItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy lookup_item" do
+    @admin_user.permission_id = 1  # Owner permission required for destroy
+    @admin_user.save!
+
     assert_difference("LookupItem.count", -1) do
       delete admin_lookup_item_url(@lookup_item)
     end
