@@ -33,7 +33,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("MbList.count") do
       post admin_mb_lists_url, params: {
         mb_list: {
-          name: "New List",
+          taxon_name: "New Taxon",
           description: "Test description",
           comments: "Test comments"
         }
@@ -52,7 +52,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
   test "should update mb_list" do
     patch admin_mb_list_url(@mb_list), params: {
       mb_list: {
-        name: "Updated List"
+        taxon_name: "Updated Taxon"
       }
     }
 
@@ -73,7 +73,7 @@ class Admin::MbListsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference("MbList.count") do
       post admin_mb_lists_url, params: {
         mb_list: {
-          name: ""  # Invalid
+          taxon_name: ""  # Invalid - required field
         }
       }
     end

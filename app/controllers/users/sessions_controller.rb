@@ -7,15 +7,19 @@ class Users::SessionsController < Devise::SessionsController
       # Check if this device is trusted
       if trusted_device_valid?(resource)
         # Skip 2FA and sign in directly
-        super
+        set_flash_message!(:notice, :signed_in)
+        sign_in(resource_name, resource)
+        redirect_to after_sign_in_path_for(resource)
       else
         # Redirect user to OTP flow if enabled
         session[:otp_user_id] = resource.id
         redirect_to user_two_factor_authentication_path
       end
     else
-      # Default behavior
-      super
+      # Default behavior - sign in and redirect
+      set_flash_message!(:notice, :signed_in)
+      sign_in(resource_name, resource)
+      redirect_to after_sign_in_path_for(resource)
     end
   end
 

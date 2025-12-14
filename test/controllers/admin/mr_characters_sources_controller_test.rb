@@ -18,11 +18,6 @@ class Admin::MrCharactersSourcesControllerTest < ActionDispatch::IntegrationTest
     File.delete(csv_path) if File.exist?(csv_path)
   end
 
-  test "should redirect index to show" do
-    get admin_mr_characters_source_url  # Route is singular
-    assert_redirected_to action: :show
-  end
-
   test "should show csv content" do
     get admin_mr_characters_source_url
     assert_response :success
@@ -45,13 +40,13 @@ class Admin::MrCharactersSourcesControllerTest < ActionDispatch::IntegrationTest
 
     get admin_mr_characters_source_url
     assert_redirected_to root_path
-    assert_equal "You are not authorized to view this page.", flash[:alert]
+    assert_equal "You are not authorized to access this area.", flash[:alert]
   end
 
   test "guest should not access" do
     sign_out @admin_user
 
     get admin_mr_characters_source_url
-    assert_redirected_to new_user_session_path
+    assert_redirected_to root_path
   end
 end

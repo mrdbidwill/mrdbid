@@ -20,7 +20,7 @@ class StatesControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(response.body)
     json_response.each do |state|
-      assert_equal @country.id, state["id"] if state["id"]
+      assert_equal @country.id, state["country_id"] if state["country_id"]
     end
   end
 

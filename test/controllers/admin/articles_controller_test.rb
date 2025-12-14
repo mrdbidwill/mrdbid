@@ -24,7 +24,7 @@ class Admin::ArticlesControllerTest < ActionDispatch::IntegrationTest
         article: {
           title: "New Article",
           slug: "new-article",
-          subject: "Testing",
+          subject: "Mycology",
           summary: "Summary",
           body: "Body content",
           published: false

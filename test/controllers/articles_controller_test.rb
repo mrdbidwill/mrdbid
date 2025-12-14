@@ -39,12 +39,12 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       title: "Unpublished",
       slug: "unpublished",
       body: "Content",
+      subject: "Mycology",
       published: false
     )
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get article_url(unpublished.slug)
-    end
+    get article_url(unpublished.slug)
+    assert_response :not_found
   end
 
   test "should paginate articles" do

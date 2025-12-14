@@ -35,8 +35,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "genera autocomplete requires authentication" do
     get genera_autocomplete_path(format: :json, q: "gen")
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "genera autocomplete returns empty array for short query" do
@@ -102,8 +103,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "species autocomplete requires authentication" do
     get species_autocomplete_path(format: :json, q: "spec")
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "species autocomplete returns empty array for short query" do
@@ -173,8 +175,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "trees autocomplete requires authentication" do
     get trees_autocomplete_path(format: :json, q: "oak")
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "trees autocomplete returns empty array for short query" do
@@ -218,8 +221,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "plants autocomplete requires authentication" do
     get plants_autocomplete_path(format: :json, q: "fern")
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "plants autocomplete returns empty array for short query" do
@@ -266,8 +270,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "mr_characters autocomplete requires authentication" do
     get mr_characters_autocomplete_path(format: :json, q: "pileus")
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "mr_characters autocomplete returns empty array for short query" do
@@ -325,10 +330,9 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
   test "autocomplete endpoints reject HTML format" do
     sign_in @user
 
-    # Genera endpoint should only respond to JSON
-    assert_raises(ActionController::RoutingError) do
-      get genera_autocomplete_path(format: :html, q: "test")
-    end
+    # Genera endpoint should default to JSON
+    get genera_autocomplete_path(format: :html, q: "test")
+    assert_response :not_acceptable
   end
 
   test "autocomplete handles special characters safely" do
