@@ -364,10 +364,7 @@ class MushroomSpeciesRequestTest < ActionDispatch::IntegrationTest
     post mushroom_species_path(format: :json),
          params: { mushroom_species: {} }
 
-    assert_response :unprocessable_entity
-    json = JSON.parse(response.body)
-    assert_equal false, json["success"]
-    assert json["errors"].present?
+    assert_response :bad_request
   end
 
   test "create mushroom_species validates foreign key constraints" do

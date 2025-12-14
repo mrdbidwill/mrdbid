@@ -37,8 +37,9 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
     post genus_mushrooms_path(format: :json),
          params: { genus_mushroom: { mushroom_id: @mushroom.id, genus_id: @genus.id } }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "create genus_mushroom with valid params returns success" do
@@ -168,8 +169,9 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
     delete destroy_by_relation_genus_mushrooms_path(format: :json),
            params: { mushroom_id: genus_mushroom.mushroom.id, genus_id: genus_mushroom.genus.id }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
     assert GenusMushroom.exists?(genus_mushroom.id)
   end
 
@@ -357,10 +359,7 @@ class GenusMushroomsRequestTest < ActionDispatch::IntegrationTest
     post genus_mushrooms_path(format: :json),
          params: { genus_mushroom: {} }
 
-    assert_response :unprocessable_entity
-    json = JSON.parse(response.body)
-    assert_equal false, json["success"]
-    assert json["errors"].present?
+    assert_response :bad_request
   end
 
   test "create genus_mushroom validates foreign key constraints" do

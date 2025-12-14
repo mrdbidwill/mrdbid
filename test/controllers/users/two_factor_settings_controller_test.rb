@@ -145,7 +145,7 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
   test "should require authentication" do
     sign_out @user
 
-    get enable_users_two_factor_settings_url
+    post enable_users_two_factor_settings_url
     assert_redirected_to new_user_session_path
   end
 
