@@ -29,10 +29,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "user can upload image to their mushroom" do
     sign_in @user
 
-    # Note: In actual tests, you'd use fixture_file_upload for real file testing
-    # This is a simplified version
-    skip "Image upload requires actual file fixture"
-
     assert_difference("ImageMushroom.count", 1) do
       post image_mushrooms_path, params: {
         mushroom_id: @mushroom.id,
@@ -104,7 +100,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "user cannot upload image to another user's mushroom" do
     sign_in @user
 
-    skip "Image upload requires actual file fixture"
 
     assert_no_difference("ImageMushroom.count") do
       post image_mushrooms_path, params: {
@@ -123,7 +118,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "duplicate image cannot be uploaded to same mushroom" do
     sign_in @user
 
-    skip "Duplicate detection requires actual file fixtures with checksums"
 
     # Upload first image
     post image_mushrooms_path, params: {
@@ -158,7 +152,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "mushroom can have multiple images" do
     sign_in @user
 
-    skip "Multiple image test requires actual file fixtures"
 
     assert_difference("ImageMushroom.count", 2) do
       # Upload first image
@@ -192,7 +185,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
     part1 = Part.find_or_create_by!(name: "Cap", description: "Cap of mushroom")
     part2 = Part.find_or_create_by!(name: "Stem", description: "Stem of mushroom")
 
-    skip "Part association test requires actual file fixtures"
 
     # Upload image for cap
     post image_mushrooms_path, params: {
@@ -225,7 +217,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "mushroom show page displays all associated images" do
     sign_in @user
 
-    skip "Duplicate image validation - need different test images"
 
     # Create image associations with actual files
     image1 = @mushroom.image_mushrooms.create!(
@@ -234,7 +225,7 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
     )
     image2 = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
-      image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
+      image_file: fixture_file_upload('violet_test.jpg', 'image/jpeg')
     )
 
     get mushroom_path(@mushroom)
@@ -251,7 +242,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "image upload can include camera metadata" do
     sign_in @user
 
-    skip "Metadata test requires actual file fixtures"
 
     camera_make = CameraMake.first || CameraMake.create!(name: "Canon")
     camera_model = CameraModel.first || CameraModel.create!(name: "EOS 5D", camera_make: camera_make)
@@ -286,7 +276,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "EXIF data is automatically extracted from image" do
     sign_in @user
 
-    skip "EXIF extraction requires actual image file with EXIF data"
 
     # Upload image with EXIF data
     post image_mushrooms_path, params: {
@@ -310,7 +299,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "manual metadata overrides EXIF data" do
     sign_in @user
 
-    skip "EXIF override test requires actual file fixtures"
 
     # Upload image with manual metadata that should override EXIF
     post image_mushrooms_path, params: {
@@ -339,7 +327,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Image view requires actual attached file"
 
     get image_mushroom_path(image_mushroom)
 
@@ -360,7 +347,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "image thumbnails are generated automatically" do
     sign_in @user
 
-    skip "Thumbnail generation requires actual file fixtures and Active Storage"
 
     # Upload image
     post image_mushrooms_path, params: {
@@ -392,7 +378,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       comments: "Original comments"
     )
 
-    skip "Image edit requires actual attached file"
 
     get edit_image_mushroom_path(image_mushroom)
 
@@ -409,7 +394,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       comments: "Original comments"
     )
 
-    skip "Image update requires actual attached file"
 
     patch image_mushroom_path(image_mushroom), params: {
       image_mushroom: {
@@ -436,7 +420,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Part change requires actual attached file"
 
     patch image_mushroom_path(image_mushroom), params: {
       image_mushroom: {
@@ -456,7 +439,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Authorization test requires actual attached file"
 
     get edit_image_mushroom_path(other_image)
 
@@ -472,7 +454,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       comments: "Original"
     )
 
-    skip "Authorization test requires actual attached file"
 
     patch image_mushroom_path(other_image), params: {
       image_mushroom: {
@@ -497,7 +478,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Image deletion requires actual attached file"
 
     assert_difference("ImageMushroom.count", -1) do
       delete image_mushroom_path(image_mushroom)
@@ -516,7 +496,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Image deletion requires actual attached file"
 
     mushroom_id = @mushroom.id
 
@@ -535,7 +514,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-    skip "Authorization test requires actual attached file"
 
     assert_no_difference("ImageMushroom.count") do
       delete image_mushroom_path(other_image)
@@ -545,7 +523,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting mushroom deletes all associated images" do
-    skip "Duplicate image validation - need different test images"
 
     sign_in @user
 
@@ -556,7 +533,7 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
     )
     image2 = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
-      image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
+      image_file: fixture_file_upload('indigo_test.jpg', 'image/jpeg')
     )
 
     assert_difference("ImageMushroom.count", -2) do
@@ -568,7 +545,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting all images leaves mushroom intact" do
-    skip "Multiple deletion and duplicate validation - need different test images"
 
     sign_in @user
 
@@ -578,7 +554,7 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
     )
     image2 = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
-      image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
+      image_file: fixture_file_upload('teal_test.jpg', 'image/jpeg')
     )
 
     mushroom_id = @mushroom.id
@@ -597,7 +573,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "system accepts JPEG images" do
     sign_in @user
 
-    skip "Format test requires actual JPEG file"
 
     assert_difference("ImageMushroom.count", 1) do
       post image_mushrooms_path, params: {
@@ -614,7 +589,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "system accepts PNG images" do
     sign_in @user
 
-    skip "Format test requires actual PNG file"
 
     assert_difference("ImageMushroom.count", 1) do
       post image_mushrooms_path, params: {
@@ -631,7 +605,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "system accepts HEIC images" do
     sign_in @user
 
-    skip "Format test requires actual HEIC file"
 
     assert_difference("ImageMushroom.count", 1) do
       post image_mushrooms_path, params: {
@@ -652,7 +625,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   test "complete image management workflow" do
     sign_in @user
 
-    skip "Complete workflow requires actual file fixtures"
 
     # Step 1: Create mushroom
     post mushrooms_path, params: {

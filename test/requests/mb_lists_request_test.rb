@@ -37,8 +37,9 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
 
   test "mb_lists index requires authentication" do
     get admin_mb_lists_path(format: :json)
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "mb_lists index returns JSON for authenticated admin user" do
@@ -90,8 +91,9 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
 
   test "mb_lists show requires authentication" do
     get admin_mb_list_path(@mb_list, format: :json)
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "mb_lists show returns JSON for authenticated user" do
@@ -130,8 +132,9 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
     post admin_mb_lists_path(format: :json),
          params: { mb_list: { taxon_name: "NewGenus" } }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "create mb_list with valid params returns redirect" do
@@ -163,7 +166,8 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
     post admin_mb_lists_path,
          params: { mb_list: {} }
 
-    assert_response :unprocessable_entity
+    # Empty params hash returns 400 (Bad Request) due to params.expect
+    assert_response :bad_request
   end
 
   # ==========================================================================
@@ -258,7 +262,7 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
     # If there's a user without admin permissions, test here
     # For now, basic auth test covers this
     get admin_mb_lists_path(format: :json)
-    assert_response :redirect
+    assert_response :unauthorized
   end
 
   # ==========================================================================

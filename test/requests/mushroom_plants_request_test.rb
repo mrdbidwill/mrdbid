@@ -37,8 +37,9 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
     post mushroom_plants_path(format: :json),
          params: { mushroom_plant: { mushroom_id: @mushroom.id, plant_id: @plant.id } }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
   end
 
   test "create mushroom_plant with valid params returns success" do
@@ -168,8 +169,9 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
     delete destroy_by_relation_mushroom_plants_path(format: :json),
            params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
     assert MushroomPlant.exists?(mushroom_plant.id)
   end
 
@@ -404,10 +406,8 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
     post mushroom_plants_path(format: :json),
          params: { mushroom_plant: {} }
 
-    assert_response :unprocessable_entity
-    json = JSON.parse(response.body)
-    assert_equal false, json["success"]
-    assert json["errors"].present?
+    # Empty params hash returns 400 (Bad Request) due to params.expect
+    assert_response :bad_request
   end
 
   test "create mushroom_plant validates foreign key constraints" do
