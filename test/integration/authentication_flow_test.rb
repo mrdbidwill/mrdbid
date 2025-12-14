@@ -334,7 +334,10 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "user can login with valid 2FA code" do
-    @user.update!(otp_required_for_login: true)
+    @user.update!(
+      otp_required_for_login: true,
+      otp_secret: User.generate_otp_secret
+    )
 
     # First step: provide email and password
     post user_session_path, params: {
@@ -396,6 +399,8 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "user receives backup codes when enabling 2FA" do
     sign_in @user
 
+    # Generate OTP secret first
+    @user.update!(otp_secret: User.generate_otp_secret)
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
 
     post user_two_factor_authentication_path, params: {
