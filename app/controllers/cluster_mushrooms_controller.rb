@@ -3,7 +3,6 @@
 
 class ClusterMushroomsController < ApplicationController
   include Pundit::Authorization
-  # Authorization is intentionally not enforced here to simplify controller tests
 
   before_action :set_cluster_mushroom, only: %i[ show edit update destroy ]
 
@@ -46,9 +45,20 @@ class ClusterMushroomsController < ApplicationController
 
 
   def edit
+    # Verify user owns the mushroom
+    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only edit your own mushroom associations."
+      return
+    end
   end
 
   def update
+    # Verify user owns the mushroom
+    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only update your own mushroom associations."
+      return
+    end
+
     if @cluster_mushroom.update(cluster_mushroom_params)
       redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully updated."
     else
@@ -58,6 +68,12 @@ class ClusterMushroomsController < ApplicationController
 
 
   def destroy
+    # Verify user owns the mushroom
+    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only delete your own mushroom associations."
+      return
+    end
+
     @cluster_mushroom.destroy
     redirect_to mushrooms_path, notice: "Cluster was successfully removed."
   end

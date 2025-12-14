@@ -39,7 +39,12 @@ class ImageMushroomsController < ApplicationController
     @image_mushroom.mushroom_id = parent_id
 
     @mushroom = Mushroom.find_by(id: @image_mushroom.mushroom_id)
-    authorize @mushroom, :mushroom_image_mushroom? if @mushroom
+
+    begin
+      authorize @mushroom, :mushroom_image_mushroom? if @mushroom
+    rescue Pundit::NotAuthorizedError
+      redirect_to root_path, alert: "You are not authorized to perform this action." and return
+    end
 
     if @image_mushroom.save
       redirect_to mushroom_path(@image_mushroom.mushroom_id), notice: "Image successfully uploaded."
@@ -64,11 +69,15 @@ class ImageMushroomsController < ApplicationController
       else
         @mushrooms = Mushroom.all
         @parts = Part.all
+        # Reload to get association after failed update
+        @image_mushroom.reload unless @image_mushroom.mushroom_id.nil?
         render :edit, status: :unprocessable_entity
       end
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
       @mushrooms = Mushroom.all
       @parts = Part.all
+      # Reload to get association after failed update
+      @image_mushroom.reload unless @image_mushroom.mushroom_id.nil?
       render :edit, status: :unprocessable_entity, alert: 'Invalid change ignored.'
     end
   end

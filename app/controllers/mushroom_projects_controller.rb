@@ -3,7 +3,6 @@
 
 class MushroomProjectsController < ApplicationController
   include Pundit::Authorization
-  # Authorization is intentionally not enforced here to simplify controller tests
 
   before_action :set_mushroom_project, only: %i[ show edit update destroy ]
 
@@ -24,6 +23,20 @@ class MushroomProjectsController < ApplicationController
     @mushroom_project = MushroomProject.new(mushroom_project_params)
     @mushroom = Mushroom.find_by(id: mushroom_project_params[:mushroom_id])
     @projects = policy_scope(Project, policy_scope_class: ProjectPolicy::SelectionScope)
+
+    # Verify user owns the project they're trying to add to
+    project = Project.find_by(id: mushroom_project_params[:project_id])
+    unless project && project.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only add mushrooms to your own projects."
+      return
+    end
+
+    # Verify user owns the mushroom they're trying to add
+    unless @mushroom && @mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only add your own mushrooms to projects."
+      return
+    end
+
     if @mushroom_project.save
       redirect_to mushrooms_path, notice: "Group was successfully added."
     else

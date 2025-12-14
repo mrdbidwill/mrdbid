@@ -1,29 +1,29 @@
 class Admin::DnaSequencesController < Admin::ApplicationController
-  before_action :set_camera_make, only: %i[show edit update destroy]
+  before_action :set_dna_sequence, only: %i[show edit update destroy]
 
   # GET /dna_sequences
   def index
     authorize DnaSequence
-    @dna_sequences = policy_scope(DnaSequence.order(:name))
+    @dna_sequences = policy_scope(DnaSequence.includes(:mushroom).order(created_at: :desc))
   end
 
   # GET /dna_sequences/1
   def show
-    authorize @camera_make
+    authorize @dna_sequence
   end
 
   # GET /dna_sequences/new
   def new
-    @camera_make = DnaSequence.new
-    authorize @camera_make
+    @dna_sequence = DnaSequence.new
+    authorize @dna_sequence
   end
 
   # POST /dna_sequences
   def create
-    @camera_make = DnaSequence.new(camera_make_params)
-    authorize @camera_make
-    if @camera_make.save
-      redirect_to admin_camera_make_path(@camera_make), notice: "Camera make was successfully created."
+    @dna_sequence = DnaSequence.new(dna_sequence_params)
+    authorize @dna_sequence
+    if @dna_sequence.save
+      redirect_to admin_dna_sequence_path(@dna_sequence), notice: "DNA sequence was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,14 +31,14 @@ class Admin::DnaSequencesController < Admin::ApplicationController
 
   # GET /dna_sequences/1/edit
   def edit
-    authorize @camera_make
+    authorize @dna_sequence
   end
 
   # PATCH/PUT /dna_sequences/1
   def update
-    authorize @camera_make
-    if @camera_make.update(camera_make_params)
-      redirect_to admin_camera_make_path(@camera_make), notice: "Camera make was successfully updated."
+    authorize @dna_sequence
+    if @dna_sequence.update(dna_sequence_params)
+      redirect_to admin_dna_sequence_path(@dna_sequence), notice: "DNA sequence was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,18 +46,23 @@ class Admin::DnaSequencesController < Admin::ApplicationController
 
   # DELETE /dna_sequences/1
   def destroy
-    authorize @camera_make
-    @camera_make.destroy!
-    redirect_to admin_dna_sequences_path, notice: "Camera make was successfully deleted."
+    authorize @dna_sequence
+    @dna_sequence.destroy!
+    redirect_to admin_dna_sequences_path, notice: "DNA sequence was successfully deleted."
   end
 
   private
 
-  def set_camera_make
-    @camera_make = DnaSequence.find(params.expect(:id))
+  def set_dna_sequence
+    @dna_sequence = DnaSequence.find(params.expect(:id))
   end
 
-  def camera_make_params
-    params.expect(camera_make: [:name, :description, :comments, :source])
+  def dna_sequence_params
+    params.expect(dna_sequence: [
+      :mushroom_id, :notes, :dna_barcode_its, :genbank_number_url,
+      :genbank_accession_number, :herbarium_catalog_number,
+      :mycomap_blast_results, :provisional_species_name,
+      :sequencing_technology, :trace_files_raw_dna_data, :voucher_number
+    ])
   end
 end

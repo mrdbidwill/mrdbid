@@ -7,16 +7,24 @@ class Users::SessionsController < Devise::SessionsController
       # Check if this device is trusted
       if trusted_device_valid?(resource)
         # Skip 2FA and sign in directly
-        super
+        sign_in(resource_name, resource)
+        redirect_to mushrooms_path, notice: 'Signed in successfully.'
       else
         # Redirect user to OTP flow if enabled
         session[:otp_user_id] = resource.id
         redirect_to user_two_factor_authentication_path
       end
     else
-      # Default behavior
-      super
+      # Default behavior - sign in and redirect
+      sign_in(resource_name, resource)
+      redirect_to mushrooms_path, notice: 'Signed in successfully.'
     end
+  end
+
+  def destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    set_flash_message! :notice, :signed_out if signed_out
+    redirect_to mushrooms_path
   end
 
   private

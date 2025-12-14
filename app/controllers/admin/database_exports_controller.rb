@@ -1,7 +1,8 @@
 # app/controllers/admin/database_exports_controller.rb
 require 'open3'
 
-class Admin::DatabaseExportsController < Admin::ApplicationController
+module Admin
+  class DatabaseExportsController < Admin::ApplicationController
   skip_after_action :verify_policy_scoped, only: :export
 
   def export
@@ -189,5 +190,6 @@ class Admin::DatabaseExportsController < Admin::ApplicationController
         Rails.logger.error "Error cleaning up temp files: #{cleanup_error.message}"
       end
     end
+  end
   end
 end

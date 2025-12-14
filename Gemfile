@@ -73,6 +73,7 @@ gem 'thruster', require: false
 group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'factory_bot_rails'
 
   gem "letter_opener"
   gem "letter_opener_web"
@@ -105,6 +106,12 @@ group :test do
   gem 'minitest-reporters', '~> 1.4' # Better test output
   gem 'minitest-rails'             # Adds Minitest integration with Rails
   gem 'rails-controller-testing', '~> 1.0' # For controller tests if needed
+  gem 'simplecov', require: false  # Code coverage
+  gem 'simplecov-lcov', require: false  # LCOV formatter for CI
+  gem 'mutant-minitest'            # Mutation testing
+  gem 'bullet'                     # N+1 query detection
+  gem 'webmock'                    # HTTP request stubbing
+  gem 'vcr'                        # Record HTTP interactions
 end
 
 gem "tailwindcss-ruby", "~> 4.1"

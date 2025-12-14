@@ -2,8 +2,12 @@ Rails.application.routes.draw do
   get "mushroom_search/index"
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    passwords: 'users/passwords'
   }
+
+  # User management routes (for admin/user profile management)
+  resources :users
 
   # Two-Factor Authentication routes
   namespace :users do

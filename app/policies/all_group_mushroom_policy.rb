@@ -1,14 +1,14 @@
 class AllGroupMushroomPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      # Allow users to see only their own groups
-      scope.where(user_id: user.id)
+      # Allow users to see associations for their own mushrooms
+      scope.joins(:mushroom).where(mushrooms: { user_id: user.id })
     end
   end
 
 
   def create?
-    record.user_id == user.id
+    record.mushroom&.user_id == user.id
   end
 
   def index?
@@ -16,14 +16,14 @@ class AllGroupMushroomPolicy < ApplicationPolicy
   end
 
   def show?
-    record.user_id == user.id
+    record.mushroom&.user_id == user.id
   end
 
   def update?
-    record.user_id == user.id
+    record.mushroom&.user_id == user.id
   end
 
   def destroy?
-    record.user_id == user.id
+    record.mushroom&.user_id == user.id
   end
 end

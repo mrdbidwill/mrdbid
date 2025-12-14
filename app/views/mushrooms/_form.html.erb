@@ -1,6 +1,6 @@
 <%= form_with(model: mushroom, class: "contents") do |form| %>
   <% if mushroom.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="error alert bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(mushroom.errors.count, "error") %> prohibited this mushroom from being saved:</h2>
       <ul class="list-disc ml-6">
         <% mushroom.errors.each do |error| %>

@@ -6,7 +6,7 @@ one:
   confirmed_at: <%= Time.current %> # Add confirmation for Devise
   confirmation_sent_at: <%= Time.current %>
   confirmation_token: "token1"
-  permission_id: 1
+  permission_id: 1 # Owner
 
 two:
   email: "user2@example.com"
@@ -16,4 +16,14 @@ two:
   confirmed_at: <%= Time.current %> # Add confirmation for Devise
   confirmation_sent_at: <%= Time.current %>
   confirmation_token: "token2"
-  permission_id: 9
+  permission_id: 9 # Regular user
+
+three:
+  email: "admin@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+  confirmed_at: <%= Time.current %>
+  confirmation_sent_at: <%= Time.current %>
+  confirmation_token: "token3"
+  permission_id: 2 # Admin

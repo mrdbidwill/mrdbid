@@ -1,18 +1,61 @@
 # test/test_helper.rb
 ENV['RAILS_ENV'] ||= 'test'
+
+# Code coverage tracking
+require 'simplecov'
+require 'simplecov-lcov'
+
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::LcovFormatter
+])
+
+SimpleCov.start 'rails' do
+  add_filter '/test/'
+  add_filter '/config/'
+  add_filter '/vendor/'
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Models', 'app/models'
+  add_group 'Helpers', 'app/helpers'
+  add_group 'Mailers', 'app/mailers'
+  add_group 'Jobs', 'app/jobs'
+  add_group 'Policies', 'app/policies'
+  add_group 'Services', 'app/services'
+
+  # Enable branch coverage
+  enable_coverage :branch
+
+  # Start with lower target, will increase as we add tests
+  minimum_coverage line: 50, branch: 40
+  refuse_coverage_drop
+end
+
 require_relative '../config/environment'
 require 'rails/test_help'
 require 'devise'
 
+# Load all support files
+Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |file| require file }
+
 class ActiveSupport::TestCase
-  # Run tests in parallel with a reduced number of workers to avoid DRb connection issues
-  parallelize(workers: 1)
+  # Disable parallel testing temporarily due to DRb connection issues
+  # Can be re-enabled after verifying test isolation
+  # parallelize(workers: 2)
+
   include Pundit::Authorization # Include Pundit explicitly in tests
+  include FactoryBot::Syntax::Methods # FactoryBot syntax
+
   # Set up all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
   # Include Devise test helpers
   include Devise::Test::IntegrationHelpers
+
+  # Helper method to sign in users in tests
+  def sign_in_as(user)
+    sign_in user
+  end
 end
 
 class ActiveSupport::TestCase

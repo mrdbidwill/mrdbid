@@ -86,7 +86,7 @@
   <div class="my-5 flex flex-wrap gap-3">
     <%= form.submit image_mushroom.persisted? ? "Update Image" : "Upload Image", class: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium' %>
 
-    <% if image_mushroom.persisted? %>
+    <% if image_mushroom.persisted? && mushroom.present? %>
       <%= link_to "Cancel",
                   edit_mushroom_path(mushroom),
                   class: "bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded font-medium inline-block" %>

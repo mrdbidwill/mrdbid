@@ -1,6 +1,6 @@
 <%= form_with(model: project, class: "contents") do |form| %>
   <% if project.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="error alert bg-red-50 text-red-500 px-2 py-1 font-medium rounded-md mt-3">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul class="list-disc ml-6">

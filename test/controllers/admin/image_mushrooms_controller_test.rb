@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
+class Admin::ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @camera_make = camera_makes(:one)
     @camera_model = camera_models(:one)

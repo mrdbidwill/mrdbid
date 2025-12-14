@@ -218,10 +218,11 @@ class MushroomsController < ApplicationController
       # ASSOCIATIONS LOADED:
       # - genera: For genus selection dropdown
       # - mr_characters: Character traits assigned to this mushroom
-      # - mr_characters.genera: Genus associations for each character
       # - mr_characters.part, observation_method, color, source_data: Character metadata
+      # - image_mushrooms: For image display in edit form
+      # - fungus_type: For fungus type display in edit form
       # ============================================================================
-      @mushroom = Mushroom.includes(:genera, mr_characters: [:genera, :part, :observation_method, :color, :source_data]).find(@mushroom.id)
+      @mushroom = Mushroom.includes(:image_mushrooms, :fungus_type, mr_characters: [:part, :observation_method, :color, :source_data]).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
   end

@@ -27,6 +27,7 @@ module Admin
     # POST /admin/articles
     def create
       @article = Article.new(article_params)
+      @article.user = current_user
       authorize @article
 
       if params[:preview].present?
