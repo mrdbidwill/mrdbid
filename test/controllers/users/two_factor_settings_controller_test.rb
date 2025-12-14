@@ -30,7 +30,9 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
   test "should verify OTP and complete 2FA setup" do
     @user.otp_secret = User.generate_otp_secret
     @user.save!
-    request.session[:enabling_otp] = true
+
+    # Set session by making initial request
+    post enable_users_two_factor_settings_url
 
     otp_code = @user.current_otp
 
@@ -40,7 +42,7 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to edit_user_registration_path
     assert_match /2FA has been enabled successfully/, flash[:notice]
-    assert_nil request.session[:enabling_otp]
+    assert_nil session[:enabling_otp]
 
     @user.reload
     assert @user.otp_required_for_login
@@ -50,7 +52,9 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
   test "should reject invalid OTP during verification" do
     @user.otp_secret = User.generate_otp_secret
     @user.save!
-    request.session[:enabling_otp] = true
+
+    # Set session by making initial request
+    post enable_users_two_factor_settings_url
 
     post verify_users_two_factor_settings_url, params: {
       otp_attempt: "000000"  # Invalid
@@ -111,7 +115,9 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
   test "should generate backup codes on verification" do
     @user.otp_secret = User.generate_otp_secret
     @user.save!
-    request.session[:enabling_otp] = true
+
+    # Set session by making initial request
+    post enable_users_two_factor_settings_url
 
     otp_code = @user.current_otp
 
@@ -145,12 +151,14 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should clear enabling_otp session on disable" do
     @user.update!(otp_required_for_login: true)
-    request.session[:enabling_otp] = true
+
+    # Set session by enabling first
+    post enable_users_two_factor_settings_url
 
     delete disable_users_two_factor_settings_url, params: {
       current_password: "password"
     }
 
-    assert_nil request.session[:enabling_otp]
+    assert_nil session[:enabling_otp]
   end
 end
