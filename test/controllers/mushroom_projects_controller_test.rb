@@ -32,7 +32,10 @@ class MushroomProjectsControllerTest < ActionDispatch::IntegrationTest
   test "should create mushroom_project" do
     new_mushroom = Mushroom.create!(
       user: @user,
-      collection_date: Date.today
+      name: "Test Mushroom",
+      collection_date: Date.today,
+      country_id: countries(:one).id,
+      fungus_type_id: fungus_types(:one).id
     )
 
     assert_difference("MushroomProject.count") do

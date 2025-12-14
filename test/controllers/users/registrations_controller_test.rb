@@ -99,6 +99,8 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy user account" do
     sign_in @user
+    # Delete dependent records that would prevent user deletion
+    AdminTodo.where(user_id: @user.id).delete_all if defined?(AdminTodo)
 
     assert_difference("User.count", -1) do
       delete user_registration_url
@@ -109,6 +111,9 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should handle strict_loading on destroy" do
     sign_in @user
+    # Delete dependent records that would prevent user deletion
+    AdminTodo.where(user_id: @user.id).delete_all if defined?(AdminTodo)
+
     # Verify strict_loading is disabled during destroy
     delete user_registration_url
     assert_redirected_to root_path

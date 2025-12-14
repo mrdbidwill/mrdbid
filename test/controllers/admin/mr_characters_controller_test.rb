@@ -91,10 +91,13 @@ class Admin::MrCharactersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy mr_character" do
-    # Create one without associations
+    # Create one with all required associations
     deletable = MrCharacter.create!(
       name: "Deletable",
-      part_id: @mr_character.part_id
+      part_id: @mr_character.part_id,
+      observation_method_id: @mr_character.observation_method_id,
+      display_option_id: @mr_character.display_option_id,
+      source_data_id: @mr_character.source_data_id
     )
 
     assert_difference("MrCharacter.count", -1) do

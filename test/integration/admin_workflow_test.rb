@@ -180,7 +180,8 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can delete species" do
     sign_in @admin_user
-    species = Species.create!(name: "toDelete")
+    genus = Genus.first || Genus.create!(name: "Test Genus")
+    species = Species.create!(name: "toDelete", genus: genus)
 
     assert_difference("Species.count", -1) do
       delete admin_species_path(species)
@@ -210,7 +211,10 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
         color: {
           latin_name: "Test Latin Color",
           common_name: "Test Common Color",
-          hex: "#FF0000"
+          hex: "#FF0000",
+          r_val: 255,
+          g_val: 0,
+          b_val: 0
         }
       }
     end
@@ -238,7 +242,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can delete color" do
     sign_in @admin_user
-    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common", hex: "#000000")
+    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common", hex: "#000000", r_val: 0, g_val: 0, b_val: 0)
 
     assert_difference("Color.count", -1) do
       delete admin_color_path(color)

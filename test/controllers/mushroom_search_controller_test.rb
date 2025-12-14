@@ -89,7 +89,10 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
     other_user = users(:two)
     other_mushroom = Mushroom.create!(
       user: other_user,
-      collection_date: Date.today
+      name: "Other User Mushroom",
+      collection_date: Date.today,
+      country_id: countries(:one).id,
+      fungus_type_id: fungus_types(:one).id
     )
 
     get mushroom_search_index_url
