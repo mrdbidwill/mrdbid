@@ -3,7 +3,6 @@
 
 class AllGroupMushroomsController < ApplicationController
   include Pundit::Authorization
-  # Authorization is intentionally not enforced here to simplify controller tests
 
   before_action :set_all_group_mushroom, only: %i[ show edit update destroy ]
 
@@ -38,9 +37,20 @@ class AllGroupMushroomsController < ApplicationController
   end
 
   def edit
+    # Verify user owns the mushroom
+    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only edit your own mushroom associations."
+      return
+    end
   end
 
   def update
+    # Verify user owns the mushroom
+    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only update your own mushroom associations."
+      return
+    end
+
     if @all_group_mushroom.update(all_group_mushroom_params)
       redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully updated."
     else
@@ -50,6 +60,12 @@ class AllGroupMushroomsController < ApplicationController
 
 
   def destroy
+    # Verify user owns the mushroom
+    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+      redirect_to mushrooms_path, alert: "You can only delete your own mushroom associations."
+      return
+    end
+
     @all_group_mushroom.destroy
     redirect_to mushrooms_path, notice: "That group was successfully removed."
   end

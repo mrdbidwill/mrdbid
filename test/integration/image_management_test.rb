@@ -439,10 +439,10 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-
-    get edit_image_mushroom_path(other_image)
-
-    assert_response :redirect
+    # Authorization should raise Pundit::NotAuthorizedError
+    assert_raises(Pundit::NotAuthorizedError) do
+      get edit_image_mushroom_path(other_image)
+    end
   end
 
   test "user cannot update another user's image" do
@@ -454,16 +454,17 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       comments: "Original"
     )
 
-
-    patch image_mushroom_path(other_image), params: {
-      image_mushroom: {
-        comments: "Hacked comments"
+    # Authorization should raise Pundit::NotAuthorizedError
+    assert_raises(Pundit::NotAuthorizedError) do
+      patch image_mushroom_path(other_image), params: {
+        image_mushroom: {
+          comments: "Hacked comments"
+        }
       }
-    }
+    end
 
     other_image.reload
-    assert_not_equal "Hacked comments", other_image.comments
-    assert_response :redirect
+    assert_equal "Original", other_image.comments
   end
 
   # ==============================================================================
@@ -514,12 +515,12 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
 
-
+    # Authorization should raise Pundit::NotAuthorizedError
     assert_no_difference("ImageMushroom.count") do
-      delete image_mushroom_path(other_image)
+      assert_raises(Pundit::NotAuthorizedError) do
+        delete image_mushroom_path(other_image)
+      end
     end
-
-    assert_response :redirect
   end
 
   test "deleting mushroom deletes all associated images" do

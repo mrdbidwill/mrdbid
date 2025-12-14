@@ -3,7 +3,6 @@
 
 class MushroomProjectsController < ApplicationController
   include Pundit::Authorization
-  # Authorization is intentionally not enforced here to simplify controller tests
 
   before_action :set_mushroom_project, only: %i[ show edit update destroy ]
 
