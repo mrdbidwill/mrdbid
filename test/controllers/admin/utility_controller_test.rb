@@ -33,7 +33,7 @@ class Admin::UtilityControllerTest < ActionDispatch::IntegrationTest
     regular_user = users(:two)
     sign_in regular_user
 
-    get export_database_admin_utility_index_url
+    get database_export_url
     assert_redirected_to root_path
     assert_equal "You are not authorized to access this area.", flash[:alert]
   end
@@ -41,7 +41,7 @@ class Admin::UtilityControllerTest < ActionDispatch::IntegrationTest
   test "guest should not access utility functions" do
     sign_out @admin_user
 
-    get export_database_admin_utility_index_url
+    get database_export_url
     assert_redirected_to new_user_session_path
   end
 end
