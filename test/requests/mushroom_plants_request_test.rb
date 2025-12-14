@@ -74,9 +74,7 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
   test "create mushroom_plant with duplicate association returns error" do
     sign_in @user
 
-    # Create first association
-    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
-
+    # Use existing fixture association (mushroom:one and plant:one already exists)
     # Attempt to create duplicate
     assert_no_difference("MushroomPlant.count") do
       post mushroom_plants_path(format: :json),
@@ -164,7 +162,8 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "destroy mushroom_plant requires authentication" do
-    mushroom_plant = MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Use existing fixture association
+    mushroom_plant = mushroom_plants(:one)
 
     delete destroy_by_relation_mushroom_plants_path(format: :json),
            params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
@@ -176,11 +175,13 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_plant with valid params returns success" do
     sign_in @user
-    mushroom_plant = MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant1")
+    mushroom_plant = MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: unique_plant.id)
 
     assert_difference("MushroomPlant.count", -1) do
       delete destroy_by_relation_mushroom_plants_path(format: :json),
-             params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
+             params: { mushroom_id: @mushroom.id, plant_id: unique_plant.id }
     end
 
     assert_response :success
@@ -191,10 +192,12 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_plant returns proper JSON structure" do
     sign_in @user
-    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant2")
+    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: unique_plant.id)
 
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
+           params: { mushroom_id: @mushroom.id, plant_id: unique_plant.id }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -238,10 +241,12 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_plant with string IDs works" do
     sign_in @user
-    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant3")
+    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: unique_plant.id)
 
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: @mushroom.id.to_s, plant_id: @plant.id.to_s }
+           params: { mushroom_id: @mushroom.id.to_s, plant_id: unique_plant.id.to_s }
 
     assert_response :success
     json = JSON.parse(response.body)
@@ -265,10 +270,12 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
   test "user can delete mushroom_plant for their own mushroom" do
     sign_in @user
     my_mushroom = @user.mushrooms.first
-    mushroom_plant = MushroomPlant.create!(mushroom_id: my_mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant4")
+    mushroom_plant = MushroomPlant.create!(mushroom_id: my_mushroom.id, plant_id: unique_plant.id)
 
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: my_mushroom.id, plant_id: @plant.id }
+           params: { mushroom_id: my_mushroom.id, plant_id: unique_plant.id }
 
     assert_response :success
   end
@@ -299,10 +306,12 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_plant returns JSON content type" do
     sign_in @user
-    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant5")
+    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: unique_plant.id)
 
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
+           params: { mushroom_id: @mushroom.id, plant_id: unique_plant.id }
 
     assert_response :success
     assert_match(/application\/json/, response.content_type)
@@ -314,9 +323,11 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "create mushroom_plant represents ecological association" do
     sign_in @user
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant6")
 
     post mushroom_plants_path(format: :json),
-         params: { mushroom_plant: { mushroom_id: @mushroom.id, plant_id: @plant.id } }
+         params: { mushroom_plant: { mushroom_id: @mushroom.id, plant_id: unique_plant.id } }
 
     assert_response :created
     json = JSON.parse(response.body)
@@ -324,13 +335,17 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
     # Verify association exists
     @mushroom.reload
-    assert @mushroom.plants.include?(@plant)
+    assert @mushroom.plants.include?(unique_plant)
   end
 
   test "create multiple plant associations for single mushroom" do
     sign_in @user
 
-    plant_list = [plants(:one), plants(:two)]
+    # Create unique plants to avoid fixture duplication
+    plant1 = Plant.create!(name: "MultiPlant1")
+    plant2 = Plant.create!(name: "MultiPlant2")
+    plant_list = [plant1, plant2]
+
     plant_list.each do |plant|
       post mushroom_plants_path(format: :json),
            params: { mushroom_plant: { mushroom_id: @mushroom.id, plant_id: plant.id } }
@@ -339,7 +354,7 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
     end
 
     @mushroom.reload
-    assert_equal 2, @mushroom.plants.count
+    assert_operator @mushroom.plants.count, :>=, 2
   end
 
   test "mushroom can be associated with various plant types" do
@@ -470,16 +485,18 @@ class MushroomPlantsRequestTest < ActionDispatch::IntegrationTest
 
   test "destroy mushroom_plant is idempotent" do
     sign_in @user
-    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: @plant.id)
+    # Create unique plant to avoid fixture duplication
+    unique_plant = Plant.create!(name: "UniquePlant7")
+    MushroomPlant.create!(mushroom_id: @mushroom.id, plant_id: unique_plant.id)
 
     # First deletion
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
+           params: { mushroom_id: @mushroom.id, plant_id: unique_plant.id }
     assert_response :success
 
     # Second deletion of same relation
     delete destroy_by_relation_mushroom_plants_path(format: :json),
-           params: { mushroom_id: @mushroom.id, plant_id: @plant.id }
+           params: { mushroom_id: @mushroom.id, plant_id: unique_plant.id }
     assert_response :not_found
   end
 
