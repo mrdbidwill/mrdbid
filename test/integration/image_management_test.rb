@@ -432,9 +432,9 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot edit another user's image" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
-    other_image = @other_user_mushroom.image_mushrooms.create!(
+    other_image = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )
@@ -446,9 +446,9 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot update another user's image" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
-    other_image = @other_user_mushroom.image_mushrooms.create!(
+    other_image = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg'),
       comments: "Original"
@@ -507,9 +507,9 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot delete another user's image" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
-    other_image = @other_user_mushroom.image_mushrooms.create!(
+    other_image = @mushroom.image_mushrooms.create!(
       part_id: @part.id,
       image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
     )

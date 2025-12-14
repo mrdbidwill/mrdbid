@@ -18,6 +18,8 @@ class ImageMushroomPolicy < ApplicationPolicy
 
   def owner_or_admin?
     return false unless user
-    user.admin? || record.mushroom.user_id == user.id
+    return true if user.admin?
+    return false unless record.mushroom
+    record.mushroom.user_id == user.id
   end
 end
