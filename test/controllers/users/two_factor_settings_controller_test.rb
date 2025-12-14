@@ -12,7 +12,7 @@ class Users::TwoFactorSettingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to edit_user_registration_path
     assert_equal "Scan the QR code and enter a verification code to enable 2FA.", flash[:notice]
-    assert request.request.session[:enabling_otp]
+    assert session[:enabling_otp]
 
     @user.reload
     assert @user.otp_secret.present?

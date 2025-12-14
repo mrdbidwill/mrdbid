@@ -28,7 +28,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def show
     authorize LookupItem
-    @lookup_item = LookupItem.find(params[:id])
+    @lookup_item = LookupItem.includes(:mr_character).find(params[:id])
   end
 
 

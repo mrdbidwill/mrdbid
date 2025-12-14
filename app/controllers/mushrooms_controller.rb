@@ -219,8 +219,9 @@ class MushroomsController < ApplicationController
       # - genera: For genus selection dropdown
       # - mr_characters: Character traits assigned to this mushroom
       # - mr_characters.part, observation_method, color, source_data: Character metadata
+      # - image_mushrooms: For image display in edit form
       # ============================================================================
-      @mushroom = Mushroom.includes(mr_characters: [:part, :observation_method, :color, :source_data]).find(@mushroom.id)
+      @mushroom = Mushroom.includes(:image_mushrooms, mr_characters: [:part, :observation_method, :color, :source_data]).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
   end

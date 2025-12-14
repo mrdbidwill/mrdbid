@@ -50,7 +50,7 @@ class Users::SessionsControllerTest < ActionDispatch::IntegrationTest
     trusted_device = @user.trusted_devices.create!(
       device_token: SecureRandom.hex(32),
       device_fingerprint: fingerprint,
-      last_used_at: Time.current
+      trusted_at: Time.current
     )
 
     cookies[:trusted_device_token] = trusted_device.device_token
