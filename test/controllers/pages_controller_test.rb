@@ -2,7 +2,7 @@ require "test_helper"
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
   test "should get home without authentication" do
-    get home_url
+    get root_url
     assert_response :success
   end
 
@@ -18,7 +18,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "authenticated user should access home" do
     sign_in users(:one)
-    get home_url
+    get root_url
     assert_response :success
   end
 
