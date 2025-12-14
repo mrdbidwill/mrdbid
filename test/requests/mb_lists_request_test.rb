@@ -119,9 +119,8 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
   test "mb_lists show with non-existent id returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get admin_mb_list_path(id: 999999, format: :json)
-    end
+    get admin_mb_list_path(id: 999999, format: :json)
+    assert_response :not_found
   end
 
   # ==========================================================================
@@ -205,10 +204,9 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
   test "update non-existent mb_list returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      patch admin_mb_list_path(id: 999999),
-            params: { mb_list: { taxon_name: "Test" } }
-    end
+    patch admin_mb_list_path(id: 999999),
+          params: { mb_list: { taxon_name: "Test" } }
+    assert_response :not_found
   end
 
   # ==========================================================================
@@ -238,9 +236,8 @@ class MbListsRequestTest < ActionDispatch::IntegrationTest
   test "destroy non-existent mb_list returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      delete admin_mb_list_path(id: 999999)
-    end
+    delete admin_mb_list_path(id: 999999)
+    assert_response :not_found
   end
 
   # ==========================================================================

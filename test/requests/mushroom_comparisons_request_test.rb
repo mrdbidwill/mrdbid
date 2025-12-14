@@ -203,9 +203,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index with non-existent mushroom returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get mushroom_mushroom_comparisons_path(mushroom_id: 999999)
-    end
+    get mushroom_mushroom_comparisons_path(mushroom_id: 999999)
+    assert_response :not_found
   end
 
   # ==========================================================================
@@ -275,9 +274,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons create with non-existent mushroom returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      post mushroom_mushroom_comparisons_path(mushroom_id: 999999)
-    end
+    post mushroom_mushroom_comparisons_path(mushroom_id: 999999)
+    assert_response :not_found
   end
 
   # ==========================================================================
@@ -343,9 +341,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show with non-existent id returns not found" do
     sign_in @user
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get mushroom_comparison_path(id: 999999)
-    end
+    get mushroom_comparison_path(id: 999999)
+    assert_response :not_found
   end
 
   test "comparison show loads character details for both mushrooms" do
