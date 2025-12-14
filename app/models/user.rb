@@ -70,6 +70,7 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
   has_many :trusted_devices, dependent: :destroy
+  has_many :articles, dependent: :nullify
 
   # Default location preferences
   belongs_to :default_country, class_name: 'Country', optional: true

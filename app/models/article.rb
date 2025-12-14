@@ -1,4 +1,6 @@
 class Article < ApplicationRecord
+  belongs_to :user, optional: true
+
   # Predefined subjects to prevent taxonomy sprawl
   SUBJECTS = [
     "Mycology",
