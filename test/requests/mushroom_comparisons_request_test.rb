@@ -86,10 +86,19 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index shows pending comparison count" do
     sign_in @user
 
+    # Create a new mushroom to avoid duplicate comparison
+    new_mushroom = Mushroom.create!(
+      name: "Test Pending Mushroom",
+      user: @user,
+      country: countries(:one),
+      state: states(:one),
+      fungus_type: fungus_types(:one)
+    )
+
     # Create a pending comparison
     MushroomComparison.create!(
       mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
+      compared_mushroom: new_mushroom,
       status: "pending",
       similarity_score: 0
     )
@@ -133,13 +142,15 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index orders by similarity score" do
     sign_in @user
 
-    # Create comparisons with different similarity scores
-    high_score = MushroomComparison.create!(
+    # Fixtures already have comparisons for mushroom:one
+    # Use find_or_create_by to avoid duplicates
+    high_score = MushroomComparison.find_or_create_by!(
       mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 90
-    )
+      compared_mushroom: @other_mushroom
+    ) do |comparison|
+      comparison.status = "completed"
+      comparison.similarity_score = 90
+    end
 
     get mushroom_mushroom_comparisons_path(@mushroom)
     assert_response :success
@@ -150,10 +161,27 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index only shows completed comparisons" do
     sign_in @user
 
+    # Create new mushrooms to avoid duplicate comparisons
+    pending_mushroom = Mushroom.create!(
+      name: "Test Pending Mushroom",
+      user: @user,
+      country: countries(:one),
+      state: states(:one),
+      fungus_type: fungus_types(:one)
+    )
+
+    completed_mushroom = Mushroom.create!(
+      name: "Test Completed Mushroom",
+      user: @user,
+      country: countries(:one),
+      state: states(:one),
+      fungus_type: fungus_types(:one)
+    )
+
     # Create pending comparison
     pending = MushroomComparison.create!(
       mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
+      compared_mushroom: pending_mushroom,
       status: "pending",
       similarity_score: 0
     )
@@ -161,7 +189,7 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
     # Create completed comparison
     completed = MushroomComparison.create!(
       mushroom: @mushroom,
-      compared_mushroom: mushrooms(:three),
+      compared_mushroom: completed_mushroom,
       status: "completed",
       similarity_score: 75
     )
@@ -257,12 +285,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "comparison show requires authentication" do
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :redirect
@@ -272,12 +296,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show returns success for authenticated user" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -286,12 +306,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show displays both mushrooms" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -303,12 +319,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show displays similarity score" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 85
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -319,14 +331,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show displays character matches" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75,
-      matching_characters: 10,
-      total_characters: 15
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -345,12 +351,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show loads character details for both mushrooms" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -403,10 +405,19 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index handles pending comparisons correctly" do
     sign_in @user
 
+    # Create a new mushroom to avoid duplicate comparison
+    pending_mushroom = Mushroom.create!(
+      name: "Test Pending Comparison Mushroom",
+      user: @user,
+      country: countries(:one),
+      state: states(:one),
+      fungus_type: fungus_types(:one)
+    )
+
     # Create both pending and completed
     MushroomComparison.create!(
       mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
+      compared_mushroom: pending_mushroom,
       status: "pending",
       similarity_score: 0
     )
@@ -471,15 +482,10 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison index indicates when job is processing" do
     sign_in @user
 
-    # Create pending comparison
-    MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "pending",
-      similarity_score: 0
-    )
+    # Use existing pending fixture to avoid duplicates
+    pending_comparison = mushroom_comparisons(:pending_comparison)
 
-    get mushroom_mushroom_comparisons_path(@mushroom)
+    get mushroom_mushroom_comparisons_path(pending_comparison.mushroom)
     assert_response :success
 
     # Should show pending status message
@@ -492,12 +498,9 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show displays percentage similarity" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 66.67
-    )
+    # Use existing fixture comparison to avoid duplicates
+    # Note: Fixtures have integer similarity scores, which matches the validation
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
@@ -508,20 +511,9 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons ordered by highest similarity first" do
     sign_in @user
 
-    # Create multiple comparisons with different scores
-    low = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 30
-    )
-
-    high = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: mushrooms(:three),
-      status: "completed",
-      similarity_score: 90
-    )
+    # Fixtures already have comparisons for mushroom:one with different scores
+    # completed_high_similarity: 85, completed_low_similarity: 25
+    # No need to create new comparisons, just verify ordering
 
     get mushroom_mushroom_comparisons_path(@mushroom)
     assert_response :success
@@ -541,12 +533,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparisons index eager loads associations" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_mushroom_comparisons_path(@mushroom)
     assert_response :success
@@ -558,12 +546,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   test "comparison show eager loads character associations" do
     sign_in @user
 
-    comparison = MushroomComparison.create!(
-      mushroom: @mushroom,
-      compared_mushroom: @other_mushroom,
-      status: "completed",
-      similarity_score: 75
-    )
+    # Use existing fixture comparison to avoid duplicates
+    comparison = mushroom_comparisons(:completed_high_similarity)
 
     get mushroom_comparison_path(comparison)
     assert_response :success
