@@ -13,6 +13,28 @@ class Admin::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "owner sees all articles in index" do
+    sign_in @owner_user
+    article_by_owner = Article.create!(title: "Owner Article Index", slug: "owner-article-index", body: "Content", user: @owner_user)
+    article_by_admin = Article.create!(title: "Admin Article Index", slug: "admin-article-index", body: "Content", user: @admin_user)
+
+    get admin_articles_url
+    assert_response :success
+    assert_select "body", text: /Owner Article Index/
+    assert_select "body", text: /Admin Article Index/
+  end
+
+  test "admin sees only their own articles in index" do
+    sign_in @admin_user
+    article_by_admin = Article.create!(title: "My Admin Article", slug: "my-admin-article-index", body: "Content", user: @admin_user)
+    article_by_owner = Article.create!(title: "Owner Article Index 2", slug: "owner-article-index-2", body: "Content", user: @owner_user)
+
+    get admin_articles_url
+    assert_response :success
+    assert_select "body", text: /My Admin Article/
+    assert_select "body", text: /Owner Article Index 2/, count: 0
+  end
+
   test "should get new as admin" do
     sign_in @admin_user
     get new_admin_article_url

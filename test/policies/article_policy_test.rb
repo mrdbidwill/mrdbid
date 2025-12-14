@@ -110,4 +110,32 @@ class ArticlePolicyTest < ActiveSupport::TestCase
     assert_not Pundit.policy(@regular_user, @article_by_admin).destroy?
     assert_not Pundit.policy(@regular_user, @article_by_owner).destroy?
   end
+
+  # Scope tests
+  test "owner scope returns all articles" do
+    article1 = Article.create!(title: "Article 1", slug: "article-1", body: "Content", user: @owner_user)
+    article2 = Article.create!(title: "Article 2", slug: "article-2", body: "Content", user: @admin_user)
+    article3 = Article.create!(title: "Article 3", slug: "article-3", body: "Content", user: nil)
+
+    scoped = Pundit.policy_scope(@owner_user, Article)
+    assert_includes scoped, article1
+    assert_includes scoped, article2
+    assert_includes scoped, article3
+  end
+
+  test "admin scope returns only their own articles" do
+    article1 = Article.create!(title: "Admin Article", slug: "admin-article-scope", body: "Content", user: @admin_user)
+    article2 = Article.create!(title: "Owner Article", slug: "owner-article-scope", body: "Content", user: @owner_user)
+
+    scoped = Pundit.policy_scope(@admin_user, Article)
+    assert_includes scoped, article1
+    assert_not_includes scoped, article2
+  end
+
+  test "regular user scope returns no articles" do
+    Article.create!(title: "Article", slug: "article-regular-scope", body: "Content", user: @admin_user)
+
+    scoped = Pundit.policy_scope(@regular_user, Article)
+    assert_equal 0, scoped.count
+  end
 end

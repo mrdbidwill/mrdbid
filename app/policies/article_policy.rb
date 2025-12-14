@@ -1,8 +1,14 @@
 class ArticlePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      # Admins see all; non-admins see none in /admin
-      user&.admin? ? scope.all : scope.none
+      # Non-admins see none in /admin
+      return scope.none unless user&.admin?
+
+      # Owner sees all articles
+      return scope.all if user.owner?
+
+      # Admins (permission_id == 2) only see their own articles
+      scope.where(user_id: user.id)
     end
   end
 
