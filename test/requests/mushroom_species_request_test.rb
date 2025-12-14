@@ -168,8 +168,9 @@ class MushroomSpeciesRequestTest < ActionDispatch::IntegrationTest
     delete destroy_by_relation_mushroom_species_path(format: :json),
            params: { mushroom_id: mushroom_species.mushroom_id, species_id: mushroom_species.species_id }
 
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_equal "You need to sign in or sign up before continuing.", json["error"]
     assert MushroomSpecies.exists?(mushroom_species.id)
   end
 
