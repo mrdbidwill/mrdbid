@@ -164,8 +164,8 @@ class StatesRequestTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
     names = json.map { |s| s["name"] }
 
-    # Names should be in alphabetical order
-    assert_equal names.sort, names
+    # Names should be in alphabetical order (case-insensitive like database)
+    assert_equal names.sort_by(&:downcase), names
   end
 
   test "states index returns valid JSON for empty results" do
