@@ -45,15 +45,15 @@ class Users::SessionsControllerTest < ActionDispatch::IntegrationTest
       otp_secret: User.generate_otp_secret
     )
 
-    # Create a trusted device
-    fingerprint = Digest::SHA256.hexdigest("#{request.user_agent}-127.0.0.1")
+    # Create a trusted device with mock user agent
+    fingerprint = Digest::SHA256.hexdigest("Rails Testing-127.0.0.1")
     trusted_device = @user.trusted_devices.create!(
       device_token: SecureRandom.hex(32),
       device_fingerprint: fingerprint,
       last_used_at: Time.current
     )
 
-    cookies.encrypted[:trusted_device_token] = trusted_device.device_token
+    cookies[:trusted_device_token] = trusted_device.device_token
 
     post user_session_url, params: {
       user: {
@@ -73,7 +73,7 @@ class Users::SessionsControllerTest < ActionDispatch::IntegrationTest
     )
 
     # Set invalid cookie
-    cookies.encrypted[:trusted_device_token] = "invalid_token"
+    cookies[:trusted_device_token] = "invalid_token"
 
     post user_session_url, params: {
       user: {
