@@ -8,6 +8,12 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     @mushroom.save!
     @image_mushroom = image_mushrooms(:one)
     @image_mushroom.mushroom = @mushroom
+    # Attach test image file to satisfy validation
+    @image_mushroom.image_file.attach(
+      io: File.open(Rails.root.join('test', 'files', 'test_image.jpg')),
+      filename: 'test_image.jpg',
+      content_type: 'image/jpeg'
+    )
     @image_mushroom.save!
   end
 
@@ -43,7 +49,8 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
         image_mushroom: {
           mushroom_id: @mushroom.id,
           part_id: @image_mushroom.part_id,
-          image_name: "Test Image"
+          image_name: "Test Image",
+          image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
         }
       }
     end
@@ -101,7 +108,8 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
       mushroom_id: @mushroom.id,
       image_mushroom: {
         mushroom_id: @mushroom.id,
-        part_id: @image_mushroom.part_id
+        part_id: @image_mushroom.part_id,
+        image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
       }
     }
 

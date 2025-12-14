@@ -317,7 +317,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
 
     # Add associated records
     @mushroom.image_mushrooms.create!(
-      image_file: fixture_file_upload("test/fixtures/files/test_image.jpg", "image/jpeg"),
+      image_file: fixture_file_upload('test_image.jpg', 'image/jpeg'),
       part_id: parts(:one).id
     ) if Part.exists? && @mushroom.image_mushrooms.empty?
 
