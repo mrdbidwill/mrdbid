@@ -33,6 +33,7 @@ class Admin::LookupItemsControllerTest < ActionDispatch::IntegrationTest
       post admin_lookup_items_url, params: {
         lookup_item: {
           mr_character_id: @lookup_item.mr_character_id,
+          source_data_id: @lookup_item.source_data_id,
           name: "New Lookup Item",
           description: "Test description"
         }

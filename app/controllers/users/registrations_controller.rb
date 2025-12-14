@@ -13,13 +13,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
-        respond_with resource, location: after_sign_in_path_for(resource)
+        redirect_to mushrooms_path, notice: 'Welcome! You have signed up successfully.'
       else
-        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        redirect_to mushrooms_path, notice: "A message with a confirmation link has been sent to your email address. Please follow the link to activate your account."
       end
     else
       clean_up_passwords resource
@@ -70,7 +68,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def check_honeypot
     # If the honeypot field is filled, it's likely a bot
-    if params[:user][:website_url].present?
+    if params[:user] && params[:user][:website_url].present?
       Rails.logger.warn "Bot registration attempt detected: #{params[:user][:email]}"
       redirect_to new_user_registration_path, alert: "Registration failed. Please try again."
     end

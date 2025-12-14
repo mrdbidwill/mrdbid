@@ -47,6 +47,10 @@ class ApplicationController < ActionController::Base
     mushrooms_path
   end
 
+  def after_inactive_sign_up_path_for(resource)
+    mushrooms_path
+  end
+
   private
   def user_not_authorized
     respond_to do |format|
