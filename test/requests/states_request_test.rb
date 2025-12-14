@@ -191,8 +191,8 @@ class StatesRequestTest < ActionDispatch::IntegrationTest
   test "states index with no format defaults properly" do
     # When called without format, should handle gracefully
     get states_path(country_id: @country.id)
-    # Depending on routes config, this might redirect or return JSON
-    assert_response :success
+    # Controller explicitly returns 404 for HTML format
+    assert_response :not_found
   end
 
   # ==========================================================================

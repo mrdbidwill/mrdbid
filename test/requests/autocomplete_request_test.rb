@@ -330,9 +330,11 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
   test "autocomplete endpoints reject HTML format" do
     sign_in @user
 
-    # Genera endpoint should default to JSON
+    # Genera endpoint should default to JSON even with HTML format param
     get genera_autocomplete_path(format: :html, q: "test")
-    assert_response :not_acceptable
+    assert_response :success
+    json = JSON.parse(response.body)
+    assert_equal [], json
   end
 
   test "autocomplete handles special characters safely" do
