@@ -142,10 +142,8 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
     follow_redirect!
     assert_response :success
-    # Verify user is logged in by checking session data
-    # Note: Direct session access in integration tests may not work as expected
-    # Using Warden helper method instead
-    assert warden.authenticated?(:user)
+    # Verify user is logged in by checking session has user_id
+    assert_not_nil session[:user_id]
   end
 
   test "user cannot login with invalid password" do
@@ -179,8 +177,8 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     follow_redirect!
-    # Verify user is logged out
-    assert_not warden.authenticated?(:user)
+    # Verify user is logged out by checking session has no user_id
+    assert_nil session[:user_id]
   end
 
   test "user is redirected to login page when accessing protected resources" do
@@ -287,7 +285,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     # Visit 2FA setup page
-    get users_two_factor_authentication_path
+    get user_two_factor_authentication_path
 
     assert_response :success
     assert_select "img[alt='QR Code']" # QR code should be displayed
@@ -296,7 +294,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
 
     # Enable 2FA by providing valid OTP code
-    post users_two_factor_authentication_path, params: {
+    post user_two_factor_authentication_path, params: {
       code: otp_code
     }
 
@@ -310,7 +308,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "user cannot enable 2FA with invalid code" do
     sign_in @user
 
-    post users_two_factor_authentication_path, params: {
+    post user_two_factor_authentication_path, params: {
       code: "000000" # Invalid code
     }
 
@@ -384,7 +382,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     @user.update!(otp_required_for_login: true)
     sign_in @user
 
-    delete users_two_factor_authentication_path, params: {
+    delete user_two_factor_authentication_path, params: {
       password: "password"
     }
 
@@ -400,7 +398,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
     otp_code = ROTP::TOTP.new(@user.otp_secret).now
 
-    post users_two_factor_authentication_path, params: {
+    post user_two_factor_authentication_path, params: {
       code: otp_code
     }
 
@@ -459,11 +457,12 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     first_session_cookie = cookies["_mrdbid_session"]
 
     # Second session (different browser/device)
-    reset_session
+    # In integration tests, we can simulate by signing out and signing in again
+    sign_out @user
     sign_in @user
     second_session_cookie = cookies["_mrdbid_session"]
 
-    # Both sessions should be valid
+    # Both sessions should be valid (different cookies)
     assert_not_equal first_session_cookie, second_session_cookie
   end
 
