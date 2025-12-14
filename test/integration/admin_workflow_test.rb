@@ -242,7 +242,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
 
   test "admin can delete color" do
     sign_in @admin_user
-    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common", hex: "#000000", r_val: 0, g_val: 0, b_val: 0)
+    color = Color.create!(latin_name: "To Delete Latin", common_name: "To Delete Common", hex: "#ABCDEF", r_val: 171, g_val: 205, b_val: 239)
 
     assert_difference("Color.count", -1) do
       delete admin_color_path(color)

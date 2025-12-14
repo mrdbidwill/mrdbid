@@ -92,12 +92,13 @@ class Admin::MrCharactersControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy mr_character" do
     # Create one with all required associations
+    source_data = SourceData.first || SourceData.create!(name: "Test Source")
     deletable = MrCharacter.create!(
       name: "Deletable",
       part_id: @mr_character.part_id,
       observation_method_id: @mr_character.observation_method_id,
       display_option_id: @mr_character.display_option_id,
-      source_data_id: @mr_character.source_data_id
+      source_data_id: source_data.id
     )
 
     assert_difference("MrCharacter.count", -1) do

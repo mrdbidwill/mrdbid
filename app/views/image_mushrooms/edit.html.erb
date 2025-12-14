@@ -16,6 +16,7 @@
   </div>
 
   <!-- Additional Navigation -->
+  <% if @image_mushroom.mushroom.present? %>
   <div class="mt-6 pt-4 border-t">
     <p class="text-sm text-gray-600 mb-2">Quick navigation:</p>
     <div class="flex flex-wrap gap-3">
@@ -36,4 +37,5 @@
                   class: "text-blue-600 hover:underline text-sm" %>
     </div>
   </div>
+  <% end %>
 </div>
