@@ -416,7 +416,7 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
     valid_types = %w[lookup_tables lookup_no_mblist mblist_only]
     valid_types.each do |valid_type|
       # Just test that the type is recognized (will fail at mysqldump)
-      assert_nothing_raised(RuntimeError) do
+      assert_nothing_raised do
         begin
           get admin_database_export_path(export_type: valid_type)
         rescue => e

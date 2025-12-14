@@ -29,7 +29,7 @@ class QueryPerformanceTest < ActiveSupport::TestCase
     start_time = Time.now
 
     Mushroom.where(user: user)
-            .where("collected_on >= ?", 1.year.ago)
+            .where("collection_date >= ?", 1.year.ago)
             .includes(:genus_mushrooms, :mushroom_species)
             .limit(100)
             .to_a
@@ -76,7 +76,7 @@ class QueryPerformanceTest < ActiveSupport::TestCase
   test "article index with pagination should be fast" do
     start_time = Time.now
 
-    Article.published.includes(:user).page(1).per(25).to_a
+    Article.published.page(1).per(25).to_a
 
     elapsed = Time.now - start_time
     assert elapsed < 1.0, "Article pagination took too long: #{elapsed}s"
@@ -119,8 +119,8 @@ class QueryPerformanceTest < ActiveSupport::TestCase
   test "image_mushrooms with blobs should load efficiently" do
     start_time = Time.now
 
-    ImageMushroom.includes(image_attachment: :blob).limit(20).each do |im|
-      im.image.attached?
+    ImageMushroom.includes(image_file_attachment: :blob).limit(20).each do |im|
+      im.image_file.attached?
     end
 
     elapsed = Time.now - start_time
