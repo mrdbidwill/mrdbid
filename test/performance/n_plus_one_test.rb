@@ -56,13 +56,13 @@ class NPlusOneTest < ActiveSupport::TestCase
     # Without eager loading
     without_eager = count_queries do
       m = Mushroom.strict_loading(false).find(mushroom.id)
-      m.image_mushrooms.each { |im| im.image.attached? }
+      m.image_mushrooms.each { |im| im.image_file.attached? }
     end
 
     # With eager loading
     with_eager = count_queries do
-      m = Mushroom.includes(image_mushrooms: { image_attachment: :blob }).find(mushroom.id)
-      m.image_mushrooms.each { |im| im.image.attached? }
+      m = Mushroom.includes(image_mushrooms: { image_file_attachment: :blob }).find(mushroom.id)
+      m.image_mushrooms.each { |im| im.image_file.attached? }
     end
 
     assert with_eager < without_eager, "Eager loading should reduce queries"
@@ -175,16 +175,18 @@ class NPlusOneTest < ActiveSupport::TestCase
     without_eager = count_queries do
       ImageMushroom.limit(5).strict_loading(false).each do |im|
         im.lens&.make
-        im.camera&.name
+        im.camera_make&.name
+        im.camera_model&.name
         im.part&.name
         im.mushroom.name
       end
     end
 
     with_eager = count_queries do
-      ImageMushroom.includes(:lens, :camera, :part, :mushroom).limit(5).each do |im|
+      ImageMushroom.includes(:lens, :camera_make, :camera_model, :part, :mushroom).limit(5).each do |im|
         im.lens&.make
-        im.camera&.name
+        im.camera_make&.name
+        im.camera_model&.name
         im.part&.name
         im.mushroom.name
       end
