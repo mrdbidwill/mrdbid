@@ -274,7 +274,6 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "EXIF data is automatically extracted from image" do
-    skip "EXIF extraction test - requires specific test image with EXIF metadata"
     sign_in @user
 
 
