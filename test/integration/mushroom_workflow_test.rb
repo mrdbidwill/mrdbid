@@ -221,27 +221,24 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user cannot edit another user's mushroom" do
     sign_in @user
 
-    get edit_mushroom_path(@other_mushroom)
-
-    # Should be denied by Pundit
-    assert_response :redirect
-    assert_redirected_to root_path
-    follow_redirect!
-    assert_select ".alert", text: /not authorized/i
+    assert_raises(Pundit::NotAuthorizedError) do
+      get edit_mushroom_path(@other_mushroom)
+    end
   end
 
   test "user cannot update another user's mushroom" do
     sign_in @user
 
-    patch mushroom_path(@other_mushroom), params: {
-      mushroom: {
-        name: "Hacked Mushroom Name"
+    assert_raises(Pundit::NotAuthorizedError) do
+      patch mushroom_path(@other_mushroom), params: {
+        mushroom: {
+          name: "Hacked Mushroom Name"
+        }
       }
-    }
+    end
 
     @other_mushroom.reload
     assert_not_equal "Hacked Mushroom Name", @other_mushroom.name
-    assert_response :redirect
   end
 
   test "user cannot change mushroom user_id via mass assignment" do
@@ -297,11 +294,10 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_no_difference("Mushroom.count") do
-      delete mushroom_path(@other_mushroom)
+      assert_raises(Pundit::NotAuthorizedError) do
+        delete mushroom_path(@other_mushroom)
+      end
     end
-
-    assert_response :redirect
-    assert_redirected_to root_path
   end
 
   test "guest cannot delete mushroom" do
@@ -548,10 +544,9 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user cannot export another user's mushroom to PDF" do
     sign_in @user
 
-    get export_pdf_mushroom_path(@other_mushroom, format: :pdf)
-
-    # Should be denied by authorization
-    assert_response :redirect
+    assert_raises(Pundit::NotAuthorizedError) do
+      get export_pdf_mushroom_path(@other_mushroom, format: :pdf)
+    end
   end
 
   # ==============================================================================

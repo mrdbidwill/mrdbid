@@ -11,7 +11,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create mushroom_species as JSON" do
     assert_difference("MushroomSpecies.count") do
-      post mushroom_species_index_url, params: {
+      post mushroom_species_url, params: {
         mushroom_species: {
           mushroom_id: @mushroom.id,
           species_id: @other_species.id  # Use other_species to avoid fixture duplication
@@ -29,7 +29,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
     # Fixtures already have mushroom:one with species:one, try to create duplicate
 
     # Try to create duplicate
-    post mushroom_species_index_url, params: {
+    post mushroom_species_url, params: {
       mushroom_species: {
         mushroom_id: @mushroom.id,
         species_id: @species.id
@@ -49,7 +49,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_difference("MushroomSpecies.count", -1) do
-      delete destroy_by_relation_mushroom_species_index_url, params: {
+      delete destroy_by_relation_mushroom_species_url, params: {
         mushroom_id: @mushroom.id,
         species_id: @other_species.id
       }, as: :json
@@ -61,7 +61,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return not found for non-existent relation" do
-    delete destroy_by_relation_mushroom_species_index_url, params: {
+    delete destroy_by_relation_mushroom_species_url, params: {
       mushroom_id: 99999,
       species_id: 99999
     }, as: :json
@@ -74,7 +74,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   test "should require authentication" do
     sign_out @user
 
-    post mushroom_species_index_url, params: {
+    post mushroom_species_url, params: {
       mushroom_species: {
         mushroom_id: @mushroom.id,
         species_id: @species.id
@@ -85,7 +85,7 @@ class MushroomSpeciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should handle invalid params" do
-    post mushroom_species_index_url, params: {
+    post mushroom_species_url, params: {
       mushroom_species: {
         mushroom_id: @mushroom.id,
         species_id: nil
