@@ -145,10 +145,13 @@ For a fully functional installation with all lookup tables, taxonomic data, and 
 
 This application uses several key tables:
 
-- **Lookup Tables**: `lookup_types`, `lookup_items` - Define character options
-- **Character System**: `mr_characters`, `parts` - Mushroom identification characters
-- **Taxonomy**: `mb_lists` - Species/genus taxonomy (from MBList database)
-- **User Data**: `mushrooms`, `articles`, `clusters` - User-created content
+- **Lookup Tables**: `lookup_types`, `lookup_items` - Define character options and taxonomic data
+- **Character System**: `mr_characters`, `parts` - Mushroom identification characters and morphological features
+- **Taxonomy**: `mb_lists`, `genus` - Species/genus taxonomy (from MBList database)
+- **User Data**: `mushrooms`, `articles`, `clusters`, `all_groups` - User-created content and specimen groupings
+- **Image Management**: `image_mushrooms` - Photo attachments with EXIF metadata
+- **Camera Equipment**: `cameras`, `camera_makes`, `camera_models`, `lenses` - Photography equipment tracking
+- **Authentication**: `users` - User accounts with Devise and optional 2FA
 - **Reference Data**: `colors`, `countries`, `states`, `trees`, `plants` - Supporting lookup data
 
 ## Configuration
@@ -204,7 +207,7 @@ The database configuration is in `config/database.yml`. It's set up to use envir
 
 ## Running Tests
 
-The application uses Minitest for testing.
+The application uses Minitest for testing with comprehensive coverage.
 
 **Run all tests:**
 ```bash
@@ -221,41 +224,70 @@ bundle exec rails test test/controllers/admin/database_exports_controller_test.r
 COVERAGE=true bundle exec rails test
 ```
 
+**Test Status:**
+The test suite has been extensively refactored and improved. See `TEST_SUITE_STATUS.md` for current status and `TESTING_QUICK_START.md` for testing guidelines.
+
+Recent commits show 0 failures, 0 errors achieved through comprehensive test suite refactoring.
+
 ## Key Features
 
 - **Mushroom Character Tracking**: Detailed morphological and microscopic character recording
-- **Image Management**: Upload, organize, and annotate mushroom photographs
+- **Image Management**: Upload, organize, and annotate mushroom photographs with EXIF extraction
+- **Camera Equipment Tracking**: Detailed camera, lens, and photography metadata management
 - **Taxonomic Integration**: Integration with MBList taxonomy database
-- **Search & Compare**: Search mushrooms by characters and compare specimens
+- **Search & Compare**: Advanced search by characters and side-by-side specimen comparison
+- **Grouping & Organization**: Clusters and genus grouping for related specimens
 - **Export Tools**: PDF export of mushroom records for offline reference
 - **Admin Tools**: Database backup/restore, data management, version tracking
+- **User Authentication**: Secure login with optional two-factor authentication (2FA)
+- **Content Management**: Article publishing system with role-based permissions
 
 ## Project Structure
 
 ```
 mrdbid/
 ├── app/
-│   ├── controllers/     # Application controllers
-│   ├── models/          # ActiveRecord models
-│   ├── views/           # ERB templates
+│   ├── controllers/     # Application controllers (including Admin namespace)
+│   ├── models/          # ActiveRecord models (46+ models)
+│   ├── views/           # ERB templates with Tailwind CSS
 │   ├── policies/        # Authorization policies (Pundit)
-│   └── jobs/            # Background jobs
+│   ├── services/        # Service objects for business logic
+│   ├── jobs/            # Background jobs (Solid Queue)
+│   ├── helpers/         # View helpers
+│   └── assets/          # Stylesheets, images
 ├── config/              # Application configuration
+│   ├── locales/         # I18n translations (9 languages supported)
+│   └── deploy.rb        # Capistrano deployment config
 ├── db/
 │   ├── migrate/         # Database migrations
-│   └── seeds.rb         # Seed data
-├── test/                # Test suite
-└── public/              # Static assets
+│   ├── seeds/           # Seed data files
+│   └── structure.sql    # Database schema
+├── test/                # Comprehensive test suite (Minitest)
+│   ├── controllers/     # Controller tests
+│   ├── models/          # Model tests
+│   ├── policies/        # Policy tests
+│   ├── services/        # Service tests
+│   ├── system/          # System/integration tests
+│   └── factories/       # Test data factories
+├── lib/                 # Library modules
+│   └── tasks/           # Rake tasks
+├── docs/                # Documentation (I18N guide)
+└── public/              # Static assets and error pages
 ```
 
 ## Deployment
 
-This application uses Capistrano for deployment. See `config/deploy.rb` for deployment configuration.
+This application uses Capistrano for deployment. See `config/deploy.rb` for deployment configuration and `DEPLOYMENT.md` for detailed deployment instructions.
 
 **Deploy to production:**
 ```bash
 bundle exec cap production deploy
 ```
+
+**Additional Deployment Resources:**
+- `DEPLOYMENT_TROUBLESHOOTING.md` - Common deployment issues and solutions
+- `SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md` - Backup procedures
+- `SOLID_QUEUE_SETUP.md` - Background job system configuration
 
 ## Contributing
 
@@ -313,6 +345,31 @@ For questions or issues:
 - Open an issue on GitHub
 - Visit [https://mrdbid.com](https://mrdbid.com)
 - Contact: mrdbidwill@gmail.com
+
+## Recent Improvements
+
+Recent development has focused on:
+
+- **Test Suite Refactoring**: Achieved 0 failures, 0 errors through comprehensive test improvements
+- **Article Authorization**: Implemented role-based permissions - admins can only manage their own articles
+- **Camera Integration**: Full EXIF metadata extraction and camera equipment tracking
+- **Performance Optimization**: Query optimization and caching improvements
+- **Code Quality**: Extensive refactoring for maintainability and performance
+
+See project documentation files (`CAMERA_INTEGRATION_COMPLETE.md`, `TEST_SUITE_COMPLETE_SUMMARY.md`, etc.) for detailed information about recent features and improvements.
+
+## Technology Stack
+
+- **Framework**: Ruby on Rails 8.0.2
+- **Ruby Version**: 3.4.3
+- **Database**: MySQL 5.6.4+ (or MariaDB)
+- **Frontend**: Tailwind CSS 3.4, Stimulus 3.2, Hotwire
+- **Authentication**: Devise with TOTP-based 2FA
+- **Authorization**: Pundit
+- **Background Jobs**: Solid Queue
+- **Testing**: Minitest with FactoryBot
+- **Deployment**: Capistrano
+- **Image Processing**: ImageMagick/libvips with EXIF extraction
 
 ## Acknowledgments
 
