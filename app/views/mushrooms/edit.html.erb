@@ -58,7 +58,7 @@
   <!-- Images Section -->
   <% images = @mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
   <div class="my-5">
-    <div id="images-panel" class="hidden border border-blue-200 rounded p-4 bg-blue-50">
+    <div id="images-panel" class="border border-blue-200 rounded p-4 bg-blue-50">
       <% if images.any? %>
         <div class="mb-3">
           <h3 class="text-lg font-semibold text-gray-800 mb-1">Mushroom Images</h3>
