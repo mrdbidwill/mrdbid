@@ -17,7 +17,11 @@ Permission.find_or_create_by!(id: 9) do |p|
 end
 
 # Load camera equipment data (makes, models, lenses)
-require_relative 'seeds/camera_equipment_seeds'
+# Comment out for production
+#require_relative 'seeds/camera_equipment_seeds'
+
+# Load countries and states data
+require_relative 'seeds/countries_and_states_seeds'
 
 if Rails.env.test?
   Mushroom.delete_all

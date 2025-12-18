@@ -3,6 +3,9 @@ class State < ApplicationRecord
   belongs_to :country, class_name: "Country", foreign_key: :country_id
   has_many :mushrooms, dependent: :nullify
 
+  # Validate state_code only for new records with carmen integration
+  validates :state_code, presence: true, on: :create, if: -> { country&.country_code.present? }
+
   before_create :set_default_country
   before_destroy :check_for_mushrooms
 
@@ -13,6 +16,14 @@ class State < ApplicationRecord
   # Safely access the `name` field
   def safe_name
     name.presence || "N/A"
+  end
+
+  # Get carmen subregion data
+  def carmen_subregion
+    return nil unless country&.country_code.present? && state_code.present?
+
+    carmen_country = Carmen::Country.coded(country.country_code)
+    @carmen_subregion ||= carmen_country&.subregions&.coded(state_code)
   end
 
   private

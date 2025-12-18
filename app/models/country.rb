@@ -4,6 +4,13 @@ class Country < ApplicationRecord
   has_many :states, foreign_key: :country_id
   has_many :mushrooms, dependent: :nullify
 
+  validates :country_code, uniqueness: true, allow_nil: true
+
+  # Get carmen country data
+  def carmen_country
+    @carmen_country ||= Carmen::Country.coded(country_code) if country_code.present?
+  end
+
   # Before destroying, provide helpful information about associated records
   before_destroy :check_for_associated_records
 

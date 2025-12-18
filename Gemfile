@@ -34,6 +34,7 @@ gem "capistrano-puma"
 gem 'csv'
 
 gem 'i18n', '~> 1.14'
+gem 'carmen-rails', '~> 1.0'
 
 gem 'devise'                        # Authentication
 gem 'devise-two-factor', '~> 6.1.0' # Two-factor authentication
