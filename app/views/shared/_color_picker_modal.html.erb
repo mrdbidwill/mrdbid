@@ -11,22 +11,41 @@
 <% current_color_id ||= nil %>
 <% redirect_path ||= nil %>
 
-<div data-controller="color-picker">
+<%
+  # Get current colors for this character-mushroom combination
+  current_mr_char_mushroom = mushroom_id && character_id ?
+    MrCharacterMushroom.find_by(mushroom_id: mushroom_id, mr_character_id: character_id) : nil
+  current_colors = current_mr_char_mushroom&.ordered_colors || []
+  selected_color_ids = current_colors.map(&:id)
+%>
+
+<div data-controller="multicolor-picker"
+     data-multicolor-picker-character-id-value="<%= character_id %>"
+     data-multicolor-picker-selected-ids-value="<%= selected_color_ids.to_json %>">
   <!-- Modal Trigger Button -->
   <button type="button"
-          data-action="click->color-picker#open"
+          data-action="click->multicolor-picker#open"
           data-character-id="<%= character_id %>"
           class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition">
-  <% if current_color_id %>
-    <%= image_tag "AMS_colors/banner_50x50/banner_#{current_color_id}.jpg",
-                  alt: "Current color",
-                  class: "w-5 h-5 rounded border border-white" %>
-    <span>Change Color</span>
+  <% if current_colors.any? %>
+    <div class="flex -space-x-2">
+      <% current_colors.first(3).each do |color| %>
+        <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                      alt: color.common_name,
+                      class: "w-5 h-5 rounded-full border-2 border-white" %>
+      <% end %>
+      <% if current_colors.size > 3 %>
+        <span class="w-5 h-5 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs">
+          +<%= current_colors.size - 3 %>
+        </span>
+      <% end %>
+    </div>
+    <span>Change Colors</span>
   <% else %>
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
     </svg>
-    <span>Choose Color</span>
+    <span>Choose Colors</span>
   <% end %>
   </button>
 
@@ -34,10 +53,10 @@
   <div id="colorPickerModal<%= character_id %>"
        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
        data-character-id="<%= character_id %>"
-       data-action="click->color-picker#closeOnBackdrop">
+       data-action="click->multicolor-picker#closeOnBackdrop">
 
-  <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-       data-action="click->color-picker#stopPropagation">
+  <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+       data-action="click->multicolor-picker#stopPropagation">
 
     <!-- Modal Header -->
     <div class="sticky top-0 bg-white border-b px-6 py-4 flex items-start justify-between">
@@ -50,7 +69,7 @@
         <% end %>
       </div>
       <button type="button"
-              data-action="click->color-picker#close"
+              data-action="click->multicolor-picker#close"
               class="ml-4 text-gray-400 hover:text-gray-600 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -60,25 +79,41 @@
 
     <!-- Modal Body -->
     <div class="p-6">
-      <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true } do |f| %>
+      <%= form_with url: mr_character_mushrooms_path,
+                    method: :post,
+                    data: { turbo: true, multicolor_picker_target: "form" } do |f| %>
         <%= hidden_field_tag :mushroom_id, mushroom_id %>
         <%= hidden_field_tag :mr_character_id, character.id %>
         <% if redirect_path %>
           <%= hidden_field_tag :redirect_to, redirect_path %>
         <% end %>
 
-        <p class="text-sm text-gray-600 mb-4">Click a color to select:</p>
+        <!-- Selected Colors Section -->
+        <div class="mb-6">
+          <h4 class="text-sm font-semibold text-gray-700 mb-3">
+            Selected Colors
+            <span class="text-xs font-normal text-gray-500">(Click color below to add/remove, drag to reorder)</span>
+          </h4>
+          <div data-multicolor-picker-target="selectedColors" class="flex flex-col gap-2 min-h-[60px]">
+            <!-- Dynamic content rendered by Stimulus -->
+          </div>
+        </div>
+
+        <hr class="my-6" />
+
+        <p class="text-sm text-gray-600 mb-4">Click colors to add or remove from selection:</p>
 
         <!-- Color Grid -->
-        <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
+        <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2"
+             data-multicolor-picker-target="colorGrid">
           <% (1..50).each do |color_id| %>
             <% color = Color.find_by(id: color_id) %>
-            <button type="submit"
-                    name="character_value"
-                    value="<%= color_id %>"
+            <% is_selected = selected_color_ids.include?(color_id) %>
+            <button type="button"
+                    data-color-id="<%= color_id %>"
+                    data-action="click->multicolor-picker#toggleColor"
                     title="<%= color ? "#{color.latin_name} (#{color.common_name})" : "Color #{color_id}" %>"
-                    class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg <%= current_color_id == color_id ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-300 hover:border-blue-400' %>"
-                    data-action="click->color-picker#close">
+                    class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg <%= is_selected ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-300 hover:border-blue-400' %>">
               <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
                             alt: "Color #{color_id}",
                             class: "w-full h-full object-cover rounded-md" %>
@@ -91,7 +126,7 @@
               <% end %>
 
               <!-- Selected checkmark -->
-              <% if current_color_id == color_id %>
+              <% if is_selected %>
                 <div class="absolute inset-0 flex items-center justify-center bg-blue-500 bg-opacity-20 rounded-md">
                   <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -105,10 +140,15 @@
     </div>
 
     <!-- Modal Footer -->
-    <div class="sticky bottom-0 bg-gray-50 border-t px-6 py-4">
+    <div class="sticky bottom-0 bg-gray-50 border-t px-6 py-4 flex gap-3">
       <button type="button"
-              data-action="click->color-picker#close"
-              class="w-full sm:w-auto px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition">
+              data-action="click->multicolor-picker#submitColors"
+              class="flex-1 sm:flex-none px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
+        Save Colors
+      </button>
+      <button type="button"
+              data-action="click->multicolor-picker#close"
+              class="flex-1 sm:flex-none px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition">
         Cancel
       </button>
     </div>

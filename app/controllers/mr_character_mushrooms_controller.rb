@@ -10,11 +10,15 @@ class MrCharacterMushroomsController < ApplicationController
       mr_character_id: params[:mr_character_id]
     )
 
-    raw_value = params[:character_value]
-    if booleanish_display_option?(params[:mr_character_id])
-      @rc.character_value = normalize_boolean_string(raw_value)
+    # Handle color characters differently (via join table)
+    if color_character?(params[:mr_character_id])
+      # Set color_ids (can be single value or array)
+      color_ids = params[:color_ids].presence || [params[:character_value]].compact
+      @rc.color_ids = color_ids
+    elsif booleanish_display_option?(params[:mr_character_id])
+      @rc.character_value = normalize_boolean_string(params[:character_value])
     else
-      @rc.character_value = raw_value
+      @rc.character_value = params[:character_value]
     end
 
     # Determine where to redirect after save (back to grid or edit page)
@@ -39,7 +43,12 @@ class MrCharacterMushroomsController < ApplicationController
     @mushroom = Mushroom.find(params[:mushroom_id])
   end
 
-  # Boolean helpers
+  # Display option helpers
+
+  def color_character?(mr_character_id)
+    mc = MrCharacter.includes(:display_option).find_by(id: mr_character_id)
+    mc&.display_option_id == 6
+  end
 
   def booleanish_display_option?(mr_character_id)
     mc = MrCharacter.includes(:display_option).find_by(id: mr_character_id)

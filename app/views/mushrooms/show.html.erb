@@ -117,14 +117,22 @@
                   <% display_opt_name = c&.display_option&.name %>
                   <% case display_opt_name %>
                   <% when "color" %>
-                    <% color = Color.find_by(id: rc.character_value.to_i) %>
-                    <% if color %>
-                      <span class="inline-flex items-center">
-                        <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg", alt: color.latin_name, class: "w-6 h-6 mr-1 rounded border" %>
-                        <span><%= color.latin_name %> (<%= color.common_name %>)</span>
-                      </span>
+                    <% colors = rc.ordered_colors %>
+                    <% if colors.any? %>
+                      <div class="inline-flex items-center gap-2 flex-wrap">
+                        <% colors.each_with_index do |color, index| %>
+                          <span class="inline-flex items-center gap-1">
+                            <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                          alt: color.latin_name,
+                                          class: "w-6 h-6 rounded border #{index == 0 ? 'border-blue-500 border-2' : 'border-gray-300'}" %>
+                            <span class="<%= index == 0 ? 'font-semibold' : '' %>">
+                              <%= color.latin_name %>
+                            </span>
+                          </span>
+                        <% end %>
+                      </div>
                     <% else %>
-                      <%= rc.character_value %>
+                      <span class="text-gray-500 italic">No colors</span>
                     <% end %>
                   <% when "radio", "drop-down" %>
                     <% lookup_item = LookupItem.find_by(id: rc.character_value.to_i) %>

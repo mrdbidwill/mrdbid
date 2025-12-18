@@ -89,28 +89,71 @@ class CompareMushroomsJob < ApplicationJob
   end
 
   def load_character_values(mushroom)
-    # Returns hash: { mr_character_id => character_value }
-    mushroom.mr_character_mushrooms.pluck(:mr_character_id, :character_value).to_h
+    # Returns hash: { mr_character_id => value(s) }
+    # For color characters (display_option_id = 6), value is array of color_ids
+    # For other characters, value is the character_value string
+    result = {}
+
+    mushroom.mr_character_mushrooms.includes(:mr_character, :colors).each do |mcm|
+      if mcm.color_character?
+        # Color character: store array of color IDs in display order
+        result[mcm.mr_character_id] = mcm.color_ids
+      else
+        # Non-color character: store character_value
+        result[mcm.mr_character_id] = mcm.character_value
+      end
+    end
+
+    result
   end
 
   def calculate_jaccard_similarity(set_a, set_b)
-    # Create sets of (character_id, value) tuples for accurate comparison
-    pairs_a = set_a.to_a.to_set
-    pairs_b = set_b.to_a.to_set
+    # Get all character IDs present in either mushroom
+    all_character_ids = (set_a.keys + set_b.keys).uniq
 
-    # Calculate intersection and union
-    intersection = pairs_a & pairs_b
-    union = pairs_a | pairs_b
+    matching_count = 0
+    total_count = 0
 
-    return { score: 0, matching: 0, total: 0 } if union.empty?
+    all_character_ids.each do |char_id|
+      value_a = set_a[char_id]
+      value_b = set_b[char_id]
 
-    matching_count = intersection.size
-    total_count = union.size
+      # Skip if character missing from both (shouldn't happen, but safety check)
+      next if value_a.nil? && value_b.nil?
+
+      total_count += 1
+
+      # Handle color arrays (multicolor support)
+      if value_a.is_a?(Array) && value_b.is_a?(Array)
+        # For colors: match if ANY colors overlap
+        # Weight by overlap: full match = 1.0, partial match = 0.5, no match = 0.0
+        overlap = (value_a & value_b).size
+        if overlap > 0
+          if value_a.sort == value_b.sort
+            # Exact match (all colors same)
+            matching_count += 1.0
+          else
+            # Partial match (some colors overlap)
+            matching_count += 0.5
+          end
+        end
+      elsif value_a.is_a?(Array) || value_b.is_a?(Array)
+        # One is array, one isn't - treat as different types, no match
+        # (This shouldn't happen in practice but handle gracefully)
+        next
+      else
+        # Regular string comparison
+        matching_count += 1 if value_a == value_b
+      end
+    end
+
+    return { score: 0, matching: 0, total: 0 } if total_count.zero?
+
     similarity_percentage = ((matching_count.to_f / total_count) * 100).round
 
     {
       score: similarity_percentage,
-      matching: matching_count,
+      matching: matching_count.round,
       total: total_count
     }
   end

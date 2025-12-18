@@ -151,7 +151,7 @@ CREATE TABLE `camera_makes` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `camera_models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -165,7 +165,7 @@ CREATE TABLE `camera_models` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cameras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -276,7 +276,7 @@ CREATE TABLE `countries` (
   `country_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_countries_on_country_code` (`country_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `display_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -405,7 +405,7 @@ CREATE TABLE `lenses` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lookup_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -448,6 +448,25 @@ CREATE TABLE `mb_lists` (
   KEY `index_mblists_on_rank_name` (`rank_name`(255)),
   KEY `index_mblists_on_name_status` (`name_status`(255))
 ) ENGINE=InnoDB AUTO_INCREMENT=1075217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `mr_character_mushroom_colors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mr_character_mushroom_colors` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `mr_character_mushroom_id` bigint NOT NULL,
+  `color_id` bigint NOT NULL,
+  `display_order` int NOT NULL DEFAULT '1' COMMENT '1=primary, 2=secondary, etc.',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mcm_colors_unique` (`mr_character_mushroom_id`,`color_id`),
+  KEY `index_mcm_colors_on_mcm_id` (`mr_character_mushroom_id`),
+  KEY `index_mr_character_mushroom_colors_on_color_id` (`color_id`),
+  KEY `index_mcm_colors_on_color` (`color_id`,`mr_character_mushroom_id`),
+  CONSTRAINT `fk_rails_cf8c40bad0` FOREIGN KEY (`mr_character_mushroom_id`) REFERENCES `mr_character_mushrooms` (`id`),
+  CONSTRAINT `fk_rails_e89ab97506` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_character_mushrooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -977,7 +996,7 @@ CREATE TABLE `states` (
   PRIMARY KEY (`id`),
   KEY `index_states_on_country_id` (`country_id`),
   CONSTRAINT `fk_rails_40bd891262` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3777 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `storage_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1022,7 +1041,7 @@ CREATE TABLE `trusted_devices` (
   KEY `index_trusted_devices_on_user_id` (`user_id`),
   KEY `index_trusted_devices_on_user_id_and_device_fingerprint` (`user_id`,`device_fingerprint`),
   CONSTRAINT `fk_rails_96c1dacf00` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1114,6 +1133,8 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251218163001'),
+('20251218163000'),
 ('20251218003424'),
 ('20251218003419'),
 ('20251214200444'),

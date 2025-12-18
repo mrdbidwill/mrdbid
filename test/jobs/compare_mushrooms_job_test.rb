@@ -70,12 +70,15 @@ class CompareMushroomsJobTest < ActiveJob::TestCase
 
     result = job.send(:calculate_jaccard_similarity, set_a, set_b)
 
-    # Intersection: [(1, "red")] = 1
-    # Union: [(1, "red"), (2, "large"), (2, "small"), (3, "smooth")] = 4
-    # Score: 1/4 = 25%
-    assert_equal 25, result[:score]
+    # New logic: compares character by character
+    # char 1: both "red" -> match (1)
+    # char 2: "large" vs "small" -> no match (0)
+    # char 3: only in set_b -> no match (0)
+    # Total characters: 3, Matching: 1
+    # Score: 1/3 = 33%
+    assert_equal 33, result[:score]
     assert_equal 1, result[:matching]
-    assert_equal 4, result[:total]
+    assert_equal 3, result[:total]
   end
 
   test "calculate_jaccard_similarity returns zero for completely different sets" do

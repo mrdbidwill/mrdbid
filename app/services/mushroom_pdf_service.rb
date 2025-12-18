@@ -201,8 +201,15 @@ class MushroomPdfService
 
     case display_opt_name
     when 'color'
-      color = Color.find_by(id: rc.character_value.to_i)
-      color ? "#{color.latin_name} (#{color.common_name})" : rc.character_value
+      colors = rc.ordered_colors
+      if colors.any?
+        colors.map.with_index do |color, index|
+          label = index == 0 ? "PRIMARY: " : ""
+          "#{label}#{color.latin_name} (#{color.common_name})"
+        end.join("; ")
+      else
+        "No colors"
+      end
     when 'radio', 'drop-down'
       lookup_item = LookupItem.find_by(id: rc.character_value.to_i)
       lookup_item&.name || rc.character_value
