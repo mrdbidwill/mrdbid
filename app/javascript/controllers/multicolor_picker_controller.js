@@ -108,14 +108,19 @@ export default class extends Controller {
         }
     }
 
-    // Submit the form with selected colors
+    // Clear all selected colors
+    clearAll(event) {
+        event.preventDefault()
+        if (confirm('Clear all colors for this character?')) {
+            this.selectedColors = []
+            this.renderSelectedColors()
+            this.updateGridHighlights()
+        }
+    }
+
+    // Submit the form with selected colors (or empty to delete)
     submitColors(event) {
         event.preventDefault()
-
-        if (this.selectedColors.length === 0) {
-            alert('Please select at least one color')
-            return
-        }
 
         // Create form data
         const formData = new FormData(this.formTarget)

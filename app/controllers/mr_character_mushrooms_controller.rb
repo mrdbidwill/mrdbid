@@ -14,6 +14,21 @@ class MrCharacterMushroomsController < ApplicationController
     if color_character?(params[:mr_character_id])
       # Set color_ids (can be single value or array)
       color_ids = params[:color_ids].presence || [params[:character_value]].compact
+
+      # If clearing all colors, delete the record instead of saving empty
+      if color_ids.empty? && @rc.persisted?
+        @rc.destroy
+        redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+        respond_to do |format|
+          format.turbo_stream do
+            flash[:notice] = "Character cleared."
+            render turbo_stream: turbo_stream.action(:redirect, redirect_path)
+          end
+          format.html { redirect_to redirect_path, notice: "Character cleared." }
+        end
+        return
+      end
+
       @rc.color_ids = color_ids
     elsif booleanish_display_option?(params[:mr_character_id])
       @rc.character_value = normalize_boolean_string(params[:character_value])

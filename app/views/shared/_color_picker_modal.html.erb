@@ -147,11 +147,16 @@
     </div>
 
     <!-- Modal Footer -->
-    <div class="sticky bottom-0 bg-gray-50 border-t px-6 py-4 flex gap-3">
+    <div class="sticky bottom-0 bg-gray-50 border-t px-6 py-4 flex flex-wrap gap-3">
       <button type="button"
               data-action="click->multicolor-picker#submitColors"
               class="flex-1 sm:flex-none px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
         Save Colors
+      </button>
+      <button type="button"
+              data-action="click->multicolor-picker#clearAll"
+              class="flex-1 sm:flex-none px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 font-medium rounded-lg transition">
+        Clear All
       </button>
       <button type="button"
               data-action="click->multicolor-picker#close"
