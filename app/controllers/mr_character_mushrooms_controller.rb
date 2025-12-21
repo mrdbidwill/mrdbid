@@ -26,12 +26,18 @@ class MrCharacterMushroomsController < ApplicationController
 
     if @rc.save
       respond_to do |format|
-        format.turbo_stream { redirect_to redirect_path, notice: "Character saved.", status: :see_other }
+        format.turbo_stream do
+          flash[:notice] = "Character saved."
+          render turbo_stream: turbo_stream.action(:redirect, redirect_path)
+        end
         format.html { redirect_to redirect_path, notice: "Character saved." }
       end
     else
       respond_to do |format|
-        format.turbo_stream { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence, status: :see_other }
+        format.turbo_stream do
+          flash[:alert] = @rc.errors.full_messages.to_sentence
+          render turbo_stream: turbo_stream.action(:redirect, redirect_path), status: :unprocessable_entity
+        end
         format.html { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence }
       end
     end
