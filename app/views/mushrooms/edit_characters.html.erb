@@ -62,18 +62,25 @@
 
                 <!-- Display current value -->
                 <% if is_color %>
-                  <% color_id = char_mushroom.character_value.to_i %>
-                  <% current_color = Color.find_by(id: color_id) %>
-                  <div class="flex items-center mt-2 text-sm">
-                    <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
-                                  alt: "Color #{color_id}",
-                                  class: "w-6 h-6 mr-2 rounded border" %>
-                    <% if current_color %>
-                      <span><%= current_color.latin_name %> (<%= current_color.common_name %>)</span>
-                    <% else %>
-                      <span class="text-gray-600">Color ID: <%= color_id %></span>
-                    <% end %>
-                  </div>
+                  <% colors = char_mushroom.ordered_colors %>
+                  <% if colors.any? %>
+                    <div class="flex items-center gap-2 flex-wrap mt-2 text-sm">
+                      <% colors.each_with_index do |color, index| %>
+                        <div class="flex items-center gap-1">
+                          <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                        alt: color.latin_name,
+                                        class: "w-6 h-6 rounded border-2 #{index == 0 ? 'border-blue-500' : 'border-gray-300'}" %>
+                          <span class="<%= index == 0 ? 'font-semibold' : '' %>">
+                            <%= color.latin_name %>
+                          </span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <div class="mt-2 text-sm text-gray-500 italic">
+                      No colors selected
+                    </div>
+                  <% end %>
                 <% elsif do_not_display %>
                   <div class="mt-2 text-sm bg-gray-100 px-2 py-1 rounded">
                     <span class="text-gray-600">Value: <%= char_mushroom.character_value.presence || "(hidden)" %></span>
