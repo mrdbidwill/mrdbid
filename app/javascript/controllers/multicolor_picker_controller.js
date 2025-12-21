@@ -6,7 +6,8 @@ export default class extends Controller {
     static targets = ["selectedColors", "colorGrid", "form"]
     static values = {
         characterId: Number,
-        selectedIds: Array
+        selectedIds: Array,
+        colorImages: Object
     }
 
     connect() {
@@ -155,9 +156,12 @@ export default class extends Controller {
             const isLast = index === this.selectedColors.length - 1
             const label = index === 0 ? 'Primary' : `Secondary ${index}`
 
+            // Get the image URL from the mapping provided by Rails
+            const imageUrl = this.colorImagesValue[colorId] || `/images/AMS_colors/banner_50x50/banner_${colorId}.jpg`
+
             return `
                 <div class="flex items-center gap-2 p-2 bg-gray-50 rounded border ${isFirst ? 'border-blue-500 border-2' : 'border-gray-300'}">
-                    <img src="/images/AMS_colors/banner_50x50/banner_${colorId}.jpg"
+                    <img src="${imageUrl}"
                          alt="Color ${colorId}"
                          class="w-8 h-8 rounded border border-gray-400" />
                     <span class="text-sm font-medium">${label}</span>

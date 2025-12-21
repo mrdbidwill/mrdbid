@@ -17,11 +17,18 @@
     MrCharacterMushroom.find_by(mushroom_id: mushroom_id, mr_character_id: character_id) : nil
   current_colors = current_mr_char_mushroom&.ordered_colors || []
   selected_color_ids = current_colors.map(&:id)
+
+  # Build color ID to image URL mapping for JavaScript
+  color_image_urls = {}
+  (1..50).each do |cid|
+    color_image_urls[cid] = image_path("AMS_colors/banner_50x50/banner_#{cid}.jpg")
+  end
 %>
 
 <div data-controller="multicolor-picker"
      data-multicolor-picker-character-id-value="<%= character_id %>"
-     data-multicolor-picker-selected-ids-value="<%= selected_color_ids.to_json %>">
+     data-multicolor-picker-selected-ids-value="<%= selected_color_ids.to_json %>"
+     data-multicolor-picker-color-images-value="<%= color_image_urls.to_json %>">
   <!-- Modal Trigger Button -->
   <button type="button"
           data-action="click->multicolor-picker#open"
