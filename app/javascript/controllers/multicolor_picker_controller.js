@@ -13,6 +13,8 @@ export default class extends Controller {
     connect() {
         // Initialize selected colors from data attribute
         this.selectedColors = this.selectedIdsValue || []
+        // Store original selection for cancel/reset
+        this.originalColors = [...this.selectedColors]
         this.renderSelectedColors()
 
         // Escape key handler
@@ -40,6 +42,11 @@ export default class extends Controller {
     }
 
     close() {
+        // Reset to original selection on cancel
+        this.selectedColors = [...this.originalColors]
+        this.renderSelectedColors()
+        this.updateGridHighlights()
+
         const modal = this.element.closest('[id^="colorPickerModal"]')
         if (modal) {
             modal.classList.add('hidden')
@@ -140,6 +147,8 @@ export default class extends Controller {
             }
         }).then(response => {
             if (response.ok) {
+                // Update original colors so cancel works correctly if page doesn't reload immediately
+                this.originalColors = [...this.selectedColors]
                 window.location.reload()
             } else {
                 alert('Error saving colors')
