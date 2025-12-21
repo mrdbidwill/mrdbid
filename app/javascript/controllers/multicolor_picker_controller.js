@@ -157,7 +157,7 @@ export default class extends Controller {
 
             return `
                 <div class="flex items-center gap-2 p-2 bg-gray-50 rounded border ${isFirst ? 'border-blue-500 border-2' : 'border-gray-300'}">
-                    <img src="/assets/AMS_colors/banner_50x50/banner_${colorId}.jpg"
+                    <img src="/images/AMS_colors/banner_50x50/banner_${colorId}.jpg"
                          alt="Color ${colorId}"
                          class="w-8 h-8 rounded border border-gray-400" />
                     <span class="text-sm font-medium">${label}</span>

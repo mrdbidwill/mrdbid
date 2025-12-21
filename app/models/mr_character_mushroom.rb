@@ -85,7 +85,7 @@ class MrCharacterMushroom < ApplicationRecord
   end
 
   def validate_color_presence
-    if color_character? && colors.empty?
+    if color_character? && mr_character_mushroom_colors.empty?
       errors.add(:base, "At least one color must be selected")
     end
   end
