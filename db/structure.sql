@@ -651,6 +651,7 @@ CREATE TABLE `mushrooms` (
   `template_description` text,
   `city` varchar(255) DEFAULT NULL,
   `county` varchar(255) DEFAULT NULL,
+  `personal_notes` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_mushrooms_on_user_id_and_name` (`user_id`,`name`),
   KEY `index_mushrooms_on_user_id` (`user_id`),
@@ -1156,6 +1157,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251221140452'),
 ('20251221134848'),
 ('20251221134829'),
 ('20251218163001'),

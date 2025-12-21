@@ -51,6 +51,20 @@
       </div>
     </div>
 
+    <!-- Personal Notes -->
+    <div class="my-5">
+      <%= form.label :personal_notes, "Personal Notes (private - only visible to you)" %>
+      <%= form.text_area :personal_notes, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:personal_notes].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:personal_notes].any?}] %>
+      <p class="text-xs text-gray-500 mt-1">These notes are private and only visible to you.</p>
+      <div class="mt-2">
+        <%= button_tag "Update personal notes",
+                       type: "submit",
+                       name: "commit",
+                       value: "update_personal_notes",
+                       class: "btn-primary" %>
+      </div>
+    </div>
+
     <!-- Country + State -->
     <div class="my-5" data-controller="country-select"
          data-country-select-url-value="<%= states_path %>">

@@ -73,6 +73,13 @@
             <dd class="whitespace-pre-wrap"><%= mushroom.comments %></dd>
           </div>
         <% end %>
+
+        <% if user_signed_in? && current_user.id == mushroom.user_id && mushroom.personal_notes.present? %>
+          <div class="border rounded-md p-2 bg-yellow-50">
+            <dt class="text-sm text-gray-500">Personal Notes <span class="text-xs italic">(private)</span></dt>
+            <dd class="whitespace-pre-wrap"><%= mushroom.personal_notes %></dd>
+          </div>
+        <% end %>
       </dl>
     </div>
 </div>
