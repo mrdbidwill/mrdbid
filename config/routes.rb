@@ -60,11 +60,15 @@ Rails.application.routes.draw do
   resources :image_mushrooms
 
 
+  # Guest session magic link route
+  resource :guest_session, only: [:create]
+
   # Admin-specific routes
   namespace :admin do
     root to: "dashboard#index"
     get 'database/export', to: 'database_exports#export', as: :database_export
     resources :admin_todos
+    resources :invitations, only: [:index, :new, :create, :destroy]
     resources :articles
     resources :colors
     resources :countries

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :set_view_debug_identifier, if: -> { Rails.env.development? || Rails.env.test? }  # see file name on each page
   before_action :_debug_views_reset, if: -> { Rails.env.development? || Rails.env.test? }
+  before_action :check_temporary_admin_expiration, if: :user_signed_in?
   helper_method :rendered_views_debug
 
   include Pundit::Authorization # Updated inclusion for Pundit
@@ -53,6 +54,15 @@ class ApplicationController < ActionController::Base
 
   def after_inactive_sign_up_path_for(resource)
     mushrooms_path
+  end
+
+  def check_temporary_admin_expiration
+    return unless current_user.admin_expired?
+
+    if current_user.check_and_downgrade_expired_admin!
+      sign_out current_user
+      redirect_to root_path, alert: 'Your temporary admin access has expired. To continue, please create a regular account and email will@mrdbid.com to request permanent admin access.'
+    end
   end
 
   private
