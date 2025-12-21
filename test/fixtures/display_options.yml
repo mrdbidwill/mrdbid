@@ -28,3 +28,10 @@ text:
   comments: "For text values"
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+color_picker:
+  id: 6
+  name: "Color Picker"
+  description: "Color selection"
+  comments: "For color values"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

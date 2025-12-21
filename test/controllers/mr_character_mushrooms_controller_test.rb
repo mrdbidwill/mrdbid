@@ -97,7 +97,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
       character_value: "test"
     }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
 
-    assert_response :see_other
+    assert_response :success
+    assert_match /turbo-stream action="redirect"/, response.body
   end
 
   # Skipping: test requires mocha which is not configured
@@ -127,5 +128,87 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to new_user_session_path
+  end
+
+  # Multicolor tests
+  test "should create mr_character_mushroom with multiple colors" do
+    @mr_character.update!(display_option: display_options(:color_picker))
+    color_one = colors(:one)
+    color_two = colors(:two)
+
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      color_ids: [color_one.id, color_two.id]
+    }
+
+    assert_redirected_to edit_mushroom_path(@mushroom)
+
+    rcm = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)
+    assert_equal 2, rcm.colors.count
+    assert_includes rcm.color_ids, color_one.id
+    assert_includes rcm.color_ids, color_two.id
+  end
+
+  test "should update existing colors when posting new color_ids" do
+    @mr_character.update!(display_option: display_options(:color_picker))
+
+    # Create initial record via controller with one color (ID 1)
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      color_ids: [1]
+    }
+
+    rcm = MrCharacterMushroom.includes(:colors).find_by(
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id
+    )
+    assert_equal 1, rcm.colors.count
+    assert_equal 1, rcm.colors.first.id
+
+    # Update with different color (ID 2)
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      color_ids: [2]
+    }
+
+    rcm_updated = MrCharacterMushroom.includes(:colors).find_by(
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id
+    )
+    assert_equal 1, rcm_updated.colors.count
+    assert_equal 2, rcm_updated.colors.first.id
+  end
+
+  test "should handle turbo_stream format with colors" do
+    @mr_character.update!(display_option: display_options(:color_picker))
+    color_one = colors(:one)
+
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      color_ids: [color_one.id]
+    }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
+
+    assert_response :success
+    assert_match /turbo-stream action="redirect"/, response.body
+
+    rcm = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)
+    assert_equal 1, rcm.colors.count
+  end
+
+  test "should validate at least one color for color_character" do
+    @mr_character.update!(display_option: display_options(:color_picker))
+
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      color_ids: []
+    }
+
+    # Should redirect back with error
+    assert_redirected_to edit_mushroom_path(@mushroom)
   end
 end
