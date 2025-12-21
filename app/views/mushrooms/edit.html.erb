@@ -144,38 +144,28 @@
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <% color_rows.each do |rc| %>
             <% c = rc.mr_character %>
-            <% color_id = rc.character_value.to_i %>
-            <% current_color = Color.find_by(id: color_id) %>
+            <% colors = rc.ordered_colors %>
             <div class="flex flex-col border rounded p-3 gap-2">
               <div class="min-w-0 font-medium break-words"><%= c&.name.to_s.tr("_", " ") %></div>
-              <div class="flex items-center text-sm text-gray-700">
-                <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
-                              alt: "Color #{color_id}",
-                              class: "w-6 h-6 mr-2 rounded border" %>
-                <% if current_color %>
-                  <span><%= current_color.latin_name %> (<%= current_color.common_name %>)</span>
-                <% else %>
-                  <span>Color ID: <%= color_id %></span>
-                <% end %>
-              </div>
-              <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "mt-1" } do |f| %>
-                <%= hidden_field_tag :mushroom_id, @mushroom.id %>
-                <%= hidden_field_tag :mr_character_id, c.id %>
-                <div class="grid grid-cols-10 gap-1">
-                  <% (1..50).each do |cid| %>
-                    <button type="submit"
-                            name="character_value"
-                            value="<%= cid %>"
-                            title="Color <%= cid %>"
-                            class="border rounded p-0.5 focus:ring-2 focus:ring-blue-500">
-                      <%= image_tag "AMS_colors/banner_50x50/banner_#{cid}.jpg",
-                                    alt: "Color #{cid}",
-                                    class: "w-7 h-7 rounded border" %>
-                    </button>
+              <% if colors.any? %>
+                <div class="flex flex-wrap gap-2">
+                  <% colors.each do |color| %>
+                    <div class="flex items-center text-sm text-gray-700">
+                      <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                    alt: "Color #{color.id}",
+                                    class: "w-6 h-6 rounded border" %>
+                      <span class="ml-1"><%= color.latin_name %></span>
+                    </div>
                   <% end %>
                 </div>
-                <div class="sr-only"><%= f.submit "Update color" %></div>
+              <% else %>
+                <div class="text-sm text-gray-500">No colors selected</div>
               <% end %>
+              <div class="mt-2">
+                <%= link_to "Edit Colors",
+                            edit_characters_mushroom_path(@mushroom, part_id: c.part_id, observation_method_id: c.observation_method_id),
+                            class: "inline-flex items-center px-3 py-1.5 border border-blue-600 text-sm font-medium rounded text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+              </div>
             </div>
           <% end %>
         </div>
