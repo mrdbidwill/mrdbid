@@ -27,7 +27,7 @@
                       <div class="text-sm text-gray-600 mt-1"><%= simple_format(todo.description) %></div>
                     <% end %>
                     <div class="text-xs text-gray-500 mt-2">
-                      Created by <%= todo.user.email %> on <%= todo.created_at.to_date %>
+                      Created by <%= todo.user.display_name %> on <%= todo.created_at.to_date %>
                     </div>
                   </div>
                   <div class="flex flex-col gap-2 whitespace-nowrap">
@@ -53,7 +53,7 @@
                       <div class="text-sm text-gray-500 mt-1"><%= simple_format(todo.description) %></div>
                     <% end %>
                     <div class="text-xs text-gray-500 mt-2">
-                      Created by <%= todo.user.email %> on <%= todo.created_at.to_date %>
+                      Created by <%= todo.user.display_name %> on <%= todo.created_at.to_date %>
                     </div>
                   </div>
                   <div class="flex flex-col gap-2 whitespace-nowrap">
