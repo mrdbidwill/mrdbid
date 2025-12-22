@@ -28,14 +28,15 @@ class ImageMushroomPolicyTest < ActiveSupport::TestCase
     assert Pundit.policy(@admin_user, @image_mushroom).show?
   end
 
-  test "should not authorize non-owner to show" do
+  test "should authorize anyone to show (public)" do
     # Create a new mushroom owned by a different user
     other_mushroom = Mushroom.new(user_id: @owner.id)
     other_image = ImageMushroom.new
     other_image.mushroom = other_mushroom
 
-    # Regular user (non-owner, non-admin) should not be able to show another user's image
-    assert_not Pundit.policy(@regular_user, other_image).show?
+    # Images are public - anyone can view them (including non-owners and guests)
+    assert Pundit.policy(@regular_user, other_image).show?
+    assert Pundit.policy(nil, other_image).show?  # Even unauthenticated users
   end
 
   test "should authorize owner to new" do
