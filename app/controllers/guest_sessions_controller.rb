@@ -2,7 +2,6 @@
 
 class GuestSessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
-  skip_after_action :verify_authorized, only: [:create]
 
   def create
     token = InvitationToken.find_by(token: params[:token])
