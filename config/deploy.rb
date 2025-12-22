@@ -114,4 +114,24 @@ namespace :systemd_puma do
       execute :tail, "-n", "50", "#{shared_path}/log/puma_stdout.log"
     end
   end
+
+  desc 'Verify Puma is running and responding'
+  task :verify do
+    on roles(:app) do
+      info "Waiting 5 seconds for Puma to fully start..."
+      sleep 5
+
+      info "Checking if Puma process is running..."
+      execute "ps aux | grep '[p]uma' || (echo 'ERROR: Puma process not found' && exit 1)"
+
+      info "Checking if Puma is responding to requests..."
+      # Check the Unix socket directly
+      execute "curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null || (echo 'ERROR: Puma not responding on socket' && exit 1)"
+
+      info "✓ Puma is running and responding successfully"
+    end
+  end
 end
+
+# Add verification after restart
+after "systemd_puma:restart", "systemd_puma:verify"

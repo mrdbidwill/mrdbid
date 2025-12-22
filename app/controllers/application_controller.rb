@@ -22,12 +22,11 @@ class ApplicationController < ActionController::Base
   # Configure permitted parameters for Devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # In development/test, ensure actions are authorized and index actions are policy-scoped.
+  # Ensure actions are authorized and index actions are policy-scoped in all environments.
   # Skips Devise controllers to avoid noise in auth flows.
-  if Rails.env.development? || Rails.env.test?
-    after_action :verify_authorized, unless: -> { devise_controller? || action_name == 'index' }
-    after_action :verify_policy_scoped, unless: -> { devise_controller? || action_name != 'index' || !action_has_index? }
-  end
+  # This prevents environment-specific bugs where callbacks exist in dev/test but not production.
+  after_action :verify_authorized, unless: -> { devise_controller? || action_name == 'index' }
+  after_action :verify_policy_scoped, unless: -> { devise_controller? || action_name != 'index' || !action_has_index? }
 
   private
 
