@@ -1,6 +1,7 @@
 # app/controllers/users/two_factor_authentication_controller.rb
 class Users::TwoFactorAuthenticationController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_after_action :verify_authorized, raise: false
   before_action :require_otp_user_id
 
   def show
