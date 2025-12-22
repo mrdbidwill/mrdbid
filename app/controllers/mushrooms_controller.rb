@@ -28,6 +28,10 @@ class MushroomsController < ApplicationController
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
   before_action :authorize_mushroom, except: %i[index new create export_pdf clone_characters]
 
+  # Skip Pundit verification for public actions (index when not logged in, and show)
+  skip_after_action :verify_authorized, only: [:show], if: -> { !user_signed_in? }, raise: false
+  skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
+
   # GET /mushrooms
   def index
     if user_signed_in?

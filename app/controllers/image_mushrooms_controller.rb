@@ -4,12 +4,22 @@ class ImageMushroomsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 
+  # Skip Pundit verification for public actions when not authenticated
+  skip_after_action :verify_authorized, only: [:show], if: -> { !user_signed_in? }, raise: false
+  skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
+
   def index
-    @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part)
+    if user_signed_in?
+      @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part)
+    else
+      # Public visitors see demo user's images (user_id 1)
+      @image_mushrooms = ImageMushroom.joins(:mushroom).where(mushrooms: { user_id: 1 }).includes(:mushroom, :part)
+    end
   end
 
 
   def show
+    authorize @image_mushroom if user_signed_in?
   end
 
   def new

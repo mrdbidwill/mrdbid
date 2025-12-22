@@ -7,7 +7,7 @@ class ImageMushroomPolicy < ApplicationPolicy
   end
 
   def index?;   user&.admin?; end
-  def show?;    owner_or_admin?; end
+  def show?;    true; end  # Public - anyone can view images
   def new?;     owner_or_admin?; end
   def create?;  owner_or_admin?; end
   def edit?;    owner_or_admin?; end
