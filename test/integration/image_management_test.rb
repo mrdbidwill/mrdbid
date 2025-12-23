@@ -98,14 +98,14 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot upload image to another user's mushroom" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
 
     assert_no_difference("ImageMushroom.count") do
       post image_mushrooms_path, params: {
-        mushroom_id: @other_user_mushroom.id,
+        mushroom_id: @mushroom.id,  # Try to upload to @user's mushroom
         image_mushroom: {
-          mushroom_id: @other_user_mushroom.id,
+          mushroom_id: @mushroom.id,
           part_id: @part.id,
           image_file: fixture_file_upload("test/fixtures/files/test_image.jpg", "image/jpeg")
         }

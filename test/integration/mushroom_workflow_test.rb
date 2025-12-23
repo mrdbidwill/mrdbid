@@ -220,26 +220,26 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot edit another user's mushroom" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
     assert_raises(Pundit::NotAuthorizedError) do
-      get edit_mushroom_path(@other_mushroom)
+      get edit_mushroom_path(@mushroom)  # Try to edit @user's mushroom
     end
   end
 
   test "user cannot update another user's mushroom" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
     assert_raises(Pundit::NotAuthorizedError) do
-      patch mushroom_path(@other_mushroom), params: {
+      patch mushroom_path(@mushroom), params: {  # Try to update @user's mushroom
         mushroom: {
           name: "Hacked Mushroom Name"
         }
       }
     end
 
-    @other_mushroom.reload
-    assert_not_equal "Hacked Mushroom Name", @other_mushroom.name
+    @mushroom.reload
+    assert_not_equal "Hacked Mushroom Name", @mushroom.name
   end
 
   test "user cannot change mushroom user_id via mass assignment" do
@@ -293,11 +293,15 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot delete another user's mushroom" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
+
+    # Verify test preconditions
+    assert_not_equal @another_user.id, @mushroom.user_id, "Test setup error: mushroom should not belong to @another_user"
+    assert_not @another_user.admin?, "Test setup error: @another_user should not be admin"
 
     assert_no_difference("Mushroom.count") do
       assert_raises(Pundit::NotAuthorizedError) do
-        delete mushroom_path(@other_mushroom)
+        delete mushroom_path(@mushroom)  # Try to delete @user's mushroom
       end
     end
   end
@@ -563,10 +567,10 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot export another user's mushroom to PDF" do
-    sign_in @user
+    sign_in @another_user  # Use non-admin user
 
     assert_raises(Pundit::NotAuthorizedError) do
-      get export_pdf_mushroom_path(@other_mushroom, format: :pdf)
+      get export_pdf_mushroom_path(@mushroom, format: :pdf)  # Try to export @user's mushroom
     end
   end
 

@@ -166,8 +166,8 @@ class EnvironmentConsistencyTest < ActiveSupport::TestCase
       content = File.read(file)
       relative_path = file.sub("#{Rails.root}/", '')
 
-      # Check class definition
-      if content =~ /class\s+(\w+)\s+<\s+(\w+)/
+      # Check class definition (support namespaced classes like Admin::ApplicationController)
+      if content =~ /class\s+(\w+)\s+<\s+([\w:]+)/
         controller_name = $1
         parent_class = $2
 

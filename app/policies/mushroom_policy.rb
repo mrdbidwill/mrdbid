@@ -18,6 +18,11 @@ class MushroomPolicy < ApplicationPolicy
     user.present? && record.user_id == user.id
   end
 
+  # Shared logic to check if user is owner or admin
+  def owner_or_admin?
+    user.present? && (record.user_id == user.id || user.admin?)
+  end
+
 
 
   # Allow index for all signed-in users
@@ -29,13 +34,14 @@ class MushroomPolicy < ApplicationPolicy
   def show?
     user.present? || record.user_id == 1
   end
+
   def edit?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow editing characters if the mushroom is owned by the current user
+  # Allow editing characters if the mushroom is owned by the current user or user is admin
   def edit_characters?
-    owner?
+    owner_or_admin?
   end
 
   # Allow create if the user is signed in
@@ -43,43 +49,43 @@ class MushroomPolicy < ApplicationPolicy
     user.present?
   end
 
-  # Allow update if the mushroom is owned by the current user
+  # Allow update if the mushroom is owned by the current user or user is admin
   def update?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow destroy if the mushroom is owned by the current user
+  # Allow destroy if the mushroom is owned by the current user or user is admin
   def destroy?
-    owner?
+    owner_or_admin?
   end
 
   def mushroom_image_mushroom?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow adding to a group
+  # Allow adding to a group if owner or admin
   def all_group_mushroom?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow adding to a cluster
+  # Allow adding to a cluster if owner or admin
   def mushroom_cluster?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow adding to a project
+  # Allow adding to a project if owner or admin
   def mushroom_project?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow PDF export if user owns the mushroom
+  # Allow PDF export if user owns the mushroom or is admin
   def export_pdf?
-    owner?
+    owner_or_admin?
   end
 
-  # Allow cloning characters if user owns the mushroom
+  # Allow cloning characters if user owns the mushroom or is admin
   def clone_characters?
-    owner?
+    owner_or_admin?
   end
 
 end

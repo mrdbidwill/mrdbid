@@ -89,15 +89,16 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     assert_response :success, "Non-owners should be able to view public mushroom pages"
 
     # Non-owner CANNOT edit owner's mushroom
-    get edit_mushroom_path(@mushroom)
-    assert_response :redirect, "Non-owners should not be able to edit others' mushrooms"
-    assert_redirected_to root_path
+    assert_raises(Pundit::NotAuthorizedError, "Non-owners should not be able to edit others' mushrooms") do
+      get edit_mushroom_path(@mushroom)
+    end
 
     # Non-owner CANNOT update owner's mushroom
-    patch mushroom_path(@mushroom), params: {
-      mushroom: { name: 'Hacked Name' }
-    }
-    assert_response :redirect
+    assert_raises(Pundit::NotAuthorizedError) do
+      patch mushroom_path(@mushroom), params: {
+        mushroom: { name: 'Hacked Name' }
+      }
+    end
     # Mushroom name should not have changed
     @mushroom.reload
     assert_not_equal 'Hacked Name', @mushroom.name
@@ -200,6 +201,68 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     assert_redirected_to mushroom_path(@mushroom)
     @mushroom.reload
     assert_equal 'Admin Updated', @mushroom.name
+
+    # Admin CAN delete others' mushrooms
+    other_mushroom = Mushroom.create!(
+      name: 'Test Mushroom for Deletion',
+      user: @owner,
+      country: countries(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.today
+    )
+    assert_difference('Mushroom.count', -1) do
+      delete mushroom_path(other_mushroom)
+    end
+    assert_redirected_to mushrooms_path
+
+    # Admin CAN export others' mushrooms to PDF
+    export_mushroom = Mushroom.create!(
+      name: 'Test Mushroom for Export',
+      user: @owner,
+      country: countries(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.today
+    )
+    get export_pdf_mushroom_path(export_mushroom, format: :pdf)
+    assert_response :success
+    assert_equal 'application/pdf', response.content_type
+
+    # Admin CAN manage others' images (test policy coverage)
+    test_mushroom = Mushroom.create!(
+      name: 'Test Mushroom for Images',
+      user: @owner,
+      country: countries(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.today
+    )
+
+    # Create an image owned by another user
+    part = Part.first || Part.create!(name: 'Test Part', description: 'Test')
+    image = test_mushroom.image_mushrooms.create!(
+      part_id: part.id,
+      image_file: fixture_file_upload('test_image.jpg', 'image/jpeg')
+    )
+
+    # Admin can view the image
+    get image_mushroom_path(image)
+    assert_response :success, "Admins should be able to view others' images"
+
+    # Admin can edit the image
+    get edit_image_mushroom_path(image)
+    assert_response :success, "Admins should be able to edit others' images"
+
+    # Admin can update the image
+    patch image_mushroom_path(image), params: {
+      image_mushroom: { comments: 'Admin updated comments' }
+    }
+    assert_redirected_to edit_mushroom_path(test_mushroom)
+    image.reload
+    assert_equal 'Admin updated comments', image.comments
+
+    # Admin can delete the image
+    assert_difference('ImageMushroom.count', -1) do
+      delete image_mushroom_path(image)
+    end
   end
 
   # ============================================================================

@@ -127,10 +127,14 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not allow exporting another user's mushroom" do
-    other_user = users(:two)
+    # Sign in as non-admin user
+    sign_out @user
+    non_admin_user = users(:two) # Regular user, not admin
+    sign_in non_admin_user
+
     other_mushroom = Mushroom.create!(
       name: "Other User Mushroom",
-      user: other_user,
+      user: @user, # Owned by @user (admin)
       country: countries(:one),
       fungus_type: fungus_types(:one),
       collection_date: Date.today

@@ -3,7 +3,7 @@ require 'open3'
 
 module Admin
   class DatabaseExportsController < Admin::ApplicationController
-  skip_after_action :verify_policy_scoped, only: :export
+  skip_after_action :verify_policy_scoped, only: :export, raise: false
 
   def export
     authorize :database_export, :export?
