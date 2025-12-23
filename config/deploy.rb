@@ -118,15 +118,23 @@ namespace :systemd_puma do
   desc 'Verify Puma is running and responding'
   task :verify do
     on roles(:app) do
-      info "Waiting 5 seconds for Puma to fully start..."
-      sleep 5
+      info "Waiting 10 seconds for Puma to fully start..."
+      sleep 10
 
       info "Checking if Puma process is running..."
       execute "ps aux | grep '[p]uma' || (echo 'ERROR: Puma process not found' && exit 1)"
 
       info "Checking if Puma is responding to requests..."
-      # Check the Unix socket directly
-      execute "curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null || (echo 'ERROR: Puma not responding on socket' && exit 1)"
+      # Check the Unix socket directly with retry logic
+      execute <<~BASH
+        for i in {1..3}; do
+          curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null && exit 0
+          echo "Attempt $i failed, waiting 2 seconds..."
+          sleep 2
+        done
+        echo 'ERROR: Puma not responding on socket after 3 attempts'
+        exit 1
+      BASH
 
       info "✓ Puma is running and responding successfully"
     end
