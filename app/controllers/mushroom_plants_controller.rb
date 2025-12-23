@@ -7,7 +7,7 @@ class MushroomPlantsController < ApplicationController
   # POST /mushroom_plants.json
   def create
     @mushroom_plant = MushroomPlant.new(mushroom_plant_params)
-    authorize @mushroom_plant if respond_to?(:authorize)
+    Pundit.authorize(current_user, @mushroom_plant, :create?)
     if @mushroom_plant.save
       render json: { success: true, id: @mushroom_plant.id }, status: :created
     else
@@ -20,7 +20,8 @@ class MushroomPlantsController < ApplicationController
   # DELETE /mushroom_plants/destroy_by_relation.json
   def destroy_by_relation
     @mushroom_plant = MushroomPlant.find_by(mushroom_id: params[:mushroom_id], plant_id: params[:plant_id])
-    if @mushroom_plant && ( !respond_to?(:authorize) || authorize(@mushroom_plant) )
+    if @mushroom_plant
+      Pundit.authorize(current_user, @mushroom_plant, :destroy?)
       @mushroom_plant.destroy
       render json: { success: true }
     else

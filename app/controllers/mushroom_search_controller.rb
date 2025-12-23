@@ -6,8 +6,8 @@ class MushroomSearchController < ApplicationController
     @fungus_type_id = params[:fungus_type_id]
     @character_filters = params[:characters]&.to_unsafe_h || {}
 
-    # Start with user's mushrooms
-    @mushrooms = current_user.mushrooms.non_templates
+    # Start with user's mushrooms (using policy_scope for authorization)
+    @mushrooms = Pundit.policy_scope!(current_user, Mushroom).non_templates
                    .includes(:fungus_type, :country, :state, :genera, :species,
                              image_mushrooms: [:part, { image_file_attachment: :blob }])
 
