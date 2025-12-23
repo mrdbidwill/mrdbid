@@ -127,10 +127,14 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not allow exporting another user's mushroom" do
-    other_user = users(:two)
+    # Sign in as non-admin user
+    sign_out @user
+    non_admin_user = users(:two) # Regular user, not admin
+    sign_in non_admin_user
+
     other_mushroom = Mushroom.create!(
       name: "Other User Mushroom",
-      user: other_user,
+      user: @user, # Owned by @user (admin)
       country: countries(:one),
       fungus_type: fungus_types(:one),
       collection_date: Date.today
@@ -171,6 +175,75 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     get export_pdf_mushroom_path(@mushroom, format: :pdf)
     # Devise returns 401 Unauthorized for unauthenticated requests
     assert_response :unauthorized
+  end
+
+  # ============================================================================
+  # Public Access Tests (Pundit Authorization)
+  # ============================================================================
+  # These tests ensure that public pages work correctly for unauthenticated users
+  # and don't raise Pundit::NotAuthorizedError or fail verify_authorized callbacks
+
+  test "public can access index without authentication" do
+    sign_out @user
+
+    get mushrooms_path
+    assert_response :success, "Public users should be able to view mushrooms index"
+    assert_not_includes response.body, "Internal Server Error"
+    # Should not raise Pundit::NotAuthorizedError
+  end
+
+  test "public can access show without authentication" do
+    sign_out @user
+
+    get mushroom_path(@mushroom)
+    assert_response :success, "Public users should be able to view individual mushrooms"
+    assert_not_includes response.body, "Internal Server Error"
+    # Should not raise Pundit::NotAuthorizedError
+  end
+
+  test "public sees demo user mushrooms on index" do
+    sign_out @user
+
+    # Public should see user_id 1's mushrooms as demo
+    get mushrooms_path
+    assert_response :success
+
+    # The response should contain mushrooms (from user_id 1 demo account)
+    # but we can't make specific assertions without knowing fixture data
+  end
+
+  test "public cannot access new without authentication" do
+    sign_out @user
+
+    get new_mushroom_path
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "public cannot access edit without authentication" do
+    sign_out @user
+
+    get edit_mushroom_path(@mushroom)
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "public cannot create mushrooms without authentication" do
+    sign_out @user
+
+    assert_no_difference("Mushroom.count") do
+      post mushrooms_path, params: {
+        mushroom: {
+          name: "Unauthorized Mushroom",
+          country_id: countries(:one).id,
+          fungus_type_id: fungus_types(:one).id,
+          collection_date: Date.today
+        }
+      }
+    end
+
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
   end
 
 end

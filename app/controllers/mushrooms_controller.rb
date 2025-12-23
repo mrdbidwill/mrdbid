@@ -26,10 +26,10 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index new create export_pdf clone_characters]
+  before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
-  skip_after_action :verify_authorized, only: [:show], if: -> { !user_signed_in? }, raise: false
+  skip_after_action :verify_authorized, only: [:show], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -140,12 +140,16 @@ class MushroomsController < ApplicationController
 
   # POST /mushrooms or /mushrooms.json
   def create
-    @mushroom = current_user.mushrooms.build(mushroom_params.except(:user_id))
-    authorize @mushroom # Authorize before saving
+    result = Mushrooms::Creator.call(
+      user: current_user,
+      params: mushroom_params.except(:user_id)
+    )
 
-    if @mushroom.save
-      redirect_to new_image_mushroom_path(mushroom_id: @mushroom.id), notice: "Mushroom was successfully created. Now add an image."
+    if result.success?
+      redirect_to new_image_mushroom_path(mushroom_id: result.data.id), notice: "Mushroom was successfully created. Now add an image."
     else
+      # result.data contains the mushroom object (even on failure) for form re-render
+      @mushroom = result.data || Mushroom.new(mushroom_params.except(:user_id))
       render :new, status: :unprocessable_entity
     end
   end
@@ -153,13 +157,13 @@ class MushroomsController < ApplicationController
   # GET /mushrooms/1/edit
   def edit
     # set_mushroom before_action already loads the mushroom with basic associations
+    # authorize_mushroom before_action already checks authorization
     # Reload with additional associations needed for edit view
     @mushroom = Mushroom
                   .includes(:genera, :species, :trees, :plants, :fungus_type,
                             image_mushrooms: [:part, { image_file_attachment: :blob }],
                             mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
                   .find(params[:id])
-    authorize @mushroom
 
     # Check if fungus_type exists (data integrity check)
     if @mushroom.fungus_type.nil?
@@ -199,118 +203,79 @@ class MushroomsController < ApplicationController
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
   def update
-    # ============================================================================
-    # SECURITY: Prevent mass assignment of user_id
-    # ============================================================================
-    # Users should only be able to update their own mushrooms (enforced by Pundit policy).
-    # This line ensures user_id cannot be changed via form tampering.
-    filtered_params = mushroom_params.except(:user_id)
+    result = Mushrooms::Updater.call(
+      user: current_user,
+      mushroom: @mushroom,
+      params: mushroom_params.except(:user_id)
+    )
 
-    if @mushroom.update(filtered_params)
-      redirect_to @mushroom, notice: "Mushroom was successfully updated."
+    if result.success?
+      redirect_to result.data, notice: "Mushroom was successfully updated."
     else
-      # ============================================================================
-      # PERFORMANCE: Reload with eager loading to avoid N+1 queries in edit form
-      # ============================================================================
-      # When validation fails, we need to re-render the edit form. The form uses
-      # associations (genera, mr_characters, etc.) that trigger strict_loading violations
-      # if not preloaded. This single query fetches all required associations.
-      #
-      # ⚠️  WARNING: Do NOT add duplicate queries here (was causing performance issues)
-      # This one comprehensive query replaces 4 duplicate queries that were here before.
-      #
-      # ASSOCIATIONS LOADED:
-      # - genera: For genus selection dropdown
-      # - mr_characters: Character traits assigned to this mushroom
-      # - mr_characters.part, observation_method, color, source_data: Character metadata
-      # - image_mushrooms: For image display in edit form
-      # - fungus_type: For fungus type display in edit form
-      # ============================================================================
-      @mushroom = Mushroom.includes(:image_mushrooms, :fungus_type, mr_characters: [:part, :observation_method, :color, :source_data]).find(@mushroom.id)
+      # Reload with eager loading for edit form associations
+      @mushroom = Mushroom.includes(
+        :image_mushrooms,
+        :fungus_type,
+        mr_characters: [:part, :observation_method, :color, :source_data]
+      ).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /mushrooms/1 or /mushrooms/1.json
   def destroy
-    # Temporarily disable strict_loading for this mushroom
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-    @mushroom.destroy
-    redirect_to mushrooms_path, notice: "Mushroom was successfully deleted."
+    result = Mushrooms::Destroyer.call(user: current_user, mushroom: @mushroom)
+
+    if result.success?
+      redirect_to mushrooms_path, notice: "Mushroom was successfully deleted."
+    else
+      redirect_to @mushroom, alert: result.error
+    end
   end
 
   # GET /mushrooms/export.pdf or /mushrooms/:id/export.pdf
   def export_pdf
-    # Determine which mushrooms to export
-    if params[:id].present?
-      # Single mushroom export
-      mushroom = Mushroom
-                   .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
-                             image_mushrooms: { image_file_attachment: :blob },
-                             mr_character_mushrooms: { mr_character: [:part, :display_option] })
-                   .find(params[:id])
-      authorize mushroom
-      mushrooms = [mushroom]
-      filename = "#{mushroom.name.parameterize}-#{Date.today}.pdf"
-    elsif params[:ids].present?
-      # Multiple specific mushrooms
-      mushrooms = policy_scope(Mushroom)
-                    .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
-                              image_mushrooms: { image_file_attachment: :blob },
-                              mr_character_mushrooms: { mr_character: [:part, :display_option] })
-                    .where(id: params[:ids])
-                    .order(:name)
-      filename = "mushrooms-export-#{Date.today}.pdf"
+    mushroom_ids = params[:id] || params[:ids]
+
+    result = Mushrooms::PdfExporter.call(
+      user: current_user,
+      mushroom_ids: mushroom_ids
+    )
+
+    if result.success?
+      send_data result.data[:pdf],
+                filename: result.data[:filename],
+                type: 'application/pdf',
+                disposition: 'attachment'
     else
-      # All user's mushrooms
-      mushrooms = policy_scope(Mushroom)
-                    .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants,
-                              image_mushrooms: { image_file_attachment: :blob },
-                              mr_character_mushrooms: { mr_character: [:part, :display_option] })
-                    .order(:name)
-      filename = "all-mushrooms-#{Date.today}.pdf"
+      # Add period to match existing alert format
+      redirect_to mushrooms_path, alert: "#{result.error}."
     end
-
-    # Generate PDF
-    pdf = MushroomPdfService.new(mushrooms).generate
-
-    # Send PDF
-    send_data pdf.render,
-              filename: filename,
-              type: 'application/pdf',
-              disposition: 'attachment'
-  rescue ActiveRecord::RecordNotFound
-    redirect_to mushrooms_path, alert: 'Mushroom not found.'
+  rescue Pundit::NotAuthorizedError
+    raise # Let ApplicationController handle it
   end
 
   # POST /mushrooms/:id/clone_characters
   def clone_characters
-    authorize @mushroom
-
-    source_id = params[:source_mushroom_id]
-    if source_id.blank?
+    if params[:source_mushroom_id].blank?
       redirect_to edit_mushroom_path(@mushroom), alert: 'Please select a mushroom to clone from.'
       return
     end
 
-    source_mushroom = Mushroom.includes(:mr_character_mushrooms).find(source_id)
+    source_mushroom = Mushroom.includes(:mr_character_mushrooms).find(params[:source_mushroom_id])
 
-    # Check if source is accessible (either user's own or a template)
-    unless source_mushroom.user_id == current_user.id || source_mushroom.is_template?
-      redirect_to edit_mushroom_path(@mushroom), alert: 'You do not have permission to clone from that mushroom.'
-      return
-    end
+    result = Mushrooms::CharacterCloner.call(
+      user: current_user,
+      source_mushroom: source_mushroom,
+      target_mushroom: @mushroom
+    )
 
-    # Temporarily disable strict loading for the cloning operation
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-
-    if @mushroom.clone_characters_from(source_mushroom)
-      character_count = source_mushroom.mr_character_mushrooms.count
+    if result.success?
+      count = result.data[:count]
       redirect_to edit_mushroom_path(@mushroom),
-                  notice: "Successfully cloned #{character_count} characters from #{source_mushroom.name}."
+                  notice: "Successfully cloned #{count} characters from #{source_mushroom.name}."
     else
-      redirect_to edit_mushroom_path(@mushroom),
-                  alert: 'Failed to clone characters. Please try again.'
+      redirect_to edit_mushroom_path(@mushroom), alert: result.error
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to edit_mushroom_path(@mushroom), alert: 'Source mushroom not found.'
@@ -338,7 +303,7 @@ class MushroomsController < ApplicationController
     @mushroom = Mushroom
                   .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
-    authorize @mushroom
+    # Authorization is handled by authorize_mushroom before_action
   rescue ActiveRecord::RecordNotFound
     redirect_to mushrooms_path, alert: "Mushroom not found."
   end
@@ -371,6 +336,6 @@ class MushroomsController < ApplicationController
   # ERRORS: Pundit::NotAuthorizedError is rescued by ApplicationController
   # ============================================================================
   def authorize_mushroom
-    authorize @mushroom if respond_to?(:authorize)
+    authorize @mushroom
   end
 end

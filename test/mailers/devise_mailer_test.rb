@@ -6,25 +6,27 @@ class DeviseMailerTest < ActionMailer::TestCase
   end
 
   test "password reset email can be generated" do
-    # Test that password reset emails work
-    @user.send_reset_password_instructions
+    # Generate a reset password token
+    token = @user.send(:set_reset_password_token)
 
-    assert_not ActionMailer::Base.deliveries.empty?
-    email = ActionMailer::Base.deliveries.last
+    # Call the mailer directly
+    email = DeviseMailer.reset_password_instructions(@user, token)
 
     assert_equal [@user.email], email.to
     assert_match /password/i, email.subject
   end
 
   test "password change notification can be generated" do
-    skip "Requires Devise mailer to be properly configured"
-    # This would test password change notifications
-    # but requires full Devise integration
+    email = DeviseMailer.password_change(@user)
+
+    assert_equal [@user.email], email.to
+    assert_match /password.*change/i, email.subject
   end
 
   test "email change notification can be generated" do
-    skip "Requires Devise mailer to be properly configured"
-    # This would test email change notifications
-    # but requires full Devise integration
+    email = DeviseMailer.email_changed(@user)
+
+    assert_equal [@user.email], email.to
+    assert_match /email.*change/i, email.subject
   end
 end

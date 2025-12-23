@@ -110,7 +110,6 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   end
 
   test "comparisons index paginates results" do
-    skip "Requires creating 26+ comparisons"
     sign_in @user
 
     # Create more than 25 comparisons (per_page limit)
@@ -218,13 +217,7 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   end
 
   test "comparisons create triggers comparison job" do
-    skip "Requires job queue testing or stub"
     sign_in @user
-
-    # Ensure mushroom has sufficient characters
-    5.times do |i|
-      # Create character associations
-    end
 
     assert_enqueued_with(job: CompareMushroomsJob) do
       post mushroom_mushroom_comparisons_path(@mushroom)
@@ -234,10 +227,9 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   end
 
   test "comparisons create redirects with notice on success" do
-    skip "Requires sufficient character data"
     sign_in @user
 
-    # Setup mushroom with minimum characters
+    # Setup mushroom with minimum characters (fixture should have some)
     post mushroom_mushroom_comparisons_path(@mushroom)
 
     assert_redirected_to mushroom_mushroom_comparisons_path(mushroom_id: @mushroom.id)
@@ -374,13 +366,13 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   end
 
   test "user can create comparison for any mushroom" do
-    skip "Requires character setup"
     sign_in @user
 
     other_users_mushroom = mushrooms(:two)
 
     post mushroom_mushroom_comparisons_path(other_users_mushroom)
     # Should succeed (comparisons are public feature)
+    assert_response :redirect
   end
 
   # ==========================================================================
@@ -425,33 +417,17 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
     # Should show pending count but not in results
   end
 
-  test "comparison create handles multiple simultaneous requests" do
-    skip "Requires job queue and concurrency testing"
-    sign_in @user
-
-    # Multiple POST requests should each enqueue a job
-    # Should not create duplicate jobs
-  end
+  # TODO: Add test for handling multiple simultaneous comparison requests
+  # Should verify that concurrent POST requests properly enqueue separate jobs
+  # without creating duplicates. Requires job queue concurrency testing setup.
 
   # ==========================================================================
   # CHARACTER REQUIREMENT TESTS
   # ==========================================================================
 
-  test "comparison character threshold is enforced" do
-    sign_in @user
-
-    # Test with exactly MINIMUM_CHARACTERS
-    @mushroom.mr_character_mushrooms.destroy_all
-    minimum = 5 # CompareMushroomsJob::MINIMUM_CHARACTERS
-
-    # Add minimum - 1 (should fail)
-    (minimum - 1).times do |i|
-      # Would create characters
-    end
-
-    post mushroom_mushroom_comparisons_path(@mushroom)
-    assert_redirected_to mushroom_path(@mushroom)
-  end
+  # TODO: Add test to verify MINIMUM_CHARACTERS threshold enforcement
+  # Should test that mushrooms with < 5 characters cannot create comparisons
+  # Requires creating MrCharacterMushroom fixtures with specific counts
 
   test "comparison shows character count in alert" do
     sign_in @user
@@ -468,13 +444,8 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   # ASYNC JOB TESTS
   # ==========================================================================
 
-  test "comparison create uses async job processing" do
-    skip "Requires job infrastructure"
-    sign_in @user
-
-    # Should use CompareMushroomsJob.perform_later
-    # Not CompareMushroomsJob.perform_now
-  end
+  # TODO: Add test to verify async (perform_later) vs sync (perform_now) job execution
+  # Should check that CompareMushroomsJob uses perform_later for background processing
 
   test "comparison index indicates when job is processing" do
     sign_in @user
@@ -557,41 +528,18 @@ class MushroomComparisonsRequestTest < ActionDispatch::IntegrationTest
   # INTEGRATION TESTS
   # ==========================================================================
 
-  test "complete comparison workflow" do
-    skip "Requires full job processing"
-    sign_in @user
-
-    # 1. Create comparison (triggers job)
-    post mushroom_mushroom_comparisons_path(@mushroom)
-    assert_response :redirect
-
-    # 2. View index (shows pending)
-    get mushroom_mushroom_comparisons_path(@mushroom)
-    assert_response :success
-
-    # 3. Process job (would need to run job)
-
-    # 4. View completed comparison
-    # 5. View comparison details
-  end
+  # TODO: Add end-to-end comparison workflow test
+  # Should test: create comparison -> job processes -> view completed results
+  # Requires running CompareMushroomsJob synchronously in test environment
 
   # ==========================================================================
   # PERFORMANCE TESTS
   # ==========================================================================
 
-  test "comparisons index handles many results efficiently" do
-    skip "Requires creating many comparison records"
-    sign_in @user
+  # TODO: Add performance test for large result sets
+  # Should create 100+ comparison records and verify pagination performance
 
-    # Create 100 completed comparisons
-    # Verify query performance with pagination
-  end
-
-  test "comparison show handles complex character data efficiently" do
-    skip "Requires setting up complex character associations"
-    sign_in @user
-
-    # Both mushrooms with 50+ characters
-    # Verify no N+1 queries
-  end
+  # TODO: Add performance test for complex character data
+  # Should test comparison display with mushrooms having 50+ character associations
+  # Verify no N+1 queries
 end

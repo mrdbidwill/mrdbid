@@ -136,6 +136,7 @@ CREATE TABLE `articles` (
   KEY `index_articles_on_published_at` (`published_at`),
   KEY `index_articles_on_subject` (`subject`),
   KEY `index_articles_on_user_id` (`user_id`),
+  KEY `index_articles_on_published` (`published`),
   CONSTRAINT `fk_rails_3d31dad1cc` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -660,6 +661,7 @@ CREATE TABLE `mushrooms` (
   KEY `index_mushrooms_on_fungus_type_id` (`fungus_type_id`),
   KEY `index_mushrooms_on_is_template` (`is_template`),
   KEY `index_mushrooms_on_fungus_type_id_and_is_template` (`fungus_type_id`,`is_template`),
+  KEY `index_mushrooms_on_collection_date` (`collection_date`),
   FULLTEXT KEY `mushrooms_fulltext_idx` (`name`,`description`,`comments`),
   CONSTRAINT `fk_rails_0e85826c18` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE SET NULL,
   CONSTRAINT `fk_rails_1d15355ab0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
@@ -1062,7 +1064,7 @@ CREATE TABLE `trusted_devices` (
   KEY `index_trusted_devices_on_user_id` (`user_id`),
   KEY `index_trusted_devices_on_user_id_and_device_fingerprint` (`user_id`,`device_fingerprint`),
   CONSTRAINT `fk_rails_96c1dacf00` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1157,6 +1159,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20251223143303'),
 ('20251221140452'),
 ('20251221134848'),
 ('20251221134829'),
