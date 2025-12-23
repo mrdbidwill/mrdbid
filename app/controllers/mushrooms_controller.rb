@@ -148,7 +148,8 @@ class MushroomsController < ApplicationController
     if result.success?
       redirect_to new_image_mushroom_path(mushroom_id: result.data.id), notice: "Mushroom was successfully created. Now add an image."
     else
-      @mushroom = result.data
+      # result.data contains the mushroom object (even on failure) for form re-render
+      @mushroom = result.data || Mushroom.new(mushroom_params.except(:user_id))
       render :new, status: :unprocessable_entity
     end
   end
@@ -247,7 +248,8 @@ class MushroomsController < ApplicationController
                 type: 'application/pdf',
                 disposition: 'attachment'
     else
-      redirect_to mushrooms_path, alert: result.error
+      # Add period to match existing alert format
+      redirect_to mushrooms_path, alert: "#{result.error}."
     end
   rescue Pundit::NotAuthorizedError
     raise # Let ApplicationController handle it

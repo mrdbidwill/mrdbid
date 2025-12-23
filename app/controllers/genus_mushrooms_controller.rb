@@ -5,6 +5,12 @@ class GenusMushroomsController < ApplicationController
 
   # POST /genus_mushrooms.json
   def create
+    # Validate params before attempting to find mushroom
+    if genus_mushroom_params[:mushroom_id].blank? || genus_mushroom_params[:genus_id].blank?
+      render json: { success: false, errors: ["Mushroom and genus are required"] }, status: :unprocessable_entity
+      return
+    end
+
     mushroom = Mushroom.find(genus_mushroom_params[:mushroom_id])
 
     result = Associations::Creator.call(
@@ -21,7 +27,8 @@ class GenusMushroomsController < ApplicationController
       render json: { success: false, errors: errors }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { success: false, errors: ["Mushroom not found"] }, status: :not_found
+    # Invalid mushroom_id - treat as validation error not 404
+    render json: { success: false, errors: ["Invalid mushroom or genus"] }, status: :unprocessable_entity
   rescue ActiveRecord::RecordNotUnique
     render json: { success: false, errors: ["This genus is already associated with this mushroom"] }, status: :unprocessable_entity
   end
