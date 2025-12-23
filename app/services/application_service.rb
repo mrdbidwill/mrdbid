@@ -57,8 +57,8 @@ class ApplicationService
       new(success: true, data: data)
     end
 
-    def self.failure(error)
-      new(success: false, error: error)
+    def self.failure(error, data: nil)
+      new(success: false, error: error, data: data)
     end
   end
 end

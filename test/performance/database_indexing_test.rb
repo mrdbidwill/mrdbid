@@ -23,11 +23,11 @@ class DatabaseIndexingTest < ActiveSupport::TestCase
     end
   end
 
-  test "mushrooms table should have index on collected_on for date filtering" do
+  test "mushrooms table should have index on collection_date for date filtering" do
     indexes = ActiveRecord::Base.connection.indexes('mushrooms')
-    date_indexed = indexes.any? { |idx| idx.columns.include?('collected_on') }
+    date_indexed = indexes.any? { |idx| idx.columns.include?('collection_date') }
 
-    skip "collected_on not indexed - consider adding for date filtering" unless date_indexed
+    assert date_indexed, "mushrooms.collection_date should be indexed for date filtering"
   end
 
   test "genus_mushrooms should have composite index on genus_id and mushroom_id" do
@@ -67,7 +67,7 @@ class DatabaseIndexingTest < ActiveSupport::TestCase
     indexes = ActiveRecord::Base.connection.indexes('articles')
     published_indexed = indexes.any? { |idx| idx.columns.include?('published') }
 
-    skip "articles.published not indexed - consider adding" unless published_indexed
+    assert published_indexed, "articles.published should be indexed for filtering"
   end
 
   test "states should have index on country_id" do
@@ -165,8 +165,6 @@ class DatabaseIndexingTest < ActiveSupport::TestCase
   end
 
   test "mushroom_comparisons should have index on mushroom_id" do
-    skip "mushroom_comparisons table may not exist"
-
     indexes = ActiveRecord::Base.connection.indexes('mushroom_comparisons')
     mushroom_indexed = indexes.any? { |idx| idx.columns.include?('mushroom_id') }
 

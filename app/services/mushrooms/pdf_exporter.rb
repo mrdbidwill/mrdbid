@@ -65,7 +65,7 @@ module Mushrooms
 
     def authorize_mushrooms!(mushrooms)
       mushrooms.each do |mushroom|
-        Pundit.authorize(user, mushroom, :show?)
+        Pundit.authorize(user, mushroom, :export_pdf?)
       end
     end
 

@@ -33,7 +33,7 @@ module Mushrooms
       if mushroom.persisted?
         Result.success(mushroom)
       else
-        Result.failure(mushroom)
+        Result.failure(mushroom.errors.full_messages.join(", "), data: mushroom)
       end
     rescue Pundit::NotAuthorizedError => e
       Result.failure(e.message)

@@ -64,6 +64,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_admin!
+    unless current_user&.permission_id == 1
+      flash[:alert] = "Admin access required."
+      redirect_to root_path
+    end
+  end
+
   private
   def user_not_authorized
     respond_to do |format|

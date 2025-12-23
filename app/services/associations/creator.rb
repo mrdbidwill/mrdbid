@@ -33,7 +33,8 @@ module Associations
       if record.persisted?
         Result.success(record)
       else
-        Result.failure(record)
+        # Return the record with validation errors for proper error message extraction
+        Result.failure(record.errors.full_messages.join(", "), data: record)
       end
     rescue Pundit::NotAuthorizedError => e
       Result.failure(e.message)

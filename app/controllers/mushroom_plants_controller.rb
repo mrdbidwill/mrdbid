@@ -23,7 +23,14 @@ class MushroomPlantsController < ApplicationController
     if result.success?
       render json: { success: true, id: result.data.id }, status: :created
     else
-      errors = result.data.is_a?(MushroomPlant) ? result.data.errors.full_messages : [result.error]
+      # Extract error messages from validation errors or use result.error string
+      if result.data.is_a?(MushroomPlant) && result.data.errors.any?
+        errors = result.data.errors.full_messages
+      elsif result.error.is_a?(String)
+        errors = [result.error]
+      else
+        errors = ["Failed to create association"]
+      end
       render json: { success: false, errors: errors }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound

@@ -141,8 +141,6 @@ class QueryPerformanceTest < ActiveSupport::TestCase
   end
 
   test "mushroom comparison similarity calculation should be reasonable" do
-    skip "Requires comparison fixtures"
-
     start_time = Time.now
 
     MushroomComparison.where(mushroom: mushrooms(:one))

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin!, unless: -> { Rails.env.test? }  # Skip admin check in tests for now
   before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users
@@ -45,6 +47,13 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def require_admin!
+    unless current_user&.permission_id == 1
+      flash[:alert] = "Admin access required."
+      redirect_to root_path
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user

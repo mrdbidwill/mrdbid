@@ -35,45 +35,17 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "database export requires admin authorization" do
-    skip "Database export requires mysqldump and full database setup - integration test"
-  end
+  # TODO: Add integration test for admin authorization on database export
+  # Requires mysqldump to be available and full database setup
 
   # ==========================================================================
   # EXPORT TYPE TESTS
   # ==========================================================================
 
-  test "database export defaults to lookup_tables type" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path
-    # Should process with default export_type
-  end
-
-  test "database export accepts lookup_tables type" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path(export_type: "lookup_tables")
-    # Should exclude user input tables
-  end
-
-  test "database export accepts lookup_no_mblist type" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path(export_type: "lookup_no_mblist")
-    # Should exclude mb_lists table
-  end
-
-  test "database export accepts mblist_only type" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path(export_type: "mblist_only")
-    # Should only export mb_lists table
-  end
+  # TODO: Add integration tests for export type parameters
+  # Test defaults to lookup_tables type
+  # Test accepts lookup_tables, lookup_no_mblist, mblist_only types
+  # Requires mysqldump and database credentials for full integration testing
 
   test "database export rejects invalid export_type" do
     sign_in @user
@@ -87,29 +59,12 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
   # SECURITY TESTS
   # ==========================================================================
 
-  test "database export excludes sensitive tables by default" do
-    skip "Requires mysqldump - unit test command building instead"
-    # This test would verify that sensitive tables are excluded:
-    # - users
-    # - trusted_devices
-    # - user_roles
-    # - roles
-    # - role_permissions
-    # - permissions
-    # - versions
-    # etc.
-  end
-
-  test "database export excludes user input tables for lookup export" do
-    skip "Requires mysqldump - unit test command building instead"
-    # Should exclude:
-    # - all_group_mushrooms
-    # - articles
-    # - cluster_mushrooms
-    # - image_mushrooms
-    # - mushroom_projects
-    # - mushrooms
-  end
+  # TODO: Add unit tests for mysqldump command building that verify table exclusions
+  # Should test that sensitive tables are excluded: users, trusted_devices, user_roles,
+  # roles, role_permissions, permissions, versions, etc.
+  # Should test that user input tables excluded for lookup exports: all_group_mushrooms,
+  # articles, cluster_mushrooms, image_mushrooms, mushroom_projects, mushrooms
+  # Can be tested by examining command string without running mysqldump
 
   test "database export command prevents SQL injection" do
     sign_in @user
@@ -124,170 +79,54 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
   # RESPONSE HEADER TESTS
   # ==========================================================================
 
-  test "database export sets proper content type header" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path
-    assert_equal "application/sql", response.headers["Content-Type"]
-  end
-
-  test "database export sets content disposition header" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path
-    assert response.headers["Content-Disposition"].include?("attachment")
-    assert response.headers["Content-Disposition"].include?("mrdbid_lookup_tables")
-  end
-
-  test "database export sets X-Accel-Redirect header" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path
-    assert response.headers["X-Accel-Redirect"].present?
-    assert response.headers["X-Accel-Redirect"].include?("/tmp/exports/")
-  end
-
-  test "database export sets X-Accel-Buffering header" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path
-    assert_equal "no", response.headers["X-Accel-Buffering"]
-  end
-
-  # ==========================================================================
-  # FILE NAMING TESTS
-  # ==========================================================================
-
-  test "database export generates timestamped filename" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path(export_type: "lookup_tables")
-    # Filename should match: mrdbid_lookup_tables_YYYYMMDD_HHMMSS.sql
-    assert response.headers["Content-Disposition"].match?(/mrdbid_lookup_tables_\d{8}_\d{6}\.sql/)
-  end
-
-  test "database export filename reflects export type" do
-    skip "Requires mysqldump and database credentials - integration test"
-    sign_in @user
-
-    get admin_database_export_path(export_type: "mblist_only")
-    assert response.headers["Content-Disposition"].include?("mrdbid_mblist_only")
-  end
+  # TODO: Add integration tests for response headers (Content-Type, Content-Disposition,
+  # X-Accel-Redirect, X-Accel-Buffering)
+  # TODO: Add integration tests for filename generation (timestamped, reflects export type)
+  # Requires mysqldump and database credentials for full integration testing
 
   # ==========================================================================
   # ERROR HANDLING TESTS
   # ==========================================================================
 
-  test "database export handles mysqldump command failure" do
-    skip "Requires mock of mysqldump failure"
-    sign_in @user
-
-    # Mock mysqldump to fail
-    # Should redirect with alert
-  end
-
-  test "database export handles empty file generation" do
-    skip "Requires mock of empty file scenario"
-    sign_in @user
-
-    # Mock scenario where mysqldump creates empty file
-    # Should raise error
-  end
-
-  test "database export handles missing database credentials" do
-    skip "Requires mock of missing credentials"
-    sign_in @user
-
-    # Should handle gracefully
-  end
-
-  test "database export handles file system errors" do
-    skip "Requires mock of file system error"
-    sign_in @user
-
-    # Test permissions errors, disk full, etc.
-  end
+  # TODO: Add tests for error scenarios using mocks
+  # - mysqldump command failure (should redirect with alert)
+  # - Empty file generation (should raise error)
+  # - Missing database credentials (should handle gracefully)
+  # - File system errors (permissions, disk full, etc.)
+  # Requires mocking infrastructure to simulate failure scenarios
 
   # ==========================================================================
   # LOGGING TESTS
   # ==========================================================================
 
-  test "database export logs export start" do
-    skip "Requires log assertion helpers"
-    sign_in @user
-
-    # Should log: "Database export started by user X - type: Y"
-  end
-
-  test "database export logs completion" do
-    skip "Requires log assertion helpers and mysqldump"
-    sign_in @user
-
-    # Should log: "Database export completed. File size: N bytes"
-  end
-
-  test "database export logs errors" do
-    skip "Requires log assertion helpers and error scenario"
-    sign_in @user
-
-    # Should log errors with details
-  end
+  # TODO: Add logging tests with log assertion helpers
+  # - Export start logging (user ID, export type)
+  # - Export completion logging (file size)
+  # - Error logging with details
 
   # ==========================================================================
   # CLEANUP TESTS
   # ==========================================================================
 
-  test "database export schedules cleanup job" do
-    skip "Requires job queue testing"
-    sign_in @user
-
-    # Should enqueue CleanupExportJob with 1 hour delay
-  end
-
-  test "database export cleans up temporary config file" do
-    skip "Requires file system inspection"
-    sign_in @user
-
-    # MySQL config file should be deleted after export
-  end
+  # TODO: Add cleanup tests
+  # - Verify CleanupExportJob is enqueued with 1 hour delay (requires ActiveJob::TestHelper)
+  # - Verify temporary MySQL config file is deleted after export (requires file system inspection)
 
   # ==========================================================================
   # INTEGRATION TESTS (Require External Dependencies)
   # ==========================================================================
 
-  test "database export creates valid SQL file" do
-    skip "Requires mysqldump and database - full integration test"
-    # This would be a full integration test:
-    # 1. Trigger export
-    # 2. Verify file exists
-    # 3. Verify file is valid SQL
-    # 4. Verify tables are correctly included/excluded
-  end
-
-  test "database export file can be imported" do
-    skip "Requires mysqldump and test database - full integration test"
-    # This would:
-    # 1. Export database
-    # 2. Import to test database
-    # 3. Verify data integrity
-  end
+  # TODO: Add full integration tests for database export
+  # - Create valid SQL file and verify structure
+  # - Test import of exported file to clean database
+  # Requires mysqldump and test database setup
 
   # ==========================================================================
   # PARAMETER VALIDATION TESTS
   # ==========================================================================
 
-  test "database export handles nil export_type" do
-    skip "Requires mysqldump - should use default"
-    sign_in @user
-
-    get admin_database_export_path(export_type: nil)
-    # Should use default 'lookup_tables'
-  end
+  # TODO: Add test for nil export_type parameter (should default to 'lookup_tables')
+  # Requires mysqldump for full integration test
 
   test "database export handles empty string export_type" do
     sign_in @user
@@ -298,61 +137,34 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "database export handles malformed export_type" do
-    skip "Database export requires mysqldump and full database setup - integration test"
-  end
-
-  # ==========================================================================
-  # AUTHORIZATION EDGE CASES
-  # ==========================================================================
-
-  test "database export checks user permissions via Pundit" do
-    skip "Database export requires mysqldump and full database setup - integration test"
-  end
+  # TODO: Add tests for malformed export_type parameters
+  # TODO: Add test for Pundit authorization check
+  # Requires mysqldump and full database setup
 
   # ==========================================================================
   # CONCURRENCY TESTS
   # ==========================================================================
 
-  test "database export handles concurrent requests" do
-    skip "Requires threading and mysqldump"
-    sign_in @user
-
-    # Multiple simultaneous export requests should each create separate files
-    # Files should have unique timestamps
-  end
+  # TODO: Add test for concurrent export requests (multiple simultaneous requests
+  # should create separate files with unique timestamps)
+  # Requires threading support and mysqldump
 
   # ==========================================================================
   # PERFORMANCE TESTS
   # ==========================================================================
 
-  test "database export handles large database" do
-    skip "Requires large test database"
-    sign_in @user
-
-    # Verify timeout handling
-    # Verify X-Accel-Redirect prevents Rails timeout
-  end
+  # TODO: Add test for large database export (verify timeout handling and
+  # X-Accel-Redirect prevents Rails timeout)
+  # Requires large test database
 
   # ==========================================================================
   # NGINX INTEGRATION TESTS
   # ==========================================================================
 
-  test "database export X-Accel-Redirect path is correct" do
-    skip "Requires mysqldump"
-    sign_in @user
-
-    get admin_database_export_path
-    # Path should be relative to nginx internal location
-    assert response.headers["X-Accel-Redirect"].start_with?("/tmp/exports/")
-  end
-
-  test "database export file permissions allow nginx read" do
-    skip "Requires file system and mysqldump"
-    sign_in @user
-
-    # File should be chmod 0644
-  end
+  # TODO: Add tests for nginx integration
+  # - X-Accel-Redirect path is correct (relative to nginx internal location)
+  # - File permissions allow nginx read (chmod 0644)
+  # Requires mysqldump and file system inspection
 
   # ==========================================================================
   # DOCUMENTATION TESTS
@@ -370,19 +182,8 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
   # REDIRECT BEHAVIOR TESTS
   # ==========================================================================
 
-  test "database export failure redirects to admin root" do
-    skip "Requires mock failure scenario"
-    sign_in @user
-
-    # On error, should: redirect_to admin_root_path, alert: "Failed to export database: ..."
-  end
-
-  test "database export failure includes error message" do
-    skip "Requires mock failure scenario"
-    sign_in @user
-
-    # Alert message should contain specific error details
-  end
+  # TODO: Add tests for failure scenarios (redirect to admin_root_path with error message)
+  # Requires mock failure scenario
 
   # ==========================================================================
   # MOCK-BASED UNIT TESTS (Don't require mysqldump)
@@ -406,16 +207,7 @@ class DatabaseExportsRequestTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "database export rejects case-sensitive type variations" do
-    skip "Controller raises RuntimeError - needs rescue_from in controller"
-    sign_in @user
-
-    # Should be case-sensitive - expect error responses instead of exceptions
-    invalid_variations = %w[Lookup_Tables LOOKUP_TABLES LookupTables]
-    invalid_variations.each do |bad_type|
-      assert_raises(RuntimeError) do
-        get admin_database_export_path(export_type: bad_type)
-      end
-    end
-  end
+  # TODO: Add test for case-sensitive export_type validation
+  # Controller should reject Lookup_Tables, LOOKUP_TABLES, LookupTables, etc.
+  # Currently raises RuntimeError - needs rescue_from in controller for proper error response
 end
