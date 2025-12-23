@@ -2,31 +2,48 @@
 
 class GenusMushroomsController < ApplicationController
   before_action :authenticate_user!
-  skip_after_action :verify_authorized, raise: false
 
   # POST /genus_mushrooms.json
   def create
-    @genus_mushroom = GenusMushroom.new(genus_mushroom_params)
-    Pundit.authorize(current_user, @genus_mushroom, :create?)
-    if @genus_mushroom.save
-      render json: { success: true, id: @genus_mushroom.id }, status: :created
+    mushroom = Mushroom.find(genus_mushroom_params[:mushroom_id])
+
+    result = Associations::Creator.call(
+      user: current_user,
+      parent: mushroom,
+      association_class: GenusMushroom,
+      attributes: genus_mushroom_params
+    )
+
+    if result.success?
+      render json: { success: true, id: result.data.id }, status: :created
     else
-      render json: { success: false, errors: @genus_mushroom.errors.full_messages }, status: :unprocessable_entity
+      errors = result.data.is_a?(GenusMushroom) ? result.data.errors.full_messages : [result.error]
+      render json: { success: false, errors: errors }, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, errors: ["Mushroom not found"] }, status: :not_found
   rescue ActiveRecord::RecordNotUnique
     render json: { success: false, errors: ["This genus is already associated with this mushroom"] }, status: :unprocessable_entity
   end
 
   # DELETE /genus_mushrooms/destroy_by_relation.json
   def destroy_by_relation
-    @genus_mushroom = GenusMushroom.find_by(mushroom_id: params[:mushroom_id], genus_id: params[:genus_id])
-    if @genus_mushroom
-      Pundit.authorize(current_user, @genus_mushroom, :destroy?)
-      @genus_mushroom.destroy
+    mushroom = Mushroom.find(params[:mushroom_id])
+
+    result = Associations::Destroyer.call(
+      user: current_user,
+      parent: mushroom,
+      association_class: GenusMushroom,
+      related_id: params[:genus_id]
+    )
+
+    if result.success?
       render json: { success: true }
     else
-      render json: { success: false, message: "Not found" }, status: :not_found
+      render json: { success: false, message: result.error }, status: :not_found
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, message: "Mushroom not found" }, status: :not_found
   rescue StandardError => e
     render json: { success: false, message: e.message }, status: :internal_server_error
   end

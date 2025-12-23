@@ -2,31 +2,48 @@
 
 class MushroomSpeciesController < ApplicationController
   before_action :authenticate_user!
-  skip_after_action :verify_authorized, raise: false
 
   # POST /mushroom_species.json
   def create
-    @ms = MushroomSpecies.new(mushroom_species_params)
-    Pundit.authorize(current_user, @ms, :create?)
-    if @ms.save
-      render json: { success: true, id: @ms.id }, status: :created
+    mushroom = Mushroom.find(mushroom_species_params[:mushroom_id])
+
+    result = Associations::Creator.call(
+      user: current_user,
+      parent: mushroom,
+      association_class: MushroomSpecies,
+      attributes: mushroom_species_params
+    )
+
+    if result.success?
+      render json: { success: true, id: result.data.id }, status: :created
     else
-      render json: { success: false, errors: @ms.errors.full_messages }, status: :unprocessable_entity
+      errors = result.data.is_a?(MushroomSpecies) ? result.data.errors.full_messages : [result.error]
+      render json: { success: false, errors: errors }, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, errors: ["Mushroom not found"] }, status: :not_found
   rescue ActiveRecord::RecordNotUnique
     render json: { success: false, errors: ["This species is already associated with this mushroom"] }, status: :unprocessable_entity
   end
 
   # DELETE /mushroom_species/destroy_by_relation.json
   def destroy_by_relation
-    @ms = MushroomSpecies.find_by(mushroom_id: params[:mushroom_id], species_id: params[:species_id])
-    if @ms
-      Pundit.authorize(current_user, @ms, :destroy?)
-      @ms.destroy
+    mushroom = Mushroom.find(params[:mushroom_id])
+
+    result = Associations::Destroyer.call(
+      user: current_user,
+      parent: mushroom,
+      association_class: MushroomSpecies,
+      related_id: params[:species_id]
+    )
+
+    if result.success?
       render json: { success: true }
     else
-      render json: { success: false, message: "Not found" }, status: :not_found
+      render json: { success: false, message: result.error }, status: :not_found
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, message: "Mushroom not found" }, status: :not_found
   end
 
   private
