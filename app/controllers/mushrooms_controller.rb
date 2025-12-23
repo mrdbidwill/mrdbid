@@ -26,10 +26,10 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index new create export_pdf clone_characters]
+  before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
-  skip_after_action :verify_authorized, only: [:show], if: -> { !user_signed_in? }, raise: false
+  skip_after_action :verify_authorized, only: [:show], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -338,7 +338,8 @@ class MushroomsController < ApplicationController
     @mushroom = Mushroom
                   .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
-    authorize @mushroom
+    # Only authorize if not show action (show is public)
+    authorize @mushroom unless action_name == 'show'
   rescue ActiveRecord::RecordNotFound
     redirect_to mushrooms_path, alert: "Mushroom not found."
   end

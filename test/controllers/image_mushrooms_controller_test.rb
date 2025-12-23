@@ -17,14 +17,21 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     @image_mushroom.save!
   end
 
+  # ============================================================================
+  # Public Access Tests (Pundit Authorization)
+  # ============================================================================
+  # These tests ensure public pages don't raise Pundit errors
+
   test "should get index without authentication" do
     get image_mushrooms_url
     assert_response :success
+    assert_not_includes response.body, "Internal Server Error"
   end
 
   test "should show image without authentication" do
     get image_mushroom_url(@image_mushroom)
     assert_response :success
+    assert_not_includes response.body, "Internal Server Error"
   end
 
   test "authenticated user should get new" do
