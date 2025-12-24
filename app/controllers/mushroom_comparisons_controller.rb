@@ -28,6 +28,7 @@ class MushroomComparisonsController < ApplicationController
 
   # Skip Pundit verification - authorization handled via authentication and record lookup
   skip_after_action :verify_authorized, raise: false
+  skip_after_action :verify_policy_scoped, only: :index, raise: false
 
   # GET /mushrooms/:mushroom_id/comparisons
   def index

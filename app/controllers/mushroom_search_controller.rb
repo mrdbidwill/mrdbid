@@ -1,6 +1,9 @@
 class MushroomSearchController < ApplicationController
   before_action :authenticate_user!
 
+  # Skip Pundit verification - uses policy_scope! inline
+  skip_after_action :verify_authorized, raise: false
+
   def index
     @query = params[:q]
     @fungus_type_id = params[:fungus_type_id]
