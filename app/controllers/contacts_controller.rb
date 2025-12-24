@@ -36,7 +36,7 @@ class ContactsController < ApplicationController
         subject: subject,
         message: message,
         recipient: recipient
-      ).deliver_later
+      ).deliver_now
       flash[:notice] = "Thanks! Your message has been sent."
     rescue => e
       Rails.logger.error("Contact mail failed: #{e.class} - #{e.message}")
