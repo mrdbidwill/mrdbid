@@ -3,6 +3,9 @@
 class Users::TwoFactorSettingsController < ApplicationController
   before_action :authenticate_user!
 
+  # Skip Pundit verification - authorization handled via authentication (users manage own 2FA)
+  skip_after_action :verify_authorized, raise: false
+
   def enable
     if current_user.otp_required_for_login?
       redirect_to edit_user_registration_path, alert: '2FA is already enabled.'

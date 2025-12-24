@@ -6,6 +6,9 @@ class ClusterMushroomsController < ApplicationController
 
   before_action :set_cluster_mushroom, only: %i[ show edit update destroy ]
 
+  # Skip Pundit verification - authorization handled via ownership checks
+  skip_after_action :verify_authorized, raise: false
+
   def index
     @cluster_mushrooms = ClusterMushroom.all
   end

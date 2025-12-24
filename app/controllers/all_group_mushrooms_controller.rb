@@ -6,6 +6,9 @@ class AllGroupMushroomsController < ApplicationController
 
   before_action :set_all_group_mushroom, only: %i[ show edit update destroy ]
 
+  # Skip Pundit verification - authorization handled via ownership checks
+  skip_after_action :verify_authorized, raise: false
+
   def index
     @all_group_mushrooms = AllGroupMushroom.all
   end

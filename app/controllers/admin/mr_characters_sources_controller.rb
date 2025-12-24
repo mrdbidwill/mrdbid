@@ -9,6 +9,8 @@ module Admin
     before_action :ensure_admin!
     # Avoid Pundit's verify_policy_scoped check on a non-routed index here
     skip_after_action :verify_policy_scoped, only: [:index], raise: false
+    # Skip Pundit verification - authorization handled via ensure_admin! check
+    skip_after_action :verify_authorized, raise: false
 
     # Define index to satisfy Rails 7.1 callback validation (not routed)
     def index

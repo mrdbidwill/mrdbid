@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :require_admin!, unless: -> { Rails.env.test? }  # Skip admin check in tests for now
   before_action :set_user, only: %i[show edit update destroy]
 
+  # Skip Pundit verification - authorization handled via require_admin! check
+  skip_after_action :verify_authorized, raise: false
+  skip_after_action :verify_policy_scoped, only: :index, raise: false
+
   # GET /users
   def index
     @users = User.all

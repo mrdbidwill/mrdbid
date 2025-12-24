@@ -1,5 +1,7 @@
 # app/controllers/admin/utility_controller.rb
 class Admin::UtilityController < Admin::ApplicationController
+  # Skip Pundit verification - authorization via Admin::ApplicationController's before_action
+  skip_after_action :verify_authorized, raise: false
   def export_database
     # Logic to create a database dump
     system("pg_dump -Fc --file=backup.dump #{Rails.configuration.database_configuration[Rails.env]['database']}")

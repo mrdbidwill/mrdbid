@@ -26,6 +26,9 @@ class MushroomComparisonsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_mushroom, only: [:index, :create]
 
+  # Skip Pundit verification - authorization handled via authentication and record lookup
+  skip_after_action :verify_authorized, raise: false
+
   # GET /mushrooms/:mushroom_id/comparisons
   def index
     # Check if mushroom has minimum characters

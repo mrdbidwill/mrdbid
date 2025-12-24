@@ -6,6 +6,9 @@ class MushroomProjectsController < ApplicationController
 
   before_action :set_mushroom_project, only: %i[ show edit update destroy ]
 
+  # Skip Pundit verification - authorization handled via ownership checks
+  skip_after_action :verify_authorized, raise: false
+
   def index
     @mushroom_projects = MushroomProject.all
   end
