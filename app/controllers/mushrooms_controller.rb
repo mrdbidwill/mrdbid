@@ -29,7 +29,8 @@ class MushroomsController < ApplicationController
   before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
-  skip_after_action :verify_authorized, only: [:show], raise: false
+  # and actions where authorization is handled by service objects
+  skip_after_action :verify_authorized, only: [:show, :create, :export_pdf, :clone_characters], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
