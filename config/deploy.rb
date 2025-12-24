@@ -126,15 +126,26 @@ namespace :systemd_puma do
 
       info "Checking if Puma is responding to requests..."
       # Check the Unix socket directly with retry logic
-      execute <<~BASH
-        for i in {1..3}; do
-          curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null && exit 0
-          echo "Attempt $i failed, waiting 2 seconds..."
-          sleep 2
-        done
-        echo 'ERROR: Puma not responding on socket after 3 attempts'
+      max_attempts = 3
+      attempt = 0
+      success = false
+
+      max_attempts.times do |i|
+        attempt = i + 1
+        begin
+          execute "curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null"
+          success = true
+          break
+        rescue SSHKit::Command::Failed
+          info "Attempt #{attempt} failed..."
+          sleep 2 unless attempt == max_attempts
+        end
+      end
+
+      unless success
+        error "ERROR: Puma not responding on socket after #{max_attempts} attempts"
         exit 1
-      BASH
+      end
 
       info "✓ Puma is running and responding successfully"
     end
