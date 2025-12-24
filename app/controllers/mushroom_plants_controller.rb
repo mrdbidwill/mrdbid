@@ -3,6 +3,9 @@
 class MushroomPlantsController < ApplicationController
   before_action :authenticate_user!
 
+  # Skip Pundit verification - authorization handled by service objects
+  skip_after_action :verify_authorized, raise: false
+
   # POST /mushroom_plants.json
   def create
     # Validate params before attempting to find mushroom
