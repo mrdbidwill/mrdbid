@@ -66,6 +66,7 @@ class MushroomsController < ApplicationController
               "mushrooms.name LIKE ? OR mushrooms.description LIKE ? OR mushrooms.comments LIKE ? OR mushrooms.city LIKE ? OR genera.name LIKE ?",
               "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%"
             )
+            .distinct
         end
       end
 
@@ -95,6 +96,7 @@ class MushroomsController < ApplicationController
               "mushrooms.name LIKE ? OR mushrooms.description LIKE ? OR mushrooms.comments LIKE ? OR mushrooms.city LIKE ? OR genera.name LIKE ?",
               "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%"
             )
+            .distinct
         end
       end
 
