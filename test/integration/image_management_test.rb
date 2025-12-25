@@ -381,7 +381,8 @@ class ImageManagementTest < ActionDispatch::IntegrationTest
     get edit_image_mushroom_path(image_mushroom)
 
     assert_response :success
-    assert_select "form[action='#{image_mushroom_path(image_mushroom)}']"
+    # Form uses nested route when accessed with mushroom context (always available via @image_mushroom.mushroom)
+    assert_select "form[action='#{mushroom_image_mushroom_path(@mushroom, image_mushroom)}']"
   end
 
   test "user can update image metadata" do
