@@ -74,6 +74,7 @@ class MushroomsController < ApplicationController
                      .includes(:fungus_type, :country, :state, :genera, :species,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
+                     .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
                      .per(12)
@@ -104,6 +105,7 @@ class MushroomsController < ApplicationController
                      .includes(:fungus_type, :country, :state, :genera, :species,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
+                     .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
                      .per(12)
