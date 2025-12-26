@@ -9,7 +9,7 @@
   <div class="group-box mb-6">
     <div class="group-header">
       Filter Lookup Items by Character
-      <p class="hint mt-1">Select a character to view and edit its lookup items.</p>
+      <p class="hint mt-1">Choose a character from the dropdown, then click "Apply Filter" to view or edit its lookup items.</p>
     </div>
     <div class="px-4 py-4">
       <%= form_with url: admin_lookup_items_path, method: :get, local: true, class: "grid grid-cols-1 gap-4" do |form| %>
@@ -20,7 +20,7 @@
                           { include_blank: "Select a character..." },
                           class: "form-input",
                           style: "width: 70%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
-          <p class="form-help">Select a character to filter lookup items.</p>
+          <p class="form-help">Step 1: Select a character from the dropdown, then Step 2: Click "Apply Filter" below to load existing lookup items.</p>
         </div>
 
         <div class="flex gap-2">
@@ -97,10 +97,6 @@
       <% else %>
         <p class="text-center my-10 text-2xl text-red-600">No lookup items found for this character.</p>
       <% end %>
-    </div>
-  <% else %>
-    <div class="text-center my-10">
-      <p class="text-xl text-gray-600">Please select a character from the dropdown above to view and edit its lookup items.</p>
     </div>
   <% end %>
 </div>

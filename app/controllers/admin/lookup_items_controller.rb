@@ -13,12 +13,8 @@ class Admin::LookupItemsController < Admin::ApplicationController
     # Apply character filter if present
     @lookup_items = @lookup_items.where(mr_character_id: params[:mr_character_id]) if params[:mr_character_id].present?
 
-    # Populate mr_characters dropdown - only those that have lookup_items
-    @mr_characters = MrCharacter
-                      .joins(:lookup_items)
-                      .distinct
-                      .order(:name)
-                      .pluck(:name, :id)
+    # Populate mr_characters dropdown - show ALL characters so admins can add lookup_items to new characters
+    @mr_characters = MrCharacter.strict_loading(false).order(:name).pluck(:name, :id)
   end
 
   def new
