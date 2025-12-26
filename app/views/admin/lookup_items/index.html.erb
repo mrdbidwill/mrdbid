@@ -166,7 +166,7 @@
               </table>
             </div>
           <% else %>
-            <p class="text-gray-600 italic mb-4">No lookup items yet for this character. <%= link_to "Add one", new_admin_lookup_item_path, class: "text-blue-600 hover:underline" %></p>
+            <p class="text-gray-600 italic mb-4">No lookup items yet for this character. <%= link_to "Add one", new_admin_lookup_item_path(mr_character_id: mr_character.id), class: "text-blue-600 hover:underline" %></p>
           <% end %>
         </div>
       <% end %>

@@ -49,7 +49,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def new
     authorize LookupItem
-    @lookup_item = LookupItem.new
+    @lookup_item = LookupItem.new(mr_character_id: params[:mr_character_id])
     @mr_characters = MrCharacter.strict_loading(false).includes(:part).order(:name).to_a
   end
 
