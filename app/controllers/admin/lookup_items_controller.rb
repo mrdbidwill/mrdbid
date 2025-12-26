@@ -4,24 +4,38 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def index
     authorize LookupItem
-    @lookup_items = policy_scope(
-      LookupItem.includes(:mr_character, :source_data)
-        .joins(:mr_character)
-        .order("mr_characters.name, lookup_items.name")  # Sort by character name, then item name
-    )
 
     # Search by character name or ID (independent of filters)
     if params[:q].present?
       term_raw = params[:q].to_s.strip
       term = ActiveRecord::Base.sanitize_sql_like(term_raw)
-      if term_raw =~ /\A\d+\z/
-        # Search by character ID
-        @lookup_items = @lookup_items.where("mr_characters.id = ?", term_raw.to_i)
+
+      # Find matching characters first
+      matching_characters = if term_raw =~ /\A\d+\z/
+        MrCharacter.where(id: term_raw.to_i)
       else
-        # Search by character name
-        @lookup_items = @lookup_items.where("mr_characters.name LIKE ?", "%#{term}%")
+        MrCharacter.where("name LIKE ?", "%#{term}%")
       end
+
+      matching_character_ids = matching_characters.pluck(:id)
+
+      # Get lookup items for those characters (LEFT JOIN so characters without items still appear)
+      @lookup_items = policy_scope(
+        LookupItem.includes(:mr_character, :source_data)
+          .where(mr_character_id: matching_character_ids)
+          .order("mr_characters.name, lookup_items.name")
+      ).joins(:mr_character)
+
+      # Store matching characters for display (including those without items)
+      @searched_characters = matching_characters.order(:name)
     else
+      # Normal filtering/browsing mode
+      @lookup_items = policy_scope(
+        LookupItem.includes(:mr_character, :source_data)
+          .joins(:mr_character)
+          .order("mr_characters.name, lookup_items.name")
+      )
+
       # Apply character filter only when NOT searching
       @lookup_items = @lookup_items.where(mr_character_id: params[:mr_character_id]) if params[:mr_character_id].present?
     end

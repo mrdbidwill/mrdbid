@@ -126,7 +126,52 @@
   <% end %>
 
   <div id="lookup_items" class="min-w-full divide-y divide-gray-100 space-y-5">
-    <% if @lookup_items.any? %>
+    <% if params[:q].present? && @searched_characters.present? %>
+      <%# When searching, show ALL matching characters, even those without lookup items %>
+      <% @searched_characters.each do |mr_character| %>
+        <% character_items = @lookup_items.select { |item| item.mr_character_id == mr_character.id } %>
+        <div class="my-10">
+          <h2 class="font-bold text-2xl mb-2">
+            <%= mr_character.name %> (ID: <%= mr_character.id %>)
+          </h2>
+          <% if character_items.any? %>
+            <div class="overflow-x-auto">
+              <table class="min-w-full table-auto border border-gray-100 mb-8">
+                <thead>
+                <tr>
+                  <th class="px-2 py-1">Name</th>
+                  <th class="px-2 py-1">Description</th>
+                  <th class="px-2 py-1">Comments</th>
+                  <th class="px-2 py-1">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% character_items.each do |lookup_item| %>
+                  <tr id="<%= dom_id lookup_item %>">
+                    <td class="border px-2 py-1"><%= lookup_item.name %></td>
+                    <td class="border px-2 py-1"><%= lookup_item.description %></td>
+                    <td class="border px-2 py-1"><%= lookup_item.comments %></td>
+                    <td class="border px-2 py-1 whitespace-nowrap">
+                      <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
+                        <%= link_to "Show", admin_lookup_item_path(lookup_item), class: "btn-primary btn-responsive" %>
+                        <%= link_to "Edit", edit_admin_lookup_item_path(lookup_item, q: params[:q], page: params[:page]), class: "btn-primary btn-responsive" %>
+                        <% if current_user&.owner? %>
+                          <%= button_to "Delete", admin_lookup_item_path(lookup_item), method: :delete, class: "btn-responsive inline-flex items-center justify-center text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-md px-2 py-1", data: { turbo_confirm: "Are you sure you want to delete this lookup item?" } %>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <p class="text-gray-600 italic mb-4">No lookup items yet for this character. <%= link_to "Add one", new_admin_lookup_item_path, class: "text-blue-600 hover:underline" %></p>
+          <% end %>
+        </div>
+      <% end %>
+    <% elsif @lookup_items.any? %>
+      <%# Normal browsing/filtering mode %>
       <% @lookup_items.group_by(&:mr_character).each do |mr_character, items| %>
         <div class="my-10">
           <h2 class="font-bold text-2xl mb-2">
@@ -189,7 +234,13 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-center my-10 text-2xl text-red-600">No lookup items found.</p>
+      <p class="text-center my-10 text-2xl text-red-600">
+        <% if params[:q].present? %>
+          No characters found matching "<%= params[:q] %>".
+        <% else %>
+          No lookup items found.
+        <% end %>
+      </p>
     <% end %>
   </div>
 </div>
