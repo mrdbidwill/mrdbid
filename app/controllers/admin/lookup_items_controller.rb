@@ -10,8 +10,24 @@ class Admin::LookupItemsController < Admin::ApplicationController
         .order("mr_characters.name, lookup_items.name")  # Sort by character name, then item name
     )
 
-    # Apply character filter if present
-    @lookup_items = @lookup_items.where(mr_character_id: params[:mr_character_id]) if params[:mr_character_id].present?
+    # Search by character name or ID (independent of filters)
+    if params[:q].present?
+      term_raw = params[:q].to_s.strip
+      term = ActiveRecord::Base.sanitize_sql_like(term_raw)
+      if term_raw =~ /\A\d+\z/
+        # Search by character ID
+        @lookup_items = @lookup_items.where("mr_characters.id = ?", term_raw.to_i)
+      else
+        # Search by character name
+        @lookup_items = @lookup_items.where("mr_characters.name LIKE ?", "%#{term}%")
+      end
+    else
+      # Apply character filter only when NOT searching
+      @lookup_items = @lookup_items.where(mr_character_id: params[:mr_character_id]) if params[:mr_character_id].present?
+    end
+
+    # Paginate (required for `paginate` helper)
+    @lookup_items = @lookup_items.page(params[:page]).per(20)
 
     # Populate mr_characters dropdown - show ALL characters so admins can add lookup_items to new characters
     @mr_characters = MrCharacter.strict_loading(false).order(:name).pluck(:name, :id)
@@ -47,8 +63,8 @@ class Admin::LookupItemsController < Admin::ApplicationController
   def update
     authorize @lookup_item
     if @lookup_item.update(lookup_item_params)
-      # Return to filtered view if mr_character_id is present
-      redirect_to admin_lookup_items_path(mr_character_id: params[:mr_character_id]),
+      # Return to filtered view with page if present
+      redirect_to admin_lookup_items_path(mr_character_id: params[:mr_character_id], page: params[:page]),
                   notice: "Lookup item updated successfully."
     else
       render :edit, status: :unprocessable_entity
