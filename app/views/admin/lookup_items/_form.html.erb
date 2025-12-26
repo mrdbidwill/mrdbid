@@ -15,7 +15,7 @@
 
   <div class="my-1">
     <%= form.label :mr_character_id, "Character" %> (If not listed, please add a new Character before adding this item)
-    <%= form.collection_select :mr_character_id, MrCharacter.includes(:part).order('mr_characters.name'), :id, :name, { prompt: "Select a character" }, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_item.errors[:mr_character_id].none?, "border-red-400 focus:outline-red-600": lookup_item.errors[:mr_character_id].any?}] %>
+    <%= form.collection_select :mr_character_id, @mr_characters || MrCharacter.strict_loading(false).includes(:part).order('mr_characters.name'), :id, :name, { prompt: "Select a character" }, class: ["block shadow-sm rounded-md border px-2 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lookup_item.errors[:mr_character_id].none?, "border-red-400 focus:outline-red-600": lookup_item.errors[:mr_character_id].any?}] %>
   </div>
 
   <div class="my-1">

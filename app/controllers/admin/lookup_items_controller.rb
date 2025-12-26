@@ -24,7 +24,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
   def new
     authorize LookupItem
     @lookup_item = LookupItem.new
-    @mr_characters = MrCharacter.order(:name).pluck(:name, :id)
+    @mr_characters = MrCharacter.strict_loading(false).includes(:part).order(:name).to_a
   end
 
   def show
@@ -45,7 +45,7 @@ class Admin::LookupItemsController < Admin::ApplicationController
 
   def edit
     authorize @lookup_item
-    @mr_characters = MrCharacter.order(:name).pluck(:name, :id)
+    @mr_characters = MrCharacter.strict_loading(false).includes(:part).order(:name).to_a
   end
 
   def update
