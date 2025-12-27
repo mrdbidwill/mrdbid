@@ -38,6 +38,8 @@ export default class extends Controller {
         if (modal) {
             modal.classList.remove('hidden')
             document.body.style.overflow = 'hidden'
+            // Ensure grid highlights are updated when modal opens
+            this.updateGridHighlights()
         }
     }
 
@@ -231,9 +233,23 @@ export default class extends Controller {
             if (isSelected) {
                 button.classList.add('ring-2', 'ring-blue-500', 'border-blue-500')
                 button.classList.remove('border-gray-300')
+
+                // Add checkmark if not present
+                if (!button.querySelector('.checkmark-overlay')) {
+                    const checkmark = document.createElement('div')
+                    checkmark.className = 'checkmark-overlay absolute inset-0 flex items-center justify-center bg-blue-500 bg-opacity-20 rounded-md'
+                    checkmark.innerHTML = '<svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>'
+                    button.appendChild(checkmark)
+                }
             } else {
                 button.classList.remove('ring-2', 'ring-blue-500', 'border-blue-500')
                 button.classList.add('border-gray-300')
+
+                // Remove checkmark if present
+                const checkmark = button.querySelector('.checkmark-overlay')
+                if (checkmark) {
+                    checkmark.remove()
+                }
             }
         })
     }
