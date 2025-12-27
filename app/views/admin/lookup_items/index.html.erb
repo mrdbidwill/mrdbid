@@ -99,8 +99,20 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-2xl">Lookup Items</h1>
-    <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-gray-600 hover:bg-gray-500 text-white block font-medium" %>
-    <%= link_to "New Lookup Item", new_admin_lookup_item_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <div class="flex gap-2">
+      <%= link_to "Back to Admin Dashboard", admin_root_path, class: "rounded-md px-2 py-1 bg-gray-600 hover:bg-gray-500 text-white block font-medium" %>
+      <% if @searched_characters&.one? %>
+        <%# When search returns exactly one character, provide context-aware button %>
+        <% char = @searched_characters.first %>
+        <%= link_to "New Lookup Item for #{char.name}", new_admin_lookup_item_path(mr_character_id: char.id), class: "rounded-md px-2 py-1 bg-green-600 hover:bg-green-500 text-white block font-medium" %>
+      <% elsif params[:mr_character_id].present? %>
+        <%# When filtering by character, pass character_id %>
+        <%= link_to "New Lookup Item", new_admin_lookup_item_path(mr_character_id: params[:mr_character_id]), class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+      <% else %>
+        <%# Generic new button %>
+        <%= link_to "New Lookup Item", new_admin_lookup_item_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+      <% end %>
+    </div>
   </div>
 
   <%# TOP pagination %>
