@@ -120,7 +120,7 @@
                     data-color-id="<%= color_id %>"
                     data-action="click->multicolor-picker#toggleColor"
                     title="<%= color ? "#{color.latin_name} (#{color.common_name})" : "Color #{color_id}" %>"
-                    class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg <%= is_selected ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-300 hover:border-blue-400' %>">
+                    class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg border-gray-300 hover:border-blue-400">
               <%= image_tag "AMS_colors/banner_50x50/banner_#{color_id}.jpg",
                             alt: "Color #{color_id}",
                             class: "w-full h-full object-cover rounded-md" %>
@@ -132,14 +132,7 @@
                 </span>
               <% end %>
 
-              <!-- Selected checkmark -->
-              <% if is_selected %>
-                <div class="absolute inset-0 flex items-center justify-center bg-blue-500 bg-opacity-20 rounded-md">
-                  <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              <% end %>
+              <!-- Checkmarks will be added dynamically by JavaScript -->
             </button>
           <% end %>
         </div>
