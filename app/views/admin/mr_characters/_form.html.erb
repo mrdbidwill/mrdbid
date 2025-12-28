@@ -94,30 +94,14 @@
       <div class="my-5">
         <%= form.label :source_data_id, "Source Data" %>
         <p class="text-sm text-gray-600 mb-2">
-          Type to search existing sources.
-          <%= link_to "View all sources", admin_source_data_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %> |
+          If the source you need is not in the dropdown,
           <%= link_to "Create new source", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>
+          then return here to add the character.
         </p>
-        <% current_source = mr_character.source_data %>
-        <% sources_json = SourceData.order(:title).map { |sd| { id: sd.id, title: sd.title } }.to_json %>
-        <div data-controller="source-data-autocomplete"
-             data-source-data-autocomplete-sources-value='<%= sources_json %>'
-             class="relative">
-          <%= form.text_field :source_data_title,
-                              value: current_source&.title,
-                              placeholder: "Start typing to search sources...",
-                              class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600",
-                              data: {
-                                source_data_autocomplete_target: "input",
-                                action: "input->source-data-autocomplete#onInput"
-                              },
-                              autocomplete: "off" %>
-          <ul class="hidden absolute z-10 w-full border rounded mt-1 bg-white max-h-60 overflow-auto shadow-lg"
-              data-source-data-autocomplete-target="dropdown">
-          </ul>
-          <%= form.hidden_field :source_data_id,
-                                data: { source_data_autocomplete_target: "hiddenField" } %>
-        </div>
+        <%= form.select :source_data_id,
+                        SourceData.order(:title).pluck(:title, :id),
+                        { include_blank: "Select a source..." },
+                        class: "block shadow-md rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
       </div>
 
 
