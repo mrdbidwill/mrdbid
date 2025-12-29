@@ -165,7 +165,7 @@
     <div class="my-1 flex flex-wrap items-center gap-4">
       <%= paginate @mr_characters,
                    theme: 'tailwind_bar',
-                   params: request.query_parameters,
+                   params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], q: params[:q] }.compact,
                    window: 2,        # how many pages around current
                    outer_window: 1   # how many pages at the ends
       %>
@@ -212,7 +212,7 @@
           <div class="my-1 flex flex-wrap items-center gap-4">
             <%= paginate @mr_characters,
                          theme: 'tailwind_bar',
-                         params: request.query_parameters,
+                         params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], q: params[:q] }.compact,
                          window: 2,        # how many pages around current
                          outer_window: 1   # how many pages at the ends
             %>
