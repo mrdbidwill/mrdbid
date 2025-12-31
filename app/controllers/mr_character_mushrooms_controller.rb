@@ -18,14 +18,11 @@ class MrCharacterMushroomsController < ApplicationController
       # If clearing all colors, delete the record instead of saving empty
       if color_ids.empty? && @rc.persisted?
         @rc.destroy
-        redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+        @redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
         flash[:notice] = "Character cleared."
         respond_to do |format|
-          format.turbo_stream do
-            # Turbo Stream redirect - flash will be available after redirect
-            render turbo_stream: turbo_stream.action(:redirect, redirect_path)
-          end
-          format.html { redirect_to redirect_path, notice: "Character cleared." }
+          format.turbo_stream # Uses create.turbo_stream.erb template
+          format.html { redirect_to @redirect_path, notice: "Character cleared." }
         end
         return
       end
@@ -38,25 +35,19 @@ class MrCharacterMushroomsController < ApplicationController
     end
 
     # Determine where to redirect after save (back to grid or edit page)
-    redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+    @redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
 
     if @rc.save
       flash[:notice] = "Character saved."
       respond_to do |format|
-        format.turbo_stream do
-          # Turbo Stream redirect - flash will be available after redirect
-          render turbo_stream: turbo_stream.action(:redirect, redirect_path)
-        end
-        format.html { redirect_to redirect_path, notice: "Character saved." }
+        format.turbo_stream # Uses create.turbo_stream.erb template
+        format.html { redirect_to @redirect_path, notice: "Character saved." }
       end
     else
       flash[:alert] = @rc.errors.full_messages.to_sentence
       respond_to do |format|
-        format.turbo_stream do
-          # Turbo Stream redirect - flash will be available after redirect
-          render turbo_stream: turbo_stream.action(:redirect, redirect_path), status: :unprocessable_entity
-        end
-        format.html { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence }
+        format.turbo_stream # Uses create.turbo_stream.erb template
+        format.html { redirect_to @redirect_path, alert: @rc.errors.full_messages.to_sentence }
       end
     end
   end
