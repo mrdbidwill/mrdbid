@@ -29,6 +29,7 @@ class MrCharacterMushroom < ApplicationRecord
     colors.joins(:mr_character_mushroom_colors)
           .where(mr_character_mushroom_colors: { mr_character_mushroom_id: id })
           .order('mr_character_mushroom_colors.display_order')
+          .uniq
   end
 
   def color_ids

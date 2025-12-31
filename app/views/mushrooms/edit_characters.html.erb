@@ -86,9 +86,14 @@
                     <span class="text-gray-600">Value: <%= char_mushroom.character_value.presence || "(hidden)" %></span>
                   </div>
                 <% else %>
-                  <div class="mt-2 text-sm bg-white px-2 py-1 rounded border">
-                    <span class="font-medium text-gray-700">Current: <%= char_mushroom.character_value %></span>
-                  </div>
+                  <% key = display_option_key(character) %>
+                  <% boolean_keys = %w[boolean_yes_no boolean_true_false boolean_present_absent checkbox] %>
+                  <% is_radio = key == "radio" || key == "9" %>
+                  <% unless boolean_keys.include?(key) || is_radio %>
+                    <div class="mt-2 text-sm bg-white px-2 py-1 rounded border">
+                      <span class="font-medium text-gray-700">Current: <%= char_mushroom.character_value %></span>
+                    </div>
+                  <% end %>
                 <% end %>
               </div>
 
