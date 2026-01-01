@@ -25,6 +25,7 @@
           <div>
             <span id="db-export-link-1">
               <%= link_to "1. Lookup Tables (includes MBList)", admin_database_export_path(export_type: 'lookup_tables'),
+                  data: { turbo: false },
                   onclick: "return confirm('⚠️ This file is approximately 400MB and may take 10-30 seconds to download. Continue?');",
                   class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
             </span>
@@ -67,6 +68,7 @@
           <div>
             <span id="db-export-link-3">
               <%= link_to "3. MBList Database Only", admin_database_export_path(export_type: 'mblist_only'),
+                  data: { turbo: false },
                   onclick: "return confirm('⚠️ This file is approximately 380MB and may take 10-30 seconds to download. Continue?');",
                   class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
             </span>
