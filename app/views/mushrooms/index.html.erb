@@ -71,8 +71,8 @@
                         saver: { strip: true, quality: 70, effort: 4 }
                       )),
                       alt: mushroom.name || "Mushroom image",
-                      loading: "eager",
-                      class: "w-full h-full object-cover"
+                      class: "w-full h-full object-cover",
+                      onerror: "this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-full bg-gray-200 flex items-center justify-center\\'><span class=\\'text-gray-400 text-sm\\'>Image unavailable</span></div>';"
                     ) %>
                 <% if images.size > 1 %>
                   <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
