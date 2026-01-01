@@ -31,24 +31,20 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
     mr_character = mr_characters(:one)
 
     get mushroom_search_index_url, params: {
-      characters: {
-        mr_character.id.to_s => "test value"
-      }
+      character_ids: [mr_character.id.to_s],
+      character_values: ["test value"]
     }
 
     assert_response :success
   end
 
-  test "should handle dynamic character filters" do
+  test "should handle multiple character filters" do
     mr_character = mr_characters(:one)
+    mr_character_two = mr_characters(:two)
 
     get mushroom_search_index_url, params: {
-      characters: {
-        "new_1" => {
-          "character_id" => mr_character.id.to_s,
-          "value" => "test value"
-        }
-      }
+      character_ids: [mr_character.id.to_s, mr_character_two.id.to_s],
+      character_values: ["test value", "another value"]
     }
 
     assert_response :success
@@ -56,13 +52,13 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
 
   test "should combine multiple filters" do
     mr_character = mr_characters(:one)
+    mr_character_two = mr_characters(:two)
 
     get mushroom_search_index_url, params: {
       q: "test",
       fungus_type_id: @fungus_type.id,
-      characters: {
-        mr_character.id.to_s => "value"
-      }
+      character_ids: [mr_character.id.to_s],
+      character_values: ["value"]
     }
 
     assert_response :success
@@ -79,13 +75,7 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:fungus_types)
   end
 
-  test "should load common characters for filter" do
-    get mushroom_search_index_url
-    assert_response :success
-    assert assigns(:common_characters)
-  end
-
-  test "should only search user's mushrooms" do
+  test "should search ALL mushrooms regardless of ownership" do
     other_user = users(:two)
     other_mushroom = Mushroom.create!(
       user: other_user,
@@ -99,7 +89,7 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     mushrooms = assigns(:mushrooms)
-    assert_not_includes mushrooms, other_mushroom
+    assert_includes mushrooms, other_mushroom
   end
 
   test "should exclude template mushrooms" do
@@ -113,5 +103,23 @@ class MushroomSearchControllerTest < ActionDispatch::IntegrationTest
 
     get mushroom_search_index_url
     assert_redirected_to new_user_session_path
+  end
+
+  test "should autocomplete characters" do
+    mr_character = mr_characters(:one)
+
+    get mushroom_search_autocomplete_characters_url, params: { q: mr_character.name[0..2] }, as: :json
+    assert_response :success
+
+    json_response = JSON.parse(response.body)
+    assert json_response.is_a?(Array)
+  end
+
+  test "should return empty array for autocomplete without query" do
+    get mushroom_search_autocomplete_characters_url, as: :json
+    assert_response :success
+
+    json_response = JSON.parse(response.body)
+    assert_equal [], json_response
   end
 end

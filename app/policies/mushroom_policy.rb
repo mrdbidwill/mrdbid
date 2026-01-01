@@ -11,6 +11,11 @@ class MushroomPolicy < ApplicationPolicy
     def resolve
       scope.where(user: user)
     end
+
+    # For advanced search - allow searching across all users' mushrooms
+    def resolve_all
+      scope.all
+    end
   end
 
   # Shared logic to check if the current user owns the mushroom

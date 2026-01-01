@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "mushroom_search/index"
+  get "mushroom_search/autocomplete_characters", to: "mushroom_search#autocomplete_characters", defaults: { format: :json }
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',

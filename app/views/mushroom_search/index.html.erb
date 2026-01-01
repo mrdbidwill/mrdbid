@@ -3,7 +3,7 @@
 <div class="w-full">
   <div class="mb-6">
     <h1 class="text-3xl font-bold text-gray-900 mb-2">🔍 Advanced Mushroom Search</h1>
-    <p class="text-gray-700">Search your collection by text, fungus type, and specific character values.</p>
+    <p class="text-gray-700">Search <strong>all mushrooms in the database</strong> by text, fungus type, and specific character values.</p>
   </div>
 
   <!-- Search Form -->
@@ -36,7 +36,7 @@
 
       <div class="space-y-3 pl-4 border-l-2 border-blue-200">
         <p class="text-sm text-gray-600 mb-2">
-          Add specific character values to narrow down results. For example, "Cap color = red" or "Gill attachment = free"
+          Add specific character values to narrow down results. Type to search for a character, then enter its value.
         </p>
 
         <div id="character-filters">
@@ -44,11 +44,22 @@
             <% @character_filters.each_with_index do |(char_id, value), index| %>
               <% character = MrCharacter.find_by(id: char_id) %>
               <% next unless character %>
-              <div class="flex gap-2 mb-2 character-filter-row">
-                <%= select_tag "characters[#{char_id}]",
-                      options_from_collection_for_select(@common_characters, :id, :name, char_id),
-                      class: "flex-1 border border-gray-300 rounded px-3 py-2" %>
-                <%= text_field_tag "characters[#{char_id}]", value,
+              <div class="flex gap-2 mb-2 character-filter-row" data-controller="character-autocomplete" data-character-autocomplete-url-value="<%= mushroom_search_autocomplete_characters_path %>">
+                <div class="flex-1 relative">
+                  <input type="text"
+                         value="<%= character.name.tr('_', ' ') %>"
+                         placeholder="Start typing character name..."
+                         data-character-autocomplete-target="input"
+                         data-action="input->character-autocomplete#onInput"
+                         class="w-full border border-gray-300 rounded px-3 py-2">
+                  <input type="hidden"
+                         name="character_ids[]"
+                         value="<%= char_id %>"
+                         data-character-autocomplete-target="hiddenField">
+                  <ul data-character-autocomplete-target="dropdown"
+                      class="hidden absolute z-10 w-full bg-white border border-gray-300 rounded-b-md shadow-lg max-h-60 overflow-y-auto"></ul>
+                </div>
+                <%= text_field_tag "character_values[]", value,
                       placeholder: "Value",
                       class: "w-48 border border-gray-300 rounded px-3 py-2" %>
                 <button type="button" onclick="this.parentElement.remove()"
@@ -157,25 +168,33 @@
 
   function addCharacterFilter() {
     const container = document.getElementById('character-filters');
-    const newRow = document.createElement('div');
-    newRow.className = 'flex gap-2 mb-2 character-filter-row';
     filterCount++;
 
-    newRow.innerHTML = `
-      <select name="characters[new_${filterCount}][character_id]" class="flex-1 border border-gray-300 rounded px-3 py-2">
-        <option value="">-- Select Character --</option>
-        <% @common_characters.each do |char| %>
-          <option value="<%= char.id %>"><%= char.name.tr('_', ' ') %></option>
-        <% end %>
-      </select>
-      <input type="text" name="characters[new_${filterCount}][value]" placeholder="Value"
-             class="w-48 border border-gray-300 rounded px-3 py-2">
-      <button type="button" onclick="this.parentElement.remove()"
-              class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded">
-        Remove
-      </button>
+    const html = `
+      <div class="flex gap-2 mb-2 character-filter-row"
+           data-controller="character-autocomplete"
+           data-character-autocomplete-url-value="<%= mushroom_search_autocomplete_characters_path %>">
+        <div class="flex-1 relative">
+          <input type="text"
+                 placeholder="Start typing character name..."
+                 data-character-autocomplete-target="input"
+                 data-action="input->character-autocomplete#onInput"
+                 class="w-full border border-gray-300 rounded px-3 py-2">
+          <input type="hidden"
+                 name="character_ids[]"
+                 data-character-autocomplete-target="hiddenField">
+          <ul data-character-autocomplete-target="dropdown"
+              class="hidden absolute z-10 w-full bg-white border border-gray-300 rounded-b-md shadow-lg max-h-60 overflow-y-auto"></ul>
+        </div>
+        <input type="text" name="character_values[]" placeholder="Value"
+               class="w-48 border border-gray-300 rounded px-3 py-2">
+        <button type="button" onclick="this.parentElement.remove()"
+                class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded">
+          Remove
+        </button>
+      </div>
     `;
 
-    container.appendChild(newRow);
+    container.insertAdjacentHTML('beforeend', html);
   }
 </script>
