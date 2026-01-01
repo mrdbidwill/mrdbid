@@ -22,10 +22,20 @@ class MushroomPdfService
 
   private
 
+  # Sanitize text to be compatible with Windows-1252 encoding
+  # Replace incompatible characters with safe alternatives
+  def sanitize_for_pdf(text)
+    return '' if text.nil?
+
+    text.to_s
+        .encode('Windows-1252', invalid: :replace, undef: :replace, replace: '?')
+        .force_encoding('UTF-8')
+  end
+
   def render_mushroom(pdf, mushroom)
     # Title
     pdf.font_size(20) do
-      pdf.text mushroom.name, style: :bold, color: '333333'
+      pdf.text sanitize_for_pdf(mushroom.name), style: :bold, color: '333333'
     end
     pdf.move_down 10
 
@@ -52,19 +62,19 @@ class MushroomPdfService
     pdf.font_size(10) do
       info_data = []
 
-      info_data << ['Fungus Type:', mushroom.fungus_type&.name || 'N/A']
-      info_data << ['Location:', location_text(mushroom)]
-      info_data << ['Description:', mushroom.description.presence || 'N/A'] if mushroom.description.present?
-      info_data << ['Comments:', mushroom.comments.presence || 'N/A'] if mushroom.comments.present?
+      info_data << ['Fungus Type:', sanitize_for_pdf(mushroom.fungus_type&.name || 'N/A')]
+      info_data << ['Location:', sanitize_for_pdf(location_text(mushroom))]
+      info_data << ['Description:', sanitize_for_pdf(mushroom.description.presence || 'N/A')] if mushroom.description.present?
+      info_data << ['Comments:', sanitize_for_pdf(mushroom.comments.presence || 'N/A')] if mushroom.comments.present?
 
       # Taxonomy
       if mushroom.genera.any?
         genera_names = mushroom.genera.map(&:name).join(', ')
-        info_data << ['Genera:', genera_names]
+        info_data << ['Genera:', sanitize_for_pdf(genera_names)]
       end
       if mushroom.species.any?
         species_names = mushroom.species.map(&:name).join(', ')
-        info_data << ['Species:', species_names]
+        info_data << ['Species:', sanitize_for_pdf(species_names)]
       end
 
       pdf.table(info_data,
@@ -141,14 +151,14 @@ class MushroomPdfService
 
     grouped.each do |part_name, rows|
       pdf.font_size(12) do
-        pdf.text part_name, style: :bold, color: '666666'
+        pdf.text sanitize_for_pdf(part_name), style: :bold, color: '666666'
       end
       pdf.move_down 3
 
       table_data = rows.map do |rc|
         [
-          rc.mr_character&.name || 'Unknown',
-          format_character_value(rc)
+          sanitize_for_pdf(rc.mr_character&.name || 'Unknown'),
+          sanitize_for_pdf(format_character_value(rc))
         ]
       end
 
@@ -168,12 +178,12 @@ class MushroomPdfService
 
     if mushroom.trees.any?
       tree_names = mushroom.trees.order(:name).pluck(:name).join(', ')
-      associations << ['Associated Trees:', tree_names]
+      associations << ['Associated Trees:', sanitize_for_pdf(tree_names)]
     end
 
     if mushroom.plants.any?
       plant_names = mushroom.plants.order(:name).pluck(:name).join(', ')
-      associations << ['Associated Plants:', plant_names]
+      associations << ['Associated Plants:', sanitize_for_pdf(plant_names)]
     end
 
     if associations.any?
@@ -199,7 +209,7 @@ class MushroomPdfService
     c = rc.mr_character
     display_opt_name = c&.display_option&.name
 
-    case display_opt_name
+    result = case display_opt_name
     when 'color'
       colors = rc.ordered_colors
       if colors.any?
@@ -224,5 +234,7 @@ class MushroomPdfService
     else
       rc.character_value
     end
+
+    result.to_s
   end
 end
