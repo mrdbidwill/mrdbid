@@ -126,7 +126,8 @@ class ImageMushroomsController < ApplicationController
       :comments,
       :camera_make_id,
       :camera_model_id,
-      :lens_id
+      :lens_id,
+      :date_taken
     )
   end
 end

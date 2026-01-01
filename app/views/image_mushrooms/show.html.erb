@@ -107,6 +107,14 @@
         <p class="text-base text-gray-900"><%= @image_mushroom.iso.presence || 'N/A' %></p>
       </div>
 
+      <!-- Date Taken -->
+      <% if @image_mushroom.date_taken.present? %>
+        <div class="border-b pb-2">
+          <span class="text-sm text-gray-600 font-medium">Date Taken</span>
+          <p class="text-base text-gray-900"><%= @image_mushroom.date_taken.strftime("%B %d, %Y at %I:%M %p") %></p>
+        </div>
+      <% end %>
+
       <!-- File Size -->
       <% if @image_mushroom.image_file.attached? %>
         <div class="border-b pb-2">

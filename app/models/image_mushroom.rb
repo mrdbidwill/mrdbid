@@ -82,6 +82,7 @@ class ImageMushroom < ApplicationRecord
       self.exposure     ||= data[:exposure]
       self.aperture     ||= data[:aperture]
       self.iso          ||= data[:iso]
+      self.date_taken   ||= data[:date_taken]
 
       # Auto-match EXIF strings to database records (only if foreign keys not set)
       if camera_make_id.nil? && data[:camera_make].present?
@@ -134,7 +135,8 @@ class ImageMushroom < ApplicationRecord
       lens:         (exif.respond_to?(:lens_model) ? exif.lens_model.to_s.presence : nil),
       exposure:     format_exposure(exif.respond_to?(:exposure_time) ? exif.exposure_time : nil),
       aperture:     format_aperture(exif.respond_to?(:f_number) ? exif.f_number : nil),
-      iso:          (exif.respond_to?(:iso_speed_ratings) ? Array(exif.iso_speed_ratings).compact.first.to_s.presence : nil)
+      iso:          (exif.respond_to?(:iso_speed_ratings) ? Array(exif.iso_speed_ratings).compact.first.to_s.presence : nil),
+      date_taken:   (exif.respond_to?(:date_time_original) ? parse_exif_datetime(exif.date_time_original) : nil)
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] EXIFR parse failed: #{e.class} - #{e.message}")
@@ -162,6 +164,8 @@ class ImageMushroom < ApplicationRecord
     fnum = tags[:fnumber] || tags[:f_number]
     aperture_str = fnum ? format_aperture(fnum) : nil
 
+    date_original = tags[:date_time_original] || tags[:datetimeoriginal] || tags[:create_date]
+
     {
       image_width:  safe_int(width),
       image_height: safe_int(height),
@@ -170,7 +174,8 @@ class ImageMushroom < ApplicationRecord
       lens:         (tags[:lens_model] || tags[:lens] || nil).to_s.presence,
       exposure:     exposure_str,
       aperture:     aperture_str,
-      iso:          (tags[:iso] || tags[:iso_speed_ratings]).to_s.presence
+      iso:          (tags[:iso] || tags[:iso_speed_ratings]).to_s.presence,
+      date_taken:   parse_exif_datetime(date_original)
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] ExifTool parse failed: #{e.class} - #{e.message}")
@@ -208,6 +213,24 @@ class ImageMushroom < ApplicationRecord
     f = fnum.to_f
     return nil if f <= 0
     "f/#{f.round(1)}"
+  end
+
+  def parse_exif_datetime(value)
+    return nil if value.nil?
+
+    # If already a Time/DateTime object, convert to datetime
+    return value.to_datetime if value.respond_to?(:to_datetime)
+
+    # If it's a string, try parsing common EXIF formats
+    return nil unless value.is_a?(String)
+
+    # EXIF format: "YYYY:MM:DD HH:MM:SS"
+    if value =~ /^(\d{4}):(\d{2}):(\d{2})\s+(\d{2}):(\d{2}):(\d{2})/
+      DateTime.strptime(value, "%Y:%m:%d %H:%M:%S") rescue nil
+    else
+      # Try ISO8601 or other standard formats
+      DateTime.parse(value) rescue nil
+    end
   end
 
   def preprocess_thumbnail_variant
