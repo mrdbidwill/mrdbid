@@ -189,19 +189,21 @@
     // Handle PDF export with loading indicator
     const exportPdfLink = document.getElementById('export-all-pdf-link');
     if (exportPdfLink) {
-      exportPdfLink.addEventListener('click', function(e) {
-        e.preventDefault();
+      // Store original content
+      const originalButtonContent = exportPdfLink.innerHTML;
 
+      exportPdfLink.addEventListener('click', function(e) {
         // Only proceed if user confirms (if confirm dialog exists)
         const confirmMessage = this.dataset.turboConfirm;
         if (confirmMessage) {
           if (!confirm(confirmMessage)) {
+            e.preventDefault();
             return;
           }
         }
 
-        const originalButtonContent = this.innerHTML;
-        const exportUrl = this.href;
+        // Don't prevent default - let the download happen naturally
+        // Just update the UI to show loading state
 
         // Change button text
         this.innerHTML = '⏳ Exporting...';
@@ -242,20 +244,8 @@
           }
         }
 
-        // Create hidden iframe for download
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        // Trigger download via iframe
-        iframe.src = exportUrl;
-
-        // Reset UI after a delay (adjust based on typical generation time)
-        // We'll use a minimum delay plus checking for user activity
-        setTimeout(function() {
-          resetUI();
-          document.body.removeChild(iframe);
-        }, 3000); // Reset after 3 seconds minimum
+        // Reset UI after a delay to allow download to start
+        setTimeout(resetUI, 3000);
       });
     }
   }
