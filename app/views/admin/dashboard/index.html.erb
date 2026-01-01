@@ -95,37 +95,50 @@
           ℹ️ All options exclude user data and security tables. Use these to populate a fresh installation.
         </small>
         <script>
-          // Detect if user is on mobile device
-          if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            for (let i = 1; i <= 3; i++) {
-              document.getElementById('db-export-link-' + i).style.display = 'none';
-              document.getElementById('db-export-mobile-warning-' + i).style.display = 'inline';
-              document.getElementById('db-export-desktop-warning-' + i).style.display = 'none';
-              document.getElementById('db-export-mobile-msg-' + i).style.display = 'inline';
-            }
-          }
+          function initializeDatabaseExports() {
+            // Detect if user is on mobile device
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+              for (let i = 1; i <= 3; i++) {
+                const linkElement = document.getElementById('db-export-link-' + i);
+                const mobileWarning = document.getElementById('db-export-mobile-warning-' + i);
+                const desktopWarning = document.getElementById('db-export-desktop-warning-' + i);
+                const mobileMsg = document.getElementById('db-export-mobile-msg-' + i);
 
-          // Add confirmation dialogs for large downloads
-          document.addEventListener('DOMContentLoaded', function() {
+                if (linkElement) linkElement.style.display = 'none';
+                if (mobileWarning) mobileWarning.style.display = 'inline';
+                if (desktopWarning) desktopWarning.style.display = 'none';
+                if (mobileMsg) mobileMsg.style.display = 'inline';
+              }
+            }
+
+            // Add confirmation dialogs for large downloads
             const link1 = document.querySelector('#db-export-link-1 a');
             const link3 = document.querySelector('#db-export-link-3 a');
 
             if (link1) {
               link1.addEventListener('click', function(e) {
-                if (!confirm('⚠️ This file is approximately 400MB and may take 10-30 seconds to download. Continue?')) {
-                  e.preventDefault();
+                e.preventDefault();
+                if (confirm('⚠️ This file is approximately 400MB and may take 10-30 seconds to download. Continue?')) {
+                  window.location.href = this.href;
                 }
               });
             }
 
             if (link3) {
               link3.addEventListener('click', function(e) {
-                if (!confirm('⚠️ This file is approximately 380MB and may take 10-30 seconds to download. Continue?')) {
-                  e.preventDefault();
+                e.preventDefault();
+                if (confirm('⚠️ This file is approximately 380MB and may take 10-30 seconds to download. Continue?')) {
+                  window.location.href = this.href;
                 }
               });
             }
-          });
+          }
+
+          // Initialize on page load
+          document.addEventListener('DOMContentLoaded', initializeDatabaseExports);
+
+          // Re-initialize on Turbo navigation
+          document.addEventListener('turbo:load', initializeDatabaseExports);
         </script>
       </div>
     </li>
