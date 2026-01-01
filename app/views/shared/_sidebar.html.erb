@@ -190,14 +190,24 @@
     const exportPdfLink = document.getElementById('export-all-pdf-link');
     if (exportPdfLink) {
       exportPdfLink.addEventListener('click', function(e) {
-        // Only show loading if user confirms (if confirm dialog exists)
+        e.preventDefault();
+
+        // Only proceed if user confirms (if confirm dialog exists)
         const confirmMessage = this.dataset.turboConfirm;
         if (confirmMessage) {
           if (!confirm(confirmMessage)) {
-            e.preventDefault();
             return;
           }
         }
+
+        const originalButtonContent = this.innerHTML;
+        const exportUrl = this.href;
+
+        // Change button text
+        this.innerHTML = '⏳ Exporting...';
+        this.classList.remove('hover:bg-indigo-700');
+        this.classList.add('opacity-75', 'cursor-not-allowed');
+        this.style.pointerEvents = 'none';
 
         // Show loading overlay
         const loadingOverlay = document.createElement('div');
@@ -218,51 +228,34 @@
         `;
         document.body.appendChild(loadingOverlay);
 
-        // Change button text
-        const originalButtonContent = this.innerHTML;
-        this.innerHTML = '⏳ Exporting...';
-        this.classList.remove('hover:bg-indigo-700');
-        this.classList.add('opacity-75', 'cursor-not-allowed');
-        this.style.pointerEvents = 'none';
-
-        // Detect when download completes by checking window focus
-        let focusCheckCount = 0;
-        const downloadCheckInterval = setInterval(function() {
-          focusCheckCount++;
-          // Check if window has regained focus (happens when download dialog closes)
-          if (document.hasFocus() && focusCheckCount > 5) { // Wait at least 5 checks (1.5 sec) before considering focus
-            clearInterval(downloadCheckInterval);
-            // Give it a moment for the download to complete, then remove overlay
-            setTimeout(function() {
-              const overlay = document.getElementById('pdf-loading-overlay');
-              if (overlay) {
-                overlay.remove();
-              }
-              // Reset button
-              if (exportPdfLink) {
-                exportPdfLink.innerHTML = originalButtonContent;
-                exportPdfLink.classList.add('hover:bg-indigo-700');
-                exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-                exportPdfLink.style.pointerEvents = '';
-              }
-            }, 1000); // 1 second delay after focus returns
+        // Function to reset UI
+        function resetUI() {
+          const overlay = document.getElementById('pdf-loading-overlay');
+          if (overlay) {
+            overlay.remove();
           }
-
-          // Stop checking after 100 attempts (30 seconds)
-          if (focusCheckCount > 100) {
-            clearInterval(downloadCheckInterval);
-            const overlay = document.getElementById('pdf-loading-overlay');
-            if (overlay) {
-              overlay.remove();
-            }
-            if (exportPdfLink) {
-              exportPdfLink.innerHTML = originalButtonContent;
-              exportPdfLink.classList.add('hover:bg-indigo-700');
-              exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-              exportPdfLink.style.pointerEvents = '';
-            }
+          if (exportPdfLink) {
+            exportPdfLink.innerHTML = originalButtonContent;
+            exportPdfLink.classList.add('hover:bg-indigo-700');
+            exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+            exportPdfLink.style.pointerEvents = '';
           }
-        }, 300); // Check every 300ms
+        }
+
+        // Create hidden iframe for download
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Trigger download via iframe
+        iframe.src = exportUrl;
+
+        // Reset UI after a delay (adjust based on typical generation time)
+        // We'll use a minimum delay plus checking for user activity
+        setTimeout(function() {
+          resetUI();
+          document.body.removeChild(iframe);
+        }, 3000); // Reset after 3 seconds minimum
       });
     }
   }
