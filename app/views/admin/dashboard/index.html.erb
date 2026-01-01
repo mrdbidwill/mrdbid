@@ -104,6 +104,28 @@
               document.getElementById('db-export-mobile-msg-' + i).style.display = 'inline';
             }
           }
+
+          // Add confirmation dialogs for large downloads
+          document.addEventListener('DOMContentLoaded', function() {
+            const link1 = document.querySelector('#db-export-link-1 a');
+            const link3 = document.querySelector('#db-export-link-3 a');
+
+            if (link1) {
+              link1.addEventListener('click', function(e) {
+                if (!confirm('⚠️ This file is approximately 400MB and may take 10-30 seconds to download. Continue?')) {
+                  e.preventDefault();
+                }
+              });
+            }
+
+            if (link3) {
+              link3.addEventListener('click', function(e) {
+                if (!confirm('⚠️ This file is approximately 380MB and may take 10-30 seconds to download. Continue?')) {
+                  e.preventDefault();
+                }
+              });
+            }
+          });
         </script>
       </div>
     </li>
