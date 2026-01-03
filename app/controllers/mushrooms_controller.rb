@@ -151,7 +151,13 @@ class MushroomsController < ApplicationController
     )
 
     if result.success?
-      redirect_to new_image_mushroom_path(mushroom_id: result.data.id), notice: "Mushroom was successfully created. Now add an image."
+      flash[:notice] = "Mushroom was successfully created. Now add an image."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, new_image_mushroom_path(mushroom_id: result.data.id))
+        end
+        format.html { redirect_to new_image_mushroom_path(mushroom_id: result.data.id), notice: "Mushroom was successfully created. Now add an image.", status: :see_other }
+      end
     else
       # result.data contains the mushroom object (even on failure) for form re-render
       @mushroom = result.data || Mushroom.new(mushroom_params.except(:user_id))
@@ -215,7 +221,13 @@ class MushroomsController < ApplicationController
     )
 
     if result.success?
-      redirect_to result.data, notice: "Mushroom was successfully updated."
+      flash[:notice] = "Mushroom was successfully updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, result.data)
+        end
+        format.html { redirect_to result.data, notice: "Mushroom was successfully updated.", status: :see_other }
+      end
     else
       # Reload with eager loading for edit form associations
       @mushroom = Mushroom.includes(
@@ -232,7 +244,13 @@ class MushroomsController < ApplicationController
     result = Mushrooms::Destroyer.call(user: current_user, mushroom: @mushroom)
 
     if result.success?
-      redirect_to mushrooms_path, notice: "Mushroom was successfully deleted."
+      flash[:notice] = "Mushroom was successfully deleted."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, mushrooms_path)
+        end
+        format.html { redirect_to mushrooms_path, notice: "Mushroom was successfully deleted.", status: :see_other }
+      end
     else
       redirect_to @mushroom, alert: result.error
     end

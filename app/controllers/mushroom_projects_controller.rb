@@ -41,7 +41,13 @@ class MushroomProjectsController < ApplicationController
     end
 
     if @mushroom_project.save
-      redirect_to mushrooms_path, notice: "Group was successfully added."
+      flash[:notice] = "Group was successfully added."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, mushrooms_path)
+        end
+        format.html { redirect_to mushrooms_path, notice: "Group was successfully added.", status: :see_other }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -54,7 +60,13 @@ class MushroomProjectsController < ApplicationController
 
   def update
     if @mushroom_project.update(mushroom_project_params)
-      redirect_to mushroom_project_path(@mushroom_project), notice: "All group mushroom was successfully updated."
+      flash[:notice] = "All group mushroom was successfully updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, mushroom_project_path(@mushroom_project))
+        end
+        format.html { redirect_to mushroom_project_path(@mushroom_project), notice: "All group mushroom was successfully updated.", status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -63,7 +75,13 @@ class MushroomProjectsController < ApplicationController
 
   def destroy
     @mushroom_project.destroy
-    redirect_to mushroom_path, notice: "The group was successfully removed."
+    flash[:notice] = "The group was successfully removed."
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.action(:redirect, mushrooms_path)
+      end
+      format.html { redirect_to mushrooms_path, notice: "The group was successfully removed.", status: :see_other }
+    end
   end
 
 

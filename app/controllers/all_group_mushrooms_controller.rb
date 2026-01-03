@@ -33,7 +33,13 @@ class AllGroupMushroomsController < ApplicationController
     @mushroom = Mushroom.find_by(id: all_group_mushroom_params[:mushroom_id])
     @all_groups = @mushroom ? AllGroup.where(user_id: @mushroom.user_id) : AllGroup.none
     if @mushroom && AllGroup.where(id: @all_group_mushroom.all_group_id, user_id: @mushroom.user_id).exists? && @all_group_mushroom.save
-      redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully created."
+      flash[:notice] = "All group mushroom was successfully created."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, all_group_mushroom_path(@all_group_mushroom))
+        end
+        format.html { redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully created.", status: :see_other }
+      end
     else
       render :new, status: :unprocessable_entity, locals: { all_group_mushroom: @all_group_mushroom, all_groups: @all_groups, mushrooms: @mushroom ? Mushroom.where(id: @mushroom.id) : Mushroom.none }
     end
@@ -55,7 +61,13 @@ class AllGroupMushroomsController < ApplicationController
     end
 
     if @all_group_mushroom.update(all_group_mushroom_params)
-      redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully updated."
+      flash[:notice] = "All group mushroom was successfully updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, all_group_mushroom_path(@all_group_mushroom))
+        end
+        format.html { redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully updated.", status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -70,7 +82,13 @@ class AllGroupMushroomsController < ApplicationController
     end
 
     @all_group_mushroom.destroy
-    redirect_to mushrooms_path, notice: "That group was successfully removed."
+    flash[:notice] = "That group was successfully removed."
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.action(:redirect, mushrooms_path)
+      end
+      format.html { redirect_to mushrooms_path, notice: "That group was successfully removed.", status: :see_other }
+    end
   end
 
 

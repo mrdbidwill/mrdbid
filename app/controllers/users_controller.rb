@@ -25,7 +25,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      flash[:notice] = 'User was successfully created.'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, @user)
+        end
+        format.html { redirect_to @user, notice: 'User was successfully created.', status: :see_other }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +44,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/:id
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      flash[:notice] = 'User was successfully updated.'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, @user)
+        end
+        format.html { redirect_to @user, notice: 'User was successfully updated.', status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -47,7 +59,13 @@ class UsersController < ApplicationController
   # DELETE /users/:id
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully deleted.'
+    flash[:notice] = 'User was successfully deleted.'
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.action(:redirect, users_path)
+      end
+      format.html { redirect_to users_path, notice: 'User was successfully deleted.', status: :see_other }
+    end
   end
 
   private

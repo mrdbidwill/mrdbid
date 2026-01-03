@@ -44,7 +44,13 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
     authorize @project
     if @project.save
-      redirect_to project_url(@project), notice: "Project was successfully created."
+      flash[:notice] = "Project was successfully created."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, project_url(@project))
+        end
+        format.html { redirect_to project_url(@project), notice: "Project was successfully created.", status: :see_other }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -54,7 +60,13 @@ class ProjectsController < ApplicationController
   def update
     authorize @project
     if @project.update(project_params)
-      redirect_to @project, notice: "Project was successfully updated."
+      flash[:notice] = "Project was successfully updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, @project)
+        end
+        format.html { redirect_to @project, notice: "Project was successfully updated.", status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -65,7 +77,13 @@ class ProjectsController < ApplicationController
   def destroy
     authorize @project
     @project.destroy!
-    redirect_to projects_path, notice: "Project was successfully deleted."
+    flash[:notice] = "Project was successfully deleted."
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.action(:redirect, projects_path)
+      end
+      format.html { redirect_to projects_path, notice: "Project was successfully deleted.", status: :see_other }
+    end
   end
 
 

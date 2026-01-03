@@ -74,7 +74,7 @@ class MushroomProjectsControllerTest < ActionDispatch::IntegrationTest
       delete mushroom_project_url(@mushroom_project)
     end
 
-    assert_redirected_to mushroom_path
+    assert_redirected_to mushrooms_path
     assert_equal "The group was successfully removed.", flash[:notice]
   end
 
