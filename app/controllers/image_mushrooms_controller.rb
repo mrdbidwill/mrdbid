@@ -97,7 +97,16 @@ class ImageMushroomsController < ApplicationController
     authorize @image_mushroom
     parent_id = @image_mushroom.mushroom_id
     @image_mushroom.destroy
-    redirect_to mushroom_path(parent_id), notice: 'Image was successfully deleted.'
+
+    redirect_path = parent_id ? mushroom_path(parent_id) : image_mushrooms_path
+    flash[:notice] = 'Image was successfully deleted.'
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.action(:redirect, redirect_path)
+      end
+      format.html { redirect_to redirect_path, notice: 'Image was successfully deleted.', status: :see_other }
+    end
   end
 
   private
