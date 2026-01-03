@@ -134,12 +134,6 @@ export default class extends Controller {
     submitColors(event) {
         event.preventDefault()
 
-        // Validate that at least one color is selected
-        if (this.selectedColors.length === 0) {
-            alert('Please select at least one color. Use the "Clear All" button only if you want to remove colors, then click Cancel to close without saving.')
-            return
-        }
-
         // Create form data
         const formData = new FormData(this.formTarget)
 
@@ -164,7 +158,7 @@ export default class extends Controller {
             } else {
                 response.text().then(text => {
                     console.error('Server error:', text)
-                    alert('Error saving colors. At least one color must be selected.')
+                    alert('Error saving colors. Please try again.')
                 })
             }
         }).catch(error => {

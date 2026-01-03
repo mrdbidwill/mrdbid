@@ -97,8 +97,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
       character_value: "test"
     }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
 
-    assert_response :see_other
-    assert_redirected_to edit_mushroom_path(@mushroom)
+    assert_response :success
+    assert_match /turbo-stream action="redirect"/, response.body
     assert_equal "Character saved.", flash[:notice]
   end
 
@@ -193,8 +193,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
       color_ids: [color_one.id]
     }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
 
-    assert_response :see_other
-    assert_redirected_to edit_mushroom_path(@mushroom)
+    assert_response :success
+    assert_match /turbo-stream action="redirect"/, response.body
     assert_equal "Character saved.", flash[:notice]
 
     rcm = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)
