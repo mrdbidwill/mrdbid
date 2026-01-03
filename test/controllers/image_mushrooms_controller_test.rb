@@ -110,15 +110,14 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Image was successfully deleted.", flash[:notice]
   end
 
-  test "should destroy image_mushroom with turbo_stream format" do
+  test "should destroy image_mushroom and redirect" do
     sign_in @user
 
     assert_difference("ImageMushroom.count", -1) do
-      delete image_mushroom_url(@image_mushroom), headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      delete image_mushroom_url(@image_mushroom)
     end
 
-    assert_response :success
-    assert_match /turbo-stream action="redirect"/, response.body
+    assert_redirected_to mushroom_path(@mushroom)
     assert_equal "Image was successfully deleted.", flash[:notice]
   end
 

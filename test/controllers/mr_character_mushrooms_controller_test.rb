@@ -90,15 +90,14 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to custom_path
   end
 
-  test "should handle turbo stream format" do
+  test "should redirect after create" do
     post mr_character_mushrooms_url, params: {
       mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       character_value: "test"
-    }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    }
 
-    assert_response :success
-    assert_match /turbo-stream action="redirect"/, response.body
+    assert_redirected_to edit_mushroom_path(@mushroom)
     assert_equal "Character saved.", flash[:notice]
   end
 
@@ -183,7 +182,7 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, rcm_updated.colors.first.id
   end
 
-  test "should handle turbo_stream format with colors" do
+  test "should redirect after create with colors" do
     @mr_character.update!(display_option: display_options(:color_picker))
     color_one = colors(:one)
 
@@ -191,10 +190,9 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
       mushroom_id: @mushroom.id,
       mr_character_id: @mr_character.id,
       color_ids: [color_one.id]
-    }, headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    }
 
-    assert_response :success
-    assert_match /turbo-stream action="redirect"/, response.body
+    assert_redirected_to edit_mushroom_path(@mushroom)
     assert_equal "Character saved.", flash[:notice]
 
     rcm = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)

@@ -30,13 +30,7 @@ class AllGroupsController < ApplicationController
     @all_group = current_user.all_groups.build(all_group_params)
     authorize @all_group
     if @all_group.save
-      flash[:notice] = "Group was successfully created."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, all_group_url(@all_group))
-        end
-        format.html { redirect_to all_group_url(@all_group), notice: "Group was successfully created.", status: :see_other }
-      end
+      redirect_to all_group_url(@all_group), notice: "Group was successfully created.", status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,13 +42,7 @@ class AllGroupsController < ApplicationController
   def update
     @all_group = authorize current_user.all_groups.find(params[:id])
     if @all_group.update(all_group_params)
-      flash[:notice] = "Group was successfully updated."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, @all_group)
-        end
-        format.html { redirect_to @all_group, notice: "Group was successfully updated.", status: :see_other }
-      end
+      redirect_to @all_group, notice: "Group was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -65,13 +53,7 @@ class AllGroupsController < ApplicationController
   def destroy
     @all_group = authorize current_user.all_groups.find(params[:id])
     @all_group.destroy!
-    flash[:notice] = "Group was successfully deleted."
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.action(:redirect, all_groups_path)
-      end
-      format.html { redirect_to all_groups_path, notice: "Group was successfully deleted.", status: :see_other }
-    end
+    redirect_to all_groups_path, notice: "Group was successfully deleted.", status: :see_other
   end
 
 

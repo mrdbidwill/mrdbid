@@ -38,13 +38,7 @@ class ClusterMushroomsController < ApplicationController
     @clusters = @mushroom ? Cluster.where(user_id: @mushroom.user_id) : Cluster.none
     # Ownership guard: cluster must belong to the mushroom owner
     if @mushroom && Cluster.where(id: @cluster_mushroom.cluster_id, user_id: @mushroom.user_id).exists? && @cluster_mushroom.save
-      flash[:notice] = "Cluster mushroom was successfully created."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, cluster_mushroom_path(@cluster_mushroom))
-        end
-        format.html { redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully created.", status: :see_other }
-      end
+      redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully created.", status: :see_other
     else
       @cluster_mushroom.errors.add(:cluster_id, "is not owned by the mushroom owner") if @mushroom && @cluster_mushroom.cluster_id.present? && !Cluster.where(id: @cluster_mushroom.cluster_id, user_id: @mushroom.user_id).exists?
       render :new, status: :unprocessable_entity
@@ -69,13 +63,7 @@ class ClusterMushroomsController < ApplicationController
     end
 
     if @cluster_mushroom.update(cluster_mushroom_params)
-      flash[:notice] = "Cluster mushroom was successfully updated."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, cluster_mushroom_path(@cluster_mushroom))
-        end
-        format.html { redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully updated.", status: :see_other }
-      end
+      redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -90,13 +78,7 @@ class ClusterMushroomsController < ApplicationController
     end
 
     @cluster_mushroom.destroy
-    flash[:notice] = "Cluster was successfully removed."
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.action(:redirect, mushrooms_path)
-      end
-      format.html { redirect_to mushrooms_path, notice: "Cluster was successfully removed.", status: :see_other }
-    end
+    redirect_to mushrooms_path, notice: "Cluster was successfully removed.", status: :see_other
   end
 
 

@@ -19,13 +19,7 @@ class MrCharacterMushroomsController < ApplicationController
       if color_ids.empty? && @rc.persisted?
         @rc.destroy
         redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
-        flash[:notice] = "Character cleared."
-        respond_to do |format|
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.action(:redirect, redirect_path)
-          end
-          format.html { redirect_to redirect_path, notice: "Character cleared.", status: :see_other }
-        end
+        redirect_to redirect_path, notice: "Character cleared.", status: :see_other
         return
       end
 
@@ -40,21 +34,9 @@ class MrCharacterMushroomsController < ApplicationController
     redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
 
     if @rc.save
-      flash[:notice] = "Character saved."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, redirect_path)
-        end
-        format.html { redirect_to redirect_path, notice: "Character saved.", status: :see_other }
-      end
+      redirect_to redirect_path, notice: "Character saved.", status: :see_other
     else
-      flash[:alert] = @rc.errors.full_messages.to_sentence
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, redirect_path), status: :unprocessable_entity
-        end
-        format.html { redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence, status: :see_other }
-      end
+      redirect_to redirect_path, alert: @rc.errors.full_messages.to_sentence, status: :see_other
     end
   end
 

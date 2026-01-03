@@ -50,13 +50,7 @@ class ClustersController < ApplicationController
     @cluster = current_user.clusters.build(cluster_params)
     authorize @cluster
     if @cluster.save
-      flash[:notice] = "Cluster was successfully created."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, cluster_url(@cluster))
-        end
-        format.html { redirect_to cluster_url(@cluster), notice: "Cluster was successfully created.", status: :see_other }
-      end
+      redirect_to cluster_url(@cluster), notice: "Cluster was successfully created.", status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -66,13 +60,7 @@ class ClustersController < ApplicationController
   def update
     @cluster = authorize current_user.clusters.find(params[:id])
     if @cluster.update(cluster_params)
-      flash[:notice] = "Cluster was successfully updated."
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, @cluster)
-        end
-        format.html { redirect_to @cluster, notice: "Cluster was successfully updated.", status: :see_other }
-      end
+      redirect_to @cluster, notice: "Cluster was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -83,13 +71,7 @@ class ClustersController < ApplicationController
   def destroy
     @cluster = authorize current_user.clusters.find(params[:id])
     @cluster.destroy!
-    flash[:notice] = "Cluster was successfully deleted."
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.action(:redirect, clusters_path)
-      end
-      format.html { redirect_to clusters_path, notice: "Cluster was successfully deleted.", status: :see_other }
-    end
+    redirect_to clusters_path, notice: "Cluster was successfully deleted.", status: :see_other
   end
 
 
