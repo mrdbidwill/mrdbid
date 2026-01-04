@@ -25,9 +25,9 @@
                   width: (image_size || [120,120])[0],
                   height: (image_size || [120,120])[1],
                   class: "w-full h-full object-cover block",
-                  loading: "lazy",
+                  loading: "eager",
                   decoding: "async",
-                  fetchpriority: "low",
+                  fetchpriority: "high",
                   alt: image_mushroom.image_name.presence || alt_fallback
                 ) %>
           </picture>

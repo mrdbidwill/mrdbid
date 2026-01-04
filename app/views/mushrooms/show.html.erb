@@ -54,9 +54,9 @@
                     width: 120,
                     height: 120,
                     class: "w-full h-full object-cover block",
-                    loading: "lazy",
+                    loading: "eager",
                     decoding: "async",
-                    fetchpriority: "low",
+                    fetchpriority: "high",
                     alt: image_mushroom.image_name.presence || @mushroom.name
                   ) %>
             </picture>
