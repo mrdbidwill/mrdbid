@@ -243,6 +243,7 @@ When creating a new controller, ensure:
 - Rails 8 Turbo Documentation: https://turbo.hotwired.dev/
 - Rails Guides - Working with JavaScript: https://guides.rubyonrails.org/working_with_javascript_in_rails.html
 - This pattern was established after multiple incidents of broken flash messages (see commits)
+- **Related Standard**: See `IPAD_IMAGE_LOADING.md` for image loading requirements
 
 ## History of This Issue
 
