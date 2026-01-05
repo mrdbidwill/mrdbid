@@ -41,9 +41,13 @@
   <% if current_colors.any? %>
     <div class="flex -space-x-2">
       <% current_colors.first(3).each do |color| %>
-        <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
-                      alt: color.common_name,
-                      class: "w-5 h-5 rounded-full border-2 border-white" %>
+        <% if color.is_simplified? %>
+          <div class="w-5 h-5 rounded-full border-2 border-white" style="background-color: <%= color.hex %>"></div>
+        <% else %>
+          <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                        alt: color.common_name,
+                        class: "w-5 h-5 rounded-full border-2 border-white" %>
+        <% end %>
       <% end %>
       <% if current_colors.size > 3 %>
         <span class="w-5 h-5 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs">
@@ -123,7 +127,7 @@
                 <%= family_name %> Family
                 <span class="text-xs text-gray-500 font-normal">(<%= colors.size %> colors)</span>
               </h5>
-              <div class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-9 gap-3">
+              <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-3">
                 <% colors.each do |color| %>
                   <% is_selected = selected_color_ids.include?(color.id) %>
                   <button type="button"
@@ -132,7 +136,7 @@
                           title="<%= color.latin_name %> (<%= color.common_name %>)"
                           class="group relative flex flex-col items-center gap-2 p-2 border-2 rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %>">
                     <!-- Color swatch -->
-                    <div class="w-full aspect-square rounded-md border border-gray-200"
+                    <div class="w-full aspect-square rounded-md border border-gray-200 min-w-[60px] min-h-[60px]"
                          style="background-color: <%= color.hex %>"></div>
 
                     <!-- Color name -->
