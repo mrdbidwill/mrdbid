@@ -134,7 +134,7 @@
                           data-color-id="<%= color.id %>"
                           data-action="click->multicolor-picker#toggleColor"
                           title="<%= color.latin_name %> (<%= color.common_name %>)"
-                          class="group relative flex flex-col items-center gap-2 p-3 border-2 rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %>">
+                          class="group relative flex flex-col items-center gap-2 p-2 border-2 rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %> w-full">
                     <!-- Color swatch -->
                     <div class="w-full aspect-square rounded-md border border-gray-200"
                          style="background-color: <%= color.hex %>"></div>
