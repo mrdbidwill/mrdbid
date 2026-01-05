@@ -127,7 +127,7 @@
                 <%= family_name %> Family
                 <span class="text-xs text-gray-500 font-normal">(<%= colors.size %> colors)</span>
               </h5>
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 <% colors.each do |color| %>
                   <% is_selected = selected_color_ids.include?(color.id) %>
                   <button type="button"
