@@ -9,4 +9,31 @@ class Color < ApplicationRecord
 
   # Scope to find colors by group
   scope :by_group, ->(group) { where(color_group: group) }
+
+  # Scopes for simplified color system
+  scope :simplified, -> { where(is_simplified: true) }
+  scope :legacy_ams, -> { where(is_simplified: false) }
+  scope :by_family, ->(family) { where(color_family: family) }
+  scope :by_display_order, -> { order(display_order: :asc) }
+
+  # Get all color families in display order
+  def self.color_families
+    simplified.select(:color_family).distinct.pluck(:color_family)
+  end
+
+  # Get colors grouped by family
+  def self.grouped_by_family
+    simplified.by_display_order.group_by(&:color_family)
+  end
+
+  # Find the simplified equivalent of a legacy AMS color
+  def simplified_equivalent
+    return self if is_simplified?
+    Color.find_by(id: simplified_color_id) if simplified_color_id.present?
+  end
+
+  # Check if this is a simplified color
+  def is_simplified?
+    is_simplified == true
+  end
 end

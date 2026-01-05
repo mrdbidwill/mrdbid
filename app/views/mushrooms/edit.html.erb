@@ -151,10 +151,14 @@
                 <div class="flex flex-wrap gap-2">
                   <% colors.each do |color| %>
                     <div class="flex items-center text-sm text-gray-700">
-                      <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
-                                    alt: "Color #{color.id}",
-                                    class: "w-6 h-6 rounded border" %>
-                      <span class="ml-1"><%= color.latin_name %></span>
+                      <% if color.is_simplified? %>
+                        <div class="w-6 h-6 rounded border border-gray-300" style="background-color: <%= color.hex %>"></div>
+                      <% else %>
+                        <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                      alt: "Color #{color.id}",
+                                      class: "w-6 h-6 rounded border" %>
+                      <% end %>
+                      <span class="ml-1"><%= color.common_name %></span>
                     </div>
                   <% end %>
                 </div>

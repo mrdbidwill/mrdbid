@@ -67,11 +67,16 @@
                     <div class="flex items-center gap-2 flex-wrap mt-2 text-sm">
                       <% colors.each_with_index do |color, index| %>
                         <div class="flex items-center gap-1">
-                          <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
-                                        alt: "#{color.latin_name} (#{color.common_name})",
-                                        class: "w-6 h-6 rounded border-2 #{index == 0 ? 'border-blue-500' : 'border-gray-300'}" %>
+                          <% if color.is_simplified? %>
+                            <div class="w-6 h-6 rounded border-2 <%= index == 0 ? 'border-blue-500' : 'border-gray-300' %>"
+                                 style="background-color: <%= color.hex %>"></div>
+                          <% else %>
+                            <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                          alt: "#{color.latin_name} (#{color.common_name})",
+                                          class: "w-6 h-6 rounded border-2 #{index == 0 ? 'border-blue-500' : 'border-gray-300'}" %>
+                          <% end %>
                           <span class="<%= index == 0 ? 'font-semibold' : '' %>">
-                            <%= color.latin_name %> (<%= color.common_name %>)
+                            <%= color.common_name %>
                           </span>
                         </div>
                       <% end %>
