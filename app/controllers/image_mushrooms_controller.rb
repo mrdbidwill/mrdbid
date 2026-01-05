@@ -20,6 +20,16 @@ class ImageMushroomsController < ApplicationController
 
   def show
     authorize @image_mushroom if user_signed_in?
+
+    # Get all images for this mushroom in the same order as shown on the mushroom page
+    mushroom = @image_mushroom.mushroom
+    all_images = mushroom.image_mushrooms.select { |im| im.image_file.attached? }
+    current_index = all_images.index(@image_mushroom)
+
+    if current_index
+      @prev_image = all_images[current_index - 1] if current_index > 0
+      @next_image = all_images[current_index + 1] if current_index < all_images.length - 1
+    end
   end
 
   def new
@@ -106,7 +116,7 @@ class ImageMushroomsController < ApplicationController
 
   def set_image_mushroom
     # Eager load all associations used in views and disable strict loading for this record
-    @image_mushroom = ImageMushroom.includes(:mushroom, :part, :camera_make, :camera_model, :lens).find(params[:id])
+    @image_mushroom = ImageMushroom.includes(mushroom: :image_mushrooms).includes(:part, :camera_make, :camera_model, :lens).find(params[:id])
     @image_mushroom.strict_loading!(false) if @image_mushroom.respond_to?(:strict_loading!)
   end
 
