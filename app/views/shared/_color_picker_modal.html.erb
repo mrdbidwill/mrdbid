@@ -127,16 +127,16 @@
                 <%= family_name %> Family
                 <span class="text-xs text-gray-500 font-normal">(<%= colors.size %> colors)</span>
               </h5>
-              <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-3">
+              <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
                 <% colors.each do |color| %>
                   <% is_selected = selected_color_ids.include?(color.id) %>
                   <button type="button"
                           data-color-id="<%= color.id %>"
                           data-action="click->multicolor-picker#toggleColor"
                           title="<%= color.latin_name %> (<%= color.common_name %>)"
-                          class="group relative flex flex-col items-center gap-2 p-2 border-2 rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %>">
+                          class="group relative flex flex-col items-center gap-2 p-3 border-2 rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %>">
                     <!-- Color swatch -->
-                    <div class="w-full aspect-square rounded-md border border-gray-200 min-w-[60px] min-h-[60px]"
+                    <div class="w-20 h-20 rounded-md border border-gray-200"
                          style="background-color: <%= color.hex %>"></div>
 
                     <!-- Color name -->

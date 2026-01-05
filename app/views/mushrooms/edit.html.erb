@@ -148,17 +148,17 @@
             <div class="flex flex-col border rounded p-3 gap-2">
               <div class="min-w-0 font-medium break-words"><%= c&.name.to_s.tr("_", " ") %></div>
               <% if colors.any? %>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-3">
                   <% colors.each do |color| %>
-                    <div class="flex items-center text-sm text-gray-700">
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
                       <% if color.is_simplified? %>
-                        <div class="w-6 h-6 rounded border border-gray-300" style="background-color: <%= color.hex %>"></div>
+                        <div class="w-8 h-8 rounded border border-gray-300 flex-shrink-0" style="background-color: <%= color.hex %>"></div>
                       <% else %>
                         <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
                                       alt: "Color #{color.id}",
-                                      class: "w-6 h-6 rounded border" %>
+                                      class: "w-8 h-8 rounded border flex-shrink-0" %>
                       <% end %>
-                      <span class="ml-1"><%= color.common_name %></span>
+                      <span class="font-medium"><%= color.common_name %></span>
                     </div>
                   <% end %>
                 </div>
