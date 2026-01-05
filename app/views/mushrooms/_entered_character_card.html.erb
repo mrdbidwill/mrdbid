@@ -81,14 +81,19 @@
           <div class="flex items-center gap-2 flex-wrap">
             <% colors.each_with_index do |color, index| %>
               <div class="flex items-center gap-1">
-                <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
-                              alt: color.latin_name,
-                              class: "w-8 h-8 rounded border-2 #{index == 0 ? 'border-blue-500' : 'border-gray-300'}" %>
+                <% if color.is_simplified? %>
+                  <div class="w-8 h-8 rounded border-2 flex-shrink-0 <%= index == 0 ? 'border-blue-500' : 'border-gray-300' %>"
+                       style="background-color: <%= color.hex %>"></div>
+                <% else %>
+                  <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                alt: color.latin_name,
+                                class: "w-8 h-8 rounded border-2 flex-shrink-0 #{index == 0 ? 'border-blue-500' : 'border-gray-300'}" %>
+                <% end %>
                 <span class="text-xs text-gray-700">
                   <% if index == 0 %>
-                    <span class="font-semibold"><%= color.latin_name %></span>
+                    <span class="font-semibold"><%= color.common_name %></span>
                   <% else %>
-                    <%= color.latin_name %>
+                    <%= color.common_name %>
                   <% end %>
                 </span>
               </div>
