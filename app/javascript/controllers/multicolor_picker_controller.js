@@ -7,7 +7,7 @@ export default class extends Controller {
     static values = {
         characterId: Number,
         selectedIds: Array,
-        colorImages: Object
+        colorHexMap: Object
     }
 
     connect() {
@@ -134,37 +134,26 @@ export default class extends Controller {
     submitColors(event) {
         event.preventDefault()
 
-        // Create form data
-        const formData = new FormData(this.formTarget)
+        // Add each color ID to the form before submitting
+        // Remove any existing color_ids[] inputs first
+        const existingInputs = this.formTarget.querySelectorAll('input[name="color_ids[]"]')
+        existingInputs.forEach(input => input.remove())
 
-        // Add each color ID with array notation
+        // Add hidden inputs for each selected color
         this.selectedColors.forEach(colorId => {
-            formData.append('color_ids[]', colorId)
+            const input = document.createElement('input')
+            input.type = 'hidden'
+            input.name = 'color_ids[]'
+            input.value = colorId
+            this.formTarget.appendChild(input)
         })
 
-        // Submit via fetch
-        fetch(this.formTarget.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'text/vnd.turbo-stream.html',
-                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-            }
-        }).then(response => {
-            if (response.ok) {
-                // Update original colors so cancel works correctly if page doesn't reload immediately
-                this.originalColors = [...this.selectedColors]
-                window.location.reload()
-            } else {
-                response.text().then(text => {
-                    console.error('Server error:', text)
-                    alert('Error saving colors. Please try again.')
-                })
-            }
-        }).catch(error => {
-            console.error('Network error:', error)
-            alert('Network error saving colors. Please try again.')
-        })
+        // Update original colors so cancel works correctly
+        this.originalColors = [...this.selectedColors]
+
+        // Let Turbo handle the form submission normally
+        // This will follow the redirect and show the flash message
+        this.formTarget.requestSubmit()
     }
 
     // Render selected color chips/badges
@@ -181,14 +170,17 @@ export default class extends Controller {
             const isLast = index === this.selectedColors.length - 1
             const label = index === 0 ? 'Primary' : `Secondary ${index}`
 
-            // Get the image URL from the mapping provided by Rails
-            const imageUrl = this.colorImagesValue[colorId] || `/images/AMS_colors/banner_50x50/banner_${colorId}.jpg`
+            // Get the hex color from the mapping provided by Rails
+            const hexColor = this.colorHexMapValue[colorId]
+
+            // Render color swatch - use hex for simplified colors, image for legacy
+            const colorDisplay = hexColor
+                ? `<div class="w-8 h-8 rounded border border-gray-400" style="background-color: ${hexColor}"></div>`
+                : `<img src="/images/AMS_colors/banner_50x50/banner_${colorId}.jpg" alt="Color ${colorId}" class="w-8 h-8 rounded border border-gray-400" />`
 
             return `
                 <div class="flex items-center gap-2 p-2 bg-gray-50 rounded border ${isFirst ? 'border-blue-500 border-2' : 'border-gray-300'}">
-                    <img src="${imageUrl}"
-                         alt="Color ${colorId}"
-                         class="w-8 h-8 rounded border border-gray-400" />
+                    ${colorDisplay}
                     <span class="text-sm font-medium">${label}</span>
                     <div class="flex gap-1 ml-auto">
                         ${!isFirst ? `
