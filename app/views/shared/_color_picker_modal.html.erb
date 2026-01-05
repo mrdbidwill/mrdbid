@@ -134,15 +134,15 @@
                           data-color-id="<%= color.id %>"
                           data-action="click->multicolor-picker#toggleColor"
                           title="<%= color.latin_name %> (<%= color.common_name %>)"
-                          class="group relative flex flex-col items-center gap-0 p-1 border rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50 border-2' : 'border-gray-300 hover:border-blue-400' %> w-full">
+                          class="group relative p-1 border rounded-lg transition-all hover:scale-105 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50 border-2' : 'border-gray-300 hover:border-blue-400' %> w-full aspect-square">
                     <!-- Color swatch -->
-                    <div class="w-full aspect-square rounded-md"
-                         style="background-color: <%= color.hex %>"></div>
-
-                    <!-- Color name -->
-                    <span class="text-xs text-center font-medium text-gray-700 leading-tight mt-0.5">
-                      <%= color.common_name %>
-                    </span>
+                    <div class="w-full h-full rounded-md relative"
+                         style="background-color: <%= color.hex %>">
+                      <!-- Color name overlaid on swatch -->
+                      <span class="absolute bottom-0 left-0 right-0 text-xs text-center font-semibold text-white bg-black bg-opacity-50 py-0.5 rounded-b-md">
+                        <%= color.common_name %>
+                      </span>
+                    </div>
 
                     <!-- Tooltip with Latin name on hover -->
                     <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
