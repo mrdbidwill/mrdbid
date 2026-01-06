@@ -129,6 +129,19 @@ class ImageMushroom < ApplicationRecord
 
     return nil unless exif
 
+    lat = nil
+    lon = nil
+    if exif.respond_to?(:gps_latitude) && exif.gps_latitude
+      lat_array = exif.gps_latitude
+      lat_ref = exif.respond_to?(:gps_latitude_ref) ? exif.gps_latitude_ref : nil
+      lat = convert_gps_array_to_decimal(lat_array, lat_ref)
+    end
+    if exif.respond_to?(:gps_longitude) && exif.gps_longitude
+      lon_array = exif.gps_longitude
+      lon_ref = exif.respond_to?(:gps_longitude_ref) ? exif.gps_longitude_ref : nil
+      lon = convert_gps_array_to_decimal(lon_array, lon_ref)
+    end
+
     {
       image_width:  safe_int(exif.width),
       image_height: safe_int(exif.height),
@@ -139,8 +152,8 @@ class ImageMushroom < ApplicationRecord
       aperture:     format_aperture(exif.respond_to?(:f_number) ? exif.f_number : nil),
       iso:          (exif.respond_to?(:iso_speed_ratings) ? Array(exif.iso_speed_ratings).compact.first.to_s.presence : nil),
       date_taken:   (exif.respond_to?(:date_time_original) ? parse_exif_datetime(exif.date_time_original) : nil),
-      latitude:     (exif.respond_to?(:gps_latitude) ? exif.gps_latitude : nil),
-      longitude:    (exif.respond_to?(:gps_longitude) ? exif.gps_longitude : nil)
+      latitude:     lat,
+      longitude:    lon
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] EXIFR parse failed: #{e.class} - #{e.message}")
@@ -180,8 +193,8 @@ class ImageMushroom < ApplicationRecord
       aperture:     aperture_str,
       iso:          (tags[:iso] || tags[:iso_speed_ratings]).to_s.presence,
       date_taken:   parse_exif_datetime(date_original),
-      latitude:     tags[:gps_latitude],
-      longitude:    tags[:gps_longitude]
+      latitude:     parse_gps_coordinate(tags[:gps_latitude] || tags[:gpslatitude]),
+      longitude:    parse_gps_coordinate(tags[:gps_longitude] || tags[:gpslongitude])
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] ExifTool parse failed: #{e.class} - #{e.message}")
@@ -237,6 +250,52 @@ class ImageMushroom < ApplicationRecord
       # Try ISO8601 or other standard formats
       DateTime.parse(value) rescue nil
     end
+  end
+
+  def convert_gps_array_to_decimal(gps_array, ref)
+    return nil unless gps_array.is_a?(Array) && gps_array.length >= 2
+
+    # EXIFR returns [degrees, minutes, seconds] as Rational numbers
+    degrees = gps_array[0].to_f
+    minutes = gps_array[1].to_f
+    seconds = gps_array[2]&.to_f || 0.0
+
+    # Convert to decimal degrees
+    decimal = degrees + (minutes / 60.0) + (seconds / 3600.0)
+
+    # Apply negative sign for South and West
+    decimal = -decimal if ref&.to_s&.upcase&.start_with?('S', 'W')
+
+    decimal
+  end
+
+  def parse_gps_coordinate(value)
+    return nil if value.nil?
+
+    # If already numeric, return as-is
+    return value.to_f if value.is_a?(Numeric)
+
+    # If it's a string, try parsing DMS format: "30 deg 30' 42.41\" N"
+    return nil unless value.is_a?(String)
+
+    # Match DMS format with direction
+    if value =~ /(\d+)\s*deg\s*(\d+)'\s*([\d.]+)"\s*([NSEW])/i
+      degrees = $1.to_f
+      minutes = $2.to_f
+      seconds = $3.to_f
+      direction = $4.upcase
+
+      # Convert to decimal degrees
+      decimal = degrees + (minutes / 60.0) + (seconds / 3600.0)
+
+      # Apply negative sign for South and West
+      decimal = -decimal if direction == 'S' || direction == 'W'
+
+      return decimal
+    end
+
+    # If string is already a decimal number, parse it
+    value.to_f if value =~ /^-?\d+\.?\d*$/
   end
 
   def preprocess_thumbnail_variant
