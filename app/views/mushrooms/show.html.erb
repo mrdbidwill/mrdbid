@@ -141,7 +141,16 @@
                     <% end %>
                   <% when "radio", "drop-down" %>
                     <% lookup_item = LookupItem.find_by(id: rc.character_value.to_i) %>
-                    <%= lookup_item&.name || rc.character_value %>
+                    <% if lookup_item %>
+                      <div>
+                        <div><%= lookup_item.name %></div>
+                        <% if lookup_item.description.present? %>
+                          <div class="text-sm text-gray-600"><%= lookup_item.description %></div>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <%= rc.character_value %>
+                    <% end %>
                   <% when "boolean_yes_no" %>
                     <%= rc.character_value.to_s.downcase == "true" ? "Yes" : "No" %>
                   <% when "boolean_true_false" %>
