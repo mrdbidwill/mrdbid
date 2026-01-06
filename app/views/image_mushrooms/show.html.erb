@@ -16,11 +16,36 @@
     </p>
   </div>
 
-  <!-- Full-size Image Display -->
-  <div class="mb-6 bg-gray-100 border rounded-lg overflow-hidden">
-    <%= image_tag @image_mushroom.image_file,
-                  class: "w-full h-auto max-h-[70vh] object-contain",
-                  alt: @image_mushroom.image_name.presence || @image_mushroom.mushroom.name %>
+  <!-- Full-size Image Display with Side Navigation -->
+  <div class="mb-6 relative flex items-center gap-2">
+    <!-- Previous Image Arrow -->
+    <% if @prev_image %>
+      <%= link_to image_mushroom_path(@prev_image),
+                  class: "flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl shadow-lg transition-colors",
+                  title: "Previous Image (← key)" do %>
+        ‹
+      <% end %>
+    <% else %>
+      <div class="flex-shrink-0 w-12 h-12"></div>
+    <% end %>
+
+    <!-- Image -->
+    <div class="flex-1 bg-gray-100 border rounded-lg overflow-hidden">
+      <%= image_tag @image_mushroom.image_file,
+                    class: "w-full h-auto max-h-[70vh] object-contain",
+                    alt: @image_mushroom.image_name.presence || @image_mushroom.mushroom.name %>
+    </div>
+
+    <!-- Next Image Arrow -->
+    <% if @next_image %>
+      <%= link_to image_mushroom_path(@next_image),
+                  class: "flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl shadow-lg transition-colors",
+                  title: "Next Image (→ key)" do %>
+        ›
+      <% end %>
+    <% else %>
+      <div class="flex-shrink-0 w-12 h-12"></div>
+    <% end %>
   </div>
 
   <!-- Action Buttons -->
@@ -28,20 +53,6 @@
     <%= link_to mushroom_path(@image_mushroom.mushroom),
                 class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium inline-flex items-center" do %>
       ← Back to Mushroom
-    <% end %>
-
-    <% if @prev_image %>
-      <%= link_to image_mushroom_path(@prev_image),
-                  class: "rounded-md px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium inline-flex items-center" do %>
-        ← Previous Image
-      <% end %>
-    <% end %>
-
-    <% if @next_image %>
-      <%= link_to image_mushroom_path(@next_image),
-                  class: "rounded-md px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium inline-flex items-center" do %>
-        Next Image →
-      <% end %>
     <% end %>
 
     <button type="button"
