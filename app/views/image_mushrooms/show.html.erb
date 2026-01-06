@@ -129,6 +129,14 @@
         </div>
       <% end %>
 
+      <!-- Location -->
+      <% if @image_mushroom.latitude.present? && @image_mushroom.longitude.present? %>
+        <div class="border-b pb-2">
+          <span class="text-sm text-gray-600 font-medium">Location</span>
+          <p class="text-base text-gray-900"><%= @image_mushroom.latitude %>, <%= @image_mushroom.longitude %></p>
+        </div>
+      <% end %>
+
       <!-- File Size -->
       <% if @image_mushroom.image_file.attached? %>
         <div class="border-b pb-2">
