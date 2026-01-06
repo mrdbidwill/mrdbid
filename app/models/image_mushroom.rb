@@ -83,6 +83,8 @@ class ImageMushroom < ApplicationRecord
       self.aperture     ||= data[:aperture]
       self.iso          ||= data[:iso]
       self.date_taken   ||= data[:date_taken]
+      self.latitude     ||= data[:latitude]
+      self.longitude    ||= data[:longitude]
 
       # Auto-match EXIF strings to database records (only if foreign keys not set)
       if camera_make_id.nil? && data[:camera_make].present?
@@ -136,7 +138,9 @@ class ImageMushroom < ApplicationRecord
       exposure:     format_exposure(exif.respond_to?(:exposure_time) ? exif.exposure_time : nil),
       aperture:     format_aperture(exif.respond_to?(:f_number) ? exif.f_number : nil),
       iso:          (exif.respond_to?(:iso_speed_ratings) ? Array(exif.iso_speed_ratings).compact.first.to_s.presence : nil),
-      date_taken:   (exif.respond_to?(:date_time_original) ? parse_exif_datetime(exif.date_time_original) : nil)
+      date_taken:   (exif.respond_to?(:date_time_original) ? parse_exif_datetime(exif.date_time_original) : nil),
+      latitude:     (exif.respond_to?(:gps_latitude) ? exif.gps_latitude : nil),
+      longitude:    (exif.respond_to?(:gps_longitude) ? exif.gps_longitude : nil)
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] EXIFR parse failed: #{e.class} - #{e.message}")
@@ -175,7 +179,9 @@ class ImageMushroom < ApplicationRecord
       exposure:     exposure_str,
       aperture:     aperture_str,
       iso:          (tags[:iso] || tags[:iso_speed_ratings]).to_s.presence,
-      date_taken:   parse_exif_datetime(date_original)
+      date_taken:   parse_exif_datetime(date_original),
+      latitude:     tags[:gps_latitude],
+      longitude:    tags[:gps_longitude]
     }
   rescue => e
     Rails.logger.debug("[ImageMushroom##{id}] ExifTool parse failed: #{e.class} - #{e.message}")

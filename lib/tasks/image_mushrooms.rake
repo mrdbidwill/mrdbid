@@ -1,5 +1,5 @@
 namespace :image_mushrooms do
-  desc "Extract EXIF data (including date_taken) for existing images"
+  desc "Extract EXIF data (including date_taken and GPS location) for existing images"
   task extract_exif: :environment do
     count = 0
     updated = 0
@@ -15,16 +15,20 @@ namespace :image_mushrooms do
         next
       end
 
-      # Extract EXIF for images missing date_taken
-      if im.date_taken.nil?
+      # Extract EXIF for images missing date_taken or location
+      if im.date_taken.nil? || im.latitude.nil? || im.longitude.nil?
         print "Processing ImageMushroom ##{im.id}... "
         begin
           im.send(:extract_and_store_exif)
-          if im.date_taken.present?
-            puts "✓ (date_taken: #{im.date_taken})"
+          info = []
+          info << "date_taken: #{im.date_taken}" if im.date_taken.present?
+          info << "location: #{im.latitude}, #{im.longitude}" if im.latitude.present? && im.longitude.present?
+
+          if info.any?
+            puts "✓ (#{info.join(', ')})"
             updated += 1
           else
-            puts "✓ (no EXIF date found)"
+            puts "✓ (no EXIF data found)"
             updated += 1
           end
         rescue => e
@@ -37,6 +41,6 @@ namespace :image_mushrooms do
     puts "Total records: #{count}"
     puts "Updated: #{updated}"
     puts "Skipped (no attachment): #{skipped}"
-    puts "Already had date_taken: #{count - updated - skipped}"
+    puts "Already had complete data: #{count - updated - skipped}"
   end
 end
