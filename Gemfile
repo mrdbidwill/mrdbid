@@ -62,6 +62,9 @@ gem 'prawn-table'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# AWS SDK for S3 storage
+gem 'aws-sdk-s3', '~> 1', require: false
+
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
 

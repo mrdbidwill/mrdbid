@@ -34,7 +34,7 @@
 
     <!-- Image -->
     <div class="flex-1 bg-gray-100 border rounded-lg overflow-hidden">
-      <%= image_tag @image_mushroom.image_file,
+      <%= image_tag url_for(@image_mushroom.image_file),
                     class: "w-full h-auto max-h-[70vh] object-contain",
                     alt: @image_mushroom.image_name.presence || @image_mushroom.mushroom.name %>
     </div>
