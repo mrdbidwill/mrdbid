@@ -41,11 +41,11 @@ server "85.31.233.192", user: "deploy", roles: %w{app db web}
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/user_name/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+# Enable SSH agent forwarding so deploy user can use your local SSH keys to access GitHub
+set :ssh_options, {
+  forward_agent: true,
+  auth_methods: %w(publickey)
+}
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
