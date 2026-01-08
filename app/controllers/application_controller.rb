@@ -12,7 +12,12 @@ class ApplicationController < ActionController::Base
   # Make Pundit's policy and policy_scope methods available to views
   helper_method :policy, :policy_scope
 
+  # Error handling
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActiveRecord::StrictLoadingViolationError, with: :handle_strict_loading_violation
+  rescue_from ActiveStorage::FileNotFoundError, with: :handle_missing_file
+  rescue_from StandardError, with: :handle_internal_error
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -89,6 +94,61 @@ class ApplicationController < ActionController::Base
         render json: { error: "forbidden", message: "You are not authorized to perform this action." }, status: :forbidden
       end
     end
+  end
+
+  def record_not_found(exception)
+    Rails.logger.error "Record not found: #{exception.message}"
+    Rails.logger.error exception.backtrace.join("\n")
+
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "The record you were looking for could not be found."
+        redirect_to root_path, status: :not_found
+      end
+      format.json do
+        render json: { error: "not_found", message: "Record not found" }, status: :not_found
+      end
+    end
+  end
+
+  def handle_strict_loading_violation(exception)
+    Rails.logger.error "Strict loading violation: #{exception.message}"
+    Rails.logger.error exception.backtrace.join("\n")
+
+    @error_message = "A database query error occurred."
+    @error_details = is_admin? ? exception.message : nil
+    render "errors/internal_error", status: :internal_server_error
+  end
+
+  def handle_missing_file(exception)
+    Rails.logger.error "Missing file: #{exception.message}"
+    Rails.logger.error exception.backtrace.join("\n")
+
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "The requested file could not be found. It may have been deleted."
+        redirect_back fallback_location: root_path, status: :not_found
+      end
+      format.json do
+        render json: { error: "file_not_found", message: "File not found" }, status: :not_found
+      end
+    end
+  end
+
+  def handle_internal_error(exception)
+    # Don't catch exceptions in development/test - let them bubble up for debugging
+    raise exception if Rails.env.development? || Rails.env.test?
+
+    Rails.logger.error "Internal error: #{exception.class} - #{exception.message}"
+    Rails.logger.error exception.backtrace.join("\n")
+
+    @error_message = "An unexpected error occurred. The issue has been logged and will be investigated."
+    @error_details = is_admin? ? "#{exception.class}: #{exception.message}" : nil
+    render "errors/internal_error", status: :internal_server_error
+  end
+
+  def is_admin?
+    current_user&.permission_id == 1
   end
 
   def set_view_debug_identifier
