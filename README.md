@@ -170,11 +170,9 @@ DB_HOST=127.0.0.1
 RAILS_ENV=development
 SECRET_KEY_BASE=your_secret_key_base
 
-# Optional: File storage (for production)
-# AWS_ACCESS_KEY_ID=your_aws_key
-# AWS_SECRET_ACCESS_KEY=your_aws_secret
-# AWS_REGION=us-east-1
-# AWS_BUCKET=your_bucket_name
+# Optional: Storage configuration
+# Note: Application uses local storage by default (storage/ directory)
+# See BACKUP_STRATEGY.md for backup recommendations
 ```
 
 Generate a secret key base:
@@ -233,6 +231,7 @@ Recent commits show 0 failures, 0 errors achieved through comprehensive test sui
 
 - **Mushroom Character Tracking**: Detailed morphological and microscopic character recording
 - **Image Management**: Upload, organize, and annotate mushroom photographs with EXIF extraction
+- **User Image Backup**: Download all your images and metadata as ZIP for personal backup
 - **Camera Equipment Tracking**: Detailed camera, lens, and photography metadata management
 - **Taxonomic Integration**: Integration with MBList taxonomy database
 - **Search & Compare**: Advanced search by characters and side-by-side specimen comparison
@@ -241,6 +240,7 @@ Recent commits show 0 failures, 0 errors achieved through comprehensive test sui
 - **Admin Tools**: Database backup/restore, data management, version tracking
 - **User Authentication**: Secure login with optional two-factor authentication (2FA)
 - **Content Management**: Article publishing system with role-based permissions
+- **Terms of Service**: Clear ownership rights - users retain all rights to their images
 
 ## Project Structure
 

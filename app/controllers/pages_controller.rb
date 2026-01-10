@@ -10,4 +10,7 @@ class PagesController < ApplicationController
 
   def trees_of_blakeley_signs
   end
+
+  def terms
+  end
 end

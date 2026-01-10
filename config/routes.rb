@@ -17,6 +17,12 @@ Rails.application.routes.draw do
       post :verify
       delete :disable
     end
+
+    # Image export routes
+    resource :image_export, only: [:new, :create] do
+      get :status, on: :collection
+      get :download, on: :collection
+    end
   end
 
   # 2FA login verification
@@ -117,6 +123,7 @@ Rails.application.routes.draw do
   # Static pages
     root 'pages#home'
     get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
+    get 'terms', to: 'pages#terms'
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check

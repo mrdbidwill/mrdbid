@@ -87,6 +87,10 @@
           id: "export-all-pdf-link",
           data: { turbo: false } %>
 
+      <!-- Export Images -->
+      <%= link_to "💾 Backup My Images", new_users_image_export_path,
+          class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
+
       <div class="my-2 border-t border-gray-400"></div>
 
       <!-- Articles -->
@@ -97,6 +101,9 @@
 
       <!-- Contact -->
       <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <!-- Terms of Service -->
+      <%= link_to "Terms of Service", terms_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
 
       <div class="my-2 border-t border-gray-400"></div>
 
@@ -121,6 +128,8 @@
       <%= link_to "Books", books_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 
       <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
+      <%= link_to "Terms of Service", terms_path, class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition" %>
 
       <%= link_to "Sign In", new_user_session_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 

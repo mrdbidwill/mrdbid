@@ -59,6 +59,9 @@ gem 'roo' # Read Excel files
 gem 'prawn'
 gem 'prawn-table'
 
+# ZIP file creation for user exports
+gem 'rubyzip', '~> 2.3'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
