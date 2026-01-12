@@ -54,7 +54,11 @@ Rails.application.routes.draw do
   resources :books, only: [:index]
   resources :clusters
   resources :cluster_mushrooms
-  resources :mr_character_mushrooms, only: [:create]
+  resources :mr_character_mushrooms, only: [:create] do
+    collection do
+      post :bulk_update
+    end
+  end
   resources :mushroom_trees, except: [:destroy]
   resources :mushroom_plants, except: [:destroy]
   resources :mushroom_projects

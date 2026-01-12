@@ -1,6 +1,9 @@
 <% content_for :title, "Edit #{@part.name} Characters - #{@observation_method.name}" %>
 
-<div class="w-full auto-margins">
+<div class="w-full auto-margins"
+     data-controller="bulk-character-update"
+     data-bulk-character-update-mushroom-id-value="<%= @mushroom.id %>"
+     data-bulk-character-update-redirect-path-value="<%= edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>">
   <!-- Back to Grid Link -->
   <div class="mb-4">
     <%= link_to edit_mushroom_path(@mushroom),
@@ -31,6 +34,28 @@
     </div>
   </div>
 
+  <!-- User Instructions & Bulk Save Button -->
+  <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex-1">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">💡 Two ways to save your work:</h2>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li><strong>Individual Update:</strong> Use the "Update" or "Add" button on each character to save that field immediately.</li>
+          <li><strong>Bulk Save:</strong> Edit multiple fields, then click "Save All Changes" below to save everything at once. Modified fields will be highlighted in yellow.</li>
+        </ul>
+      </div>
+      <div class="flex-shrink-0">
+        <button type="button"
+                data-bulk-character-update-target="saveButton"
+                data-action="click->bulk-character-update#saveAll"
+                disabled
+                class="w-full md:w-auto px-6 py-3 rounded-lg font-semibold text-white bg-gray-400 cursor-not-allowed transition shadow-md whitespace-nowrap">
+          Save All Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Characters Entry Section -->
   <% if @characters.any? %>
     <!-- Already Entered Characters -->
@@ -49,7 +74,8 @@
             <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
             <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
 
-            <div class="border-2 border-green-300 rounded-lg p-3 bg-green-50 hover:shadow-lg hover:border-green-400 transition">
+            <div class="border-2 border-green-300 rounded-lg p-3 bg-green-50 hover:shadow-lg hover:border-green-400 transition"
+                 data-character-card>
               <div class="min-w-0 mb-2">
                 <div class="text-sm font-semibold text-gray-800 break-words">
                   <%= character.name.to_s.tr("_", " ") %>
@@ -115,7 +141,7 @@
                   </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true } do |f| %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true, bulk_character_update_target: "form" } do |f| %>
                     <%= hidden_field_tag :mushroom_id, @mushroom.id %>
                     <%= hidden_field_tag :mr_character_id, character.id %>
                     <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
@@ -143,7 +169,8 @@
             <% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
             <% do_not_display = (character.display_option&.name&.downcase == "do not display") || character.display_option_id == 1 %>
 
-            <div class="border-2 border-blue-300 rounded-lg p-3 bg-blue-50 hover:shadow-lg hover:border-blue-400 transition">
+            <div class="border-2 border-blue-300 rounded-lg p-3 bg-blue-50 hover:shadow-lg hover:border-blue-400 transition"
+                 data-character-card>
               <div class="min-w-0 mb-2">
                 <div class="text-sm font-semibold text-gray-800 break-words">
                   <%= character.name.to_s.tr("_", " ") %>
@@ -168,7 +195,7 @@
                   </div>
                 <% else %>
                   <%# Regular form for non-color characters %>
-                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true } do |f| %>
+                  <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true, bulk_character_update_target: "form" } do |f| %>
                     <%= hidden_field_tag :mushroom_id, @mushroom.id %>
                     <%= hidden_field_tag :mr_character_id, character.id %>
                     <%= hidden_field_tag :redirect_to, edit_characters_mushroom_path(@mushroom, observation_method_id: @observation_method.id, part_id: @part.id) %>
@@ -189,6 +216,19 @@
       <p class="text-yellow-800">No characters found for this combination of lookup type and part.</p>
     </div>
   <% end %>
+
+  <!-- Bottom Save All Button -->
+  <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6 shadow-sm">
+    <div class="flex justify-center">
+      <button type="button"
+              data-bulk-character-update-target="saveButton"
+              data-action="click->bulk-character-update#saveAll"
+              disabled
+              class="px-6 py-3 rounded-lg font-semibold text-white bg-gray-400 cursor-not-allowed transition shadow-md">
+        Save All Changes
+      </button>
+    </div>
+  </div>
 
   <!-- Back to Grid Link (bottom) -->
   <div class="mt-6 pt-4 border-t">

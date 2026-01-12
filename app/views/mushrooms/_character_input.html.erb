@@ -20,7 +20,7 @@
         <% id = "#{character.id}-#{item.id}" %>
         <div class="flex flex-col">
           <label for="<%= id %>" class="inline-flex items-center gap-2">
-            <%= f.radio_button(:character_value, item.id, id: id, checked: existing == item.id.to_s.downcase) %>
+            <%= f.radio_button(:character_value, item.id, id: id, checked: existing == item.id.to_s.downcase, data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" }) %>
             <span class="text-sm"><%= item.name.to_s %></span>
           </label>
           <% if item.description.present? %>
@@ -48,7 +48,8 @@
             :character_value,
             options_for_select(lookup_items.pluck(:name, :id), current_value),
             { include_blank: "Select..." },
-            class: "border rounded px-2 py-1 text-sm w-full max-w-xs"
+            class: "border rounded px-2 py-1 text-sm w-full max-w-xs",
+            data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" }
           ) %>
       <% if current_value.present? %>
         <% selected_item = lookup_items.find_by(id: current_value) %>
@@ -67,13 +68,13 @@
   <% end %>
 
 <% when "text_box_number_mm", "text_box_number_um", "text_box_number", "2", "3", "4" %>
-  <%= f.number_field :character_value, step: "any", class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+  <%= f.number_field :character_value, step: "any", class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, data: { bulk_character_update_target: "input", action: "input->bulk-character-update#trackChange" } %>
 
 <% when "text_box_string", "5" %>
-  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, data: { bulk_character_update_target: "input", action: "input->bulk-character-update#trackChange" } %>
 
 <% when "taste", "7", "odor", "8" %>
-  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, placeholder: key %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, placeholder: key, data: { bulk_character_update_target: "input", action: "input->bulk-character-update#trackChange" } %>
 
 <% when "state", "11", "country", "12" %>
   <span class="text-xs text-gray-500">Handled in location inputs</span>
@@ -83,7 +84,7 @@
     <%= hidden_field_tag :mr_character_id, character.id %>
     <%= hidden_field_tag :character_value, "false" %>
     <label class="inline-flex items-center gap-2">
-      <%= check_box_tag :character_value, "true", existing == "true" %>
+      <%= check_box_tag :character_value, "true", existing == "true", data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" } %>
       <span>Yes</span>
     </label>
   <% else %>
@@ -96,16 +97,16 @@
          end %>
     <div class="flex items-center gap-4">
       <label class="inline-flex items-center gap-2">
-        <%= radio_button_tag :character_value, "true", existing == "true" %>
+        <%= radio_button_tag :character_value, "true", existing == "true", data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" } %>
         <span><%= yes_label %></span>
       </label>
       <label class="inline-flex items-center gap-2">
-        <%= radio_button_tag :character_value, "false", existing == "false" %>
+        <%= radio_button_tag :character_value, "false", existing == "false", data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" } %>
         <span><%= no_label %></span>
       </label>
     </div>
   <% end %>
 
 <% else %>
-  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value %>
+  <%= f.text_field :character_value, class: "border rounded px-2 py-1 text-sm w-full max-w-xs", value: current_value, data: { bulk_character_update_target: "input", action: "input->bulk-character-update#trackChange" } %>
 <% end %>

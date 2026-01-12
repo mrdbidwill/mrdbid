@@ -1,6 +1,7 @@
 class MrCharacterMushroomsController < ApplicationController
   # Add Pundit if you authorize mushrooms; ensure policy permits linking characters
-  before_action :set_mushroom
+  before_action :set_mushroom, except: [:bulk_update]
+  before_action :set_mushroom_for_bulk, only: [:bulk_update]
   skip_after_action :verify_authorized, raise: false
 
   def create
@@ -40,9 +41,72 @@ class MrCharacterMushroomsController < ApplicationController
     end
   end
 
+  def bulk_update
+    # Accept array of character updates and process them in a transaction
+    updates = params[:updates]&.values || []
+
+    if updates.empty?
+      redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+      redirect_to redirect_path, alert: "No updates provided.", status: :see_other
+      return
+    end
+
+    success_count = 0
+    error_messages = []
+
+    ActiveRecord::Base.transaction do
+      updates.each do |update|
+        character_id = update[:mr_character_id]
+        value = update[:character_value]
+
+        # Skip if missing required data
+        next unless character_id.present?
+
+        # Find or initialize the character-mushroom record
+        rc = MrCharacterMushroom.find_or_initialize_by(
+          mushroom_id: @mushroom.id,
+          mr_character_id: character_id
+        )
+
+        # Handle color characters differently (via join table)
+        if color_character?(character_id)
+          color_ids = [value].compact
+          if color_ids.empty? && rc.persisted?
+            rc.destroy
+            success_count += 1
+            next
+          end
+          rc.color_ids = color_ids
+        elsif booleanish_display_option?(character_id)
+          rc.character_value = normalize_boolean_string(value)
+        else
+          rc.character_value = value
+        end
+
+        if rc.save
+          success_count += 1
+        else
+          error_messages << "Character #{character_id}: #{rc.errors.full_messages.join(', ')}"
+        end
+      end
+    end
+
+    redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+
+    if error_messages.any?
+      redirect_to redirect_path, alert: "Saved #{success_count} characters. Errors: #{error_messages.join('; ')}", status: :see_other
+    else
+      redirect_to redirect_path, notice: "Successfully saved #{success_count} character#{success_count == 1 ? '' : 's'}.", status: :see_other
+    end
+  end
+
   private
 
   def set_mushroom
+    @mushroom = Mushroom.find(params[:mushroom_id])
+  end
+
+  def set_mushroom_for_bulk
     @mushroom = Mushroom.find(params[:mushroom_id])
   end
 
