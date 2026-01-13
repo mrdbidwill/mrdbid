@@ -48,24 +48,26 @@ class UserImageExportJob < ApplicationJob
           next unless img_mush.image_file.attached?
 
           begin
-            # Download the blob to a temp file
-            img_mush.image_file.open(tmpdir: Dir.tmpdir) do |file|
-              # Create organized filename
-              genus_name = img_mush.mushroom.genera.first&.name || "unknown"
-              species_name = img_mush.mushroom.species.first&.name || "sp"
-              mushroom_name = sanitize_filename(genus_name)
-              species_name = sanitize_filename(species_name)
-              image_name = sanitize_filename(img_mush.image_name || "image")
-              extension = File.extname(img_mush.image_file.filename.to_s)
+            # Create organized filename
+            genus_name = img_mush.mushroom.genera.first&.name || "unknown"
+            species_name = img_mush.mushroom.species.first&.name || "sp"
+            mushroom_name = sanitize_filename(genus_name)
+            species_name_sanitized = sanitize_filename(species_name)
+            image_name = sanitize_filename(img_mush.image_name || "image")
+            extension = File.extname(img_mush.image_file.filename.to_s)
 
-              # Format: MushroomName_species_imagename_001.jpg
-              safe_filename = "#{mushroom_name}_#{species_name}_#{image_name}_#{(index + 1).to_s.rjust(3, '0')}#{extension}"
+            # Format: MushroomName_species_imagename_001.jpg
+            safe_filename = "#{mushroom_name}_#{species_name_sanitized}_#{image_name}_#{(index + 1).to_s.rjust(3, '0')}#{extension}"
 
-              # Add to ZIP in images/ subdirectory
-              zipfile.add("images/#{safe_filename}", file.path)
-
-              Rails.logger.debug "[UserImageExportJob] Added image #{index + 1}/#{image_mushrooms.count}: #{safe_filename}"
+            # Download the blob and add to ZIP
+            # Use get_output_stream to write content directly instead of adding by path
+            img_mush.image_file.download do |file_content|
+              zipfile.get_output_stream("images/#{safe_filename}") do |stream|
+                stream.write(file_content)
+              end
             end
+
+            Rails.logger.debug "[UserImageExportJob] Added image #{index + 1}/#{image_mushrooms.count}: #{safe_filename}"
           rescue => e
             Rails.logger.error "[UserImageExportJob] Failed to add image #{img_mush.id}: #{e.message}"
             # Continue with other images
