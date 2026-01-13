@@ -22,7 +22,7 @@ class UserImageExportJob < ApplicationJob
       # Find all image_mushrooms for this user
       image_mushrooms = ImageMushroom.joins(:mushroom)
                                      .where(mushrooms: { user_id: user.id })
-                                     .includes(:mushroom => [:genera, :species], :part, :camera_make, :camera_model, :lens)
+                                     .includes({ mushroom: [:genera, :species] }, :part, :camera_make, :camera_model, :lens)
                                      .order('mushrooms.name, image_mushrooms.created_at')
 
       if image_mushrooms.empty?
