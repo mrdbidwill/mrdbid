@@ -12,6 +12,7 @@ module Users
 
       if @image_count.zero?
         redirect_to root_path, alert: "You don't have any images to export."
+        return
       end
     end
 
