@@ -168,8 +168,8 @@ namespace :deploy do
           directories_str = directories.map do |release|
             releases_path.join(release)
           end.join(" ")
-          # Use -f flag to force deletion and ignore errors
-          execute :rm, '-rf', '--', directories_str rescue nil
+          # Use SSHKit's raise_on_non_zero_exit: false to ignore permission errors
+          execute :rm, '-rf', directories_str, raise_on_non_zero_exit: false
         else
           info t(:no_old_releases, host: host.to_s, keep_releases: fetch(:keep_releases))
         end
