@@ -156,6 +156,7 @@ end
 after "systemd_puma:restart", "systemd_puma:verify"
 
 # Override cleanup task to ignore permission errors on bootsnap cache files
+Rake::Task["deploy:cleanup"].clear_actions
 namespace :deploy do
   desc 'Clean up old releases (ignore permission errors)'
   task :cleanup do
@@ -165,11 +166,15 @@ namespace :deploy do
         info t(:keeping_releases, host: host.to_s, keep_releases: fetch(:keep_releases), releases: releases.count)
         directories = (releases - releases.last(fetch(:keep_releases)))
         if directories.any?
-          directories_str = directories.map do |release|
-            releases_path.join(release)
-          end.join(" ")
-          # Use SSHKit's raise_on_non_zero_exit: false to ignore permission errors
-          execute :rm, '-rf', directories_str, raise_on_non_zero_exit: false
+          directories.each do |release|
+            # Delete each directory individually and ignore permission errors
+            begin
+              execute :rm, '-rf', releases_path.join(release)
+            rescue SSHKit::Command::Failed => e
+              # Silently ignore permission denied errors during cleanup
+              warn "Some files in #{release} could not be deleted (permission denied), skipping..."
+            end
+          end
         else
           info t(:no_old_releases, host: host.to_s, keep_releases: fetch(:keep_releases))
         end
