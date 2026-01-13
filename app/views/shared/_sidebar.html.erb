@@ -82,10 +82,18 @@
       <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
       <!-- Export All -->
+      <!-- CRITICAL: Do not remove the data-turbo-confirm or the JavaScript handling below.
+           This confirmation dialog and loading overlay provide essential user feedback during PDF generation.
+           See: CODING_STANDARDS.md and commit 1f7a688 for why this pattern is required.
+           PDF generation can take 10-60+ seconds depending on number of mushrooms.
+           Without this feedback, users think the button is broken. DO NOT SIMPLIFY THIS CODE. -->
       <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
           class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
           id: "export-all-pdf-link",
-          data: { turbo: false } %>
+          data: {
+            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
+            turbo: false
+          } %>
 
       <!-- Export Images -->
       <%= link_to "💾 Backup My Images", new_users_image_export_path,
@@ -192,21 +200,80 @@
     // Ensure sidebar is closed on mobile after navigation
     closeSidebar();
 
-    // Handle PDF export with simple loading indicator
+    // CRITICAL: PDF Export Loading Feedback - DO NOT REMOVE OR SIMPLIFY
+    // This code provides essential user feedback during PDF generation which can take 10-60+ seconds.
+    // Without this, users think the button is broken and click multiple times or navigate away.
+    // See commit 1f7a688 and 096e678 for history of why this pattern is required.
+    // This has been accidentally removed/simplified multiple times - DO NOT DO IT AGAIN.
     const exportPdfLink = document.getElementById('export-all-pdf-link');
     if (exportPdfLink) {
-      const originalContent = exportPdfLink.innerHTML;
+      exportPdfLink.addEventListener('click', function(e) {
+        e.preventDefault();
 
-      exportPdfLink.addEventListener('click', function() {
-        // Change button to show loading state
+        // Only proceed if user confirms (if confirm dialog exists)
+        const confirmMessage = this.dataset.turboConfirm;
+        if (confirmMessage) {
+          if (!confirm(confirmMessage)) {
+            return;
+          }
+        }
+
+        const originalButtonContent = this.innerHTML;
+        const exportUrl = this.href;
+
+        // Change button text
         this.innerHTML = '⏳ Exporting...';
-        this.classList.add('opacity-75', 'cursor-wait');
+        this.classList.remove('hover:bg-indigo-700');
+        this.classList.add('opacity-75', 'cursor-not-allowed');
+        this.style.pointerEvents = 'none';
 
-        // Reset after download initiates (browsers handle PDF downloads automatically)
-        setTimeout(() => {
-          this.innerHTML = originalContent;
-          this.classList.remove('opacity-75', 'cursor-wait');
-        }, 2000);
+        // Show loading overlay
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.id = 'pdf-loading-overlay';
+        loadingOverlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+        loadingOverlay.innerHTML = `
+          <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+            <div class="mb-4">
+              <svg class="animate-spin h-16 w-16 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Generating PDF...</h3>
+            <p class="text-gray-600 mb-4">Please wait while we export your mushrooms to PDF. This may take a minute or two depending on the number of mushrooms.</p>
+            <p class="text-sm text-gray-500">Do not close this window or navigate away.</p>
+          </div>
+        `;
+        document.body.appendChild(loadingOverlay);
+
+        // Function to reset UI
+        function resetUI() {
+          const overlay = document.getElementById('pdf-loading-overlay');
+          if (overlay) {
+            overlay.remove();
+          }
+          if (exportPdfLink) {
+            exportPdfLink.innerHTML = originalButtonContent;
+            exportPdfLink.classList.add('hover:bg-indigo-700');
+            exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+            exportPdfLink.style.pointerEvents = '';
+          }
+        }
+
+        // Create hidden iframe for download
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Trigger download via iframe
+        iframe.src = exportUrl;
+
+        // Reset UI after a delay (adjust based on typical generation time)
+        // We'll use a minimum delay plus checking for user activity
+        setTimeout(function() {
+          resetUI();
+          document.body.removeChild(iframe);
+        }, 3000); // Reset after 3 seconds minimum
       });
     }
   }

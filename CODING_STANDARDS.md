@@ -26,6 +26,17 @@ These standards were created after recurring bugs that wasted significant develo
 
 **Why:** This issue was fixed twice (2026-01-01, 2026-01-04). Lazy loading breaks image display on iPad, a critical device for field use.
 
+### 3. PDF Export User Feedback Pattern
+**File:** `PDF_EXPORT_FEEDBACK.md`
+**Status:** MANDATORY
+**Created:** 2026-01-13 (after 4th+ occurrence)
+
+**Summary:** The "Export All to PDF" button MUST have a loading overlay and feedback mechanism. PDF generation takes 10-60+ seconds. Without visual feedback, users think the button is broken and click multiple times or navigate away. The implementation requires: (1) a confirmation dialog via `data-turbo-confirm`, (2) button state change to "⏳ Exporting...", (3) a full-screen loading overlay with spinner and "do not navigate away" message, and (4) automatic cleanup after 3 seconds minimum.
+
+**Why:** This issue has been fixed and then accidentally removed/simplified MULTIPLE times (commits 3a307ae, 096e678, 1f7a688, then broken again in 6abce02). Each time it's removed, users report the button as "not working" because there's no feedback during the 10-60 second PDF generation. DO NOT SIMPLIFY OR REMOVE THIS CODE.
+
+**Location:** `app/views/shared/_sidebar.html.erb` lines 85-278
+
 ## Code Review Checklist
 
 Before merging any PR, verify:
@@ -40,6 +51,13 @@ Before merging any PR, verify:
 - [ ] All mushroom images use `loading="eager"`
 - [ ] All mushroom images use `fetchpriority="high"`
 - [ ] No instances of `loading="lazy"` in mushroom-related views
+
+### PDF Export (in _sidebar.html.erb)
+- [ ] "Export All to PDF" button has `data-turbo-confirm` attribute
+- [ ] JavaScript handler creates loading overlay with spinner
+- [ ] Button changes to "⏳ Exporting..." during generation
+- [ ] Overlay shows "do not navigate away" message
+- [ ] Code has CRITICAL warning comments not to remove/simplify
 
 ### Forms
 - [ ] Standard `form_with` with Turbo enabled (default)
