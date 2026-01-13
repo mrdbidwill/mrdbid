@@ -52,10 +52,6 @@ set :keep_releases, 5
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-# Use systemd to restart Puma instead of capistrano-puma's restart
-after "deploy:published", "systemd_puma:restart"
-after "systemd_puma:restart", "systemd_solid_queue:restart"
-
 # Custom tasks to manage Puma via systemd
 namespace :systemd_puma do
   desc 'Install Puma systemd service'
@@ -153,9 +149,6 @@ namespace :systemd_puma do
   end
 end
 
-# Add verification after restart
-after "systemd_puma:restart", "systemd_puma:verify"
-
 # Solid Queue management via systemd
 # CRITICAL: Solid Queue must be restarted after each deploy to load new job code
 # Without this, background jobs run with stale code causing hard-to-debug errors
@@ -176,3 +169,9 @@ namespace :systemd_solid_queue do
     end
   end
 end
+
+# Deploy hooks - MUST be after namespace definitions
+# Use systemd to restart Puma and Solid Queue after deploy
+after "deploy:published", "systemd_puma:restart"
+after "systemd_puma:restart", "systemd_puma:verify"
+after "systemd_puma:verify", "systemd_solid_queue:restart"
