@@ -52,6 +52,9 @@ set :keep_releases, 5
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+# Use systemd to restart Puma instead of capistrano-puma's restart
+after "deploy:published", "systemd_puma:restart"
+
 # Custom tasks to manage Puma via systemd
 namespace :systemd_puma do
   desc 'Install Puma systemd service'
@@ -149,29 +152,28 @@ namespace :systemd_puma do
   end
 end
 
-# Solid Queue management via systemd
-# CRITICAL: Solid Queue must be restarted after each deploy to load new job code
-# Without this, background jobs run with stale code causing hard-to-debug errors
-namespace :systemd_solid_queue do
-  desc 'Restart Solid Queue via systemd to load new code'
-  task :restart do
-    on roles(:app) do
-      info "Restarting Solid Queue to load new job code..."
-      execute :sudo, :systemctl, "restart", "solid-queue-mrdbid.service"
-      info "✓ Solid Queue restarted successfully"
-    end
-  end
+# Add verification after restart
+after "systemd_puma:restart", "systemd_puma:verify"
 
-  desc 'Check Solid Queue status'
-  task :status do
-    on roles(:app) do
-      execute :sudo, :systemctl, "status", "solid-queue-mrdbid.service"
+# Override cleanup task to ignore permission errors on bootsnap cache files
+namespace :deploy do
+  desc 'Clean up old releases (ignore permission errors)'
+  task :cleanup do
+    on release_roles :all do |host|
+      releases = capture(:ls, '-xtr', releases_path).split
+      if releases.count >= fetch(:keep_releases)
+        info t(:keeping_releases, host: host.to_s, keep_releases: fetch(:keep_releases), releases: releases.count)
+        directories = (releases - releases.last(fetch(:keep_releases)))
+        if directories.any?
+          directories_str = directories.map do |release|
+            releases_path.join(release)
+          end.join(" ")
+          # Use -f flag to force deletion and ignore errors
+          execute :rm, '-rf', '--', directories_str rescue nil
+        else
+          info t(:no_old_releases, host: host.to_s, keep_releases: fetch(:keep_releases))
+        end
+      end
     end
   end
 end
-
-# Deploy hooks - MUST be after namespace definitions
-# Use systemd to restart Puma and Solid Queue after deploy
-after "deploy:published", "systemd_puma:restart"
-after "systemd_puma:restart", "systemd_puma:verify"
-after "systemd_puma:verify", "systemd_solid_queue:restart"
