@@ -54,6 +54,7 @@ set :keep_releases, 5
 
 # Use systemd to restart Puma instead of capistrano-puma's restart
 after "deploy:published", "systemd_puma:restart"
+after "systemd_puma:restart", "systemd_solid_queue:restart"
 
 # Custom tasks to manage Puma via systemd
 namespace :systemd_puma do
@@ -154,3 +155,24 @@ end
 
 # Add verification after restart
 after "systemd_puma:restart", "systemd_puma:verify"
+
+# Solid Queue management via systemd
+# CRITICAL: Solid Queue must be restarted after each deploy to load new job code
+# Without this, background jobs run with stale code causing hard-to-debug errors
+namespace :systemd_solid_queue do
+  desc 'Restart Solid Queue via systemd to load new code'
+  task :restart do
+    on roles(:app) do
+      info "Restarting Solid Queue to load new job code..."
+      execute :sudo, :systemctl, "restart", "solid-queue-mrdbid.service"
+      info "✓ Solid Queue restarted successfully"
+    end
+  end
+
+  desc 'Check Solid Queue status'
+  task :status do
+    on roles(:app) do
+      execute :sudo, :systemctl, "status", "solid-queue-mrdbid.service"
+    end
+  end
+end
