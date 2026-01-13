@@ -145,7 +145,7 @@ class UserImageExportJob < ApplicationJob
           img_mush.date_taken&.strftime('%Y-%m-%d %H:%M:%S'),
           img_mush.camera_make&.name,
           img_mush.camera_model&.name,
-          img_mush.lens&.name,
+          img_mush.lens ? "#{img_mush.lens.make} #{img_mush.lens.model}".strip : nil,
           img_mush.exposure,
           img_mush.aperture,
           img_mush.iso,
