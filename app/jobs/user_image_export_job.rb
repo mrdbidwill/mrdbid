@@ -22,8 +22,8 @@ class UserImageExportJob < ApplicationJob
       # Find all image_mushrooms for this user
       image_mushrooms = ImageMushroom.joins(:mushroom)
                                      .where(mushrooms: { user_id: user.id })
-                                     .includes(:mushroom, :part, :camera_make, :camera_model, :lens)
-                                     .order('mushrooms.genus_id, mushrooms.species_id, image_mushrooms.created_at')
+                                     .includes(:mushroom => [:genera, :species], :part, :camera_make, :camera_model, :lens)
+                                     .order('mushrooms.name, image_mushrooms.created_at')
 
       if image_mushrooms.empty?
         Rails.logger.info "[UserImageExportJob] No images found for user #{user_id}"
@@ -51,8 +51,10 @@ class UserImageExportJob < ApplicationJob
             # Download the blob to a temp file
             img_mush.image_file.open(tmpdir: Dir.tmpdir) do |file|
               # Create organized filename
-              mushroom_name = sanitize_filename(img_mush.mushroom.genus_name || "unknown")
-              species_name = sanitize_filename(img_mush.mushroom.species_name || "sp")
+              genus_name = img_mush.mushroom.genera.first&.name || "unknown"
+              species_name = img_mush.mushroom.species.first&.name || "sp"
+              mushroom_name = sanitize_filename(genus_name)
+              species_name = sanitize_filename(species_name)
               image_name = sanitize_filename(img_mush.image_name || "image")
               extension = File.extname(img_mush.image_file.filename.to_s)
 
@@ -127,16 +129,18 @@ class UserImageExportJob < ApplicationJob
       image_mushrooms.each_with_index do |img_mush, index|
         next unless img_mush.image_file.attached?
 
-        mushroom_name = sanitize_filename(img_mush.mushroom.genus_name || "unknown")
-        species_name = sanitize_filename(img_mush.mushroom.species_name || "sp")
+        genus_name = img_mush.mushroom.genera.first&.name || "unknown"
+        species_name = img_mush.mushroom.species.first&.name || "sp"
+        mushroom_name = sanitize_filename(genus_name)
+        species_name_sanitized = sanitize_filename(species_name)
         image_name = sanitize_filename(img_mush.image_name || "image")
         extension = File.extname(img_mush.image_file.filename.to_s)
-        safe_filename = "#{mushroom_name}_#{species_name}_#{image_name}_#{(index + 1).to_s.rjust(3, '0')}#{extension}"
+        safe_filename = "#{mushroom_name}_#{species_name_sanitized}_#{image_name}_#{(index + 1).to_s.rjust(3, '0')}#{extension}"
 
         csv << [
           safe_filename,
-          img_mush.mushroom.genus_name,
-          img_mush.mushroom.species_name,
+          genus_name,
+          species_name,
           img_mush.part&.name,
           img_mush.date_taken&.strftime('%Y-%m-%d %H:%M:%S'),
           img_mush.camera_make&.name,
