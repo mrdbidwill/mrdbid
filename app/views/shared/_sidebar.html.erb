@@ -270,19 +270,32 @@
         // Create hidden iframe for download
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+        iframe.onload = function() {
+          // Keep overlay for at least 2 more seconds after iframe loads
+          // to allow browser to initiate download
+          setTimeout(function() {
+            resetUI();
+            // Clean up iframe after a longer delay
+            setTimeout(function() {
+              if (iframe.parentNode) {
+                document.body.removeChild(iframe);
+              }
+            }, 2000);
+          }, 2000);
+        };
 
-        // Trigger download via iframe
-        iframe.src = exportUrl;
-
-        // Reset UI after a delay (adjust based on typical generation time)
-        // We'll use a minimum delay plus checking for user activity
+        // Fallback: if iframe doesn't load within 60 seconds, reset anyway
         setTimeout(function() {
           resetUI();
           if (iframe.parentNode) {
             document.body.removeChild(iframe);
           }
-        }, 3000); // Reset after 3 seconds minimum
+        }, 60000);
+
+        document.body.appendChild(iframe);
+
+        // Trigger download via iframe
+        iframe.src = exportUrl;
       });
     }
   }
@@ -301,6 +314,21 @@
       sidebar.classList.add('-translate-x-full');
       sidebarOverlay.classList.add('hidden');
       document.body.style.overflow = '';
+    }
+
+    // Reset PDF export button state before caching
+    const exportPdfLink = document.getElementById('export-all-pdf-link');
+    if (exportPdfLink) {
+      exportPdfLink.innerHTML = '📄 Export All to PDF';
+      exportPdfLink.classList.add('hover:bg-indigo-700');
+      exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+      exportPdfLink.style.pointerEvents = '';
+    }
+
+    // Remove any lingering PDF loading overlay
+    const overlay = document.getElementById('pdf-loading-overlay');
+    if (overlay) {
+      overlay.remove();
     }
   });
 </script>
