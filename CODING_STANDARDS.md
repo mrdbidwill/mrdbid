@@ -112,6 +112,7 @@ Before merging any PR, verify:
 ### Production Issues
 - `PRODUCTION_500_ERROR_FIX.md` - N+1 query fix
 - `PRODUCTION_500_ERROR_FIX_ACTUAL.md` - Strict loading implementation
+- `STRICT_LOADING_PATTERN.md` - Strict loading association preloading patterns
 
 ### Infrastructure
 - `SOLID_QUEUE_SETUP.md` - Background job configuration
