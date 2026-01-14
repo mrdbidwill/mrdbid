@@ -64,8 +64,10 @@ class MushroomPdfService
 
       info_data << ['Fungus Type:', sanitize_for_pdf(mushroom.fungus_type&.name || 'N/A')]
       info_data << ['Location:', sanitize_for_pdf(location_text(mushroom))]
+      info_data << ['Date Found:', sanitize_for_pdf(mushroom.collection_date&.strftime('%B %d, %Y') || 'N/A')]
       info_data << ['Description:', sanitize_for_pdf(mushroom.description.presence || 'N/A')] if mushroom.description.present?
       info_data << ['Comments:', sanitize_for_pdf(mushroom.comments.presence || 'N/A')] if mushroom.comments.present?
+      info_data << ['Personal Notes:', sanitize_for_pdf(mushroom.personal_notes.presence || 'N/A')] if mushroom.personal_notes.present?
 
       # Taxonomy
       if mushroom.genera.any?
@@ -200,8 +202,10 @@ class MushroomPdfService
 
   def location_text(mushroom)
     parts = []
-    parts << mushroom.country&.name if mushroom.country
+    parts << mushroom.city if mushroom.city.present?
+    parts << mushroom.county if mushroom.county.present?
     parts << mushroom.state&.name if mushroom.state
+    parts << mushroom.country&.name if mushroom.country
     parts.any? ? parts.join(', ') : 'N/A'
   end
 

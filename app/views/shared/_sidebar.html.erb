@@ -207,7 +207,13 @@
     // This has been accidentally removed/simplified multiple times - DO NOT DO IT AGAIN.
     const exportPdfLink = document.getElementById('export-all-pdf-link');
     if (exportPdfLink) {
-      exportPdfLink.addEventListener('click', function(e) {
+      // Remove old event listeners by replacing the element with a clone
+      // This prevents duplicate listeners when Turbo reloads the page
+      const newExportPdfLink = exportPdfLink.cloneNode(true);
+      exportPdfLink.parentNode.replaceChild(newExportPdfLink, exportPdfLink);
+
+      // Add event listener to the new (clean) element
+      newExportPdfLink.addEventListener('click', function(e) {
         e.preventDefault();
 
         // Only proceed if user confirms (if confirm dialog exists)
@@ -247,18 +253,19 @@
         document.body.appendChild(loadingOverlay);
 
         // Function to reset UI
-        function resetUI() {
+        const resetUI = () => {
           const overlay = document.getElementById('pdf-loading-overlay');
           if (overlay) {
             overlay.remove();
           }
-          if (exportPdfLink) {
-            exportPdfLink.innerHTML = originalButtonContent;
-            exportPdfLink.classList.add('hover:bg-indigo-700');
-            exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-            exportPdfLink.style.pointerEvents = '';
+          const currentLink = document.getElementById('export-all-pdf-link');
+          if (currentLink) {
+            currentLink.innerHTML = originalButtonContent;
+            currentLink.classList.add('hover:bg-indigo-700');
+            currentLink.classList.remove('opacity-75', 'cursor-not-allowed');
+            currentLink.style.pointerEvents = '';
           }
-        }
+        };
 
         // Create hidden iframe for download
         const iframe = document.createElement('iframe');
@@ -272,7 +279,9 @@
         // We'll use a minimum delay plus checking for user activity
         setTimeout(function() {
           resetUI();
-          document.body.removeChild(iframe);
+          if (iframe.parentNode) {
+            document.body.removeChild(iframe);
+          }
         }, 3000); // Reset after 3 seconds minimum
       });
     }
