@@ -136,8 +136,9 @@ class Mushroom < ApplicationRecord
                       .order(Arel.sql('CASE WHEN is_primary = true THEN 0 ELSE 1 END'), :created_at)
 
     # Get mushroom_species with their is_primary status, ordered by primary first, then creation
+    # CRITICAL: Must include species.genus to prevent strict_loading violations in views
     species_records = mushroom_species
-                        .includes(:species)
+                        .includes(species: :genus)
                         .order(Arel.sql('CASE WHEN is_primary = true THEN 0 ELSE 1 END'), :created_at)
 
     # Pair them up (genus[0] with species[0], genus[1] with species[1], etc.)
