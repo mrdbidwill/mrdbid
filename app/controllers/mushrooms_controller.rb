@@ -164,8 +164,9 @@ class MushroomsController < ApplicationController
     # set_mushroom before_action already loads the mushroom with basic associations
     # authorize_mushroom before_action already checks authorization
     # Reload with additional associations needed for edit view
+    # CRITICAL: species must include genus association for ranked_identifications display
     @mushroom = Mushroom
-                  .includes(:genera, :species, :trees, :plants, :fungus_type,
+                  .includes(:genera, { species: :genus }, :trees, :plants, :fungus_type,
                             image_mushrooms: [:part, { image_file_attachment: :blob }],
                             mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
                   .find(params[:id])
@@ -306,7 +307,7 @@ class MushroomsController < ApplicationController
   # ============================================================================
   def set_mushroom
     @mushroom = Mushroom
-                  .includes(:country, :state, :fungus_type, :genera, :species, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
+                  .includes(:country, :state, :fungus_type, :genera, { species: :genus }, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
     # Authorization is handled by authorize_mushroom before_action
   rescue ActiveRecord::RecordNotFound
