@@ -71,7 +71,7 @@ class MushroomsController < ApplicationController
       end
 
       @mushrooms = @mushrooms
-                     .includes(:fungus_type, :country, :state, :genera, :species,
+                     .includes(:fungus_type, :country, :state, :genera, { species: :genus },
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
@@ -102,7 +102,7 @@ class MushroomsController < ApplicationController
       end
 
       @mushrooms = @mushrooms
-                     .includes(:fungus_type, :country, :state, :genera, :species,
+                     .includes(:fungus_type, :country, :state, :genera, { species: :genus },
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
