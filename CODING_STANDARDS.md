@@ -37,6 +37,19 @@ These standards were created after recurring bugs that wasted significant develo
 
 **Location:** `app/views/shared/_sidebar.html.erb` lines 85-278
 
+### 4. Genus Display Fallback Pattern
+**Status:** MANDATORY
+**Created:** 2026-01-14 (after 2nd occurrence)
+
+**Summary:** When displaying identifications from `ranked_identifications`, ALWAYS use the genus fallback pattern: `(id[:genus]&.name || id[:species]&.genus&.name || '?')`. Never use just `id[:genus]&.name || '?'`. The `ranked_identifications` method pairs genera and species by array index, which can create mismatches when species are added in different orders. Species always have a `genus_id` foreign key, so falling back to `id[:species]&.genus&.name` provides the correct genus name even when the pairing is off.
+
+**Why:** Fixed in commit ca3f9ab for edit view, but the same pattern was missing in the show view (`_mushroom.html.erb`), causing "?" to display instead of genus names (e.g., "? betulinus" instead of "Lenzites betulinus"). All views that display identifications must use this pattern consistently.
+
+**Locations:**
+- `app/views/mushrooms/edit.html.erb` (lines around genus display)
+- `app/views/mushrooms/_form.html.erb` (candidate summary section)
+- `app/views/mushrooms/_mushroom.html.erb` (identification display - lines 40, 45)
+
 ## Code Review Checklist
 
 Before merging any PR, verify:
@@ -58,6 +71,11 @@ Before merging any PR, verify:
 - [ ] Button changes to "⏳ Exporting..." during generation
 - [ ] Overlay shows "do not navigate away" message
 - [ ] Code has CRITICAL warning comments not to remove/simplify
+
+### Identification Display
+- [ ] Uses genus fallback pattern: `(id[:genus]&.name || id[:species]&.genus&.name || '?')`
+- [ ] Pattern applied consistently across all views that display identifications
+- [ ] Never use simplified version: `id[:genus]&.name || '?'`
 
 ### Forms
 - [ ] Standard `form_with` with Turbo enabled (default)
