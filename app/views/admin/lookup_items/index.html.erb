@@ -143,9 +143,12 @@
       <% @searched_characters.each do |mr_character| %>
         <% character_items = @lookup_items.select { |item| item.mr_character_id == mr_character.id } %>
         <div class="my-10">
-          <h2 class="font-bold text-2xl mb-2">
-            <%= mr_character.name %> (ID: <%= mr_character.id %>)
-          </h2>
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="font-bold text-2xl">
+              <%= mr_character.name %> (ID: <%= mr_character.id %>)
+            </h2>
+            <%= link_to "New Lookup Item for #{mr_character.name}", new_admin_lookup_item_path(mr_character_id: mr_character.id), class: "rounded-md px-2 py-1 bg-green-600 hover:bg-green-500 text-white font-medium" %>
+          </div>
           <% if character_items.any? %>
             <div class="overflow-x-auto">
               <table class="min-w-full table-auto border border-gray-100 mb-8">
@@ -186,9 +189,14 @@
       <%# Normal browsing/filtering mode %>
       <% @lookup_items.group_by(&:mr_character).each do |mr_character, items| %>
         <div class="my-10">
-          <h2 class="font-bold text-2xl mb-2">
-            <%= mr_character&.name || 'Unassigned Character' %>
-          </h2>
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="font-bold text-2xl">
+              <%= mr_character&.name || 'Unassigned Character' %>
+            </h2>
+            <% if mr_character.present? %>
+              <%= link_to "New Lookup Item for #{mr_character.name}", new_admin_lookup_item_path(mr_character_id: mr_character.id), class: "rounded-md px-2 py-1 bg-green-600 hover:bg-green-500 text-white font-medium" %>
+            <% end %>
+          </div>
           <div class="overflow-x-auto">
             <table class="min-w-full table-auto border border-gray-100 mb-8">
               <thead>
