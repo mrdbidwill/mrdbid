@@ -40,6 +40,11 @@ class Admin::MrCharactersController < Admin::ApplicationController
           @mr_characters = @mr_characters.where(fungus_type_id: params[:fungus_type_id])
         end
       end
+
+      # Filter by needs_review status
+      if params[:needs_review].present?
+        @mr_characters = @mr_characters.where(needs_review: params[:needs_review] == 'true')
+      end
     end
 
     # Paginate (required for `paginate` helper)
@@ -113,6 +118,6 @@ class Admin::MrCharactersController < Admin::ApplicationController
   end
 
   def mr_character_params
-    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :observation_method_id, :display_option_id, :source_data_id, :source_data_title, :fungus_type_id)
+    params.require(:mr_character).permit(:name, :description, :comments, :part_id, :observation_method_id, :display_option_id, :source_data_id, :source_data_title, :fungus_type_id, :needs_review)
   end
 end

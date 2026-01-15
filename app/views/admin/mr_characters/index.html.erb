@@ -41,10 +41,10 @@
   <div class="group-box mb-6">
     <div class="group-header">
       Filter Mushroom Characters
-      <p class="hint mt-1">Browse characters by Part, Observation Method, and/or Fungus Type. Does not affect search below.</p>
+      <p class="hint mt-1">Browse characters by Part, Observation Method, Fungus Type, and/or Review Status. Does not affect search below.</p>
     </div>
     <div class="px-4 py-4">
-      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6" do |form| %>
+      <%= form_with url: admin_mr_characters_path, method: :get, local: true, class: "grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-6" do |form| %>
         <div class="form-field">
           <%= form.label :part_id, "Part", class: "form-label" %>
           <%= form.select :part_id,
@@ -75,7 +75,17 @@
           <p class="form-help">Filter characters by fungus type or universal.</p>
         </div>
 
-        <div class="lg:col-span-3 flex gap-2">
+        <div class="form-field">
+          <%= form.label :needs_review, "Review Status", class: "form-label" %>
+          <%= form.select :needs_review,
+                          [['Needs Review Only', 'true'], ['Not Marked for Review', 'false']],
+                          { include_blank: "All" },
+                          class: "form-input",
+                          style: "width: 85%; padding: 0.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 0 10px 2px rgba(0,0,0,0.12), 0 0 24px 6px rgba(0,0,0,0.12);" %>
+          <p class="form-help">Show characters marked for review/evaluation.</p>
+        </div>
+
+        <div class="lg:col-span-4 flex gap-2">
           <%= form.submit "Apply Filter", class: "btn-primary" %>
           <%= link_to "Reset", admin_mr_characters_path, class: "btn" %>
         </div>
@@ -89,7 +99,7 @@
     <% selected_part_name = params[:part_id].presence && part_name_by_id[params[:part_id].to_s] %>
 
     <div class="well">
-      <% if params[:part_id].present? || params[:observation_method_id].present? || params[:fungus_type_id].present? %>
+      <% if params[:part_id].present? || params[:observation_method_id].present? || params[:fungus_type_id].present? || params[:needs_review].present? %>
         <div class="flex flex-wrap items-center gap-2 text-sm">
           <span class="text-gray-700 font-medium">Currently showing:</span>
           <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2.5 py-1">
@@ -104,6 +114,12 @@
             <span class="font-medium">Fungus Type:</span>
             <span><%= params[:fungus_type_id] == 'universal' ? 'Universal' : (FungusType.find_by(id: params[:fungus_type_id])&.name || "All") %></span>
           </span>
+          <% if params[:needs_review].present? %>
+            <span class="inline-flex items-center gap-1 rounded-full bg-orange-50 text-orange-700 px-2.5 py-1">
+              <span class="font-medium">Review Status:</span>
+              <span><%= params[:needs_review] == 'true' ? 'Needs Review' : 'Not Marked' %></span>
+            </span>
+          <% end %>
           <%= link_to "Change", "#", class: "ml-auto text-blue-700 hover:underline", onclick: "document.querySelector('form[action=\"#{admin_mr_characters_path}\"]').scrollIntoView({behavior:'smooth'})" %>
         </div>
       <% else %>
@@ -165,7 +181,7 @@
     <div class="my-1 flex flex-wrap items-center gap-4">
       <%= paginate @mr_characters,
                    theme: 'tailwind_bar',
-                   params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], q: params[:q] }.compact,
+                   params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], needs_review: params[:needs_review], q: params[:q] }.compact,
                    window: 2,        # how many pages around current
                    outer_window: 1   # how many pages at the ends
       %>
@@ -177,6 +193,7 @@
           <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
           <%= hidden_field_tag :observation_method_id, params[:observation_method_id] if params[:observation_method_id].present? %>
           <%= hidden_field_tag :fungus_type_id, params[:fungus_type_id] if params[:fungus_type_id].present? %>
+          <%= hidden_field_tag :needs_review, params[:needs_review] if params[:needs_review].present? %>
           <%= form.submit "Go", class: "btn-primary px-3 py-1" %>
         <% end %>
         <span class="text-sm text-gray-600">of <%= @mr_characters.total_pages %></span>
@@ -212,7 +229,7 @@
           <div class="my-1 flex flex-wrap items-center gap-4">
             <%= paginate @mr_characters,
                          theme: 'tailwind_bar',
-                         params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], q: params[:q] }.compact,
+                         params: { part_id: params[:part_id], observation_method_id: params[:observation_method_id], fungus_type_id: params[:fungus_type_id], needs_review: params[:needs_review], q: params[:q] }.compact,
                          window: 2,        # how many pages around current
                          outer_window: 1   # how many pages at the ends
             %>
@@ -224,6 +241,7 @@
                 <%= hidden_field_tag :part_id, params[:part_id] if params[:part_id].present? %>
                 <%= hidden_field_tag :observation_method_id, params[:observation_method_id] if params[:observation_method_id].present? %>
                 <%= hidden_field_tag :fungus_type_id, params[:fungus_type_id] if params[:fungus_type_id].present? %>
+                <%= hidden_field_tag :needs_review, params[:needs_review] if params[:needs_review].present? %>
                 <%= form.submit "Go", class: "btn-primary px-3 py-1" %>
               <% end %>
               <span class="text-sm text-gray-600">of <%= @mr_characters.total_pages %></span>
