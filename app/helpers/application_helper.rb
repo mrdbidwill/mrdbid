@@ -26,6 +26,19 @@ module ApplicationHelper
     LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id)
   end
 
+  # Check if current user is an admin (permission_id < 5)
+  # This helper enables inline edit links for admins throughout the application.
+  # Admin users can click edit icons next to characters and lookup items to quickly
+  # edit definitions without leaving their current workflow.
+  #
+  # Returns true if user is signed in AND has admin permissions (permission_id < 5)
+  # Returns false if user not signed in or not an admin
+  #
+  # Used in views to conditionally show admin-only edit links
+  def admin_user?
+    user_signed_in? && current_user.admin?
+  end
+
   # Render an input for a given character based on its display option.
   # current_value comes from existing MrCharacterMushroom (string), may be a lookup_item id for radio/dropdown.
   def input_for_character(form:, character:, current_value: nil)

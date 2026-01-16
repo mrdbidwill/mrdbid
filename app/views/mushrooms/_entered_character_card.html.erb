@@ -18,6 +18,18 @@
       <div class="flex-1 min-w-0">
         <h4 class="text-sm font-semibold text-gray-800 break-words">
           <%= character.name.to_s.tr("_", " ") %>
+          <%# INLINE ADMIN EDIT LINK: Gear icon for editing character definition
+              Only visible to admin users (permission_id < 5)
+              Clicking takes admin to character edit page with return_to param
+              After save, admin returns here to continue mushroom editing
+              Uses respond_to? check for defensive coding (avoids errors in test environment) %>
+          <% if respond_to?(:admin_user?) && admin_user? %>
+            <%= link_to edit_admin_mr_character_path(character, return_to: request.fullpath),
+                        class: "inline-block ml-1 text-blue-600 hover:text-blue-800 opacity-70 hover:opacity-100 transition",
+                        title: "Edit character definition (Admin)" do %>
+              <span class="text-xs">⚙️</span>
+            <% end %>
+          <% end %>
         </h4>
         <p class="text-xs text-gray-500 mt-0.5">
           <%= character.part&.name || "Unknown part" %>

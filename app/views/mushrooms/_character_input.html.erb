@@ -22,6 +22,17 @@
           <label for="<%= id %>" class="inline-flex items-center gap-2">
             <%= f.radio_button(:character_value, item.id, id: id, checked: existing == item.id.to_s.downcase, data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" }) %>
             <span class="text-sm"><%= item.name.to_s %></span>
+            <%# INLINE ADMIN EDIT LINK: Pencil icon for editing lookup item (radio option)
+                Only visible to admin users (permission_id < 5)
+                Allows quick editing of option text, description, comments
+                After save, admin returns to this exact page to continue work %>
+            <% if respond_to?(:admin_user?) && admin_user? %>
+              <%= link_to edit_admin_lookup_item_path(item, return_to: request.fullpath),
+                          class: "ml-1 text-blue-600 hover:text-blue-800 opacity-60 hover:opacity-100 transition",
+                          title: "Edit option (Admin)" do %>
+                <span class="text-xs">✏️</span>
+              <% end %>
+            <% end %>
           </label>
           <% if item.description.present? %>
             <div class="text-xs text-gray-600 ml-6 mt-0.5">
@@ -51,6 +62,21 @@
             class: "border rounded px-2 py-1 text-sm w-full max-w-xs",
             data: { bulk_character_update_target: "input", action: "change->bulk-character-update#trackChange" }
           ) %>
+      <%# INLINE ADMIN EDIT LINK: Edit link for dropdown selections
+          Only visible to admin users when an option is selected
+          Provides convenient access to edit the currently selected lookup item
+          After save, admin returns to continue mushroom editing %>
+      <% if respond_to?(:admin_user?) && admin_user? && current_value.present? %>
+        <% selected_item = lookup_items.find_by(id: current_value) %>
+        <% if selected_item %>
+          <%= link_to edit_admin_lookup_item_path(selected_item, return_to: request.fullpath),
+                      class: "text-xs text-blue-600 hover:text-blue-800 inline-flex items-center gap-1",
+                      title: "Edit selected option (Admin)" do %>
+            <span>✏️</span>
+            <span>Edit this option</span>
+          <% end %>
+        <% end %>
+      <% end %>
       <% if current_value.present? %>
         <% selected_item = lookup_items.find_by(id: current_value) %>
         <% if selected_item&.description.present? || selected_item&.comments.present? %>

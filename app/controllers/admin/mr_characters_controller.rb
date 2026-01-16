@@ -99,7 +99,24 @@ class Admin::MrCharactersController < Admin::ApplicationController
   def update
     authorize @mr_character
     if @mr_character.update(mr_character_params)
-      redirect_to admin_mr_characters_path(page: params[:page]), notice: "Character updated successfully."
+      # INLINE EDITING SUPPORT: Allow admins to edit characters from user workflows
+      # When admins click edit icons (⚙️) next to characters in mushroom edit views,
+      # they are redirected here with a return_to param containing the originating page.
+      # After successful save, redirect back to that page so admin can continue their work.
+      #
+      # Flow: Mushroom Edit → Click ⚙️ → Edit Character → Save → Back to Mushroom Edit
+      #
+      # Example return_to: "/mushrooms/123/edit"
+      # Falls back to admin index if return_to not provided (normal admin workflow)
+      redirect_path = if params[:return_to].present?
+        params[:return_to]
+      else
+        admin_mr_characters_path(page: params[:page])
+      end
+
+      # CODING STANDARD: Use redirect_to with notice: and status: :see_other
+      # per RAILS_8_TURBO_STANDARD_PATTERN.md - DO NOT use respond_to blocks
+      redirect_to redirect_path, notice: "Character updated successfully.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
