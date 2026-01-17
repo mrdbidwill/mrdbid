@@ -150,7 +150,17 @@
             <% c = rc.mr_character %>
             <% colors = rc.ordered_colors %>
             <div class="flex flex-col border rounded p-3 gap-2">
-              <div class="min-w-0 font-medium break-words"><%= c&.name.to_s.tr("_", " ") %></div>
+              <div class="min-w-0 font-medium break-words">
+                <%= c&.name.to_s.tr("_", " ") %>
+                <%# INLINE ADMIN EDIT LINK: Gear icon for editing character definition %>
+                <% if respond_to?(:admin_user?) && admin_user? %>
+                  <%= link_to edit_admin_mr_character_path(c, return_to: request.fullpath),
+                              class: "inline-block ml-1 text-blue-600 hover:text-blue-800 opacity-70 hover:opacity-100 transition",
+                              title: "Edit character definition (Admin)" do %>
+                    <span class="text-xs">⚙️</span>
+                  <% end %>
+                <% end %>
+              </div>
               <% if colors.any? %>
                 <div class="flex flex-wrap gap-3">
                   <% colors.each do |color| %>

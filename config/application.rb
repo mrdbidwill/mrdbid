@@ -5,7 +5,6 @@
 require_relative 'boot'
 
 require 'rails/all'
-require 'rails/application_controller' # Fix for Rails::ApplicationController error
 require 'i18n'
 
 

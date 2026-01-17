@@ -12,9 +12,6 @@ class ApplicationController < ActionController::Base
   # Make Pundit's policy and policy_scope methods available to views
   helper_method :policy, :policy_scope
 
-  # Make admin check available to views
-  helper_method :admin_user?
-
   # Error handling
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -35,6 +32,27 @@ class ApplicationController < ActionController::Base
   # This prevents environment-specific bugs where callbacks exist in dev/test but not production.
   after_action :verify_authorized, unless: -> { devise_controller? || action_name == 'index' }
   after_action :verify_policy_scoped, unless: -> { devise_controller? || action_name != 'index' || !action_has_index? }
+
+  # Check if current user is an admin (permission_id < 5)
+  # This method is made available to views via helper_method (see below)
+  #
+  # Purpose: Enable inline edit links for admins in user-facing workflows
+  # Admin users see small edit icons (⚙️, ✏️) next to characters and lookup items
+  # that link directly to admin edit pages with automatic return navigation.
+  #
+  # Returns:
+  #   true - if user is signed in AND has admin permissions
+  #   false - if user not signed in or not an admin
+  #
+  # Usage in views:
+  #   <% if admin_user? %>
+  #     <%= link_to "Edit", edit_admin_path(..., return_to: request.fullpath) %>
+  #   <% end %>
+  def admin_user?
+    # Helper method to check admin status
+    user_signed_in? && current_user.admin?
+  end
+  helper_method :admin_user?
 
   private
 
@@ -152,25 +170,6 @@ class ApplicationController < ActionController::Base
 
   def is_admin?
     current_user&.permission_id == 1
-  end
-
-  # Check if current user is an admin (permission_id < 5)
-  # This method is made available to views via helper_method (see line 16)
-  #
-  # Purpose: Enable inline edit links for admins in user-facing workflows
-  # Admin users see small edit icons (⚙️, ✏️) next to characters and lookup items
-  # that link directly to admin edit pages with automatic return navigation.
-  #
-  # Returns:
-  #   true - if user is signed in AND has admin permissions
-  #   false - if user not signed in or not an admin
-  #
-  # Usage in views:
-  #   <% if admin_user? %>
-  #     <%= link_to "Edit", edit_admin_path(..., return_to: request.fullpath) %>
-  #   <% end %>
-  def admin_user?
-    user_signed_in? && current_user.admin?
   end
 
   def set_view_debug_identifier
