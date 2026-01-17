@@ -106,7 +106,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       delete user_registration_url
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   test "should handle strict_loading on destroy" do
@@ -116,7 +116,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     # Verify strict_loading is disabled during destroy
     delete user_registration_url
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   test "should reject invalid registration" do

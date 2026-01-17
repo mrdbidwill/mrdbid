@@ -8,6 +8,7 @@ class AllGroupMushroomsController < ApplicationController
 
   # Skip Pundit verification - authorization handled via ownership checks
   skip_after_action :verify_authorized, raise: false
+  skip_after_action :verify_policy_scoped, only: [:index], raise: false
 
   def index
     @all_group_mushrooms = AllGroupMushroom.all

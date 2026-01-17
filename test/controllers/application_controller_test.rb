@@ -34,4 +34,29 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
     # This is tested in Sessions controller and integration tests
     assert ApplicationController.method_defined?(:after_sign_in_path_for)
   end
+
+  test "admin_user? returns true for admin users" do
+    admin = users(:one)
+    admin.permission_id = 2  # super_admin from fixtures
+    admin.save!
+    sign_in admin
+
+    get mushrooms_url
+    assert @controller.admin_user?
+  end
+
+  test "admin_user? returns false for non-admin users" do
+    user = users(:one)
+    user.permission_id = 9  # member from fixtures
+    user.save!
+    sign_in user
+
+    get mushrooms_url
+    assert_not @controller.admin_user?
+  end
+
+  test "admin_user? returns false when not signed in" do
+    get mushrooms_url
+    assert_not @controller.admin_user?
+  end
 end

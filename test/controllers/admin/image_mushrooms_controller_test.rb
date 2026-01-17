@@ -22,12 +22,12 @@ class Admin::ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get image_mushrooms_path
+    get admin_image_mushrooms_path
     assert_response :success
   end
 
   test "should get new" do
-    get new_image_mushroom_path(mushroom_id: @mushroom.id)
+    get new_admin_image_mushroom_path(mushroom_id: @mushroom.id)
     assert_response :success
   end
 
@@ -46,7 +46,7 @@ class Admin::ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     image_file = fixture_file_upload("test_image.jpg", "image/jpeg")
 
     assert_difference("ImageMushroom.count") do
-      post image_mushrooms_url, params: {
+      post admin_image_mushrooms_url, params: {
         image_mushroom: {
           image_name: "Test Image",
           mushroom_id: other_mushroom.id,
@@ -60,36 +60,35 @@ class Admin::ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-    assert_redirected_to mushroom_path(other_mushroom)
+    assert_redirected_to admin_image_mushroom_path(ImageMushroom.last)
   end
 
   test "should show image_mushroom" do
-    get image_mushroom_path(@image_mushroom)
+    get admin_image_mushroom_path(@image_mushroom)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_image_mushroom_path(@image_mushroom)
+    get edit_admin_image_mushroom_path(@image_mushroom)
     assert_response :success
   end
 
   test "should update image mushroom" do
-    patch image_mushroom_path(@image_mushroom), params: {
+    patch admin_image_mushroom_path(@image_mushroom), params: {
       image_mushroom: {
         image_name: "Updated Picture"
       }
     }
-    assert_redirected_to edit_mushroom_path(@image_mushroom.mushroom)
+    assert_redirected_to admin_image_mushroom_path(@image_mushroom)
   end
 
 
   test "should destroy image_mushroom" do
-    mushroom_id = @image_mushroom.mushroom_id
     assert_difference("ImageMushroom.count", -1) do
-      delete image_mushroom_path(@image_mushroom)
+      delete admin_image_mushroom_path(@image_mushroom)
     end
 
-    assert_redirected_to mushroom_path(mushroom_id)
+    assert_redirected_to admin_image_mushrooms_path
   end
 end
 

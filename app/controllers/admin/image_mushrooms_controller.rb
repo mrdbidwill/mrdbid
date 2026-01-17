@@ -6,7 +6,7 @@ class Admin::ImageMushroomsController < Admin::ApplicationController
 
   def index
     authorize ImageMushroom
-    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part).order(:image_name))
+    @image_mushrooms = policy_scope(ImageMushroom.includes(:mushroom, :part, :camera_make, :camera_model, :lens).order(:image_name))
   end
 
   def show

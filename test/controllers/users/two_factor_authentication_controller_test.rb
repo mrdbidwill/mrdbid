@@ -45,7 +45,7 @@ class Users::TwoFactorAuthenticationControllerTest < ActionDispatch::Integration
     patch user_two_factor_authentication_url,
       params: { otp_attempt: otp_code }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     assert_nil session[:otp_user_id]
     assert_equal "Successfully signed in with 2FA", flash[:notice]
   end
@@ -83,7 +83,7 @@ class Users::TwoFactorAuthenticationControllerTest < ActionDispatch::Integration
         params: { otp_attempt: otp_code, trust_device: "1" }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
     assert cookies[:trusted_device_token].present?
   end
 
@@ -103,7 +103,7 @@ class Users::TwoFactorAuthenticationControllerTest < ActionDispatch::Integration
         params: { otp_attempt: otp_code, trust_device: "0" }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 
   # Skipping: test requires mocha which is not configured
@@ -151,6 +151,6 @@ class Users::TwoFactorAuthenticationControllerTest < ActionDispatch::Integration
     patch user_two_factor_authentication_url,
       params: { otp_attempt: otp_code }
 
-    assert_redirected_to root_path
+    assert_redirected_to mushrooms_path
   end
 end

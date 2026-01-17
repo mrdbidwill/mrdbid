@@ -5,7 +5,7 @@ class ImageMushroomsController < ApplicationController
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 
   # Skip Pundit verification for public actions when not authenticated
-  skip_after_action :verify_authorized, only: [:show], if: -> { !user_signed_in? }, raise: false
+  skip_after_action :verify_authorized, only: [:show, :new, :create], if: -> { !user_signed_in? }, raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   def index
@@ -35,6 +35,7 @@ class ImageMushroomsController < ApplicationController
   def new
     @mushroom = Mushroom.find_by(id: params[:mushroom_id]) # Optional mushroom from params
     unless @mushroom
+      skip_authorization
       redirect_to mushrooms_path, alert: "You must choose a mushroom first." and return
     end
     authorize @mushroom, :mushroom_image_mushroom?
@@ -53,6 +54,7 @@ class ImageMushroomsController < ApplicationController
     parent_id = route_parent_id || form_parent_id
 
     if parent_id.blank?
+      skip_authorization
       redirect_to mushrooms_path, alert: "You must choose a mushroom first." and return
     end
 
