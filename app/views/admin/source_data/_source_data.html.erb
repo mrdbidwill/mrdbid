@@ -23,6 +23,12 @@
       <span class="text-gray-500">Item code:</span>
       <span class="font-medium"><%= source_data.item_code.presence || "—" %></span>
     </div>
+    <% if source_data.user.present? %>
+      <div class="truncate">
+        <span class="text-gray-500">Added by:</span>
+        <span class="font-medium"><%= source_data.user.email %></span>
+      </div>
+    <% end %>
 </div>
 
   <% if source_data.comments.present? %>

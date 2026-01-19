@@ -108,6 +108,7 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles
   has_many :trusted_devices, dependent: :destroy
   has_many :articles, dependent: :nullify
+  has_many :source_data, class_name: 'SourceData', dependent: :nullify
 
   # Invitation associations
   has_many :created_invitations, class_name: 'InvitationToken', foreign_key: 'created_by_user_id', dependent: :destroy

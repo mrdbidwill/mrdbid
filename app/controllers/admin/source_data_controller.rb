@@ -53,6 +53,12 @@ class Admin::SourceDataController < Admin::ApplicationController
   def create
     @source_data = SourceData.new(source_data_params)
     authorize @source_data
+
+    # Auto-assign current user for "Personal Notes" type (id: 11)
+    if @source_data.source_data_type_id == 11 && @source_data.user_id.nil?
+      @source_data.user_id = current_user.id
+    end
+
     if @source_data.save
       redirect_to admin_source_datum_path(@source_data), notice: "Source data was successfully created."
     else
@@ -86,6 +92,13 @@ class Admin::SourceDataController < Admin::ApplicationController
     redirect_to admin_source_data_path, notice: "Source data was successfully deleted."
   end
 
+  # GET /source_datas/1/versions
+  def versions
+    @source_data = SourceData.find(params[:id])
+    @versions = @source_data.versions.order(created_at: :desc)
+    authorize @source_data
+  end
+
   private
 
   def set_source_data
@@ -94,6 +107,6 @@ class Admin::SourceDataController < Admin::ApplicationController
 
 
   def source_data_params
-    params.expect(source_data: [:title, :author, :ref, :item_code, :source_data_type_id, :comments])
+    params.expect(source_data: [ :title, :author, :ref, :item_code, :source_data_type_id, :comments, :user_id ])
   end
 end

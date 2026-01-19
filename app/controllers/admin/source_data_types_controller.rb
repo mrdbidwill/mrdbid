@@ -58,6 +58,6 @@ class Admin::SourceDataTypesController < Admin::ApplicationController
   end
 
   def source_data_type_params
-    params.expect(source_data_type: [:name, :description, :comments, :source])
+    params.expect(source_data_type: [ :name, :description, :comments ])
   end
 end

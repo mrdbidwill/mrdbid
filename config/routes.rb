@@ -98,7 +98,11 @@ Rails.application.routes.draw do
     resources :permissions
     resources :plants
     resources :roles
-    resources :source_data
+    resources :source_data do
+      member do
+        get :versions
+      end
+    end
     resources :source_data_types
     resources :storage_locations
     resources :species

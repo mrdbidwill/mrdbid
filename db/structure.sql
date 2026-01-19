@@ -516,7 +516,7 @@ CREATE TABLE `mr_character_mushrooms` (
   KEY `index_mr_character_mushrooms_on_mushroom_id` (`mushroom_id`),
   CONSTRAINT `fk_rails_976623cbea` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
   CONSTRAINT `fk_rails_ba5a019ccc` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mr_characters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -983,8 +983,12 @@ CREATE TABLE `source_data` (
   `comments` text,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_source_data_on_source_data_type_id` (`source_data_type_id`),
+  KEY `index_source_data_on_user_id` (`user_id`),
+  KEY `index_source_data_on_user_id_and_source_data_type_id` (`user_id`,`source_data_type_id`),
+  CONSTRAINT `fk_rails_2d439870ca` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_e2b6e4c854` FOREIGN KEY (`source_data_type_id`) REFERENCES `source_data_types` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1172,6 +1176,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260119114150'),
 ('20260115140618'),
 ('20260106131559'),
 ('20260105000002'),
