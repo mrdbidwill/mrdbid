@@ -46,6 +46,27 @@ class SourceDataControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_source_datum_path(SourceData.last)
   end
 
+  test "should create source_data and return to originating page when return_to parameter present" do
+    source_data_type = SourceDataType.first
+    return_path = new_admin_mr_character_path
+
+    assert_difference("SourceData.count") do
+      post admin_source_data_url, params: {
+        source_data: {
+          title: "New Source #{Time.now.to_i}",
+          author: "New Author",
+          ref: "12345",
+          item_code: "ABC123",
+          source_data_type_id: source_data_type.id,
+          comments: "New comment"
+        },
+        return_to: return_path
+      }
+    end
+
+    assert_redirected_to return_path
+  end
+
   test "should show source_data" do
     get admin_source_datum_path(@source_data)
     assert_response :success

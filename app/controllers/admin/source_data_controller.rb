@@ -60,7 +60,16 @@ class Admin::SourceDataController < Admin::ApplicationController
     end
 
     if @source_data.save
-      redirect_to admin_source_datum_path(@source_data), notice: "Source data was successfully created."
+      # INLINE EDITING SUPPORT: When creating a source from another form (e.g., character creation),
+      # return the user back to that form instead of showing the newly created source.
+      # This maintains the user's workflow and prevents losing their work in progress.
+      redirect_path = if params[:return_to].present?
+        params[:return_to]
+      else
+        admin_source_datum_path(@source_data)
+      end
+
+      redirect_to redirect_path, notice: "Source data was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

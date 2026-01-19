@@ -109,7 +109,7 @@
         <%= form.label :source_data_id, "Source Data" %>
         <p class="text-sm text-gray-600 mb-2">
           If the source you need is not in the dropdown,
-          <%= link_to "Create new source", new_admin_source_datum_path, target: "_blank", class: "text-blue-600 hover:underline font-medium" %>
+          <%= link_to "Create new source", new_admin_source_datum_path(return_to: request.fullpath), class: "text-blue-600 hover:underline font-medium" %>
           then return here to add the character.
         </p>
         <%= form.select :source_data_id,
