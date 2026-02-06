@@ -39,10 +39,10 @@ class ProjectTest < ActiveSupport::TestCase
     assert_instance_of User, @project.user
   end
 
-  test "should require user" do
+  test "should allow nil user for universal projects" do
     @project.user = nil
-    assert_not @project.valid?
-    assert_includes @project.errors[:user], "must exist"
+    assert @project.valid?, "Universal projects (user_id = nil) should be valid"
+    assert @project.universal?, "Project with user_id = nil should be universal"
   end
 
   test "should have many mushroom_projects" do

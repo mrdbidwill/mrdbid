@@ -101,6 +101,28 @@
 
       <div class="my-2 border-t border-gray-400"></div>
 
+      <!-- Organization Tools (Collapsible) -->
+      <div class="mb-3">
+        <button type="button"
+                onclick="this.nextElementSibling.classList.toggle('hidden')"
+                class="w-full text-left px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition flex items-center justify-between">
+          <span>📁 Organize Specimens</span>
+          <span class="text-xs">▼</span>
+        </button>
+        <div class="hidden mt-1 space-y-1 pl-2">
+          <%= link_to "Clusters", clusters_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
+          <%= link_to "Groups", all_groups_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
+          <% if current_user&.admin? %>
+            <%= link_to "Projects (Universal) 🌍", admin_projects_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold transition" %>
+          <% else %>
+            <%= link_to "Projects", projects_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
+          <% end %>
+          <p class="text-xs text-gray-600 px-2 py-1 italic">Create custom collections to organize your specimens</p>
+        </div>
+      </div>
+
+      <div class="my-2 border-t border-gray-400"></div>
+
       <!-- Articles -->
       <%= link_to "Articles", articles_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 

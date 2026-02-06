@@ -97,6 +97,7 @@ Rails.application.routes.draw do
     resources :parts
     resources :permissions
     resources :plants
+    resources :projects  # Universal projects managed by admins
     resources :roles
     resources :source_data do
       member do

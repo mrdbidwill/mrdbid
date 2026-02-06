@@ -59,6 +59,9 @@
           </div>
         </div>
 
+        <!-- Organization (Clusters, Groups, Projects) -->
+        <%= render "mushrooms/organization_display", mushroom: mushroom %>
+
         <!-- Full-width rows -->
         <% if mushroom.description.present? %>
           <div class="border rounded-md p-2">

@@ -72,6 +72,7 @@ class MushroomsController < ApplicationController
 
       @mushrooms = @mushrooms
                      .includes(:fungus_type, :country, :state, :genera, { species: :genus },
+                               :clusters, :all_groups, :projects,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
@@ -103,6 +104,7 @@ class MushroomsController < ApplicationController
 
       @mushrooms = @mushrooms
                      .includes(:fungus_type, :country, :state, :genera, { species: :genus },
+                               :clusters, :all_groups, :projects,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
                      .select('mushrooms.*', 'fungus_types.name as fungus_type_name')
@@ -167,6 +169,8 @@ class MushroomsController < ApplicationController
     # CRITICAL: species must include genus association for ranked_identifications display
     @mushroom = Mushroom
                   .includes(:genera, { species: :genus }, :trees, :plants, :fungus_type,
+                            :clusters, :all_groups, :projects,
+                            :cluster_mushrooms, :all_group_mushrooms, :mushroom_projects,
                             image_mushrooms: [:part, { image_file_attachment: :blob }],
                             mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
                   .find(params[:id])
@@ -222,6 +226,12 @@ class MushroomsController < ApplicationController
       @mushroom = Mushroom.includes(
         :image_mushrooms,
         :fungus_type,
+        :clusters,
+        :all_groups,
+        :projects,
+        :cluster_mushrooms,
+        :all_group_mushrooms,
+        :mushroom_projects,
         mr_characters: [:part, :observation_method, :color, :source_data]
       ).find(@mushroom.id)
       render :edit, status: :unprocessable_entity
@@ -307,7 +317,10 @@ class MushroomsController < ApplicationController
   # ============================================================================
   def set_mushroom
     @mushroom = Mushroom
-                  .includes(:country, :state, :fungus_type, :genera, { species: :genus }, :trees, :plants, image_mushrooms: { image_file_attachment: :blob })
+                  .includes(:country, :state, :fungus_type, :genera, { species: :genus }, :trees, :plants,
+                            :clusters, :all_groups, :projects,
+                            :cluster_mushrooms, :all_group_mushrooms, :mushroom_projects,
+                            image_mushrooms: { image_file_attachment: :blob })
                   .find(params[:id])
     # Authorization is handled by authorize_mushroom before_action
   rescue ActiveRecord::RecordNotFound
