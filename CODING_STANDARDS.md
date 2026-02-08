@@ -112,6 +112,7 @@ Before merging any PR, verify:
 - `FUNGUS_TYPE_FLEXIBILITY_REFACTORING.md` - Fungus type architecture
 - `CAMERA_INTEGRATION_COMPLETE.md` - Camera/EXIF integration
 - `CAMERA_EQUIPMENT_SUMMARY.md` - Camera equipment features
+- `COLOR_SYSTEM.md` - Hybrid color system (77 colors: 27 simplified + 50 AMS)
 
 ### Performance & Optimization
 - `OPTIMIZATION_SUMMARY.md` - Performance improvements

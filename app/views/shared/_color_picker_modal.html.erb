@@ -18,21 +18,30 @@
   current_colors = current_mr_char_mushroom&.ordered_colors || []
   selected_color_ids = current_colors.map(&:id)
 
-  # Get simplified colors grouped by family
-  simplified_colors = Color.where(is_simplified: true).order(:display_order)
+  # Get all colors for picker (simplified first, then AMS)
+  all_colors = Color.all_for_picker
+  simplified_colors = all_colors.select(&:is_simplified?)
+  ams_colors = all_colors.reject(&:is_simplified?)
   color_families = simplified_colors.group_by(&:color_family)
 
-  # Build color ID to hex mapping for JavaScript (for simplified colors)
+  # Build color ID to hex mapping for JavaScript (all colors)
   color_hex_map = {}
-  simplified_colors.each do |color|
+  all_colors.each do |color|
     color_hex_map[color.id] = color.hex
+  end
+
+  # Build color ID to image URL mapping for AMS colors
+  color_image_urls = {}
+  ams_colors.each do |color|
+    color_image_urls[color.id] = image_path("AMS_colors/banner_50x50/banner_#{color.id}.jpg")
   end
 %>
 
 <div data-controller="multicolor-picker"
      data-multicolor-picker-character-id-value="<%= character_id %>"
      data-multicolor-picker-selected-ids-value="<%= selected_color_ids.to_json %>"
-     data-multicolor-picker-color-hex-map-value="<%= color_hex_map.to_json %>">
+     data-multicolor-picker-color-hex-map-value="<%= color_hex_map.to_json %>"
+     data-multicolor-picker-color-images-value="<%= color_image_urls.to_json %>">
   <!-- Modal Trigger Button -->
   <button type="button"
           data-action="click->multicolor-picker#open"
@@ -120,6 +129,7 @@
 
         <!-- Grouped Color Grid -->
         <div class="space-y-6" data-multicolor-picker-target="colorGrid">
+          <!-- Simplified Colors (27 colors, grouped by family) -->
           <% color_families.each do |family_name, colors| %>
             <div class="color-family-group">
               <h5 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
@@ -152,6 +162,46 @@
                     <!-- Checkmark for selected colors (will be enhanced by JavaScript) -->
                     <% if is_selected %>
                       <svg class="absolute top-1 right-1 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                      </svg>
+                    <% end %>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- AMS Colors (50 colors, the original Alabama Mushroom Society palette) -->
+          <% if ams_colors.any? %>
+            <div class="color-family-group">
+              <h5 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <span class="inline-block w-3 h-3 rounded border border-gray-300 bg-gradient-to-br from-amber-200 via-orange-300 to-red-200"></span>
+                Alabama Mushroom Society (AMS) Colors
+                <span class="text-xs text-gray-500 font-normal">(<%= ams_colors.size %> colors)</span>
+              </h5>
+              <p class="text-xs text-gray-600 mb-3">Original 50-color AMS palette with Latin botanical names</p>
+              <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
+                <% ams_colors.each do |color| %>
+                  <% is_selected = selected_color_ids.include?(color.id) %>
+                  <button type="button"
+                          data-color-id="<%= color.id %>"
+                          data-action="click->multicolor-picker#toggleColor"
+                          title="<%= color.latin_name %> (<%= color.common_name %>)"
+                          class="group relative aspect-square border-2 rounded-lg transition-all hover:scale-110 hover:shadow-lg <%= is_selected ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400' %>">
+                    <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                  alt: color.common_name,
+                                  loading: "eager",
+                                  fetchpriority: "high",
+                                  class: "w-full h-full object-cover rounded-md" %>
+
+                    <!-- Tooltip on hover -->
+                    <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      <%= color.latin_name %> (<%= color.common_name %>)
+                    </span>
+
+                    <!-- Checkmark for selected colors (will be enhanced by JavaScript) -->
+                    <% if is_selected %>
+                      <svg class="absolute top-1 right-1 w-5 h-5 text-blue-600 bg-white rounded-full" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                       </svg>
                     <% end %>

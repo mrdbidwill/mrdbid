@@ -7,7 +7,8 @@ export default class extends Controller {
     static values = {
         characterId: Number,
         selectedIds: Array,
-        colorHexMap: Object
+        colorHexMap: Object,
+        colorImages: Object
     }
 
     connect() {
@@ -170,13 +171,14 @@ export default class extends Controller {
             const isLast = index === this.selectedColors.length - 1
             const label = index === 0 ? 'Primary' : `Secondary ${index}`
 
-            // Get the hex color from the mapping provided by Rails
+            // Get the hex color and image URL from the mappings provided by Rails
             const hexColor = this.colorHexMapValue[colorId]
+            const imageUrl = this.colorImagesValue[colorId]
 
-            // Render color swatch - use hex for simplified colors, image for legacy
-            const colorDisplay = hexColor
-                ? `<div class="w-8 h-8 rounded border border-gray-400" style="background-color: ${hexColor}"></div>`
-                : `<img src="/images/AMS_colors/banner_50x50/banner_${colorId}.jpg" alt="Color ${colorId}" class="w-8 h-8 rounded border border-gray-400" />`
+            // Render color swatch - use image for AMS colors if available, otherwise hex
+            const colorDisplay = imageUrl
+                ? `<img src="${imageUrl}" alt="Color ${colorId}" class="w-8 h-8 rounded border border-gray-400" />`
+                : `<div class="w-8 h-8 rounded border border-gray-400" style="background-color: ${hexColor}"></div>`
 
             return `
                 <div class="flex items-center gap-2 p-2 bg-gray-50 rounded border ${isFirst ? 'border-blue-500 border-2' : 'border-gray-300'}">

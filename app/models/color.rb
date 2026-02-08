@@ -16,6 +16,12 @@ class Color < ApplicationRecord
   scope :by_family, ->(family) { where(color_family: family) }
   scope :by_display_order, -> { order(display_order: :asc) }
 
+  # Scope for color picker - shows all colors in a sensible order
+  # Simplified colors first (by display_order), then AMS colors (by sequence)
+  scope :all_for_picker, -> {
+    order(Arel.sql('CASE WHEN is_simplified = 1 THEN 0 ELSE 1 END, COALESCE(display_order, sequence)'))
+  }
+
   # Get all color families in display order
   def self.color_families
     simplified.select(:color_family).distinct.pluck(:color_family)
