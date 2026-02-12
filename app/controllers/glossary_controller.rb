@@ -1,6 +1,6 @@
 class GlossaryController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
-  skip_after_action :verify_authorized
+  skip_after_action :verify_authorized, raise: false
 
   # GET /glossary/definition?term=basidiospore
   def definition
