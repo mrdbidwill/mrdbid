@@ -1,7 +1,15 @@
 <% content_for :title, "Mushrooms" %>
 
 <h1 class="text-3xl font-bold text-gray-900 mb-4">
-  <%= user_signed_in? ? "Your Mushrooms" : "Demo Collection" %>
+  <% if user_signed_in? %>
+    <% if @viewing_all %>
+      All Mushrooms
+    <% else %>
+      Your Mushrooms
+    <% end %>
+  <% else %>
+    Demo Collection
+  <% end %>
 </h1>
 
 <!-- Search card -->
@@ -106,6 +114,12 @@
               <p class="font-semibold text-gray-900 mb-1">
                 <%= mushroom.name.presence || "Unnamed" %>
               </p>
+
+              <% if @viewing_all && mushroom.user %>
+                <p class="text-xs text-gray-500 mb-1">
+                  👤 <%= mushroom.user.display_name %>
+                </p>
+              <% end %>
 
               <% if mushroom.collection_date.present? %>
                 <p class="text-xs text-gray-600">

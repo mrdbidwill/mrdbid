@@ -26,11 +26,11 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters]
+  before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters toggle_view_mode]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
-  skip_after_action :verify_authorized, only: [:show, :create, :export_pdf, :clone_characters], raise: false
+  skip_after_action :verify_authorized, only: [:show, :create, :export_pdf, :clone_characters, :toggle_view_mode], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -49,7 +49,15 @@ class MushroomsController < ApplicationController
       # ⚠️  WARNING: Adding associations to views? Update this includes!
       # Missing associations cause 500 errors in production due to strict_loading.
       # ============================================================================
-      @mushrooms = policy_scope(Mushroom)
+
+      # Check if user wants to view all mushrooms or just their own
+      if session[:view_all_mushrooms] == true
+        @mushrooms = Mushroom.all
+        @viewing_all = true
+      else
+        @mushrooms = policy_scope(Mushroom)
+        @viewing_all = false
+      end
 
       # Search by name, description, comments, city, genus (minimum 3 characters)
       if params[:q].present? && params[:q].strip.length >= 3
@@ -71,7 +79,7 @@ class MushroomsController < ApplicationController
       end
 
       @mushrooms = @mushrooms
-                     .includes(:fungus_type, :country, :state, :genera, { species: :genus },
+                     .includes(:user, :fungus_type, :country, :state, :genera, { species: :genus },
                                :clusters, :all_groups, :projects,
                                image_mushrooms: [:part, { image_file_attachment: :blob }])
                      .left_joins(:fungus_type)
@@ -295,6 +303,12 @@ class MushroomsController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to edit_mushroom_path(@mushroom), alert: 'Source mushroom not found.'
+  end
+
+  # POST /mushrooms/toggle_view_mode
+  def toggle_view_mode
+    session[:view_all_mushrooms] = !session[:view_all_mushrooms]
+    redirect_to mushrooms_path
   end
 
   private

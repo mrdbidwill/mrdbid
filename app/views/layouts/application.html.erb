@@ -4,6 +4,7 @@
     <link rel="preload" href="<%= asset_path('application.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="<%= asset_path('application.css') %>"></noscript>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "glossary", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
     <style>
@@ -28,7 +29,7 @@
     <link rel="apple-touch-icon" href="<%= asset_path('favicon-16x16.png') %>" type="image/png">
   </head>
 
-  <body class="bg-gray-100 text-gray-800">
+  <body class="bg-gray-100 text-gray-800" data-controller="glossary">
   <%# Removed horizontal menu - all navigation now in sidebar %>
 
   <%# Dev/Test view origin banner %>

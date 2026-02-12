@@ -17,11 +17,11 @@
 
   <%# Body can be HTML; otherwise use simple_format for plain text %>
   <% if @article.body.to_s.strip.starts_with?("<") %>
-    <%= sanitize(@article.body,
+    <%= raw mark_glossary_terms(sanitize(@article.body,
         tags: %w[div p span br ul ol li h1 h2 h3 h4 strong em a blockquote code pre img table thead tbody tr th td b u i],
-        attributes: %w[href src alt title class style]) %>
+        attributes: %w[href src alt title class style])) %>
   <% else %>
-    <%= simple_format(@article.body) %>
+    <%= raw mark_glossary_terms(simple_format(@article.body)) %>
   <% end %>
 
   <div class="flex gap-2 m-6">

@@ -145,7 +145,7 @@
                       <div>
                         <div><%= lookup_item.name %></div>
                         <% if lookup_item.description.present? %>
-                          <div class="text-sm text-gray-600"><%= lookup_item.description %></div>
+                          <div class="text-sm text-gray-600"><%= raw mark_glossary_terms(lookup_item.description) %></div>
                         <% end %>
                       </div>
                     <% else %>

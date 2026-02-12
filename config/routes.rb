@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
     collection do
       get 'export', to: 'mushrooms#export_pdf', as: :export_all_pdf, defaults: { format: :pdf }
+      post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
     end
   end
 
@@ -132,6 +133,10 @@ Rails.application.routes.draw do
     root 'pages#home'
     get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
     get 'terms', to: 'pages#terms'
+
+  # Glossary routes
+  get 'glossary/definition', to: 'glossary#definition'
+  get 'glossary', to: 'glossary#index'
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check

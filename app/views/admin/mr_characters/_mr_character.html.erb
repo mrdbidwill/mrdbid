@@ -9,10 +9,10 @@
       </span>
     <% end %>
     <% if (desc = mr_character.description.presence) %>
-      <span class="block text-sm">Description: <%= desc %></span>
+      <span class="block text-sm">Description: <%= raw mark_glossary_terms(desc) %></span>
     <% end %>
     <% if (comm = mr_character.comments.presence) %>
-      <span class="block text-sm">Comments: <%= comm %></span>
+      <span class="block text-sm">Comments: <%= raw mark_glossary_terms(comm) %></span>
     <% end %>
 
     <% end %>

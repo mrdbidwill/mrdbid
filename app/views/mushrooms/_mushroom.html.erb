@@ -66,21 +66,21 @@
         <% if mushroom.description.present? %>
           <div class="border rounded-md p-2">
             <dt class="text-sm text-gray-500">Description</dt>
-            <dd class="whitespace-pre-wrap"><%= mushroom.description %></dd>
+            <dd class="whitespace-pre-wrap"><%= raw mark_glossary_terms(mushroom.description) %></dd>
           </div>
         <% end %>
 
         <% if mushroom.comments.present? %>
           <div class="border rounded-md p-2">
             <dt class="text-sm text-gray-500">Comments</dt>
-            <dd class="whitespace-pre-wrap"><%= mushroom.comments %></dd>
+            <dd class="whitespace-pre-wrap"><%= raw mark_glossary_terms(mushroom.comments) %></dd>
           </div>
         <% end %>
 
         <% if user_signed_in? && current_user.id == mushroom.user_id && mushroom.personal_notes.present? %>
           <div class="border rounded-md p-2 bg-yellow-50">
             <dt class="text-sm text-gray-500">Personal Notes <span class="text-xs italic">(private)</span></dt>
-            <dd class="whitespace-pre-wrap"><%= mushroom.personal_notes %></dd>
+            <dd class="whitespace-pre-wrap"><%= raw mark_glossary_terms(mushroom.personal_notes) %></dd>
           </div>
         <% end %>
       </dl>

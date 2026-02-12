@@ -79,6 +79,16 @@
       <!-- Mushrooms -->
       <%= link_to "Your Mushrooms", mushrooms_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
+      <!-- View Mode Toggle -->
+      <% viewing_all = defined?(@viewing_all) ? @viewing_all : session[:view_all_mushrooms] %>
+      <% if viewing_all %>
+        <%= button_to "👁️ Switch to Your Mushrooms", toggle_view_mode_mushrooms_path,
+            class: "w-full text-left px-3 py-2 rounded bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium transition" %>
+      <% else %>
+        <%= button_to "🌍 View All Mushrooms", toggle_view_mode_mushrooms_path,
+            class: "w-full text-left px-3 py-2 rounded bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium transition" %>
+      <% end %>
+
       <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
       <!-- Export All -->
