@@ -135,7 +135,7 @@ Rails.application.routes.draw do
     get 'terms', to: 'pages#terms'
 
   # Glossary routes
-  get 'glossary/definition', to: 'glossary#definition'
+  get 'glossary/definition', to: 'glossary#definition', defaults: { format: :json }
   get 'glossary', to: 'glossary#index'
 
   # Health check
