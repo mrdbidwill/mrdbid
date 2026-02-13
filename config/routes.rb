@@ -138,6 +138,11 @@ Rails.application.routes.draw do
   get 'glossary/definition', to: 'glossary#definition', defaults: { format: :json }
   get 'glossary', to: 'glossary#index'
 
+  # iNaturalist data routes
+  get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
+  get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv
+  get 'inaturalist/observation_fields/download/json', to: 'inaturalist_data#download_json', as: :download_inaturalist_json
+
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
   get "autocomplete/genera",        to: "autocomplete#genera",        as: :genera_autocomplete, defaults: { format: :json }
