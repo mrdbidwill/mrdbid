@@ -25,7 +25,7 @@ Many of us work with observation fields for mushrooms, fungi, and other taxa. Ho
 - [JSON Format](https://github.com/mrdbidwill/mrdbid/raw/main/data/inaturalist/observation_fields.json) (8.8 MB) - For developers
 
 **Option 2: Interactive Web View**
-- [Browse and search online](https://yourwebsite.com/inaturalist/observation_fields) - View first 100 fields with search functionality
+- [Browse and search online](https://mrdbid.com/inaturalist/observation_fields) - View first 100 fields with search functionality
 
 **Option 3: GitHub Repository**
 - [Full repository with documentation](https://github.com/mrdbidwill/mrdbid/tree/main/data/inaturalist)
@@ -65,7 +65,7 @@ This is a snapshot from February 2026. Since new observation fields are created 
 
 This data comes from iNaturalist's public API. Please respect [iNaturalist's Terms of Service](https://www.inaturalist.org/pages/terms) when using this data.
 
-Special thanks to [@username] in the original thread for the Python script that inspired this work!
+Special thanks to jwidness Forum Moderator in the original thread July 2022 for the Python script that inspired this work!
 
 ---
 
