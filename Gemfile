@@ -32,6 +32,7 @@ gem "capistrano-bundler"
 gem "capistrano-puma"
 
 gem 'csv'
+gem 'sitemap_generator' # Generate XML sitemap for search engines
 
 gem 'i18n', '~> 1.14'
 gem 'carmen-rails', '~> 1.0'
