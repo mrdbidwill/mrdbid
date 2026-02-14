@@ -1,4 +1,7 @@
 class InaturalistDataController < ApplicationController
+  skip_after_action :verify_policy_scoped, only: [:index], raise: false
+  skip_after_action :verify_authorized, only: [:download_csv, :download_json], raise: false
+
   def index
     csv_path = Rails.root.join('data', 'inaturalist', 'observation_fields.csv')
     @observation_fields = []
