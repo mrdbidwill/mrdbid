@@ -10,7 +10,7 @@ SitemapGenerator::Sitemap.create do
   add '/contact', priority: 0.5, changefreq: 'monthly'
 
   # iNaturalist observation fields dataset - high priority for SEO
-  add '/inaturalist/observation_fields', priority: 0.9, changefreq: 'quarterly'
+  add '/inaturalist/observation_fields', priority: 0.9, changefreq: 'monthly'
 
   # Main resources
   add mushrooms_path, priority: 0.8, changefreq: 'daily'
