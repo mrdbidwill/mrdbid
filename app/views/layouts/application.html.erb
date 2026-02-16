@@ -21,6 +21,16 @@
 
     <%= yield :head %>
 
+    <%# SEO: Add noindex for non-public pages %>
+    <% if controller_path.start_with?('admin/') || action_name.in?(['edit', 'new']) || controller_path.start_with?('users/') %>
+      <meta name="robots" content="noindex, nofollow">
+    <% end %>
+
+    <%# SEO: Canonical URL %>
+    <% if content_for?(:canonical_url) %>
+      <link rel="canonical" href="<%= yield(:canonical_url) %>">
+    <% end %>
+
     <%# PWA manifest for installable progressive web app %>
     <link rel="manifest" href="/manifest.json">
 

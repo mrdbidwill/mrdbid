@@ -1,4 +1,5 @@
 <% content_for :title, @image_mushroom.image_name.presence || "Mushroom Image" %>
+<% content_for :canonical_url, image_mushroom_url(@image_mushroom) %>
 
 <div class="w-full max-w-5xl mx-auto p-4"
      data-controller="image-exif"
