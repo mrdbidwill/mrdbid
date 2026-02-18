@@ -373,7 +373,7 @@ See project documentation files (`CAMERA_INTEGRATION_COMPLETE.md`, `TEST_SUITE_C
 
 ## Acknowledgments
 
-- **MBList Database**: Taxonomic data provided by the MBList project
+- **MBList Database**: Taxonomic data from MycoBank MBList database (https://www.mycobank.org) - Licensed under Creative Commons CC BY-NC-ND. This license allows reusers to copy and distribute the material in any medium or format in unadapted form only, for noncommercial purposes only, and only so long as attribution is given to the creator.
 - **Contributors**: See GitHub contributors list
 - Built with Ruby on Rails 8 and modern web technologies
 
