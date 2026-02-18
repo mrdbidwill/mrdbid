@@ -88,6 +88,9 @@ class Mushroom < ApplicationRecord
   validates :comments, length: { maximum: 4096 }
   validates :city, length: { maximum: 255 }
   validates :county, length: { maximum: 255 }
+  validates :name, profanity: true
+  validates :description, profanity: true, allow_blank: true
+  validates :comments, profanity: true, allow_blank: true
 
   # Instance method to trigger comparison recalculation
   def recalculate_comparisons

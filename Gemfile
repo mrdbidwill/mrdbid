@@ -33,6 +33,7 @@ gem "capistrano-puma"
 
 gem 'csv'
 gem 'sitemap_generator' # Generate XML sitemap for search engines
+gem 'obscenity' # Profanity filtering
 
 gem 'i18n', '~> 1.14'
 gem 'carmen-rails', '~> 1.0'
