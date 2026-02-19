@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Auto-Glossary routes
+  mount AutoGlossary::Engine => "/glossary"
   get "mushroom_search/index"
   get "mushroom_search/autocomplete_characters", to: "mushroom_search#autocomplete_characters", defaults: { format: :json }
   devise_for :users, controllers: {
@@ -133,10 +135,6 @@ Rails.application.routes.draw do
     root 'pages#home'
     get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
     get 'terms', to: 'pages#terms'
-
-  # Glossary routes
-  get 'glossary/definition', to: 'glossary#definition', defaults: { format: :json }
-  get 'glossary', to: 'glossary#index'
 
   # iNaturalist data routes
   get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
