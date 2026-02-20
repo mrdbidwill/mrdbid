@@ -1,7 +1,7 @@
 PATH
   remote: ../mycowriter_gem/mycowriter
   specs:
-    mycowriter (0.1.0)
+    mycowriter (0.1.1)
       rails (>= 7.0)
 
 GEM

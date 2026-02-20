@@ -3,12 +3,12 @@
 # Mycowriter configuration
 Mycowriter.configure do |config|
   # Minimum number of characters required before autocomplete triggers
-  # Default: 3
-  config.min_characters = 3
+  # Default: 4 (prevents excessive matches like "a", "ag", "aga")
+  config.min_characters = 4
 
-  # Whether search should be case-sensitive
-  # Default: false (case-insensitive)
-  config.case_sensitive = false
+  # Require uppercase first letter for genus names
+  # Default: true (genus names always start with capital letter: Agaricus, not agaricus)
+  config.require_uppercase = true
 
   # Maximum number of results to return
   # Default: 20
