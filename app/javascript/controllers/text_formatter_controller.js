@@ -13,26 +13,34 @@ export default class extends Controller {
     const start = textarea.selectionStart
     const end = textarea.selectionEnd
     const value = textarea.value
+    const selectedText = value.substring(start, end)
 
-    // Insert double newline for paragraph break
-    const newValue = value.substring(0, start) + '\n\n' + value.substring(end)
-    textarea.value = newValue
+    if (selectedText) {
+      // Wrap selected text in <p> tags with class
+      const newValue = value.substring(0, start) + '<p class="p-mrdbid">' + selectedText + '</p>' + value.substring(end)
+      textarea.value = newValue
+      // Position cursor after the closing tag
+      const newPos = start + selectedText.length + 27 // length of '<p class="p-mrdbid">' + '</p>'
+      textarea.setSelectionRange(newPos, newPos)
+    } else {
+      // Insert paragraph break (double newline)
+      const newValue = value.substring(0, start) + '\n\n' + value.substring(start)
+      textarea.value = newValue
+      // Move cursor after the inserted newlines
+      const newPos = start + 2
+      textarea.setSelectionRange(newPos, newPos)
+    }
 
-    // Move cursor after the inserted newlines
-    const newPos = start + 2
-    textarea.setSelectionRange(newPos, newPos)
     textarea.focus()
-
-    // Trigger input event
     textarea.dispatchEvent(new Event('input', { bubbles: true }))
   }
 
   makeBold() {
-    this.wrapSelection('**', '**')
+    this.wrapSelection('<strong>', '</strong>')
   }
 
   makeItalic() {
-    this.wrapSelection('*', '*')
+    this.wrapSelection('<em>', '</em>')
   }
 
   makeUnderline() {
@@ -40,27 +48,27 @@ export default class extends Controller {
   }
 
   makeStrikethrough() {
-    this.wrapSelection('~~', '~~')
+    this.wrapSelection('<s>', '</s>')
   }
 
   makeH1() {
-    this.insertLinePrefix('# ')
+    this.wrapSelection('<h1>', '</h1>')
   }
 
   makeH2() {
-    this.insertLinePrefix('## ')
+    this.wrapSelection('<h2>', '</h2>')
   }
 
   makeH3() {
-    this.insertLinePrefix('### ')
+    this.wrapSelection('<h3>', '</h3>')
   }
 
   makeBulletList() {
-    this.insertLinePrefix('- ')
+    this.wrapListItem('<ul>', '</ul>', '<li>', '</li>')
   }
 
   makeNumberedList() {
-    this.insertLinePrefix('1. ')
+    this.wrapListItem('<ol>', '</ol>', '<li>', '</li>')
   }
 
   insertLink() {
@@ -72,43 +80,48 @@ export default class extends Controller {
 
     if (selectedText) {
       // Wrap selected text as link
-      const newValue = value.substring(0, start) + '[' + selectedText + '](url)' + value.substring(end)
+      const newValue = value.substring(0, start) + '<a href="url" class="text-blue-600 underline">' + selectedText + '</a>' + value.substring(end)
       textarea.value = newValue
       // Select "url" for easy replacement
-      const urlStart = start + selectedText.length + 3
+      const urlStart = start + 9 // length of '<a href="'
       textarea.setSelectionRange(urlStart, urlStart + 3)
     } else {
       // Insert link template
-      const linkText = '[link text](url)'
+      const linkText = '<a href="url" class="text-blue-600 underline">link text</a>'
       const newValue = value.substring(0, start) + linkText + value.substring(end)
       textarea.value = newValue
-      // Select "link text" for easy replacement
-      textarea.setSelectionRange(start + 1, start + 10)
+      // Select "url" for easy replacement
+      textarea.setSelectionRange(start + 9, start + 12)
     }
 
     textarea.focus()
     textarea.dispatchEvent(new Event('input', { bubbles: true }))
   }
 
-  insertLinePrefix(prefix) {
+  wrapListItem(openList, closeList, openItem, closeItem) {
     const textarea = this.textareaTarget
     const start = textarea.selectionStart
     const end = textarea.selectionEnd
     const value = textarea.value
+    const selectedText = value.substring(start, end)
 
-    // Find the start of the current line
-    let lineStart = start
-    while (lineStart > 0 && value[lineStart - 1] !== '\n') {
-      lineStart--
+    if (selectedText) {
+      // Split selected text by lines and wrap each in <li>
+      const lines = selectedText.split('\n').filter(line => line.trim())
+      const listItems = lines.map(line => `  ${openItem}${line.trim()}${closeItem}`).join('\n')
+      const newValue = value.substring(0, start) + openList + '\n' + listItems + '\n' + closeList + value.substring(end)
+      textarea.value = newValue
+      const newPos = start + openList.length + listItems.length + closeList.length + 2
+      textarea.setSelectionRange(newPos, newPos)
+    } else {
+      // Insert empty list item
+      const newValue = value.substring(0, start) + openList + '\n  ' + openItem + closeItem + '\n' + closeList + value.substring(end)
+      textarea.value = newValue
+      // Position cursor inside the list item
+      const newPos = start + openList.length + 3 + openItem.length
+      textarea.setSelectionRange(newPos, newPos)
     }
 
-    // Insert prefix at the start of the line
-    const newValue = value.substring(0, lineStart) + prefix + value.substring(lineStart)
-    textarea.value = newValue
-
-    // Move cursor after the prefix
-    const newPos = start + prefix.length
-    textarea.setSelectionRange(newPos, newPos)
     textarea.focus()
     textarea.dispatchEvent(new Event('input', { bubbles: true }))
   }
