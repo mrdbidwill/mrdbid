@@ -39,9 +39,59 @@
     <%= f.text_area :summary, rows: 3, class: "border rounded px-2 py-1 w-full" %>
   </div>
 
-  <div>
-    <%= f.label :body, class: "block text-sm font-medium" %>
-    <%= f.text_area :body, rows: 12, class: "border rounded px-2 py-1 w-full font-mono" %>
+  <div data-controller="text-formatter" data-text-formatter-max-length-value="16777215">
+    <div class="flex justify-between items-center mb-2">
+      <%= f.label :body, class: "block text-sm font-medium" %>
+      <span data-text-formatter-target="charCount" class="text-xs text-gray-500"></span>
+    </div>
+
+    <!-- Formatting toolbar -->
+    <div class="flex flex-wrap gap-1 mb-2 p-2 bg-gray-50 border rounded">
+      <button type="button" data-action="click->text-formatter#makeBold" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Bold">
+        <strong>B</strong>
+      </button>
+      <button type="button" data-action="click->text-formatter#makeItalic" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Italic">
+        <em>I</em>
+      </button>
+      <button type="button" data-action="click->text-formatter#makeUnderline" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Underline">
+        <u>U</u>
+      </button>
+      <button type="button" data-action="click->text-formatter#makeStrikethrough" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Strikethrough">
+        <s>S</s>
+      </button>
+      <span class="border-r mx-1"></span>
+      <button type="button" data-action="click->text-formatter#makeH1" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Heading 1">
+        H1
+      </button>
+      <button type="button" data-action="click->text-formatter#makeH2" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Heading 2">
+        H2
+      </button>
+      <button type="button" data-action="click->text-formatter#makeH3" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Heading 3">
+        H3
+      </button>
+      <span class="border-r mx-1"></span>
+      <button type="button" data-action="click->text-formatter#makeBulletList" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Bullet List">
+        • List
+      </button>
+      <button type="button" data-action="click->text-formatter#makeNumberedList" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Numbered List">
+        1. List
+      </button>
+      <span class="border-r mx-1"></span>
+      <button type="button" data-action="click->text-formatter#insertLink" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="Insert Link">
+        🔗 Link
+      </button>
+      <button type="button" data-action="click->text-formatter#insertParagraph" class="px-2 py-1 text-xs border rounded hover:bg-gray-100" title="New Paragraph">
+        ¶ Para
+      </button>
+    </div>
+
+    <%= f.text_area :body,
+        rows: 12,
+        class: "border rounded px-2 py-1 w-full font-mono",
+        data: {
+          text_formatter_target: "textarea",
+          action: "input->text-formatter#updateCharCount"
+        } %>
     <details class="text-xs text-gray-700 mt-2 bg-gray-50 p-3 rounded border">
       <summary class="cursor-pointer font-semibold text-gray-800 hover:text-blue-600">💡 Click for HTML styling guide</summary>
       <div class="mt-2 space-y-2">
