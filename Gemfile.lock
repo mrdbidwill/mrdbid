@@ -1,3 +1,9 @@
+PATH
+  remote: ../mycowriter_gem/mycowriter
+  specs:
+    mycowriter (0.1.0)
+      rails (>= 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -639,6 +645,7 @@ DEPENDENCIES
   minitest-rails
   minitest-reporters (~> 1.4)
   mutant-minitest
+  mycowriter!
   mysql2 (~> 0.5)
   obscenity
   paper_trail (~> 16.0)

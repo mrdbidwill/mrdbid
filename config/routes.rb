@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # Auto-Glossary routes
   mount AutoGlossary::Engine => "/glossary"
+  # Mycowriter routes
+  mount Mycowriter::Engine => "/mycowriter"
   get "mushroom_search/index"
   get "mushroom_search/autocomplete_characters", to: "mushroom_search#autocomplete_characters", defaults: { format: :json }
   devise_for :users, controllers: {
