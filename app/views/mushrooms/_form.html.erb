@@ -322,44 +322,43 @@
         <div class="mb-3">
           <label class="block text-xs font-semibold text-gray-700">1. Add Genera</label>
           <p class="text-xs text-gray-600 mb-1">
-            Begin typing at least 3 letters, then select a genus from the dropdown. Each genus you choose will show up as a blue pill below.
+            Begin typing at least 4 letters starting with uppercase (e.g., Agaricus), then select a genus from the dropdown. Each genus you choose will show up as a blue pill below.
             You can select multiple genera as candidates for identification, and remove any of them by clicking ×.
           </p>
-          <div data-controller="tokens"
-               data-tokens-url-value="<%= genera_autocomplete_path(format: :json) %>"
-               data-tokens-min-value="3"
-               data-tokens-mushroom-id-value="<%= mushroom.id %>"
-               data-tokens-kind-value="genera"
+          <div data-controller="mycowriter--autocomplete"
+               data-mycowriter--autocomplete-url-value="<%= mycowriter.genera_autocomplete_path %>"
+               data-mycowriter--autocomplete-min-value="4"
+               data-mycowriter--autocomplete-mushroom-id-value="<%= mushroom.id %>"
+               data-mycowriter--autocomplete-kind-value="genera"
                class="border rounded p-2 bg-white">
             <div class="mb-2 flex items-center gap-2">
               <div class="relative w-full">
                 <input type="text"
-                       placeholder="Type at least 3 letters..."
+                       placeholder="Type genus name (e.g., Agaricus)..."
                        class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
-                       data-tokens-target="input"
-                       data-action="input->tokens#onInput"
-                       minlength="3"
+                       data-mycowriter--autocomplete-target="input"
+                       minlength="4"
                        autocomplete="off">
-                <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                <div data-mycowriter--autocomplete-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
                   <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 </div>
                 <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl shadow-lg"
-                    data-tokens-target="dropdown"
+                    data-mycowriter--autocomplete-target="dropdown"
                     style="position: absolute; z-index: 40;"></ul>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1" data-tokens-target="list">
+            <div class="flex flex-wrap gap-1" data-mycowriter--autocomplete-target="list">
               <% mushroom.genera.order(:name).each do |g| %>
                 <span class="inline-flex items-center bg-blue-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= g.id %>">
                   <%= g.name %>
-                  <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= g.id %>">&times;</button>
+                  <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="mycowriter--autocomplete#removeToken" data-id="<%= g.id %>">&times;</button>
                 </span>
               <% end %>
             </div>
-            <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.genera.pluck(:id).join(',') %>">
+            <input type="hidden" data-mycowriter--autocomplete-target="hiddenIds" value="<%= mushroom.genera.pluck(:id).join(',') %>">
           </div>
         </div>
 
@@ -367,44 +366,43 @@
         <div class="mb-3">
           <label class="block text-xs font-semibold text-gray-700">2.Add Species (after adding genera)</label>
           <p class="text-xs text-gray-600 mb-1">
-            Type at least 3 letters, then choose a species in one of your selected genera from the dropdown. Each species you add will appear as a yellow pill below.
+            Type at least 4 letters, then choose a species in one of your selected genera from the dropdown. Each species you add will appear as a yellow pill below.
             You can add and remove species candidates freely while editing this mushroom.
           </p>
-          <div data-controller="tokens"
-               data-tokens-url-value="<%= species_autocomplete_path %>"
-               data-tokens-min-value="3"
-               data-tokens-mushroom-id-value="<%= mushroom.id %>"
-               data-tokens-kind-value="species"
+          <div data-controller="mycowriter--autocomplete"
+               data-mycowriter--autocomplete-url-value="<%= mycowriter.species_autocomplete_path %>"
+               data-mycowriter--autocomplete-min-value="4"
+               data-mycowriter--autocomplete-mushroom-id-value="<%= mushroom.id %>"
+               data-mycowriter--autocomplete-kind-value="species"
                class="border rounded p-2 bg-white">
             <div class="mb-2 flex items-center gap-2">
               <div class="relative w-full">
                 <input type="text"
-                       placeholder="Type species epithet (min 3 letters)..."
+                       placeholder="Type species epithet (min 4 letters)..."
                        class="w-full border rounded px-2 py-1 min-w-[16rem] md:min-w-[24rem] max-w-xl"
-                       data-tokens-target="input"
-                       data-action="input->tokens#onInput"
-                       minlength="3"
+                       data-mycowriter--autocomplete-target="input"
+                       minlength="4"
                        autocomplete="off">
-                <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                <div data-mycowriter--autocomplete-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
                   <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 </div>
                 <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto min-w-[16rem] md:min-w-[24rem] max-w-xl shadow-lg"
-                    data-tokens-target="dropdown"
+                    data-mycowriter--autocomplete-target="dropdown"
                     style="position: absolute; z-index: 40;"></ul>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1" data-tokens-target="list">
+            <div class="flex flex-wrap gap-1" data-mycowriter--autocomplete-target="list">
               <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |sp| %>
                 <span class="inline-flex items-center bg-yellow-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= sp.id %>">
                   <%= [sp.genus&.name, sp.name].compact.join(" ") %>
-                  <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= sp.id %>">&times;</button>
+                  <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="mycowriter--autocomplete#removeToken" data-id="<%= sp.id %>">&times;</button>
                 </span>
               <% end %>
             </div>
-            <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.species.pluck(:id).join(',') %>">
+            <input type="hidden" data-mycowriter--autocomplete-target="hiddenIds" value="<%= mushroom.species.pluck(:id).join(',') %>">
           </div>
         </div>
 

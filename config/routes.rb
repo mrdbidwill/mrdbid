@@ -145,8 +145,9 @@ Rails.application.routes.draw do
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
-  get "autocomplete/genera",        to: "autocomplete#genera",        as: :genera_autocomplete, defaults: { format: :json }
-  get "autocomplete/species",       to: "autocomplete#species",       as: :species_autocomplete, defaults: { format: :json }
+
+  # NOTE: genera and species autocomplete now provided by mycowriter gem
+  # See: /mycowriter/autocomplete/genera and /mycowriter/autocomplete/species
   get "autocomplete/trees",         to: "autocomplete#trees",         as: :trees_autocomplete, defaults: { format: :json }
   get "autocomplete/plants",        to: "autocomplete#plants",        as: :plants_autocomplete, defaults: { format: :json }
   get "autocomplete/mr_characters", to: "autocomplete#mr_characters", as: :mr_characters_autocomplete, defaults: { format: :json }
