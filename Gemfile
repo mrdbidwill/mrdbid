@@ -34,7 +34,7 @@ gem "capistrano-puma"
 gem 'csv'
 gem 'sitemap_generator' # Generate XML sitemap for search engines
 gem 'obscenity' # Profanity filtering
-gem 'auto_glossary' # Auto-glossary for mycological terms
+gem 'auto_glossary', '>= 0.1.1' # Auto-glossary for mycological terms
 
 gem 'i18n', '~> 1.14'
 gem 'carmen-rails', '~> 1.0'
