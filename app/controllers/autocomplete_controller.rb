@@ -14,7 +14,7 @@ class AutocompleteController < ApplicationController
                  .limit(20)
                  .pluck(:id, :name)
 
-    render json: items.map { |id, name| { id: id, label: name, value: name } }
+    render json: items.map { |id, name| { id: id, name: name } }
   end
 
   # GET /autocomplete/species.json?q=sessile&genus_id=123
@@ -34,7 +34,7 @@ class AutocompleteController < ApplicationController
     items = scope.where("species.name LIKE ?", "#{sanitize_like(q)}%")
                  .includes(:genus)
                  .limit(20)
-                 .map { |sp| { id: sp.id, label: "#{sp.genus&.name} #{sp.name}".strip, value: sp.name } }
+                 .map { |sp| { id: sp.id, name: "#{sp.genus&.name} #{sp.name}".strip } }
 
     render json: items
   end
