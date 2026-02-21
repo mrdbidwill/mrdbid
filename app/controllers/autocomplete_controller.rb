@@ -4,8 +4,40 @@ class AutocompleteController < ApplicationController
   before_action :authenticate_user!
   skip_after_action :verify_authorized, raise: false
 
-  # NOTE: genera and species autocomplete now provided by mycowriter gem
-  # See: /mycowriter/autocomplete/genera and /mycowriter/autocomplete/species
+  # GET /autocomplete/genera.json?q=Agar
+  def genera
+    q = params[:q].to_s.strip
+    return render json: [] if q.length < 3
+
+    items = Genus.where("name LIKE ?", "#{sanitize_like(q)}%")
+                 .order(:name)
+                 .limit(20)
+                 .pluck(:id, :name)
+
+    render json: items.map { |id, name| { id: id, label: name, value: name } }
+  end
+
+  # GET /autocomplete/species.json?q=sessile&genus_id=123
+  def species
+    q = params[:q].to_s.strip
+    return render json: [] if q.length < 3
+
+    scope = Species.order(:name)
+    if params[:genus_id].present?
+      scope = scope.where(genus_id: params[:genus_id])
+    elsif params[:genus_name].present?
+      if (g = Genus.find_by(name: params[:genus_name]))
+        scope = scope.where(genus_id: g.id)
+      end
+    end
+
+    items = scope.where("species.name LIKE ?", "#{sanitize_like(q)}%")
+                 .includes(:genus)
+                 .limit(20)
+                 .map { |sp| { id: sp.id, label: "#{sp.genus&.name} #{sp.name}".strip, value: sp.name } }
+
+    render json: items
+  end
 
   # GET /autocomplete/trees.json?q=oak
   def trees
@@ -85,5 +117,12 @@ class AutocompleteController < ApplicationController
               end
 
     render json: results
+  end
+
+  private
+
+  # Escape % and _ for LIKE queries
+  def sanitize_like(term)
+    term.gsub(/[\\%_]/) { |m| "\\#{m}" }
   end
 end
