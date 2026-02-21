@@ -34,8 +34,8 @@ gem "capistrano-puma"
 gem 'csv'
 gem 'sitemap_generator' # Generate XML sitemap for search engines
 gem 'obscenity' # Profanity filtering
-gem 'auto_glossary', '>= 0.1.1' # Auto-glossary for mycological terms
-gem 'mycowriter', path: '../mycowriter_gem/mycowriter' # Taxonomic autocomplete
+gem 'auto_glossary', '>= 0.1.1' # Auto-glossary for mycological terms - created by mrdbid
+gem 'mycowriter', '~> 0.1.1'    # Adds genus species suggestions - create by mrdbid
 
 gem 'i18n', '~> 1.14'
 gem 'carmen-rails', '~> 1.0'

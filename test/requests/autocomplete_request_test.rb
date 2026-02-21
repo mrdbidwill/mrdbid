@@ -34,7 +34,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "genera autocomplete requires authentication" do
-    get genera_autocomplete_path(format: :json, q: "gen")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "gen")
     assert_response :unauthorized
     json = JSON.parse(response.body)
     assert_equal "You need to sign in or sign up before continuing.", json["error"]
@@ -42,7 +42,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "genera autocomplete returns empty array for short query" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "ge")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "ge")
     assert_response :success
     assert_equal "application/json; charset=utf-8", response.content_type
     assert_equal [], JSON.parse(response.body)
@@ -50,14 +50,14 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "genera autocomplete returns empty array for missing query" do
     sign_in @user
-    get genera_autocomplete_path(format: :json)
+    get mycowriter.genera_autocomplete_path(format: :json)
     assert_response :success
     assert_equal [], JSON.parse(response.body)
   end
 
   test "genera autocomplete returns results for valid query" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "Genus")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "Genus")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -70,7 +70,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     # Create more than 20 genera with same prefix
     25.times { |i| Genus.create!(name: "TestGenus#{i}", mblist_id: i + 100) }
 
-    get genera_autocomplete_path(format: :json, q: "TestGenus")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "TestGenus")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -82,7 +82,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     Genus.create!(name: "ZGenusLast", mblist_id: 100)
     Genus.create!(name: "AGenusFirst", mblist_id: 101)
 
-    get genera_autocomplete_path(format: :json, q: "Genus")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "Genus")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -92,7 +92,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "genera autocomplete handles SQL injection attempt" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "'; DROP TABLE genera; --")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "'; DROP TABLE genera; --")
     assert_response :success
     assert Genus.count > 0 # Table should still exist
   end
@@ -102,7 +102,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "species autocomplete requires authentication" do
-    get species_autocomplete_path(format: :json, q: "spec")
+    get mycowriter.species_autocomplete_path(format: :json, q: "spec")
     assert_response :unauthorized
     json = JSON.parse(response.body)
     assert_equal "You need to sign in or sign up before continuing.", json["error"]
@@ -110,14 +110,14 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "species autocomplete returns empty array for short query" do
     sign_in @user
-    get species_autocomplete_path(format: :json, q: "sp")
+    get mycowriter.species_autocomplete_path(format: :json, q: "sp")
     assert_response :success
     assert_equal [], JSON.parse(response.body)
   end
 
   test "species autocomplete returns results for valid query" do
     sign_in @user
-    get species_autocomplete_path(format: :json, q: "Species")
+    get mycowriter.species_autocomplete_path(format: :json, q: "Species")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -135,7 +135,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     species_in_genus = Species.create!(name: "SpeciesInGenus", genera_id: genus.id, mblist_id: 200)
     species_out_genus = Species.create!(name: "SpeciesOutGenus", genera_id: genera(:two).id, mblist_id: 201)
 
-    get species_autocomplete_path(format: :json, q: "Species", mushroom_id: mushroom.id)
+    get mycowriter.species_autocomplete_path(format: :json, q: "Species", mushroom_id: mushroom.id)
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -146,7 +146,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "species autocomplete includes genus name in result" do
     sign_in @user
-    get species_autocomplete_path(format: :json, q: "Species")
+    get mycowriter.species_autocomplete_path(format: :json, q: "Species")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -162,7 +162,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     genus = genera(:one)
     25.times { |i| Species.create!(name: "TestSpecies#{i}", genera_id: genus.id, mblist_id: i + 300) }
 
-    get species_autocomplete_path(format: :json, q: "TestSpecies")
+    get mycowriter.species_autocomplete_path(format: :json, q: "TestSpecies")
     assert_response :success
 
     json = JSON.parse(response.body)
@@ -331,7 +331,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     # Genera endpoint should default to JSON even with HTML format param
-    get genera_autocomplete_path(format: :html, q: "test")
+    get mycowriter.genera_autocomplete_path(format: :html, q: "test")
     assert_response :success
     json = JSON.parse(response.body)
     assert_equal [], json
@@ -342,28 +342,28 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
     special_queries = ["test%", "test_", "test*", "test?", "test\\"]
 
     special_queries.each do |query|
-      get genera_autocomplete_path(format: :json, q: query)
+      get mycowriter.genera_autocomplete_path(format: :json, q: query)
       assert_response :success, "Failed for query: #{query}"
     end
   end
 
   test "autocomplete handles unicode characters" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "Génüs")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "Génüs")
     assert_response :success
     assert JSON.parse(response.body).is_a?(Array)
   end
 
   test "autocomplete returns valid JSON for empty results" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "XYZ_NONEXISTENT_123")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "XYZ_NONEXISTENT_123")
     assert_response :success
     assert_equal [], JSON.parse(response.body)
   end
 
   test "autocomplete trims whitespace from query" do
     sign_in @user
-    get genera_autocomplete_path(format: :json, q: "  Genus  ")
+    get mycowriter.genera_autocomplete_path(format: :json, q: "  Genus  ")
     assert_response :success
     json = JSON.parse(response.body)
     assert json.is_a?(Array)
