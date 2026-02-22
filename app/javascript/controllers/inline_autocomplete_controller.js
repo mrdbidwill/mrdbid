@@ -223,13 +223,18 @@ export default class extends Controller {
       after = text.substring(this.cursorPosition)
     }
 
-    textarea.value = before + selectedName + after
+    // Format scientific name with italic tags for body field (HTML)
+    // Check if this is the body textarea by looking for data-text-formatter-target
+    const isBodyField = textarea.hasAttribute('data-text-formatter-target')
+    const formattedName = isBodyField ? `<em>${selectedName}</em>` : selectedName
+
+    textarea.value = before + formattedName + after
 
     // Hide dropdown immediately
     this.hideDropdown()
 
     // Position cursor after inserted text and focus
-    const newPosition = before.length + selectedName.length
+    const newPosition = before.length + formattedName.length
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
 
