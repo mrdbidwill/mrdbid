@@ -35,6 +35,7 @@ gem 'csv'
 gem 'sitemap_generator' # Generate XML sitemap for search engines
 gem 'obscenity' # Profanity filtering
 gem 'auto_glossary', '>= 0.1.1' # Auto-glossary for mycological terms
+gem 'mycowriter', path: '/Users/wrj/Documents/www/public_html/mycowriter_gem/mycowriter' # Local testing of v0.1.6
 
 gem 'i18n', '~> 1.14'
 gem 'carmen-rails', '~> 1.0'
