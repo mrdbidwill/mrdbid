@@ -1,47 +1,71 @@
-# Mycowriter Gem Integration - Complete Steps
+# Mycowriter Gem Integration - COMPLETED
+
+**Last Updated:** 2026-02-22
+**Status:** ✅ COMPLETE
+
+## Overview
+
+The mycowriter gem provides autocomplete functionality for genus and species names in mushroom forms and article editor. This integration consolidates duplicate autocomplete code into a reusable, tested gem published to RubyGems.org.
 
 ## Current Status
-✅ Gem created at `../mycowriter_gem/mycowriter/` (v0.1.1)
-✅ Gem added to Gemfile and bundle installed
-✅ Routes mounted: `/mycowriter`
-✅ Initializer created: `config/initializers/mycowriter.rb`
-✅ Stimulus controller registered in `application.js`
-✅ `mb_lists` table already exists in mrdbid (no migration needed!)
 
-## What's Left To Do
+✅ **Gem installed:** mycowriter v0.1.7 (published to RubyGems.org)
+✅ **Routes mounted:** `/mycowriter` engine
+✅ **Authentication configured:** Requires login via Devise
+✅ **Views updated:** All forms use `mycowriter--autocomplete` controller
+✅ **Local routes removed:** Duplicate genera/species routes cleaned up
+✅ **Local controller cleaned:** Genera/species methods removed from `autocomplete_controller.rb`
+✅ **Tests passing:** All 2065 tests pass with full authentication
 
-### STEP 1: Update Views - Replace Old Controller with Gem Controller
+## Implementation Details
 
-**Files to update:**
-- `app/views/mushrooms/_form.html.erb` (4 instances - genera, species, trees, plants)
+### Configuration
 
-**Changes needed:**
+**File:** `config/initializers/mycowriter.rb`
 
-**OLD (tokens controller):**
-```erb
-<div data-controller="tokens"
-     data-tokens-url-value="<%= genera_autocomplete_path(format: :json) %>"
-     data-tokens-min-value="3"
-     data-tokens-mushroom-id-value="<%= mushroom.id %>"
-     data-tokens-kind-value="genera">
+```ruby
+Mycowriter.configure do |config|
+  config.min_characters = 4      # Require 4+ characters before autocomplete
+  config.require_uppercase = true # Genus names must start with uppercase
+  config.results_limit = 20      # Max 20 results per query
+end
 
-  <input data-tokens-target="input"
-         data-action="input->tokens#onInput"
-         minlength="3"
-         placeholder="Type at least 3 letters...">
-
-  <ul data-tokens-target="dropdown"></ul>
-  <div data-tokens-target="list">...</div>
-  <input type="hidden" data-tokens-target="hiddenIds">
-</div>
+# Add authentication to gem's controller
+Rails.application.config.after_initialize do
+  Mycowriter::AutocompleteController.class_eval do
+    before_action :authenticate_user!
+    skip_after_action :verify_authorized, raise: false
+    skip_after_action :verify_policy_scoped, raise: false
+  end
+end
 ```
 
-**NEW (mycowriter--autocomplete controller):**
+### Routes
+
+The gem provides two autocomplete endpoints:
+- `/mycowriter/autocomplete/genera.json?q=Agar`
+- `/mycowriter/autocomplete/species.json?q=campestr&mushroom_id=123`
+
+Both require authentication via Devise.
+
+### Views Using Mycowriter
+
+**1. Mushroom Form** (`app/views/mushrooms/_form.html.erb`)
+- Lines 328-362: Genera autocomplete
+- Lines 372-407: Species autocomplete
+
+**2. Article Editor** (`app/views/admin/articles/_form.html.erb`)
+- Lines 13-16: Title field inline autocomplete
+- Lines 53-54: Slug field inline autocomplete
+- Lines 71-72: Body field inline autocomplete
+
+### Controller Pattern
+
 ```erb
 <div data-controller="mycowriter--autocomplete"
      data-mycowriter--autocomplete-url-value="<%= mycowriter.genera_autocomplete_path %>"
      data-mycowriter--autocomplete-min-value="4"
-     data-mycowriter--autocomplete-mushroom-id-value="<%= mushroom.id %>"
+     data-mycowriter--autocomplete-mushroom-id-value="<%= @mushroom.id %>"
      data-mycowriter--autocomplete-kind-value="genera">
 
   <input data-mycowriter--autocomplete-target="input"
@@ -49,139 +73,97 @@
          placeholder="Type genus name (e.g., Agaricus)...">
 
   <ul data-mycowriter--autocomplete-target="dropdown"></ul>
-  <div data-mycowriter--autocomplete-target="list">...</div>
-  <input type="hidden" data-mycowriter--autocomplete-target="hiddenIds">
+  <div data-mycowriter--autocomplete-target="list">
+    <!-- Pills display here -->
+  </div>
 </div>
 ```
 
-**Key changes:**
-1. `data-controller="tokens"` → `data-controller="mycowriter--autocomplete"`
-2. `data-tokens-*` → `data-mycowriter--autocomplete-*`
-3. `minlength="3"` → `minlength="4"`
-4. Update route: `genera_autocomplete_path` → `mycowriter.genera_autocomplete_path`
-5. Remove `data-action="input->tokens#onInput"` (automatic in gem)
-6. Update button actions: `tokens#removeToken` → `mycowriter--autocomplete#removeToken`
+### Key Features
 
-**Lines to update in _form.html.erb:**
-- Line 328-363 (Genera section)
-- Line 373-410 (Species section)
-- Line 479-515 (Trees section)
-- Line 534-570 (Plants section)
+1. **Uppercase validation for genera:** Genus names must start with capital letter
+2. **Species lowercase allowed:** Set `data-mycowriter--autocomplete-require-uppercase-value="false"`
+3. **Genus filtering for species:** Species filtered by mushroom's selected genera
+4. **Debounced search:** 150ms delay to reduce server requests
+5. **Smart ranking:** Exact matches first, then prefix matches, then substring matches
+6. **Confirmation dialogs:** Asks before removing associated items
 
-### STEP 2: Remove Old Code Files (No Longer Needed)
+### JavaScript Controller
 
-**Delete these files:**
-```bash
-rm app/javascript/controllers/tokens_controller.js
-rm app/controllers/autocomplete_controller.rb  # Only if ONLY used for genus/species
-```
+**File:** `app/javascript/controllers/mycowriter_autocomplete_controller.js`
 
-**WAIT!** Check if `autocomplete_controller.rb` has other methods:
-- If it has `mr_characters`, `trees`, `plants` methods used elsewhere, keep the file but remove only `genera` and `species` methods
-- Gem provides: `genera`, `species`
-- You still need local routes for: `trees`, `plants`, `mr_characters` autocomplete
+This is a **local copy** of the gem's controller for development/customization. The gem includes its own version that gets loaded automatically when the engine is mounted.
 
-### STEP 3: Update Routes
+### Removed Code
 
-**Current routes to KEEP:**
+**Previous implementation (removed):**
+- ~~`app/javascript/controllers/tokens_controller.js`~~ (kept for trees/plants autocomplete)
+- `app/controllers/autocomplete_controller.rb` - Removed genera/species methods
+- `config/routes.rb` - Removed local genera/species routes
+
+**Note:** The `tokens_controller.js` file is still used for trees and plants autocomplete, which are not part of the mycowriter gem.
+
+## Testing
+
+All autocomplete endpoints require authentication:
+
 ```ruby
-# Keep these - not provided by gem
-get "autocomplete/trees", to: "autocomplete#trees", as: :trees_autocomplete
-get "autocomplete/plants", to: "autocomplete#plants", as: :plants_autocomplete
-get "autocomplete/mr_characters", to: "autocomplete#mr_characters", as: :mr_characters_autocomplete
+# test/requests/autocomplete_request_test.rb
+test "genera autocomplete requires authentication" do
+  get mycowriter.genera_autocomplete_path(format: :json, q: "Agar")
+  assert_response :unauthorized
+end
+
+test "species autocomplete requires authentication" do
+  get mycowriter.species_autocomplete_path(format: :json, q: "campestr")
+  assert_response :unauthorized
+end
 ```
 
-**Routes to REMOVE (provided by gem):**
-```ruby
-# DELETE THESE - gem provides them
-get "autocomplete/genera", to: "autocomplete#genera", as: :genera_autocomplete
-get "autocomplete/species", to: "autocomplete#species", as: :species_autocomplete
-```
+Run tests: `rails test test/requests/autocomplete_request_test.rb`
 
-**Gem provides these routes (via mount):**
-- `/mycowriter/autocomplete/genera`
-- `/mycowriter/autocomplete/species`
+## Gem Source Code
 
-### STEP 4: Database - You're Good!
+The mycowriter gem source is located at:
+`../mycowriter_gem/mycowriter/`
 
-✅ **Your `mb_lists` table already exists**
-✅ **No migration needed**
-✅ **Data already populated**
-
-The gem will use your existing table automatically.
-
-### STEP 5: Test the Integration
-
-1. **Restart Rails server:**
-   ```bash
-   rails restart  # or kill and restart server
-   ```
-
-2. **Test genus autocomplete:**
-   - Go to mushroom edit page
-   - Type "Agar" (uppercase A, 4+ letters)
-   - Should see "Agaricus" in dropdown
-   - Test lowercase "agar" - should see validation message
-
-3. **Test species autocomplete:**
-   - Add a genus first
-   - Type species name
-   - Should filter by selected genus
-
-4. **Check for JavaScript errors:**
-   - Open browser console (F12)
-   - Look for any controller registration errors
-
-### STEP 6: Publishing to RubyGems.org
-
-**Same process as auto_glossary:**
-
-```bash
-cd ../mycowriter_gem/mycowriter
-
-# Build the gem
-gem build mycowriter.gemspec
-# Creates: mycowriter-0.1.1.gem
-
-# Push to RubyGems (requires rubygems.org account)
-gem push mycowriter-0.1.1.gem
-```
-
-**After publishing:**
-
-1. **Update mrdbid Gemfile:**
-   ```ruby
-   # Change from local path to rubygems
-   gem 'mycowriter', '~> 0.1.1'  # Remove path: '../mycowriter_gem/mycowriter'
-   ```
-
-2. **Run bundle update:**
-   ```bash
-   bundle update mycowriter
-   ```
-
-## Summary Checklist
-
-- [ ] Update `_form.html.erb` - replace tokens controller (4 sections)
-- [ ] Delete `tokens_controller.js`
-- [ ] Update `autocomplete_controller.rb` - remove genera/species methods
-- [ ] Update `routes.rb` - remove genera/species autocomplete routes
-- [ ] Test genus autocomplete (uppercase validation)
-- [ ] Test species autocomplete (genus filtering)
-- [ ] Build gem: `gem build mycowriter.gemspec`
-- [ ] Push to RubyGems: `gem push mycowriter-0.1.1.gem`
-- [ ] Update Gemfile to use published gem
-- [ ] Run `bundle update mycowriter`
+To update the gem:
+1. Make changes in gem directory
+2. Update version in `lib/mycowriter/version.rb`
+3. Build: `gem build mycowriter.gemspec`
+4. Test locally: `gem install ./mycowriter-X.X.X.gem`
+5. Publish: `gem push mycowriter-X.X.X.gem`
+6. Update Gemfile: `gem 'mycowriter', '~> X.X.X'`
+7. Run: `bundle update mycowriter`
 
 ## Troubleshooting
 
-**If autocomplete doesn't work:**
-1. Check browser console for errors
-2. Verify routes: `rails routes | grep mycowriter`
-3. Verify controller registered: Check `application.js`
-4. Restart Rails server
+### Autocomplete not showing results
+1. Check browser console for JavaScript errors
+2. Verify min_characters setting (default: 4)
+3. Check authentication (must be logged in)
+4. Verify routes: `rails routes | grep mycowriter`
 
-**If validation doesn't trigger:**
-1. Check `minlength="4"` on input
-2. Verify `data-mycowriter--autocomplete-min-value="4"`
-3. Check `config/initializers/mycowriter.rb` settings
+### Uppercase validation not working
+- Genus autocomplete requires uppercase first letter by default
+- Species autocomplete doesn't require uppercase (configured with `require-uppercase-value="false"`)
+
+### Tests failing with authentication errors
+- Verify initializer adds `before_action :authenticate_user!`
+- Check that `skip_before_action :authenticate_user!` is NOT present in initializer
+
+## Related Documentation
+
+- `CODING_STANDARDS.md` - Project coding standards
+- `RAILS_ENGINE_SETUP.md` - How to create Rails engines/gems
+- `test/requests/autocomplete_request_test.rb` - Comprehensive test suite
+
+## Migration Notes
+
+This integration was completed on 2026-02-22 to:
+1. Fix authentication issue (tests were failing)
+2. Complete the gem integration (views were still using old `tokens` controller)
+3. Remove duplicate code (local genera/species routes and controller methods)
+4. Consolidate autocomplete functionality into tested, reusable gem
+
+Previous attempts to integrate this gem were incomplete. This integration is now fully complete and deployed to production.

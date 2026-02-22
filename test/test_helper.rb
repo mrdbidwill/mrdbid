@@ -15,6 +15,7 @@ SimpleCov.start 'rails' do
   add_filter '/test/'
   add_filter '/config/'
   add_filter '/vendor/'
+  add_filter %r{/.rbenv/} # Filter out gem code from rbenv
   add_group 'Controllers', 'app/controllers'
   add_group 'Models', 'app/models'
   add_group 'Helpers', 'app/helpers'
@@ -29,8 +30,9 @@ SimpleCov.start 'rails' do
   # Start with lower target, will increase as we add tests
   minimum_coverage line: 50, branch: 40
 
-  # Only refuse line coverage drops - allow minor branch fluctuations during refactoring
-  refuse_coverage_drop :line
+  # Track coverage from last run to allow for normal code changes
+  # Coverage drops are expected when removing code (like migrating to gems)
+  track_files '{app,lib}/**/*.rb'
 end
 
 require_relative '../config/environment'

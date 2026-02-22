@@ -11,8 +11,8 @@
   <div>
     <%= f.label :title, class: "block text-sm font-medium" %>
     <div class="relative" data-controller="inline-autocomplete"
-         data-inline-autocomplete-genus-url-value="<%= genera_autocomplete_path %>"
-         data-inline-autocomplete-species-url-value="<%= species_autocomplete_path %>"
+         data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+         data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
          data-inline-autocomplete-min-value="4">
       <%= f.text_field :title,
           class: "border rounded px-2 py-1 w-full",
@@ -50,8 +50,8 @@
   <div>
     <%= f.label :summary, class: "block text-sm font-medium" %>
     <div class="relative" data-controller="inline-autocomplete"
-         data-inline-autocomplete-genus-url-value="<%= genera_autocomplete_path %>"
-         data-inline-autocomplete-species-url-value="<%= species_autocomplete_path %>"
+         data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+         data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
          data-inline-autocomplete-min-value="4">
       <%= f.text_area :summary,
           rows: 3,
@@ -68,8 +68,8 @@
 
   <div data-controller="text-formatter inline-autocomplete"
        data-text-formatter-max-length-value="16777215"
-       data-inline-autocomplete-genus-url-value="<%= genera_autocomplete_path %>"
-       data-inline-autocomplete-species-url-value="<%= species_autocomplete_path %>"
+       data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+       data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
        data-inline-autocomplete-min-value="4">
     <div class="flex justify-between items-center mb-2">
       <%= f.label :body, class: "block text-sm font-medium" %>

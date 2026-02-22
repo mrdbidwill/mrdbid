@@ -15,13 +15,13 @@ Mycowriter.configure do |config|
   config.results_limit = 20
 end
 
-# Skip Pundit authorization and Devise authentication for Mycowriter engine controllers
-# This ensures the autocomplete functionality works without requiring user authentication
+# Configure Mycowriter engine controllers
+# Require authentication via Devise and skip Pundit authorization
 # This must run AFTER devise_authentication.rb initializer
 Rails.application.config.after_initialize do
   Mycowriter::AutocompleteController.class_eval do
+    before_action :authenticate_user!
     skip_after_action :verify_authorized, raise: false
     skip_after_action :verify_policy_scoped, raise: false
-    skip_before_action :authenticate_user!, raise: false
   end
 end
