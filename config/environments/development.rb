@@ -80,4 +80,12 @@ Rails.application.configure do
 config.assets.debug = true
 config.assets.compile = true
 config.assets.digest = false
+
+  # Disable asset caching completely in development
+  config.assets.cache_store = :null_store
+  config.public_file_server.headers = {
+    'Cache-Control' => 'no-store, no-cache, must-revalidate',
+    'Pragma' => 'no-cache',
+    'Expires' => '0'
+  }
 end
