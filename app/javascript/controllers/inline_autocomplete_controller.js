@@ -243,11 +243,11 @@ export default class extends Controller {
         before = before.substring(0, emStartIdx)
         after = after.substring(emEndIdx + 5) // 5 = length of '</em>'
         formattedName = `<em>${selectedName}</em>`
-        cursorOffset = selectedName.length + 4 // position inside the </em> tag (before <)
+        cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
       } else {
         // Not inside tags - add new <em> tags
         formattedName = `<em>${selectedName}</em>`
-        cursorOffset = selectedName.length + 4 // position inside the </em> tag (before <)
+        cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
       }
     } else {
       // Plain text fields (title, summary) - no HTML tags
@@ -260,8 +260,8 @@ export default class extends Controller {
     // Hide dropdown immediately
     this.hideDropdown()
 
-    // Position cursor INSIDE the closing </em> tag (before the '<')
-    // This allows typing species epithet to continue inside the italic tags
+    // Position cursor AFTER the closing </em> tag
+    // User types space + species epithet, then selects from dropdown
     const newPosition = before.length + cursorOffset
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
