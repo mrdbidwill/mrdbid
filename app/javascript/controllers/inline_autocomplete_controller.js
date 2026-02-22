@@ -209,29 +209,60 @@ export default class extends Controller {
     const isLowercaseWord = /^[a-z]/.test(this.currentWord)
     const hasPrevGenus = this.hasPrecedingCapitalizedWord(text, this.wordStart)
 
-    let before, after
+    let before, after, replaceStart
     if (isLowercaseWord && hasPrevGenus) {
       // Find start of previous genus word
       const prevGenus = this.getPreviousWord(text, this.wordStart)
       const genusStart = this.wordStart - prevGenus.length - 1 // -1 for space
 
+      replaceStart = genusStart
       before = text.substring(0, genusStart)
       after = text.substring(this.cursorPosition)
     } else {
       // Normal replacement - just replace current word
+      replaceStart = this.wordStart
       before = text.substring(0, this.wordStart)
       after = text.substring(this.cursorPosition)
     }
 
-    // Insert plain text - let user apply formatting manually if desired
-    // This prevents issues with nested tags and allows proper species completion
-    textarea.value = before + selectedName + after
+    // Check if this is the body field (needs HTML formatting)
+    const isBodyField = textarea.hasAttribute('data-text-formatter-target')
+
+    let formattedName, cursorOffset
+    if (isBodyField) {
+      // Smart italicization: check if we're inside existing <em> tags
+      const emStartIdx = before.lastIndexOf('<em>')
+      const emEndIdx = after.indexOf('</em>')
+
+      // Check if there's an opening <em> before us without a closing tag
+      const hasOpenEmBefore = emStartIdx !== -1 && before.substring(emStartIdx).indexOf('</em>') === -1
+
+      if (hasOpenEmBefore && emEndIdx !== -1) {
+        // We're inside <em> tags - replace content but keep the tags
+        // Remove the <em> from before and </em> from after
+        before = before.substring(0, emStartIdx)
+        after = after.substring(emEndIdx + 5) // 5 = length of '</em>'
+        formattedName = `<em>${selectedName}</em>`
+        cursorOffset = selectedName.length + 4 // position inside the </em> tag (before <)
+      } else {
+        // Not inside tags - add new <em> tags
+        formattedName = `<em>${selectedName}</em>`
+        cursorOffset = selectedName.length + 4 // position inside the </em> tag (before <)
+      }
+    } else {
+      // Plain text fields (title, summary) - no HTML tags
+      formattedName = selectedName
+      cursorOffset = selectedName.length
+    }
+
+    textarea.value = before + formattedName + after
 
     // Hide dropdown immediately
     this.hideDropdown()
 
-    // Position cursor after inserted text and focus
-    const newPosition = before.length + selectedName.length
+    // Position cursor INSIDE the closing </em> tag (before the '<')
+    // This allows typing species epithet to continue inside the italic tags
+    const newPosition = before.length + cursorOffset
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
 
