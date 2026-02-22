@@ -228,31 +228,21 @@ export default class extends Controller {
     // Check if this is the body field (needs HTML formatting)
     const isBodyField = textarea.hasAttribute('data-text-formatter-target')
 
+    // Only apply <em> tags if:
+    // 1. It's the body field (supports HTML)
+    // 2. Selected name contains a space (complete binomial like "Ganoderma sessile")
+    const isBinomial = selectedName.includes(' ')
+    const shouldItalicize = isBodyField && isBinomial
+
     let formattedName, cursorOffset
-    if (isBodyField) {
-      // Smart italicization: check if we're inside existing <em> tags
-      const emStartIdx = before.lastIndexOf('<em>')
-      const emEndIdx = after.indexOf('</em>')
-
-      // Check if there's an opening <em> before us without a closing tag
-      const hasOpenEmBefore = emStartIdx !== -1 && before.substring(emStartIdx).indexOf('</em>') === -1
-
-      if (hasOpenEmBefore && emEndIdx !== -1) {
-        // We're inside <em> tags - replace content but keep the tags
-        // Remove the <em> from before and </em> from after
-        before = before.substring(0, emStartIdx)
-        after = after.substring(emEndIdx + 5) // 5 = length of '</em>'
-        formattedName = `<em>${selectedName}</em>`
-        cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
-      } else {
-        // Not inside tags - add new <em> tags
-        formattedName = `<em>${selectedName}</em>`
-        cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
-      }
+    if (shouldItalicize) {
+      // Complete binomial - wrap in <em> tags
+      formattedName = `<em>${selectedName}</em>`
+      cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
     } else {
-      // Plain text fields (title, summary) - no HTML tags
-      formattedName = selectedName
-      cursorOffset = selectedName.length
+      // Genus only or plain text field - no HTML tags, add trailing space
+      formattedName = selectedName + ' '
+      cursorOffset = selectedName.length + 1
     }
 
     textarea.value = before + formattedName + after
@@ -260,8 +250,7 @@ export default class extends Controller {
     // Hide dropdown immediately
     this.hideDropdown()
 
-    // Position cursor AFTER the closing </em> tag
-    // User types space + species epithet, then selects from dropdown
+    // Position cursor after the insertion
     const newPosition = before.length + cursorOffset
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
