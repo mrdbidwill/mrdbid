@@ -4,39 +4,80 @@ class AutocompleteController < ApplicationController
   before_action :authenticate_user!
   skip_after_action :verify_authorized, raise: false
 
-  # GET /autocomplete/genera.json?q=Agar
+  # GET /autocomplete/genera.json?q=aga
   def genera
-    q = params[:q].to_s.strip
-    return render json: [] if q.length < 3
-
-    items = Genus.where("name LIKE ?", "#{sanitize_like(q)}%")
-                 .order(:name)
-                 .limit(20)
-                 .pluck(:id, :name)
-
-    render json: items.map { |id, name| { id: id, name: name } }
+    query = params[:q].to_s.strip
+    results = if query.length >= 3
+                Genus
+                # For genus only use wildcard on end of name not this  "%#{Genus.sanitize_sql_like(query)}%
+                  .where("name LIKE ?", "#{Genus.sanitize_sql_like(query)}%")
+                  .select(:id, :name)
+                  .order(
+                    Arel.sql(
+                      Genus.sanitize_sql_array([
+                        "CASE WHEN LOWER(name) = LOWER(?) THEN 1 ELSE 2 END, name",
+                        query
+                      ])
+                    )
+                  )
+                  .limit(20)
+                  .map { |g| { id: g.id, name: g.name } }
+              else
+                []
+              end
+    render json: results
   end
 
-  # GET /autocomplete/species.json?q=sessile&genus_id=123
+  # GET /autocomplete/species.json?q=placo&mushroom_id=1&genus_name=Ganoderma
   def species
-    q = params[:q].to_s.strip
-    return render json: [] if q.length < 3
+    query = params[:q].to_s.strip
+    mushroom_id = params[:mushroom_id]
+    genus_name = params[:genus_name]
 
-    scope = Species.order(:name)
-    if params[:genus_id].present?
-      scope = scope.where(genus_id: params[:genus_id])
-    elsif params[:genus_name].present?
-      if (g = Genus.find_by(name: params[:genus_name]))
-        scope = scope.where(genus_id: g.id)
-      end
-    end
+    results = if query.length >= 3
+                scope = Species.where("name LIKE ?", "%#{Species.sanitize_sql_like(query)}%")
 
-    items = scope.where("species.name LIKE ?", "#{sanitize_like(q)}%")
-                 .includes(:genus)
-                 .limit(20)
-                 .map { |sp| { id: sp.id, name: "#{sp.genus&.name} #{sp.name}".strip } }
+                # Filter by genus name (for inline autocomplete)
+                if genus_name.present?
+                  genus = Genus.find_by(name: genus_name)
+                  scope = scope.where(genera_id: genus.id) if genus
+                # OR filter by selected genera for this mushroom (for mushroom form)
+                elsif mushroom_id.present?
+                  mushroom = Mushroom.find_by(id: mushroom_id)
+                  if mushroom && mushroom.genera.any?
+                    genera_ids = mushroom.genera.pluck(:id)
+                    scope = scope.where(genera_id: genera_ids)
+                  end
+                end
 
-    render json: items
+                # Use includes to eager load genera and avoid N+1 queries
+                # Smart ranking: exact matches first, then prefix matches, then substring matches
+                species_results = scope
+                  .includes(:genus)
+                  .select(:id, :name, :genera_id)
+                  .order(
+                    Arel.sql(
+                      Species.sanitize_sql_array([
+                        "CASE
+                           WHEN LOWER(name) = LOWER(?) THEN 1
+                           WHEN LOWER(name) LIKE LOWER(?) THEN 2
+                           ELSE 3
+                         END, name",
+                        query,
+                        "#{query}%"
+                      ])
+                    )
+                  )
+                  .limit(20)
+
+                species_results.map do |sp|
+                  genus_label = sp.genus ? "#{sp.genus.name} " : ""
+                  { id: sp.id, name: "#{genus_label}#{sp.name}" }
+                end
+              else
+                []
+              end
+    render json: results
   end
 
   # GET /autocomplete/trees.json?q=oak
@@ -117,12 +158,5 @@ class AutocompleteController < ApplicationController
               end
 
     render json: results
-  end
-
-  private
-
-  # Escape % and _ for LIKE queries
-  def sanitize_like(term)
-    term.gsub(/[\\%_]/) { |m| "\\#{m}" }
   end
 end
