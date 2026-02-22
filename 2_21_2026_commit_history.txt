@@ -1,0 +1,23 @@
+47c7e6fd8f3a1efdff4393123664db8ce3bdbee6	2026-02-20T20:27:52-06:00	Will Johnston	mrdbidwill@gmail.com	Fix autocomplete API response format and remove broken article inline autocomplete
+3d8ea0a78655b2bed7893ff1e027e77af01f1467	2026-02-20T20:12:45-06:00	Will Johnston	mrdbidwill@gmail.com	Restore original tokens controller for mushroom form genera/species autocomplete
+3a76aa2cc7d8223048d96a906656c9fc30e3e6f9	2026-02-20T19:48:45-06:00	Will Johnston	mrdbidwill@gmail.com	Restore original genera/species autocomplete to local AutocompleteController
+b990cc53a90ab49a57271bcc1eb2ddae571ffd8a	2026-02-20T19:46:43-06:00	Will Johnston	mrdbidwill@gmail.com	Update devise authentication to skip for Mycowriter and AutoGlossary engines
+5ce7c32360f34b3dee345143311563ab6d0bf196	2026-02-20T19:23:31-06:00	Will Johnston	mrdbidwill@gmail.com	Add inline autocomplete for genus/species names in article editor
+9e0aaf751bff974866916111ffea1aaf0580de0b	2026-02-20T18:17:07-06:00	Will Johnston	mrdbidwill@gmail.com	fix failing tests due to change to mycowriter gem
+59e0f6fbefd21bac55c2a41e77a6fd5e98da5455	2026-02-20T17:52:44-06:00	Will Johnston	mrdbidwill@gmail.com	Complete mycowriter gem integration - replace tokens controller
+80bc3170051742a5bfb3d07f84ede58ff773b656	2026-02-20T16:05:34-06:00	Will Johnston	mrdbidwill@gmail.com	Update mycowriter gem integration to v0.1.1 with corrected validation
+993ab613d170a8de7e32d69fd4e276a87c65c124	2026-02-20T15:46:06-06:00	Will Johnston	mrdbidwill@gmail.com	Add mycowriter gem integration for taxonomic autocomplete
+f8a54745e5510aef1a944f0872f203826fdeaa29	2026-02-20T15:20:03-06:00	Will Johnston	mrdbidwill@gmail.com	Add trailing newline to auto_glossary.rb for RuboCop compliance
+5053a2b346db29d6dda39d40f841f580ea2c732a	2026-02-20T15:10:17-06:00	Will Johnston	mrdbidwill@gmail.com	Override authenticate_user! method in auto_glossary to ensure public access
+27195de5ffbcfa7aee1942c0754b80365fcc934e	2026-02-20T15:08:52-06:00	Will Johnston	mrdbidwill@gmail.com	Add skip_before_action for Devise authentication in auto_glossary initializer
+8a3052de374392c1521c6df5902d67c4982ccdd6	2026-02-20T15:06:03-06:00	Will Johnston	mrdbidwill@gmail.com	Fix auto_glossary 401 error and document Rails engine + Pundit integration
+7008a42c9588deaeb471bdde3d9409690798b902	2026-02-20T08:02:31-06:00	Will Johnston	mrdbidwill@gmail.com	update article editor and add image
+9531f3677caa4c3ca08de1734ce4c4e1eb0d7904	2026-02-19T19:45:06-06:00	Will Johnston	mrdbidwill@gmail.com	Add text formatting toolbar and character count to article editor
+78b10197dfde87b8de33e215651be62892788ab4	2026-02-19T19:37:32-06:00	Will Johnston	mrdbidwill@gmail.com	U
+pdate auto_glossary gem to v0.1.1
+fc77cc812af9605b624b3734447dac37fc095cac	2026-02-19T13:05:06-06:00	Will Johnston	mrdbidwill@gmail.com	Replace local glossary code with auto_glossary gem
+afd5780d6114fae7a756e834990993d200f0a936	2026-02-19T07:16:23-06:00	Will Johnston	mrdbidwill@gmail.com	Document server configuration and Feb 19 downtime resolution
+725541a52a467f6b08cd34e08598b07a61b11f68	2026-02-18T12:44:22-06:00	Will Johnston	mrdbidwill@gmail.com	remove profanity filter and warnings from views - too many false reads
+5a1317ce931b3fb7e15aec1b09676ebdf4971082	2026-02-18T09:48:28-06:00	Will Johnston	mrdbidwill@gmail.com	add profanity filter and tests
+f56147e6d361cb6c3f2634bda31d487728e10806	2026-02-18T06:20:45-06:00	Will Johnston	mrdbidwill@gmail.com	add attribution to MycoBank for use of MBList database
+c3f3a97f0dea021476193034641f6aa9d300c4c1	2026-02-16T05:11:06-06:00	Will Johnston	mrdbidwill@gmail.com	Update Capistrano to 3.20.0

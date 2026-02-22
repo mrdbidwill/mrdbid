@@ -33,7 +33,6 @@ gem "capistrano-puma"
 
 gem 'csv'
 gem 'sitemap_generator' # Generate XML sitemap for search engines
-gem 'obscenity' # Profanity filtering
 gem 'auto_glossary', '>= 0.1.1' # Auto-glossary for mycological terms - created by mrdbid
 gem 'mycowriter', '~> 0.1.7'    # Adds genus species suggestions - created by mrdbid
 

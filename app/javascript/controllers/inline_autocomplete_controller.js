@@ -18,9 +18,16 @@ export default class extends Controller {
     this.currentWord = ""
     this.cursorPosition = 0
     this.wordStart = 0
+    this.ignoreNextInput = false
   }
 
   onInput(event) {
+    // Skip if this input was triggered by our own text insertion
+    if (this.ignoreNextInput) {
+      this.ignoreNextInput = false
+      return
+    }
+
     clearTimeout(this.debounceTimer)
 
     const textarea = this.textareaTarget
@@ -152,7 +159,8 @@ export default class extends Controller {
           this.hideDropdown()
         }
       } else {
-        // Uppercase word - search GENUS first (most common: typing genus name)
+        // Uppercase word - search GENUS ONLY (no species fallback)
+        // This prevents words like "Still" from matching species names with substring matches
         const genusResponse = await fetch(`${this.genusUrlValue}?q=${encodeURIComponent(query)}`, {
           headers: { "Accept": "application/json" }
         })
@@ -162,25 +170,11 @@ export default class extends Controller {
 
           if (genusData.length > 0) {
             this.renderDropdown(genusData)
-            return
-          }
-
-          // No genus matches - try species as fallback
-          const speciesResponse = await fetch(`${this.speciesUrlValue}?q=${encodeURIComponent(query)}`, {
-            headers: { "Accept": "application/json" }
-          })
-
-          if (speciesResponse.ok) {
-            const speciesData = await speciesResponse.json()
-
-            if (speciesData.length > 0) {
-              this.renderDropdown(speciesData)
-            } else {
-              this.hideDropdown()
-            }
           } else {
             this.hideDropdown()
           }
+        } else {
+          this.hideDropdown()
         }
       }
     } catch (error) {
@@ -238,6 +232,9 @@ export default class extends Controller {
     const newPosition = before.length + selectedName.length
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
+
+    // Set flag to ignore the input event we're about to trigger
+    this.ignoreNextInput = true
 
     // Trigger input event for character count update
     textarea.dispatchEvent(new Event('input', { bubbles: true }))

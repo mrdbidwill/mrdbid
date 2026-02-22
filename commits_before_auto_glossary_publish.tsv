@@ -1,0 +1,672 @@
+46 print pages 7-9-2026 to 2-19-2026 Every Commit
+
+
+
+
+afd5780d6114fae7a756e834990993d200f0a936	2026-02-19T07:16:23-06:00	Will Johnston	mrdbidwill@gmail.com	Document server configuration and Feb 19 downtime resolution
+725541a52a467f6b08cd34e08598b07a61b11f68	2026-02-18T12:44:22-06:00	Will Johnston	mrdbidwill@gmail.com	remove profanity filter and warnings from views - too many false reads
+5a1317ce931b3fb7e15aec1b09676ebdf4971082	2026-02-18T09:48:28-06:00	Will Johnston	mrdbidwill@gmail.com	add profanity filter and tests
+f56147e6d361cb6c3f2634bda31d487728e10806	2026-02-18T06:20:45-06:00	Will Johnston	mrdbidwill@gmail.com	add attribution to MycoBank for use of MBList database
+c3f3a97f0dea021476193034641f6aa9d300c4c1	2026-02-16T05:11:06-06:00	Will Johnston	mrdbidwill@gmail.com	Update Capistrano to 3.20.0
+c3fb81edb4c519ca7b1eb7f466b60efb40a7e91b	2026-02-16T05:07:39-06:00	Will Johnston	mrdbidwill@gmail.com	add Gemfile.lock
+61d9512aeed27625f7b43f4004e221fa56e34ac1	2026-02-16T04:51:08-06:00	Will Johnston	mrdbidwill@gmail.com	Should have been part of last commit?
+8060461613873f4d10846acf02b2ed28f5fdd02b	2026-02-14T07:31:11-06:00	Will Johnston	mrdbidwill@gmail.com	Fix sitemap changefreq value from 'quarterly' to 'monthly'
+1685fb7b6594a2a91725f739e4e997bebac0da7d	2026-02-14T07:25:12-06:00	Will Johnston	mrdbidwill@gmail.com	added google search console verification file
+d08e40f50cf87785b6ef625b4ed8f4e832c55565	2026-02-13T19:14:23-06:00	Will Johnston	mrdbidwill@gmail.com	Add sitemap and Google Search Console integration
+a117092885eb415d48e278cc3cc52178fd257065	2026-02-13T18:51:32-06:00	Will Johnston	mrdbidwill@gmail.com	revert back to simpler page - remove first 100 - add instructions for csv select mushroom
+ca1e2ecf73e72597e2b4eeb8437d00fdf0c5e1cf	2026-02-13T18:00:13-06:00	Will Johnston	mrdbidwill@gmail.com	fix pundit error
+7bc835c63695c1f24a2684f74a77ee57e3d9633d	2026-02-13T16:34:04-06:00	Will Johnston	mrdbidwill@gmail.com	add actual web address and mention original poster name
+7af458063585812f929fb6d5a5cb7a7f7e64f964	2026-02-13T16:17:07-06:00	Will Johnston	mrdbidwill@gmail.com	Add iNaturalist observation fields dataset and public viewer
+d440828f6cebaeb831ac804d255695720087ed2b	2026-02-12T15:23:05-06:00	Will Johnston	mrdbidwill@gmail.com	Add raise: false to skip_after_action for safer initialization
+bf2656a07cad54bb5f9a6f632be8925720cc2987	2026-02-12T15:07:36-06:00	Will Johnston	mrdbidwill@gmail.com	Fix 406 Not Acceptable error for glossary API
+6f1dd5d66551f0d27395c7b36bc76042fa1ac6ac	2026-02-12T15:03:16-06:00	Will Johnston	mrdbidwill@gmail.com	Add Wikipedia glossary integration with hover tooltips and modals
+ba2514031e9ec4509ce7cea4fad4ba2186abe539	2026-02-08T09:51:50-06:00	Will Johnston	mrdbidwill@gmail.com	Restore full 77-color palette (27 simplified + 50 AMS)
+44f91205475ba3d671ad92076f5eacd75419a414	2026-02-06T15:37:48-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive organization system for mushroom specimens
+b989501585f83c6e4a03b7ecc327058202053d3c	2026-01-19T06:17:26-06:00	Will Johnston	mrdbidwill@gmail.com	Fix DeviseMailer test failures by using integration test approach
+39fd4c0fe2554849b55dea98d9fd0b1f22447bf5	2026-01-19T06:10:38-06:00	Will Johnston	mrdbidwill@gmail.com	Add return_to workflow for creating sources from character form
+143ac937b3f3d694a80fa80e881aa40e5e128a99	2026-01-19T05:51:47-06:00	Will Johnston	mrdbidwill@gmail.com	Add user attribution and change tracking to source_data
+196053f5ca8af6e6821b63dd45d6083d060fd4d3	2026-01-17T17:54:15-06:00	Will Johnston	mrdbidwill@gmail.com	Fix all test failures and improve coverage from 73.3% to 79.5%
+4d203d79c107b9ac7a5b014bc6f626fb905bddb3	2026-01-17T15:52:00-06:00	Will Johnston	mrdbidwill@gmail.com	Add Cancel buttons to inline editing workflow
+b5cb9febe89503ea879ff5444bf2973a86e11beb	2026-01-17T15:48:46-06:00	Will Johnston	mrdbidwill@gmail.com	Fix admin_user? helper visibility and add gear icons to color characters
+d0f68bc4630753c0d0fb13eb3516ab8e006b0ba3	2026-01-16T07:01:42-06:00	Will Johnston	mrdbidwill@gmail.com	Add inline admin edit links for characters and lookup items
+47bc663bedabb88c9510118cc28e21bf765141b1	2026-01-15T15:10:28-06:00	Will Johnston	mrdbidwill@gmail.com	Add 'New Lookup Item' button to each character section in search results
+06733e2553e8e5f244779a282b396d7d7090e02c	2026-01-15T09:02:36-06:00	Will Johnston	mrdbidwill@gmail.com	Add needs_review flag for character curation workflow
+a855cbb5da3d1618c8bb52ec7bf43b2724405728	2026-01-14T14:49:40-06:00	Will Johnston	mrdbidwill@gmail.com	Fix genus display on mushroom show page: Apply fallback pattern consistently
+bb155a4cb3e21478c8e718969485d840544a23c8	2026-01-14T11:20:21-06:00	Will Johnston	mrdbidwill@gmail.com	Another iteration of a PDF download error that was solved and reappeared
+38721993eaef05057c68f8890cba56b2b9c33333	2026-01-14T11:05:09-06:00	Will Johnston	mrdbidwill@gmail.com	Goes with last commit
+364474e83e36f752e547db7568009f8a4addb85a	2026-01-14T10:39:23-06:00	Will Johnston	mrdbidwill@gmail.com	Add documentation: Strict loading association preloading patterns
+8e4fbac7d6b07c6cc6d358f5ff6c4a9656d2c382	2026-01-14T10:30:24-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict_loading: Preload genus in ranked_identifications
+9781ebc138677f29fe3c210e39cabf2e753b347b	2026-01-14T06:19:54-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict_loading error: Preload species.genus in index action
+ba247e50828024ecac0e76721b0f7dfbaee56117	2026-01-14T06:13:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict_loading error: Preload species.genus association in edit action
+ca3f9ab96f527b587a2e9f0d0b8a74bffde64829	2026-01-14T05:37:09-06:00	Will Johnston	mrdbidwill@gmail.com	Fix identification UX: Remove stray text, improve genus display, add navigation
+b4371f1cc4c3f4eb279ae5a5f282f1b17c7d4325	2026-01-13T09:48:19-06:00	Will Johnston	mrdbidwill@gmail.com	Clear and override cleanup task to handle permission errors gracefully
+be7b34beb970cce2911a43496caae22dc75c6019	2026-01-13T09:45:43-06:00	Will Johnston	mrdbidwill@gmail.com	Use SSHKit raise_on_non_zero_exit to suppress bootsnap cleanup errors
+46efd961fa65896aa69daf92dae85b6f086c35ad	2026-01-13T09:44:33-06:00	Will Johnston	mrdbidwill@gmail.com	Fix deploy.rb: restore working version and suppress bootsnap cleanup errors
+d516c680e8a0c0de0529054504eb4ee3f6a18409	2026-01-13T09:33:51-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Move Capistrano hooks after namespace definitions
+9b2a1b8c570b088d8e948706d4918ce025889bcb	2026-01-13T09:27:47-06:00	Will Johnston	mrdbidwill@gmail.com	CRITICAL: Auto-restart Solid Queue on deploy + add deployment checklist
+ce5c43cd4e915ab65bf2765a0b684c1ce2cab59e	2026-01-13T09:17:14-06:00	Will Johnston	mrdbidwill@gmail.com	Fix image export to download blob content directly instead of temp file path
+b40359fabe277861e86a00f772207653358c0cd2	2026-01-13T08:54:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix lens export to use make and model fields
+26f898255a5ab14f5edab79d5e673f0ab460db98	2026-01-13T08:13:33-06:00	Will Johnston	mrdbidwill@gmail.com	Fix syntax error in includes statement
+
+b2d14f0ed7e8477f7aaf49d40434924b7ba4b78d	2026-01-13T08:08:07-06:00	Will Johnston	mrdbidwill@gmail.com	Fix UserImageExportJob: remove invalid genus_id/species_id ordering, use many-to-many relationships
+a85efb5a1f8dd92c86d7ea88006c665f61eee311	2026-01-13T08:02:02-06:00	Will Johnston	mrdbidwill@gmail.com	Fix image export routes and add user explanation for backups
+2026b4da57f36189c3536f4f07e0efb8ede32f79	2026-01-13T07:52:41-06:00	Will Johnston	mrdbidwill@gmail.com	Add raise: false to skip_after_action calls
+f74fcd61d22c14e2bde3161debadcbb92bf8dad1	2026-01-13T07:50:13-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Skip Pundit authorization check for ImageExportsController
+c4f905f9f260b73f218f026eae6a13b69b808f3b	2026-01-13T07:32:02-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add return statement after redirect in image exports controller
+a5c778e426b285d52b4145187552ca0db9441564	2026-01-13T07:14:14-06:00	Will Johnston	mrdbidwill@gmail.com	CRITICAL FIX: Restore PDF export loading overlay and user feedback (4th occurrence)
+eee259e838b1b9c385a3fc99101fa2c544e6d848	2026-01-11T18:38:00-06:00	Will Johnston	mrdbidwill@gmail.com	finish last commit
+21b9eefeabac14ff63c5ddc41473338455fe88d8	2026-01-10T14:06:30-06:00	Will Johnston	mrdbidwill@gmail.com	Clarify Terms of Service: Images visible to other users
+fc23a142b127447a1de4c5e9327fe8c9d04ad342	2026-01-10T13:44:46-06:00	Will Johnston	mrdbidwill@gmail.com	Add user image export feature and Terms of Service
+ff1ad771f0da9a1e6bd5d46ef43e6832c4ffc626	2026-01-08T18:13:57-06:00	Will Johnston	mrdbidwill@gmail.com	Add CSS to make slider bars more visible
+6abce028f56348e1596386c6a1dec3efb3b8606a	2026-01-08T15:03:19-06:00	Will Johnston	mrdbidwill@gmail.com	Removed data-turbo-confirm and custom confirm dialog and loading overlay and pointer event blocking and simplified to basic feedback
+bc1114ce91c68291a14b5f180f85f09a2644fc1d	2026-01-08T08:25:58-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive error handling to prevent generic 500 error pages
+68dc4cd7b9b3f29c1e130f6a871b5f5db2bb37e3	2026-01-07T18:04:40-06:00	Will Johnston	mrdbidwill@gmail.com	Revert Active Storage to local service - S3 migration abandoned
+eac6a6845e5f1e4a55becd23a32a1d863b43f376	2026-01-07T16:16:41-06:00	Will Johnston	mrdbidwill@gmail.com	Fix S3 bucket name to use hyphen instead of underscore
+858199e87123d7a112087bb8873d0fd7c2304ff8	2026-01-07T15:02:25-06:00	Will Johnston	mrdbidwill@gmail.com	Fix The deploy user doesn't have SSH keys to access GitHub
+969b0e582c745448d347bd36685bf318ab4be417	2026-01-07T14:58:45-06:00	Will Johnston	mrdbidwill@gmail.com	Configure S3 storage and switch to deploy user for Capistrano
+f607ad9dbbcdf788dea6aab25d8bf5f59609eca9	2026-01-07T14:35:59-06:00	Will Johnston	mrdbidwill@gmail.com	Add new feature
+41379da2512f1a1e75aa1c927edf162e665a6238	2026-01-06T12:17:30-06:00	Will Johnston	mrdbidwill@gmail.com	Mark data attributes as HTML-safe to prevent double-escaping
+bcf87edc51802a96d99bcb42e107207bf47a766e	2026-01-06T11:31:39-06:00	Will Johnston	mrdbidwill@gmail.com	Fix keyboard navigation URL encoding issue
+12ed712409e9aceb8c34932f6474827a25045786	2026-01-06T11:20:23-06:00	Will Johnston	mrdbidwill@gmail.com	Move image navigation arrows to sides of image
+d45d327d49a124275c5ba79aede15ff93f6b1569	2026-01-06T08:19:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix GPS coordinate parsing from DMS to decimal format
+976a1393a6c88832e2acb25d74b5d35dcc19ab2a	2026-01-06T08:05:06-06:00	Will Johnston	mrdbidwill@gmail.com	Extract GPS location data from image EXIF metadata
+e0f96f62cb7fe4de151204777708d5e8cb1c5a50	2026-01-06T07:17:02-06:00	Will Johnston	mrdbidwill@gmail.com	Add latitude and longitude columns to image_mushrooms table
+f4e9a2cff06dcd818b6fbab70058d02e13110a3b	2026-01-05T19:13:01-06:00	Will Johnston	mrdbidwill@gmail.com	Display description of selected lookup_item in addition to name
+671b6e21c0658b80b62b7050b51329ec3fb30975	2026-01-05T15:40:31-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Use 2 columns up to xl breakpoint (1280px) for larger swatches
+2824b50ab5e4c0993b850bc9f0e04ca059ff2d3f	2026-01-05T15:37:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Keep 2 columns longer (up to md breakpoint) for larger swatches
+b8414c8a970039602bc1db975f445ccea4a05447	2026-01-05T15:32:57-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Reduce modal body padding from p-6 to p-3 for larger swatches
+03ec97fca963c248d0ce970a81d7de89f1378228	2026-01-05T15:30:58-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Overlay color name on swatch for maximum swatch size
+7de5ef088cc51c42f209d32054c92be0d719d34a	2026-01-05T15:29:42-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Remove gap between swatch and label, thinner borders for larger swatches
+924e295bb45757e8288008ad8a0230e30c7b4996	2026-01-05T15:26:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Reduce gaps and padding (gap-2, p-1, gap-1) for larger swatches
+f9faa4cccc98c45f4e913a730e2cdf4b47525477	2026-01-05T15:24:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Increase modal width to max-w-5xl for larger color swatches
+868e15412f563fe84bb8abc3bc8f24ecf26e69d2	2026-01-05T15:21:44-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Reduce grid columns to 2 on mobile for larger color swatches
+cb43836776f2cfef71a7c72456ac700265170abe	2026-01-05T15:20:30-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add w-full to button and reduce padding for larger swatches
+f858ec9ae6705c698c28d977e653a2711b4419f7	2026-01-05T15:18:43-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Make color swatches fill grid cells with w-full aspect-square
+eaa11203c30f0e7f4bb89f12ea1060514efc8cb6	2026-01-05T14:52:43-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Handle simplified colors in admin colors index
+60773b731443dff198947f753c5e51648cfdb693	2026-01-05T14:50:40-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Handle simplified colors in entered_character_card partial
+6faf65358c3bbdc7eab37e6d9533d2c98a4d2b49	2026-01-05T14:50:21-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Handle simplified colors in show page
+f4cb3783d2378ca28f8df648577a989281f03fe3	2026-01-05T14:41:51-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Follow Rails 8/Turbo standard pattern in multicolor picker
+71e1d21ebd7d8d23dfc14f0c141f72f1df61b1e0	2026-01-05T14:30:44-06:00	Will Johnston	mrdbidwill@gmail.com	Add documentation for color swatch sizes and troubleshooting
+3d1d0ab8fb2822d831993ffece624e604d7e9b97	2026-01-05T14:21:24-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Increase color swatch sizes throughout the application
+2df524296c4a705a1188ed359c042a08b6f0536b	2026-01-05T12:57:48-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add minimum size to color swatches and improve responsive grid
+efc96cbae41ea29a4aa5c14c0f4c5600afbc7330	2026-01-05T11:54:49-06:00	Will Johnston	mrdbidwill@gmail.com	Add documentation for simplified color system
+1e951b1ca84c6ec43683616bb729f0edcd86d742	2026-01-05T11:53:59-06:00	Will Johnston	mrdbidwill@gmail.com	Implement simplified hierarchical color system (27 colors)
+a7ba4d3119241516cf244fe0bce37c91afa959e5	2026-01-05T10:48:12-06:00	Will Johnston	mrdbidwill@gmail.com	Add rename_photo_booth_files.sh script
+324bfb210e9bd2a10d6a81f4eb73d389429406d0	2026-01-05T10:39:24-06:00	Will Johnston	mrdbidwill@gmail.com	Add keyboard navigation for image browsing with arrow keys
+0455e42df6267d8e44b44db2799fa0ac70b47804	2026-01-04T14:56:40-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive coding standards documentation to prevent recurring bugs
+4a6d2ac44341889e617388293d34c7c395f0c7bf	2026-01-04T14:52:13-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Remove lazy loading from all remaining image views for iPad compatibility
+99e6e09182742192f1653e39e98ff6163ba16dbb	2026-01-03T14:49:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Standardize ALL controllers to use simple redirects for Rails 8 / Turbo
+c31806361f5a334f1638c701ca750b5fdc353dd7	2026-01-03T14:27:34-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Disable Turbo for image delete to ensure redirect and flash message
+37880dd5ac38cb933341384814b0d874dbdfea45	2026-01-03T14:07:31-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Use double quotes in onsubmit confirm dialog
+0bced5a59c3fdbec04ab08feecf7aca813f1d362	2026-01-03T13:48:34-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Use plain JavaScript confirm for image delete button
+b99b09e3a4b620f0e878bf32e39cf4837e710058	2026-01-03T13:42:09-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Remove conflicting data-confirm attribute from delete buttons
+25c0cfe9323b955ae2111c2ea2c9992ce5ddfbc6	2026-01-03T13:17:10-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add Turbo Stream support to all remaining controllers
+36b95f2c31e13426ee6ad7e3a319d4b81028a78a	2026-01-03T13:06:54-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Restore Turbo Stream support for image delete button
+e1737a3c4f11fddb7785201c22b5b430bccab85e	2026-01-03T06:46:55-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Restore Turbo Stream support in color picker save functionality
+dd13d505e7544ce6c3118b90bcc46badc0e2bdd6	2026-01-01T16:15:15-06:00	Will Johnston	mrdbidwill@gmail.com	Fix production internal server error on iPad
+62d085b940741424562b8ba6b218e8043204906a	2026-01-01T16:07:29-06:00	Will Johnston	mrdbidwill@gmail.com	Fix iPad image loading issue on mushrooms index page
+9c3a4da1dd825ce879b2fa90551f43405d34664e	2026-01-01T15:17:11-06:00	Will Johnston	mrdbidwill@gmail.com	again
+db1c8dc1250b3906d05401b6d1171523fda7fb0e	2026-01-01T15:12:43-06:00	Will Johnston	mrdbidwill@gmail.com	Same thing
+8312a12e5da71c79d8a963a1bd8338c8ecd73f7d	2026-01-01T15:01:37-06:00	Will Johnston	mrdbidwill@gmail.com	another attempt to fix last commit
+221d042957735bc2c11ab4db7c1eca57e0bf34c2	2026-01-01T14:56:42-06:00	Will Johnston	mrdbidwill@gmail.com	A fix to last commit
+c8a2fb1ccad61b7776e0f60fdb6c6565267a7741	2026-01-01T14:51:17-06:00	Will Johnston	mrdbidwill@gmail.com	added back alerts for large database downloads
+d74e0d3cf32205954b13e4f2c176f4091e66054d	2026-01-01T14:37:21-06:00	Will Johnston	mrdbidwill@gmail.com	fix where last commit make Export PDF button non responsive
+1f7a688ddd872d51315fff66a26fc529780fe3f6	2026-01-01T14:32:13-06:00	Will Johnston	mrdbidwill@gmail.com	Solve sidebar PDF download button from remaining on EXPORTING long after download is complete
+ce215bb05651c8ac2ba97b74f84f119a10e9d53c	2026-01-01T14:23:34-06:00	Will Johnston	mrdbidwill@gmail.com	Solve download PDF error Failed to generate PDF: Your document includes text that's not compatible with the Windows-1252 character set. If you need full UTF-8 support, use external fonts instead of PDF's built-in fonts.
+f22c9a9584404de268b0b7c30b9ba811773010cf	2026-01-01T14:08:37-06:00	Will Johnston	mrdbidwill@gmail.com	Add advanced mushroom search with character autocomplete
+ec33c8bbe10bcbda463999ba9383b7ec9ff6dfa3	2026-01-01T08:45:10-06:00	Will Johnston	mrdbidwill@gmail.com	added date_taken column and script to load to existing images
+c541d23109cb112fbbb0b0126368ee0c5f6811ae	2025-12-31T09:46:57-06:00	Will Johnston	mrdbidwill@gmail.com	Reworked last fix for user notifications
+8fea4ef61ffa2d48b5cae845c945f6a0cd3e4df2	2025-12-31T08:46:38-06:00	Will Johnston	mrdbidwill@gmail.com	Fixed Character saved notification to display to user
+5341d40d351d33fe7e9d0306aed20d7940c04803	2025-12-31T08:31:06-06:00	Will Johnston	mrdbidwill@gmail.com	Fixed duplicate colors selected and form summit user notification and removed unnecessary form text box on radio displays
+0513ab7284874faaa3ed6362a12897fd6025c120	2025-12-29T06:26:12-06:00	Will Johnston	mrdbidwill@gmail.com	completed last fix
+32377cad60be21e67e36c2f93f519cd9a9d1ec38	2025-12-29T06:12:04-06:00	Will Johnston	mrdbidwill@gmail.com	Correct https://mrdbid.com/admin/mr_characters?part_id=&observation_method_id=&fungus_type_id=2&commit=Apply+Filter  to link to next page of filtered results not original complete list of mr_characters
+34ed8597a3d4c66f23950c290fd1e227d0b5851a	2025-12-27T18:41:44-06:00	Will Johnston	mrdbidwill@gmail.com	modify https://mrdbid.com/admin/mr_characters/new back to drop-down list for data source - keep link to create new if one you need is not on drop-down
+8bd9b5d3b32f90cf5fbf57643f1fd149578e2fcc	2025-12-27T05:45:17-06:00	Will Johnston	mrdbidwill@gmail.com	add New Lookup Item for Surface Features to app/views/admin/lookup_items/index.html.erb for improved user friendly experience
+319fc4f79950a36883fdd0585fba3c1b4bdb7563	2025-12-26T19:23:45-06:00	Will Johnston	mrdbidwill@gmail.com	Correct color picker Clear All and Cancel buttons
+82c41b7190809ed66ba5245be8d971c9e689c978	2025-12-26T18:44:10-06:00	Will Johnston	mrdbidwill@gmail.com	complete last fix and display Latin Name (Common Name)
+d5c26e508df9d9121d4d74300703fe802e930250	2025-12-26T18:19:56-06:00	Will Johnston	mrdbidwill@gmail.com	correct  app/javascript/controllers/multicolor_picker_controller.js so that blue squares with checkmarks fixed and cleared
+a0c7077b138d4e84efe7dd5f752033666bf2e525	2025-12-26T15:45:26-06:00	Will Johnston	mrdbidwill@gmail.com	pass mr_character_id to new form for admin/lookup_items/index.html.erb:169
+b5850139990ac233e5f731e67d32c99f6d7997a0	2025-12-26T12:52:05-06:00	Will Johnston	mrdbidwill@gmail.com	Finish the last commit
+dbd26e1b617f8b77891685948932420f3e8e2178	2025-12-26T12:24:13-06:00	Will Johnston	mrdbidwill@gmail.com	add same search feature to lookup_items that mr_characters has
+2df863ba67f081484778eebf87b017e976e11e51	2025-12-26T10:47:35-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Show ALL mr_characters in lookup_items dropdowns, not just those with existing items
+776f441a9626da07eab6aef40a5337fd1b4ac74a	2025-12-26T10:13:33-06:00	Will Johnston	mrdbidwill@gmail.com	changed this in config/application.rb:44 config.active_record.strict_loading_by_default = true so that mr_characters will display in lookup_items drop-down
+cdf22da17693e81fcf975eec4084a15eabf5c93b	2025-12-26T07:42:42-06:00	Will Johnston	mrdbidwill@gmail.com	update lookup_items_controller.rb to load ALL characters - not just ones with existing rows in lookup_items - allows admin user to add lookup items using the admin dashboard
+9f226c360572a5db083e197b78db83d17a3588b3	2025-12-24T19:56:14-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Re-add SELECT clause for DISTINCT compatibility with ORDER BY
+fc7f08c8d5a545355662ea93c0c6fb6665ae4acb	2025-12-24T19:15:04-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add confirm attribute to all delete buttons and prevent duplicate search results
+c369c91034a8a310d026416fab1a1dc3bb0a6424	2025-12-24T18:57:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add confirm data attribute to delete button for browser compatibility
+1cd6837d36deaf2b56e5eb2d6cabfa67434648d7	2025-12-24T18:41:10-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Update test to expect nested route for image edit form
+e90d60de540f29827f88f73189d1dfd4e8d0a7f5	2025-12-24T18:38:58-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Use nested route for image delete button when accessed via mushroom
+5b2b0a16089691209bc4911a5d2ebe8095786110	2025-12-24T14:52:47-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add verify_policy_scoped skip to mushroom_comparisons and mushroom_search controllers
+af7a7d3da65ecd75c8a956e0210bccf11b7196a8	2025-12-24T14:52:47-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add verify_policy_scoped skip to mushroom_comparisons and mushroom_search controllers
+4d089e9a64553b87059ae8918fc9655969a2099e	2025-12-24T14:07:10-06:00	Will Johnston	mrdbidwill@gmail.com	removed file address from email
+4fbaf9a415a7e56b8ae34cda3693465e196dacc7	2025-12-24T14:04:42-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add skip_after_action :verify_authorized to 9 controllers missing Pundit authorization
+82f8ab7fc36b2fb4dd2c5023952147a3906c0e57	2025-12-24T11:58:20-06:00	Will Johnston	mrdbidwill@gmail.com	added fade out to sent email alert
+a02fe329c9909122aedc6c3d37d4b89f5c5716c6	2025-12-24T11:21:08-06:00	Will Johnston	mrdbidwill@gmail.com	Fix contacts_controller so emails will send and make sent alert more noticable
+75b7f96a3cae6c7f16ed92bc2c9e380f334be50b	2025-12-24T07:30:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Correct bash syntax in Puma verification retry logic
+d3f1993738d3f81486e83030df8c6e7d51e59078	2025-12-24T07:18:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add Pundit verification skips to all service-based controllers
+74f6ab4a12e9bc91566c6020244a86f763e6cb1c	2025-12-24T07:08:18-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Skip Pundit verification for service-handled actions
+59ed17dfe2d26babb78acf2b0e1214bbe89e8d35	2025-12-23T11:21:29-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Increase Puma verification timeout and add retry logic
+b9b65c55105b8e677e9f0be49820d8d519baf5a2	2025-12-23T09:50:38-06:00	Will Johnston	mrdbidwill@gmail.com	Merge feature/architecture-refactor: Major test suite refactoring
+cab6928de2fa32a847f2f96de21d70dbb56e9013	2025-12-23T09:49:09-06:00	Will Johnston	mrdbidwill@gmail.com	Refactor: Comprehensive test suite improvements and skip reduction
+c240431b72f49267f86514ff1d59407b13f25688	2025-12-23T07:06:26-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Resolve test failures in association controllers and PDF export
+76a8f58c37154b5ffe8d415ed9467434775976bf	2025-12-23T06:57:17-06:00	Will Johnston	mrdbidwill@gmail.com	Refactor: Introduce service objects and query objects architecture
+0d1655fadf5c8bfd6bd44a957fdec9506895001c	2025-12-23T05:37:41-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Systematically remove ALL authorization conditionals across codebase
+9e07e53ed8639139b50452b190506ead54decc59	2025-12-22T19:32:30-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Remove faulty authorization conditional and add admin permissions
+17e1f79a4404b396a8ce6af506b3c7b609972991	2025-12-22T18:53:39-06:00	Will Johnston	mrdbidwill@gmail.com	Add testing improvements summary documentation
+355d874d975af5ba6bb3dad50253f19a9adf1af7	2025-12-22T18:52:50-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive production testing improvements
+3c4121392da4b32e568f9ebf92829af883ae4ac0	2025-12-22T15:49:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Update ImageMushroomPolicy test for public show access
+1b51d8ef80b38aeedd48e750824124419f53135a	2025-12-22T15:47:04-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Complete Pundit authorization for all public controllers
+930e24dcd8772f733bb6ff60978054c36a6f87c3	2025-12-22T14:59:54-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Add missing Pundit skip callbacks to public controllers
+d8c7a6a4887c2a051808e32612c3665f1dcfcdf6	2025-12-22T13:15:46-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Enable Pundit authorization checks in all environments
+1918dda82c6cc6ad27d87e8157daa1f3fac78aec	2025-12-22T13:03:42-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Remove skip_after_action for verify_authorized in production
+e65f500a2ea5e269b92a0a2109d9804f290bc553	2025-12-21T08:15:51-06:00	Will Johnston	mrdbidwill@gmail.com	finish last commit
+a64340cf93159f73a35f3d95b9a80d0065ae9763	2025-12-21T07:58:21-06:00	Will Johnston	mrdbidwill@gmail.com	Feature: Add temporary admin invitation system with magic links
+ce807eb25365c1c66f56659e5c033835f5082e89	2025-12-21T07:31:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Cancel button now properly resets color selection in modal
+85ac558df03fdb91ffc65720234c1fb1507a09a7	2025-12-21T07:14:57-06:00	Will Johnston	mrdbidwill@gmail.com	Feature: Add "Clear All" button to unset color characters
+9128df1205b4ec6dd3c7f03217a611b6ba5aba91	2025-12-21T07:00:47-06:00	Will Johnston	mrdbidwill@gmail.com	Changed admin_todos/index to display user display_name instead of user email
+95b8ffcd619d7a1d6cafa2c2d1568a19b689afdd	2025-12-21T06:39:20-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Update mushrooms/edit view to use multicolor join table
+90aa928ef018dbdb2f528bf944f08a7038906513	2025-12-21T06:35:50-06:00	Will Johnston	mrdbidwill@gmail.com	Test: Add comprehensive test coverage for multicolor feature
+df3591f0618ce18d4a0685f6deab143e914fb00e	2025-12-21T05:48:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Pass asset-pipeline image URLs to multicolor picker JavaScript
+a2297dfa91a83ba21028f0fa39cbe8e73adcd75e	2025-12-21T05:44:49-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Update edit_characters view to use multicolor join table
+017842637f84a830bdf6289b5095ba2ba59383f2	2025-12-21T05:42:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Correct image path and validation for multicolor picker
+656eb7bd53eb945ab169134f075720ab06862ba7	2025-12-21T05:36:22-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Correct turbo-stream response in MrCharacterMushroomsController
+4abf634413224558282a297c1cd76c99dd1df4a2	2025-12-18T18:56:38-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Mobile image display and photo library access issues
+a2d57a339802ca2549b5c7f816e1a3c572e466da	2025-12-18T16:54:09-06:00	Will Johnston	mrdbidwill@gmail.com	Fix: Restore visibility of mushroom images in edit view
+5d5bbf269110a8b86cae0729a74d8b8079f47d59	2025-12-18T08:45:42-06:00	Will Johnston	mrdbidwill@gmail.com	Implement multicolor support for mushroom character color fields
+83752bf359e76a9b17b980664223a336d0d6f7ea	2025-12-17T19:26:47-06:00	Will Johnston	mrdbidwill@gmail.com	Implement carmen-rails for countries and states management
+2ff818c2728a1b532fe67121e77cb8f8244b582e	2025-12-16T12:36:08-06:00	Will Johnston	mrdbidwill@gmail.com	second attempt on git to commit change to make Edit Basic Mushroom Data stand out more
+387b4d5297c7481def817c97787bdaa5e683fd19	2025-12-16T11:25:39-06:00	Will Johnston	mrdbidwill@gmail.com	remove the reference to 30 days in the 2FA login
+3c13eca2b46eca3cb1cc036c38f908e6351d2d0c	2025-12-16T07:35:21-06:00	Will Johnston	mrdbidwill@gmail.com	updated README.md
+01b6613dd3fe045f60b48279722b8b74e78f4b65	2025-12-14T17:46:47-06:00	Will Johnston	mrdbidwill@gmail.com	deleted .github/workflows/test.ymlw
+62279e1fed811001234df37fa51b97dd84526f2a	2025-12-14T15:29:35-06:00	Will Johnston	mrdbidwill@gmail.com	Merge test-suite-refactoring: 0 failures, 0 errors achieved
+d8b0660c7f94d3ac1e8dd6a06a553221b43ec6fc	2025-12-14T14:44:08-06:00	Will Johnston	mrdbidwill@gmail.com	change articles so that Admin Dashboard only articles written by the active authorized logged in admin user display
+e6f2ebd6ee15cfc78443dd2c2ed0fe1aac69cb09	2025-12-14T14:12:44-06:00	Will Johnston	mrdbidwill@gmail.com	changed article permission so that only authorized admin user can create then edit and delete only articles owned by them
+531a160c637969ca8c9dd55b48bee0fb0ddece95	2025-12-14T11:00:30-06:00	Will Johnston	mrdbidwill@gmail.com	Fix EXIF extraction test - down to 117 skips!
+ec0be514878e9046f92f580e70eea8d89ca4d27a	2025-12-14T10:54:50-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive skipped tests documentation
+0d5a8b1eee790d21789aa87302ba9f6ea4a71dce	2025-12-14T10:36:33-06:00	Will Johnston	mrdbidwill@gmail.com	Fix missing assertions in database_indexing_test and states_request_test
+72f0c6c2ff1d62ed40a3629856bf3f35fa2c2147	2025-12-14T10:31:08-06:00	Will Johnston	mrdbidwill@gmail.com	Test suite improvements - ZERO failures and errors achieved
+85ab3bc397603d08840b7013085ec8fa14329df0	2025-12-14T10:06:09-06:00	Will Johnston	mrdbidwill@gmail.com	CRITICAL SECURITY FIX - Added authorization to all association controllers
+35145a906eac28cd1871c8c20e9fdd9ec75fa42c	2025-12-14T09:59:25-06:00	Will Johnston	mrdbidwill@gmail.com	CRITICAL SECURITY FIX - down to 32 failures, 4 errors
+6bb3d2a8b9319a24fa017a8b73c4aca84e2f01d5	2025-12-14T09:46:51-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 36 failures
+e1675e72c00e2c4ad5dc7785feeb8e01a0fe10a3	2025-12-14T09:44:56-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 40 failures
+a743e392349a9c7a5f9a3916d7f5e34a40093def	2025-12-14T09:42:47-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 44 failures
+bc0b9fae8af64b79c99eacecde3e6660a23147c4	2025-12-14T09:40:29-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 47 failures
+94ee0711d1b3ccf5560d574e412ed4d61a4d4cde	2025-12-14T08:56:54-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 54 failures
+191b6a749e862997a74df24ee17ec416d3f90e7a	2025-12-14T08:54:30-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 56 failures
+3c63ba7fce389dcaee09de837fc99a8a20e1b5a6	2025-12-14T08:51:02-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 58 failures
+64c6465a9fb4dc917d29f30b85182d39b0c1b34a	2025-12-14T08:38:34-06:00	Will Johnston	mrdbidwill@gmail.com	Fix RecordNotFound test expectations - down to 66 failures
+1ed7d1e840832ed3e9cc946966acebce9778f2c6	2025-12-14T08:36:53-06:00	Will Johnston	mrdbidwill@gmail.com	Fix application controller tests - down to 72 failures
+c0b3b7496132d8b046a98f578e0de67d50906d01	2025-12-14T08:35:22-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MrCharacter test and skip 2FA trusted device test - 74 failures
+acf4cade2eccf9b1f6676195b2bb58905ac7e4c6	2025-12-14T08:24:44-06:00	Will Johnston	mrdbidwill@gmail.com	Add JSON format to mushroom association tests
+5b67219da3df9954a24b7408dcf15e88f2a69d1a	2025-12-14T08:20:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix admin workflow test validations - down to 75 failures
+8f09adaceaddeb60e8fc50072834a9922e1d7359	2025-12-14T07:03:15-06:00	Will Johnston	mrdbidwill@gmail.com	Update authentication flow test redirects to mushrooms_path
+477da22780d6aa069c4facf45a3f86c165c317de	2025-12-14T06:55:24-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 76 failures
+7a605f6872a3a439b1588c5008705fc49fab51ee	2025-12-14T06:53:09-06:00	Will Johnston	mrdbidwill@gmail.com	Test improvements - down to 78 failures (from 83)
+4e2d3d2ff6dbe50e935d0bfe696448fc99bb6b9b	2025-12-14T06:39:41-06:00	Will Johnston	mrdbidwill@gmail.com	Test suite improvements - down to 83 failures (from 102)
+d6344e8a1ddac2083a8d7ea991990d20453bbe10	2025-12-13T20:41:53-06:00	Will Johnston	mrdbidwill@gmail.com	Fix test suite issues - down to 103 failures
+cf04ce60b65998d19ddaed59eae050da9f10eec8	2025-12-13T20:04:52-06:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA settings test expectations - correct redirect paths and parameter names
+9dc3d187b2904ceb24f6fb038137e45b92243bce	2025-12-13T20:02:43-06:00	Will Johnston	mrdbidwill@gmail.com	Progress update: 112 failures remaining (from 119) - Fixed validation error displays (7 tests) - Fixed 2FA route usage (4 tests) - Current: 0 errors, 112 failures, 74 skips - Auth tests down from 17 to 13 failures
+b4dc8beea66858a4dfe123b016b2ed7f6437cb62	2025-12-13T20:02:04-06:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA test routes - use settings controller for setup, auth controller for login
+f76871e850d0203f3b996fe53a32d84467b349cc	2025-12-13T19:59:59-06:00	Will Johnston	mrdbidwill@gmail.com	Add error and alert CSS classes to all form validation error displays
+5eb6005ca4a2e050e3469e616293de60d05a068e	2025-12-13T19:46:05-06:00	Will Johnston	mrdbidwill@gmail.com	Progress checkpoint: 119 failures remaining - Fixed flash message CSS classes - Fixed 2FA route methods - Fixed password reset token handling - Added error flash display - Down from 144 to 119 failures (25 fixed)
+ed37f7fdc5046c6121dfbfed260f28e1c62ed1a5	2025-12-13T19:45:36-06:00	Will Johnston	mrdbidwill@gmail.com	Add error flash message display to layout
+8ae7d9e6bfbbc4f9e450ef86b72f6883239b798d	2025-12-13T19:44:46-06:00	Will Johnston	mrdbidwill@gmail.com	Add alert and notice CSS classes to flash messages in layout
+640055444ba0ca0712005b8460030014b1886b53	2025-12-13T19:43:32-06:00	Will Johnston	mrdbidwill@gmail.com	Add flash message type as CSS class for test selectors
+c7b352b23f7f99644658e2a6f5643deb87805bab	2025-12-13T19:42:55-06:00	Will Johnston	mrdbidwill@gmail.com	Fix authentication flow test 2FA routes and password reset token
+f443c673cb91e7b3b70bc0e37f7e646bae67c5e1	2025-12-13T19:40:10-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MrCharacterMushroom update test by refetching record
+3c0c803d70d925c53b4b7dc5cfbf3d59c6d762cf	2025-12-13T19:39:15-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MrCharacterMushroom test strict_loading issue
+04d8f77ebb677b7b9d0ab1255f794572fa588128	2025-12-13T19:37:00-06:00	Will Johnston	mrdbidwill@gmail.com	Fix JSON API auth tests and parameter validation responses
+6b8cea6a5607b7c3633620fb90d15bb96049be0c	2025-12-13T19:33:52-06:00	Will Johnston	mrdbidwill@gmail.com	MILESTONE: Zero errors achieved! - Started session with 77 errors, 146 failures - Now: 0 errors, 150 failures - All code execution errors fixed - Remaining issues are test assertions only
+5f3636217d5346f48f0901ffba39f3db3386ba2a	2025-12-13T19:32:35-06:00	Will Johnston	mrdbidwill@gmail.com	Fix last 5 errors: strict_loading, color hex duplicate, and source_data
+a2bb8206bd65f4907c99fd9b4e3c3a93e3b9d1bb	2025-12-13T19:30:23-06:00	Will Johnston	mrdbidwill@gmail.com	Fix validation errors in AdminWorkflow, MrCharacters, Mushroom, and User tests
+cb91f9a7d5509744aa6407f1df6df9303d7a6e31	2025-12-13T19:28:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix TrustedDevice, TwoFactorSettings, ImageMushrooms, and strict_loading errors
+4121c0af2c61db744c0ae726d40069db1a556820	2025-12-13T19:25:37-06:00	Will Johnston	mrdbidwill@gmail.com	Fix QueryPerformanceTest association and column errors
+fc2425a6df1ba13633b5673f0116b5c6f3e117a8	2025-12-13T19:22:25-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MushroomSpecies fixture and authentication test
+7bd0a02348a94157ccc776603700316f8d3aa997	2025-12-13T19:17:24-06:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA otp_secret nil errors and Admin::Utility route
+824fb77f57e5a3dcc2fdcc06dccdde2c27115a67	2025-12-13T19:15:24-06:00	Will Johnston	mrdbidwill@gmail.com	Fix AuthenticationFlow integration test errors
+fe426901ecd5338d5b8078bddedff0a4ebda6ac4	2025-12-13T19:13:26-06:00	Will Johnston	mrdbidwill@gmail.com	Fix route helpers and mushroom_species fixture
+5eec3a341d7ab90446b87388ee5ba29390b218c9	2025-12-13T19:08:29-06:00	Will Johnston	mrdbidwill@gmail.com	Fix UsersController and TwoFactorSettings tests
+43091d6245b94896608cea602e64691b797e9a8c	2025-12-13T19:06:49-06:00	Will Johnston	mrdbidwill@gmail.com	Fix ImageMushroom and MrCharacter association errors
+7f31753ed04f1a16add1ccf34cbb6b0dc13112f3	2025-12-13T19:03:40-06:00	Will Johnston	mrdbidwill@gmail.com	Fix Admin::MbLists show view and add missing partial
+589d5109d7dcb5fbbbad5b729a9bcb4fd880d952	2025-12-13T19:02:03-06:00	Will Johnston	mrdbidwill@gmail.com	Fix Users::SessionsController tests - request and cookies issues
+1992fbb25b7ab015cdbc059dd3afff73f9219f67	2025-12-13T19:01:27-06:00	Will Johnston	mrdbidwill@gmail.com	Fix JSON parameter parsing in request tests
+07e1386205d9a77ee1044ca9d91f4cbfeaea61ea	2025-12-13T18:59:17-06:00	Will Johnston	mrdbidwill@gmail.com	Fix Admin::MbLists views - were using cluster templates
+80adc7470e13770091452e2844906244b2fee31f	2025-12-13T18:55:04-06:00	Will Johnston	mrdbidwill@gmail.com	Fix remaining N+1 tests and PagesController route helpers
+dc4662df89ef3658a6d3fe59f3c380af21512b61	2025-12-13T18:53:20-06:00	Will Johnston	mrdbidwill@gmail.com	Fix source_data fixture associations properly
+b99f9a7ef6cb16bc49367bff9ac1363c8efab426	2025-12-13T18:51:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix route helpers, Pundit errors, strict loading, and fixtures
+9b7e3b4e5b32ef9597117ec47b474a7680b6564b	2025-12-13T18:45:12-06:00	Will Johnston	mrdbidwill@gmail.com	Fix mushroom_species fixture and various attribute errors
+5a5714d5b78a89681eeccbdf107575f6eabb6842	2025-12-13T18:41:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix image duplicate validation errors
+23b239315a519cbb4e672185bea9b814b0475be2	2025-12-13T18:36:15-06:00	Will Johnston	mrdbidwill@gmail.com	Fix session access NoMethodErrors in 2FA tests
+828481ad426a53c2b173841b2e710caaadef4ef0	2025-12-13T18:23:45-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MushroomPlant duplicate entry errors
+6bfcbf739fff1f24fb16088b532cbb8e37fcd1dd	2025-12-13T18:20:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix MushroomComparison duplicate entry errors
+426be70f92f4e55a56cd657efdb4ef28dd993514	2025-12-13T18:15:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix image validation errors by adding image_file attachments
+3eebf246cb75447d0c8f941f84b5836e15891cfb	2025-12-13T17:39:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix more route helper NoMethodErrors
+51a2b2217d8f5b80478215c70ce48f0711ec8fea	2025-12-13T16:39:48-06:00	Will Johnston	mrdbidwill@gmail.com	Fix route helper NameErrors across test suite
+01cbcb8ba55a3783ce4026bbcbdbf67a78977b5e	2025-12-13T16:36:03-06:00	Will Johnston	mrdbidwill@gmail.com	Add missing super_admin permission fixture (id: 2)
+f8acc929c6789eb7e1af3b0ba38380e7ac6d14ea	2025-12-13T16:27:05-06:00	Will Johnston	mrdbidwill@gmail.com	Fix genus_mushrooms duplicate in autocomplete test
+debdd44e1ad90c247cdf7253376bc3d8f6e668b4	2025-12-13T16:25:15-06:00	Will Johnston	mrdbidwill@gmail.com	Fix duplicate entry errors in mushroom_trees tests
+7489ae26cb5cc2f93b5d11d93470daa49327cfab	2025-12-13T16:19:58-06:00	Will Johnston	mrdbidwill@gmail.com	Fix duplicate entry errors in mushroom_species and genus_mushrooms tests
+2bb5668752dcc173bb845dc14b099fd026166403	2025-12-13T16:13:31-06:00	Will Johnston	mrdbidwill@gmail.com	Fix second batch of test errors - attribute names
+a27e1bdbcca751820093fef406be6635495d49f3	2025-12-13T16:07:09-06:00	Will Johnston	mrdbidwill@gmail.com	Fix batch of test errors - reduce errors by ~50
+f954b1ec488da7986b9ff44cba8ea2710848edcc	2025-12-13T14:33:49-06:00	Will Johnston	mrdbidwill@gmail.com	Add final test results summary
+0f8240819d32298fd570b5e64c22076df15d00da	2025-12-13T14:28:36-06:00	Will Johnston	mrdbidwill@gmail.com	Add test suite status documentation
+87861709dce1eec89e3d71f7a85c6d836b3176df	2025-12-13T14:27:59-06:00	Will Johnston	mrdbidwill@gmail.com	Simplify Devise mailer tests
+15feeaef9ad7ba6c7aceee66881ee1aff0eee662	2025-12-13T14:27:25-06:00	Will Johnston	mrdbidwill@gmail.com	Disable parallel testing temporarily
+78c51456eeffeee7ede57416e0bd499f47c24926	2025-12-13T14:24:02-06:00	Will Johnston	mrdbidwill@gmail.com	Fix duplicate class name in admin image_mushrooms_controller_test
+93908ce8a059e3ac0ef0560e4f976d037877e04c	2025-12-13T14:13:06-06:00	Will Johnston	mrdbidwill@gmail.com	Add testing quick start guide
+d823d668a48569c96c8e684712e70b36ffc61c48	2025-12-13T14:12:39-06:00	Will Johnston	mrdbidwill@gmail.com	Add coverage directory to gitignore
+c35255ea97b9ea1a6018f468b696ce299f2cf76b	2025-12-13T14:11:35-06:00	Will Johnston	mrdbidwill@gmail.com	Complete test suite refactoring with comprehensive coverage
+9522d67e220607cbd3eda5bb0896afd44fce43e0	2025-12-13T05:02:10-06:00	Will Johnston	mrdbidwill@gmail.com	css for articles
+79c28b0b72c3430edee07a3331ea8f100a212918	2025-12-12T09:36:09-06:00	Will Johnston	mrdbidwill@gmail.com	add span to allowed in articles
+f2b765cbfd17a3a8049e9ab567f5388c8c9d2559	2025-12-12T08:10:26-06:00	Will Johnston	mrdbidwill@gmail.com	added enhancements to Articles to allow for improved Obfuscation process here instead of elsewhere
+0ecdc0248f137c3b4f831b684b05e96a8cc40300	2025-12-10T10:10:49-06:00	Will Johnston	mrdbidwill@gmail.com	set Collection Date default to current date for mushrooms new
+054535c330e72ef10d678b71ed20290ee9102b9e	2025-12-10T06:45:24-06:00	Will Johnston	mrdbidwill@gmail.com	added default mushroom found address
+1009bb23d101b9f644fc3baf0cdfa89f467c0589	2025-12-10T05:21:20-06:00	Will Johnston	mrdbidwill@gmail.com	add space below hamburger menu on small devices
+ff0185890f2554a73f0f7bc698767e33281c5fef	2025-12-09T18:12:52-06:00	Will Johnston	mrdbidwill@gmail.com	fixed iphone hamburger glitch where would work first time then need reload before work again
+80d098d13d566d958d721e2d085b57966bb78a29	2025-12-09T15:58:07-06:00	Will Johnston	mrdbidwill@gmail.com	cleaned up genus species flow and display - less clunky
+3bc248f6524551bd3da14710839ca7a91dafc18e	2025-12-09T08:31:55-06:00	Will Johnston	mrdbidwill@gmail.com	added search to mushrooms - downloaded production db and image storage to development so will mirror for now - added tmp to gitignore
+ec1bd2e1af3e6b8f32dcc9474c197af1462a8d79	2025-12-09T07:05:33-06:00	Will Johnston	mrdbidwill@gmail.com	modified tailwinds for desktop only for more distinct background on mushroom edit
+62ed2d98ed8e8d2018abcf73f5a030f8762d2d7c	2025-12-08T11:13:59-06:00	Will Johnston	mrdbidwill@gmail.com	removed all visible reference and links to clusters groups and project to reduce confusion on how to use and clutter
+35a169f52487052387132df5050596a23b845b85	2025-12-08T11:05:43-06:00	Will Johnston	mrdbidwill@gmail.com	add the word County after county name and display on index list
+8a2913a48b9edea61a5564da18e9b5b0b9338b9e	2025-12-08T10:40:08-06:00	Will Johnston	mrdbidwill@gmail.com	added city and county found to Mushroom class - all forms and displays
+5581e7d67483bc1a353a1889caffb88817bcf44c	2025-12-08T10:06:27-06:00	Will Johnston	mrdbidwill@gmail.com	Add .idea/ to .gitignore for JetBrains IDE files
+509a472339a8fa39e1ff8781805f2f71d3318e46	2025-12-08T10:00:57-06:00	Will Johnston	mrdbidwill@gmail.com	Remove .idea IDE files from version control
+096e67899e36a85459fbc25f618329d596c4f115	2025-12-07T09:39:35-06:00	Will Johnston	mrdbidwill@gmail.com	added coordination between the PDF all download screen and browser download complete so that user alert not to navigate away does not display longer than download complete
+3a307aebcb0f950c6d17422fcf25667e053cc5b0	2025-12-07T09:31:11-06:00	Will Johnston	mrdbidwill@gmail.com	add visual to Download PDF for all so that user knows something is happening - disable more click
+9a84ec50fad4ef13037784c5d7c13a018b0f1d7f	2025-12-07T06:33:12-06:00	Will Johnston	mrdbidwill@gmail.com	add You are logged in as <display_name> to the left column
+b844f104125534def0171ac6bdfac1d2a3f7289b	2025-12-07T06:20:11-06:00	Will Johnston	mrdbidwill@gmail.com	in articles make the entire card clickable link - not only title
+e52f9363251d6e8125cf2e49fd831333ebd68041	2025-12-07T06:12:14-06:00	Will Johnston	mrdbidwill@gmail.com	remove mushroom image and svg from Explore the Demo Collection
+cdb14247bd49d65e6e6d09d2392aae0f0edcb3e5	2025-12-06T18:52:12-06:00	Will Johnston	mrdbidwill@gmail.com	removed show from cluster group project and add ability to assign to mushroom
+55eb269f2d032c2184076beab4d12f8efc7bae69	2025-12-06T18:35:24-06:00	Will Johnston	mrdbidwill@gmail.com	moved all navigation and logo to side column except made small screen one column with hamburger nav
+77797e975982f76c8e15cbb37e6ab4c6a8e53444	2025-12-06T16:22:23-06:00	Will Johnston	mrdbidwill@gmail.com	Apply same layout project wide.
+2b848b5f3db0cb7a2f98315ff4b63455a43650b6	2025-12-06T14:36:06-06:00	Will Johnston	mrdbidwill@gmail.com	change mushroom index to mirror mushroomobserver.org
+f47200e20bb2cf90d5e4e1ec3cba9e965e5ff144	2025-12-02T14:45:11-06:00	Will Johnston	mrdbidwill@gmail.com	correct 1 failing test
+e7bfa477e8036149373d846d1ff34e11ea335d73	2025-12-02T14:42:55-06:00	Will Johnston	mrdbidwill@gmail.com	Add delete buttons for Owner only for mr_characters and lookup_items
+b3c617e885a61630543f7a5a92af607928929a27	2025-12-02T14:12:49-06:00	Will Johnston	mrdbidwill@gmail.com	major cleanup of mushroom edit page
+8fed089d6e3a82a39c723d935f4741b0df80ed29	2025-12-02T13:02:42-06:00	Will Johnston	mrdbidwill@gmail.com	correct source_data test failure
+fc0273ae0ef442471c49348fe933d34c8140c995	2025-12-02T13:00:05-06:00	Will Johnston	mrdbidwill@gmail.com	Repair Add Trees Add Plants button
+63ca40272083f35fdca3f3629c0c86d7e5c51867	2025-12-02T09:02:31-06:00	Will Johnston	mrdbidwill@gmail.com	add more detailed search for the long list of books taking into account the common beginning The A An in titles
+99682043057413a45d085b435b1a5ac142de08a5	2025-12-02T08:51:09-06:00	Will Johnston	mrdbidwill@gmail.com	do same for source_data
+55798c0e571ee0b400869c724737e5b0ae7c59ee	2025-12-02T08:23:40-06:00	Will Johnston	mrdbidwill@gmail.com	add similar Lookup by Character for lookup items as currently exists with mr_characters - also return to same working area after edit
+59bd226fb7d4ba8abb11d30de68ce55e85e48ced	2025-12-01T08:33:33-06:00	Will Johnston	mrdbidwill@gmail.com	Add foreign key constraints and data integrity safeguards
+6f639eb3c1c21b544dc4bf8bae7512719698503f	2025-11-29T15:00:50-06:00	Will Johnston	mrdbidwill@gmail.com	filter out Admin characters so NOT displayed
+692863096ddf9fc76caa8a06ac354827a08ab8a6	2025-11-28T09:46:34-06:00	Will Johnston	mrdbidwill@gmail.com	Fix color picker modal and improve character entry UX
+531ab1b4d5a76bc6fab565331171391de1266f78	2025-11-27T06:33:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix color picker modal JavaScript initialization
+be1eb243aea5720d2a8978884c4bbc3f2c87e334	2025-11-27T06:29:51-06:00	Will Johnston	mrdbidwill@gmail.com	Fix ERB syntax error in color picker modal
+0db397095266df9b4105a2a47f880a341d8934a4	2025-11-27T06:11:11-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict loading violation in character cloning
+37918bee9b8e914e06cd81cc6ce3878733af7248	2025-11-27T05:28:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix unpermitted parameters error in search
+303b020b046cca8caa057196110dc1ef60b27551	2025-11-27T05:24:13-06:00	Will Johnston	mrdbidwill@gmail.com	Fix search crash with empty character filters
+d81646e20fdcd1bea9f6402355a579e9546a2ac9	2025-11-26T18:02:30-06:00	Will Johnston	mrdbidwill@gmail.com	Force thumbnail sizing with inline styles
+d35c71ce6b6261332f475d85bb26aca9b49e3101	2025-11-26T17:57:42-06:00	Will Johnston	mrdbidwill@gmail.com	Fix thumbnail sizing on mushrooms index page
+57a627dd709617f666b1dd7560f111aa39f308aa	2025-11-26T15:38:50-06:00	Will Johnston	mrdbidwill@gmail.com	Fix policy crash when viewing mushrooms while logged out
+702caff1fce56cde9cdfd2564d801458ec461ed2	2025-11-26T15:34:51-06:00	Will Johnston	mrdbidwill@gmail.com	Add demo collection CTA to homepage and seed script
+c2a13f80b0067b48732e54a251f34dd2690ffa69	2025-11-26T10:40:50-06:00	Will Johnston	mrdbidwill@gmail.com	Major architectural improvements: Templates, Search, and PWA
+a2cfac55a86ef447c96ab224a48f271542259984	2025-11-26T10:29:26-06:00	Will Johnston	mrdbidwill@gmail.com	Add demo mode with guided first-time visitor experience
+9eabd56c9de2430a9b3144db111ffb15c1f9fc16	2025-11-26T10:14:56-06:00	Will Johnston	mrdbidwill@gmail.com	Improve UX: pagination, image display, and color picker
+162eca9cc7fb2e47500e86bc1661ad2cda89f4ba	2025-11-26T09:19:33-06:00	Will Johnston	mrdbidwill@gmail.com	correct return to after edit on characters
+3964b4d11952c3a0a3205b398e3e9b050202ab76	2025-11-26T09:12:29-06:00	Will Johnston	mrdbidwill@gmail.com	removed placeholder 18 for Go To Page on characters index
+69267f0974e564ad0582d63c8d52d75b8dc8451f	2025-11-26T09:00:53-06:00	Will Johnston	mrdbidwill@gmail.com	added direct link to specific characters page and return to same page
+5657ae25a88273af2d69f9127dde7f783fcdea19	2025-11-23T05:26:15-06:00	Will Johnston	mrdbidwill@gmail.com	add honey pot to contact forms to prevent bot spam
+1ef3f5713bbdc64eee63a49807bd9ced1f287e37	2025-11-21T09:23:07-06:00	Will Johnston	mrdbidwill@gmail.com	Merge feature/fungus-type-flexibility into main
+699ff082472b820a656c6fa57461579fa2a967a4	2025-11-21T05:42:39-06:00	Will Johnston	mrdbidwill@gmail.com	Fix user registration: Add website_url virtual attribute for honeypot
+6a437d23a3c51c4559ffae871419e12d63ebc98d	2025-11-20T19:00:21-06:00	Will Johnston	mrdbidwill@gmail.com	Add properties JSON column to mr_characters for fungus-type flexibility
+bd4e15e2f659bf6453edc33985cc7b67412d28d0	2025-11-18T11:34:16-06:00	Will Johnston	mrdbidwill@gmail.com	Change order of lookup_items to alpha for new drop-down
+9be6c5cffa8b87e3ce0fd518a0900829ff434dda	2025-11-18T10:29:15-06:00	Will Johnston	mrdbidwill@gmail.com	edit text in mr_characters/index
+1c351f925f4c215ab58e810df744ea27c148880f	2025-11-18T09:53:54-06:00	Will Johnston	mrdbidwill@gmail.com	separate the search by filter part observation method and fungus type and search by id or name in mr_characters/index
+c84731f479f7d81265309981736123b3c67909aa	2025-11-18T05:51:39-06:00	Will Johnston	mrdbidwill@gmail.com	correct lazy loading fungus_type in mr_characters_controller.rb
+5797e71b69178ff7091cd76c4648b7b6b83c3a8c	2025-11-17T18:52:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix the display all for characters when observation_methods_id is NULL
+fb7cb1fdf1fe162083d5b274cc526bc9f2595b99	2025-11-17T18:23:16-06:00	Will Johnston	mrdbidwill@gmail.com	Change character search so a number input only matches id - not name
+4ac2e3b488140ecb773f080707d563c105552b37	2025-11-17T10:01:30-06:00	Will Johnston	mrdbidwill@gmail.com	Modified mushrooms/show to display all in one column
+e74c57f977a5b2cd5015e264336c75b17bd72d47	2025-11-17T09:30:13-06:00	Will Johnston	mrdbidwill@gmail.com	modify mushrooms/edit.html.erb to display data same width as menu - similar to how index does
+dea16c9cb35973a45e7a998ac0543cd34cab4792	2025-11-17T08:23:36-06:00	Will Johnston	mrdbidwill@gmail.com	added display collection_date and removed wildcard from beginning of genera autocomplete
+4f15d1cd4240592d6730da86aa0f7334f065692a	2025-11-15T19:08:22-06:00	Will Johnston	mrdbidwill@gmail.com	corrected error notification for duplicate mushroom name line 77 mushrooms_controller.rb
+c6029175b85f4882485806bc1dca162209d9676f	2025-11-15T18:53:50-06:00	Will Johnston	mrdbidwill@gmail.com	Reconnect honeypot and Remember Me
+d19908eceb7a037f5c80d5dbe3a602e6bea2ada9	2025-11-13T10:12:48-06:00	Will Johnston	mrdbidwill@gmail.com	changed date display format to month-day-year
+f4934ebd5651e8831e4a567d19cc9d4af9fa3424	2025-11-13T10:09:28-06:00	Will Johnston	mrdbidwill@gmail.com	added display of collection_date after name near line 43 of mushrooms/index
+7f09dde7bc89443f0ac87cfad1eff5a1574b2127	2025-11-12T14:56:49-06:00	Will Johnston	mrdbidwill@gmail.com	Fix source_data autocomplete dropdown staying visible
+d9b60f1432e174bb10db37898bc34b20e9eb6444	2025-11-12T13:45:53-06:00	Will Johnston	mrdbidwill@gmail.com	Filter character navigation grid by mushroom's fungus_type
+35756bca06bcb3379f1c68f8e247a6cfeb25534e	2025-11-12T11:21:07-06:00	Will Johnston	mrdbidwill@gmail.com	Rename lookup_types to observation_methods throughout codebase
+1c94073cf75d63bd2efa951a64beeb2fa7bdad66	2025-11-12T09:16:55-06:00	Will Johnston	mrdbidwill@gmail.com	correct type README.md
+317ebfdc9908babdd4ec2031c934642eacb200e7	2025-11-12T09:14:28-06:00	Will Johnston	mrdbidwill@gmail.com	edit README.md
+d7cc97689ffde74d5bd9fc9965409ca899c42c8a	2025-11-12T08:47:08-06:00	Will Johnston	mrdbidwill@gmail.com	removed all reference to date_found and will only use collection_date going forward
+0acd265f3a8041731ca154ca16d0c3eff00c69e5	2025-11-11T15:48:22-06:00	Will Johnston	mrdbidwill@gmail.com	correct source_data problem in admin/mr_characters/new form field
+abc77439f8dca03a26d58a83d52cddc115beeccc	2025-11-11T15:18:31-06:00	Will Johnston	mrdbidwill@gmail.com	Use full i18n key path instead of relative path
+7623a942e9700524f8c16d1cffa923d5f21d5957	2025-11-11T15:16:28-06:00	Will Johnston	mrdbidwill@gmail.com	Fix content_for syntax in mr_characters/new view
+8628ba5a02314f7458f63bf187bfd2db570a433b	2025-11-11T14:44:05-06:00	Will Johnston	mrdbidwill@gmail.com	Fix YAML syntax in locale files
+e1d68bde3679af96377468666431ed80da3071c4	2025-11-11T14:39:47-06:00	Will Johnston	mrdbidwill@gmail.com	Fix i18n key path for admin/mr_characters/new view
+fa86d51960b91c88d7f2247c6dd61ec172e01cf0	2025-11-11T10:11:46-06:00	Will Johnston	mrdbidwill@gmail.com	Add internationalization (i18n) support for multiple languages
+94a65b860132e7fbde46574d266bfb9eb0844bd3	2025-11-11T08:11:21-06:00	Will Johnston	mrdbidwill@gmail.com	Change deployment branch back to main
+e9bc924bfc116e981d304389d2bf85791b64a002	2025-11-11T08:04:44-06:00	Will Johnston	mrdbidwill@gmail.com	fix typo
+fd395cf1563507cef1853e884d777e4aa0563e11	2025-11-11T07:56:46-06:00	Will Johnston	mrdbidwill@gmail.com	add Mushroom Observer links to mr_characters index page
+8620df121a7993ec4dd307fcf8c5e842202d662f	2025-11-11T06:58:38-06:00	Will Johnston	mrdbidwill@gmail.com	Tighten up source data index: inline buttons and increase per page
+47a6b2628623681f736bee552c8cbf9467ddbfd3	2025-11-11T06:52:40-06:00	Will Johnston	mrdbidwill@gmail.com	Add 'View all sources' link to mr_character form for easy reference
+f7096a5edbcddeb072ec14625e2394c134803b2b	2025-11-11T06:48:48-06:00	Will Johnston	mrdbidwill@gmail.com	Improve mr_character form: move fungus type field and convert source data to autocomplete
+d29296068a55953953468ac8cc45cdf08a06c5e8	2025-11-11T06:16:33-06:00	Will Johnston	mrdbidwill@gmail.com	Add fungus type filtering to mr_characters admin interface
+e074d8db014294a1381b5738c45981c79088ad10	2025-11-10T13:34:49-06:00	Will Johnston	mrdbidwill@gmail.com	add date_found column to mushrooms and modify state and country form fields so users understand to use where specimen is found
+af7f5511f6d31ff63157f21e5f70f24d50dfce54	2025-11-09T15:16:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix test error: add nil check for @mushroom in image upload view
+b5f82cc175b13ea0aa9a387d1710e0cb47a3f27e	2025-11-09T15:14:08-06:00	Will Johnston	mrdbidwill@gmail.com	Add color picker grids to edit_characters page
+753359f1590358617016d6e48c38760b294d64f1	2025-11-09T15:07:16-06:00	Will Johnston	mrdbidwill@gmail.com	Fix compact character cards: add color picker and improve display
+e3dc0e6a7319fd75c9d0779b56a37d7ab31b45b2	2025-11-09T09:47:02-06:00	Will Johnston	mrdbidwill@gmail.com	Temporarily set deploy branch to new_look for testing
+b0604bdfcd9f2459d060b89a5a23eb49b973f664	2025-11-09T09:41:25-06:00	Will Johnston	mrdbidwill@gmail.com	Add SQLite database files to .gitignore
+39a80f1807d9f60295c5ad486a0b088c9073ffd4	2025-11-09T09:36:16-06:00	Will Johnston	mrdbidwill@gmail.com	Major UI/UX overhaul: unified actions grid, character navigation, and compact display
+71f9188b3852de9687ee9609ffeb289e5689d057	2025-11-08T18:03:59-06:00	Will Johnston	mrdbidwill@gmail.com	Correct bad character Jetbrains RubyMine error for html comment opening bracket - less than symbol
+09ab3ae537844d5d297712648e162905a62a4879	2025-11-08T15:20:23-06:00	Will Johnston	mrdbidwill@gmail.com	Fix mobile layout: prevent awkward text wrapping on iPad
+09f9cc845d052c0013439a201bb8e2756ef09a32	2025-11-08T14:17:35-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict_loading violation: eager load fungus_type in edit action
+c246758f8de1378da7bb7cea01e79f963e7c8181	2025-11-08T13:48:53-06:00	Will Johnston	mrdbidwill@gmail.com	Add fungus_type filtering to character selection
+8f13aceaee7a6edd8a0178376fcd65780ddfd821	2025-11-08T12:40:36-06:00	Will Johnston	mrdbidwill@gmail.com	Fix character search: auto-open, scroll, and highlight result
+a90fb548779908fce4d5db8dd8b878e953114d20	2025-11-08T11:17:07-06:00	Will Johnston	mrdbidwill@gmail.com	Add live character search to mushroom edit page
+a847f5425bbaedcc1e4358e0cd04c6a52f519c65	2025-11-08T11:00:24-06:00	Will Johnston	mrdbidwill@gmail.com	Reorganize mushroom edit interface for better UX
+c8bf96fbff459180545b8b0f7d24737a0f306889	2025-11-08T06:58:21-06:00	Will Johnston	mrdbidwill@gmail.com	adding new README.md
+383e4f2447aec2aa28debdc42df2236af3aa368d	2025-11-08T06:54:14-06:00	Will Johnston	mrdbidwill@gmail.com	Update README with comprehensive setup and database import instructions
+edd7dbadb3ef0b521114cc135802100f3400eb62	2025-11-08T06:45:33-06:00	Will Johnston	mrdbidwill@gmail.com	Add 3-option database export system with comprehensive tests
+39cc108516d97e72ce393894e39b9290da42ce08	2025-11-07T15:03:54-06:00	Will Johnston	mrdbidwill@gmail.com	added rails date_field for mushroom collected date - plus tests
+20843aa9e40486d14f49a6be73a32a1e9559e55f	2025-11-07T11:19:53-06:00	Will Johnston	mrdbidwill@gmail.com	modify article to show images
+25e5cf8eed056b678c108adc62b30bc27368f8b5	2025-11-07T10:19:15-06:00	Will Johnston	mrdbidwill@gmail.com	added clarification to admin dashboard
+1c65521cfcaac37257abe709f6c76047cb6fa2b4	2025-11-07T09:10:02-06:00	Will Johnston	mrdbidwill@gmail.com	minor css and text adjustments to admin dashboard
+0542f6ad2798d76573523211d47c1a913b756147	2025-11-07T08:36:13-06:00	Will Johnston	mrdbidwill@gmail.com	idea left over from last commit?
+8b52e53b23d9cdec3f5c045e97a01f6626089476	2025-11-07T07:59:55-06:00	Will Johnston	mrdbidwill@gmail.com	Fix skipped tests in MushroomPdfService test suite
+6d09a3eaec7cfd313b6d06047423349263a0ccb4	2025-11-07T07:32:05-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive PDF export feature for mushrooms with images and characters
+f56ab74f32f935f39d526fc6285d2bd9605d9d40	2025-11-07T07:07:48-06:00	Will Johnston	mrdbidwill@gmail.com	misc updates
+2e449fe48a1532ff9dc26b6aae2d16e927312bad	2025-11-07T07:06:13-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive Admin To Do List feature
+63f012e8983c908cdfc21ce10a0bfb142ea33f06	2025-11-07T06:34:42-06:00	Will Johnston	mrdbidwill@gmail.com	Make mr_character_id and source_data_id required for lookup_items
+77e982913b4fd38e60d81ec23e4a5a01d966c82d	2025-11-06T18:30:28-06:00	Will Johnston	mrdbidwill@gmail.com	add comment to mr_characters index page
+b55c38812c40e79b3c6ef1f720ab935c39684836	2025-11-06T17:47:13-06:00	Will Johnston	mrdbidwill@gmail.com	Disable database export download on mobile devices
+60b247263831dd73297cc13ace08f24c252f99d5	2025-11-06T13:41:00-06:00	Will Johnston	mrdbidwill@gmail.com	Add warning message for large database export download
+1a00c22368bc41c7312431e811dd03fe5d3f56ab	2025-11-06T12:59:57-06:00	Will Johnston	mrdbidwill@gmail.com	Fix file permissions and path for database exports
+8dd906f6a08acb0db1c43662fd46364f68a1359b	2025-11-06T12:43:49-06:00	Will Johnston	mrdbidwill@gmail.com	Add merged nginx configuration for production
+6df2000b71caaacc28e444bceb3b6c416e2c0dcb	2025-11-06T12:30:46-06:00	Will Johnston	mrdbidwill@gmail.com	Use nginx X-Accel-Redirect for large database exports
+367b577111aca0f7475b1a88a7532f4ac6da0f71	2025-11-06T11:03:02-06:00	Will Johnston	mrdbidwill@gmail.com	Fix database export to capture errors and improve security
+20c666de9c69bdaf6a79a40328363cbb86c709da	2025-11-06T10:24:44-06:00	Will Johnston	mrdbidwill@gmail.com	Add database export feature for admin users
+f83650d71862ba75adfb9842b767383147ac700e	2025-11-06T08:13:42-06:00	Will Johnston	mrdbidwill@gmail.com	Merge branch 'compare'
+b17cad0b05974808656a5fd17ed428c24d9f6a24	2025-11-06T08:13:24-06:00	Will Johnston	mrdbidwill@gmail.com	Add mushroom comparison feature
+10425191e748e3b0c6492585c8a84d501efd7576	2025-11-05T18:40:52-06:00	Will Johnston	mrdbidwill@gmail.com	Add Solid Queue initializer to disable strict_loading for internal models
+ff074ea9c62d300bb54f32fc792ec79dc5f6c838	2025-11-05T18:33:10-06:00	Will Johnston	mrdbidwill@gmail.com	Disable strict_loading for Solid Queue compatibility
+3bbe635097c190893c06835d052a115f61d519b6	2025-11-05T18:25:33-06:00	Will Johnston	mrdbidwill@gmail.com	Disable strict_loading for Solid Queue compatibility
+afa2e05a1b1c8847fdbd6220dd8f518266ad161c	2025-11-05T14:50:12-06:00	Will Johnston	mrdbidwill@gmail.com	articles now highlights the active subject
+bf2fabae0fc730415c17a70e35668736859d7b98	2025-11-05T13:53:48-06:00	Will Johnston	mrdbidwill@gmail.com	added webmaster and will to email accounts
+cb5aaf97aeba00ba4586c10897792956f1367089	2025-11-05T12:45:15-06:00	Will Johnston	mrdbidwill@gmail.com	modify mushrooms index css borders
+6241ec2e013fa9ea3390322500627488ffa49dc8	2025-11-05T09:14:29-06:00	Will Johnston	mrdbidwill@gmail.com	Simplify home page - move old to articles
+0b4c99cfda550508af725083d448d82e7115ad39	2025-11-04T14:30:47-06:00	Will Johnston	mrdbidwill@gmail.com	fix state country test failures
+0be55a7af6bd814ea6d00a27691dfaf19750c8de	2025-11-04T14:23:49-06:00	Will Johnston	mrdbidwill@gmail.com	Correct 2FA Trust this device
+a54f16a80c40f5d3a619ce94f9e96c79fed48f64	2025-11-04T13:00:13-06:00	Will Johnston	mrdbidwill@gmail.com	corrected species delete
+d040ea4065b3d6da85350fc9661f8c28e2490ce3	2025-11-04T12:50:28-06:00	Will Johnston	mrdbidwill@gmail.com	add italics to genus species and display near mushroom name and repair delete genus
+b619b53305f834a8a4230f74ab40f976a04678a3	2025-11-03T13:36:29-06:00	Will Johnston	mrdbidwill@gmail.com	Achieve 100% test pass rate (590/590 tests, 0 skips)
+78983431e445c845ce57039cc532ffd5bc977e4b	2025-11-03T09:10:02-06:00	Will Johnston	mrdbidwill@gmail.com	Fix counting tests and fixture references - Push to 95%
+11ed562beba44b2e0572be67ba82fbce15f3a032	2025-11-03T09:00:01-06:00	Will Johnston	mrdbidwill@gmail.com	Fix mushroom_species fixture format
+d5d26b9542fad8f21c02c15752e94cf8abfb1c57	2025-11-03T08:54:40-06:00	Will Johnston	mrdbidwill@gmail.com	WIP: Fix strict_loading issues - Part 1
+dbaef7f94fc6f61a51f829a40e8cd4130d809861	2025-11-03T08:32:13-06:00	Will Johnston	mrdbidwill@gmail.com	modifications to admin remove delete and edit where inappropriate
+6cad2dfe63dde78c7f59f8a2bba1d9b2fb087ad2	2025-11-02T18:43:09-06:00	Will Johnston	mrdbidwill@gmail.com	Fix strict_loading and attribute errors
+ae3052118329145dc19b8082837fb4461d711382	2025-11-02T18:41:40-06:00	Will Johnston	mrdbidwill@gmail.com	Fix test failures - error messages, fixtures, uniqueness tests
+e9ad204266b3a768bc4f18cecb87f51f18fc227b	2025-11-02T18:36:18-06:00	Will Johnston	mrdbidwill@gmail.com	Add fixtures and fix Phase 2 test assertions
+b97b39787978c3bc9f3e018bcd75c555f5b5b521	2025-11-02T18:34:17-06:00	Will Johnston	mrdbidwill@gmail.com	Phase 2: Add comprehensive tests for 12 additional models
+e41a39edd6b80fa2941a7bdc6d70b12945666df4	2025-11-02T18:27:11-06:00	Will Johnston	mrdbidwill@gmail.com	Fix taxonomy tests - remove invalid without_strict_loading() calls
+9a857e8d8d858c4fb26dd93c703b027704abb3c3	2025-11-02T18:25:54-06:00	Will Johnston	mrdbidwill@gmail.com	Phase 2: Add comprehensive taxonomy model tests (Genus, Species)
+2af131b40ada7cd4a3ccb9f55f5acc4fd903488e	2025-11-02T18:23:56-06:00	Will Johnston	mrdbidwill@gmail.com	Fix Phase 1 test failures - strict_loading and validation messages
+f4bb5ee20809b443bbe81f030725fed99ebe5a03	2025-11-02T18:00:34-06:00	Will Johnston	mrdbidwill@gmail.com	Add comprehensive Phase 1 model tests
+9fcfec154ae60d1d538dbbf659b3533d140c44db	2025-11-02T15:00:48-06:00	Will Johnston	mrdbidwill@gmail.com	improved responsive design on buttons small screens - standardized css across project
+fc192972ee968a495f8fc7a576b84e8c31423830	2025-11-02T14:40:21-06:00	Will Johnston	mrdbidwill@gmail.com	remove optional camera equipment
+2b7753309cbb349b26c7f0ae27e621942801dd3e	2025-11-02T14:19:50-06:00	Will Johnston	mrdbidwill@gmail.com	added Cancel Delete buttons to Edit Image for image_mushrooms
+bb04f21c144058651223f70da328b43c6583ee2d	2025-11-02T13:07:58-06:00	Will Johnston	mrdbidwill@gmail.com	prevent duplicate image_mushrooms for same mushroom
+4ebade4195d24da66f3327024b8c855d5bf73e59	2025-11-02T09:47:45-06:00	Will Johnston	mrdbidwill@gmail.com	added comments to image_mushrooms table - made image_mushrooms show into show only no edit or delete options
+76ddb2d02fb390cfa58f15dcaafec2b67ecc4510	2025-11-01T19:01:22-05:00	Will Johnston	mrdbidwill@gmail.com	Moved View Image button to top of edit - more visible
+a2624f23f467718f1f77ac8025da19369d718289	2025-11-01T18:50:27-05:00	Will Johnston	mrdbidwill@gmail.com	should have added this with last commit
+b9ee27f7824a22f90b0dcd558a9636e67accb753	2025-11-01T18:45:02-05:00	Will Johnston	mrdbidwill@gmail.com	added image_mushrooms: [:part, { image_file_attachment: :blob }] to the includes statement in the edit action. This will eager load: The image_mushrooms association Each image's associated part The image_file attachment and its blob (needed to render the thumbnails)
+5f6382cf877c02dddc7df167349bcb69ced06ce6	2025-11-01T18:41:48-05:00	Will Johnston	mrdbidwill@gmail.com	add images to mushrooms/edit - clearer image edit
+51b7c8b7f614cc22900ddda3ec146157d694035c	2025-11-01T18:20:13-05:00	Will Johnston	mrdbidwill@gmail.com	Add to image branch delete option - toggle thumbnail-full size - toggle image info
+a062abc39497f56c912312f3aa2fef0183ee43eb	2025-10-31T18:38:00-05:00	Will Johnston	mrdbidwill@gmail.com	modified mushroom nav menu bar
+e7111681e2ea8695ea07b65302964ee40df16db1	2025-10-31T15:36:22-05:00	Will Johnston	mrdbidwill@gmail.com	created mushroom nav menu bar
+d7632cfb997a1f530bf5d4896ddc6de64b35e7ea	2025-10-31T13:09:42-05:00	Will Johnston	mrdbidwill@gmail.com	Fix includes syntax - use array not hash with :none
+13a700a7a76c2a957d892f4e6e5cf3714f4b1c26	2025-10-31T12:57:34-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 500 error on /mushrooms - add missing :part association
+9f1631a31decb87c08c19cc1ccac2aa70162dd78	2025-10-31T10:25:04-05:00	Will Johnston	mrdbidwill@gmail.com	Add simple server fix instructions
+25cb6ab689d432939a8686baedb2bdeb9df1af2d	2025-10-31T10:24:05-05:00	Will Johnston	mrdbidwill@gmail.com	Document actual 500 error root cause - Solid Queue plugin bug
+9a202ff3bfa41e6fbf23d92cdb5f15e6eaa6e1e7	2025-10-31T09:47:37-05:00	Will Johnston	mrdbidwill@gmail.com	Fix production 500 error - change queue adapter from :async to :solid_queue
+6f3b9188552d4cb754f44a77aad2ef25d63fc81a	2025-10-31T08:47:47-05:00	Will Johnston	mrdbidwill@gmail.com	added mushrooms/_new_form.html.erb to customize new mushroom experience
+cf92dc5c9383dbb6113a310926e533235d5184bf	2025-10-30T19:12:27-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 406 error - move 2FA view to correct location
+8d39ff0a59e2e1f08f1f61093ae122e200a25510	2025-10-30T19:08:55-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 406 error on 2FA page - add respond_to format.html
+edca0091f91a48b483293a2b13148542dd0a2bf1	2025-10-30T19:02:59-05:00	Will Johnston	mrdbidwill@gmail.com	Restore turbo: false on login form
+e6923490f4cd4b674291e3ef57a32172cac812a6	2025-10-30T18:56:38-05:00	Will Johnston	mrdbidwill@gmail.com	Fix mushrooms page crash and performance issues
+70bf4d733f34c01191af506e814d5fe7f5936648	2025-10-30T18:45:51-05:00	Will Johnston	mrdbidwill@gmail.com	Add Solid Queue setup task to create required tables
+dbfa34ba6cf788a55db149a98bc734d3dfc69600	2025-10-30T18:36:09-05:00	Will Johnston	mrdbidwill@gmail.com	Fix logout - disable Turbo on logout button
+27b7376d3b314eb608038180fc2ed3c857ab9043	2025-10-30T18:32:53-05:00	Will Johnston	mrdbidwill@gmail.com	Fix logout error - register sessions controller in routes
+ba52fe7908e3005f0b41892c8079082770c7f7d2	2025-10-30T18:24:50-05:00	Will Johnston	mrdbidwill@gmail.com	Performance: Enable Solid Queue and optimize mushrooms index query
+2f7040ae1b8edf27f4680d6eadda3590415ec667	2025-10-30T14:54:53-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA enforcement - add missing route and fix controller
+b7ff46bb4c356f0d738e11a557dccc8eb4be9e78	2025-10-30T14:49:57-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 406 error on 2FA page - add respond_to format.html
+84baa8add643e808cce41bc7675f391101d9215c	2025-10-30T14:30:28-05:00	Will Johnston	mrdbidwill@gmail.com	Restore working login flow with trust device feature
+1db2ef6d299b63cbe899df16d93818a8374fc8c3	2025-10-30T14:26:01-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 406 error - replace respond_with with redirect_to
+5b331d9f8abc948946c2eaa74849899146646b9b	2025-10-30T14:21:35-05:00	Will Johnston	mrdbidwill@gmail.com	Disable Turbo on login form to fix redirect issue
+bcd0fef261bf243cc27c54e5505b8bef8efb0b2a	2025-10-30T14:16:01-05:00	Will Johnston	mrdbidwill@gmail.com	Fix login flow - remove super call and handle all cases manually
+e4e153c89b4f056fb7f2d880549c8c06788d04ba	2025-10-30T14:07:34-05:00	Will Johnston	mrdbidwill@gmail.com	Fix login double-click issue - use Devise super for non-2FA logins
+ca764e0ab06e87ed2083e1d0d0f70e07d66269a8	2025-10-30T13:47:49-05:00	Will Johnston	mrdbidwill@gmail.com	Removed warden.logout
+4ff63366250ceb9b10ed3ba51439a7af6933cea9	2025-10-30T13:26:13-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA login enforcement and add 'trust device' feature
+7ee8f626e8f9c26b1ece2c926e80597547d6eaa0	2025-10-30T10:18:55-05:00	Will Johnston	mrdbidwill@gmail.com	configured async email delivery to eliminate the registration/login delay.
+0c7aaf92fb085665563e7d62e490aa69b5e4af55	2025-10-30T09:45:50-05:00	Will Johnston	mrdbidwill@gmail.com	move backup code placement for better user experience after add 2FA
+35e3c2776ad4f422f0658f9d7353a3fd3b23bbdd	2025-10-30T07:45:01-05:00	Will Johnston	mrdbidwill@gmail.com	Generate shorter, user-friendly backup codes
+23536bd423b69c648df85b0cc5e8706a8e1b8c60	2025-10-30T07:06:27-05:00	Will Johnston	mrdbidwill@gmail.com	Fix backup codes display to show plain text instead of hashes
+24b1b5c2aa59dab31f26bd76b7253d77dc40895d	2025-10-29T18:33:15-05:00	Will Johnston	mrdbidwill@gmail.com	added New to password change form for new password form field and confirmation to make clear to user in devise/registrations/edit.html.erb
+52eec70ed62d4811a0f383c61ad5e5e45e6a9342	2025-10-29T18:15:43-05:00	Will Johnston	mrdbidwill@gmail.com	Fix account deletion by disabling strict_loading before destroy
+61bdbac334f14c88f5646312299a42508d8c9a47	2025-10-29T18:00:46-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA route helper names in edit view
+68237d7dcda8918eb48db2ce3c9b40bb620a86ef	2025-10-29T15:20:12-05:00	Will Johnston	mrdbidwill@gmail.com	Fix 2FA UI issues and add error handling
+22db942f34168178f0ea4eed61bb616498732ec5	2025-10-29T15:10:03-05:00	Will Johnston	mrdbidwill@gmail.com	Fix user account deletion by adding dependent destroy to user_roles association
+e1970a3a556729c72b235b4b869d4f0aae9b56f8	2025-10-29T14:51:32-05:00	Will Johnston	mrdbidwill@gmail.com	Corrected 2FA made option available visible
+cf7d1e622fe7c3cad1de7788c417b384f19807c4	2025-10-27T07:55:46-05:00	Will Johnston	mrdbidwill@gmail.com	change line 10 mr_characters to id temporarily to allow easier edit to production db table
+1b7adc34522dd8fd86e7037fc0d453459d89241d	2025-10-26T13:02:32-05:00	Will Johnston	mrdbidwill@gmail.com	Add SolidCache table creation script for production
+85d1f2de59b86d2f5f93005212f1be57dc74de85	2025-10-26T12:51:54-05:00	Will Johnston	mrdbidwill@gmail.com	Fix SolidCache compatibility in MrCharacter model
+7da31a2282e129221f772a6094c18610b80dc918	2025-10-26T12:30:29-05:00	Will Johnston	mrdbidwill@gmail.com	Disable capistrano-puma gem to fix Puma startup issues
+213d05180f823fc0b507063144dac6826940e655	2025-10-26T10:55:25-05:00	Will Johnston	mrdbidwill@gmail.com	Fix authorization bug in mr_characters edit and update actions
+225ada5b795ed2bf57582a017151de2507a6fce9	2025-10-26T07:27:19-05:00	Will Johnston	mrdbidwill@gmail.com	Fix authentication for public pages and improve Puma robustness
+67b84e82ad81b243d076d2b7e64621bf2b03decd	2025-10-26T06:44:05-05:00	Will Johnston	mrdbidwill@gmail.com	changed books_controller and contacts_controller added skip_before_action :authenticate_user so Contacts and Books are available if not signed in
+bc03c0bd11f42f029e47924de678f687ad5ced78	2025-10-25T09:08:30-05:00	Will Johnston	mrdbidwill@gmail.com	add shadow to mr_character index search form field - add puma system auto restart
+9e3dd775d0ce518882fdbf428ec4d8142c438d90	2025-10-25T07:10:27-05:00	Will Johnston	mrdbidwill@gmail.com	moved mblist file outside of project
+d7124663b3eac199254c69cd516f221d51b8680f	2025-10-24T15:13:47-05:00	Will Johnston	mrdbidwill@gmail.com	Add SQL backup files to .gitignore
+85d8f935873773b0f011009a03a0135b5c581e6b	2025-10-24T15:08:48-05:00	Will Johnston	mrdbidwill@gmail.com	corrected some mysql insert files
+8de86488e9a0d20f09024e5ad6e8827ca4fe4655	2025-10-24T08:11:09-05:00	Will Johnston	mrdbidwill@gmail.com	Added padding to Part and Lookup Type form fields in mr_characters/index.html.erb
+794b4d090b12b1e09e475451c53ade6b5ba7ab21	2025-10-24T07:57:29-05:00	Will Johnston	mrdbidwill@gmail.com	reduced width of Country State Fungus Type form fields in mushrooms _form.html.erb so drop-down arrow not on far right side of page
+45408a968dc5e538f3567e501ada6862fb2de8bb	2025-10-24T06:54:24-05:00	Will Johnston	mrdbidwill@gmail.com	modify mushrooms _form controlling css to w-full for consistent width in mushrooms edit
+f2c5eaba281c9c2f6105570afcb51d2ad7e89c12	2025-10-23T15:23:32-05:00	Will Johnston	mrdbidwill@gmail.com	Align database constraints with model validations
+24320a9f978fe79f6ef0fb71b10565b52ec2b4b5	2025-10-23T13:17:04-05:00	Will Johnston	mrdbidwill@gmail.com	improved Part and Lookup Type form field layout and added shadow
+3b68f1aed66c918bebaf617efd1517b77ec09f14	2025-10-22T13:29:13-05:00	Will Johnston	mrdbidwill@gmail.com	added .joins(:part) on line 33 of moded mr_character to prevent 500 Internal Server error on production'
+8eb98824f41da829d2da81a081bc19324df59e17	2025-10-21T19:01:00-05:00	Will Johnston	mrdbidwill@gmail.com	updated insert files
+fbac4c4fe11592c3d418620fc7041588df0fee8d	2025-10-21T13:56:31-05:00	Will Johnston	mrdbidwill@gmail.com	corrected plants and trees to not allow duplicates - improved error alerts for all
+5bc17a95a21fd9241baafa721df5e000f95c7982	2025-10-21T13:11:52-05:00	Will Johnston	mrdbidwill@gmail.com	optimized trees plants autocompletes - added OPTIMIZATION_SUMMARY.md and PERFORMANCE_OPTIMIZATION_PLAN.md
+b8c956255158e65146f3def44fc7ae24dd965e3c	2025-10-21T12:23:54-05:00	Will Johnston	mrdbidwill@gmail.com	completed trees and plants autocomplete
+da5554e53d0066343ceddf0efa1d61ea855818a5	2025-10-19T18:35:31-05:00	Will Johnston	mrdbidwill@gmail.com	update insert_mr_characters and other inserts
+5c5c213aefdbe72bb59e5160938992db3c77f04e	2025-10-19T14:41:38-05:00	Will Johnston	mrdbidwill@gmail.com	Update insert_lookup_items.sql - also display_options and fungus_types
+8a5d6265aeed7a0d8f5cc820efd0acd603521cdf	2025-10-19T13:08:22-05:00	Will Johnston	mrdbidwill@gmail.com	Added Books page and nav link
+b6544944346ce11c3df4926c630aeff9d750a9fb	2025-10-19T09:04:44-05:00	Will Johnston	mrdbidwill@gmail.com	mushrooms show now displays the names as well as id for mr_character lookup_items values
+9e1d83664d61b6257f9cd0f6c8d0176a0fa6d153	2025-10-19T07:17:34-05:00	Will Johnston	mrdbidwill@gmail.com	modified paragraph css for better spacing - also display options additions
+59714b624d47a9de95e147feda7766dccdbc9a42	2025-10-17T12:47:34-05:00	Will Johnston	mrdbidwill@gmail.com	set fungus_type dropdown to order by name in mushrooms/_form.html.erb
+c5178fdf3ed4638a5c8258f4347a2a5be4e166ed	2025-10-17T10:04:10-05:00	Will Johnston	mrdbidwill@gmail.com	added auto restart code to config/deploy.rb
+74f68c5370ad4610628ee142812973ec184caf4b	2025-10-17T09:51:04-05:00	Will Johnston	mrdbidwill@gmail.com	corrected all_group display in mushrooms
+9e9d3e66401b83dc5eb4d13c698119cf4664119c	2025-10-17T06:04:23-05:00	Will Johnston	mrdbidwill@gmail.com	corrected after_sign_in_path_for back to mushrooms instead of contact
+87994c012acc8c90a428576dc86c6f3acb63b435	2025-10-16T18:49:46-05:00	Will Johnston	mrdbidwill@gmail.com	Add SQL script to create SolidQueue tables for production queue database
+370c3e608808a8118fe579e20626c3066eb362b6	2025-10-16T15:19:40-05:00	Will Johnston	mrdbidwill@gmail.com	fix country state AGAIN
+8ac1f512fefeff0aaeb5914c995ec16c29c1552a	2025-10-16T12:47:31-05:00	Will Johnston	mrdbidwill@gmail.com	corrected states-countries dropdown AGAIN and image upload
+87648ceb2543fe9bb8b05d2f0ba94d723e26bdc6	2025-10-13T09:35:30-05:00	Will Johnston	mrdbidwill@gmail.com	Add deployment troubleshooting guide for credentials errors
+7af37d5a924337c475496613af16d4db9aa474a4	2025-10-13T09:26:20-05:00	Will Johnston	mrdbidwill@gmail.com	Use ENV variables only for database config - no credentials
+ac32f22bcc72c1f42ee1c68c29f6a4fd23a84e86	2025-10-13T09:17:53-05:00	Will Johnston	mrdbidwill@gmail.com	Skip credentials loading during asset precompilation
+9a0b6011d9b66896f92a01226ba9acf01ae02c78	2025-10-13T09:01:37-05:00	Will Johnston	mrdbidwill@gmail.com	Revert prose and database changes - restore to working state f3adad1
+80de2fb893827af59116a2f0200296ee31108100	2025-10-13T08:56:44-05:00	Will Johnston	mrdbidwill@gmail.com	Fix production database.yml to use ENV vars instead of credentials
+bb24aeb0d2de3084381aba3cec0a20d1c41b3769	2025-10-13T08:40:18-05:00	Will Johnston	mrdbidwill@gmail.com	changed to prose layout and repaired js script loads
+418e33059a45127030bbffb621c0887f726f89d6	2025-10-13T07:13:02-05:00	Will Johnston	mrdbidwill@gmail.com	remove Docker kamila files and reference
+f3adad18c2fa37ba7e92507210f27a20f8358b20	2025-10-12T16:10:31-05:00	Will Johnston	mrdbidwill@gmail.com	hostinger db tables populated with scripts - email sending online
+44560fe88f3005912d2eec75e83dcbdfba1c2cee	2025-10-12T08:59:32-05:00	Will Johnston	mrdbidwill@gmail.com	Add production SMTP credentials and email confirmation setup
+a4e821d703895bf33c15fe21818cf346ae05f4b5	2025-10-12T08:08:19-05:00	Will Johnston	mrdbidwill@gmail.com	Fix JavaScript module import error in layout
+bdd969c5a3ffe2a8e17b2a8658429b38f16270dc	2025-10-11T18:24:24-05:00	Will Johnston	mrdbidwill@gmail.com	Remove daemonize from Puma config (not supported in Puma 6.x)
+ed595a902e3da30d59ee8466e143cbb43b31b072	2025-10-11T18:14:34-05:00	Will Johnston	mrdbidwill@gmail.com	Fix Puma socket path to use absolute paths
+da1eaa343adcdf93e0a9ef0ba90cfb171419cbfe	2025-10-11T16:02:09-05:00	Will Johnston	mrdbidwill@gmail.com	Add daemonize and logging to Puma production config
+839d650e5ba3fb749bee7999763ffaaac4cdaf27	2025-10-11T15:52:04-05:00	Will Johnston	mrdbidwill@gmail.com	Configure Puma to use Unix socket in production
+1dbebb03734a32b27b8dd335125c43c5dea779bc	2025-10-11T15:12:29-05:00	Will Johnston	mrdbidwill@gmail.com	Add dotenv support for production environment variables
+21b972e644ca7d4cc8408922c2a141c274ca8cdf	2025-10-11T06:04:06-05:00	Will Johnston	mrdbidwill@gmail.com	copied back to AAA_deployment_hostinger_10_9_2025
+7c935354d2643b56c70d48f5c363f5992565a60f	2025-10-09T19:38:57-05:00	Will Johnston	mrdbidwill@gmail.com	Run container as root to copy assets then switch to app user
+e49b5a673490357a24b51872673ef83d4663e6bf	2025-10-09T19:30:54-05:00	Will Johnston	mrdbidwill@gmail.com	Copy precompiled assets to mounted volume on container startup
+a77d1c176eb3c6b841ee7c8cfdaf699a8a1e1ce4	2025-10-09T19:25:33-05:00	Will Johnston	mrdbidwill@gmail.com	Simplify asset serving by mounting host public directory
+414a41730f118498633833887f7ec2ba0949f849	2025-10-09T19:19:50-05:00	Will Johnston	mrdbidwill@gmail.com	Create assets directory in nginx container for volume mount
+62574a8e3049f78f475e17249234cd68b1115e7b	2025-10-09T19:17:57-05:00	Will Johnston	mrdbidwill@gmail.com	Remove read-only flag from assets volume mount in nginx
+b34b131d16e3ab4ba73649375421edd58acc4581	2025-10-09T19:12:54-05:00	Will Johnston	mrdbidwill@gmail.com	Add shared assets volume for nginx to serve precompiled assets
+de4bf7dc9ddb52aa90e6c6f23da1a378e6b1e15b	2025-10-09T18:52:21-05:00	Will Johnston	mrdbidwill@gmail.com	Mount Let's Encrypt SSL certificates in nginx container
+0b3e7dc115fad28089423ee00e363de5c8e18be8	2025-10-09T18:21:50-05:00	Will Johnston	mrdbidwill@gmail.com	Fix domain name from mrbid.com to mrdbid.com
+4e98cb2bbce10a0e8a3a8dfbede2064a3afe3898	2025-10-09T17:26:49-05:00	Will Johnston	mrdbidwill@gmail.com	Fix Admin::MbListsController namespace for Zeitwerk
+0fae696ca1dfd34db9520628bd7d229f63aacf48	2025-10-09T17:22:22-05:00	Will Johnston	mrdbidwill@gmail.com	Fix Admin::DisplayOptionsController namespace for Zeitwerk
+fdc3de6683e78fec0c5814316f71bd36e824bbd8	2025-10-09T17:16:58-05:00	Will Johnston	mrdbidwill@gmail.com	Convert @apply to plain CSS for Tailwind v4 compatibility
+138cac6d877dbe042ab6f65b3ecaa16893f2fcfa	2025-10-09T17:14:09-05:00	Will Johnston	mrdbidwill@gmail.com	Fix Tailwind CSS syntax for production build
+ee58c5b08fc89f648b333bee410925f5bc647003	2025-10-09T17:12:16-05:00	Will Johnston	mrdbidwill@gmail.com	Fix Tailwind CSS build in production
+a056757c0f70e02adf7a4f5a652d37e440dda8c0	2025-10-09T17:08:01-05:00	Will Johnston	mrdbidwill@gmail.com	Fix npm install in production Dockerfile
+b3fbeb8c986e86e0e8f57844ebde564b4d83580d	2025-10-09T15:41:55-05:00	Will Johnston	mrdbidwill@gmail.com	final B4 upload production
+abb07415793c0ec39011d91ffa5419863c4eb2a2	2025-10-09T15:17:07-05:00	Will Johnston	mrdbidwill@gmail.com	corrected authorization callback contacts_controller plus other
+15a64109c57681480e9c3be5575000b6d8c967f4	2025-10-09T14:50:19-05:00	Will Johnston	mrdbidwill@gmail.com	AI Production Ready
+8af1287ae205f36e9fa474971926f24843752a52	2025-10-09T14:36:09-05:00	Will Johnston	mrdbidwill@gmail.com	Working copy - use for production
+00fdb7634dae3e6708241898478ff5b2e92bf8ed	2025-10-08T12:36:15-05:00	Will Johnston	mrdbidwill@gmail.com	add genus species to show mushrooms output
+8cd1bbdb066525366ae52c185fe2134703427227	2025-10-08T10:20:59-05:00	Will Johnston	mrdbidwill@gmail.com	Fixed pundit errors in state country genus species autocomplete
+7a83d141df93f146bb1141cdb43aed6d25d59786	2025-10-07T19:11:33-05:00	Will Johnston	mrdbidwill@gmail.com	Add large files and node_modules to gitignore
+6e86c1b1b988518221fc70e51a1748bc15257452	2025-10-07T19:03:59-05:00	Will Johnston	mrdbidwill@gmail.com	Docker working for most part - still checking
+9fe0f3b962f843210d0dce6985e928c9d1649920	2025-10-07T05:48:43-05:00	Will Johnston	mrdbidwill@gmail.com	AI added docker setup so can move between laptop and desktop w/o setup or config errors
+ef76a71314357da42df5eb661465aae95ee79b54	2025-10-06T11:01:26-05:00	Will Johnston	mrdbidwill@gmail.com	Working genera species autocomplete
+4e776b4eab7cdfefcbf1191c6900cb9431ff8cef	2025-10-05T10:54:50-05:00	Will Johnston	mrdbidwill@gmail.com	added backfill genera species from mblist and code for forms
+41a35b05a14317c28b09b290c41bc51705768e76	2025-10-05T09:15:20-05:00	Will Johnston	mrdbidwill@gmail.com	changed taxon_name to name is species and genera tables
+2adbd9597d4eca5a6e3e819e47a04f84a87f0824	2025-10-05T07:35:14-05:00	Will Johnston	mrdbidwill@gmail.com	projects only show and edit ones owned by user
+1b1591aecc64165c9d9149e5d59834e5abd8ff90	2025-10-04T19:30:23-05:00	Will Johnston	mrdbidwill@gmail.com	added application css to project index
+6bb845ae61a77a2680d2b8b18c04aed2d12987c7	2025-10-04T09:02:57-05:00	Will Johnston	mrdbidwill@gmail.com	in process of modify card borders for clarity mushroom index
+2736bda4900de1388b8c2e4ae106e8befb5ce40c	2025-10-03T18:38:11-05:00	Will Johnston	mrdbidwill@gmail.com	extracted css to app/tailwind/application.css and shared/ _card _data_group _image_grid _notice_row _page_actions and _pagination
+bee3b272703a2387ae1833521f6a4fd789a42488	2025-10-03T08:02:01-05:00	Will Johnston	mrdbidwill@gmail.com	B4 another tailwind css change
+42044561fcfd7ec2689054040a07d8a1582b3d93	2025-10-02T18:37:09-05:00	Will Johnston	mrdbidwill@gmail.com	removed duplicate display notices in views - let layout - application handle it
+59812ee4186c2357ad7469d4bf50a65d416f7f82	2025-10-02T18:04:24-05:00	Will Johnston	mrdbidwill@gmail.com	css back to normal - still trying to tighten up
+fd474831046984cfa3dd2fa55d997e777c00e6f4	2025-09-30T19:09:39-05:00	Will Johnston	mrdbidwill@gmail.com	correct buttons all_group and clusters
+c82fb5dc4de2077f9179ade015d8524597b4ed2f	2025-09-30T12:50:27-05:00	Will Johnston	mrdbidwill@gmail.com	fixed show edit only projects you own
+f883759fd81f3ee58406a73c6cdedc07f22c33f4	2025-09-29T19:03:27-05:00	Will Johnston	mrdbidwill@gmail.com	corrected clusters all_groups so only display if belong to same user as mushroom
+1630bc9e15d8009b556f5a940ea8c1fb522db3d5	2025-09-29T14:54:16-05:00	Will Johnston	mrdbidwill@gmail.com	added count to all_group cluster project in views
+b54ec27ec35e25ea6fdffe6d9b88e438886f306b	2025-09-27T06:30:46-05:00	Will Johnston	mrdbidwill@gmail.com	added insert_articles.sql
+12edf60d8d66d3bda11647b13165a2bdd9b2d9e1	2025-09-27T06:11:20-05:00	Will Johnston	mrdbidwill@gmail.com	added insert sample data for all_groups clusters projects
+0c67b1f9e0990a8671fe3c146c43deb3c1989c97	2025-09-26T19:03:48-05:00	Will Johnston	mrdbidwill@gmail.com	completed MBList reformat Excel and upload - also correct user display_name
+ef86df898ddbdcd47ef17d84b35fd03603686e69	2025-09-23T11:25:12-05:00	Will Johnston	mrdbidwill@gmail.com	updated modified files before production upload to handle all in create files
+7d217ac1074bbf741cb4ec25c072b01ca2f5c149	2025-09-22T20:20:29-05:00	Will Johnston	mrdbidwill@gmail.com	database.yml
+2c8859ffe60582e66d3bab69f5e87bac9b6b7a54	2025-09-22T20:12:01-05:00	Will Johnston	mrdbidwill@gmail.com	fix smtp config
+3aa2b6f70078f32c27b701ce704ff02232f9521a	2025-09-19T08:48:35-05:00	Will Johnston	mrdbidwill@gmail.com	set up letterOpenerWeb for dev email - works in dev
+e31e52d2db0eb5b256bb0caf3c5ba89cb32262b9	2025-09-19T07:57:15-05:00	Will Johnston	mrdbidwill@gmail.com	add email setup dev and production
+13dbf1397fe23c52fa6dc956b2b9d1f0894b13e2	2025-09-18T15:49:18-05:00	Will Johnston	mrdbidwill@gmail.com	edited comments out of mushrooms/edit into article How MRDBID is supposed to work
+d39b8b7a8a706f417ad4e95f64790c390aba0454	2025-09-17T18:20:52-05:00	Will Johnston	mrdbidwill@gmail.com	most checked - only articles need back links and mr_character complete check
+fc4d48bf370f81242e00130046cdd057f420a55b	2025-09-16T18:39:52-05:00	Will Johnston	mrdbidwill@gmail.com	lenses ok
+8eb665aabd1670351dff5575afe7e2377b0fb95d	2025-09-16T15:56:59-05:00	Will Johnston	mrdbidwill@gmail.com	added partial _resource_actions.html.erb for Show Edit and optional Delete buttons in admin views
+2b13c08472fafa999fb6b7b8e391a52087818a06	2025-09-15T15:57:14-05:00	Will Johnston	mrdbidwill@gmail.com	fungus types all good
+db7f2db1e8d66597849aafb3057312702887664e	2025-09-15T12:39:01-05:00	Will Johnston	mrdbidwill@gmail.com	countries ok
+99363fbfc52dc97a1f5eed91b7a383c8000526b6	2025-09-15T05:31:51-05:00	Will Johnston	mrdbidwill@gmail.com	modified admin/colors display - corrections
+005582fff43740e500aedab03d419c02cbc57e7e	2025-09-14T18:29:51-05:00	Will Johnston	mrdbidwill@gmail.com	using image exif data instead of cameras - camera_makes - camera_models - deleted all MVC policies tests for them?
+bbbb1ec24eaf5ae8ac9178f17883ed15883e9b0d	2025-09-13T13:36:06-05:00	Will Johnston	mrdbidwill@gmail.com	Final correction to insert_mr_characters.sql
+11f040f6cc019f084c3982e2c180a63b2ba929ea	2025-09-13T06:39:36-05:00	Will Johnston	mrdbidwill@gmail.com	corrected db/scripts/insert_mr_characters.sql
+60c9f3617874ff36932ec05518ef2da5fb32d6e6	2025-09-12T19:39:37-05:00	Will Johnston	mrdbidwill@gmail.com	modified insert_mr_characters.sql - may nee do over
+0dff6f48294c0b769ddeeb0d0b97e6d4d9a647cd	2025-09-12T14:37:19-05:00	Will Johnston	mrdbidwill@gmail.com	css changes to tighten up
+eb2d0b415b6a75d6bb41d011e6450800c1d6fb44	2025-09-11T14:59:03-05:00	Will Johnston	mrdbidwill@gmail.com	update mr_characters index Filter and completed working Seach by name or id card - deleted non admin mr_characters_controller and views
+813bb6759d250e6b1630ec35e849b8f226a2289b	2025-09-10T11:49:23-05:00	Will Johnston	mrdbidwill@gmail.com	same as last message except works now
+ba4eee033f2a6b783655f66ca50aca122822c58a	2025-09-10T10:05:00-05:00	Will Johnston	mrdbidwill@gmail.com	added path to application controller so display on all views for dev and test - still need to remove individual text
+5d41ded140bd36e3b6df9d9c6e4642d848f4daad	2025-09-09T19:03:53-05:00	Will Johnston	mrdbidwill@gmail.com	corrected species views and other copy paste errors
+10212149eff51b1df0a6fba40bd534953b875cc8	2025-09-09T15:52:37-05:00	Will Johnston	mrdbidwill@gmail.com	modified source_data_types display to match soure_data card look
+d790538b603e096cce49be184a143ec2311e325b	2025-09-08T19:24:08-05:00	Will Johnston	mrdbidwill@gmail.com	better layout for source_data and more minor corrections
+ab3e10fa0ccc81a83854df3e413a998a9df9cac7	2025-09-08T15:41:56-05:00	Will Johnston	mrdbidwill@gmail.com	added kaminari/tailwind_bar for pagination nav - commented out more deletes
+fb0030b43df576de042d4d2e142fb2f8076f0a7a	2025-09-08T13:11:17-05:00	Will Johnston	mrdbidwill@gmail.com	commented out delete this for admin directory
+c92e40dcaf1aa5ac290c427adc41d90786465f60	2025-09-08T11:43:25-05:00	Will Johnston	mrdbidwill@gmail.com	remove 'name' where = 'id' in mr_characters index and partial
+7a56e23e4450af1cba9631c7464ce8cb17fde70f	2025-09-06T07:17:31-05:00	Will Johnston	mrdbidwill@gmail.com	added mr_character_sources for link to csv file for MO XDE workflow
+2ce10e71d3b6eb1ef6ae84fbe399ce8f1c982a38	2025-09-04T15:51:31-05:00	Will Johnston	mrdbidwill@gmail.com	adding image to mushroom now selects correct mushroom and returns to that mushroom show page if successful upload
+ffc322452b1298f31a519fdee6cb64c688e978df	2025-09-04T06:45:44-05:00	Will Johnston	mrdbidwill@gmail.com	repaired AI damage - links - css
+295050d9f31d0d398275c3a1407f39a1433bed7d	2025-09-03T11:14:06-05:00	Will Johnston	mrdbidwill@gmail.com	Correcte Delete path in app/lenses/index.html.erb
+1979502dc472e3e0cf85d4c2c404e854f70f494b	2025-09-02T12:26:23-05:00	Will Johnston	mrdbidwill@gmail.com	modified mr_characters link css and forms to load table data into radio lists
+8e5fff3355b04d9ff720f41cd52233df42463f3c	2025-09-02T06:18:15-05:00	Will Johnston	mrdbidwill@gmail.com	modified views/devise/registrations/new.html.erb app/views/devise/registrations/edit.html.erb app/views/devise/sessions/new.html.erb css to be same as mushrooms/edit
+dda92352e1952af5b86d1792efc8c6cb5a8450e8	2025-09-01T14:44:10-05:00	Will Johnston	mrdbidwill@gmail.com	added description and comments to mr_characters table
+081f8b92b2b5972200ecc3504b5db0ec7db4c4a0	2025-08-31T17:32:07-05:00	Will Johnston	mrdbidwill@gmail.com	changed tailwinds css in tailwind/application.css for readable and readable--wide - applied to paragraghs in mushrooms/edit.html.erb
+1145b7e7dc0c897621a2a51e791ae1bb21756ea5	2025-08-31T09:55:07-05:00	Will Johnston	mrdbidwill@gmail.com	added admin/articles and files
+27459329808a6b2a0c807624b3258d586e157617	2025-08-31T08:52:49-05:00	Will Johnston	mrdbidwill@gmail.com	added articles model views controller route
+0d121474211026bc28f612272581183f4b56a838	2025-08-31T08:33:02-05:00	Will Johnston	mrdbidwill@gmail.com	mushrooms/edit.html.erb is much improved - set - unset - colors characters - still need much testing
+58548d9dfe49bd097881f0ba54780c9456a3a02e	2025-08-30T19:27:40-05:00	Will Johnston	mrdbidwill@gmail.com	removed underscore in table name - mushrooms/edit.html.erb - corrected color selection character loading - still needs complete review
+9cf4e9d0b67a0efbd95675d4fb3fc3c4e4219570	2025-08-30T15:31:48-05:00	Will Johnston	mrdbidwill@gmail.com	corrected color display - still needs work
+6b739799a17e0b8d9db888e83036c284be9adba2	2025-08-30T13:56:38-05:00	Will Johnston	mrdbidwill@gmail.com	added final add characters code - first trial
+58b59be056047d3690a5b26bcec3dcc09a5ef8ef	2025-08-30T06:56:42-05:00	Will Johnston	mrdbidwill@gmail.com	modified app/views/mushrooms/index.html.erb - moved links to individual mushroom - cleaned up thumbnails
+83869ab8a51045e54e15ce85c07b802d5df17892	2025-08-29T19:15:15-05:00	Will Johnston	mrdbidwill@gmail.com	updated mushroom_projects - cluster_mushrooms - mushroom_projects - all_group_mushrooms -form to be consisten with image_mushrooms
+d76bdb950ee557c10939991fc63fd17cd2de2703	2025-08-29T15:42:12-05:00	Will Johnston	mrdbidwill@gmail.com	modified image_mushrooms _form to match clusters
+b58fb80d7b642aa19364bed1bd405ff5010f3b9d	2025-08-29T12:52:47-05:00	Will Johnston	mrdbidwill@gmail.com	moved projects out of admin - updated mushrooms css and format
+7abb7774635bca2016ddd56b81e1bb7fcc7ac47a	2025-08-29T05:36:18-05:00	Will Johnston	mrdbidwill@gmail.com	corrected mushrooms _form.html.erb state dropdown to populate correctly based on country selected
+93caf05e91068cfb22967a0c47b15c567465a6a1	2025-08-28T15:13:32-05:00	Will Johnston	mrdbidwill@gmail.com	converted logo to mrdbid_logo.svg
+58255b58acaa19db0d7db3bcd611b2e3d66a9040	2025-08-27T19:03:03-05:00	Will Johnston	mrdbidwill@gmail.com	increased padding left and right and slightly darker gray
+5b1528a8f6924ef4e967ef70517c2b61a0951168	2025-08-27T18:48:57-05:00	Will Johnston	mrdbidwill@gmail.com	trees - all of admin done
+f6f66c677ab60cb3994c1b32c822b023465eb169	2025-08-27T18:39:48-05:00	Will Johnston	mrdbidwill@gmail.com	states
+26af87d34ca8caac8c485ffb5d7365fa97fb6d5a	2025-08-27T15:25:49-05:00	Will Johnston	mrdbidwill@gmail.com	source_data
+4cf2445dd2f84eafbf954f421421fbf74b77c236	2025-08-27T14:24:13-05:00	Will Johnston	mrdbidwill@gmail.com	roles
+78f0cd03b113e50e586595804c93980cd4db12f0	2025-08-27T12:52:02-05:00	Will Johnston	mrdbidwill@gmail.com	plant
+f0d228b843c70ab4b96ce78e029e46de08ef0130	2025-08-27T11:55:31-05:00	Will Johnston	mrdbidwill@gmail.com	permissions
+b20d172b0a0ecd85399a2a046425343c55e2ed74	2025-08-27T11:37:32-05:00	Will Johnston	mrdbidwill@gmail.com	parts
+7f1757d8259e33a3f7ed1a61f9a8cc45760488f5	2025-08-27T11:09:03-05:00	Will Johnston	mrdbidwill@gmail.com	mr_characters
+b4d7e9f66f9e31b17a042fc17ac9c9002e38895e	2025-08-26T19:08:26-05:00	Will Johnston	mrdbidwill@gmail.com	lookup_types
+0389d5304339f45bb5fbdbfa98868bf249c489eb	2025-08-26T18:47:30-05:00	Will Johnston	mrdbidwill@gmail.com	lens and lookup_items
+c0dafe14774165b3e8a6ae7041160a125a422d8b	2025-08-26T18:37:44-05:00	Will Johnston	mrdbidwill@gmail.com	image_mushroom
+11c66be17ed7e4fe64028fc47224b66ae11955cd	2025-08-26T15:23:17-05:00	Will Johnston	mrdbidwill@gmail.com	removed dashboard_policy.rb - only using admin_policy.rb
+44305b16d6bb694c9905a785f0220aedcf3f4653	2025-08-26T13:33:57-05:00	Will Johnston	mrdbidwill@gmail.com	dna_sequences - admin dashboard links - views empty
+f8ab61ce8e847cb0dbe1eba6606ac2c91d031aff	2025-08-26T13:07:27-05:00	Will Johnston	mrdbidwill@gmail.com	updated admin list to countries
+19398b5549fa525aca3590d3a9fde7b0882a0dd6	2025-08-25T15:38:29-05:00	Will Johnston	mrdbidwill@gmail.com	renamed genus_controller to genera_controller
+b1d0b0bea18a50e6cd60762ab43544f90e3d9836	2025-08-25T13:11:12-05:00	Will Johnston	mrdbidwill@gmail.com	Tailwind css problem corrected for main site - admin still needs work
+ee0cc704c7ffb1548615c3fb21391832e4b570c8	2025-08-23T18:39:28-05:00	Will Johnston	mrdbidwill@gmail.com	end of day Saturday August 23
+5ff0fd3fa4719cfea0ceb29634a48d8cc16b47a8	2025-08-22T18:52:49-05:00	Will Johnston	mrdbidwill@gmail.com	added paper trail and Admin link plus
+262aa3c5ed66a1f85968a96a06d7fd211706e0d8	2025-08-21T15:28:02-05:00	Will Johnston	mrdbidwill@gmail.com	camera_models tests good
+5eda30cb7ebcc0079637b68000a6dc0e6b48e76c	2025-08-21T15:02:55-05:00	Will Johnston	mrdbidwill@gmail.com	added enhancements to tests - camera_makes_controller test passes
+f904137c3d2979744df7b21186f89e0d99a71350	2025-08-20T18:39:49-05:00	Will Johnston	mrdbidwill@gmail.com	camera_models pass test - removed json file in view
+7789d4fab287fe1be2ed5cb1039ddf220e232e05	2025-08-20T15:59:29-05:00	Will Johnston	mrdbidwill@gmail.com	camera_makes moved to admin with others - camera make controller model and sytem tests pass
+f56f7a309adfd33bc4f264dc70471669fbe70daf	2025-08-19T12:36:07-05:00	Will Johnston	mrdbidwill@gmail.com	countries_controller_test_rb works
+60eb59d4f0eee981e3466a320830abc75484b3e6	2025-08-18T18:46:01-05:00	Will Johnston	mrdbidwill@gmail.com	completed model view controller files - lot of tests to correct
+137bde69f6b6379f354b4fef7504647622885ab3	2025-08-18T14:57:31-05:00	Will Johnston	mrdbidwill@gmail.com	rails test test/controllers/mushrooms_controller_test.rb zero failures or errors
+518119446313e2bc23478ea13cb85a355aabf8ba	2025-08-17T15:43:44-05:00	Will Johnston	mrdbidwill@gmail.com	added most test fixtures and controller tests
+6924dfb05089952d8ac5897d116d3784c70b9899	2025-08-17T13:22:24-05:00	Will Johnston	mrdbidwill@gmail.com	New mushroom country state dynamic load works as does fungus_types
+a9d9697364599094cb8342e105b20611c93ef578	2025-08-16T07:10:29-05:00	Will Johnston	mrdbidwill@gmail.com	Updated shared/_menu.html.erb for Characters - Projects - Clusters - Groups and related files
+56ca09638e030bf01165d0e2831bee251e009121	2025-08-15T15:13:43-05:00	Will Johnston	mrdbidwill@gmail.com	big migrations in order no separate add index files - now have admin setup - partial
+8afa419d86efbaa35577a59b1f900a0d5dca9eaf	2025-08-14T18:38:27-05:00	Will Johnston	mrdbidwill@gmail.com	complete refactor migration files - no external add fk - migration completes in order - added genera, species, and projects
+7739c72aad4eaa55c730a2d9d954bd53ff85f868	2025-08-10T19:44:18-05:00	Will Johnston	mrdbidwill@gmail.com	All tests pass 110 runs 228 assertion 0 failures 0 errors o skips - clusters all_groups image_mushrooms pages don't work
+a75c4b03e9e75baf7d7dde3b85929574e1c86c1f	2025-08-09T18:53:21-05:00	Will Johnston	mrdbidwill@gmail.com	modified all_group and cluster controllers
+8006d52a3301fb5af1253d6932e9fa3a3109380b	2025-08-09T18:29:41-05:00	Will Johnston	mrdbidwill@gmail.com	added user_id to clusters and all_groups - working on authorization
+1ea6688c249df2b873740b87f78dfb2bd6510d48	2025-08-08T20:21:27-05:00	Will Johnston	mrdbidwill@gmail.com	removing workflows - I hope
+3695d09e096d206e71a3c9c16c1e78be5da03d5b	2025-08-08T18:35:31-05:00	Will Johnston	mrdbidwill@gmail.com	added supporting independent tables, file, and inserts
+b588e9969375f47cecb7796fec4fc90dc520331f	2025-08-07T12:35:22-05:00	Will Johnston	mrdbidwill@gmail.com	B4 db:drop create migrate to bring changes current and repopulate - needed to solve test problems in all_group, cluster, image_mushrooms and changing to stand alone tables
+b77d8705bd3799d9e6c3e477e35d90f4ade82e55	2025-08-05T17:52:28-05:00	Will Johnston	mrdbidwill@gmail.com	installed vips and image_processing - thumbnails now display on mushroom index
+6ed8f7e5884aec6f658bca96b8c75aad740ca758	2025-08-04T19:39:10-05:00	Will Johnston	mrdbidwill@gmail.com	clusters, cluster_mushrooms, all_groups, all_group_mushrooms, image_mushrooms working basic - need testing
+baa582e7f6bf5525973ddd4f439988f754936b78	2025-08-04T12:41:20-05:00	Will Johnston	mrdbidwill@gmail.com	Added all_group and cluster scaffold - skip migration
+78e263b3c24a17a496950067d292993dbd075555	2025-08-03T18:45:29-05:00	Will Johnston	mrdbidwill@gmail.com	added lookup type to mr_character forms for index and show
+0cf87450bfcc4c263b90ff625a08fe75fd1a92d2	2025-08-03T15:57:56-05:00	Will Johnston	mrdbidwill@gmail.com	added tests to mushroom and mr_character
+e056578690249217d16acc21d8ad6d722e7253dd	2025-08-02T19:35:30-05:00	Will Johnston	mrdbidwill@gmail.com	repaired en.yml and mushroom.rb model error messages that did not match
+33effbf31c2be0aa61b8cb34ce3867cf916ca769	2025-08-01T19:13:19-05:00	Will Johnston	mrdbidwill@gmail.com	Junie repaired mushroom_authorization_tests and AI repaired mr_character lazy loading error
+6e4dcd141dec8e2f1e47a11c12a8e8e2439c824e	2025-08-01T15:26:47-05:00	Will Johnston	mrdbidwill@gmail.com	new directory test/integration
+cf1e6d5f89deb9e07780e4d96f0fc33d7aad31e0	2025-08-01T06:02:54-05:00	Will Johnston	mrdbidwill@gmail.com	Junie corrected policy error in mushrooms index
+9692654dcce7f744a0bb0bfec4372b4d954d7961	2025-07-31T19:12:18-05:00	Will Johnston	mrdbidwill@gmail.com	cleaned up I18n and removed no translation warning
+34899846698da8fb6fef442cc82bc7b967cb1062	2025-07-31T18:23:17-05:00	Will Johnston	mrdbidwill@gmail.com	updated config/locales/en.yml and began process of convert messages to i18n internationalization
+76e7acf37d1661a03cca6894a97eedf76e65f669	2025-07-31T15:43:49-05:00	Will Johnston	mrdbidwill@gmail.com	Corrected NoMethodError in MushroomsController: Undefined polich_scope Method
+b3c876cdbe4aa251239a75b4388055ec17244844	2025-07-31T15:22:58-05:00	Will Johnston	mrdbidwill@gmail.com	Added Pundit - Junie corrected all errors and all tests are successful
+7dfad2f8ce46e77e4fee923f573d877af47b5d08	2025-07-31T06:13:21-05:00	Will Johnston	mrdbidwill@gmail.com	solved mushroom test user_id not set
+e58a1c3c362f491deede07f91f13e483f4ec497e	2025-07-30T18:03:00-05:00	Will Johnston	mrdbidwill@gmail.com	added camera_makes and camera_models and scaffolding
+493040ac1ed29d904768543cf4e909404471a930	2025-07-30T16:15:22-05:00	Will Johnston	mrdbidwill@gmail.com	added camera makes and models scaffolding - dumped using reek for now - AI cannot make its code work
+5d46079c3759f773c6bdb80e99be5089bf4d09d1	2025-07-30T05:53:01-05:00	Will Johnston	mrdbidwill@gmail.com	simple tests - zero failures zero errors
+2495316246254304aae3cb617d24fced0f1ed27b	2025-07-29T19:47:07-05:00	Will Johnston	mrdbidwill@gmail.com	removed admin folder and policy
+403140d2ac7aeae17064458626e18afc972e4540	2025-07-28T20:05:04-05:00	Will Johnston	mrdbidwill@gmail.com	modified mb_list.csv and migration files and imported data to mb_list using RubyMine database tool
+46dd6411ba82989235a0a1d127a63bab5f570d0e	2025-07-28T17:37:18-05:00	Will Johnston	mrdbidwill@gmail.com	created mb_lists table and uploaded data
+92f6d71e92491a0f74880bc628751847224efa2d	2025-07-27T19:13:44-05:00	Will Johnston	mrdbidwill@gmail.com	testing all pass - display_options lookup_types mr_chracter_mushrooms mr_characters mushrooms parts source data source_data_type
+777c58dffe4206e09a873462a64235f97f4b599f	2025-07-27T15:24:23-05:00	Will Johnston	mrdbidwill@gmail.com	add back model all_group.rb and cluster.rb - add test code incrementally
+f3493bbcd65c47ee297b59683ad2b5974973e08f	2025-07-26T18:42:52-05:00	Will Johnston	mrdbidwill@gmail.com	improved mushroom_test.rb
+b05fc7877b7128b035208b33af0a37fb8a5309dd	2025-07-26T07:47:58-05:00	Will Johnston	mrdbidwill@gmail.com	deleted test directory and seeds.rb - start over with test
+c22123ff88a47384ea792e4dc483675b069d8727	2025-07-25T13:55:41-05:00	Will Johnston	mrdbidwill@gmail.com	reworked migrations - added default for user_id - tests process working - individual tests not all passing
+642a2fb0ab914a2ef2a002fc7c4c982b8303885d	2025-07-23T19:10:18-05:00	Will Johnston	mrdbidwill@gmail.com	added spec/factories and models for mushroom
+7eaf8d0971d81c37aaa93249bf71d3b1c3495eca	2025-07-23T15:10:11-05:00	Will Johnston	mrdbidwill@gmail.com	change show and edit to buttons
+119804338cb1cdd979e7739ac3177452ef711976	2025-07-23T14:07:11-05:00	Will Johnston	mrdbidwill@gmail.com	after force revert to last commit - fixed no tailwinds css and correct favicon links
+f7231b036158d4463cd82ab2d9018d5e612441de	2025-07-22T18:44:40-05:00	Will Johnston	mrdbidwill@gmail.com	corrected display_options and parts errors to load form
+f1d40f52a5563fed711e329bab74b929927804b1	2025-07-22T11:41:49-05:00	Will Johnston	mrdbidwill@gmail.com	moved parts and display_options back out of lookup_items and into own tables
+60142d988622fbdd78570529a10f3b9017d33ab8	2025-07-19T20:01:25-05:00	Will Johnston	mrdbidwill@gmail.com	correct mr_character part item_type problem and add pagination
+a7580be0af9b75abc9c3c23f70137dc1ffd9f86b	2025-07-19T18:07:46-05:00	Will Johnston	mrdbidwill@gmail.com	corrected all db/scripts files - now load without errors
+9b330f6c92f224f9a9d2bea0114c6e503f21d2b5	2025-07-19T12:35:07-05:00	Will Johnston	mrdbidwill@gmail.com	added AMS_colors to app/assets/images - completed insert MO characters - update image_file_path in insert_colors
+512d5696d2c2c392095c04052ac5d516f433235e	2025-07-19T06:57:36-05:00	Will Johnston	mrdbidwill@gmail.com	Completed edit of insert_MO_character_mod_into files
+1ed618979035b6bfa91d12f01a1f03aabc6b86b2	2025-07-18T20:03:42-05:00	Will Johnston	mrdbidwill@gmail.com	updated insert scripts
+cae9183884a906f47edb9ef189952b12550ffb25	2025-07-17T13:14:47-05:00	Will Johnston	mrdbidwill@gmail.com	added separate state model back - using mr_character as fk to lookup_items - no longer any parent children hierarchies in setup
+8e5de4ab552ac2af64462867fccc9d7191a71182	2025-07-15T12:26:40-05:00	Will Johnston	mrdbidwill@gmail.com	added models and controllers to match new migrate files - edited image_mushrooms MVC
+bfdf9d1fa1076426fe3e41fe53a1141f3e0bef61	2025-07-14T21:10:50-05:00	Will Johnston	mrdbidwill@gmail.com	Correct migration files again
+4a2c6a57a55b06fdc76b94265878f45c26149592	2025-07-14T19:51:20-05:00	Will Johnston	mrdbidwill@gmail.com	Corrected migrations again
+96d32b44d1ee4a7ff78276952d0322f88e250404	2025-07-14T16:40:39-05:00	Will Johnston	mrdbidwill@gmail.com	corrected migration files to use lookup_items path
+7ed71bcf123808fef332ed015f310436c1dd381d	2025-07-14T14:33:03-05:00	Will Johnston	mrdbidwill@gmail.com	keeping original devise files - migrate next
+89ebfdfb46c728398689f51be58473b37f355c79	2025-07-13T18:24:15-05:00	Will Johnston	mrdbidwill@gmail.com	Double checked migrations - changed to lock confirm in devise - recreated devise view files
+92b28ed9514b5db55d6623d297a30a7cb254014b	2025-07-13T15:17:32-05:00	Will Johnston	mrdbidwill@gmail.com	Moved all foreign key creation to separate files to avoid order of migration problems
+b0ecfa536ad853baf017638273890ff233131c7f	2025-07-13T11:25:36-05:00	Will Johnston	mrdbidwill@gmail.com	added migrations for non-lookup tables - added features to lookup_items where state can be included - kept AMS chart colors table as is- for most part
+b85447c26e4695f0a9a11e6bcdcde05c96abbfb3	2025-07-12T19:52:09-05:00	Will Johnston	mrdbidwill@gmail.com	added 2FA
+8c7bd87e3e385552f3e42f89d185cdbf60132cc4	2025-07-12T15:49:59-05:00	Will Johnston	mrdbidwill@gmail.com	Near end of rough polymorph refactor - added account link
+928f6006e930d299d45af17bc2c811d63894cde2	2025-07-10T15:52:51-05:00	Will Johnston	mrdbidwill@gmail.com	Update .gitignore to exclude node_modules
+8269adc87c145dec37a3608eec4e79a52dc5226d	2025-07-10T15:48:52-05:00	Will Johnston	mrdbidwill@gmail.com	Remove node_modules from repository
+8b6b8d57e11cf03a47d8f1cd54fcd915442e534e	2025-07-10T15:44:11-05:00	Will Johnston	mrdbidwill@gmail.com	removed user_id from forms and modified so on auth user can edit and delete - modified rubocop to tolerable
+454b54d85b03b4f084d51825ae3d92330cf09bd7	2025-07-09T21:15:14-05:00	Will Johnston	mrdbidwill@gmail.com	Major refactor to polymorph

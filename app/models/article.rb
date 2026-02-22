@@ -18,8 +18,6 @@ class Article < ApplicationRecord
   validates :title, :slug, :body, presence: true
   validates :slug, uniqueness: true
   validates :subject, inclusion: { in: SUBJECTS, allow_blank: true }
-  validates :title, profanity: true
-  validates :body, profanity: true
   # Keep slugs URL-friendly
   before_validation :normalize_slug
 

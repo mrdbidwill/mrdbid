@@ -20,7 +20,7 @@
             inline_autocomplete_target: "textarea",
             action: "input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
           } %>
-      <ul class="absolute z-50 border-4 border-blue-500 rounded bg-white overflow-auto shadow-lg hidden"
+      <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
           data-inline-autocomplete-target="dropdown"
           style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
     </div>
@@ -60,7 +60,7 @@
             inline_autocomplete_target: "textarea",
             action: "input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
           } %>
-      <ul class="absolute z-50 border-4 border-blue-500 rounded bg-white overflow-auto shadow-lg hidden"
+      <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
           data-inline-autocomplete-target="dropdown"
           style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
     </div>
@@ -125,7 +125,7 @@
             inline_autocomplete_target: "textarea",
             action: "input->text-formatter#updateCharCount input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
           } %>
-      <ul class="absolute z-50 border-4 border-blue-500 rounded bg-white overflow-auto shadow-lg hidden"
+      <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
           data-inline-autocomplete-target="dropdown"
           style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
     </div>
@@ -143,11 +143,20 @@
           <li><code>class="text-purple"</code> - <span style="color: #9333ea;">Purple</span></li>
         </ul>
 
-        <p><strong>📚 Glossary Integration:</strong></p>
+        <p><strong>🍄 Mycowriter Autocomplete:</strong></p>
+        <p class="ml-4 bg-orange-50 p-2 rounded border border-orange-300">
+          <strong>While typing, genus and species names auto-complete!</strong><br>
+          • Type a <strong>capital letter + 4 characters</strong> (e.g., "Gano") → red dropdown shows genus matches like "Ganoderma"<br>
+          • After selecting a genus, type lowercase (e.g., "sess") → shows species like "Ganoderma sessile"<br>
+          • Click a suggestion or use arrow keys to select, then press Enter or click<br>
+          <em>Watch for the red bordered dropdown as you type!</em>
+        </p>
+
+        <p><strong>📚 Auto-Glossary (For Readers):</strong></p>
         <p class="ml-4 bg-blue-50 p-2 rounded border border-blue-200">
           Mycology terms are <strong>automatically highlighted</strong> with definitions from Wikipedia!<br>
           Just write terms like "basidiospore", "pileus", "hymenium" naturally in your text.<br>
-          Readers can hover for quick definitions or click for full details. No special markup needed!
+          When published, readers can hover for quick definitions or click for full details. No special markup needed!
         </p>
 
         <p><strong>Examples:</strong></p>
