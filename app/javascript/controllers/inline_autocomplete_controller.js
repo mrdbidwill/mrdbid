@@ -223,18 +223,15 @@ export default class extends Controller {
       after = text.substring(this.cursorPosition)
     }
 
-    // Format scientific name with italic tags for body field (HTML)
-    // Check if this is the body textarea by looking for data-text-formatter-target
-    const isBodyField = textarea.hasAttribute('data-text-formatter-target')
-    const formattedName = isBodyField ? `<em>${selectedName}</em>` : selectedName
-
-    textarea.value = before + formattedName + after
+    // Insert plain text - let user apply formatting manually if desired
+    // This prevents issues with nested tags and allows proper species completion
+    textarea.value = before + selectedName + after
 
     // Hide dropdown immediately
     this.hideDropdown()
 
     // Position cursor after inserted text and focus
-    const newPosition = before.length + formattedName.length
+    const newPosition = before.length + selectedName.length
     textarea.setSelectionRange(newPosition, newPosition)
     textarea.focus()
 
