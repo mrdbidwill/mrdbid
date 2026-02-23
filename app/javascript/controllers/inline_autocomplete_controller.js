@@ -225,22 +225,17 @@ export default class extends Controller {
       after = text.substring(this.cursorPosition)
     }
 
-    // Check if this is the body field (needs HTML formatting)
-    const isBodyField = textarea.hasAttribute('data-text-formatter-target')
-
-    // Only apply <em> tags if:
-    // 1. It's the body field (supports HTML)
-    // 2. Selected name contains a space (complete binomial like "Ganoderma sessile")
+    // Apply <em> tags to complete binomials (contains space like "Ganoderma sessile")
+    // This follows scientific naming conventions: binomial names must be italicized
     const isBinomial = selectedName.includes(' ')
-    const shouldItalicize = isBodyField && isBinomial
 
     let formattedName, cursorOffset
-    if (shouldItalicize) {
-      // Complete binomial - wrap in <em> tags
+    if (isBinomial) {
+      // Complete binomial - wrap in <em> tags per nomenclature standards
       formattedName = `<em>${selectedName}</em>`
       cursorOffset = selectedName.length + 9 // position AFTER closing </em> tag
     } else {
-      // Genus only or plain text field - no HTML tags, add trailing space
+      // Genus only - no HTML tags, add trailing space
       formattedName = selectedName + ' '
       cursorOffset = selectedName.length + 1
     }

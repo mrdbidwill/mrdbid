@@ -5,7 +5,7 @@
 </div>
 
 <div class="prose prose-p:text-gray-900 prose-lg max-w-none mx-auto px-6">
-  <h1><%= @article.title %></h1>
+  <h1><%= sanitize(@article.title, tags: %w[em i]) %></h1>
   <div class="text-sm text-gray-500 mb-4">
     <% if @article.subject.present? %>
       <span class="mr-2">Subject: <%= @article.subject %></span>

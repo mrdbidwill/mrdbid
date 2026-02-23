@@ -24,7 +24,7 @@
     <% @articles.each do |article| %>
       <%= link_to article_path(article), class: "block border rounded-md p-4 bg-white hover:shadow-lg hover:border-blue-400 transition no-underline" do %>
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <h2 class="text-xl font-semibold text-blue-600"><%= article.title %></h2>
+          <h2 class="text-xl font-semibold text-blue-600"><%= sanitize(article.title, tags: %w[em i]) %></h2>
           <div class="text-xs text-gray-500">
             <% if article.subject.present? %>
               <span class="mr-2">Subject: <%= article.subject %></span>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <% if article.summary.present? %>
-          <p class="mt-2 text-gray-700"><%= truncate(article.summary, length: 200) %></p>
+          <p class="mt-2 text-gray-700"><%= sanitize(truncate(article.summary, length: 200), tags: %w[em i]) %></p>
         <% end %>
       <% end %>
     <% end %>

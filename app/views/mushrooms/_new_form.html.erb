@@ -91,17 +91,64 @@
     </div>
 
     <!-- Description (Optional) -->
-    <div class="my-5">
+    <div class="my-5" data-controller="inline-autocomplete"
+         data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+         data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
+         data-inline-autocomplete-min-value="4">
       <%= form.label :description %>
       <span class="text-sm text-gray-500">(optional)</span>
-      <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}] %>
+      <div class="relative">
+        <%= form.text_area :description, rows: 4,
+            class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:description].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:description].any?}],
+            data: {
+              inline_autocomplete_target: "textarea",
+              action: "input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
+            } %>
+        <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
+            data-inline-autocomplete-target="dropdown"
+            style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
+      </div>
     </div>
 
     <!-- Comments (Optional) -->
-    <div class="my-5">
+    <div class="my-5" data-controller="inline-autocomplete"
+         data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+         data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
+         data-inline-autocomplete-min-value="4">
       <%= form.label :comments %>
       <span class="text-sm text-gray-500">(optional)</span>
-      <%= form.text_area :comments, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}] %>
+      <div class="relative">
+        <%= form.text_area :comments, rows: 4,
+            class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:comments].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:comments].any?}],
+            data: {
+              inline_autocomplete_target: "textarea",
+              action: "input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
+            } %>
+        <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
+            data-inline-autocomplete-target="dropdown"
+            style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
+      </div>
+    </div>
+
+    <!-- Personal Notes (Optional) -->
+    <div class="my-5" data-controller="inline-autocomplete"
+         data-inline-autocomplete-genus-url-value="<%= mycowriter.genera_autocomplete_path %>"
+         data-inline-autocomplete-species-url-value="<%= mycowriter.species_autocomplete_path %>"
+         data-inline-autocomplete-min-value="4">
+      <%= form.label :personal_notes, "Personal Notes (private - only visible to you)" %>
+      <span class="text-sm text-gray-500">(optional)</span>
+      <div class="relative">
+        <%= form.text_area :personal_notes, rows: 4,
+            class: ["block shadow-sm rounded-md border px-3 py-1 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": mushroom.errors[:personal_notes].none?, "border-red-400 focus:outline-red-600": mushroom.errors[:personal_notes].any?}],
+            data: {
+              inline_autocomplete_target: "textarea",
+              action: "input->inline-autocomplete#onInput keydown->inline-autocomplete#onKeydown"
+            } %>
+        <ul class="absolute z-50 border-4 border-red-500 rounded bg-white overflow-auto shadow-lg hidden"
+            data-inline-autocomplete-target="dropdown"
+            style="width: 300px; max-height: 300px; top: 100%; left: 0; margin-top: 4px;"></ul>
+      </div>
+      <p class="text-xs text-gray-500 mt-1">These notes are private and only visible to you.</p>
     </div>
 
     <!-- Single Submit Button -->
