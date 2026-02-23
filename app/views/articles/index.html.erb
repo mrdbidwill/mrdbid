@@ -22,7 +22,7 @@
 
   <div class="mt-6 space-y-1">
     <% @articles.each do |article| %>
-      <%= link_to article_path(article), class: "block border rounded-md p-4 bg-white hover:shadow-lg hover:border-blue-400 transition" do %>
+      <%= link_to article_path(article), class: "block border rounded-md p-4 bg-white hover:shadow-lg hover:border-blue-400 transition no-underline" do %>
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h2 class="text-xl font-semibold text-blue-600"><%= article.title %></h2>
           <div class="text-xs text-gray-500">
