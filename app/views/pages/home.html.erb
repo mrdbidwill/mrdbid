@@ -1,14 +1,129 @@
 <h1>Welcome to MRDBID!</h1>
 
-<h3 class="text-xl font-bold text-green-600">A personal mushroom storage notebook and much more...</h3>
+<h3 class="text-xl font-bold text-green-600 mb-4">A personal mushroom storage notebook and much more...</h3>
 
-<ol>
-  <li> Register to be able to store your fungi data. If you have experience in mycology and want to actively participate in editing and adding characters, email me after you register letting me know your experience level and/or area of expertise, and I will modify your account accordingly.</li>
-  <li> Login to enter and access your data.</li>
-  <li> Add, View, and manage your data.</li>
-  <li> <strong>Optional:</strong> Participate in editing and adding characters that are required to completely describe your fungi data if you have the experience to do so.</li>
-</ol>
+<!-- Call-to-Action Banner -->
+<div class="group-box mb-6" style="border: 2px solid #16a34a;">
+  <div class="group-header" style="background-color: #dcfce7;">
+    <h2 class="text-lg font-bold text-gray-900">Explore Sample Mushroom Collections</h2>
+  </div>
+  <div class="px-4 py-4">
+    <p class="mb-3">Below are examples of mushrooms stored in our system. <strong>Sign up to view full details, add your own mushrooms, and unlock all features!</strong></p>
+    <div class="flex gap-3 mb-4">
+      <%= link_to "Sign Up Now", new_user_registration_path, class: "btn-primary" %>
+      <%= link_to "Login", new_user_session_path, class: "btn" %>
+    </div>
 
-<p>To work on "Mushrooms" and other fungi, after you log in, click on the Mushrooms button.</p>
+    <!-- How MRDBID Works -->
+    <div class="border-t pt-4 mt-4">
+      <h3 class="text-md font-bold text-gray-900 mb-2">How MRDBID Works</h3>
+      <ol class="space-y-2 text-sm">
+        <li><strong>1. Register</strong> to store your fungi data. If you have mycology experience and want to participate in editing and adding characters, email us after registration.</li>
+        <li><strong>2. Login</strong> to enter and access your data.</li>
+        <li><strong>3. Add, View, and Manage</strong> your mushroom collection.</li>
+        <li><strong>4. Optional:</strong> Participate in editing and adding characters to describe fungi data if you have the experience.</li>
+      </ol>
+      <p class="mt-3 text-sm"><span class="text-red-500">Notice:</span> <strong>There are <u>a lot</u> of characters to consider!</strong> Formatting them for the real world is one of the main goals and challenges for this website. This is a work in progress, and we are always looking for help to improve the accuracy and completeness of the data.</p>
+    </div>
+  </div>
+</div>
 
-<p><span class="text-red-500">Notice: </span> <strong>There are <u>a lot</u> of characters to consider!</strong> Formatting them for the real world is one of the main goals and challenges for this website. This is a work in progress, and we are always looking for help to improve the accuracy and completeness of the data.</p>
+<!-- Pagination Top -->
+<%= render "shared/pagination", collection: @mushrooms %>
+
+<!-- Mushroom Preview Cards -->
+<% if @mushrooms&.any? %>
+  <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
+  <% grouped.keys.sort.each do |ft_name| %>
+    <!-- Fungus Type Header -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3 pb-2 border-b-2 border-gray-300">
+        <%= ft_name %>
+      </h2>
+
+      <!-- 4-column grid of mushrooms (NON-CLICKABLE) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <% grouped[ft_name].each do |mushroom| %>
+          <!-- Non-clickable preview card -->
+          <div class="block border-2 border-gray-400 rounded-lg overflow-hidden bg-white relative">
+            <!-- "Preview Only" Badge -->
+            <div class="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+              Preview Only
+            </div>
+
+            <!-- Image -->
+            <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
+            <% if images.any? %>
+              <div class="relative w-full" style="height: 200px;">
+                <%= image_tag(
+                      url_for(images.first.image_file.variant(
+                        resize_to_fill: [300, 300],
+                        format: :webp,
+                        saver: { strip: true, quality: 70, effort: 4 }
+                      )),
+                      alt: mushroom.name || "Mushroom image",
+                      class: "w-full h-full object-cover",
+                      onerror: "this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-full bg-gray-200 flex items-center justify-center\\'><span class=\\'text-gray-400 text-sm\\'>Image unavailable</span></div>';"
+                    ) %>
+                <% if images.size > 1 %>
+                  <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                    +<%= images.size - 1 %>
+                  </span>
+                <% end %>
+              </div>
+            <% else %>
+              <!-- Placeholder if no image -->
+              <div class="w-full bg-gray-200 flex items-center justify-center" style="height: 200px;">
+                <span class="text-gray-400 text-sm">No image</span>
+              </div>
+            <% end %>
+
+            <!-- Text content below image -->
+            <div class="p-3">
+              <% identifications = mushroom.ranked_identifications %>
+              <% if identifications.any? %>
+                <div class="text-xs italic text-gray-600 mb-1">
+                  <em><%= identifications.first[:genus]&.name&.capitalize || '?' %> <%= identifications.first[:species]&.name || '?' %></em>
+                </div>
+              <% end %>
+
+              <p class="font-semibold text-gray-900 mb-1">
+                <%= mushroom.name.presence || "Unnamed" %>
+              </p>
+
+              <% if mushroom.collection_date.present? %>
+                <p class="text-xs text-gray-600">
+                  <%= mushroom.collection_date.strftime('%m-%d-%Y') %>
+                </p>
+              <% end %>
+
+              <% location_parts = [
+                mushroom.city,
+                (mushroom.county.present? ? "#{mushroom.county} County" : nil),
+                mushroom.state&.name,
+                mushroom.country&.name
+              ].compact.reject(&:blank?) %>
+              <% if location_parts.any? %>
+                <p class="text-xs text-gray-500">
+                  <%= location_parts.join(", ") %>
+                </p>
+              <% end %>
+            </div>
+
+            <!-- Sign up overlay hint -->
+            <div class="px-3 pb-3 pt-0">
+              <div class="text-center text-xs text-gray-500 italic border-t pt-2">
+                Sign up to view full details
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-center text-gray-600 my-8">No mushrooms available for preview.</p>
+<% end %>
+
+<!-- Pagination Bottom -->
+<%= render "shared/pagination", collection: @mushrooms %>
