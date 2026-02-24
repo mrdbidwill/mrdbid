@@ -5,7 +5,7 @@
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
       <h2 class="text-xl font-semibold mb-2">About This Dataset</h2>
       <p class="mb-4">
-        This is a complete list of all <%= number_with_delimiter(@total_count) %> observation fields available on iNaturalist.
+        This is a searchable database of all <%= number_with_delimiter(@total_count) %> observation fields available on iNaturalist.
         These fields are particularly useful for mushroom and fungi identification to maintain consistency and avoid duplication.
       </p>
       <p class="text-sm text-gray-600">
@@ -14,56 +14,103 @@
       </p>
     </div>
 
+    <!-- Search Form -->
+    <div class="mb-6">
+      <%= form_with url: inaturalist_observation_fields_path, method: :get, class: "flex gap-2" do |f| %>
+        <%= f.text_field :q,
+            value: @query,
+            placeholder: "Search by name, description, or allowed values...",
+            class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        <%= f.submit "Search", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition cursor-pointer" %>
+        <% if @query.present? %>
+          <%= link_to "Clear", inaturalist_observation_fields_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition" %>
+        <% end %>
+      <% end %>
+      <% if @query.present? %>
+        <p class="text-sm text-gray-600 mt-2">
+          Found <%= number_with_delimiter(@observation_fields.total_count) %> results for "<%= @query %>"
+        </p>
+      <% end %>
+    </div>
+
     <div class="flex gap-4 mb-6">
-      <%= link_to "Download CSV", download_inaturalist_csv_path,
+      <%= link_to "📥 Download CSV", download_inaturalist_csv_path,
           class: "bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition" %>
-      <%= link_to "Download JSON", download_inaturalist_json_path,
+      <%= link_to "📥 Download JSON", download_inaturalist_json_path,
           class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition" %>
-      <a href="https://github.com/mrdbidwill/mrdbid/tree/main/data/inaturalist"
-         class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded-lg transition"
-         target="_blank">View on GitHub</a>
     </div>
   </div>
 
+  <!-- Results Table -->
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Description</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Allowed Values</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Usage</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @observation_fields.each do |field| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <%= field.inaturalist_id %>
+              </td>
+              <td class="px-6 py-4 text-sm font-semibold text-gray-900">
+                <%= field.name %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <span class="px-2 py-1 bg-gray-100 rounded text-xs"><%= field.datatype %></span>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700 max-w-md">
+                <%= field.description.present? ? truncate(field.description, length: 150) : '—' %>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600 max-w-xs">
+                <% if field.allowed_values.present? %>
+                  <div class="flex flex-wrap gap-1">
+                    <% field.allowed_values.split('|').first(5).each do |value| %>
+                      <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded text-xs"><%= value %></span>
+                    <% end %>
+                    <% if field.allowed_values.split('|').length > 5 %>
+                      <span class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs">+<%= field.allowed_values.split('|').length - 5 %> more</span>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <span class="text-gray-400">—</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <%= field.users_count || 0 %> users
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-6">
+    <%= paginate @observation_fields, theme: 'tailwind_bar' %>
+  </div>
+
+  <!-- Tips -->
   <div class="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-    <h3 class="text-lg font-semibold mb-2">How to Find Mushroom/Mycology Fields</h3>
-
-    <p class="mb-3 text-sm text-gray-700">
-      Download the CSV or JSON file above, then use these methods to filter for mushroom and fungi-related fields:
-    </p>
-
-    <div class="space-y-4">
-      <div>
-        <h4 class="font-semibold text-sm text-gray-800 mb-1">Excel / Google Sheets / LibreOffice:</h4>
-        <ol class="list-decimal list-inside space-y-1 text-sm text-gray-700 ml-2">
-          <li>Open the CSV file</li>
-          <li>Select the "name" or "description" column</li>
-          <li>Use Data → Filter or AutoFilter</li>
-          <li>Filter by text contains: "mushroom", "fungi", "fungus", "spore", "mycelium", "cap", "gill", "pileus", "stipe", etc.</li>
-        </ol>
-      </div>
-
-      <div>
-        <h4 class="font-semibold text-sm text-gray-800 mb-1">Command Line (grep):</h4>
-        <pre class="bg-gray-800 text-green-400 p-2 rounded text-xs overflow-x-auto">grep -i "mushroom\|fungi\|fungus\|spore\|mycelium" observation_fields.csv</pre>
-      </div>
-
-      <div>
-        <h4 class="font-semibold text-sm text-gray-800 mb-1">Python (pandas):</h4>
-        <pre class="bg-gray-800 text-green-400 p-2 rounded text-xs overflow-x-auto">import pandas as pd
-df = pd.read_csv('observation_fields.csv')
-mushroom_fields = df[df['name'].str.contains('mushroom|fungi|spore', case=False, na=False) |
-                     df['description'].str.contains('mushroom|fungi|spore', case=False, na=False)]</pre>
-      </div>
-
-      <div>
-        <h4 class="font-semibold text-sm text-gray-800 mb-1">Suggested Keywords for Mushroom/Fungi:</h4>
-        <p class="text-xs text-gray-600 italic">
-          mushroom, fungi, fungus, fungal, mycology, spore, mycelium, hypha, basidiomycete, ascomycete,
-          cap, pileus, gill, lamella, stipe, stem, volva, annulus, pore, tube, conk, bracket, polypore,
-          bolete, chanterelle, morel, truffle, puffball
-        </p>
-      </div>
+    <h3 class="text-lg font-semibold mb-2">💡 Search Tips</h3>
+    <div class="text-sm text-gray-700 space-y-2">
+      <p><strong>For Mushroom/Mycology Fields, try searching:</strong></p>
+      <ul class="list-disc list-inside ml-4 space-y-1">
+        <li>mushroom, fungi, fungus, fungal, mycology</li>
+        <li>spore, mycelium, hypha, basidiomycete, ascomycete</li>
+        <li>cap, pileus, gill, lamella, stipe, stem, volva, annulus</li>
+        <li>pore, tube, conk, bracket, polypore</li>
+        <li>bolete, chanterelle, morel, truffle, puffball</li>
+      </ul>
     </div>
   </div>
 </div>

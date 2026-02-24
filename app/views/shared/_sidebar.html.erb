@@ -91,43 +91,30 @@
 
       <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
-      <!-- Export All -->
-      <!-- CRITICAL: Do not remove the data-turbo-confirm or the JavaScript handling below.
-           This confirmation dialog and loading overlay provide essential user feedback during PDF generation.
-           See: CODING_STANDARDS.md and commit 1f7a688 for why this pattern is required.
-           PDF generation can take 10-60+ seconds depending on number of mushrooms.
-           Without this feedback, users think the button is broken. DO NOT SIMPLIFY THIS CODE. -->
-      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-          class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
-          id: "export-all-pdf-link",
-          data: {
-            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
-            turbo: false
-          } %>
-
-      <!-- Export Images -->
-      <%= link_to "💾 Backup My Images", new_users_image_export_path,
-          class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition" %>
-
       <div class="my-2 border-t border-gray-400"></div>
 
-      <!-- Organization Tools (Collapsible) -->
+      <!-- Tools Menu (Collapsible) -->
       <div class="mb-3">
         <button type="button"
                 onclick="this.nextElementSibling.classList.toggle('hidden')"
-                class="w-full text-left px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium transition flex items-center justify-between">
-          <span>📁 Organize Specimens</span>
+                class="w-full text-left px-3 py-2 rounded bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium transition flex items-center justify-between">
+          <span>🛠️ Tools</span>
           <span class="text-xs">▼</span>
         </button>
         <div class="hidden mt-1 space-y-1 pl-2">
-          <%= link_to "Clusters", clusters_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
-          <%= link_to "Groups", all_groups_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
-          <% if current_user&.admin? %>
-            <%= link_to "Projects (Universal) 🌍", admin_projects_path, class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold transition" %>
-          <% else %>
-            <%= link_to "Projects", projects_path, class: "block px-3 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium transition" %>
-          <% end %>
-          <p class="text-xs text-gray-600 px-2 py-1 italic">Create custom collections to organize your specimens</p>
+          <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
+              class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition",
+              id: "export-all-pdf-link",
+              data: {
+                turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
+                turbo: false
+              } %>
+          <%= link_to "💾 Backup My Images", new_users_image_export_path,
+              class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium transition" %>
+          <%= link_to "📁 Organize Specimens", tools_path,
+              class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium transition" %>
+          <%= link_to "🔍 iNaturalist Fields", inaturalist_observation_fields_path,
+              class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition" %>
         </div>
       </div>
 

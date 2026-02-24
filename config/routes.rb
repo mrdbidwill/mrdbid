@@ -138,6 +138,9 @@ Rails.application.routes.draw do
     get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
     get 'terms', to: 'pages#terms'
 
+  # Tools page
+  get 'tools', to: 'tools#index', as: :tools
+
   # iNaturalist data routes
   get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
   get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv

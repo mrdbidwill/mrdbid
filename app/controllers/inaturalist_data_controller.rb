@@ -3,28 +3,32 @@ class InaturalistDataController < ApplicationController
   skip_after_action :verify_authorized, only: [:download_csv, :download_json], raise: false
 
   def index
-    csv_path = Rails.root.join('data', 'inaturalist', 'observation_fields.csv')
-    @observation_fields = []
-    @total_count = 0
+    @query = params[:q]
+    @observation_fields = InaturalistObservationField.all
 
-    if File.exist?(csv_path)
-      require 'csv'
-      CSV.foreach(csv_path, headers: true) do |row|
-        @observation_fields << row.to_h
-      end
-      @total_count = @observation_fields.count
-    end
+    # Apply search if query present
+    @observation_fields = @observation_fields.search(@query) if @query.present?
+
+    # Order and paginate
+    @observation_fields = @observation_fields.recent.page(params[:page]).per(50)
+    @total_count = InaturalistObservationField.count
   end
 
   def download_csv
-    send_file Rails.root.join('data', 'inaturalist', 'observation_fields.csv'),
+    send_file Rails.root.join('tmp', 'inaturalist_observation_fields.csv'),
               filename: 'inaturalist_observation_fields.csv',
               type: 'text/csv',
               disposition: 'attachment'
+  rescue Errno::ENOENT
+    redirect_to inaturalist_observation_fields_path, alert: "CSV file not found"
   end
 
   def download_json
-    send_file Rails.root.join('data', 'inaturalist', 'observation_fields.json'),
+    # Generate JSON from database
+    @observation_fields = InaturalistObservationField.all
+    json_data = @observation_fields.as_json(except: [:id, :created_at, :updated_at])
+
+    send_data json_data.to_json,
               filename: 'inaturalist_observation_fields.json',
               type: 'application/json',
               disposition: 'attachment'

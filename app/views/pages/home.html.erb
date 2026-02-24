@@ -3,7 +3,7 @@
 <h3 class="text-xl font-bold text-green-600 mb-4">A personal mushroom storage notebook and much more...</h3>
 
 <!-- Call-to-Action Banner -->
-<div class="group-box mb-6" style="border: 2px solid #16a34a;">
+<div class="group-box mb-3" style="border: 2px solid #16a34a;">
   <div class="group-header" style="background-color: #dcfce7;">
     <h2 class="text-lg font-bold text-gray-900">Explore Sample Mushroom Collections</h2>
   </div>
@@ -29,7 +29,9 @@
 </div>
 
 <!-- Pagination Top -->
-<%= render "shared/pagination", collection: @mushrooms %>
+<div class="mb-1">
+  <%= render "shared/pagination", collection: @mushrooms %>
+</div>
 
 <!-- Mushroom Preview Cards -->
 <% if @mushrooms&.any? %>
@@ -126,4 +128,6 @@
 <% end %>
 
 <!-- Pagination Bottom -->
-<%= render "shared/pagination", collection: @mushrooms %>
+<div class="mt-2">
+  <%= render "shared/pagination", collection: @mushrooms %>
+</div>
