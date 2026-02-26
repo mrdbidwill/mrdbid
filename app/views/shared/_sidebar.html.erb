@@ -102,15 +102,7 @@
           <span class="text-xs">▼</span>
         </button>
         <div class="hidden mt-1 space-y-1 pl-2">
-          <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-              class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition",
-              id: "export-all-pdf-link",
-              data: {
-                turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
-                turbo: false
-              } %>
-          <%= link_to "💾 Backup My Images", new_users_image_export_path,
-              class: "block px-3 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium transition" %>
+
           <%= link_to "📁 Organize Specimens", tools_path,
               class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium transition" %>
           <%= link_to "🔍 iNaturalist Fields", inaturalist_observation_fields_path,
