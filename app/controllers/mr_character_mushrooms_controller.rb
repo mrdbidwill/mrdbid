@@ -1,7 +1,9 @@
 class MrCharacterMushroomsController < ApplicationController
   # Add Pundit if you authorize mushrooms; ensure policy permits linking characters
+  before_action :authenticate_user!
   before_action :set_mushroom, except: [:bulk_update]
   before_action :set_mushroom_for_bulk, only: [:bulk_update]
+  before_action :authorize_mushroom!, only: [:create, :bulk_update]
   skip_after_action :verify_authorized, raise: false
 
   def create
@@ -108,6 +110,10 @@ class MrCharacterMushroomsController < ApplicationController
 
   def set_mushroom_for_bulk
     @mushroom = Mushroom.find(params[:mushroom_id])
+  end
+
+  def authorize_mushroom!
+    authorize @mushroom, :update?
   end
 
   # Display option helpers

@@ -4,6 +4,7 @@
 class AllGroupMushroomsController < ApplicationController
   include Pundit::Authorization
 
+  before_action :authenticate_user!
   before_action :set_all_group_mushroom, only: %i[ show edit update destroy ]
 
   # Skip Pundit verification - authorization handled via ownership checks
@@ -11,10 +12,14 @@ class AllGroupMushroomsController < ApplicationController
   skip_after_action :verify_policy_scoped, only: [:index], raise: false
 
   def index
-    @all_group_mushrooms = AllGroupMushroom.all
+    @all_group_mushrooms = policy_scope(AllGroupMushroom)
   end
 
   def show
+    unless owns_mushroom?(@all_group_mushroom.mushroom)
+      redirect_to mushrooms_path, alert: "You can only view your own mushroom associations."
+      return
+    end
   end
 
   def new
@@ -26,6 +31,10 @@ class AllGroupMushroomsController < ApplicationController
                 else
                   AllGroup.none
                 end
+    if @mushroom && !owns_mushroom?(@mushroom)
+      redirect_to mushrooms_path, alert: "You can only add groups to your own mushrooms."
+      return
+    end
   end
 
 
@@ -33,6 +42,11 @@ class AllGroupMushroomsController < ApplicationController
     @all_group_mushroom = AllGroupMushroom.new(all_group_mushroom_params)
     @mushroom = Mushroom.find_by(id: all_group_mushroom_params[:mushroom_id])
     @all_groups = @mushroom ? AllGroup.where(user_id: @mushroom.user_id) : AllGroup.none
+    # Ownership guard: user must own the mushroom (or be elevated admin)
+    unless owns_mushroom?(@mushroom)
+      redirect_to mushrooms_path, alert: "You can only add groups to your own mushrooms."
+      return
+    end
     if @mushroom && AllGroup.where(id: @all_group_mushroom.all_group_id, user_id: @mushroom.user_id).exists? && @all_group_mushroom.save
       redirect_to all_group_mushroom_path(@all_group_mushroom), notice: "All group mushroom was successfully created.", status: :see_other
     else
@@ -42,7 +56,7 @@ class AllGroupMushroomsController < ApplicationController
 
   def edit
     # Verify user owns the mushroom
-    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@all_group_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only edit your own mushroom associations."
       return
     end
@@ -50,7 +64,7 @@ class AllGroupMushroomsController < ApplicationController
 
   def update
     # Verify user owns the mushroom
-    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@all_group_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only update your own mushroom associations."
       return
     end
@@ -65,7 +79,7 @@ class AllGroupMushroomsController < ApplicationController
 
   def destroy
     # Verify user owns the mushroom
-    unless @all_group_mushroom.mushroom && @all_group_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@all_group_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only delete your own mushroom associations."
       return
     end
@@ -91,5 +105,11 @@ class AllGroupMushroomsController < ApplicationController
       :mushroom_id,
       :all_group_id
     )
+  end
+
+  def owns_mushroom?(mushroom)
+    return false unless mushroom && current_user
+    return true if current_user.elevated_admin?
+    mushroom.user_id == current_user.id
   end
 end

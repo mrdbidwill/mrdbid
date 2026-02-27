@@ -26,17 +26,17 @@ module ApplicationHelper
     LookupItem.where(mr_character_id: character.id).order(:name).pluck(:name, :id)
   end
 
-  # Check if current user is an admin (permission_id < 5)
+  # Check if current user is an elevated admin (Owner/Admin only)
   # This helper enables inline edit links for admins throughout the application.
   # Admin users can click edit icons next to characters and lookup items to quickly
   # edit definitions without leaving their current workflow.
   #
-  # Returns true if user is signed in AND has admin permissions (permission_id < 5)
+  # Returns true if user is signed in AND has elevated admin permissions (Owner/Admin only)
   # Returns false if user not signed in or not an admin
   #
   # Used in views to conditionally show admin-only edit links
   def admin_user?
-    user_signed_in? && current_user.admin?
+    user_signed_in? && current_user.elevated_admin?
   end
 
   # Render an input for a given character based on its display option.

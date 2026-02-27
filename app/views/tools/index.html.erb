@@ -2,30 +2,10 @@
   <h1 class="text-4xl font-bold mb-8">🛠️ Tools & Utilities</h1>
 
   <p class="text-lg text-gray-700 mb-8">
-    Access various tools and utilities to manage your mushroom database, export data, and organize your specimens.
+    Access various tools and utilities to manage your mushroom database and organize your specimens.
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Export Tools -->
-    <div class="bg-white shadow-lg rounded-lg p-6 border-t-4 border-indigo-600">
-      <div class="flex items-center mb-4">
-        <span class="text-4xl mr-3">📄</span>
-        <h2 class="text-2xl font-semibold text-gray-900">Export All to PDF</h2>
-      </div>
-      <p class="text-gray-600 mb-4">
-        Generate a comprehensive PDF document containing all of your mushroom specimens with images and details.
-      </p>
-      <%= link_to export_all_pdf_mushrooms_path(format: :pdf),
-          class: "inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition w-full text-center",
-          id: "export-all-pdf-link",
-          data: {
-            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
-            turbo: false
-          } do %>
-        Export to PDF
-      <% end %>
-    </div>
-
     <!-- Organization Tools -->
     <div class="bg-white shadow-lg rounded-lg p-6 border-t-4 border-gray-600">
       <div class="flex items-center mb-4">
@@ -67,7 +47,6 @@
   <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
     <h3 class="text-lg font-semibold mb-2">ℹ️ About These Tools</h3>
     <ul class="space-y-2 text-sm text-gray-700">
-      <li><strong>Export to PDF:</strong> Creates a detailed document with all mushroom data. Large collections may take 1-2 minutes.</li>
       <li><strong>Organization:</strong> Use Clusters for field trips, Groups for related specimens, and Projects for research collections.</li>
       <li><strong>iNaturalist Fields:</strong> Reference database to help maintain data consistency when submitting observations.</li>
     </ul>

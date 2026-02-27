@@ -32,12 +32,7 @@
         mushroom_mushroom_comparisons_path(mushroom_id: mushroom.id),
         class: "border-2 border-violet-600 bg-white text-violet-700 hover:bg-violet-50 font-medium px-4 py-2.5 rounded transition text-center" %>
 
-    <%# 4. Export PDF - Navigation link %>
-    <%= link_to "Export PDF",
-        export_pdf_mushroom_path(mushroom, format: :pdf),
-        class: "border-2 border-teal-600 bg-white text-teal-700 hover:bg-teal-50 font-medium px-4 py-2.5 rounded transition text-center" %>
-
-    <%# 5. Delete This Mushroom - Destructive action %>
+    <%# 4. Delete This Mushroom - Destructive action %>
     <% if user_signed_in? && (defined?(policy) ? policy(mushroom)&.destroy? : (current_user && mushroom.user == current_user)) %>
       <%= button_to "Delete Mushroom",
                     mushroom,

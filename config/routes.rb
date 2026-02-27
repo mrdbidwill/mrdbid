@@ -11,9 +11,6 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
 
-  # User management routes (for admin/user profile management)
-  resources :users
-
   # Two-Factor Authentication routes
   namespace :users do
     resource :two_factor_settings, only: [] do
@@ -33,12 +30,10 @@ Rails.application.routes.draw do
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
     resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
     member do
-      get 'export', to: 'mushrooms#export_pdf', as: :export_pdf, defaults: { format: :pdf }
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
     collection do
-      get 'export', to: 'mushrooms#export_pdf', as: :export_all_pdf, defaults: { format: :pdf }
       post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
     end
   end
@@ -109,6 +104,7 @@ Rails.application.routes.draw do
     resources :species
     resources :states
     resources :trees
+    resources :users, controller: "/users"
     resources :lookup_items do
       member do
         get :versions

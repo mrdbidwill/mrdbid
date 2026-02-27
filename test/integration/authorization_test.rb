@@ -89,28 +89,28 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     assert_response :success, "Non-owners should be able to view public mushroom pages"
 
     # Non-owner CANNOT edit owner's mushroom
-    assert_raises(Pundit::NotAuthorizedError, "Non-owners should not be able to edit others' mushrooms") do
-      get edit_mushroom_path(@mushroom)
-    end
+    get edit_mushroom_path(@mushroom)
+    assert_response :redirect, "Non-owners should not be able to edit others' mushrooms"
 
     # Non-owner CANNOT update owner's mushroom
-    assert_raises(Pundit::NotAuthorizedError) do
+    assert_no_changes -> { @mushroom.reload.name } do
       patch mushroom_path(@mushroom), params: {
         mushroom: { name: 'Hacked Name' }
       }
     end
     # Mushroom name should not have changed
-    @mushroom.reload
-    assert_not_equal 'Hacked Name', @mushroom.name
+    assert_response :redirect
   end
 
   test "authenticated non-owners cannot delete others' content" do
     sign_in @non_owner
 
     # Non-owner CANNOT delete owner's mushroom
-    assert_raises(Pundit::NotAuthorizedError) do
+    assert_no_difference('Mushroom.count') do
       delete mushroom_path(@mushroom)
     end
+
+    assert_response :redirect
   end
 
   test "authenticated non-admin users cannot access admin area" do
@@ -214,18 +214,6 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
       delete mushroom_path(other_mushroom)
     end
     assert_redirected_to mushrooms_path
-
-    # Admin CAN export others' mushrooms to PDF
-    export_mushroom = Mushroom.create!(
-      name: 'Test Mushroom for Export',
-      user: @owner,
-      country: countries(:one),
-      fungus_type: fungus_types(:one),
-      collection_date: Date.today
-    )
-    get export_pdf_mushroom_path(export_mushroom, format: :pdf)
-    assert_response :success
-    assert_equal 'application/pdf', response.content_type
 
     # Admin CAN manage others' images (test policy coverage)
     test_mushroom = Mushroom.create!(

@@ -13,11 +13,12 @@ class ApplicationController < ActionController::Base
   helper_method :policy, :policy_scope
 
   # Error handling
+  # Define the generic handler first so more specific handlers take priority.
+  rescue_from StandardError, with: :handle_internal_error
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::StrictLoadingViolationError, with: :handle_strict_loading_violation
   rescue_from ActiveStorage::FileNotFoundError, with: :handle_missing_file
-  rescue_from StandardError, with: :handle_internal_error
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -33,7 +34,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, unless: -> { devise_controller? || action_name == 'index' }
   after_action :verify_policy_scoped, unless: -> { devise_controller? || action_name != 'index' || !action_has_index? }
 
-  # Check if current user is an admin (permission_id < 5)
+  # Check if current user is an elevated admin (Owner/Admin only)
   # This method is made available to views via helper_method (see below)
   #
   # Purpose: Enable inline edit links for admins in user-facing workflows
@@ -50,7 +51,7 @@ class ApplicationController < ActionController::Base
   #   <% end %>
   def admin_user?
     # Helper method to check admin status
-    user_signed_in? && current_user.admin?
+    user_signed_in? && current_user.elevated_admin?
   end
   helper_method :admin_user?
 
@@ -109,6 +110,10 @@ class ApplicationController < ActionController::Base
         else
           redirect_to (request.referer || fallback), status: :see_other, allow_other_host: false
         end
+      end
+
+      format.pdf do
+        render plain: "You are not authorized to perform this action.", status: :forbidden, content_type: "text/plain"
       end
 
       format.json do

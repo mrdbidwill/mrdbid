@@ -18,7 +18,7 @@ class ImageMushroomPolicy < ApplicationPolicy
 
   def owner_or_admin?
     return false unless user
-    return true if user.admin?
+    return true if user.elevated_admin?
     return false unless record.mushroom
     record.mushroom.user_id == user.id
   end

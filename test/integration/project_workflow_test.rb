@@ -378,9 +378,9 @@ class ProjectWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot add another user's mushroom to their project" do
-    sign_in @user
+    sign_in @another_user
 
-    project = @user.projects.create!(
+    project = @another_user.projects.create!(
       name: "Unauthorized Mushroom Project",
       description: "Description"
     )
@@ -389,7 +389,7 @@ class ProjectWorkflowTest < ActionDispatch::IntegrationTest
       post mushroom_projects_path, params: {
         mushroom_project: {
           project_id: project.id,
-          mushroom_id: @other_user_mushroom.id
+          mushroom_id: @mushroom1.id
         }
       }
     end
@@ -398,9 +398,9 @@ class ProjectWorkflowTest < ActionDispatch::IntegrationTest
   end
 
   test "user cannot add mushroom to another user's project" do
-    sign_in @user
+    sign_in @another_user
 
-    other_project = @another_user.projects.create!(
+    other_project = @user.projects.create!(
       name: "Other User Project",
       description: "Description"
     )
@@ -409,7 +409,7 @@ class ProjectWorkflowTest < ActionDispatch::IntegrationTest
       post mushroom_projects_path, params: {
         mushroom_project: {
           project_id: other_project.id,
-          mushroom_id: @mushroom1.id
+          mushroom_id: @other_user_mushroom.id
         }
       }
     end

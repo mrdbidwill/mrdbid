@@ -1,27 +1,34 @@
 class MushroomPlantPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      return scope.all if user&.elevated_admin?
+      scope.joins(:mushroom).where(mushrooms: { user_id: user.id })
     end
   end
 
+  def owner_or_admin?
+    return false unless user
+    return true if user.elevated_admin?
+    record.mushroom&.user_id == user.id
+  end
+
   def create?
-    true
+    owner_or_admin?
   end
 
   def index?
-    true
+    user.present?
   end
 
   def show?
-    true
+    owner_or_admin?
   end
 
   def update?
-    true
+    owner_or_admin?
   end
 
   def destroy?
-    true
+    owner_or_admin?
   end
 end

@@ -18,13 +18,6 @@ class ToolsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "index should show export tools" do
-    get tools_path
-    assert_response :success
-    assert_match "Export All to PDF", response.body
-    assert_select "#export-all-pdf-link"
-  end
-
   test "index should show organization tools" do
     get tools_path
     assert_response :success

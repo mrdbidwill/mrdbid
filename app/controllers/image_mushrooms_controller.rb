@@ -78,25 +78,34 @@ class ImageMushroomsController < ApplicationController
 
   def edit
     authorize @image_mushroom
-    @mushrooms = Mushroom.all
+    @mushrooms = current_user&.elevated_admin? ? Mushroom.all : Mushroom.where(user_id: current_user.id)
     @parts = Part.all
   end
 
   def update
     authorize @image_mushroom
+    new_mushroom_id = image_mushroom_params[:mushroom_id].presence
+    if new_mushroom_id && new_mushroom_id.to_i != @image_mushroom.mushroom_id
+      new_mushroom = Mushroom.find_by(id: new_mushroom_id)
+      unless new_mushroom && (current_user&.elevated_admin? || new_mushroom.user_id == current_user.id)
+        redirect_to edit_mushroom_image_mushroom_path(@image_mushroom.mushroom_id, @image_mushroom),
+                    alert: "You can only move images to your own mushrooms."
+        return
+      end
+    end
     begin
       if @image_mushroom.update(image_mushroom_params)
         mushroom = Mushroom.find(@image_mushroom.mushroom_id)
         redirect_to edit_mushroom_path(mushroom), notice: 'Image was successfully updated.'
       else
-        @mushrooms = Mushroom.all
+        @mushrooms = current_user&.elevated_admin? ? Mushroom.all : Mushroom.where(user_id: current_user.id)
         @parts = Part.all
         # Reload to get association after failed update
         @image_mushroom.reload unless @image_mushroom.mushroom_id.nil?
         render :edit, status: :unprocessable_entity
       end
     rescue ActiveRecord::InvalidForeignKey, ActiveRecord::RecordInvalid
-      @mushrooms = Mushroom.all
+      @mushrooms = current_user&.elevated_admin? ? Mushroom.all : Mushroom.where(user_id: current_user.id)
       @parts = Part.all
       # Reload to get association after failed update
       @image_mushroom.reload unless @image_mushroom.mushroom_id.nil?

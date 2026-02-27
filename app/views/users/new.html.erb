@@ -2,7 +2,7 @@
 
 <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
   <div class="mb-6">
-    <%= link_to "← Back to Users", users_path, class: "text-blue-600 hover:text-blue-900" %>
+    <%= link_to "← Back to Users", admin_users_path, class: "text-blue-600 hover:text-blue-900" %>
   </div>
 
   <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -11,7 +11,7 @@
     </div>
 
     <div class="px-6 py-4">
-      <%= form_with model: @user, local: true, class: "space-y-4" do |form| %>
+      <%= form_with model: @user, url: admin_users_path, local: true, class: "space-y-4" do |form| %>
         <% if @user.errors.any? %>
           <div class="bg-red-50 border border-red-200 rounded-md p-4">
             <h3 class="text-sm font-medium text-red-800 mb-2">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex justify-end gap-2">
-          <%= link_to "Cancel", users_path, class: "btn" %>
+          <%= link_to "Cancel", admin_users_path, class: "btn" %>
           <%= form.submit "Create User", class: "btn-primary" %>
         </div>
       <% end %>

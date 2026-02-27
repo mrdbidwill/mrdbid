@@ -59,6 +59,11 @@ class User < ApplicationRecord
     permission_id.present? && permission_id < 5  # Owner-1, Admin-2, Expert-3, Scholar-4, Author-5, Editor-6, Contributor-7, Developer-8, Member-9
   end
 
+  # Elevated admin = full admin privileges (Owner/Admin only)
+  def elevated_admin?
+    permission_id.present? && permission_id <= 2
+  end
+
   def owner?
     permission_id.present? && permission_id == 1  # Owner-1
   end

@@ -1,5 +1,7 @@
 # PDF Export User Feedback Pattern
 
+**Related Standard:** `docs/AI_PROJECT_MEMORY.md` (Authorization & Ownership Rules)
+
 **Status:** MANDATORY
 **Created:** 2026-01-13 (after 4th+ occurrence)
 **Last Updated:** 2026-01-13

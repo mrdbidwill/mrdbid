@@ -14,10 +14,6 @@
 
     <li class="flex items-start">
       <span class="text-blue-600 mr-2 flex-shrink-0">▸</span>
-      <span>Not unique to admin. The "Export All to PDF" button will download all of a user's Mushroom with the characters and images entered. This feature is available to all on the "Mushroom" page. The goal is to offer a current record that is available offline where needed.</span>
-    </li>
-    <li class="flex items-start">
-      <span class="text-blue-600 mr-2 flex-shrink-0">▸</span>
       <div>
         <strong>Download Database Backup Options:</strong>
         <div class="ml-4 mt-2 space-y-2">
@@ -106,6 +102,10 @@
     <li class="flex items-start">
       <span class="text-blue-600 mr-2 flex-shrink-0">▸</span>
       <span><%= link_to "Admin To Do List", admin_admin_todos_path, class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %> Or just click on 'Admin To Do' buttons throughout site.</span>
+    </li>
+    <li class="flex items-start">
+      <span class="text-blue-600 mr-2 flex-shrink-0">▸</span>
+      <%= link_to "Users", admin_users_path, class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
     </li>
     <li class="flex items-start">
       <span class="text-blue-600 mr-2 flex-shrink-0">▸</span>

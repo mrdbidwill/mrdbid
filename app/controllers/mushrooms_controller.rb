@@ -26,11 +26,11 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index show new create export_pdf clone_characters toggle_view_mode]
+  before_action :authorize_mushroom, except: %i[index show new create clone_characters toggle_view_mode]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
-  skip_after_action :verify_authorized, only: [:show, :create, :export_pdf, :clone_characters, :toggle_view_mode], raise: false
+  skip_after_action :verify_authorized, only: [:show, :create, :clone_characters, :toggle_view_mode], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -255,56 +255,6 @@ class MushroomsController < ApplicationController
     else
       redirect_to @mushroom, alert: result.error
     end
-  end
-
-  # GET /mushrooms/export.pdf or /mushrooms/:id/export.pdf
-  def export_pdf
-    mushroom_ids = params[:id] || params[:ids]
-    started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-
-    log_pdf_export(
-      "PDF export started user_id=#{current_user&.id} "\
-      "mushroom_ids=#{Array(mushroom_ids).join(',')}"
-    )
-
-    result = Mushrooms::PdfExporter.call(
-      user: current_user,
-      mushroom_ids: mushroom_ids
-    )
-
-    if result.success?
-      send_data result.data[:pdf],
-                filename: result.data[:filename],
-                type: 'application/pdf',
-                disposition: 'attachment'
-      duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at) * 1000).round
-      log_pdf_export(
-        "PDF export completed user_id=#{current_user&.id} "\
-        "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
-        "duration_ms=#{duration_ms}"
-      )
-    else
-      log_pdf_export(
-        "PDF export failed user_id=#{current_user&.id} "\
-        "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
-        "error=#{result.error}",
-        level: :error
-      )
-
-      error_message = "PDF export failed: #{result.error}."
-      if request.format.pdf?
-        render plain: error_message, status: :unprocessable_entity, content_type: "text/plain"
-      else
-        redirect_to mushrooms_path, alert: error_message
-      end
-    end
-  rescue Pundit::NotAuthorizedError
-    raise # Let ApplicationController handle it
-  end
-
-  def log_pdf_export(message, level: :info)
-    Rails.logger.public_send(level, message)
-    $stdout.puts("[PDF_EXPORT] #{message}")
   end
 
   # POST /mushrooms/:id/clone_characters

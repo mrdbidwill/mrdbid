@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'open3'
 
 class ProductionBootTest < ActionDispatch::IntegrationTest
   # ============================================================================
@@ -16,14 +17,27 @@ class ProductionBootTest < ActionDispatch::IntegrationTest
   # ============================================================================
 
   test "application boots successfully in production mode" do
-    skip "Production boot test - requires production database setup"
+    db_host = ENV.fetch("DB_HOST", "127.0.0.1")
+    db_user = ENV.fetch("MYSQL_USER", "mrdbid_user")
+    db_password = ENV.fetch("MYSQL_PASSWORD", "devpassword")
+    db_name = ENV.fetch("PRODUCTION_BOOT_DB", "mrdbid_test")
 
-    # NOTE: This test is commented out because it requires production database.
-    # To enable:
-    # 1. Create production database: RAILS_ENV=production bin/rails db:create db:migrate
-    # 2. Remove the skip above
-    #
-    # This test is valuable for CI/CD to catch environment-specific callback bugs
+    database_url = ENV.fetch(
+      "PRODUCTION_BOOT_DATABASE_URL",
+      "mysql2://#{db_user}:#{db_password}@#{db_host}/#{db_name}"
+    )
+
+    env = {
+      "RAILS_ENV" => "production",
+      "DATABASE_URL" => database_url,
+      "SECRET_KEY_BASE" => "test-secret-key-base",
+      "RAILS_LOG_TO_STDOUT" => "1"
+    }
+
+    stdout, stderr, status = Open3.capture3(env, "bin/rails", "runner", "puts 'booted'")
+
+    assert status.success?, "Production boot failed. stdout=#{stdout} stderr=#{stderr}"
+    assert_includes stdout, "booted"
   end
 
   test "public pages are accessible without authentication" do

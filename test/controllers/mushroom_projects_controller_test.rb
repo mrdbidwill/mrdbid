@@ -90,7 +90,7 @@ class MushroomProjectsControllerTest < ActionDispatch::IntegrationTest
 
     # Authorization checks happen before validation, so we get a redirect
     assert_redirected_to mushrooms_path
-    assert_equal "You can only add mushrooms to your own projects.", flash[:alert]
+    assert_equal "You can only add mushrooms to your own or universal projects.", flash[:alert]
   end
 
   test "should require authentication" do

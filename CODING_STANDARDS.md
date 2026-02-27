@@ -8,6 +8,15 @@ This document serves as the index to all mandatory coding standards for the MrDb
 
 These standards were created after recurring bugs that wasted significant development time. Violating these standards will likely reintroduce bugs that have already been fixed multiple times.
 
+### 0. Authorization & Ownership Rules (AI Project Memory)
+**File:** `docs/AI_PROJECT_MEMORY.md`
+**Status:** MANDATORY
+**Created:** 2026-02-27
+
+**Summary:** Non-admin users can only create/edit/delete their own mushrooms and their own mushroom associations. Elevated Admins (permission_id 1–2) may override ownership rules. Public users are read-only. This document is the single source of truth for all authorization rules.
+
+**Why:** Ownership regressions have occurred repeatedly due to missing or inconsistent authorization checks across mutation endpoints. This standard exists to prevent reintroducing those bugs.
+
 ### 1. Rails 8 / Turbo Controller Pattern
 **File:** `RAILS_8_TURBO_STANDARD_PATTERN.md`
 **Status:** MANDATORY
@@ -60,6 +69,12 @@ Before merging any PR, verify:
 - [ ] Does NOT have `flash[:notice] =` before redirect
 - [ ] Tests use `assert_redirected_to`, not turbo_stream assertions
 
+### Authorization (All mutation endpoints)
+- [ ] Follows `docs/AI_PROJECT_MEMORY.md` ownership rules
+- [ ] Uses `authenticate_user!` for all mutation actions
+- [ ] Enforces Pundit authorization for the parent record
+- [ ] Has a regression test proving non-owners cannot mutate
+
 ### Views (image display)
 - [ ] All mushroom images use `loading="eager"`
 - [ ] All mushroom images use `fetchpriority="high"`
@@ -106,6 +121,9 @@ Before merging any PR, verify:
 - Include test results if applicable
 
 ## Additional Documentation
+
+### Authorization (Single Source of Truth)
+- `docs/AI_PROJECT_MEMORY.md` - Authorization and ownership rules (MUST FOLLOW)
 
 ### Feature Documentation
 - `COMPARISON_FEATURE.md` - Mushroom comparison functionality

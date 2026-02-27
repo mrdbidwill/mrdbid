@@ -29,10 +29,6 @@
       <%= link_to "Compare", mushroom_mushroom_comparisons_path(mushroom_id: mushroom.id),
           class: "px-3 py-2 rounded bg-purple-600 text-white font-medium hover:bg-purple-500 transition text-center" %>
 
-      <%# Export to PDF %>
-      <%= link_to "Export PDF", export_pdf_mushroom_path(mushroom, format: :pdf),
-          class: "px-3 py-2 rounded bg-teal-600 text-white font-medium hover:bg-teal-500 transition text-center" %>
-
       <%# Delete %>
       <% if user_signed_in? && (defined?(policy) ? policy(mushroom)&.destroy? : (current_user && mushroom.user == current_user)) %>
         <%= button_to "Delete This Mushroom",

@@ -4,6 +4,7 @@
 class ClusterMushroomsController < ApplicationController
   include Pundit::Authorization
 
+  before_action :authenticate_user!
   before_action :set_cluster_mushroom, only: %i[ show edit update destroy ]
 
   # Skip Pundit verification - authorization handled via ownership checks
@@ -11,10 +12,14 @@ class ClusterMushroomsController < ApplicationController
   skip_after_action :verify_policy_scoped, only: [:index], raise: false
 
   def index
-    @cluster_mushrooms = ClusterMushroom.all
+    @cluster_mushrooms = policy_scope(ClusterMushroom)
   end
 
   def show
+    unless owns_mushroom?(@cluster_mushroom.mushroom)
+      redirect_to mushrooms_path, alert: "You can only view your own mushroom associations."
+      return
+    end
   end
 
   def new
@@ -26,6 +31,10 @@ class ClusterMushroomsController < ApplicationController
                 else
                   Cluster.none
                 end
+    if @mushroom && !owns_mushroom?(@mushroom)
+      redirect_to mushrooms_path, alert: "You can only add clusters to your own mushrooms."
+      return
+    end
   end
 
   def create
@@ -37,6 +46,11 @@ class ClusterMushroomsController < ApplicationController
     @cluster_mushroom.mushroom = @mushroom if @mushroom
     # Only clusters owned by the mushroom owner should be selectable
     @clusters = @mushroom ? Cluster.where(user_id: @mushroom.user_id) : Cluster.none
+    # Ownership guard: user must own the mushroom (or be elevated admin)
+    unless owns_mushroom?(@mushroom)
+      redirect_to mushrooms_path, alert: "You can only add clusters to your own mushrooms."
+      return
+    end
     # Ownership guard: cluster must belong to the mushroom owner
     if @mushroom && Cluster.where(id: @cluster_mushroom.cluster_id, user_id: @mushroom.user_id).exists? && @cluster_mushroom.save
       redirect_to cluster_mushroom_path(@cluster_mushroom), notice: "Cluster mushroom was successfully created.", status: :see_other
@@ -50,7 +64,7 @@ class ClusterMushroomsController < ApplicationController
 
   def edit
     # Verify user owns the mushroom
-    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@cluster_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only edit your own mushroom associations."
       return
     end
@@ -58,7 +72,7 @@ class ClusterMushroomsController < ApplicationController
 
   def update
     # Verify user owns the mushroom
-    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@cluster_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only update your own mushroom associations."
       return
     end
@@ -73,7 +87,7 @@ class ClusterMushroomsController < ApplicationController
 
   def destroy
     # Verify user owns the mushroom
-    unless @cluster_mushroom.mushroom && @cluster_mushroom.mushroom.user_id == current_user.id
+    unless owns_mushroom?(@cluster_mushroom.mushroom)
       redirect_to mushrooms_path, alert: "You can only delete your own mushroom associations."
       return
     end
@@ -99,5 +113,11 @@ class ClusterMushroomsController < ApplicationController
       :mushroom_id,
       :cluster_id
     )
+  end
+
+  def owns_mushroom?(mushroom)
+    return false unless mushroom && current_user
+    return true if current_user.elevated_admin?
+    mushroom.user_id == current_user.id
   end
 end

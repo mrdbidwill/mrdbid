@@ -1,15 +1,25 @@
 class MushroomProjectPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      # Return only records owned via associated project
-      scope.joins(:project).where(projects: { user_id: user.id })
+      return scope.all if user&.elevated_admin?
+
+      scope
+        .joins(:project, :mushroom)
+        .where(mushrooms: { user_id: user.id })
+        .where("projects.user_id IS NULL OR projects.user_id = ?", user.id)
     end
   end
 
   # Reusable ownership logic via associations (project or mushroom)
-  def owner?
-    (record.respond_to?(:project) && record.project&.user_id == user.id) ||
-      (record.respond_to?(:mushroom) && record.mushroom&.user_id == user.id)
+  def owner_or_admin?
+    return false unless user
+    return true if user.elevated_admin?
+
+    mushroom_owned = record.respond_to?(:mushroom) && record.mushroom&.user_id == user.id
+    project = record.respond_to?(:project) ? record.project : nil
+    project_allowed = project && (project.user_id.nil? || project.user_id == user.id)
+
+    mushroom_owned && project_allowed
   end
 
 
@@ -19,29 +29,27 @@ class MushroomProjectPolicy < ApplicationPolicy
 
 
   def create?
-    # When authorizing a class for create (record is a Class), allow signed-in users.
-    # Instance-level ownership is enforced elsewhere when acting on a specific record.
-    user.present?
+    owner_or_admin?
   end
 
 
   def index?
-    true # Everyone can access the index
+    user.present?
   end
 
   def show?
-    owner? # Reuse ownership logic
+    owner_or_admin?
   end
 
   def edit?
-    owner? # Reuse ownership logic
+    owner_or_admin?
   end
 
   def update?
-    edit? # Reuse `edit?` for update permissions
+    owner_or_admin?
   end
 
   def destroy?
-    owner?
+    owner_or_admin?
   end
 end

@@ -1,29 +1,35 @@
 class AllGroupMushroomPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
+      return scope.all if user&.elevated_admin?
       # Allow users to see associations for their own mushrooms
       scope.joins(:mushroom).where(mushrooms: { user_id: user.id })
     end
   end
 
+  def owner_or_admin?
+    return false unless user
+    return true if user.elevated_admin?
+    record.mushroom&.user_id == user.id && record.all_group&.user_id == user.id
+  end
 
   def create?
-    record.mushroom&.user_id == user.id
+    owner_or_admin?
   end
 
   def index?
-    true
+    user.present?
   end
 
   def show?
-    record.mushroom&.user_id == user.id
+    owner_or_admin?
   end
 
   def update?
-    record.mushroom&.user_id == user.id
+    owner_or_admin?
   end
 
   def destroy?
-    record.mushroom&.user_id == user.id
+    owner_or_admin?
   end
 end

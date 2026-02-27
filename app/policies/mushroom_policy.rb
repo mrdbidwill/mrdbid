@@ -25,7 +25,7 @@ class MushroomPolicy < ApplicationPolicy
 
   # Shared logic to check if user is owner or admin
   def owner_or_admin?
-    user.present? && (record.user_id == user.id || user.admin?)
+    user.present? && (record.user_id == user.id || user.elevated_admin?)
   end
 
 

@@ -9,12 +9,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get users_url
+    get admin_users_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_user_url
+    get new_admin_user_url
     assert_response :success
   end
 
@@ -22,28 +22,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # Custom admin user management needs different approach or use Devise admin gems
 
   test "should show user" do
-    get user_url(@user)
+    get admin_user_url(@user)
     assert_response :success
   end
 
   test "should return 404 for non-existent user" do
-    get user_url(id: 99999)
+    get admin_user_url(id: 99999)
     assert_response :not_found
   end
 
   test "should get edit" do
-    get edit_user_url(@user)
+    get edit_admin_user_url(@user)
     assert_response :success
   end
 
   test "should update user" do
-    patch user_url(@user), params: {
+    patch admin_user_url(@user), params: {
       user: {
         display_name: "Updated Name"
       }
     }
 
-    assert_redirected_to user_url(@user)
+    assert_redirected_to admin_user_url(@user)
     assert_equal "User was successfully updated.", flash[:notice]
   end
 
@@ -55,17 +55,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_difference("User.count", -1) do
-      delete user_url(user_to_delete)
+      delete admin_user_url(user_to_delete)
     end
 
-    assert_redirected_to users_url
+    assert_redirected_to admin_users_url
     assert_equal "User was successfully deleted.", flash[:notice]
   end
 
   test "should handle invalid creation" do
-    skip "User creation via controller needs Devise integration fix"
     assert_no_difference("User.count") do
-      post users_url, params: {
+      post admin_users_url, params: {
         user: {
           email: "",  # Invalid
           password: "password"
@@ -77,7 +76,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should handle invalid update" do
-    patch user_url(@user), params: {
+    patch admin_user_url(@user), params: {
       user: {
         email: ""  # Invalid
       }
@@ -89,7 +88,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should require authentication" do
     sign_out @user
 
-    get users_url
+    get admin_users_url
     assert_redirected_to new_user_session_path
   end
 end

@@ -222,15 +222,14 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
   test "user cannot edit another user's mushroom" do
     sign_in @another_user  # Use non-admin user
 
-    assert_raises(Pundit::NotAuthorizedError) do
-      get edit_mushroom_path(@mushroom)  # Try to edit @user's mushroom
-    end
+    get edit_mushroom_path(@mushroom)  # Try to edit @user's mushroom
+    assert_response :redirect
   end
 
   test "user cannot update another user's mushroom" do
     sign_in @another_user  # Use non-admin user
 
-    assert_raises(Pundit::NotAuthorizedError) do
+    assert_no_changes -> { @mushroom.reload.name } do
       patch mushroom_path(@mushroom), params: {  # Try to update @user's mushroom
         mushroom: {
           name: "Hacked Mushroom Name"
@@ -238,8 +237,7 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
       }
     end
 
-    @mushroom.reload
-    assert_not_equal "Hacked Mushroom Name", @mushroom.name
+    assert_response :redirect
   end
 
   test "user cannot change mushroom user_id via mass assignment" do
@@ -300,10 +298,10 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
     assert_not @another_user.admin?, "Test setup error: @another_user should not be admin"
 
     assert_no_difference("Mushroom.count") do
-      assert_raises(Pundit::NotAuthorizedError) do
-        delete mushroom_path(@mushroom)  # Try to delete @user's mushroom
-      end
+      delete mushroom_path(@mushroom)  # Try to delete @user's mushroom
     end
+
+    assert_response :redirect
   end
 
   test "guest cannot delete mushroom" do
@@ -525,52 +523,6 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
           plant_id: plant.id
         }
       }, as: :json
-    end
-  end
-
-  # ==============================================================================
-  # PDF EXPORT TESTS
-  # ==============================================================================
-
-  test "user can export single mushroom to PDF" do
-    sign_in @user
-
-    get export_pdf_mushroom_path(@mushroom, format: :pdf)
-
-    assert_response :success
-    assert_equal "application/pdf", response.content_type
-    assert_match /attachment/, response.headers["Content-Disposition"]
-  end
-
-  test "user can export all their mushrooms to PDF" do
-    sign_in @user
-
-    get export_all_pdf_mushrooms_path(format: :pdf)
-
-    assert_response :success
-    assert_equal "application/pdf", response.content_type
-  end
-
-  test "user can export selected mushrooms to PDF" do
-    sign_in @user
-
-    mushroom2 = @user.mushrooms.create!(
-      name: "Second Mushroom",
-      country_id: @country.id,
-      fungus_type_id: @fungus_type.id
-    )
-
-    get export_all_pdf_mushrooms_path(ids: [@mushroom.id, mushroom2.id], format: :pdf)
-
-    assert_response :success
-    assert_equal "application/pdf", response.content_type
-  end
-
-  test "user cannot export another user's mushroom to PDF" do
-    sign_in @another_user  # Use non-admin user
-
-    assert_raises(Pundit::NotAuthorizedError) do
-      get export_pdf_mushroom_path(@mushroom, format: :pdf)  # Try to export @user's mushroom
     end
   end
 
