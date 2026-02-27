@@ -272,8 +272,18 @@ class MushroomsController < ApplicationController
                 type: 'application/pdf',
                 disposition: 'attachment'
     else
-      # Add period to match existing alert format
-      redirect_to mushrooms_path, alert: "#{result.error}."
+      Rails.logger.error(
+        "PDF export failed user_id=#{current_user&.id} "\
+        "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
+        "error=#{result.error}"
+      )
+
+      error_message = "PDF export failed: #{result.error}."
+      if request.format.pdf?
+        render plain: error_message, status: :unprocessable_entity, content_type: "text/plain"
+      else
+        redirect_to mushrooms_path, alert: error_message
+      end
     end
   rescue Pundit::NotAuthorizedError
     raise # Let ApplicationController handle it

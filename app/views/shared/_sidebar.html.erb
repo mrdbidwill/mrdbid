@@ -214,6 +214,9 @@
       // This prevents duplicate listeners when Turbo reloads the page
       const newExportPdfLink = exportPdfLink.cloneNode(true);
       exportPdfLink.parentNode.replaceChild(newExportPdfLink, exportPdfLink);
+      if (!newExportPdfLink.dataset.originalHtml) {
+        newExportPdfLink.dataset.originalHtml = newExportPdfLink.innerHTML;
+      }
 
       // Add event listener to the new (clean) element
       newExportPdfLink.addEventListener('click', function(e) {
@@ -270,10 +273,33 @@
           }
         };
 
+        const showExportError = (message) => {
+          const main = document.querySelector('main');
+          if (!main) return;
+          const existing = document.getElementById('pdf-export-error-banner');
+          if (existing) {
+            existing.remove();
+          }
+          const banner = document.createElement('div');
+          banner.id = 'pdf-export-error-banner';
+          banner.className = 'alert bg-red-50 border border-red-200 text-red-700 font-bold text-lg md:text-xl px-4 py-3 rounded mb-4';
+          banner.textContent = message;
+          main.prepend(banner);
+        };
+
         // Create hidden iframe for download
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         iframe.onload = function() {
+          try {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+            const errorText = iframeDoc?.body?.textContent?.trim();
+            if (errorText && errorText.startsWith('PDF export failed:')) {
+              showExportError(errorText);
+            }
+          } catch (e) {
+            // If iframe access fails, skip error detection
+          }
           // Keep overlay for at least 2 more seconds after iframe loads
           // to allow browser to initiate download
           setTimeout(function() {
@@ -322,7 +348,8 @@
     // Reset PDF export button state before caching
     const exportPdfLink = document.getElementById('export-all-pdf-link');
     if (exportPdfLink) {
-      exportPdfLink.innerHTML = '📄 Export All to PDF';
+      const originalHtml = exportPdfLink.dataset.originalHtml || '📄 Export All to PDF';
+      exportPdfLink.innerHTML = originalHtml;
       exportPdfLink.classList.add('hover:bg-indigo-700');
       exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
       exportPdfLink.style.pointerEvents = '';

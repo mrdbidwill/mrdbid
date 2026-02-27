@@ -126,6 +126,21 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/\.pdf/, content_disposition)
   end
 
+  test "should return plain text error for PDF export failures" do
+    failure_result = ApplicationService::Result.failure("Test failure")
+
+    original_call = Mushrooms::PdfExporter.method(:call)
+    Mushrooms::PdfExporter.define_singleton_method(:call) { |_args = nil, **_kwargs| failure_result }
+
+    get export_pdf_mushroom_path(@mushroom, format: :pdf)
+  ensure
+    Mushrooms::PdfExporter.define_singleton_method(:call, original_call)
+
+    assert_response :unprocessable_entity
+    assert_equal "text/plain", response.media_type
+    assert_match "PDF export failed: Test failure.", response.body
+  end
+
   test "should not allow exporting another user's mushroom" do
     # Sign in as non-admin user
     sign_out @user
@@ -165,8 +180,9 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
 
   test "should handle mushroom not found for PDF export" do
     get export_pdf_mushroom_path(id: 999999, format: :pdf)
-    assert_redirected_to mushrooms_path
-    assert_equal "Mushroom not found.", flash[:alert]
+    assert_response :unprocessable_entity
+    assert_equal "text/plain", response.media_type
+    assert_match "PDF export failed: Mushroom not found.", response.body
   end
 
   test "should require authentication for PDF export" do

@@ -22,7 +22,6 @@ class ToolsControllerTest < ActionDispatch::IntegrationTest
     get tools_path
     assert_response :success
     assert_match "Export All to PDF", response.body
-    assert_match "Backup My Images", response.body
   end
 
   test "index should show organization tools" do

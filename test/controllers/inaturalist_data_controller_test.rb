@@ -2,7 +2,7 @@ require "test_helper"
 
 class InaturalistDataControllerTest < ActionDispatch::IntegrationTest
   setup do
-    # InaturalistDataController does not require authentication for index
+    sign_in users(:one)
     @field1 = InaturalistObservationField.create!(
       inaturalist_id: 1,
       name: "Mushroom Cap Color",

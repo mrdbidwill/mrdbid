@@ -21,11 +21,6 @@ Rails.application.routes.draw do
       post :verify
       delete :disable
     end
-
-    # Image export routes
-    resource :image_export, only: [:new, :create]
-    get 'image_export/status/:id', to: 'image_exports#status', as: :image_export_status
-    get 'image_export/download/:id', to: 'image_exports#download', as: :image_export_download
   end
 
   # 2FA login verification

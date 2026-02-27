@@ -26,20 +26,6 @@
       <% end %>
     </div>
 
-    <!-- Image Backup -->
-    <div class="bg-white shadow-lg rounded-lg p-6 border-t-4 border-purple-600">
-      <div class="flex items-center mb-4">
-        <span class="text-4xl mr-3">💾</span>
-        <h2 class="text-2xl font-semibold text-gray-900">Backup My Images</h2>
-      </div>
-      <p class="text-gray-600 mb-4">
-        Download all your mushroom images and metadata as a ZIP file for safe keeping and offline access.
-      </p>
-      <%= link_to "Create Backup",
-          new_users_image_export_path,
-          class: "inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition w-full text-center" %>
-    </div>
-
     <!-- Organization Tools -->
     <div class="bg-white shadow-lg rounded-lg p-6 border-t-4 border-gray-600">
       <div class="flex items-center mb-4">
@@ -82,79 +68,8 @@
     <h3 class="text-lg font-semibold mb-2">ℹ️ About These Tools</h3>
     <ul class="space-y-2 text-sm text-gray-700">
       <li><strong>Export to PDF:</strong> Creates a detailed document with all mushroom data. Large collections may take 1-2 minutes.</li>
-      <li><strong>Image Backup:</strong> Downloads a ZIP file with all images and metadata. You retain full ownership of your images.</li>
       <li><strong>Organization:</strong> Use Clusters for field trips, Groups for related specimens, and Projects for research collections.</li>
       <li><strong>iNaturalist Fields:</strong> Reference database to help maintain data consistency when submitting observations.</li>
     </ul>
   </div>
 </div>
-
-<!-- CRITICAL: PDF Export Loading Feedback - DO NOT REMOVE OR SIMPLIFY -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const exportPdfLink = document.getElementById('export-all-pdf-link');
-    if (exportPdfLink) {
-      exportPdfLink.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        const confirmMessage = this.dataset.turboConfirm;
-        if (confirmMessage && !confirm(confirmMessage)) {
-          return;
-        }
-
-        const originalButtonContent = this.innerHTML;
-        const exportUrl = this.href;
-
-        // Change button text
-        this.innerHTML = '⏳ Exporting...';
-        this.classList.add('opacity-75', 'cursor-not-allowed');
-        this.style.pointerEvents = 'none';
-
-        // Show loading overlay
-        const loadingOverlay = document.createElement('div');
-        loadingOverlay.id = 'pdf-loading-overlay';
-        loadingOverlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
-        loadingOverlay.innerHTML = `
-          <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
-            <div class="mb-4">
-              <svg class="animate-spin h-16 w-16 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Generating PDF...</h3>
-            <p class="text-gray-600 mb-4">Please wait while we export your mushrooms to PDF.</p>
-            <p class="text-sm text-gray-500">Do not close this window or navigate away.</p>
-          </div>
-        `;
-        document.body.appendChild(loadingOverlay);
-
-        // Create hidden iframe for download
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = function() {
-          setTimeout(function() {
-            if (loadingOverlay.parentNode) loadingOverlay.remove();
-            exportPdfLink.innerHTML = originalButtonContent;
-            exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-            exportPdfLink.style.pointerEvents = '';
-            setTimeout(() => { if (iframe.parentNode) document.body.removeChild(iframe); }, 2000);
-          }, 2000);
-        };
-
-        setTimeout(function() {
-          if (loadingOverlay.parentNode) loadingOverlay.remove();
-          if (iframe.parentNode) document.body.removeChild(iframe);
-        }, 60000);
-
-        document.body.appendChild(iframe);
-        iframe.src = exportUrl;
-      });
-    }
-  });
-
-  // Re-initialize on Turbo navigation
-  document.addEventListener('turbo:load', function() {
-    // Same code as above...
-  });
-</script>
