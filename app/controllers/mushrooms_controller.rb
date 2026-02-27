@@ -260,6 +260,12 @@ class MushroomsController < ApplicationController
   # GET /mushrooms/export.pdf or /mushrooms/:id/export.pdf
   def export_pdf
     mushroom_ids = params[:id] || params[:ids]
+    started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+    Rails.logger.info(
+      "PDF export started user_id=#{current_user&.id} "\
+      "mushroom_ids=#{Array(mushroom_ids).join(',')}"
+    )
 
     result = Mushrooms::PdfExporter.call(
       user: current_user,
@@ -271,6 +277,12 @@ class MushroomsController < ApplicationController
                 filename: result.data[:filename],
                 type: 'application/pdf',
                 disposition: 'attachment'
+      duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at) * 1000).round
+      Rails.logger.info(
+        "PDF export completed user_id=#{current_user&.id} "\
+        "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
+        "duration_ms=#{duration_ms}"
+      )
     else
       Rails.logger.error(
         "PDF export failed user_id=#{current_user&.id} "\
