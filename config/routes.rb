@@ -129,9 +129,12 @@ Rails.application.routes.draw do
   end
 
   # Static pages
-    root 'pages#home'
-    get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
-    get 'terms', to: 'pages#terms'
+  authenticated :user do
+    root to: 'mushrooms#index', as: :authenticated_root
+  end
+  root 'pages#home'
+  get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
+  get 'terms', to: 'pages#terms'
 
   # Tools page
   get 'tools', to: 'tools#index', as: :tools
