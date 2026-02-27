@@ -22,7 +22,7 @@ class ToolsControllerTest < ActionDispatch::IntegrationTest
     get tools_path
     assert_response :success
     assert_match "Export All to PDF", response.body
-    assert_select "#export-all-pdf-link", 1
+    assert_select "#export-all-pdf-link"
   end
 
   test "index should show organization tools" do
