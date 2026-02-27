@@ -262,7 +262,7 @@ class MushroomsController < ApplicationController
     mushroom_ids = params[:id] || params[:ids]
     started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-    Rails.logger.info(
+    log_pdf_export(
       "PDF export started user_id=#{current_user&.id} "\
       "mushroom_ids=#{Array(mushroom_ids).join(',')}"
     )
@@ -278,16 +278,17 @@ class MushroomsController < ApplicationController
                 type: 'application/pdf',
                 disposition: 'attachment'
       duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at) * 1000).round
-      Rails.logger.info(
+      log_pdf_export(
         "PDF export completed user_id=#{current_user&.id} "\
         "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
         "duration_ms=#{duration_ms}"
       )
     else
-      Rails.logger.error(
+      log_pdf_export(
         "PDF export failed user_id=#{current_user&.id} "\
         "mushroom_ids=#{Array(mushroom_ids).join(',')} "\
-        "error=#{result.error}"
+        "error=#{result.error}",
+        level: :error
       )
 
       error_message = "PDF export failed: #{result.error}."
@@ -299,6 +300,11 @@ class MushroomsController < ApplicationController
     end
   rescue Pundit::NotAuthorizedError
     raise # Let ApplicationController handle it
+  end
+
+  def log_pdf_export(message, level: :info)
+    Rails.logger.public_send(level, message)
+    $stdout.puts("[PDF_EXPORT] #{message}")
   end
 
   # POST /mushrooms/:id/clone_characters

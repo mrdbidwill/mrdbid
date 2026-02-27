@@ -95,14 +95,18 @@ class MushroomPdfService
 
     images = mushroom.image_mushrooms.select { |im| im.image_file.attached? }
 
-    # Display up to 6 images per mushroom to keep PDF size reasonable
-    images.first(6).each_slice(3) do |row_images|
+    # Display fewer, smaller images to keep PDF generation stable on limited resources
+    max_images = 4
+    max_dimensions = [800, 800]
+
+    images.first(max_images).each_slice(2) do |row_images|
       image_data = []
 
       row_images.each do |image_mushroom|
         begin
-          # Download image to temp file
-          image_mushroom.image_file.open do |file|
+          # Use a resized variant to reduce memory/CPU during PDF generation
+          variant = image_mushroom.image_file.variant(resize_to_limit: max_dimensions).processed
+          variant.open do |file|
             # Add image with max width/height
             img_cell = pdf.make_cell(
               image: file.path,
@@ -123,8 +127,8 @@ class MushroomPdfService
         end
       end
 
-      # Fill remaining cells in row if less than 3 images
-      while image_data.length < 3
+      # Fill remaining cells in row if less than 2 images
+      while image_data.length < 2
         image_data << pdf.make_cell(content: '', borders: [])
       end
 
@@ -132,9 +136,9 @@ class MushroomPdfService
       pdf.move_down 5
     end
 
-    if images.count > 6
+    if images.count > max_images
       pdf.font_size(8) do
-        pdf.text "(Showing 6 of #{images.count} images)", color: '999999'
+        pdf.text "(Showing #{max_images} of #{images.count} images)", color: '999999'
       end
     end
   end
