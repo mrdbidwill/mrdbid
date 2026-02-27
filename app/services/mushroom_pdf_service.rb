@@ -29,7 +29,7 @@ class MushroomPdfService
 
     text.to_s
         .encode('Windows-1252', invalid: :replace, undef: :replace, replace: '?')
-        .force_encoding('UTF-8')
+        .encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
   end
 
   def render_mushroom(pdf, mushroom)
