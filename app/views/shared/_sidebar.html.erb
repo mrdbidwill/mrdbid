@@ -105,19 +105,6 @@
 
           <%= link_to "📁 Organize Specimens", tools_path,
               class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium transition" %>
-          <!-- Export All -->
-          <!-- CRITICAL: Do not remove the data-turbo-confirm or the JavaScript handling below.
-               This confirmation dialog and loading overlay provide essential user feedback during PDF generation.
-               See: CODING_STANDARDS.md and commit 1f7a688 for why this pattern is required.
-               PDF generation can take 10-60+ seconds depending on number of mushrooms.
-               Without this feedback, users think the button is broken. DO NOT SIMPLIFY THIS CODE. -->
-          <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-              class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition",
-              id: "export-all-pdf-link",
-              data: {
-                turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
-                turbo: false
-              } %>
           <%= link_to "🔍 iNaturalist Fields", inaturalist_observation_fields_path,
               class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition" %>
         </div>

@@ -104,26 +104,57 @@ class MushroomPdfService
 
       row_images.each do |image_mushroom|
         begin
-          # Use a resized variant to reduce memory/CPU during PDF generation
-          variant = image_mushroom.image_file.variant(resize_to_limit: max_dimensions).processed
-          variant.open do |file|
-            # Add image with max width/height
-            img_cell = pdf.make_cell(
-              image: file.path,
-              fit: [150, 150],
-              position: :center,
-              vposition: :center
-            )
-            image_data << img_cell
+          # Use a resized variant when possible to reduce memory/CPU during PDF generation.
+          # Fall back to the original blob if variant processing fails in production.
+          if image_mushroom.image_file.variable?
+            variant = image_mushroom.image_file.variant(resize_to_limit: max_dimensions).processed
+            variant.open do |file|
+              # Add image with max width/height
+              img_cell = pdf.make_cell(
+                image: file.path,
+                fit: [150, 150],
+                position: :center,
+                vposition: :center
+              )
+              image_data << img_cell
+            end
+          else
+            image_mushroom.image_file.open do |file|
+              # Add image with max width/height
+              img_cell = pdf.make_cell(
+                image: file.path,
+                fit: [150, 150],
+                position: :center,
+                vposition: :center
+              )
+              image_data << img_cell
+            end
           end
         rescue => e
-          # If image fails to load, add placeholder text
-          image_data << pdf.make_cell(content: '[Image unavailable]',
-                                       align: :center,
-                                       valign: :center,
-                                       height: 150,
-                                       width: 150)
-          Rails.logger.error("PDF image error for ImageMushroom##{image_mushroom.id}: #{e.message}")
+          begin
+            image_mushroom.image_file.open do |file|
+              # Add image with max width/height
+              img_cell = pdf.make_cell(
+                image: file.path,
+                fit: [150, 150],
+                position: :center,
+                vposition: :center
+              )
+              image_data << img_cell
+            end
+          rescue => fallback_error
+            # Add image with max width/height
+            # If image fails to load, add placeholder text
+            image_data << pdf.make_cell(content: '[Image unavailable]',
+                                         align: :center,
+                                         valign: :center,
+                                         height: 150,
+                                         width: 150)
+            Rails.logger.error(
+              "PDF image error for ImageMushroom##{image_mushroom.id}: #{e.class} #{e.message}; "\
+              "fallback_error=#{fallback_error.class} #{fallback_error.message}"
+            )
+          end
         end
       end
 
