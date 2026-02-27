@@ -184,6 +184,10 @@ bundle exec rails secret
 
 The database configuration is in `config/database.yml`. It's set up to use environment variables, so you typically don't need to edit this file directly.
 
+## GitHub Actions
+
+GitHub Actions are intentionally disabled for this repository, and there are no CI workflows configured.
+
 ## Running the Application
 
 1. **Start the Rails server**
