@@ -30,6 +30,7 @@ Description=Puma HTTP Server for auto-glossary (production)
 After=network.target
 StartLimitIntervalSec=300
 StartLimitBurst=5
+OnFailure=notify-on-failure@%n.service
 
 [Service]
 Type=simple

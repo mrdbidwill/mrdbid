@@ -66,6 +66,35 @@ namespace :systemd_puma do
     end
   end
 
+  desc 'Fail deploy if legacy Puma units are not masked'
+  task :assert_legacy_units_masked do
+    on roles(:app) do
+      info "Checking for legacy Puma units (must be masked or not-found)..."
+      checks = {
+        "puma.service" => "masked",
+        "puma_auto_glossary.service" => "masked"
+      }
+
+      checks.each do |unit, required|
+        status = capture(:systemctl, "is-enabled", unit, raise_on_non_zero_exit: false).strip
+        next if status == required || status == "not-found"
+
+        error "ERROR: #{unit} is #{status.inspect}. It must be #{required.inspect} or not-found."
+        error "Run: sudo systemctl stop #{unit}; sudo systemctl disable #{unit}; sudo systemctl mask --force #{unit}"
+        exit 1
+      end
+    end
+  end
+
+  desc 'Guard against duplicate Puma units (prevents socket conflicts)'
+  task :guard_duplicate_units do
+    on roles(:app) do
+      info "Ensuring legacy Puma units are masked to avoid duplicate instances..."
+      execute :sudo, :bash, "-lc", "systemctl stop puma.service || true; systemctl disable puma.service || true; systemctl mask --force puma.service || true"
+      execute :sudo, :bash, "-lc", "systemctl stop puma_auto_glossary.service || true; systemctl disable puma_auto_glossary.service || true; systemctl mask --force puma_auto_glossary.service || true"
+    end
+  end
+
   desc 'Start Puma via systemd'
   task :start do
     on roles(:app) do
@@ -151,6 +180,12 @@ namespace :systemd_puma do
     end
   end
 end
+
+# Fail early before any deploy changes if legacy units are not masked.
+before "deploy:starting", "systemd_puma:assert_legacy_units_masked"
+
+# Ensure duplicate units are blocked before restarting Puma
+before "systemd_puma:restart", "systemd_puma:guard_duplicate_units"
 
 # Add verification after restart
 after "systemd_puma:restart", "systemd_puma:verify"
