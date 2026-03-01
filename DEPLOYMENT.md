@@ -174,6 +174,13 @@ Test:
 sudo systemctl start notify-on-failure@puma-mrdbid.service
 ```
 
+## Monitoring (Recommended)
+
+Use a lightweight endpoint for uptime monitoring:
+- `https://mrdbid.com/health`
+
+This maps to Rails' health controller and should return HTTP 200 when the app is healthy.
+
 ## Directory Structure on Server
 
 ```

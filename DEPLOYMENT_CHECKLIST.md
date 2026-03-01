@@ -108,3 +108,8 @@ Ensure these exist on the server:
 1. `/etc/systemd/system/notify-on-failure@.service`
 2. `/usr/local/bin/systemd_notify_failure.sh`
 3. `/etc/systemd/system/notify-on-failure.env` with `EMAIL_TO` and `EMAIL_FROM`
+
+## Monitoring (Recommended)
+
+Use the lightweight health endpoint for uptime checks:
+- `https://mrdbid.com/health`
