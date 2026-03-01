@@ -168,8 +168,25 @@ namespace :systemd_puma do
       info "Checking if Puma systemd service is active..."
       execute :sudo, :systemctl, "is-active", "--quiet", "puma-mrdbid.service"
 
-      info "Checking if Puma socket exists..."
-      execute "test -S #{shared_path}/tmp/sockets/puma.sock || (echo 'ERROR: Puma socket missing' && exit 1)"
+      info "Waiting for Puma socket to appear..."
+      socket_path = "#{shared_path}/tmp/sockets/puma.sock"
+      socket_ready = false
+      10.times do |i|
+        attempt = i + 1
+        begin
+          execute "test -S #{socket_path}"
+          socket_ready = true
+          break
+        rescue SSHKit::Command::Failed
+          info "Socket not ready (attempt #{attempt})..."
+          sleep 2
+        end
+      end
+
+      unless socket_ready
+        error "ERROR: Puma socket missing after waiting"
+        exit 1
+      end
 
       info "Checking if Puma is responding to requests..."
       # Check the Unix socket directly with retry logic
