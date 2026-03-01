@@ -162,27 +162,28 @@ namespace :systemd_puma do
   desc 'Verify Puma is running and responding'
   task :verify do
     on roles(:app) do
-      info "Waiting 10 seconds for Puma to fully start..."
-      sleep 10
+      info "Waiting 15 seconds for Puma to fully start..."
+      sleep 15
 
-      info "Checking if Puma process is running..."
-      execute "ps aux | grep '[p]uma' || (echo 'ERROR: Puma process not found' && exit 1)"
+      info "Checking if Puma systemd service is active..."
+      execute :sudo, :systemctl, "is-active", "--quiet", "puma-mrdbid.service"
+
+      info "Checking if Puma socket exists..."
+      execute "test -S #{shared_path}/tmp/sockets/puma.sock || (echo 'ERROR: Puma socket missing' && exit 1)"
 
       info "Checking if Puma is responding to requests..."
       # Check the Unix socket directly with retry logic
-      max_attempts = 3
-      attempt = 0
+      max_attempts = 10
       success = false
-
       max_attempts.times do |i|
         attempt = i + 1
         begin
-          execute "curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null"
+          execute "curl --unix-socket #{shared_path}/tmp/sockets/puma.sock http://localhost/ -f -s -o /dev/null --max-time 5"
           success = true
           break
         rescue SSHKit::Command::Failed
           info "Attempt #{attempt} failed..."
-          sleep 2 unless attempt == max_attempts
+          sleep 3 unless attempt == max_attempts
         end
       end
 
