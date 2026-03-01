@@ -54,6 +54,7 @@ set :keep_releases, 5
 
 # Use systemd to restart Puma instead of capistrano-puma's restart
 after "deploy:published", "systemd_puma:restart"
+after "deploy:published", "systemd_solid_queue:restart"
 
 # Custom tasks to manage Puma via systemd
 namespace :systemd_puma do
@@ -90,8 +91,22 @@ namespace :systemd_puma do
   task :guard_duplicate_units do
     on roles(:app) do
       info "Ensuring legacy Puma units are masked to avoid duplicate instances..."
-      execute :sudo, :bash, "-lc", "systemctl stop puma.service || true; systemctl disable puma.service || true; systemctl mask --force puma.service || true"
-      execute :sudo, :bash, "-lc", "systemctl stop puma_auto_glossary.service || true; systemctl disable puma_auto_glossary.service || true; systemctl mask --force puma_auto_glossary.service || true"
+      legacy_units = %w[puma.service puma_auto_glossary.service]
+
+      legacy_units.each do |unit|
+        status = capture(:systemctl, "is-enabled", unit, raise_on_non_zero_exit: false).strip
+        next if status == "masked" || status == "not-found"
+
+        info "Legacy unit #{unit} is #{status.inspect}. Attempting to mask..."
+        begin
+          execute :sudo, "-n", :bash, "-lc", "systemctl stop #{unit} || true; systemctl disable #{unit} || true; systemctl mask --force #{unit}"
+        rescue SSHKit::Command::Failed
+          error "ERROR: Unable to mask #{unit} (sudo requires interactive auth)."
+          error "Run manually: sudo systemctl stop #{unit}; sudo systemctl disable #{unit}; sudo systemctl mask --force #{unit}"
+          error "Or allow passwordless sudo for those systemctl commands."
+          exit 1
+        end
+      end
     end
   end
 
@@ -177,6 +192,21 @@ namespace :systemd_puma do
       end
 
       info "✓ Puma is running and responding successfully"
+    end
+  end
+end
+
+# Custom tasks to manage Solid Queue via systemd
+namespace :systemd_solid_queue do
+  desc 'Restart Solid Queue worker via systemd (if installed)'
+  task :restart do
+    on roles(:app) do
+      unit_present = capture(:bash, "-lc", "systemctl list-unit-files --type=service | awk '{print $1}' | grep -qx 'solid-queue-mrdbid.service' && echo yes || echo no").strip
+      if unit_present == "yes"
+        execute :sudo, :systemctl, "restart", "solid-queue-mrdbid.service"
+      else
+        info "solid-queue-mrdbid.service not found; skipping restart"
+      end
     end
   end
 end

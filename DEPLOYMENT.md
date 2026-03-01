@@ -99,6 +99,23 @@ cap production deploy
 cap production deploy
 ```
 
+This automatically restarts:
+1. `puma-mrdbid.service`
+2. `solid-queue-mrdbid.service` (if installed)
+
+### Systemd Safeguards (Required)
+
+Capistrano now includes a guard that fails the deploy early if legacy units are not masked:
+1. `puma.service`
+2. `puma_auto_glossary.service`
+
+Verification:
+```bash
+systemctl is-enabled puma.service
+systemctl is-enabled puma_auto_glossary.service
+# Expect: masked or not-found
+```
+
 ### Database Migrations
 
 Migrations run automatically during deployment. To disable:
@@ -144,6 +161,18 @@ cap -T
 - `cap production puma:stop` - Stop Puma
 - `cap production puma:status` - Check Puma status
 - `cap production logs:tail` - Tail production logs
+
+## Failure Notifications (Recommended)
+
+Puma units call `notify-on-failure@%n.service` on failure. Ensure these exist on the server:
+1. `/etc/systemd/system/notify-on-failure@.service`
+2. `/usr/local/bin/systemd_notify_failure.sh`
+3. `/etc/systemd/system/notify-on-failure.env` with `EMAIL_TO` and `EMAIL_FROM`
+
+Test:
+```bash
+sudo systemctl start notify-on-failure@puma-mrdbid.service
+```
 
 ## Directory Structure on Server
 

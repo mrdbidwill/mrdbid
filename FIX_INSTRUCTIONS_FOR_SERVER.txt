@@ -98,3 +98,17 @@ See: PRODUCTION_500_ERROR_FIX_ACTUAL.md
 Complete documentation with timeline and technical details.
 
 ================================================================================
+RELATED SAFEGUARDS (2026-03-01)
+================================================================================
+
+Separate incident: CPU spikes due to legacy puma.service running alongside
+puma-mrdbid.service (socket conflict).
+
+Fix:
+  sudo systemctl stop puma.service
+  sudo systemctl disable puma.service
+  sudo systemctl mask --force puma.service
+
+Keep puma.service masked to prevent recurrence.
+
+================================================================================

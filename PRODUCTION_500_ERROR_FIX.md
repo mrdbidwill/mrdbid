@@ -198,6 +198,26 @@ sudo systemctl status puma-mrdbid.service
 
 ### View Recent Logs
 ```bash
+sudo journalctl -xeu puma-mrdbid.service -n 50
+tail -n 50 /opt/mrdbid/shared/log/puma_stderr.log
+```
+
+## 2026-03-01 Addendum (Not a 500 Error)
+
+A separate incident caused CPU spikes and slow response times:
+**Root cause:** duplicate `puma.service` running alongside `puma-mrdbid.service`, both binding `/opt/mrdbid/shared/tmp/sockets/puma.sock`.
+
+**Fix:**
+```bash
+sudo systemctl stop puma.service
+sudo systemctl disable puma.service
+sudo systemctl mask --force puma.service
+```
+
+This is unrelated to the 500 error issue above, but it can make the site feel unusably slow.
+
+### Additional Logs
+```bash
 # Systemd logs (last 50 lines)
 sudo journalctl -xeu puma-mrdbid.service -n 50
 

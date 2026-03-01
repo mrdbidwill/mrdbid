@@ -217,6 +217,20 @@ curl -I https://mrdbid.com/mushrooms
 # Should show: HTTP/2 200 (not 500)
 ```
 
+## 2026-03-01 Addendum (Separate Incident)
+
+**Symptoms:** CPU pegged, Puma restart loops, slow site.
+**Root cause:** legacy `puma.service` ran alongside `puma-mrdbid.service` and fought over the same socket.
+
+**Fix:**
+```bash
+sudo systemctl stop puma.service
+sudo systemctl disable puma.service
+sudo systemctl mask --force puma.service
+```
+
+This issue is unrelated to the Solid Queue strict_loading bug above.
+
 ---
 
 ## Future Monitoring

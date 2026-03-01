@@ -5,7 +5,7 @@
 This application has **TWO** critical services that must restart after each deploy:
 
 1. **Puma** (web server) - Automatically restarted by Capistrano
-2. **Solid Queue** (background job worker) - Automatically restarted by Capistrano
+2. **Solid Queue** (background job worker) - Automatically restarted by Capistrano (if installed)
 
 ### Why Both Must Restart
 
@@ -24,7 +24,7 @@ cap production deploy
 This automatically:
 1. Deploys new code
 2. Restarts Puma web server
-3. **Restarts Solid Queue worker** ← Critical for background jobs!
+3. Restarts Solid Queue worker
 
 ## Manual Restart (If Needed)
 
@@ -39,6 +39,19 @@ sudo systemctl restart puma-mrdbid.service
 
 # Restart Solid Queue (CRITICAL for background jobs!)
 sudo systemctl restart solid-queue-mrdbid.service
+```
+
+## Legacy Puma Units (Must Stay Masked)
+
+These legacy units must remain masked to prevent duplicate Puma instances and socket conflicts:
+1. `puma.service`
+2. `puma_auto_glossary.service`
+
+Verification:
+```bash
+systemctl is-enabled puma.service
+systemctl is-enabled puma_auto_glossary.service
+# Expect: masked or not-found
 ```
 
 ## Verifying Background Jobs Work
@@ -70,16 +83,28 @@ To test if Solid Queue is processing jobs correctly:
 2. If it works, Solid Queue is running new code
 3. If it fails with old errors, restart Solid Queue
 
-## Files Modified for This Fix
+## Files Modified for Deployment Safeguards
 
-- `config/deploy.rb` - Added automatic Solid Queue restart
-- `app/jobs/user_image_export_job.rb` - Fixed image export logic
-- `app/controllers/users/image_exports_controller.rb` - Fixed Pundit authorization
+- `config/deploy.rb` - Adds deploy guards against legacy Puma units
+- `config/puma.service` - Adds OnFailure hook for mrdbid Puma
+- `config/puma-auto-glossary.service` - Adds OnFailure hook for auto-glossary Puma
+- `config/puma-mycowriter.service` - Adds OnFailure hook for MycoWriter Puma
+- `config/notify-on-failure@.service` - Failure notification unit template
+- `script/systemd_notify_failure.sh` - Failure notification script
 
 ## Prevention Strategy
 
-✅ **Automated** - Solid Queue now restarts automatically on every deploy
+✅ **Automated** - Deploy guards prevent legacy Puma units from starting
+✅ **Automated** - Solid Queue restarts automatically on deploy
 ✅ **Documented** - This checklist explains the issue
 ✅ **Commented** - Critical code sections have warnings not to remove
 
-**If you remove the Solid Queue restart from deploy.rb, you'll repeat these same debugging sessions.**
+**If Solid Queue errors persist after deploy, restart `solid-queue-mrdbid.service` manually.**
+
+## Failure Notifications (Recommended)
+
+Puma units are configured to call `notify-on-failure@%n.service` on failure.
+Ensure these exist on the server:
+1. `/etc/systemd/system/notify-on-failure@.service`
+2. `/usr/local/bin/systemd_notify_failure.sh`
+3. `/etc/systemd/system/notify-on-failure.env` with `EMAIL_TO` and `EMAIL_FROM`

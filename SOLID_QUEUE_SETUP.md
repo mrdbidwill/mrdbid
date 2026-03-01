@@ -5,10 +5,11 @@ Solid Queue handles background jobs for async email delivery, preventing login/r
 
 ## Configuration
 
-### Option A: Run Solid Queue Inside Puma (Recommended - Rails 8 Standard)
+### Option A: Run Solid Queue Inside Puma (NOT recommended while bug exists)
 
 **Advantage**: Simpler setup, one process to manage
 **Disadvantage**: Worker threads share Puma's resources
+**Status**: Disabled due to Rails 8 strict_loading bug (see Known Issues)
 
 **Setup**:
 1. Edit `/etc/systemd/system/puma-mrdbid.service`
@@ -22,7 +23,7 @@ Solid Queue handles background jobs for async email delivery, preventing login/r
    sudo systemctl restart puma-mrdbid.service
    ```
 
-### Option B: Separate Solid Queue Service (More Robust)
+### Option B: Separate Solid Queue Service (Recommended)
 
 **Advantage**: Dedicated resources for background jobs
 **Disadvantage**: Additional service to manage
@@ -90,7 +91,7 @@ bin/rails runner "puts SolidQueue::Job.count" -e production
 - Check production.rb has:
   ```ruby
   config.action_mailer.deliver_later_queue_name = :mailers
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :solid_queue
   ```
 
 ## Current Setup

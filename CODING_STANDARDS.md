@@ -143,6 +143,8 @@ Before merging any PR, verify:
 
 ### Deployment
 - `DEPLOYMENT.md` - Deployment process
+- `DEPLOYMENT_CHECKLIST.md` - Post-deploy verification and service restarts
+- `DEPLOYMENT_NOTES.md` - Systemd service templates and reference notes
 - `DEPLOYMENT_TROUBLESHOOTING.md` - Common deployment issues
 - `SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md` - Backup procedures
 

@@ -82,3 +82,57 @@ ssh root@85.31.233.192 "cat /opt/mrdbid/shared/config/master.key"
 
 ## Summary
 **The issue is always a mismatched master.key on the server. Fix the key, don't modify the code.**
+
+## Error: "Interactive authentication required" during deploy
+
+**Root Cause**
+The deploy guard attempts to mask legacy Puma units and your deploy user does not have non-interactive sudo for `systemctl disable/mask`.
+
+**Solution**
+Run these as root (one time):
+```bash
+sudo systemctl stop puma.service
+sudo systemctl disable puma.service
+sudo systemctl mask --force puma.service
+
+sudo systemctl stop puma_auto_glossary.service
+sudo systemctl disable puma_auto_glossary.service
+sudo systemctl mask --force puma_auto_glossary.service
+```
+
+If you want deploys to handle this automatically, allow passwordless sudo for those specific `systemctl` commands.
+
+## Issue: CPU spikes, Puma restart loops, or socket bind errors
+
+**Symptoms**
+- CPU pinned at or near 100%
+- `There is already a server bound to /opt/mrdbid/shared/tmp/sockets/puma.sock`
+- `puma.service` restarting rapidly
+
+**Root Cause**
+Legacy `puma.service` running alongside `puma-mrdbid.service` and competing for the same Unix socket.
+
+**Fix**
+Mask the legacy unit:
+```bash
+sudo systemctl stop puma.service
+sudo systemctl disable puma.service
+sudo systemctl mask --force puma.service
+```
+
+## Issue: No failure email notifications
+
+**Root Cause**
+Failure notification unit/script missing or mailer not installed.
+
+**Fix**
+Verify these exist:
+1. `/etc/systemd/system/notify-on-failure@.service`
+2. `/usr/local/bin/systemd_notify_failure.sh`
+3. `/etc/systemd/system/notify-on-failure.env` with `EMAIL_TO` and `EMAIL_FROM`
+
+If mail is missing:
+```bash
+sudo apt-get update
+sudo apt-get install -y mailutils
+```

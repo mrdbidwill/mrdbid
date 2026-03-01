@@ -24,12 +24,19 @@
 # 2. sudo systemctl daemon-reload
 # 3. sudo systemctl restart puma-auto-glossary.service
 # ============================================================================
+#
+# FAILURE NOTIFICATIONS (RECOMMENDED):
+# If OnFailure is configured, ensure these exist on the server:
+# - /etc/systemd/system/notify-on-failure@.service
+# - /usr/local/bin/systemd_notify_failure.sh
+# - /etc/systemd/system/notify-on-failure.env
 
 [Unit]
 Description=Puma HTTP Server for auto-glossary (production)
 After=network.target
 StartLimitIntervalSec=300
 StartLimitBurst=5
+OnFailure=notify-on-failure@%n.service
 
 [Service]
 Type=simple
@@ -149,6 +156,7 @@ Description=Puma HTTP Server for mrdbid (production)
 After=network.target
 StartLimitIntervalSec=300
 StartLimitBurst=5
+OnFailure=notify-on-failure@%n.service
 
 [Service]
 Type=simple
@@ -269,6 +277,9 @@ WantedBy=multi-user.target
 [Unit]
 Description=Puma HTTP Server for MycoWriter (production)
 After=network.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+OnFailure=notify-on-failure@%n.service
 
 [Service]
 Type=simple
@@ -302,8 +313,6 @@ RestartSec=10
 KillMode=mixed
 KillSignal=SIGTERM
 TimeoutStopSec=30
-StartLimitIntervalSec=300
-StartLimitBurst=5
 
 # ============================================================================
 # LOGGING
