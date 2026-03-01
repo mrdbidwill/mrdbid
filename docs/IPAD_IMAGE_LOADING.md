@@ -1,6 +1,6 @@
 # iPad / Safari Image Loading Standard
 
-**Related Standard:** `docs/AI_PROJECT_MEMORY.md` (Authorization & Ownership Rules)
+**Related Standard:** `PROJECT_MEMORY.md` (Authorization & Ownership Rules)
 
 ## Critical Rule: NEVER Use loading="lazy" for Mushroom Images
 

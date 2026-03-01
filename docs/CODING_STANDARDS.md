@@ -8,8 +8,8 @@ This document serves as the index to all mandatory coding standards for the MrDb
 
 These standards were created after recurring bugs that wasted significant development time. Violating these standards will likely reintroduce bugs that have already been fixed multiple times.
 
-### 0. Authorization & Ownership Rules (AI Project Memory)
-**File:** `docs/AI_PROJECT_MEMORY.md`
+### 0. Authorization & Ownership Rules (Project Memory)
+**File:** `PROJECT_MEMORY.md`
 **Status:** MANDATORY
 **Created:** 2026-02-27
 
@@ -70,7 +70,7 @@ Before merging any PR, verify:
 - [ ] Tests use `assert_redirected_to`, not turbo_stream assertions
 
 ### Authorization (All mutation endpoints)
-- [ ] Follows `docs/AI_PROJECT_MEMORY.md` ownership rules
+- [ ] Follows `PROJECT_MEMORY.md` ownership rules
 - [ ] Uses `authenticate_user!` for all mutation actions
 - [ ] Enforces Pundit authorization for the parent record
 - [ ] Has a regression test proving non-owners cannot mutate
@@ -102,6 +102,9 @@ Before merging any PR, verify:
 - [ ] New features have corresponding tests
 - [ ] Tests follow existing patterns in test suite
 
+### Documentation Memory
+- [ ] Updated `PROJECT_MEMORY.md` and/or `decision-log.md` for notable changes
+
 ## Development Workflow
 
 ### Before Starting Work
@@ -114,6 +117,7 @@ Before merging any PR, verify:
 2. Check for lazy loading: `grep -r 'loading: "lazy"' app/views/`
 3. Check for respond_to blocks in CRUD: `grep -r 'respond_to do |format|' app/controllers/ | grep -E '(create|update|destroy)'`
 4. Review your changes against the standards
+5. Update `PROJECT_MEMORY.md` and/or `decision-log.md` when behavior or patterns change
 
 ### Commit Messages
 - Reference the standard if following a documented pattern
@@ -123,7 +127,11 @@ Before merging any PR, verify:
 ## Additional Documentation
 
 ### Authorization (Single Source of Truth)
-- `docs/AI_PROJECT_MEMORY.md` - Authorization and ownership rules (MUST FOLLOW)
+- `PROJECT_MEMORY.md` - Authorization and ownership rules (MUST FOLLOW)
+
+### Documentation Home
+- `INDEX.md` - Documentation index (start here)
+- `decision-log.md` - Architectural and process decisions
 
 ### Feature Documentation
 - `COMPARISON_FEATURE.md` - Mushroom comparison functionality

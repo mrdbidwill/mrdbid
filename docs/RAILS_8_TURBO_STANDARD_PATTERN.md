@@ -1,6 +1,6 @@
 # Rails 8 / Turbo Standard Pattern for Controllers
 
-**Related Standard:** `docs/AI_PROJECT_MEMORY.md` (Authorization & Ownership Rules)
+**Related Standard:** `PROJECT_MEMORY.md` (Authorization & Ownership Rules)
 
 ## Critical Rule: NEVER Use respond_to Blocks for Redirects
 

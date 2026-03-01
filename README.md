@@ -11,6 +11,7 @@ Visit [https://mrdbid.com](https://mrdbid.com) to see the application in action.
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Documentation](#documentation)
 - [Database Setup](#database-setup)
 - [Configuration](#configuration)
 - [Running the Application](#running-the-application)
@@ -58,6 +59,14 @@ sudo apt-get install mysql-server libmysqlclient-dev imagemagick libvips-tools l
    ```bash
    bin/rails importmap:install
    ```
+
+## Documentation
+
+Start with the documentation index: `docs/INDEX.md`.
+
+Project memory and decision history live in:
+- `docs/PROJECT_MEMORY.md`
+- `docs/decision-log.md`
 
 ## Database Setup
 
@@ -172,7 +181,7 @@ SECRET_KEY_BASE=your_secret_key_base
 
 # Optional: Storage configuration
 # Note: Application uses local storage by default (storage/ directory)
-# See BACKUP_STRATEGY.md for backup recommendations
+# See docs/BACKUP_STRATEGY.md for backup recommendations
 ```
 
 Generate a secret key base:
@@ -227,7 +236,7 @@ COVERAGE=true bundle exec rails test
 ```
 
 **Test Status:**
-The test suite has been extensively refactored and improved. See `TEST_SUITE_STATUS.md` for current status and `TESTING_QUICK_START.md` for testing guidelines.
+The test suite has been extensively refactored and improved. See `docs/TEST_SUITE_STATUS.md` for current status and `docs/TESTING_QUICK_START.md` for testing guidelines.
 
 Recent commits show 0 failures, 0 errors achieved through comprehensive test suite refactoring.
 
@@ -275,13 +284,13 @@ mrdbid/
 │   └── factories/       # Test data factories
 ├── lib/                 # Library modules
 │   └── tasks/           # Rake tasks
-├── docs/                # Documentation (I18N guide)
+├── docs/                # Documentation
 └── public/              # Static assets and error pages
 ```
 
 ## Deployment
 
-This application uses Capistrano for deployment. See `config/deploy.rb` for deployment configuration and `DEPLOYMENT.md` for detailed deployment instructions.
+This application uses Capistrano for deployment. See `config/deploy.rb` for deployment configuration and `docs/DEPLOYMENT.md` for detailed deployment instructions.
 
 **Deploy to production:**
 ```bash
@@ -289,9 +298,9 @@ bundle exec cap production deploy
 ```
 
 **Additional Deployment Resources:**
-- `DEPLOYMENT_TROUBLESHOOTING.md` - Common deployment issues and solutions
-- `SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md` - Backup procedures
-- `SOLID_QUEUE_SETUP.md` - Background job system configuration
+- `docs/DEPLOYMENT_TROUBLESHOOTING.md` - Common deployment issues and solutions
+- `docs/SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md` - Backup procedures
+- `docs/SOLID_QUEUE_SETUP.md` - Background job system configuration
 
 ## Contributing
 
@@ -360,7 +369,7 @@ Recent development has focused on:
 - **Performance Optimization**: Query optimization and caching improvements
 - **Code Quality**: Extensive refactoring for maintainability and performance
 
-See project documentation files (`CAMERA_INTEGRATION_COMPLETE.md`, `TEST_SUITE_COMPLETE_SUMMARY.md`, etc.) for detailed information about recent features and improvements.
+See project documentation files (`docs/CAMERA_INTEGRATION_COMPLETE.md`, `docs/TEST_SUITE_COMPLETE_SUMMARY.md`, etc.) for detailed information about recent features and improvements.
 
 ## Technology Stack
 
