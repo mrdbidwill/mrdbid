@@ -8,6 +8,8 @@
         This is a searchable database of all <%= number_with_delimiter(@total_count) %> observation fields available on iNaturalist.
         These fields are particularly useful for mushroom and fungi identification to maintain consistency and avoid duplication.
       </p>
+      <p class="mb-4">
+        Speaking of duplication. This audience should be aware that any user can add an observation field, so we end up with "DNA Barcode ITS" with data type text, which is the one this page needs, and "DNA Barcode ITS:" (note the colon at the end) with data type dna. They have different id numbers of course. This was a source of confusion until both were identified.</p>
       <p class="text-sm text-gray-600">
         Last updated: February 13, 2026 |
         Source: <a href="https://www.inaturalist.org/pages/api+reference#get-observation_fields" class="text-blue-600 hover:underline" target="_blank">iNaturalist API</a>
