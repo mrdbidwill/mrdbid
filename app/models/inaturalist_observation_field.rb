@@ -13,6 +13,15 @@ class InaturalistObservationField < ApplicationRecord
           search_term, search_term, search_term)
   }
 
+  scope :canonical, -> { where(name: "DNA Barcode ITS", datatype: "dna") }
+
+  scope :canonical_first, -> {
+    order(
+      Arel.sql("CASE WHEN name = 'DNA Barcode ITS' AND datatype = 'dna' THEN 0 ELSE 1 END"),
+      created_at: :desc
+    )
+  }
+
   # Order by most recently created in iNaturalist
   scope :recent, -> { order(created_at: :desc) }
   scope :by_name, -> { order(name: :asc) }
