@@ -288,22 +288,24 @@
           }
         }
 
-        // Create hidden iframe for download
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+        // Create/reuse hidden iframe for download (do NOT remove it; removing can abort the request)
+        const iframeId = 'pdf-export-iframe';
+        let iframe = document.getElementById(iframeId);
+        if (!iframe) {
+          iframe = document.createElement('iframe');
+          iframe.id = iframeId;
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+        }
 
         // Trigger download via iframe
         iframe.src = exportUrl;
 
-        // Reset UI after a delay (adjust based on typical generation time)
-        // We'll use a minimum delay plus checking for user activity
+        // Reset UI after a delay (PDF generation can take 10-60+ seconds)
+        const resetDelayMs = 60000;
         setTimeout(function() {
           resetUI();
-          if (iframe.parentNode) {
-            document.body.removeChild(iframe);
-          }
-        }, 3000); // Reset after 3 seconds minimum
+        }, resetDelayMs);
       });
     }
   }
