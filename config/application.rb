@@ -30,6 +30,11 @@ module Mrdbid
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # ActiveStorage requires custom service adapters via `require`, which
+    # searches $LOAD_PATH. Ensure app/services is discoverable for R2.
+    services_path = Rails.root.join("app/services").to_s
+    $LOAD_PATH << services_path unless $LOAD_PATH.include?(services_path)
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
