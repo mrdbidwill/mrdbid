@@ -19,6 +19,9 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - TODO: Add high-signal, current facts that would cause regressions if forgotten.
 - **Operational rule:** All fixes must be **committed, pushed to `main`, and deployed** immediately after completion.
 - **Testing rule:** Always run the full test suite (`bin/rails test`) before deploying any change.
+- **R2 uploads:** Cloudflare R2 does not support ACLs; ActiveStorage uploads must not send ACL headers.
+- **R2 checksum conflicts:** If R2 rejects checksum combinations, retry upload without checksum.
+- **Direct uploads:** `/direct_uploads` response must include `signed_id` for ActiveStorage JS.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 
