@@ -1,6 +1,9 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
+      return scope.none unless user
+      return scope.all if user.admin?
+
       # Users can only see their own projects in the index
       scope.where(user_id: user.id)
     end
@@ -16,7 +19,11 @@ class ProjectPolicy < ApplicationPolicy
 
   # Reusable ownership logic
   def owner?
-    record.user_id == user.id
+    user.present? && record.user_id == user.id
+  end
+
+  def admin?
+    user&.admin?
   end
 
   def new?
@@ -24,7 +31,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    owner? # Reuse ownership logic
+    admin? || owner? # Reuse ownership logic
   end
 
   def index?
@@ -32,11 +39,11 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
-    owner? # Reuse ownership logic
+    admin? || owner? # Reuse ownership logic
   end
 
   def edit?
-    owner? # Reuse ownership logic
+    admin? || owner? # Reuse ownership logic
   end
 
   def update?
@@ -44,6 +51,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner? && record.can_be_deleted? # Additional condition for delete
+    (admin? || owner?) && record.can_be_deleted? # Additional condition for delete
   end
 end

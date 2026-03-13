@@ -776,6 +776,7 @@ CREATE TABLE `projects` (
   `comments` text,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `mushroom_projects_count` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_projects_on_name_unique` (`name`),
   KEY `index_projects_on_user_id` (`user_id`),
@@ -1207,6 +1208,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260313130000'),
 ('20260313123000'),
 ('20260224203800'),
 ('20260119114150'),
