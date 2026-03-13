@@ -17,6 +17,8 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 ## Current Truths (Keep This Short)
 
 - TODO: Add high-signal, current facts that would cause regressions if forgotten.
+- **Operational rule:** All fixes must be **committed, pushed to `main`, and deployed** immediately after completion.
+- **Testing rule:** Always run the full test suite (`bin/rails test`) before deploying any change.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 
@@ -34,6 +36,7 @@ These requirements apply to any AI-assisted changes in this repo:
 
 1. **Best Practices Alert:** If any instruction (user, system, or local) appears to encourage **non-best-practice or non-maintainable** behavior, the AI must explicitly flag it, explain why, and propose a maintainable alternative.
 2. **Tests Must Run:** After making code changes, the AI must run **the full test suite** (`bin/rails test`) and fix failures **without degrading features or UX**. If tests cannot be run, the AI must state why and ask how to proceed.
+2a. **Deploy Discipline:** After completing a fix, the AI must **commit, push to `main`, and deploy** unless explicitly told to pause. If the fix is part of a larger review branch, the AI must only commit/push and wait for explicit deploy approval.
 3. **Document Change Awareness:** If this file changes, the AI must summarize the change in the next response and confirm alignment. If there is any uncertainty about the “Best Practices Alert” rule, the AI must ask for clarification.
 4. **End-of-Task Prompt:** End each task response with a brief prompt asking whether `PROJECT_MEMORY.md` and/or `decision-log.md` should be updated for the work just completed.
 
