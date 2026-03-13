@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     resource :image_export, only: [:new, :create], controller: "image_exports"
     get "image_export/:id/status", to: "image_exports#status", as: :image_export_status
     get "image_export/:id/download", to: "image_exports#download", as: :image_export_download
+
+    resource :pdf_export, only: [:new, :create], controller: "pdf_exports"
+    get "pdf_export/:id/status", to: "pdf_exports#status", as: :pdf_export_status
+    get "pdf_export/:id/download", to: "pdf_exports#download", as: :pdf_export_download
   end
 
   # 2FA login verification

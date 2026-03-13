@@ -99,12 +99,13 @@
            See: CODING_STANDARDS.md and commit 1f7a688 for why this pattern is required.
            PDF generation can take 10-60+ seconds depending on number of mushrooms.
            Without this feedback, users think the button is broken. DO NOT SIMPLIFY THIS CODE. -->
-      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
-          class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
-          id: "export-all-pdf-link",
+      <%= button_to "📄 Export All to PDF", users_pdf_export_path,
+          method: :post,
+          class: "block w-full text-left px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
+          id: "export-all-pdf-button",
+          form: { id: "export-all-pdf-form", data: { turbo: false } },
           data: {
-            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
-            turbo: false
+            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?"
           } %>
 
       <div class="my-2 border-t border-gray-400"></div>
@@ -224,18 +225,18 @@
     // Without this, users think the button is broken and click multiple times or navigate away.
     // See commit 1f7a688 and 096e678 for history of why this pattern is required.
     // This has been accidentally removed/simplified multiple times - DO NOT DO IT AGAIN.
-    const exportPdfLink = document.getElementById('export-all-pdf-link');
-    if (exportPdfLink) {
+    const exportPdfButton = document.getElementById('export-all-pdf-button');
+    if (exportPdfButton) {
       // Remove old event listeners by replacing the element with a clone
       // This prevents duplicate listeners when Turbo reloads the page
-      const newExportPdfLink = exportPdfLink.cloneNode(true);
-      exportPdfLink.parentNode.replaceChild(newExportPdfLink, exportPdfLink);
-      if (!newExportPdfLink.dataset.originalHtml) {
-        newExportPdfLink.dataset.originalHtml = newExportPdfLink.innerHTML;
+      const newExportPdfButton = exportPdfButton.cloneNode(true);
+      exportPdfButton.parentNode.replaceChild(newExportPdfButton, exportPdfButton);
+      if (!newExportPdfButton.dataset.originalHtml) {
+        newExportPdfButton.dataset.originalHtml = newExportPdfButton.innerHTML;
       }
 
       // Add event listener to the new (clean) element
-      newExportPdfLink.addEventListener('click', function(e) {
+      newExportPdfButton.addEventListener('click', function(e) {
         e.preventDefault();
 
         // Only proceed if user confirms (if confirm dialog exists)
@@ -247,7 +248,10 @@
         }
 
         const originalButtonContent = this.innerHTML;
-        const exportUrl = this.href;
+        const form = this.closest('form');
+        if (!form) {
+          return;
+        }
 
         // Change button text
         this.innerHTML = '⏳ Exporting...';
@@ -280,28 +284,18 @@
           if (overlay) {
             overlay.remove();
           }
-          if (newExportPdfLink) {
-            newExportPdfLink.innerHTML = originalButtonContent;
-            newExportPdfLink.classList.add('hover:bg-indigo-700');
-            newExportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-            newExportPdfLink.style.pointerEvents = '';
+          if (newExportPdfButton) {
+            newExportPdfButton.innerHTML = originalButtonContent;
+            newExportPdfButton.classList.add('hover:bg-indigo-700');
+            newExportPdfButton.classList.remove('opacity-75', 'cursor-not-allowed');
+            newExportPdfButton.style.pointerEvents = '';
           }
         }
 
-        // Create/reuse hidden iframe for download (do NOT remove it; removing can abort the request)
-        const iframeId = 'pdf-export-iframe';
-        let iframe = document.getElementById(iframeId);
-        if (!iframe) {
-          iframe = document.createElement('iframe');
-          iframe.id = iframeId;
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
-        }
+        // Submit form to start background export and redirect to status page
+        form.submit();
 
-        // Trigger download via iframe
-        iframe.src = exportUrl;
-
-        // Reset UI after a delay (PDF generation can take 10-60+ seconds)
+        // Reset UI after a delay in case navigation is blocked
         const resetDelayMs = 60000;
         setTimeout(function() {
           resetUI();
@@ -327,13 +321,13 @@
     }
 
     // Reset PDF export button state before caching
-    const exportPdfLink = document.getElementById('export-all-pdf-link');
-    if (exportPdfLink) {
-      const originalHtml = exportPdfLink.dataset.originalHtml || '📄 Export All to PDF';
-      exportPdfLink.innerHTML = originalHtml;
-      exportPdfLink.classList.add('hover:bg-indigo-700');
-      exportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
-      exportPdfLink.style.pointerEvents = '';
+    const exportPdfButton = document.getElementById('export-all-pdf-button');
+    if (exportPdfButton) {
+      const originalHtml = exportPdfButton.dataset.originalHtml || '📄 Export All to PDF';
+      exportPdfButton.innerHTML = originalHtml;
+      exportPdfButton.classList.add('hover:bg-indigo-700');
+      exportPdfButton.classList.remove('opacity-75', 'cursor-not-allowed');
+      exportPdfButton.style.pointerEvents = '';
     }
 
     // Remove any lingering PDF loading overlay

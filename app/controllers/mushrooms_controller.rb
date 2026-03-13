@@ -123,18 +123,8 @@ class MushroomsController < ApplicationController
   end
 
   def export_all_pdf
-    result = Mushrooms::PdfExporter.call(user: current_user)
-
-    if result.success?
-      send_data(
-        result.data[:pdf],
-        filename: result.data[:filename],
-        type: "application/pdf",
-        disposition: "attachment"
-      )
-    else
-      redirect_to mushrooms_path, alert: result.error
-    end
+    redirect_to new_users_pdf_export_path,
+                notice: "PDF export now runs in the background. You'll be taken to the export status page."
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json

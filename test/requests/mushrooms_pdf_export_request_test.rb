@@ -15,7 +15,7 @@ class MushroomsPdfExportRequestTest < ActionDispatch::IntegrationTest
     assert_match(/sign in or sign up/i, response.body)
   end
 
-  test "export all pdf returns a pdf for signed-in user" do
+  test "export all pdf redirects to background export for signed-in user" do
     sign_in @user
 
     Mushroom.create!(
@@ -27,8 +27,6 @@ class MushroomsPdfExportRequestTest < ActionDispatch::IntegrationTest
     )
 
     get export_all_pdf_mushrooms_path(format: :pdf)
-    assert_response :success
-    assert_equal "application/pdf", response.media_type
-    assert response.body.start_with?("%PDF")
+    assert_redirected_to new_users_pdf_export_path
   end
 end
