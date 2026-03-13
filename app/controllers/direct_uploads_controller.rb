@@ -43,8 +43,14 @@ class DirectUploadsController < ApplicationController
     )
 
     render json: {
+      # ActiveStorage expects `signed_id` in the direct upload response.
+      signed_id: blob.signed_id,
       blob_signed_id: blob.signed_id,
       key: blob.key,
+      filename: blob.filename.to_s,
+      content_type: blob.content_type,
+      byte_size: blob.byte_size,
+      checksum: blob.checksum,
       direct_upload: {
         url: blob.service_url_for_direct_upload,
         headers: blob.service_headers_for_direct_upload
