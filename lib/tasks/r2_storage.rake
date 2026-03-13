@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "active_storage/service/disk_service"
+
 namespace :r2 do
   desc "Smoke test R2 connectivity (put/get/delete)"
   task smoke: :environment do
