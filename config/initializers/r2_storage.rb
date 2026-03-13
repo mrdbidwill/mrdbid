@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require Rails.root.join("app/services/active_storage/service/r2_service").to_s
+
 Rails.application.config.x.r2_public_base_url =
   ENV["R2_PUBLIC_BASE_URL"].to_s.strip.presence&.chomp("/")
 
