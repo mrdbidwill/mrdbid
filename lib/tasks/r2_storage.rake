@@ -77,14 +77,24 @@ namespace :r2 do
           end
 
           File.open(source_path, "rb") do |file|
-            dest_service.upload(
-              blob.key,
-              file,
-              checksum: blob.checksum,
+            upload_params = {
               content_type: blob.content_type,
               disposition: (blob.respond_to?(:content_disposition_with_filename) ? blob.content_disposition_with_filename : nil),
               filename: blob.filename
-            )
+            }
+            upload_params[:checksum] = blob.checksum if blob.checksum.present?
+
+            begin
+              dest_service.upload(blob.key, file, **upload_params)
+            rescue => e
+              if e.message.include?("only specify one non-default checksum") && upload_params.key?(:checksum)
+                upload_params.delete(:checksum)
+                file.rewind
+                dest_service.upload(blob.key, file, **upload_params)
+              else
+                raise
+              end
+            end
           end
 
           if verify && !dest_service.exist?(blob.key)
