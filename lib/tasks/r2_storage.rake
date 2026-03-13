@@ -82,7 +82,7 @@ namespace :r2 do
               file,
               checksum: blob.checksum,
               content_type: blob.content_type,
-              disposition: blob.content_disposition_with_filename,
+              disposition: (blob.respond_to?(:content_disposition_with_filename) ? blob.content_disposition_with_filename : nil),
               filename: blob.filename
             )
           end
