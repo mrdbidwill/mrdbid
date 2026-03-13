@@ -26,7 +26,7 @@ class MushroomsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index show new create clone_characters toggle_view_mode]
+  before_action :authorize_mushroom, except: %i[index show new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
