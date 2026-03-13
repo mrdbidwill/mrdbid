@@ -357,4 +357,5 @@ class MushroomCreationTest < ApplicationSystemTestCase
       assert true
     end
   end
+
 end

@@ -93,6 +93,20 @@
 
       <%= link_to "Add New Mushroom", new_mushroom_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
+      <!-- Export All -->
+      <!-- CRITICAL: Do not remove the data-turbo-confirm or the JavaScript handling below.
+           This confirmation dialog and loading overlay provide essential user feedback during PDF generation.
+           See: CODING_STANDARDS.md and commit 1f7a688 for why this pattern is required.
+           PDF generation can take 10-60+ seconds depending on number of mushrooms.
+           Without this feedback, users think the button is broken. DO NOT SIMPLIFY THIS CODE. -->
+      <%= link_to "📄 Export All to PDF", export_all_pdf_mushrooms_path(format: :pdf),
+          class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition",
+          id: "export-all-pdf-link",
+          data: {
+            turbo_confirm: "This will export all of your mushrooms to PDF. Large exports may take some time. Continue?",
+            turbo: false
+          } %>
+
       <div class="my-2 border-t border-gray-400"></div>
 
       <!-- Tools Menu (Collapsible) -->
@@ -261,72 +275,35 @@
         document.body.appendChild(loadingOverlay);
 
         // Function to reset UI
-        const resetUI = () => {
+        function resetUI() {
           const overlay = document.getElementById('pdf-loading-overlay');
           if (overlay) {
             overlay.remove();
           }
-          const currentLink = document.getElementById('export-all-pdf-link');
-          if (currentLink) {
-            currentLink.innerHTML = originalButtonContent;
-            currentLink.classList.add('hover:bg-indigo-700');
-            currentLink.classList.remove('opacity-75', 'cursor-not-allowed');
-            currentLink.style.pointerEvents = '';
+          if (newExportPdfLink) {
+            newExportPdfLink.innerHTML = originalButtonContent;
+            newExportPdfLink.classList.add('hover:bg-indigo-700');
+            newExportPdfLink.classList.remove('opacity-75', 'cursor-not-allowed');
+            newExportPdfLink.style.pointerEvents = '';
           }
-        };
-
-        const showExportError = (message) => {
-          const main = document.querySelector('main');
-          if (!main) return;
-          const existing = document.getElementById('pdf-export-error-banner');
-          if (existing) {
-            existing.remove();
-          }
-          const banner = document.createElement('div');
-          banner.id = 'pdf-export-error-banner';
-          banner.className = 'alert bg-red-50 border border-red-200 text-red-700 font-bold text-lg md:text-xl px-4 py-3 rounded mb-4';
-          banner.textContent = message;
-          main.prepend(banner);
-        };
+        }
 
         // Create hidden iframe for download
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
-        iframe.onload = function() {
-          try {
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-            const errorText = iframeDoc?.body?.textContent?.trim();
-            if (errorText && errorText.startsWith('PDF export failed:')) {
-              showExportError(errorText);
-            }
-          } catch (e) {
-            // If iframe access fails, skip error detection
-          }
-          // Keep overlay for at least 2 more seconds after iframe loads
-          // to allow browser to initiate download
-          setTimeout(function() {
-            resetUI();
-            // Clean up iframe after a longer delay
-            setTimeout(function() {
-              if (iframe.parentNode) {
-                document.body.removeChild(iframe);
-              }
-            }, 2000);
-          }, 2000);
-        };
+        document.body.appendChild(iframe);
 
-        // Fallback: if iframe doesn't load within 60 seconds, reset anyway
+        // Trigger download via iframe
+        iframe.src = exportUrl;
+
+        // Reset UI after a delay (adjust based on typical generation time)
+        // We'll use a minimum delay plus checking for user activity
         setTimeout(function() {
           resetUI();
           if (iframe.parentNode) {
             document.body.removeChild(iframe);
           }
-        }, 60000);
-
-        document.body.appendChild(iframe);
-
-        // Trigger download via iframe
-        iframe.src = exportUrl;
+        }, 3000); // Reset after 3 seconds minimum
       });
     }
   }
@@ -362,5 +339,6 @@
     if (overlay) {
       overlay.remove();
     }
+
   });
 </script>

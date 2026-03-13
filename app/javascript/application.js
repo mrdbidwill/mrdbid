@@ -1,6 +1,9 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
+import * as ActiveStorage from "@rails/activestorage"
 import "controllers"
+
+ActiveStorage.start()
 
 // Auto-dismiss flash notices after 5 seconds
 document.addEventListener('turbo:load', () => {

@@ -8,8 +8,21 @@ class ImageMushroom < ApplicationRecord
   # Attachments and presence validations
   has_one_attached :image_file
 
+  ALLOWED_CONTENT_TYPES = %w[
+    image/jpeg
+    image/png
+    image/heic
+    image/heif
+    image/webp
+    image/tiff
+    image/gif
+  ].freeze
+  MAX_IMAGE_BYTES = 25.megabytes
+
   validates :image_file, presence: { message: "An image file must be selected" }
   validate :unique_file_per_mushroom
+  validate :image_file_content_type
+  validate :image_file_size
 
   # Ensure the Mushroom is associated with the correct user if needed
   def user_id
@@ -28,6 +41,8 @@ class ImageMushroom < ApplicationRecord
   # Extract EXIF after create and when image_file changes
   after_commit :extract_exif_if_needed, on: [:create, :update]
   after_commit :preprocess_thumbnail_variant, on: [:create, :update]
+  after_commit :sync_storage_metadata, on: [:create, :update]
+  after_commit :enqueue_color_extraction, on: [:create, :update]
 
   private
 
@@ -48,6 +63,23 @@ class ImageMushroom < ApplicationRecord
     if duplicate
       errors.add(:image_file, "has already been uploaded for this mushroom")
     end
+  end
+
+  def image_file_content_type
+    return unless image_file.attached?
+    return if ALLOWED_CONTENT_TYPES.include?(image_file.blob.content_type)
+
+    extension = image_file.filename.extension&.downcase
+    return if %w[heic heif].include?(extension)
+
+    errors.add(:image_file, "must be a supported image type")
+  end
+
+  def image_file_size
+    return unless image_file.attached?
+    return if image_file.blob.byte_size <= MAX_IMAGE_BYTES
+
+    errors.add(:image_file, "must be smaller than #{MAX_IMAGE_BYTES / 1.megabyte}MB")
   end
 
   def extract_exif_if_needed
@@ -106,6 +138,43 @@ class ImageMushroom < ApplicationRecord
     end
   rescue => e
     Rails.logger.info("[ImageMushroom##{id}] EXIF extraction skipped: #{e.class} - #{e.message}")
+  end
+
+  def sync_storage_metadata
+    return unless image_file.attached?
+    return unless attachment_changed? || previous_changes.key?("id")
+
+    blob = image_file.blob
+    updates = {}
+    updates[:image_storage_key] = blob.key if image_storage_key != blob.key
+    updates[:image_content_type] = blob.content_type if image_content_type != blob.content_type
+    updates[:image_byte_size] = blob.byte_size if image_byte_size != blob.byte_size
+
+    public_url = public_image_url
+    updates[:image_public_url] = public_url if image_public_url != public_url
+
+    return if updates.empty?
+
+    updates[:updated_at] = Time.current
+    update_columns(updates)
+
+    Rails.logger.info(
+      "[ImageMushroom##{id}] upload_complete key=#{blob.key} size=#{blob.byte_size} content_type=#{blob.content_type}"
+    )
+  end
+
+  def enqueue_color_extraction
+    return unless image_file.attached?
+    return unless attachment_changed? || previous_changes.key?("id")
+
+    ImageMushroomColorExtractionJob.perform_later(id)
+  end
+
+  def public_image_url
+    base = Rails.application.config.x.r2_public_base_url.to_s.strip
+    return nil if base.empty?
+
+    "#{base.chomp("/")}/#{image_file.blob.key}"
   end
 
   def exif_from_exifr(file)

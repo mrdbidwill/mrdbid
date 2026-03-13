@@ -393,12 +393,20 @@ CREATE TABLE `image_mushrooms` (
   `date_taken` datetime(6) DEFAULT NULL,
   `latitude` decimal(10,7) DEFAULT NULL,
   `longitude` decimal(10,7) DEFAULT NULL,
+  `image_storage_key` varchar(255) DEFAULT NULL,
+  `image_public_url` varchar(255) DEFAULT NULL,
+  `image_content_type` varchar(255) DEFAULT NULL,
+  `image_byte_size` bigint DEFAULT NULL,
+  `dominant_hex` varchar(255) DEFAULT NULL,
+  `dominant_hue` int DEFAULT NULL,
+  `color_bucket` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_image_mushrooms_on_mushroom_id` (`mushroom_id`),
   KEY `index_image_mushrooms_on_part_id` (`part_id`),
   KEY `index_image_mushrooms_on_lens_id` (`lens_id`),
   KEY `index_image_mushrooms_on_camera_make_id` (`camera_make_id`),
   KEY `index_image_mushrooms_on_camera_model_id` (`camera_model_id`),
+  KEY `index_image_mushrooms_on_dominant_hue` (`dominant_hue`),
   CONSTRAINT `fk_rails_6d2bc30fcf` FOREIGN KEY (`camera_model_id`) REFERENCES `camera_models` (`id`),
   CONSTRAINT `fk_rails_974ee9e8a8` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
   CONSTRAINT `fk_rails_a39371cd65` FOREIGN KEY (`lens_id`) REFERENCES `lenses` (`id`),
@@ -427,7 +435,7 @@ CREATE TABLE `inaturalist_observation_fields` (
   UNIQUE KEY `index_inaturalist_observation_fields_on_uuid` (`uuid`),
   KEY `index_inaturalist_observation_fields_on_name` (`name`),
   KEY `index_inaturalist_observation_fields_on_created_at` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19521 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `invitation_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1199,6 +1207,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260313123000'),
 ('20260224203800'),
 ('20260119114150'),
 ('20260115140618'),

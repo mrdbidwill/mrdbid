@@ -30,7 +30,7 @@ class MushroomsController < ApplicationController
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
-  skip_after_action :verify_authorized, only: [:show, :create, :clone_characters, :toggle_view_mode], raise: false
+  skip_after_action :verify_authorized, only: [:show, :create, :clone_characters, :toggle_view_mode, :export_all_pdf], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -119,6 +119,21 @@ class MushroomsController < ApplicationController
                      .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                      .page(params[:page])
                      .per(12)
+    end
+  end
+
+  def export_all_pdf
+    result = Mushrooms::PdfExporter.call(user: current_user)
+
+    if result.success?
+      send_data(
+        result.data[:pdf],
+        filename: result.data[:filename],
+        type: "application/pdf",
+        disposition: "attachment"
+      )
+    else
+      redirect_to mushrooms_path, alert: result.error
     end
   end
 

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
 
+  resources :direct_uploads, only: [:create]
+
   # Two-Factor Authentication routes
   namespace :users do
     resource :two_factor_settings, only: [] do
@@ -18,6 +20,10 @@ Rails.application.routes.draw do
       post :verify
       delete :disable
     end
+
+    resource :image_export, only: [:new, :create], controller: "image_exports"
+    get "image_export/:id/status", to: "image_exports#status", as: :image_export_status
+    get "image_export/:id/download", to: "image_exports#download", as: :image_export_download
   end
 
   # 2FA login verification
@@ -35,6 +41,7 @@ Rails.application.routes.draw do
     end
     collection do
       post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
+      get 'export_all_pdf', to: 'mushrooms#export_all_pdf'
     end
   end
 

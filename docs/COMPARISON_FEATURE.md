@@ -186,11 +186,11 @@ puts "Similarity: #{comparison.similarity_score}%"
 
 ```ruby
 # Nested under mushroom
-GET  /mushrooms/:mushroom_id/comparisons     # Index of comparisons
-POST /mushrooms/:mushroom_id/comparisons     # Trigger comparison job
+GET  /mushrooms/<mushroom_id>/comparisons     # Index of comparisons
+POST /mushrooms/<mushroom_id>/comparisons     # Trigger comparison job
 
 # Standalone
-GET  /mushroom_comparisons/:id               # Show detailed comparison
+GET  /mushroom_comparisons/<id>               # Show detailed comparison
 ```
 
 ## Future Enhancements
