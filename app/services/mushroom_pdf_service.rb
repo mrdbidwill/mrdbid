@@ -96,8 +96,9 @@ class MushroomPdfService
     images = mushroom.image_mushrooms.select { |im| im.image_file.attached? }
 
     # Display fewer, smaller images to keep PDF generation stable on limited resources
+    # Smaller variants reduce processing time and download size during export.
     max_images = 4
-    max_dimensions = [800, 800]
+    max_dimensions = [400, 400]
 
     images.first(max_images).each_slice(2) do |row_images|
       image_data = []
@@ -112,7 +113,7 @@ class MushroomPdfService
               # Add image with max width/height
               img_cell = pdf.make_cell(
                 image: file.path,
-                fit: [150, 150],
+                fit: [120, 120],
                 position: :center,
                 vposition: :center
               )
@@ -123,7 +124,7 @@ class MushroomPdfService
               # Add image with max width/height
               img_cell = pdf.make_cell(
                 image: file.path,
-                fit: [150, 150],
+                fit: [120, 120],
                 position: :center,
                 vposition: :center
               )
@@ -136,7 +137,7 @@ class MushroomPdfService
               # Add image with max width/height
               img_cell = pdf.make_cell(
                 image: file.path,
-                fit: [150, 150],
+                fit: [120, 120],
                 position: :center,
                 vposition: :center
               )
@@ -148,8 +149,8 @@ class MushroomPdfService
             image_data << pdf.make_cell(content: '[Image unavailable]',
                                          align: :center,
                                          valign: :center,
-                                         height: 150,
-                                         width: 150)
+                                         height: 120,
+                                         width: 120)
             Rails.logger.error(
               "PDF image error for ImageMushroom##{image_mushroom.id}: #{e.class} #{e.message}; "\
               "fallback_error=#{fallback_error.class} #{fallback_error.message}"
@@ -180,9 +181,13 @@ class MushroomPdfService
     end
     pdf.move_down 5
 
-    character_rows = mushroom.mr_character_mushrooms
-                             .includes(mr_character: [:part, :display_option])
-                             .order('parts.name ASC, mr_characters.name ASC')
+    character_rows = mushroom.mr_character_mushrooms.to_a
+    character_rows.sort_by! do |rc|
+      [
+        rc.mr_character&.part&.name.to_s,
+        rc.mr_character&.name.to_s
+      ]
+    end
 
     grouped = character_rows.group_by { |rc| rc.mr_character&.part&.name || 'Other' }
 
@@ -214,12 +219,12 @@ class MushroomPdfService
     associations = []
 
     if mushroom.trees.any?
-      tree_names = mushroom.trees.order(:name).pluck(:name).join(', ')
+      tree_names = mushroom.trees.sort_by(&:name).map(&:name).join(', ')
       associations << ['Associated Trees:', sanitize_for_pdf(tree_names)]
     end
 
     if mushroom.plants.any?
-      plant_names = mushroom.plants.order(:name).pluck(:name).join(', ')
+      plant_names = mushroom.plants.sort_by(&:name).map(&:name).join(', ')
       associations << ['Associated Plants:', sanitize_for_pdf(plant_names)]
     end
 
