@@ -10,6 +10,17 @@ module ActiveStorage
       @upload_options.delete(:acl) if instance_variable_defined?(:@upload_options)
     end
 
+    def upload(key, io, checksum: nil, **options)
+      super
+    rescue => e
+      # R2 rejects certain checksum combinations; retry without checksum when detected.
+      if e.message.to_s.include?("only specify one non-default checksum") && checksum
+        super(key, io, checksum: nil, **options)
+      else
+        raise
+      end
+    end
+
     def public_url(key, **options)
       base = Rails.application.config.x.r2_public_base_url.to_s.strip
       return super if base.empty?
