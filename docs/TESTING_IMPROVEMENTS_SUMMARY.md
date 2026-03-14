@@ -9,6 +9,13 @@
 
 **Root cause:** Environment-specific behavior that tests couldn't catch because they only ran in test environment.
 
+## Update (2026-03-14)
+
+- Full suite green: 2131 runs, 0 failures, 0 errors, 0 skips.
+- Capybara/Selenium system coverage added, including a button/UX audit (`test/system/button_ux_audit_test.rb`).
+- Confirmation prompts standardized on `data-turbo-confirm` (Turbo-only JS stack).
+- Coverage now at 79.76% line / 56.07% branch.
+
 ## Solution: Three New Test Suites
 
 ### 1. ProductionBootTest
@@ -156,28 +163,20 @@ skip_after_action :verify_authorized  # Crashes in production!
 - [x] Fix 2 admin permission test errors (add User#admin? method)
 
 ### Short-term
-- [ ] Enable ProductionBootTest (requires production database setup)
+- [x] Enable ProductionBootTest in the integration suite
 - [ ] CI/CD integration intentionally deferred (GitHub Actions disabled due to noisy false errors)
 - [ ] Set up test coverage requirements (maintain >80%)
 
 ### Long-term
-- [ ] Add end-to-end browser tests (Capybara/Selenium)
-- [ ] Add performance regression tests
-- [ ] Monitor test execution time (currently ~13s)
+- [x] Add end-to-end browser tests (Capybara/Selenium)
+- [x] Add performance regression tests (N+1/indexing/query benchmarks)
+- [ ] Monitor test execution time (currently ~22s)
 
 ## Branch Information
 
-**Branch:** `feature/production-testing-improvements`
-**Status:** Ready for review
-**Tests:** 2072 runs, 0 failures (2 minor admin test errors)
-**Files changed:** 6 files, 609 additions
-
-**To merge:**
-```bash
-git checkout main
-git merge feature/production-testing-improvements
-git push origin main
-```
+**Branch:** `main`
+**Status:** Active
+**Tests:** 2131 runs, 0 failures, 0 errors, 0 skips
 
 ## Summary
 

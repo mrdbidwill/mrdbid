@@ -27,6 +27,9 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Direct uploads:** `/direct_uploads` response must include `signed_id` for ActiveStorage JS.
 - **Export throttling:** PDF/image exports are serialized per user (active export lock with 10-minute reentry window).
 - **PDF export:** Enabled via background job + X-Accel-Redirect for downloads; keep exports owner-scoped.
+- **Turbo confirm:** Use `data: { turbo_confirm: "..." }` for destructive/confirm actions (no rails-ujs).
+- **Button audit coverage:** System test `test/system/button_ux_audit_test.rb` validates core button flows (create/edit/delete, image upload, export buttons).
+- **Coverage baseline (2026-03-14):** 79.76% line, 56.07% branch; continue raising toward 80%/60%.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 

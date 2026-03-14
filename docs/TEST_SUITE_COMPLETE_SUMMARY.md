@@ -4,8 +4,8 @@
 This document summarizes the comprehensive test suite refactoring completed for the mrdbid Rails application. The goal was to achieve production-ready test coverage with best practices implementation.
 
 ## Current Status (2026-03-14)
-- Full suite passes locally: 2106 runs, 0 failures, 0 errors.
-- Coverage (SimpleCov): 71.15% line, 54.45% branch.
+- Full suite passes locally: 2131 runs, 0 failures, 0 errors.
+- Coverage (SimpleCov): 79.76% line, 56.07% branch.
 - Parallel testing remains disabled (see `test/test_helper.rb`).
 - CI/CD is intentionally disabled; GitHub Actions workflow removed due to noisy false errors.
 
@@ -27,19 +27,19 @@ This document summarizes the comprehensive test suite refactoring completed for 
 - **No CI/CD pipeline**
 
 ### After Refactoring
-- **1,400+ tests** with 3,500+ assertions (estimated)
-- **Target: 80% code coverage** with SimpleCov tracking
-- **165+ test files**
+- **2,131 tests** with 4,270 assertions (latest run)
+- **Target: 80% code coverage** with SimpleCov tracking (current 79.76% line / 56.07% branch)
+- **206 test files**
 - **Code coverage with SimpleCov + LCOV**
 - **FactoryBot integration**
 - **Parallel testing disabled** (workers: 1) until DRb stability is restored
-- **All controllers tested** (35 new controller tests, 281 test cases)
-- **All policies tested** (34 new policy tests)
-- **All mailers tested** (2 new mailer tests)
-- **Comprehensive integration tests** (6 files, 218 test cases)
-- **Expanded system tests** (8 files, 195 test scenarios)
-- **Complete API test coverage** (9 files, 308 test cases)
-- **Performance test suite** (3 files, 50+ tests)
+- **Controllers tested** (65 controller test files)
+- **Policies tested** (39 policy test files)
+- **Mailers tested** (2 mailer test files)
+- **Comprehensive integration tests** (11 files)
+- **Expanded system tests** (13 files)
+- **API/request tests** (13 files)
+- **Performance test suite** (3 files)
 - **Mutation testing configured**
 - **CI/CD pipeline intentionally disabled** (manual test runs only)
 

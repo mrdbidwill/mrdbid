@@ -33,3 +33,11 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - Public-only script rendering via `ADSENSE_ENABLED=true` + `ADSENSE_CLIENT_ID`.
   - Authenticated sessions never render AdSense markup.
 - Next operational step is to flip the AdSense env flags once ready to go live.
+- Button/UX audit coverage added:
+  - New system test `test/system/button_ux_audit_test.rb` exercises core create/edit/delete, image upload, and export buttons.
+- Turbo confirm alignment:
+  - Destructive/confirm actions now use `data: { turbo_confirm: "..." }` (no rails-ujs dependency).
+- Export navigation:
+  - Sidebar now includes a direct link to `Export My Images` (`new_users_image_export_path`).
+- Coverage checkpoint:
+  - 79.76% line, 56.07% branch (SimpleCov).

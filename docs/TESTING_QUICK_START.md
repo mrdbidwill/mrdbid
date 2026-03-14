@@ -53,8 +53,8 @@ open coverage/index.html
 ```
 
 Current targets:
-- Line coverage: 50% (will increase to 80%)
-- Branch coverage: 40%
+- Line coverage: 50% (target 80%)
+- Branch coverage: 40% (target 60%)
 
 ## Performance Testing
 
@@ -87,13 +87,13 @@ Run tests locally before deployments.
 
 ## Test Statistics
 
-- **165+ test files**
-- **1,400+ test cases**
-- **3,500+ assertions**
+- **206 test files**
+- **2,131 test cases**
+- **4,270 assertions**
 - **Target: 80% code coverage**
 
 ### Coverage by Category
-- Current (2026-03-14): 71.15% line coverage, 54.45% branch coverage
+- Current (2026-03-14): 79.76% line coverage, 56.07% branch coverage
 - Detailed breakdown: review `coverage/index.html`
 
 ## Common Commands
@@ -141,6 +141,6 @@ Check `test/performance/n_plus_one_test.rb` for eager loading examples.
 2. Review `coverage/index.html` for gaps
 3. Add fixtures/factories as needed
 4. Gradually increase coverage targets
-5. Enable skipped tests (image uploads, exports)
+5. Expand system tests as new UI flows ship
 
 Happy testing! 🧪

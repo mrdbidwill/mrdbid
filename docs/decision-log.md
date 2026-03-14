@@ -13,6 +13,18 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-03-14
+- Decision: Add a sidebar link to `Export My Images`.
+- Rationale: Improve discoverability for image backup/export without relying on direct URLs.
+- Consequences: Users can start image exports from the main navigation; no behavior change to the export job itself.
+- Alternatives Considered: Keep export link hidden in the page-only flow; rejected for UX clarity.
+
+- Date: 2026-03-14
+- Decision: Replace `data-confirm` with `data-turbo-confirm` for confirmation prompts across Turbo-driven views.
+- Rationale: `@hotwired/turbo-rails` is loaded without rails-ujs, so `data-confirm` does not trigger a browser confirm dialog.
+- Consequences: All destructive/confirm actions now consistently show confirmation prompts under Turbo.
+- Alternatives Considered: Reintroduce rails-ujs; rejected to keep the JS stack minimal.
+
+- Date: 2026-03-14
 - Decision: Enforce demo-only access for public mushroom/image show pages and require Pundit authorization on show actions.
 - Rationale: Align runtime behavior with the documented public/demo boundary and prevent unintended data exposure.
 - Consequences: Guest requests to non-demo show pages now redirect with authorization messaging.
