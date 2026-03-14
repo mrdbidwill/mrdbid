@@ -170,8 +170,8 @@ module Admin
       response.headers['X-Accel-Redirect'] = "/tmp/exports/#{filename}"
       response.headers['X-Accel-Buffering'] = 'no'
 
-      # Schedule cleanup after 1 hour
-      CleanupExportJob.set(wait: 1.hour).perform_later(final_path.to_s) if defined?(CleanupExportJob)
+      # Schedule cleanup after 7 days
+      CleanupExportJob.set(wait: 7.days).perform_later(final_path.to_s) if defined?(CleanupExportJob)
 
       Rails.logger.info "Database export file sent to user #{current_user.id} via X-Accel-Redirect"
 
