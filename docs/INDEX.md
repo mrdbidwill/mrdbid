@@ -4,7 +4,9 @@ This index is the canonical entry point for project documentation.
 
 **Project Memory**
 - `PROJECT_MEMORY.md`
+- `PROJECT_MEMORY_mrdbid.com.md`
 - `decision-log.md`
+- `HANDOFF_MRDBID_RUBYMINE_CODEX.md`
 
 **Standards & Patterns**
 - `CODING_STANDARDS.md`

@@ -4,6 +4,20 @@ Date: 2026-03-11
 Last reviewed: 2026-03-12
 Owner context: portfolio-wide R2 + ad-policy transition coordinated with `myDNAobv` updates already completed.
 
+## Status (2026-03-14)
+All deliverables in this handoff are **implemented in this repo**. Remaining work is operational:
+- Flip AdSense env flags in production (`ADSENSE_ENABLED=true`, `ADSENSE_CLIENT_ID=...`).
+- Ensure `ACTIVE_STORAGE_SERVICE=r2` and `R2_*` env vars are set in production.
+
+Implementation map (key files):
+- R2 service + validation: `config/storage.yml`, `config/initializers/r2_storage.rb`, `app/services/active_storage/service/r2_service.rb`, `app/services/r2_client.rb`
+- Direct uploads: `app/controllers/direct_uploads_controller.rb`, `app/services/direct_uploads/validator.rb`, `app/views/image_mushrooms/_form.html.erb`
+- Metadata fields + dominant color: migration `20260313123000_add_storage_metadata_and_colors_to_image_mushrooms.rb`, `app/jobs/image_mushroom_color_extraction_job.rb`, `app/services/dominant_color_extractor.rb`
+- Genus + color sorting: `app/queries/mushroom_sorting_query.rb`
+- AdSense gating: `app/helpers/adsense_helper.rb`, `app/views/layouts/application.html.erb`
+- Backfill + smoke test: `lib/tasks/r2_storage.rake`
+- Export naming: `app/jobs/user_image_export_job.rb`, `app/jobs/user_pdf_export_job.rb`
+
 ## Why This Handoff Exists
 `myDNAobv` (dna.mrdbid.com side) already has:
 - R2-ready S3 publish backend for artifacts

@@ -174,7 +174,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    current_user&.permission_id == 1
+    current_user&.elevated_admin?
   end
 
   def set_view_debug_identifier

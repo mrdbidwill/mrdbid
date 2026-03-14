@@ -21,6 +21,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     @mushroom = mushrooms(:one)
     @mushroom.user = @owner
     @mushroom.save!
+    @demo_mushroom = mushrooms(:demo)
   end
 
   # ============================================================================
@@ -32,7 +33,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     public_endpoints = [
       ['root path', root_path],
       ['mushrooms index', mushrooms_path],
-      ['mushroom show', mushroom_path(@mushroom)],
+      ['mushroom show', mushroom_path(@demo_mushroom)],
       ['articles index', articles_path]
     ]
 
@@ -285,7 +286,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     get mushrooms_path  # Uses skip_after_action :verify_policy_scoped
     assert_response :success
 
-    get mushroom_path(@mushroom)  # Uses skip_after_action :verify_authorized
+    get mushroom_path(@demo_mushroom)  # Public demo show should pass authorization
     assert_response :success
 
     # If we got here without errors, skip_after_action is working correctly

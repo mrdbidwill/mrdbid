@@ -5,6 +5,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one) # Load a valid user from fixtures
     sign_in @user # Use Devise test helper directly
     @mushroom = mushrooms(:one) # This mushroom belongs to @user based on fixtures
+    @demo_mushroom = mushrooms(:demo)
   end
 
 
@@ -91,10 +92,17 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   test "public can access show without authentication" do
     sign_out @user
 
-    get mushroom_path(@mushroom)
+    get mushroom_path(@demo_mushroom)
     assert_response :success, "Public users should be able to view individual mushrooms"
     assert_not_includes response.body, "Internal Server Error"
     # Should not raise Pundit::NotAuthorizedError
+  end
+
+  test "public cannot access non-demo mushrooms without authentication" do
+    sign_out @user
+
+    get mushroom_path(@mushroom)
+    assert_response :redirect
   end
 
   test "public sees demo user mushrooms on index" do

@@ -8,6 +8,8 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
     @mushroom.save!
     @image_mushroom = image_mushrooms(:one)
     @image_mushroom.mushroom = @mushroom
+    @demo_mushroom = mushrooms(:demo)
+    @demo_image = image_mushrooms(:demo)
     # Attach test image file to satisfy validation
     @image_mushroom.image_file.attach(
       io: File.open(Rails.root.join('test', 'files', 'test_image.jpg')),
@@ -15,6 +17,13 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
       content_type: 'image/jpeg'
     )
     @image_mushroom.save!
+    @demo_image.mushroom = @demo_mushroom
+    @demo_image.image_file.attach(
+      io: File.open(Rails.root.join('test', 'files', 'test_image.jpg')),
+      filename: 'demo_image.jpg',
+      content_type: 'image/jpeg'
+    )
+    @demo_image.save!
   end
 
   # ============================================================================
@@ -29,9 +38,14 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show image without authentication" do
-    get image_mushroom_url(@image_mushroom)
+    get image_mushroom_url(@demo_image)
     assert_response :success
     assert_not_includes response.body, "Internal Server Error"
+  end
+
+  test "should not show non-demo image without authentication" do
+    get image_mushroom_url(@image_mushroom)
+    assert_response :redirect
   end
 
   test "authenticated user should get new" do
