@@ -157,7 +157,7 @@ skip_after_action :verify_authorized  # Crashes in production!
 
 ### Short-term
 - [ ] Enable ProductionBootTest (requires production database setup)
-- [ ] Add CI/CD integration to run all tests
+- [ ] CI/CD integration intentionally deferred (GitHub Actions disabled due to noisy false errors)
 - [ ] Set up test coverage requirements (maintain >80%)
 
 ### Long-term

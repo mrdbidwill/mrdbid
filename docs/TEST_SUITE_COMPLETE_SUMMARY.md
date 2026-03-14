@@ -3,6 +3,12 @@
 ## Overview
 This document summarizes the comprehensive test suite refactoring completed for the mrdbid Rails application. The goal was to achieve production-ready test coverage with best practices implementation.
 
+## Current Status (2026-03-14)
+- Full suite passes locally: 2106 runs, 0 failures, 0 errors.
+- Coverage (SimpleCov): 71.15% line, 54.45% branch.
+- Parallel testing remains disabled (see `test/test_helper.rb`).
+- CI/CD is intentionally disabled; GitHub Actions workflow removed due to noisy false errors.
+
 ## Before vs After
 
 ### Before Refactoring
@@ -26,7 +32,7 @@ This document summarizes the comprehensive test suite refactoring completed for 
 - **165+ test files**
 - **Code coverage with SimpleCov + LCOV**
 - **FactoryBot integration**
-- **Parallel testing enabled** (workers: 2, scalable)
+- **Parallel testing disabled** (workers: 1) until DRb stability is restored
 - **All controllers tested** (35 new controller tests, 281 test cases)
 - **All policies tested** (34 new policy tests)
 - **All mailers tested** (2 new mailer tests)
@@ -35,7 +41,7 @@ This document summarizes the comprehensive test suite refactoring completed for 
 - **Complete API test coverage** (9 files, 308 test cases)
 - **Performance test suite** (3 files, 50+ tests)
 - **Mutation testing configured**
-- **Full CI/CD pipeline with GitHub Actions**
+- **CI/CD pipeline intentionally disabled** (manual test runs only)
 
 ---
 
@@ -248,26 +254,8 @@ bundle exec mutant run --config config/mutant.yml
 
 ## CI/CD Pipeline
 
-**Files Created:**
-- `.github/workflows/test.yml` - GitHub Actions workflow
-
-**Jobs Configured:**
-1. **test** - Main test suite execution
-2. **policy_tests** - Dedicated policy test run
-3. **integration_tests** - Integration test suite
-4. **system_tests** - System/UI tests with Chrome
-5. **security** - Brakeman security scans
-6. **lint** - RuboCop linting
-
-**Features:**
-- MySQL service container
-- Ruby 3.4.3 setup
-- Dependency caching with bundler-cache
-- System dependencies (libvips, chromedriver)
-- Coverage report uploads
-- Parallel job execution
-- Triggers on push to main and test-suite-refactoring branches
-- Pull request testing
+CI/CD is intentionally disabled; GitHub Actions workflow files were removed due to noisy false errors.
+Manual test runs (`bin/rails test`) are required before deploys.
 
 ---
 
@@ -330,7 +318,6 @@ rails test test/performance/
 - `Gemfile` - Added testing gems
 - `test/test_helper.rb` - Enhanced with coverage and support
 - `config/mutant.yml` - Mutation testing config (new)
-- `.github/workflows/test.yml` - CI/CD pipeline (new)
 
 ### Support Files (New)
 - `test/support/factory_bot.rb`
@@ -351,6 +338,8 @@ rails test test/performance/
 
 ## Metrics Summary
 
+Historical snapshot from the refactor period. For current results, see **Current Status (2026-03-14)** above.
+
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
 | Test Files | 82 | 165+ | +101% |
@@ -364,9 +353,9 @@ rails test test/performance/
 | Integration Tests | 1 | 7 | +600% |
 | System Tests | 4 | 12 | +200% |
 | Performance Tests | 0 | 3 | New |
-| CI/CD Pipeline | ❌ | ✅ | New |
+| CI/CD Pipeline | ❌ | ❌ | Disabled |
 | Mutation Testing | ❌ | ✅ | New |
-| Parallel Testing | Disabled | Enabled | New |
+| Parallel Testing | Disabled | Disabled | — |
 
 ---
 
@@ -405,11 +394,7 @@ rails test test/performance/
 - Comprehensive documentation
 
 ### ✅ CI/CD
-- Automated test execution
-- Security scanning
-- Code linting
-- Coverage tracking
-- Multi-job parallel execution
+- Intentionally disabled; manual test runs required before deploys
 
 ---
 
@@ -426,7 +411,7 @@ rails test test/performance/
 2. Increase coverage targets (50% → 60% → 70% → 80%)
 3. Enable all skipped tests (image uploads, exports)
 4. Add more mutation testing subjects
-5. Monitor CI/CD pipeline performance
+5. Keep manual test runs before deploys
 
 ### Long-term (Quarter 1)
 1. Achieve 80%+ code coverage
@@ -460,9 +445,9 @@ The improvements include:
 - **Comprehensive user flow testing** with integration and system tests
 - **Performance and security testing**
 - **Modern tooling** (SimpleCov, FactoryBot, Bullet, VCR, Mutant)
-- **Automated CI/CD pipeline**
+- **CI/CD intentionally disabled** (manual testing only)
 
-The test suite now provides confidence in code changes, catches regressions early, and serves as living documentation of the application's behavior.
+The test suite now provides confidence in code changes, catches regressions early, and serves as living documentation of the application's behavior. CI/CD remains disabled by design due to previous false-error noise.
 
 ---
 
@@ -470,4 +455,4 @@ The test suite now provides confidence in code changes, catches regressions earl
 
 Test suite refactored on branch: `test-suite-refactoring`
 Completed: December 2025
-Tools: Rails 8.0.2, Minitest, Capybara, SimpleCov, FactoryBot, Mutant, GitHub Actions
+Tools: Rails 8.0.2, Minitest, Capybara, SimpleCov, FactoryBot, Mutant

@@ -18,6 +18,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 - Consequences: Guest requests to non-demo show pages now redirect with authorization messaging.
 - Alternatives Considered: Leave show pages open to public; rejected due to privacy and policy drift.
 
+- Date: 2026-03-14
+- Decision: Serialize PDF/image exports per user using cache-based active export locks.
+- Rationale: Avoid duplicate long-running export jobs and reduce queue pressure without removing features.
+- Consequences: Users can queue one active export at a time (10-minute reentry window).
+- Alternatives Considered: Dedicated database table; deferred for simplicity.
+
 - Date: 2026-03-01
 - Decision: Consolidate documentation into `docs/`, add `PROJECT_MEMORY.md`, and introduce this decision log.
 - Rationale: Reduce regressions by centralizing institutional knowledge and making updates routine.

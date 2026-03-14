@@ -25,6 +25,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **R2 uploads:** Cloudflare R2 does not support ACLs; ActiveStorage uploads must not send ACL headers.
 - **R2 checksum conflicts:** If R2 rejects checksum combinations, retry upload without checksum.
 - **Direct uploads:** `/direct_uploads` response must include `signed_id` for ActiveStorage JS.
+- **Export throttling:** PDF/image exports are serialized per user (active export lock with 10-minute reentry window).
 - **PDF export:** Enabled via background job + X-Accel-Redirect for downloads; keep exports owner-scoped.
 
 ## Authorization & Ownership Rules (Non-Negotiable)

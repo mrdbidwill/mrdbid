@@ -4,7 +4,7 @@
 
 This application deploys to a Hostinger VPS using Capistrano. The deployment is automated and handles code updates, asset compilation, and database migrations.
 
-**Auto-deploy status:** CI/CD auto-deploy is **not** configured in this repo yet. Current deployment is manual via Capistrano.
+**Auto-deploy status:** CI/CD auto-deploy is intentionally **disabled** (GitHub Actions produced noisy false errors). Current deployment is manual via Capistrano.
 
 ## Server Setup
 

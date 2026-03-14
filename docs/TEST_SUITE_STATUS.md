@@ -72,19 +72,14 @@ open coverage/index.html
 
 ## Next Steps
 
-### Before Merge
-1. ✅ Verify models and mailers pass (DONE)
-2. ⏳ Run full test suite to identify fixture issues
-3. ⏳ Fix any failing tests
-4. ⏳ Update fixtures as needed
-5. ⏳ Review coverage report
-
-### After Merge
-1. Monitor CI/CD pipeline
-2. Gradually increase coverage targets
-3. Enable parallel testing when stable
-4. Expand Devise mailer tests
-5. Add missing fixtures for integration/system tests
+### Current Maintenance
+1. Run full test suite before deploys
+2. Fix any failing tests immediately
+3. Review coverage report after major changes
+4. Gradually increase coverage targets
+5. Enable parallel testing when stable
+6. Expand Devise mailer tests
+7. Add missing fixtures for integration/system tests
 
 ## Coverage Goals
 
@@ -104,8 +99,7 @@ open coverage/index.html
 - ✅ Mutant - Mutation testing
 
 ### CI/CD
-- ✅ GitHub Actions workflow configured
-- ⏳ Not yet tested (pending merge)
+- ❌ GitHub Actions workflow disabled (manual test runs only)
 
 ## Issues & Workarounds
 

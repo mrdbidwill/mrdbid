@@ -31,6 +31,7 @@ module Users
       end
 
       export_id = SecureRandom.uuid
+      store_active_export(export_id)
       Rails.cache.write(
         "pdf_export:#{export_id}",
         {
@@ -108,20 +109,27 @@ module Users
     private
 
     def check_existing_export
-      cache_keys = Rails.cache.instance_variable_get(:@data)&.keys || []
-      export_keys = cache_keys.select { |k| k.to_s.start_with?('pdf_export:') }
+      active = fetch_active_export
+      return nil unless active
+      return nil if active[:created_at].blank? || active[:created_at] <= 10.minutes.ago
 
-      export_keys.each do |key|
-        export_data = Rails.cache.read(key)
-        if export_data &&
-           export_data[:user_id] == current_user.id &&
-           export_data[:status] == 'processing' &&
-           export_data[:created_at] > 10.minutes.ago
-          return { export_id: key.to_s.sub('pdf_export:', ''), export_data: export_data }
-        end
-      end
+      { export_id: active[:export_id], export_data: active }
+    end
 
-      nil
+    def fetch_active_export
+      Rails.cache.read(active_export_cache_key)
+    end
+
+    def store_active_export(export_id)
+      Rails.cache.write(
+        active_export_cache_key,
+        { export_id: export_id, created_at: Time.current },
+        expires_in: 30.minutes
+      )
+    end
+
+    def active_export_cache_key
+      "pdf_export:active:#{current_user.id}"
     end
   end
 end

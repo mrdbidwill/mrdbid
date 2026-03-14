@@ -82,11 +82,8 @@ bundle exec mutant run --config config/mutant.yml
 
 ## CI/CD
 
-Tests run automatically on:
-- Push to `main` or `test-suite-refactoring`
-- Pull requests to `main`
-
-View results in GitHub Actions tab.
+CI/CD is intentionally disabled; GitHub Actions workflow files were removed due to noisy false errors.
+Run tests locally before deployments.
 
 ## Test Statistics
 
@@ -96,12 +93,8 @@ View results in GitHub Actions tab.
 - **Target: 80% code coverage**
 
 ### Coverage by Category
-- Controllers: 100%
-- Policies: 100%
-- Mailers: 100%
-- API Endpoints: 100%
-- Integration Flows: Comprehensive
-- UI/System: Comprehensive
+- Current (2026-03-14): 71.15% line coverage, 54.45% branch coverage
+- Detailed breakdown: review `coverage/index.html`
 
 ## Common Commands
 

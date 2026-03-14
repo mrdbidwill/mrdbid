@@ -40,6 +40,7 @@ module Users
       end
 
       # Store export request info in cache
+      store_active_export(export_id)
       Rails.cache.write(
         "image_export:#{export_id}",
         {
@@ -122,22 +123,27 @@ module Users
     private
 
     def check_existing_export
-      # Check cache for any recent exports by this user that are still processing
-      # This is a simple implementation - could be improved with a dedicated table
-      cache_keys = Rails.cache.instance_variable_get(:@data)&.keys || []
-      export_keys = cache_keys.select { |k| k.to_s.start_with?('image_export:') }
+      active = fetch_active_export
+      return nil unless active
+      return nil if active[:created_at].blank? || active[:created_at] <= 10.minutes.ago
 
-      export_keys.each do |key|
-        export_data = Rails.cache.read(key)
-        if export_data &&
-           export_data[:user_id] == current_user.id &&
-           export_data[:status] == 'processing' &&
-           export_data[:created_at] > 10.minutes.ago
-          return { export_id: key.to_s.sub('image_export:', ''), export_data: export_data }
-        end
-      end
+      { export_id: active[:export_id], export_data: active }
+    end
 
-      nil
+    def fetch_active_export
+      Rails.cache.read(active_export_cache_key)
+    end
+
+    def store_active_export(export_id)
+      Rails.cache.write(
+        active_export_cache_key,
+        { export_id: export_id, created_at: Time.current },
+        expires_in: 30.minutes
+      )
+    end
+
+    def active_export_cache_key
+      "image_export:active:#{current_user.id}"
     end
   end
 end

@@ -49,6 +49,7 @@ class UserPdfExportJob < ApplicationJob
       Rails.logger.error e.backtrace.join("\n")
       mark_export_failed(export_id, e.message)
     ensure
+      clear_active_export(user_id, export_id)
       FileUtils.rm_rf(temp_dir) if temp_dir && Dir.exist?(temp_dir)
     end
   end
@@ -78,5 +79,13 @@ class UserPdfExportJob < ApplicationJob
       },
       expires_in: 7.days
     )
+  end
+
+  def clear_active_export(user_id, export_id)
+    key = "pdf_export:active:#{user_id}"
+    active = Rails.cache.read(key)
+    return unless active && active[:export_id] == export_id
+
+    Rails.cache.delete(key)
   end
 end
