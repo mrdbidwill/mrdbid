@@ -6,10 +6,10 @@
 
 ## Current Test Results
 
-- **Latest run:** 2131 runs, 4270 assertions
+- **Latest run:** 2136 runs, 4280 assertions
 - **Failures/Errors/Skips:** 0 / 0 / 0
-- **Coverage:** 79.76% line, 56.07% branch (SimpleCov)
-- **Runtime:** ~25s locally (includes system tests)
+- **Coverage:** 80.75% line, 56.29% branch (SimpleCov)
+- **Runtime:** ~23s locally (includes system tests)
 - **CI/CD:** Disabled intentionally; manual test runs only
 
 ## Known Configuration Changes
@@ -24,7 +24,7 @@
 - **Current:** Line 50%, Branch 40%
 - **Target:** Line 80%, Branch 60%
 - **Location:** `test/test_helper.rb`
-- **Note:** Thresholds are currently met; increase only after coverage rises
+- **Note:** Line target met; branch target still in progress
 
 ### 3. Devise Mailer Tests Simplified
 - **Why:** Avoid Devise mapping configuration complexity
@@ -44,7 +44,7 @@
 | Requests | 13 | ✅ Pass | API coverage green |
 | Performance | 3 | ✅ Pass | N+1 + indexing checks |
 | Jobs | 4 | ✅ Pass | Export jobs covered |
-| Services | 4 | ✅ Pass | PDF + color extraction covered |
+| Services | 5 | ✅ Pass | PDF + color extraction + exporter covered |
 | Queries | 2 | ✅ Pass | Sorting/comparison queries covered |
 
 ## How to Run Tests
@@ -67,7 +67,7 @@ open coverage/index.html
 
 ## Coverage Goals
 
-- **Current:** 79.76% line, 56.07% branch
+- **Current:** 80.75% line, 56.29% branch
 - **Target:** 80% line, 60% branch
 
 ## Issues & Workarounds

@@ -87,13 +87,13 @@ Run tests locally before deployments.
 
 ## Test Statistics
 
-- **206 test files**
-- **2,131 test cases**
-- **4,270 assertions**
+- **207 test files**
+- **2,136 test cases**
+- **4,280 assertions**
 - **Target: 80% code coverage**
 
 ### Coverage by Category
-- Current (2026-03-14): 79.76% line coverage, 56.07% branch coverage
+- Current (2026-03-14): 80.75% line coverage, 56.29% branch coverage
 - Detailed breakdown: review `coverage/index.html`
 
 ## Common Commands

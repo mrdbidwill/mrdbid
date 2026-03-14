@@ -4,8 +4,8 @@
 This document summarizes the comprehensive test suite refactoring completed for the mrdbid Rails application. The goal was to achieve production-ready test coverage with best practices implementation.
 
 ## Current Status (2026-03-14)
-- Full suite passes locally: 2131 runs, 0 failures, 0 errors.
-- Coverage (SimpleCov): 79.76% line, 56.07% branch.
+- Full suite passes locally: 2136 runs, 0 failures, 0 errors.
+- Coverage (SimpleCov): 80.75% line, 56.29% branch.
 - Parallel testing remains disabled (see `test/test_helper.rb`).
 - CI/CD is intentionally disabled; GitHub Actions workflow removed due to noisy false errors.
 
@@ -27,9 +27,9 @@ This document summarizes the comprehensive test suite refactoring completed for 
 - **No CI/CD pipeline**
 
 ### After Refactoring
-- **2,131 tests** with 4,270 assertions (latest run)
-- **Target: 80% code coverage** with SimpleCov tracking (current 79.76% line / 56.07% branch)
-- **206 test files**
+- **2,136 tests** with 4,280 assertions (latest run)
+- **Target: 80% code coverage** with SimpleCov tracking (current 80.75% line / 56.29% branch)
+- **207 test files**
 - **Code coverage with SimpleCov + LCOV**
 - **FactoryBot integration**
 - **Parallel testing disabled** (workers: 1) until DRb stability is restored
@@ -40,6 +40,7 @@ This document summarizes the comprehensive test suite refactoring completed for 
 - **Expanded system tests** (13 files)
 - **API/request tests** (13 files)
 - **Performance test suite** (3 files)
+- **Services** (5 files, including `Mushrooms::PdfExporter`)
 - **Mutation testing configured**
 - **CI/CD pipeline intentionally disabled** (manual test runs only)
 

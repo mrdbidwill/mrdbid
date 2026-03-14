@@ -40,4 +40,4 @@ Purpose: continuity log for monetization and storage migration planning when dir
 - Export navigation:
   - Sidebar now includes a direct link to `Export My Images` (`new_users_image_export_path`).
 - Coverage checkpoint:
-  - 79.76% line, 56.07% branch (SimpleCov).
+  - 80.75% line, 56.29% branch (SimpleCov).
