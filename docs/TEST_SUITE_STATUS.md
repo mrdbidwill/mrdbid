@@ -6,10 +6,10 @@
 
 ## Current Test Results
 
-- **Latest run:** 2106 runs, 4211 assertions
+- **Latest run:** 2131 runs, 4270 assertions
 - **Failures/Errors/Skips:** 0 / 0 / 0
-- **Coverage:** 71.15% line, 54.45% branch (SimpleCov)
-- **Runtime:** ~22s locally (includes system tests)
+- **Coverage:** 79.76% line, 56.07% branch (SimpleCov)
+- **Runtime:** ~25s locally (includes system tests)
 - **CI/CD:** Disabled intentionally; manual test runs only
 
 ## Known Configuration Changes
@@ -38,11 +38,14 @@
 | Models | 48 | ✅ Pass | Full suite green |
 | Mailers | 2 | ✅ Pass | Contact mailer + simplified Devise |
 | Policies | 39 | ✅ Pass | Authorization coverage green |
-| Controllers | 63 | ✅ Pass | Full suite green |
+| Controllers | 65 | ✅ Pass | Full suite green |
 | Integration | 11 | ✅ Pass | Production boot + auth flows |
 | System | 13 | ✅ Pass | Selenium/Capybara UI coverage |
 | Requests | 13 | ✅ Pass | API coverage green |
 | Performance | 3 | ✅ Pass | N+1 + indexing checks |
+| Jobs | 4 | ✅ Pass | Export jobs covered |
+| Services | 4 | ✅ Pass | PDF + color extraction covered |
+| Queries | 2 | ✅ Pass | Sorting/comparison queries covered |
 
 ## How to Run Tests
 
@@ -64,7 +67,7 @@ open coverage/index.html
 
 ## Coverage Goals
 
-- **Current:** 71.15% line, 54.45% branch
+- **Current:** 79.76% line, 56.07% branch
 - **Target:** 80% line, 60% branch
 
 ## Issues & Workarounds

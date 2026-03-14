@@ -181,21 +181,4 @@ class Mushroom < ApplicationRecord
     # mr_character_mushrooms changed before invalidating.
     MushroomComparison.involving_mushroom(id).destroy_all if saved_change_to_updated_at?
   end
-
-  def prevent_id_change
-    if will_save_change_to_id?
-      errors.add(:id, "cannot be changed")
-      throw :abort
-    end
-  end
-
-  def invalidate_comparisons_on_character_change
-    # Delete existing comparisons involving this mushroom to force recalculation
-    # This is triggered when the mushroom is saved, but we only want to invalidate
-    # if character data might have changed (which happens via mr_character_mushrooms)
-    # Note: This is a simple approach. For optimization, you could check if
-    # mr_character_mushrooms changed before invalidating.
-    MushroomComparison.involving_mushroom(id).destroy_all if saved_change_to_updated_at?
-  end
-
 end

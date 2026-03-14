@@ -107,4 +107,33 @@ class ImageMushroomTest < ActiveSupport::TestCase
     assert @image_mushroom.image_file.byte_size > 0
   end
 
+  test "dimensions returns formatted string when present" do
+    assert_equal "800x600", @image_mushroom.dimensions
+  end
+
+  test "format_exposure handles rationals and seconds" do
+    assert_equal "1/125s", @image_mushroom.send(:format_exposure, Rational(1, 125))
+    assert_equal "2.5s", @image_mushroom.send(:format_exposure, 2.5)
+  end
+
+  test "format_aperture formats f number" do
+    assert_equal "f/2.8", @image_mushroom.send(:format_aperture, 2.8)
+  end
+
+  test "parse_exif_datetime handles time objects" do
+    time_value = Time.new(2024, 1, 2, 3, 4, 5)
+    parsed = @image_mushroom.send(:parse_exif_datetime, time_value)
+    assert_equal time_value.to_datetime, parsed
+  end
+
+  test "parse_gps_coordinate parses dms strings" do
+    value = @image_mushroom.send(:parse_gps_coordinate, "30 deg 30' 42.41\" N")
+    assert_in_delta 30.5118, value, 0.01
+  end
+
+  test "convert_gps_array_to_decimal handles south and west" do
+    value = @image_mushroom.send(:convert_gps_array_to_decimal, [30, 30, 0], "S")
+    assert_in_delta -30.5, value, 0.01
+  end
+
 end

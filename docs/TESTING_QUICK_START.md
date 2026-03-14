@@ -53,8 +53,8 @@ open coverage/index.html
 ```
 
 Current targets:
-- Line coverage: 50% (will increase to 80%)
-- Branch coverage: 40%
+- Line coverage: 50% (target 80%)
+- Branch coverage: 40% (target 60%)
 
 ## Performance Testing
 
@@ -87,13 +87,13 @@ Run tests locally before deployments.
 
 ## Test Statistics
 
-- **199 test files**
-- **2,106 test cases**
-- **4,211 assertions**
+- **206 test files**
+- **2,131 test cases**
+- **4,270 assertions**
 - **Target: 80% code coverage**
 
 ### Coverage by Category
-- Current (2026-03-14): 71.15% line coverage, 54.45% branch coverage
+- Current (2026-03-14): 79.76% line coverage, 56.07% branch coverage
 - Detailed breakdown: review `coverage/index.html`
 
 ## Common Commands

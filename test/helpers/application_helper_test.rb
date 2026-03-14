@@ -1,4 +1,5 @@
 require "test_helper"
+require "ostruct"
 
 class ApplicationHelperTest < ActionView::TestCase
   include ApplicationHelper
@@ -135,5 +136,21 @@ class ApplicationHelperTest < ActionView::TestCase
     result = input_for_character(form: form_builder, character: @character)
     
     assert_includes result, "No options"
+  end
+
+  test "input_for_character handles color display option" do
+    form_builder = ActionView::Helpers::FormBuilder.new(:test, nil, self, {})
+    character = OpenStruct.new(display_option: OpenStruct.new(name: "color"), display_option_id: 6)
+    result = input_for_character(form: form_builder, character: character)
+
+    assert_includes result, "Use color picker"
+  end
+
+  test "input_for_character handles location display options" do
+    form_builder = ActionView::Helpers::FormBuilder.new(:test, nil, self, {})
+    character = OpenStruct.new(display_option: OpenStruct.new(name: "state"), display_option_id: 11)
+    result = input_for_character(form: form_builder, character: character)
+
+    assert_includes result, "Handled in location inputs"
   end
 end

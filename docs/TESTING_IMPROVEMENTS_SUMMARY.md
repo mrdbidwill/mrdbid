@@ -11,9 +11,10 @@
 
 ## Update (2026-03-14)
 
-- Full suite green: 2106 runs, 0 failures, 0 errors, 0 skips.
+- Full suite green: 2131 runs, 0 failures, 0 errors, 0 skips.
 - Capybara/Selenium system coverage added, including a button/UX audit (`test/system/button_ux_audit_test.rb`).
 - Confirmation prompts standardized on `data-turbo-confirm` (Turbo-only JS stack).
+- Coverage now at 79.76% line / 56.07% branch.
 
 ## Solution: Three New Test Suites
 
@@ -175,7 +176,7 @@ skip_after_action :verify_authorized  # Crashes in production!
 
 **Branch:** `main`
 **Status:** Active
-**Tests:** 2106 runs, 0 failures, 0 errors, 0 skips
+**Tests:** 2131 runs, 0 failures, 0 errors, 0 skips
 
 ## Summary
 

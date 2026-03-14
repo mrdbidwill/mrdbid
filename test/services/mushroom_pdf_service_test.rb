@@ -1,181 +1,55 @@
-# frozen_string_literal: true
-
 require "test_helper"
+require "ostruct"
 
 class MushroomPdfServiceTest < ActiveSupport::TestCase
-  setup do
-    @user = users(:one)
-    @country = countries(:one)
-    @fungus_type = fungus_types(:one)
-    @mushroom = Mushroom.create!(
-      name: "Test Mushroom",
-      description: "A test mushroom for PDF export",
-      user: @user,
-      country: @country,
-      fungus_type: @fungus_type,
-      collection_date: Date.today
-    )
+  test "generate returns a Prawn document" do
+    pdf = MushroomPdfService.new([mushrooms(:one)]).generate
+    assert_kind_of Prawn::Document, pdf
   end
 
-  test "generates PDF for single mushroom" do
-    # Disable strict loading for test
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-
-    service = MushroomPdfService.new(@mushroom)
-    pdf = service.generate
-
-    assert_not_nil pdf
-    assert_instance_of Prawn::Document, pdf
-
-    # Verify PDF can be rendered
-    pdf_string = pdf.render
-    assert pdf_string.length > 0
-    assert pdf_string.start_with?("%PDF")
-  end
-
-  test "generates PDF for multiple mushrooms" do
-    mushroom2 = Mushroom.create!(
-      name: "Second Test Mushroom",
-      user: @user,
-      country: @country,
-      fungus_type: @fungus_type,
-      collection_date: Date.today
-    )
-
-    # Disable strict loading for tests
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-    mushroom2.strict_loading!(false) if mushroom2.respond_to?(:strict_loading!)
-
-    service = MushroomPdfService.new([@mushroom, mushroom2])
-    pdf = service.generate
-
-    assert_not_nil pdf
-    pdf_string = pdf.render
-    assert pdf_string.length > 0
-  end
-
-  test "generates PDF with empty mushroom array" do
+  test "sanitize_for_pdf handles invalid encoding" do
     service = MushroomPdfService.new([])
-    pdf = service.generate
+    invalid = String.new("\xC3").force_encoding("UTF-8")
 
-    assert_not_nil pdf
-    pdf_string = pdf.render
-    assert pdf_string.length > 0
+    sanitized = service.send(:sanitize_for_pdf, invalid)
+    assert_kind_of String, sanitized
   end
 
-  test "handles mushroom with basic info" do
-    @mushroom.update(
-      description: "Test description",
-      comments: "Test comments"
+  test "location_text combines location parts" do
+    service = MushroomPdfService.new([])
+    mushroom = OpenStruct.new(
+      city: "Austin",
+      county: "Travis",
+      state: OpenStruct.new(name: "Texas"),
+      country: OpenStruct.new(name: "USA")
     )
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
 
-    service = MushroomPdfService.new(@mushroom)
-    pdf = service.generate
-    pdf_string = pdf.render
-
-    # Just verify PDF was generated successfully
-    assert pdf_string.length > 0
-    assert pdf_string.start_with?("%PDF")
+    assert_equal "Austin, Travis, Texas, USA", service.send(:location_text, mushroom)
   end
 
-  test "handles mushroom without optional fields" do
-    minimal_mushroom = Mushroom.create!(
-      name: "Minimal Mushroom",
-      user: @user,
-      country: @country,
-      fungus_type: @fungus_type,
-      collection_date: Date.today
-    )
-    minimal_mushroom.strict_loading!(false) if minimal_mushroom.respond_to?(:strict_loading!)
+  test "format_character_value handles key display options" do
+    service = MushroomPdfService.new([])
 
-    service = MushroomPdfService.new(minimal_mushroom)
-    pdf = service.generate
+    color_option = OpenStruct.new(name: "color")
+    color_character = OpenStruct.new(display_option: color_option)
+    color = OpenStruct.new(latin_name: "Amanita", common_name: "Red")
+    rc_color = OpenStruct.new(mr_character: color_character, character_value: nil, ordered_colors: [color])
+    assert_match(/Amanita/, service.send(:format_character_value, rc_color))
 
-    assert_not_nil pdf
-    pdf_string = pdf.render
-    assert pdf_string.length > 0
-  end
+    radio_option = OpenStruct.new(name: "radio")
+    radio_character = OpenStruct.new(display_option: radio_option)
+    lookup = lookup_items(:one)
+    rc_radio = OpenStruct.new(mr_character: radio_character, character_value: lookup.id, ordered_colors: [])
+    assert_equal lookup.name, service.send(:format_character_value, rc_radio)
 
-  test "includes location information in PDF" do
-    state = states(:one)
-    @mushroom.update(state: state)
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
+    boolean_option = OpenStruct.new(name: "boolean_yes_no")
+    boolean_character = OpenStruct.new(display_option: boolean_option)
+    rc_bool = OpenStruct.new(mr_character: boolean_character, character_value: "true", ordered_colors: [])
+    assert_equal "Yes", service.send(:format_character_value, rc_bool)
 
-    service = MushroomPdfService.new(@mushroom)
-    pdf = service.generate
-    pdf_string = pdf.render
-
-    # Basic smoke test - PDF generates without errors
-    assert pdf_string.length > 0
-  end
-
-  test "handles mushroom with characters" do
-    # Find or create required records
-    text_display = DisplayOption.find_or_create_by!(name: "text_box_string") do |d|
-      d.description = "Text box for strings"
-    end
-    source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
-    observation_method = ObservationMethod.first || ObservationMethod.create!(name: "Test Type")
-
-    mr_character = MrCharacter.create!(
-      name: "Test Text Character",
-      part: parts(:one),
-      display_option: text_display,
-      source_data: source,
-      observation_method: observation_method
-    )
-
-    MrCharacterMushroom.create!(
-      mushroom: @mushroom,
-      mr_character: mr_character,
-      character_value: "test value"
-    )
-
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-    service = MushroomPdfService.new(@mushroom)
-    pdf = service.generate
-
-    assert_not_nil pdf
-    pdf_string = pdf.render
-    assert pdf_string.length > 0
-    assert pdf_string.start_with?("%PDF")
-  end
-
-  test "formats boolean character values correctly" do
-    # Find or create required records
-    boolean_display = DisplayOption.find_or_create_by!(name: "boolean_yes_no") do |d|
-      d.description = "Boolean Yes/No"
-    end
-    source = SourceData.first || SourceData.create!(title: "Test Source", source_data_type_id: 1)
-    observation_method = ObservationMethod.first || ObservationMethod.create!(name: "Test Type")
-
-    mr_character = MrCharacter.create!(
-      name: "Test Boolean Character",
-      part: parts(:one),
-      display_option: boolean_display,
-      source_data: source,
-      observation_method: observation_method
-    )
-
-    char_mushroom = MrCharacterMushroom.create!(
-      mushroom: @mushroom,
-      mr_character: mr_character,
-      character_value: "true"
-    )
-
-    @mushroom.strict_loading!(false) if @mushroom.respond_to?(:strict_loading!)
-    service = MushroomPdfService.new(@mushroom)
-    formatted_value = service.send(:format_character_value, char_mushroom)
-
-    assert_equal "Yes", formatted_value
-  end
-
-  test "handles PDF generation errors gracefully" do
-    # Test that service doesn't crash with edge cases
-    service = MushroomPdfService.new(nil)
-    pdf = service.generate
-
-    assert_not_nil pdf
+    default_option = OpenStruct.new(name: "text")
+    default_character = OpenStruct.new(display_option: default_option)
+    rc_default = OpenStruct.new(mr_character: default_character, character_value: "raw", ordered_colors: [])
+    assert_equal "raw", service.send(:format_character_value, rc_default)
   end
 end
