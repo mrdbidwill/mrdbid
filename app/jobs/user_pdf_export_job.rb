@@ -43,7 +43,7 @@ class UserPdfExportJob < ApplicationJob
       Rails.logger.info "[UserPdfExportJob] Export completed: #{final_path} (#{file_size_mb} MB)"
 
       mark_export_ready(export_id, pdf_filename, file_size)
-      CleanupExportJob.set(wait: 24.hours).perform_later(final_path.to_s) if defined?(CleanupExportJob)
+      CleanupExportJob.set(wait: 7.days).perform_later(final_path.to_s) if defined?(CleanupExportJob)
     rescue => e
       Rails.logger.error "[UserPdfExportJob] Export failed for user #{user_id}: #{e.class} - #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
@@ -64,7 +64,7 @@ class UserPdfExportJob < ApplicationJob
         file_size: file_size,
         created_at: Time.current
       },
-      expires_in: 25.hours
+      expires_in: 7.days
     )
   end
 
@@ -76,7 +76,7 @@ class UserPdfExportJob < ApplicationJob
         error: error_message,
         created_at: Time.current
       },
-      expires_in: 24.hours
+      expires_in: 7.days
     )
   end
 end

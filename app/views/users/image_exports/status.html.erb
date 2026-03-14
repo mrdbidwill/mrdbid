@@ -48,7 +48,7 @@
           <p class="text-sm text-gray-500 mb-6">
             File Size: <%= number_to_human_size(@export_info[:file_size]) %><br>
             Created: <%= @export_info[:created_at].strftime('%B %d, %Y at %I:%M %p') %><br>
-            Expires: <%= (@export_info[:created_at] + 24.hours).strftime('%B %d, %Y at %I:%M %p') %>
+            Expires: <%= (@export_info[:created_at] + 7.days).strftime('%B %d, %Y at %I:%M %p') %>
           </p>
 
           <%= link_to "Download ZIP File",

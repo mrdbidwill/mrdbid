@@ -91,8 +91,8 @@ class UserImageExportJob < ApplicationJob
       # Mark export as ready
       mark_export_ready(export_id, zip_filename, file_size)
 
-      # Schedule cleanup after 24 hours
-      CleanupExportJob.set(wait: 24.hours).perform_later(final_path.to_s) if defined?(CleanupExportJob)
+      # Schedule cleanup after 7 days
+      CleanupExportJob.set(wait: 7.days).perform_later(final_path.to_s) if defined?(CleanupExportJob)
 
     rescue => e
       Rails.logger.error "[UserImageExportJob] Export failed for user #{user_id}: #{e.class} - #{e.message}"
@@ -214,7 +214,7 @@ class UserImageExportJob < ApplicationJob
         file_size: file_size,
         created_at: Time.current
       },
-      expires_in: 25.hours  # Slightly longer than file cleanup
+      expires_in: 7.days
     )
   end
 
@@ -226,7 +226,7 @@ class UserImageExportJob < ApplicationJob
         error: error_message,
         created_at: Time.current
       },
-      expires_in: 24.hours
+      expires_in: 7.days
     )
   end
 end

@@ -47,7 +47,7 @@ module Users
           user_id: current_user.id,
           created_at: Time.current
         },
-        expires_in: 25.hours
+        expires_in: 7.days
       )
 
       # Queue the job
