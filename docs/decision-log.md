@@ -13,6 +13,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-03-14
+- Decision: Replace `data-confirm` with `data-turbo-confirm` for confirmation prompts across Turbo-driven views.
+- Rationale: `@hotwired/turbo-rails` is loaded without rails-ujs, so `data-confirm` does not trigger a browser confirm dialog.
+- Consequences: All destructive/confirm actions now consistently show confirmation prompts under Turbo.
+- Alternatives Considered: Reintroduce rails-ujs; rejected to keep the JS stack minimal.
+
+- Date: 2026-03-14
 - Decision: Enforce demo-only access for public mushroom/image show pages and require Pundit authorization on show actions.
 - Rationale: Align runtime behavior with the documented public/demo boundary and prevent unintended data exposure.
 - Consequences: Guest requests to non-demo show pages now redirect with authorization messaging.

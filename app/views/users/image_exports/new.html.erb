@@ -51,7 +51,7 @@
       <div class="mt-6">
         <%= button_to "Start Export", users_image_export_path, method: :post,
             class: "w-full btn-primary text-center py-3 px-4 text-lg",
-            data: { confirm: "This will create a ZIP file of all your images. This may take several minutes. Continue?" } %>
+            data: { turbo_confirm: "This will create a ZIP file of all your images. This may take several minutes. Continue?" } %>
       </div>
     </div>
   </div>

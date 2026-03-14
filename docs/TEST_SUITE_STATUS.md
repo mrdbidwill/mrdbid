@@ -1,16 +1,16 @@
 # Test Suite Status
 
-**Branch:** `test-suite-refactoring`
-**Last Updated:** December 13, 2025
-**Status:** ✅ Ready for Review/Merge
+**Branch:** `main`
+**Last Updated:** 2026-03-14
+**Status:** ✅ Full suite passing (manual runs)
 
 ## Current Test Results
 
-**Models + Mailers + Policies (subset):**
-- **516 tests** passing
-- **996 assertions**
-- **0 failures, 0 errors**
-- **2 skips** (Devise mailer tests requiring full integration)
+- **Latest run:** 2106 runs, 4211 assertions
+- **Failures/Errors/Skips:** 0 / 0 / 0
+- **Coverage:** 71.15% line, 54.45% branch (SimpleCov)
+- **Runtime:** ~22s locally (includes system tests)
+- **CI/CD:** Disabled intentionally; manual test runs only
 
 ## Known Configuration Changes
 
@@ -18,13 +18,13 @@
 - **Why:** DRb connection issues with parallel workers
 - **Location:** `test/test_helper.rb`
 - **Can be re-enabled:** After verifying test isolation
-- **Impact:** Tests run sequentially (slower but more stable)
+- **Impact:** Tests run sequentially (slower but stable)
 
 ### 2. SimpleCov Coverage Thresholds
 - **Current:** Line 50%, Branch 40%
 - **Target:** Line 80%, Branch 60%
 - **Location:** `test/test_helper.rb`
-- **Note:** Will increase gradually as more tests are added
+- **Note:** Thresholds are currently met; increase only after coverage rises
 
 ### 3. Devise Mailer Tests Simplified
 - **Why:** Avoid Devise mapping configuration complexity
@@ -35,34 +35,26 @@
 
 | Category | Files | Status | Notes |
 |----------|-------|--------|-------|
-| Models | 46 | ✅ Pass | All existing model tests pass |
+| Models | 48 | ✅ Pass | Full suite green |
 | Mailers | 2 | ✅ Pass | Contact mailer + simplified Devise |
-| Policies | 37 | ⚠️ Not fully tested | May need fixture adjustments |
-| Controllers | 35 | ⚠️ Not fully tested | May need fixture adjustments |
-| Integration | 6 | ⚠️ Not fully tested | Comprehensive but not verified |
-| System | 12 | ⚠️ Not fully tested | Requires Capybara/Chrome setup |
-| Requests | 9 | ⚠️ Not fully tested | May need fixture adjustments |
-| Performance | 3 | ⚠️ Not fully tested | May need more data |
+| Policies | 39 | ✅ Pass | Authorization coverage green |
+| Controllers | 63 | ✅ Pass | Full suite green |
+| Integration | 11 | ✅ Pass | Production boot + auth flows |
+| System | 13 | ✅ Pass | Selenium/Capybara UI coverage |
+| Requests | 13 | ✅ Pass | API coverage green |
+| Performance | 3 | ✅ Pass | N+1 + indexing checks |
 
 ## How to Run Tests
 
-### Run subset (recommended first)
+### Run subset (fast)
 ```bash
-# Models and mailers (verified working)
 rails test test/models/ test/mailers/
-
-# Add policies
-rails test test/models/ test/mailers/ test/policies/
-
-# Add controllers
-rails test test/models/ test/mailers/ test/policies/ test/controllers/
 ```
 
 ### Run full suite
 ```bash
 rails test
 ```
-Note: May take 10-20 minutes for full suite
 
 ### Run with coverage
 ```bash
@@ -70,53 +62,17 @@ rails test
 open coverage/index.html
 ```
 
-## Next Steps
-
-### Current Maintenance
-1. Run full test suite before deploys
-2. Fix any failing tests immediately
-3. Review coverage report after major changes
-4. Gradually increase coverage targets
-5. Enable parallel testing when stable
-6. Expand Devise mailer tests
-7. Add missing fixtures for integration/system tests
-
 ## Coverage Goals
 
-**Phase 1 (Current):** Get all tests passing
-**Phase 2 (Week 1):** 50% coverage
-**Phase 3 (Month 1):** 70% coverage
-**Phase 4 (Quarter 1):** 80% coverage
-
-## Test Infrastructure
-
-### Installed Gems
-- ✅ SimpleCov - Code coverage
-- ✅ FactoryBot - Test factories
-- ✅ Bullet - N+1 detection
-- ✅ VCR - HTTP recording
-- ✅ WebMock - HTTP stubbing
-- ✅ Mutant - Mutation testing
-
-### CI/CD
-- ❌ GitHub Actions workflow disabled (manual test runs only)
+- **Current:** 71.15% line, 54.45% branch
+- **Target:** 80% line, 60% branch
 
 ## Issues & Workarounds
 
 ### DRb Connection Issues
 **Problem:** Parallel testing causes "Bad file descriptor" errors
 **Workaround:** Disabled parallel testing
-**Solution:** Will investigate test isolation issues
-
-### SimpleCov Coverage Failures
-**Problem:** Current coverage (7-10%) below minimums (50%/40%)
-**Workaround:** These are expected failures during development
-**Solution:** Coverage will increase as tests are verified and fixtures added
-
-### Devise Mailer Mapping
-**Problem:** Devise mailer tests fail with mapping errors
-**Workaround:** Simplified tests to use actual user methods
-**Solution:** May need Devise test configuration refinement
+**Solution:** Investigate test isolation issues before re-enabling
 
 ## Documentation
 
@@ -124,7 +80,3 @@ open coverage/index.html
 - `TEST_SUITE_COMPLETE_SUMMARY.md` - Comprehensive details
 - `TESTING_QUICK_START.md` - Quick reference guide
 - `TEST_SUITE_STATUS.md` - This file (current status)
-
-## Questions?
-
-Review the documentation files or check commit history for details on specific tests.

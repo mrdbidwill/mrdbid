@@ -31,7 +31,7 @@
         <%= button_to "Start Comparison", mushroom_mushroom_comparisons_path(mushroom_id: @mushroom.id),
                       method: :post,
                       class: "btn-primary",
-                      data: { confirm: "This will compare against all other mushrooms. Continue?" } %>
+                      data: { turbo_confirm: "This will compare against all other mushrooms. Continue?" } %>
       </div>
     <% elsif @pending_count > 0 %>
       <div class="mb-4 p-4 bg-blue-50 border border-blue-300 rounded">
@@ -49,7 +49,7 @@
         <%= button_to "Re-run Comparison", mushroom_mushroom_comparisons_path(mushroom_id: @mushroom.id),
                       method: :post,
                       class: "btn-secondary",
-                      data: { confirm: "This will re-compare against all mushrooms. Continue?" } %>
+                      data: { turbo_confirm: "This will re-compare against all mushrooms. Continue?" } %>
       </div>
 
       <%= render "shared/pagination", collection: @comparisons %>

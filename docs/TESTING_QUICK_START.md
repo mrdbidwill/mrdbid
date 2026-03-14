@@ -87,9 +87,9 @@ Run tests locally before deployments.
 
 ## Test Statistics
 
-- **165+ test files**
-- **1,400+ test cases**
-- **3,500+ assertions**
+- **199 test files**
+- **2,106 test cases**
+- **4,211 assertions**
 - **Target: 80% code coverage**
 
 ### Coverage by Category
@@ -141,6 +141,6 @@ Check `test/performance/n_plus_one_test.rb` for eager loading examples.
 2. Review `coverage/index.html` for gaps
 3. Add fixtures/factories as needed
 4. Gradually increase coverage targets
-5. Enable skipped tests (image uploads, exports)
+5. Expand system tests as new UI flows ship
 
 Happy testing! 🧪

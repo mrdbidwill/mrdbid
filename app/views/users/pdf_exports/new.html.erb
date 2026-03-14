@@ -37,7 +37,7 @@
       <div class="mt-6">
         <%= button_to "Start PDF Export", users_pdf_export_path, method: :post,
             class: "w-full btn-primary text-center py-3 px-4 text-lg",
-            data: { confirm: "This will generate a PDF of all your mushrooms. This may take several minutes. Continue?" } %>
+            data: { turbo_confirm: "This will generate a PDF of all your mushrooms. This may take several minutes. Continue?" } %>
       </div>
     </div>
   </div>
