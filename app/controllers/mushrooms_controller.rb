@@ -8,7 +8,8 @@ class MushroomsController < ApplicationController
   # AUTHENTICATION & AUTHORIZATION:
   # - Uses Devise for authentication (authenticate_user!)
   # - Uses Pundit for authorization (see app/policies/mushroom_policy.rb)
-  # - Users can only view/edit/delete their own mushrooms
+  # - Users can only edit/delete their own mushrooms (or admin override)
+  # - Signed-in users can view any mushrooms; public users only see demo content
   #
   # PERFORMANCE NOTES:
   # - Uses eager loading to prevent N+1 queries
@@ -30,7 +31,7 @@ class MushroomsController < ApplicationController
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
-  skip_after_action :verify_authorized, only: [:show, :create, :clone_characters, :toggle_view_mode, :export_all_pdf], raise: false
+  skip_after_action :verify_authorized, only: [:create, :clone_characters, :toggle_view_mode, :export_all_pdf], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -129,6 +130,7 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1 or /mushrooms/1.json
   def show
+    authorize @mushroom
   end
 
   # GET /mushrooms/new

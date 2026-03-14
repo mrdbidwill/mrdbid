@@ -1,3 +1,15 @@
+demo:
+  name: "Demo Oyster"
+  description: "Public demo mushroom"
+  comments: "Visible to guests"
+  user_id: 1
+  country: one
+  state: one
+  fungus_type: one
+  collection_date: <%= 7.days.ago.to_date %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 one:
   id:  "980190962"
   user_id: <%= ActiveRecord::FixtureSet.identify(:one) %>

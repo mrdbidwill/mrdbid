@@ -21,3 +21,15 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - generated file naming should be context-specific (avoid generic repeated names) for better user/download UX.
   - keep a manual deploy fallback path documented; CI deploy failures can produce noise even when live service is healthy.
 - RubyMine handoff doc was revalidated and updated to explicitly call out quota-wait and split-output fallback as expected under heavy load.
+
+## 2026-03-14
+- `mrdbid` image storage migration is complete:
+  - ActiveStorage R2 service enabled (`ACTIVE_STORAGE_SERVICE=r2`).
+  - Direct uploads configured via `/direct_uploads` and R2 public base URL.
+  - Backfill task available (`r2:backfill`) for legacy disk blobs.
+- Public/demo boundary tightened:
+  - Guests can only access demo content (`user_id == 1`) for mushroom and image show pages.
+- AdSense gating is in code:
+  - Public-only script rendering via `ADSENSE_ENABLED=true` + `ADSENSE_CLIENT_ID`.
+  - Authenticated sessions never render AdSense markup.
+- Next operational step is to flip the AdSense env flags once ready to go live.

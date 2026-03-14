@@ -1,20 +1,25 @@
 # R2 + AdSense Transition Plan (Portfolio)
 
-Date: 2026-03-11
+Date: 2026-03-14
 
 ## Goal
 - Remove VPS disk/IO pressure by moving large image/export artifacts to object storage.
 - Enable monetization on public pages only.
 - Keep authenticated experiences ad-free.
 
-## What Is Already Implemented In This Repo (`dna.mrdbid.com` / `myDNAobv`)
-- S3-compatible publish backend for export artifacts (Cloudflare R2 ready).
-- New env-driven backend selector: `EXPORT_PUBLISH_BACKEND=filesystem|s3`.
-- New env vars for S3/R2 object storage publishing.
-- One-time local publish dir sync script: `scripts/sync_publish_dir_to_object_storage.py`.
-- AdSense script/banner gating at template layer:
-  - public template responses can show ads
-  - admin/authenticated template responses do not load AdSense.
+## Current Status (2026-03-14)
+- `mrdbid.com`: **R2 images complete**, direct uploads live, AdSense gating code merged (env flip pending).
+- `dna.mrdbid.com` (`myDNAobv`): **R2 exports + AdSense gating live**.
+- `mycowriter.com`: AdSense code merged (env flip pending).
+- `auto-glossary.com`: AdSense code merged (env flip pending).
+
+## What Is Already Implemented In This Repo (`mrdbid.com`)
+- ActiveStorage R2 service + env validation.
+- Direct upload endpoint (`/direct_uploads`) with validation.
+- Image metadata + dominant color extraction (async).
+- Genus + color sorting query for exports.
+- AdSense script gating at layout helper (public only).
+- R2 smoke test + backfill task.
 
 ## Cloudflare R2 Account Setup Details (Specific)
 1. Create R2 bucket per product environment.
@@ -34,9 +39,9 @@ Date: 2026-03-11
    - Alert on storage growth and request spikes.
 
 ## Recommended Execution Order
-1. `dna.mrdbid.com` (this repo): switch publish backend to R2 first.
-2. `mrdbid.com`: migrate observation image originals/derivatives to R2 with direct browser uploads.
-3. `mycowriter.com` and `auto-glossary.com`: AdSense-only rollout (minimal image migration required).
+1. `dna.mrdbid.com`: switch publish backend to R2 first. **Complete**
+2. `mrdbid.com`: migrate observation image originals/derivatives to R2 with direct browser uploads. **Complete**
+3. `mycowriter.com` and `auto-glossary.com`: AdSense-only rollout (minimal image migration required). **Pending env flip**
 4. After one full cycle, tighten lifecycle/retention for stale objects.
 
 ## `dna.mrdbid.com` Cutover Steps
@@ -71,7 +76,7 @@ Date: 2026-03-11
 - Do not rely only on URL exclusion for auth states that share routes.
 
 ## Status Tracker
-- `dna.mrdbid.com` code changes: complete in this repo.
-- `mrdbid.com`: pending (repo access required).
-- `mycowriter.com`: pending (repo access required).
-- `auto-glossary.com`: pending (repo access required).
+- `dna.mrdbid.com` code changes: complete and live.
+- `mrdbid.com`: complete in repo; production env flip pending for AdSense.
+- `mycowriter.com`: code merged; production env flip pending.
+- `auto-glossary.com`: code merged; production env flip pending.

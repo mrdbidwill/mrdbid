@@ -59,7 +59,7 @@ class ProductionBootTest < ActionDispatch::IntegrationTest
 
   test "public show pages work without authentication" do
     # Create test data
-    mushroom = mushrooms(:one)
+    mushroom = mushrooms(:demo)
 
     # Test mushroom show page (public)
     get mushroom_path(mushroom)

@@ -26,6 +26,13 @@ This automatically:
 2. Restarts Puma web server
 3. Restarts Solid Queue worker
 
+## Pre-Deploy Env Check (R2 + AdSense)
+
+Verify `/opt/mrdbid/shared/.env` includes:
+- `ACTIVE_STORAGE_SERVICE=r2`
+- `R2_BUCKET`, `R2_ENDPOINT`, `R2_REGION`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_PUBLIC_BASE_URL`
+- `ADSENSE_ENABLED` and `ADSENSE_CLIENT_ID` (public-only ads)
+
 ## Manual Restart (If Needed)
 
 If you need to manually restart services:

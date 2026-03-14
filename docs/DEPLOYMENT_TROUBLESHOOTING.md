@@ -1,6 +1,6 @@
 # Deployment Troubleshooting Guide
 
-**Key takeaway for future chats:** When you see `ActiveSupport::MessageEncryptor::InvalidMessage` during deployment, the server's master.key is wrong. Replace it with `ed125d4dcb62fe61fea5ab987cb6e30b` - don't modify any code files.
+**Key takeaway for future chats:** When you see `ActiveSupport::MessageEncryptor::InvalidMessage` during deployment, the server's `master.key` is wrong. Replace it with the correct production master key from your secure vault or Hostinger secrets. Do not store the key in this repo.
 
 ## Error: ActiveSupport::MessageEncryptor::InvalidMessage during deployment
 
@@ -8,11 +8,11 @@
 The server's `master.key` file doesn't match the `credentials.yml.enc` file, preventing Rails from decrypting credentials during asset precompilation.
 
 ### Solution
-Replace the server's master.key with the correct production key:
+Replace the server's master.key with the correct production key from your secure source:
 
 ```bash
-# The correct production key (from SERVER_BACKUP_INSTRUCTIONS_10_13_2025.md line 24)
-echo "ed125d4dcb62fe61fea5ab987cb6e30b" | ssh root@85.31.233.192 "cat > /opt/mrdbid/shared/config/master.key && chmod 600 /opt/mrdbid/shared/config/master.key"
+# The correct production key (retrieve from your secure vault)
+echo "<PRODUCTION_MASTER_KEY>" | ssh root@85.31.233.192 "cat > /opt/mrdbid/shared/config/master.key && chmod 600 /opt/mrdbid/shared/config/master.key"
 
 # Then deploy
 cap production deploy
@@ -28,7 +28,7 @@ Before attempting fixes, verify the issue:
 # 1. Check what master.key is on the server
 ssh root@85.31.233.192 "cat /opt/mrdbid/shared/config/master.key"
 
-# 2. Should output: ed125d4dcb62fe61fea5ab987cb6e30b
+# 2. Should output your production key
 # 3. If different, replace it using the command above
 ```
 
@@ -50,11 +50,11 @@ ssh root@85.31.233.192 "cat /opt/mrdbid/shared/config/master.key"
 - `config/environments/production.rb` - Already correct
 - `config/importmap.rb` - Already correct
 
-### Current Working State (as of commit 7af37d5)
+### Current Working State (example)
 - Database config uses: `ENV.fetch("MYSQL_USER")` with ENV variables from `.env` file
 - SMTP config uses: `Rails.application.credentials.dig(:smtp, :address)` from encrypted credentials
-- Master key on server: `ed125d4dcb62fe61fea5ab987cb6e30b`
-- Server .env file has all database credentials
+- Master key on server matches the encrypted credentials file
+- Server `.env` file has all database credentials
 
 ### If Deployment Still Fails After Key Fix
 1. SSH to server and test credentials manually:

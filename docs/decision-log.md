@@ -12,6 +12,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-03-14
+- Decision: Enforce demo-only access for public mushroom/image show pages and require Pundit authorization on show actions.
+- Rationale: Align runtime behavior with the documented public/demo boundary and prevent unintended data exposure.
+- Consequences: Guest requests to non-demo show pages now redirect with authorization messaging.
+- Alternatives Considered: Leave show pages open to public; rejected due to privacy and policy drift.
+
 - Date: 2026-03-01
 - Decision: Consolidate documentation into `docs/`, add `PROJECT_MEMORY.md`, and introduce this decision log.
 - Rationale: Reduce regressions by centralizing institutional knowledge and making updates routine.

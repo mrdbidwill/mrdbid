@@ -4,8 +4,7 @@ class ImageMushroomsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_image_mushroom, only: %i[show edit update destroy]
 
-  # Skip Pundit verification for public actions when not authenticated
-  skip_after_action :verify_authorized, only: [:show, :new, :create], if: -> { !user_signed_in? }, raise: false
+  # Skip Pundit verification for public index when not authenticated
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   def index
@@ -19,7 +18,7 @@ class ImageMushroomsController < ApplicationController
 
 
   def show
-    authorize @image_mushroom if user_signed_in?
+    authorize @image_mushroom
 
     # Get all images for this mushroom in the same order as shown on the mushroom page
     mushroom = @image_mushroom.mushroom

@@ -1,3 +1,14 @@
+demo:
+  id: 1
+  email: "demo@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+  confirmed_at: <%= Time.current %>
+  confirmation_sent_at: <%= Time.current %>
+  confirmation_token: "demo-token"
+  permission_id: 9 # Regular user (public demo)
+
 one:
   email: "user1@example.com"
   encrypted_password: <%= Devise::Encryptor.digest(User, "password") %> # Matches "password" used in tests

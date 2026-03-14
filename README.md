@@ -118,6 +118,19 @@ MYSQL_USER=mrdbid_user
 MYSQL_PASSWORD=devpassword
 DB_HOST=127.0.0.1
 # MYSQL_SOCKET=/path/to/mysql.sock   # Optional, macOS/Homebrew
+
+# Active Storage (Cloudflare R2)
+ACTIVE_STORAGE_SERVICE=r2
+R2_BUCKET=your_bucket
+R2_ENDPOINT=https://<accountid>.r2.cloudflarestorage.com
+R2_REGION=auto
+R2_ACCESS_KEY_ID=your_access_key
+R2_SECRET_ACCESS_KEY=your_secret_key
+R2_PUBLIC_BASE_URL=https://images.mrdbid.com
+
+# AdSense (public pages only)
+ADSENSE_ENABLED=false
+ADSENSE_CLIENT_ID=ca-pub-...
 ```
 
 Generate an OTP secret key if needed:
@@ -126,6 +139,8 @@ bundle exec rails secret
 ```
 
 Database configuration lives in `config/database.yml` and is driven by environment variables.
+
+AdSense is gated to public/anonymous sessions only; authenticated sessions never render the AdSense script.
 
 ## Database Setup
 

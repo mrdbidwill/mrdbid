@@ -15,6 +15,7 @@ module ActiveStorage
     rescue => e
       # R2 rejects certain checksum combinations; retry without checksum when detected.
       if e.message.to_s.include?("only specify one non-default checksum") && checksum
+        io.rewind if io.respond_to?(:rewind)
         super(key, io, checksum: nil, **options)
       else
         raise

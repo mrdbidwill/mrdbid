@@ -16,12 +16,16 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 
 ## Current Truths (Keep This Short)
 
-- TODO: Add high-signal, current facts that would cause regressions if forgotten.
 - **Operational rule:** All fixes must be **committed, pushed to `main`, and deployed** immediately after completion.
 - **Testing rule:** Always run the full test suite (`bin/rails test`) before deploying any change.
+- **Public demo boundary:** Unauthenticated users can only read demo content (`user_id == 1`). Public show endpoints must enforce this via Pundit.
+- **AdSense gating:** AdSense scripts may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true` + `ADSENSE_CLIENT_ID`).
+- **Active Storage:** Production image storage uses Cloudflare R2 (`ACTIVE_STORAGE_SERVICE=r2`).
+- **R2 public base URL:** `R2_PUBLIC_BASE_URL` must be set when R2 is enabled (used for public asset URLs).
 - **R2 uploads:** Cloudflare R2 does not support ACLs; ActiveStorage uploads must not send ACL headers.
 - **R2 checksum conflicts:** If R2 rejects checksum combinations, retry upload without checksum.
 - **Direct uploads:** `/direct_uploads` response must include `signed_id` for ActiveStorage JS.
+- **PDF export:** Enabled via background job + X-Accel-Redirect for downloads; keep exports owner-scoped.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 
@@ -97,7 +101,7 @@ CI runs `script/ci/authorization_guardrails_check.rb`, which fails if any in-sco
 - A regular user **cannot** move an image to another user’s mushroom.
 - A regular user **can** attach their mushroom to a universal project.
 - An Elevated Admin **can** edit any mushroom.
-- PDF export is currently **disabled** (routes removed). If re-enabled, add tests and update this document.
+- PDF export is **enabled** and must remain owner-scoped (or Elevated Admin).
 
 ### Change Control
 

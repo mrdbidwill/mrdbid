@@ -4,6 +4,8 @@
 
 This application deploys to a Hostinger VPS using Capistrano. The deployment is automated and handles code updates, asset compilation, and database migrations.
 
+**Auto-deploy status:** CI/CD auto-deploy is **not** configured in this repo yet. Current deployment is manual via Capistrano.
+
 ## Server Setup
 
 ### Prerequisites on VPS (root@85.31.233.192)
@@ -62,10 +64,12 @@ This application deploys to a Hostinger VPS using Capistrano. The deployment is 
 
 ### SSH Access
 
-Ensure you have SSH key access configured:
+Preferred access is via the Hostinger terminal. For direct SSH, ensure you have key access configured:
 ```bash
 ssh root@85.31.233.192
 ```
+
+Capistrano deploys run as the `deploy` user (see `config/deploy/production.rb`).
 
 ### Credentials
 
@@ -102,6 +106,23 @@ cap production deploy
 This automatically restarts:
 1. `puma-mrdbid.service`
 2. `solid-queue-mrdbid.service` (if installed)
+
+## Production Env Flags (R2 + AdSense)
+
+Ensure these are set in `/opt/mrdbid/shared/.env` before deploying:
+
+```bash
+ACTIVE_STORAGE_SERVICE=r2
+R2_BUCKET=your_bucket
+R2_ENDPOINT=https://<accountid>.r2.cloudflarestorage.com
+R2_REGION=auto
+R2_ACCESS_KEY_ID=your_access_key
+R2_SECRET_ACCESS_KEY=your_secret_key
+R2_PUBLIC_BASE_URL=https://images.mrdbid.com
+
+ADSENSE_ENABLED=false
+ADSENSE_CLIENT_ID=ca-pub-...
+```
 
 ### Systemd Safeguards (Required)
 
