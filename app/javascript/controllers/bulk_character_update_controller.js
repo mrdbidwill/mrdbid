@@ -14,6 +14,7 @@ export default class extends Controller {
         // Track original values for dirty state detection
         this.originalValues = new Map()
         this.modifiedFields = new Set()
+        window.mrdbidBulkPendingChanges = 0
 
         // Store original values from all inputs
         this.inputTargets.forEach(input => {
@@ -86,6 +87,7 @@ export default class extends Controller {
     // Update save button text and state
     updateSaveButtonState() {
         const count = this.modifiedFields.size
+        window.mrdbidBulkPendingChanges = count
 
         this.saveButtonTargets.forEach(button => {
             if (count === 0) {
@@ -195,6 +197,7 @@ export default class extends Controller {
     // Reset all modified field indicators (called after successful save)
     resetModifiedState() {
         this.modifiedFields.clear()
+        window.mrdbidBulkPendingChanges = 0
 
         // Remove all visual indicators
         this.element.querySelectorAll('[data-modified="true"]').forEach(card => {

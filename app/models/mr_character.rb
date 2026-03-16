@@ -83,6 +83,20 @@ class MrCharacter < ApplicationRecord
   # Convenience methods for accessing properties
   # These provide a clean API for fungus_type-specific metadata
 
+  # Core character flag for default user entry
+  def core
+    properties && properties["core"]
+  end
+
+  def core=(value)
+    cast = ActiveModel::Type::Boolean.new.cast(value)
+    self.properties = (properties || {}).merge("core" => cast)
+  end
+
+  def core?
+    core == true
+  end
+
   # Get a property value
   # Example: character.property(:gill_attachment_required) => true
   def property(key)
@@ -107,4 +121,3 @@ class MrCharacter < ApplicationRecord
     (properties || {}).keys
   end
 end
-

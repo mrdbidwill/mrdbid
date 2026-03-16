@@ -1,35 +1,21 @@
 <%# Clone Characters Panel - allows users to copy character data from templates or their own mushrooms %>
-<details class="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-300 rounded-lg p-4 mb-6">
-  <summary class="cursor-pointer flex items-center gap-3 mb-4">
-    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<details class="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-3 mb-4">
+  <summary class="cursor-pointer flex items-center gap-2">
+    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
     </svg>
-    <span class="text-xl font-bold text-purple-900">⚡ Quick Start: Clone Characters</span>
+    <span class="text-base font-semibold text-purple-900">⚡ Quick Start: Clone Characters</span>
   </summary>
 
-  <div class="pl-11">
-    <div class="mb-4">
-      <p class="text-purple-800 mb-3">
-        Save time by copying character data from a similar mushroom or template. This is perfect for:
+  <div class="mt-3">
+    <div class="mb-3">
+      <p class="text-sm text-purple-800 mb-2">
+        Copy character data from a similar mushroom or template to save time.
       </p>
-      <ul class="space-y-1 text-purple-800 mb-4">
-        <li class="flex items-start gap-2">
-          <span class="text-purple-600 font-bold">•</span>
-          <span>Starting a new specimen that's similar to one you've already documented</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="text-purple-600 font-bold">•</span>
-          <span>Using pre-filled templates for common mushroom types</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="text-purple-600 font-bold">•</span>
-          <span>Reducing repetitive data entry by 80% or more</span>
-        </li>
-      </ul>
 
-      <%= form_with url: clone_characters_mushroom_path(mushroom), method: :post, local: true, html: { class: "space-y-4" } do |f| %>
+      <%= form_with url: clone_characters_mushroom_path(mushroom), method: :post, local: true, html: { class: "space-y-3" } do |f| %>
         <div>
-          <label class="block text-sm font-semibold text-purple-900 mb-2">
+          <label class="block text-xs font-semibold text-purple-900 mb-2">
             Select a mushroom to clone from:
           </label>
 
@@ -47,7 +33,7 @@
                                 .limit(20) %>
 
           <select name="source_mushroom_id"
-                  class="w-full border border-purple-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  class="w-full border border-purple-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required>
             <option value="">-- Choose a mushroom --</option>
 
@@ -92,12 +78,12 @@
 
         <div class="flex gap-3">
           <%= f.submit "Clone Characters",
-                       class: "inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition",
+                       class: "inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition text-sm",
                        data: { turbo_confirm: "This will copy character data from the selected mushroom. Continue?" } %>
 
           <% if mushroom.mr_character_mushrooms.any? %>
-            <span class="inline-flex items-center gap-2 px-4 py-3 bg-green-100 text-green-800 rounded-lg border border-green-300">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <span class="inline-flex items-center gap-2 px-3 py-2 bg-green-100 text-green-800 rounded-lg border border-green-300 text-sm">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
               <span class="font-medium"><%= mushroom.mr_character_mushrooms.count %> characters already entered</span>

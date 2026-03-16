@@ -55,6 +55,19 @@
     </div>
   </div>
 
+  <div class="my-5 p-4 border-2 border-blue-400 rounded-md bg-blue-50">
+    <div class="flex items-start gap-3">
+      <%= form.check_box :core, class: "mt-1 h-5 w-5 text-blue-600 focus:ring-blue-600 rounded" %>
+      <div class="flex-1">
+        <%= form.label :core, "Core Character (Default)", class: "font-semibold text-blue-900" %>
+        <p class="text-sm text-blue-800 mt-1">
+          Core characters are shown by default to all users to make data entry faster and less overwhelming.
+          If no core characters exist for a part, all characters will be shown.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="my-5">
     <%= form.label :fungus_type_id, "Fungus Type" %>
     <p class="text-sm text-gray-600 mb-2">

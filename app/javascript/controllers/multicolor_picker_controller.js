@@ -39,6 +39,10 @@ export default class extends Controller {
         const characterId = event.currentTarget.dataset.characterId
         const modal = document.getElementById(`colorPickerModal${characterId}`)
         if (modal) {
+            if (this.hasPendingBulkChanges()) {
+                const ok = confirm(`You have ${window.mrdbidBulkPendingChanges} unsaved change(s). If you continue and save colors, those changes will be lost. Click Cancel to go back and use "Save All Changes".`)
+                if (!ok) return
+            }
             modal.classList.remove('hidden')
             document.body.style.overflow = 'hidden'
             // Ensure grid highlights are updated when modal opens
@@ -134,6 +138,10 @@ export default class extends Controller {
     // Submit the form with selected colors (or empty to delete)
     submitColors(event) {
         event.preventDefault()
+        if (this.hasPendingBulkChanges()) {
+            const ok = confirm(`You have ${window.mrdbidBulkPendingChanges} unsaved change(s). Saving colors now will discard them. Continue?`)
+            if (!ok) return
+        }
 
         // Add each color ID to the form before submitting
         // Remove any existing color_ids[] inputs first
@@ -155,6 +163,10 @@ export default class extends Controller {
         // Let Turbo handle the form submission normally
         // This will follow the redirect and show the flash message
         this.formTarget.requestSubmit()
+    }
+
+    hasPendingBulkChanges() {
+        return Number(window.mrdbidBulkPendingChanges || 0) > 0
     }
 
     // Render selected color chips/badges

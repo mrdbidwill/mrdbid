@@ -5,7 +5,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
     static targets = ["input", "dropdown", "loader"]
     static values = {
-        mushroomId: String
+        mushroomId: String,
+        coreOnly: Boolean
     }
 
     connect() {
@@ -60,6 +61,9 @@ export default class extends Controller {
         if(this.hasMushroomIdValue) {
             url.searchParams.append("mushroom_id", this.mushroomIdValue)
         }
+        if(this.hasCoreOnlyValue) {
+            url.searchParams.append("core_only", this.coreOnlyValue)
+        }
 
         fetch(url, { headers: {"Accept": "application/json"} })
             .then(r => r.json())
@@ -88,7 +92,7 @@ export default class extends Controller {
                      data-label="${this.escapeHtml(item.name)}"
                      data-part="${this.escapeHtml(item.part_name || '')}">
                     <div class="text-sm font-medium">${this.escapeHtml(item.name)}</div>
-                    <div class="text-xs text-gray-500">Click to add this character</div>
+                    <div class="text-xs text-gray-500">${item.is_color ? 'Opens color chart (family colors → AMS)' : 'Click to add this character'}</div>
                 </li>`
             ).join("")
         this.dropdownTarget.classList.remove("hidden")
@@ -127,6 +131,7 @@ export default class extends Controller {
         // Build URL to load this part
         const url = new URL(window.location.href)
         url.searchParams.set("show_part", partName)
+        url.searchParams.set("show_character_id", characterId)
 
         // Navigate to load the part (will reload page)
         window.location.href = url.toString()

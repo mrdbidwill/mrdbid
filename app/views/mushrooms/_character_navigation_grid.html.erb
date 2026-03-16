@@ -1,34 +1,57 @@
-<div class=" bg-blue-50 lg:bg-blue-100 border border-blue-200 rounded-lg p-4 my-6">
-  <h2 class="text-2xl font-bold text-gray-900 mb-2">Character Entry by Category</h2>
-  <p class="text-sm text-gray-600 mb-4">
+<% core_only = params[:core_only].to_s != "false" %>
+
+<div id="character-grid" class=" bg-blue-50 lg:bg-blue-100 border border-blue-200 rounded-lg p-4 my-6">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+    <h2 class="text-2xl font-bold text-gray-900">Character Entry by Category</h2>
+    <div class="inline-flex rounded-md border border-blue-300 overflow-hidden text-sm">
+      <%= link_to "Core (Default)",
+                  edit_mushroom_path(@mushroom, core_only: true, show_part: params[:show_part], show_character_id: params[:show_character_id], anchor: "character-grid"),
+                  class: "px-3 py-1.5 font-medium #{ core_only ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-50' }" %>
+      <%= link_to "All",
+                  edit_mushroom_path(@mushroom, core_only: false, show_part: params[:show_part], show_character_id: params[:show_character_id], anchor: "character-grid"),
+                  class: "px-3 py-1.5 font-medium #{ !core_only ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-50' }" %>
+    </div>
+  </div>
+  <p class="text-sm text-gray-600 mb-2">
     Click on a part to add/edit characters for that category. Each link takes you to a focused editing page.
   </p>
 
   <%
     # Build the grid data: parts with their associated observation_methods
     # Filter to only show characters for this mushroom's fungus_type or universal characters
-    # SORTED BY PART FIRST, then by observation_method
-    @part_observation_methods = Part.order(:name).map do |part|
-      observation_methods_with_counts = ObservationMethod.order(:name).map do |om|
-        # Count characters that match this part + observation_method combination
-        # AND either match the mushroom's fungus_type OR are universal (fungus_type_id IS NULL)
-        # EXCLUDE: display_option_id = 1 (Do Not Display), part_id = 1 (Admin), observation_method_id = 9 (Admin)
-        if @mushroom.fungus_type_id.present?
-          count = MrCharacter.where(observation_method: om, part: part)
-                            .where('fungus_type_id IS NULL OR fungus_type_id = ?', @mushroom.fungus_type_id)
-                            .where.not(display_option_id: 1)
-                            .where.not(part_id: 1)
-                            .where.not(observation_method_id: 9)
-                            .count
-        else
-          # If mushroom has no fungus_type, show all characters
-          count = MrCharacter.where(observation_method: om, part: part)
-                            .where.not(display_option_id: 1)
-                            .where.not(part_id: 1)
-                            .where.not(observation_method_id: 9)
-                            .count
-        end
-        next unless count > 0
+    core_only = params[:core_only].to_s != "false"
+    all_chars = if @mushroom.fungus_type_id.present?
+                  MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id)
+                else
+                  MrCharacter.cached_all_with_associations
+                end
+
+    filtered_chars = all_chars.reject { |c|
+      c.display_option_id == 1 || c.part_id == 1 || c.observation_method_id == 9
+    }
+
+    core_fallback = false
+    if core_only
+      core_chars = filtered_chars.select(&:core?)
+      if core_chars.any?
+        filtered_chars = core_chars
+      else
+        core_fallback = true
+      end
+    end
+
+    counts = Hash.new { |h, k| h[k] = Hash.new(0) }
+    filtered_chars.each do |c|
+      counts[c.part_id][c.observation_method_id] += 1
+    end
+
+    parts = Part.order(:name).to_a
+    observation_methods = ObservationMethod.order(:name).to_a
+
+    @part_observation_methods = parts.map do |part|
+      observation_methods_with_counts = observation_methods.map do |om|
+        count = counts.dig(part.id, om.id).to_i
+        next if count == 0
         { observation_method: om, count: count }
       end.compact
       next if observation_methods_with_counts.empty?
@@ -36,16 +59,16 @@
     end.compact
   %>
 
-  <div class="space-y-3">
+  <div class="space-y-2">
     <% @part_observation_methods.each do |data| %>
       <% part = data[:part] %>
       <% observation_methods = data[:observation_methods] %>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
+      <div class="bg-white border border-gray-200 rounded-lg p-2 hover:shadow-md transition">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 items-center">
           <!-- Part Name -->
           <div class="md:col-span-1">
-            <h3 class="font-semibold text-gray-800 text-lg"><%= part.name %></h3>
+            <h3 class="font-semibold text-gray-800 text-base"><%= part.name %></h3>
             <% if part.description.present? %>
               <p class="text-xs text-gray-500"><%= truncate(part.description, length: 60) %></p>
             <% end %>
@@ -57,7 +80,7 @@
               <% observation_methods.each do |om_data| %>
                 <% om = om_data[:observation_method] %>
                 <% count = om_data[:count] %>
-                <%= link_to edit_characters_mushroom_path(@mushroom, observation_method_id: om.id, part_id: part.id),
+                <%= link_to edit_characters_mushroom_path(@mushroom, observation_method_id: om.id, part_id: part.id, core_only: core_only),
                             class: "inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium transition shadow-sm hover:shadow" do %>
                   <span><%= om.name %></span>
                   <span class="bg-white/20 rounded-full px-2 py-0.5 text-xs"><%= count %></span>
@@ -74,6 +97,16 @@
     <p class="text-xs text-gray-500">
       💡 <strong>Workflow:</strong> Click a part button → Add/edit characters → Automatically return to this grid → Continue with next category
     </p>
+    <% if core_only %>
+      <p class="text-xs text-gray-600 mt-2">
+        ⭐ Showing <strong>Core</strong> characters by default. Switch to All to see every character.
+      </p>
+    <% end %>
+    <% if core_fallback %>
+      <p class="text-xs text-amber-700 mt-1">
+        No core characters defined yet for this mushroom type. Showing all instead.
+      </p>
+    <% end %>
     <% if @mushroom.fungus_type_id.present? %>
       <p class="text-xs text-gray-600 mt-2">
         📌 Showing only characters for <strong><%= @mushroom.fungus_type.name %></strong> and universal characters

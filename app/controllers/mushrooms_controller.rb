@@ -204,20 +204,33 @@ class MushroomsController < ApplicationController
   def edit_characters
     @observation_method = ObservationMethod.find(params[:observation_method_id])
     @part = Part.find(params[:part_id])
+    @core_only = params[:core_only].to_s != "false"
 
     # Get all characters for this observation_method + part combination
     # Filter by fungus_type if set (includes universal characters with fungus_type_id = NULL)
-    if @mushroom.fungus_type_id.present?
-      @characters = MrCharacter
-                      .for_fungus_type(@mushroom.fungus_type_id)
-                      .where(observation_method: @observation_method, part: @part)
-                      .includes(:display_option, :source_data, :lookup_items)
-                      .order(:name)
+    base_scope = if @mushroom.fungus_type_id.present?
+                   MrCharacter
+                     .for_fungus_type(@mushroom.fungus_type_id)
+                     .where(observation_method: @observation_method, part: @part)
+                 else
+                   MrCharacter
+                     .where(observation_method: @observation_method, part: @part)
+                 end
+
+    all_chars = base_scope.includes(:display_option, :source_data, :lookup_items).order(:name).to_a
+    @all_characters_count = all_chars.size
+    @core_characters_count = all_chars.count(&:core?)
+
+    if @core_only
+      core_chars = all_chars.select(&:core?)
+      if core_chars.any?
+        @characters = core_chars
+      else
+        @characters = all_chars
+        @core_fallback = true
+      end
     else
-      @characters = MrCharacter
-                      .where(observation_method: @observation_method, part: @part)
-                      .includes(:display_option, :source_data, :lookup_items)
-                      .order(:name)
+      @characters = all_chars
     end
 
     authorize @mushroom
