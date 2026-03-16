@@ -4,7 +4,7 @@ class Admin::ColorsController < Admin::ApplicationController
   # GET /colors or /colors.json
   def index
     authorize Color
-    @colors = policy_scope(Color.order(:sequence))
+    @colors = policy_scope(Color.all_for_picker)
   end
 
   # GET /colors/1 or /colors/1.json

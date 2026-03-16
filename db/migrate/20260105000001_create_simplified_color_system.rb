@@ -21,7 +21,7 @@ class CreateSimplifiedColorSystem < ActiveRecord::Migration[8.0]
         hex: "#FFFFFF", r_val: 255, g_val: 255, b_val: 255, display_order: 1 },
       { id: 102, latin_name: "Griseus Simplex", common_name: "Gray", color_family: "Neutral", color_variant: "Medium",
         hex: "#808080", r_val: 128, g_val: 128, b_val: 128, display_order: 2 },
-      { id: 103, latin_name: "Niger Simplex", common_name: "Black", color_family: "Neutral", color_variant: "Dark",
+      { id: 103, latin_name: "Black Simplex", common_name: "Black", color_family: "Neutral", color_variant: "Dark",
         hex: "#000000", r_val: 0, g_val: 0, b_val: 0, display_order: 3 },
 
       # BROWN FAMILY (104-106)
