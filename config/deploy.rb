@@ -241,6 +241,27 @@ after "systemd_puma:restart", "systemd_puma:verify"
 # Override cleanup task to ignore permission errors on bootsnap cache files
 Rake::Task["deploy:cleanup"].clear_actions
 namespace :deploy do
+  desc 'Fix permissions on old releases before cleanup'
+  task :fix_release_permissions do
+    on release_roles :all do |host|
+      releases = capture(:ls, '-xtr', releases_path).split
+      if releases.count >= fetch(:keep_releases)
+        directories = (releases - releases.last(fetch(:keep_releases)))
+        if directories.any?
+          deploy_user = fetch(:user, 'deploy')
+          directories.each do |release|
+            release_path = releases_path.join(release)
+            begin
+              execute :sudo, :chown, "-R", "#{deploy_user}:#{deploy_user}", release_path
+            rescue SSHKit::Command::Failed
+              warn "Failed to fix permissions for #{release}; cleanup may skip files."
+            end
+          end
+        end
+      end
+    end
+  end
+
   desc 'Clean up old releases (ignore permission errors)'
   task :cleanup do
     on release_roles :all do |host|
@@ -254,8 +275,12 @@ namespace :deploy do
             begin
               execute :rm, '-rf', releases_path.join(release)
             rescue SSHKit::Command::Failed => e
-              # Silently ignore permission denied errors during cleanup
-              warn "Some files in #{release} could not be deleted (permission denied), skipping..."
+              # Try sudo cleanup if permissions still block deletion
+              begin
+                execute :sudo, :rm, '-rf', releases_path.join(release)
+              rescue SSHKit::Command::Failed
+                warn "Some files in #{release} could not be deleted (permission denied), skipping..."
+              end
             end
           end
         else
@@ -265,3 +290,5 @@ namespace :deploy do
     end
   end
 end
+
+before "deploy:cleanup", "deploy:fix_release_permissions"
