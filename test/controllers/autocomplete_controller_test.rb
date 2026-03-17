@@ -9,12 +9,12 @@ class AutocompleteControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get mr_characters autocomplete with valid query" do
-    get mr_characters_autocomplete_path, params: { q: "pileus" }, as: :json
+    get mr_characters_autocomplete_path, params: { q: "cap" }, as: :json
     assert_response :success
     json_response = JSON.parse(response.body)
     assert json_response.is_a?(Array)
-    # Should find characters with "pileus" in the name
-    assert json_response.any? { |r| r["name"].downcase.include?("pileus") } if json_response.any?
+    # Should find characters with "cap" in the name
+    assert json_response.any? { |r| r["name"].downcase.include?("cap") } if json_response.any?
   end
 
   test "should return empty array for short query" do

@@ -65,7 +65,7 @@ Location: Lines 12, 15
 
 Currently, 421 mycology terms from Wikipedia's Glossary of Mycology are automatically detected and marked, including:
 
-- Anatomical terms: basidiospore, basidium, pileus, stipe, hymenium
+- Anatomical terms: basidiospore, basidium, cap, stem, hymenium
 - Morphological terms: adnate, decurrent, convex, umbonate
 - Ecological terms: mycorrhizal, saprobic, parasitic
 - Descriptive terms: glabrous, tomentose, viscid, hygrophanous
@@ -121,7 +121,7 @@ Glossary marking is **not** applied to:
 
 ## Testing the Integration
 
-1. Visit any mushroom show page with a description containing terms like "basidiospore", "pileus", or "gills"
+1. Visit any mushroom show page with a description containing terms like "basidiospore", "cap", or "gills"
 2. Visit `/glossary` to browse all available terms
 3. Check articles with mycology content
 4. View admin character definitions

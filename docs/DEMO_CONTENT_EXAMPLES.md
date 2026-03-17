@@ -9,14 +9,14 @@ These are ready-to-use content examples for testing and demo videos. Copy/paste 
 **Use for:** Showing how glossary helps beginners understand technical terms
 
 ```
-The chanterelle has a convex pileus that becomes depressed with age. The hymenium features
-false gills that are actually ridges or veins running down the stipe. The basidiospores
+The chanterelle has a convex cap that becomes depressed with age. The hymenium features
+false gills that are actually ridges or veins running down the stem. The basidiospores
 are produced on these ridges and are typically white to cream in spore print. The flesh
 is firm and has a characteristic apricot-like aroma. These mushrooms form mycorrhizal
 relationships with various trees, particularly oaks and conifers.
 ```
 
-**Terms highlighted:** pileus, convex, depressed, hymenium, gills, stipe, basidiospores, spore print, flesh, mycorrhizal
+**Terms highlighted:** cap, convex, depressed, hymenium, gills, stem, basidiospores, spore print, flesh, mycorrhizal
 
 ---
 
@@ -25,15 +25,15 @@ relationships with various trees, particularly oaks and conifers.
 **Use for:** Showing glossary with many technical terms
 
 ```
-This specimen exhibits an umbonate pileus with an acute umbo. The margin is incurved
+This specimen exhibits an umbonate cap with an acute umbo. The margin is incurved
 when young, becoming decurved at maturity. The cuticle is glabrous and hygrophanous,
-appearing viscid when moist. The lamellae are adnate to slightly decurrent, with
-lamellulae present. The stipe is cylindrical, fibrillose, and shows no evidence of
+appearing viscid when moist. The gills are adnate to slightly decurrent, with
+lamellulae present. The stem is cylindrical, fibrillose, and shows no evidence of
 an annulus or volva. Basidiospores measure 7-9 × 4-5 μm, are ellipsoid, and show
 an amyloid reaction. The basidia are clavate, typically 4-spored.
 ```
 
-**Terms highlighted:** umbonate, pileus, umbo, margin, incurved, decurved, cuticle, glabrous, hygrophanous, viscid, lamellae, adnate, decurrent, lamellulae, stipe, cylindrical, fibrillose, annulus, volva, basidiospores, ellipsoid, amyloid, basidia, clavate
+**Terms highlighted:** umbonate, cap, umbo, margin, incurved, decurved, cuticle, glabrous, hygrophanous, viscid, gills, adnate, decurrent, lamellulae, stem, cylindrical, fibrillose, annulus, volva, basidiospores, ellipsoid, amyloid, basidia, clavate
 
 ---
 
@@ -93,12 +93,12 @@ mechanisms helps mycologists identify and classify fungi.
 **Use for:** Short form content test
 
 ```
-Found under oak tree. Pileus brown, slightly viscid. Gills adnate, crowded. Stipe
+Found under oak tree. Cap brown, slightly viscid. Gills adnate, crowded. Stem
 central, no annulus. Spore print white. Possibly Cortinarius species based on
 cortina remnants. The basidiospores appear ellipsoid under microscope.
 ```
 
-**Terms highlighted:** pileus, viscid, gills, adnate, stipe, annulus, spore print, cortina, basidiospores, ellipsoid
+**Terms highlighted:** cap, viscid, gills, adnate, stem, annulus, spore print, cortina, basidiospores, ellipsoid
 
 ---
 
@@ -125,10 +125,10 @@ with cyanophilous contents. Clamp connections are present throughout.
 ```
 Amanita muscaria - Fly Agaric
 
-The iconic red pileus with white warts makes this species unmistakable. The universal
+The iconic red cap with white warts makes this species unmistakable. The universal
 veil breaks as the mushroom expands, leaving the characteristic warts on the cap and
-forming the volva at the base. The white lamellae are free, not attached to the stipe.
-A prominent white annulus circles the stipe. The flesh is white, becoming yellowish
+forming the volva at the base. The white gills are free, not attached to the stem.
+A prominent white annulus circles the stem. The flesh is white, becoming yellowish
 under the cuticle.
 
 Spore print is white. Basidiospores are broadly ellipsoid, non-amyloid. This species
@@ -136,7 +136,7 @@ forms ectomycorrhizal associations with birch and pine. Contains psychoactive co
 including muscimol and ibotenic acid.
 ```
 
-**Terms highlighted:** pileus, universal veil, warts, volva, lamellae, free, stipe, annulus, flesh, cuticle, spore print, basidiospores, ellipsoid, amyloid, ectomycorrhizal
+**Terms highlighted:** cap, universal veil, warts, volva, gills, free, stem, annulus, flesh, cuticle, spore print, basidiospores, ellipsoid, amyloid, ectomycorrhizal
 
 ---
 
@@ -151,7 +151,7 @@ Start with sterilized substrate colonized by mycelium. The vegetative hyphae wil
 spread through the growing medium. When conditions trigger fruiting, primordia form
 - these are tiny pin-like structures that develop into mature fruiting bodies.
 
-The pileus expands from convex to plane or depressed. The hymenium develops on the
+The cap expands from convex to plane or depressed. The hymenium develops on the
 ventral surface where gills form. Basidiospores drop from the mature gills, visible
 as spore print on surfaces below.
 
@@ -160,7 +160,7 @@ means they'll decompose various organic substrates including straw, coffee groun
 and hardwood sawdust.
 ```
 
-**Terms highlighted:** substrate, mycelium, hyphae, fruiting, primordia, fruiting bodies, pileus, convex, plane, depressed, hymenium, ventral, gills, basidiospores, spore print, saprophytic
+**Terms highlighted:** substrate, mycelium, hyphae, fruiting, primordia, fruiting bodies, cap, convex, plane, depressed, hymenium, ventral, gills, basidiospores, spore print, saprophytic
 
 ---
 
@@ -193,9 +193,9 @@ Deadly Galerina (Galerina marginata)
 
 This deadly species can be confused with edible mushrooms. Key identification features:
 
-The pileus is hygrophanous, appearing honey-brown when moist, drying to pale tan.
-The margin is striate when wet. The lamellae are adnate and close. A fragile annulus
-may be present on the stipe but often disappears. The spore print is rusty brown.
+The cap is hygrophanous, appearing honey-brown when moist, drying to pale tan.
+The margin is striate when wet. The gills are adnate and close. A fragile annulus
+may be present on the stem but often disappears. The spore print is rusty brown.
 
 Microscopically, the basidiospores are warty and show a dextrinoid reaction. This
 species is saprobic on wood. It contains deadly amatoxins that destroy liver cells.
@@ -203,7 +203,7 @@ Even small amounts are potentially fatal. Always verify mushroom identification 
 multiple reliable sources before consuming any wild mushroom.
 ```
 
-**Terms highlighted:** pileus, hygrophanous, margin, striate, lamellae, adnate, annulus, stipe, spore print, basidiospores, warty, dextrinoid, saprobic, amatoxins
+**Terms highlighted:** cap, hygrophanous, margin, striate, gills, adnate, annulus, stem, spore print, basidiospores, warty, dextrinoid, saprobic, amatoxins
 
 ---
 

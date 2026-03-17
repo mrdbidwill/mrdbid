@@ -71,7 +71,7 @@ class AutocompleteController < ApplicationController
     render json: results
   end
 
-  # GET /autocomplete/mr_characters.json?q=pileus&mushroom_id=1
+  # GET /autocomplete/mr_characters.json?q=cap&mushroom_id=1
   def mr_characters
     query = params[:q].to_s.strip.downcase
     mushroom_id = params[:mushroom_id]

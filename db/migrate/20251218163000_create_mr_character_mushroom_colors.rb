@@ -16,7 +16,7 @@ class CreateMrCharacterMushroomColors < ActiveRecord::Migration[8.0]
               unique: true,
               name: 'index_mcm_colors_unique'
 
-    # Index for querying by color (e.g., "find all mushrooms with red pileus")
+    # Index for querying by color (e.g., "find all mushrooms with red cap")
     add_index :mr_character_mushroom_colors,
               [:color_id, :mr_character_mushroom_id],
               name: 'index_mcm_colors_on_color'

@@ -2,9 +2,9 @@
 INSERT INTO `parts` (`id`, `name`, `description`, `comments`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', '',  '' , now(), now()),
 (2, 'Basic', '', '' , now(), now()),
-(3, 'Cap - Pileus', '', '' , now(), now()),
-(4, 'Gills - Lamellae', '','' , now(), now()),
-(5, 'Stem - Stipe', '','' , now(), now()),
+(3, 'Cap', '', '' , now(), now()),
+(4, 'Gills', '','' , now(), now()),
+(5, 'Stem', '','' , now(), now()),
 (6, 'Veil', '','' , now(), now()),
 (7, 'Mycelium', '','' , now(), now()),
 (8, 'Spores', 'micro for spores is here - not in micro','' , now(), now()),

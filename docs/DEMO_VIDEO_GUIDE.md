@@ -53,7 +53,7 @@
 **Script/Caption:**
 > "Have you ever read scientific content and felt lost because of technical jargon?
 >
-> Words like 'basidiospore', 'hymenium', and 'pileus' stop beginners in their tracks.
+> Words like 'basidiospore', 'hymenium', and 'cap' stop beginners in their tracks.
 >
 > What if these terms automatically explained themselves?"
 

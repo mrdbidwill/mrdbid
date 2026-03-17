@@ -269,7 +269,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
   # ==========================================================================
 
   test "mr_characters autocomplete requires authentication" do
-    get mr_characters_autocomplete_path(format: :json, q: "pileus")
+    get mr_characters_autocomplete_path(format: :json, q: "cap")
     assert_response :unauthorized
     json = JSON.parse(response.body)
     assert_equal "You need to sign in or sign up before continuing.", json["error"]
@@ -316,7 +316,7 @@ class AutocompleteRequestTest < ActionDispatch::IntegrationTest
 
   test "mr_characters autocomplete handles missing mushroom_id" do
     sign_in @user
-    get mr_characters_autocomplete_path(format: :json, q: "pileus")
+    get mr_characters_autocomplete_path(format: :json, q: "cap")
     assert_response :success
 
     json = JSON.parse(response.body)
