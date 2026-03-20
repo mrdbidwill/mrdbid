@@ -61,3 +61,4 @@ node_modules/
 # Ignore test coverage reports
 /coverage/
 /test/vcr_cassettes/
+/.project_memory_ack

@@ -28,6 +28,7 @@ class MrCharacter < ApplicationRecord
   validates :observation_method_id, presence: true
   validates :display_option_id, presence: true
   validates :source_data_id, presence: true
+  has_many :core_character_sequences, dependent: :destroy, strict_loading: false
 
   # Set source_data_id from source_data_title before validation
   before_validation :set_source_data_from_title
@@ -75,6 +76,30 @@ class MrCharacter < ApplicationRecord
         .joins(:part)
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a
+    end
+  end
+
+  def self.sequence_map_for(fungus_type_id)
+    return {} if fungus_type_id.blank?
+    CoreCharacterSequence
+      .where(fungus_type_id: fungus_type_id)
+      .pluck(:mr_character_id, :sequence)
+      .to_h
+  end
+
+  def self.sort_for_core_display(chars, keep_part_order: true, fungus_type_id: nil)
+    seq_map = sequence_map_for(fungus_type_id)
+
+    chars.sort_by do |c|
+      part_key = keep_part_order ? c.part&.name.to_s : ""
+      seq_val = seq_map[c.id]
+      seq_nil = seq_val.nil? ? 1 : 0
+
+      if seq_nil == 0
+        [part_key, 0, seq_val, c.name.to_s]
+      else
+        [part_key, 1, c.name.to_s]
+      end
     end
   end
 

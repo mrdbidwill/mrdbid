@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
+    resource :core_character_entry, only: [:show]
     collection do
       post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
       get 'export_all_pdf', to: 'mushrooms#export_all_pdf'
@@ -83,6 +84,11 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "dashboard#index"
     get 'database/export', to: 'database_exports#export', as: :database_export
+    resources :core_character_sequences, only: [:index] do
+      collection do
+        patch :update
+      end
+    end
     resources :admin_todos
     resources :invitations, only: [:index, :new, :create, :destroy]
     resources :articles

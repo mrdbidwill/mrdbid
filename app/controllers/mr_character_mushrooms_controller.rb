@@ -35,6 +35,9 @@ class MrCharacterMushroomsController < ApplicationController
 
     # Determine where to redirect after save (back to grid or edit page)
     redirect_path = params[:redirect_to].presence || edit_mushroom_path(@mushroom)
+    if params[:save_next].present? && params[:next_url].present?
+      redirect_path = params[:next_url]
+    end
 
     if @rc.save
       redirect_to redirect_path, notice: "Character saved.", status: :see_other

@@ -98,6 +98,7 @@ class AutocompleteController < ApplicationController
                 end
 
                 # Filter to core characters by default if any exist
+                core_chars = nil
                 if core_only
                   core_chars = all_chars.select(&:core?)
                   all_chars = core_chars if core_chars.any?
@@ -105,11 +106,17 @@ class AutocompleteController < ApplicationController
 
                 # Search by name (case-insensitive)
                 # Exclude "do not display" characters
-                all_chars
+                matches = all_chars
                   .select { |c|
                     c.name.downcase.include?(query) &&
                     c.display_option_id != 1 # exclude "do not display"
                   }
+
+                if core_only && core_chars&.any?
+                  matches = MrCharacter.sort_for_core_display(matches, keep_part_order: false, fungus_type_id: mushroom&.fungus_type_id)
+                end
+
+                matches
                   .first(20)
                   .map { |c|
                     is_color = (c.display_option&.name&.downcase == "color") || c.display_option_id == 6

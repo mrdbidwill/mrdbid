@@ -18,6 +18,11 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 
 - **Operational rule:** All fixes must be **committed, pushed to `main`, and deployed** immediately after completion.
 - **Testing rule:** Always run the full test suite (`bin/rails test`) before deploying any change.
+- **Runtime expectations:** Use rbenv with Ruby **3.4.3** from `.ruby-version` and Bundler **2.6.9** from `Gemfile.lock`.
+- **rbenv init required:** Any automated/test command must initialize rbenv (see `script/preflight_test_env.sh`).
+- **Memory ack required:** Run `script/ack_project_memory.sh` before any changes, then use `bin/with_project_memory <command>` for guarded commands.
+- **Core sequencing model:** Core character ordering is per fungus type via `core_character_sequences` (not `mr_characters.core_sequence`).
+- **Core entry UX:** Core mode routes to one-character-at-a-time sequential entry with `Save Character`, `Save & Next`, `Back`, and `Done`.
 - **Public demo boundary:** Unauthenticated users can only read demo content (`user_id == 1`). Public show endpoints must enforce this via Pundit.
 - **AdSense gating:** AdSense scripts may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true` + `ADSENSE_CLIENT_ID`).
 - **Active Storage:** Production image storage uses Cloudflare R2 (`ACTIVE_STORAGE_SERVICE=r2`).

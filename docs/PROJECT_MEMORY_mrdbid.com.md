@@ -41,3 +41,13 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - Sidebar now includes a direct link to `Export My Images` (`new_users_image_export_path`).
 - Coverage checkpoint:
   - 80.75% line, 56.29% branch (SimpleCov).
+
+## 2026-03-20
+- Runtime expectations reinforced:
+  - Use rbenv with Ruby 3.4.3 and Bundler 2.6.9 (from `.ruby-version` and `Gemfile.lock`).
+  - Initialize rbenv before running tests (see `script/preflight_test_env.sh`).
+- Core character sequencing and entry workflow shipped:
+  - Core order is now per fungus type via `core_character_sequences`.
+  - Admin dashboard includes `Sequence Core Characters` with drag-and-drop + save.
+  - Core toggle routes directly to sequential single-character entry.
+  - Sequential entry actions are explicit: `Save Character` stays put; `Save & Next` advances; `Done` exits to return page/edit.

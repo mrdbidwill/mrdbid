@@ -298,6 +298,9 @@
         <% core_fallback = true %>
       <% end %>
     <% end %>
+    <% if core_only && !core_fallback %>
+      <% missing_chars = MrCharacter.sort_for_core_display(missing_chars, keep_part_order: false, fungus_type_id: @mushroom.fungus_type_id) %>
+    <% end %>
 
     <% if params[:show_character_id].present? %>
       <% missing_chars = missing_chars.select { |c| c.id.to_s == params[:show_character_id].to_s } %>
@@ -342,7 +345,8 @@
 
     <div class="relative" data-controller="character-search"
          data-character-search-mushroom-id-value="<%= @mushroom.id %>"
-         data-character-search-core-only-value="<%= core_only %>">
+         data-character-search-core-only-value="<%= core_only %>"
+         data-core-entry-url="<%= mushroom_core_character_entry_path(@mushroom, core_only: true, return_to: request.fullpath) %>">
       <input type="text"
              placeholder="Type at least 3 characters (e.g., 'cap', 'color', 'taste', 'shape')..."
              class="w-full border border-purple-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"

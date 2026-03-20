@@ -12,6 +12,18 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-03-20
+- Decision: Replace legacy `mr_characters.core_sequence` ordering with per-fungus-type sequencing stored in `core_character_sequences`.
+- Rationale: Core order must be configurable by fungus type and reusable across core-only entry/search/display flows.
+- Consequences: Legacy per-character sequence field is removed; ordering is now managed from the admin sequence page and applied by fungus type.
+- Alternatives Considered: Keep global `core_sequence` column; rejected because it cannot represent fungus-type-specific order.
+
+- Date: 2026-03-20
+- Decision: Add a preflight script and enforce rbenv initialization (Ruby 3.4.3, Bundler 2.6.9) before running tests.
+- Rationale: Prevent test failures caused by the wrong Ruby/Bundler context and align execution with documented runtime expectations.
+- Consequences: Tests now have a standard preflight check (`script/preflight_test_env.sh`) and require rbenv initialization in automated runs.
+- Alternatives Considered: Rely on developer memory and README instructions; rejected due to repeatable failures.
+
 - Date: 2026-03-14
 - Decision: Add a sidebar link to `Export My Images`.
 - Rationale: Improve discoverability for image backup/export without relying on direct URLs.

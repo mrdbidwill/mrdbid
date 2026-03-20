@@ -184,19 +184,25 @@ http://localhost:3000/admin
 
 The application uses Minitest.
 
+Before running commands in this repo, acknowledge project memory and use the guard wrapper:
+```bash
+script/ack_project_memory.sh
+bin/with_project_memory script/preflight_test_env.sh
+```
+
 **Run all tests:**
 ```bash
-bundle exec rails test
+bin/with_project_memory bin/rails test
 ```
 
 **Run a specific file:**
 ```bash
-bundle exec rails test test/controllers/admin/database_exports_controller_test.rb
+bin/with_project_memory bin/rails test test/controllers/admin/database_exports_controller_test.rb
 ```
 
 **Run with coverage:**
 ```bash
-COVERAGE=true bundle exec rails test
+COVERAGE=true bin/with_project_memory bin/rails test
 ```
 
 See `docs/TEST_SUITE_STATUS.md` and `docs/TESTING_QUICK_START.md` for guidance.

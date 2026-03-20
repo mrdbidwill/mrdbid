@@ -128,6 +128,16 @@ export default class extends Controller {
         this.hideDropdown()
         this.inputTarget.value = ""
 
+        if(this.hasCoreOnlyValue && this.coreOnlyValue) {
+            const coreEntryUrl = this.element.dataset.coreEntryUrl
+            if(coreEntryUrl) {
+                const url = new URL(coreEntryUrl, window.location.origin)
+                url.searchParams.set("focus_character_id", characterId)
+                window.location.href = url.toString()
+                return
+            }
+        }
+
         // Build URL to load this part
         const url = new URL(window.location.href)
         url.searchParams.set("show_part", partName)

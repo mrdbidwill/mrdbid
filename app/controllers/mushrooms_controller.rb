@@ -224,7 +224,7 @@ class MushroomsController < ApplicationController
     if @core_only
       core_chars = all_chars.select(&:core?)
       if core_chars.any?
-        @characters = core_chars
+        @characters = MrCharacter.sort_for_core_display(core_chars, keep_part_order: false, fungus_type_id: @mushroom.fungus_type_id)
       else
         @characters = all_chars
         @core_fallback = true

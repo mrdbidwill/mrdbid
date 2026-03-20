@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class FungusType < ApplicationRecord
+  has_many :core_character_sequences, dependent: :destroy, strict_loading: false
   has_many :mushrooms, dependent: :restrict_with_error
   has_many :mr_characters, dependent: :nullify
 

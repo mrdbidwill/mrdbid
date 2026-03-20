@@ -273,6 +273,25 @@ CREATE TABLE `comments` (
   CONSTRAINT `fk_rails_03de2dc08c` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `core_character_sequences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `core_character_sequences` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `fungus_type_id` bigint NOT NULL,
+  `mr_character_id` bigint NOT NULL,
+  `sequence` int NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_core_sequences_on_fungus_and_character` (`fungus_type_id`,`mr_character_id`),
+  KEY `index_core_character_sequences_on_fungus_type_id` (`fungus_type_id`),
+  KEY `index_core_character_sequences_on_mr_character_id` (`mr_character_id`),
+  KEY `index_core_sequences_on_fungus_and_sequence` (`fungus_type_id`,`sequence`),
+  CONSTRAINT `fk_rails_938c368c40` FOREIGN KEY (`mr_character_id`) REFERENCES `mr_characters` (`id`),
+  CONSTRAINT `fk_rails_c56fce473c` FOREIGN KEY (`fungus_type_id`) REFERENCES `fungus_types` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -1208,6 +1227,10 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260320150000'),
+('20260320120000'),
+('20260319160000'),
+('20260319114749'),
 ('20260317075227'),
 ('20260313130000'),
 ('20260313123000'),
