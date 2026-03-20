@@ -104,7 +104,53 @@
   <!-- Characters, grouped by part -->
   <% character_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option]).order('parts.name ASC, mr_characters.name ASC') %>
   <% grouped = character_rows.group_by { |rc| rc.mr_character&.part&.name || "Other" } %>
-  <div class="mt-6 space-y-1">
+  <% entered_character_pairs = character_rows.map do |rc|
+       c = rc.mr_character
+       next unless c
+
+       name = c.name.to_s.tr("_", " ")
+       display_option_name = c.display_option&.name&.downcase
+       is_color = display_option_name == "color" || c.display_option_id == 6
+
+       if is_color
+         colors = rc.ordered_colors
+         value = colors.map(&:common_name).join(" / ")
+         value = "No colors selected" if value.blank?
+       elsif display_option_name == "radio" || display_option_name == "drop-down"
+         lookup_item = LookupItem.find_by(id: rc.character_value)
+         value = lookup_item&.name || rc.character_value
+       else
+         value = rc.character_value
+       end
+
+       value = value.to_s.strip
+       next if value.blank?
+       "#{name}: #{value}"
+     end.compact %>
+  <% entered_character_text = entered_character_pairs.join(", ") %>
+
+  <div class="mt-6 space-y-3">
+    <details class="bg-white border rounded-md p-4" open>
+      <summary class="font-semibold cursor-pointer">Copy characters</summary>
+      <div class="mt-2" data-copy-characters>
+        <% if entered_character_text.present? %>
+          <p class="text-xs text-gray-600 mb-2">Copy these entries to paste into iNaturalist comments or elsewhere.</p>
+          <textarea class="w-full border border-gray-300 rounded p-2 text-xs text-gray-800 bg-gray-50"
+                    rows="4"
+                    readonly><%= entered_character_text %></textarea>
+          <div class="mt-2 flex items-center gap-2">
+            <button type="button"
+                    onclick="copyEnteredCharacters(this)"
+                    class="rounded px-3 py-1.5 text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
+              Copy Entered Characters
+            </button>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-600">No characters entered yet.</p>
+        <% end %>
+      </div>
+    </details>
+
     <% grouped.each do |part_name, rows| %>
       <details class="bg-white border rounded-md p-4" open>
         <summary class="font-semibold cursor-pointer"><%= part_name %> (<%= rows.size %>)</summary>
@@ -172,3 +218,38 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  function copyEnteredCharacters(button) {
+    const container = button.closest('[data-copy-characters]');
+    if (!container) return;
+
+    const textarea = container.querySelector('textarea');
+    if (!textarea) return;
+
+    const text = textarea.value || '';
+    if (!text.trim()) return;
+
+    const originalText = button.textContent;
+    const setCopied = () => {
+      button.textContent = 'Copied';
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, 1500);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(setCopied).catch(() => {
+        textarea.select();
+        textarea.setSelectionRange(0, text.length);
+        document.execCommand('copy');
+        setCopied();
+      });
+    } else {
+      textarea.select();
+      textarea.setSelectionRange(0, text.length);
+      document.execCommand('copy');
+      setCopied();
+    }
+  }
+</script>
