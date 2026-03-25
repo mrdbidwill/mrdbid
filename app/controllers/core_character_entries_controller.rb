@@ -67,6 +67,7 @@ class CoreCharacterEntriesController < ApplicationController
       .where.not(display_option_id: 1)
       .to_a
 
-    MrCharacter.sort_for_core_display(chars, keep_part_order: false, fungus_type_id: mushroom.fungus_type_id)
+    core_chars = MrCharacter.select_core_for_display(chars, fungus_type_id: mushroom.fungus_type_id)
+    MrCharacter.sort_for_core_display(core_chars, keep_part_order: false, fungus_type_id: mushroom.fungus_type_id)
   end
 end

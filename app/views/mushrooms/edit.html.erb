@@ -291,7 +291,7 @@
 
     <% core_fallback = false %>
     <% if core_only %>
-      <% core_missing = missing_chars.select(&:core?) %>
+      <% core_missing = MrCharacter.select_core_for_display(missing_chars, fungus_type_id: @mushroom.fungus_type_id) %>
       <% if core_missing.any? %>
         <% missing_chars = core_missing %>
       <% else %>

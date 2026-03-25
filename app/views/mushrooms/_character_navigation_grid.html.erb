@@ -3,13 +3,14 @@
   core_chars = nil
   core_has_chars = true
   if core_only
-    core_chars = if @mushroom.fungus_type_id.present?
+    core_scope = if @mushroom.fungus_type_id.present?
                    MrCharacter.for_fungus_type(@mushroom.fungus_type_id)
                  else
                    MrCharacter.all
                  end
                  .where("JSON_EXTRACT(properties, '$.core') = true")
                  .where.not(display_option_id: 1)
+    core_chars = MrCharacter.select_core_for_display(core_scope.to_a, fungus_type_id: @mushroom.fungus_type_id)
     core_has_chars = core_chars.any?
   end
 %>

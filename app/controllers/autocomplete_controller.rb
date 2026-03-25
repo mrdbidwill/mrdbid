@@ -100,7 +100,7 @@ class AutocompleteController < ApplicationController
                 # Filter to core characters by default if any exist
                 core_chars = nil
                 if core_only
-                  core_chars = all_chars.select(&:core?)
+                  core_chars = MrCharacter.select_core_for_display(all_chars, fungus_type_id: mushroom&.fungus_type_id)
                   all_chars = core_chars if core_chars.any?
                 end
 

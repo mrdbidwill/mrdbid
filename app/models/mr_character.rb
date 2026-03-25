@@ -87,6 +87,24 @@ class MrCharacter < ApplicationRecord
       .to_h
   end
 
+  # Returns the core subset for UI flows (search, edit, sequential entry).
+  # Behavior:
+  # - No fungus_type context: return all core chars in the provided collection.
+  # - Fungus_type with saved sequence rows: return only characters sequenced for that type.
+  # - Fungus_type with no saved rows:
+  #   - If sequencing has never been configured: fall back to legacy global core behavior.
+  #   - If sequencing exists for any fungus type: treat this type as "not configured yet" (empty core set).
+  def self.select_core_for_display(chars, fungus_type_id: nil)
+    core_chars = chars.select(&:core?).reject { |c| c.display_option_id == 1 }
+    return core_chars if fungus_type_id.blank?
+
+    seq_map = sequence_map_for(fungus_type_id)
+    return core_chars.select { |c| seq_map.key?(c.id) } if seq_map.any?
+    return [] if CoreCharacterSequence.exists?
+
+    core_chars
+  end
+
   def self.sort_for_core_display(chars, keep_part_order: true, fungus_type_id: nil)
     seq_map = sequence_map_for(fungus_type_id)
 

@@ -219,10 +219,11 @@ class MushroomsController < ApplicationController
 
     all_chars = base_scope.includes(:display_option, :source_data, :lookup_items).order(:name).to_a
     @all_characters_count = all_chars.size
-    @core_characters_count = all_chars.count(&:core?)
+    core_chars_for_context = MrCharacter.select_core_for_display(all_chars, fungus_type_id: @mushroom.fungus_type_id)
+    @core_characters_count = core_chars_for_context.size
 
     if @core_only
-      core_chars = all_chars.select(&:core?)
+      core_chars = core_chars_for_context
       if core_chars.any?
         @characters = MrCharacter.sort_for_core_display(core_chars, keep_part_order: false, fungus_type_id: @mushroom.fungus_type_id)
       else
