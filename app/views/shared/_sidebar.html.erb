@@ -162,6 +162,8 @@
       <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left px-3 py-2 rounded bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium transition" %>
     <% else %>
       <!-- Not signed in -->
+      <%= link_to "Articles", articles_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
+
       <%= link_to "Books", books_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 
       <%= link_to "Contact", contact_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>

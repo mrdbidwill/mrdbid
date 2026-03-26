@@ -28,14 +28,14 @@
         </li>
       <% end %>
 
-      <% if user_signed_in? %>
-        <!-- Articles (new public section) -->
-        <% unless current_page?(articles_path) %>
-          <li>
-            <%= link_to "Articles", articles_path, class: "btn-nav bg-blue-600 text-white ring-2 ring-blue-300 hover:bg-blue-500 hover:ring-blue-600 focus:outline-none focus:ring-4" %>
-          </li>
-        <% end %>
+      <!-- Articles -->
+      <% unless current_page?(articles_path) %>
+        <li>
+          <%= link_to "Articles", articles_path, class: "btn-nav bg-blue-600 text-white ring-2 ring-blue-300 hover:bg-blue-500 hover:ring-blue-600 focus:outline-none focus:ring-4" %>
+        </li>
+      <% end %>
 
+      <% if user_signed_in? %>
         <!-- Mushrooms -->
         <% unless controller_name == 'mushrooms' %>  <!-- matches index, show, new, edit -->
           <li>

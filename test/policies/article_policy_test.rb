@@ -15,12 +15,12 @@ class ArticlePolicyTest < ActiveSupport::TestCase
     assert Pundit.policy(@owner_user, Article).index?
   end
 
-  test "should not authorize regular user to view index" do
-    assert_not Pundit.policy(@regular_user, Article).index?
+  test "should authorize regular user to view index" do
+    assert Pundit.policy(@regular_user, Article).index?
   end
 
-  test "should not authorize nil user to view index" do
-    assert_not Pundit.policy(nil, Article).index?
+  test "should authorize nil user to view index" do
+    assert Pundit.policy(nil, Article).index?
   end
 
   test "should authorize admin to show article" do
@@ -28,12 +28,12 @@ class ArticlePolicyTest < ActiveSupport::TestCase
     assert Pundit.policy(@owner_user, @article_by_owner).show?
   end
 
-  test "should not authorize regular user to show article" do
-    assert_not Pundit.policy(@regular_user, @article_by_owner).show?
+  test "should authorize regular user to show article" do
+    assert Pundit.policy(@regular_user, @article_by_owner).show?
   end
 
-  test "should not authorize nil user to show article" do
-    assert_not Pundit.policy(nil, @article_by_owner).show?
+  test "should authorize nil user to show article" do
+    assert Pundit.policy(nil, @article_by_owner).show?
   end
 
   test "should authorize admin to create article" do
@@ -43,6 +43,11 @@ class ArticlePolicyTest < ActiveSupport::TestCase
 
   test "should not authorize regular user to create article" do
     assert_not Pundit.policy(@regular_user, Article.new).create?
+  end
+
+  test "should not authorize expert user to create article" do
+    expert_user = User.new(permission_id: 3)
+    assert_not Pundit.policy(expert_user, Article.new).create?
   end
 
   test "should authorize admin to new article" do
