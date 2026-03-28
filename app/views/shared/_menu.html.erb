@@ -58,7 +58,7 @@
 
           <!-- Manage Mushroom Characters -->
           <li>
-            <%= link_to "Characters", admin_mr_characters_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4" %>
+            <%= link_to "Mushroom Characters", admin_mr_characters_path, class: "btn-nav bg-green-600 text-white ring-2 ring-green-400 hover:bg-green-700 hover:ring-green-700 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 
@@ -74,10 +74,10 @@
           <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "btn-nav bg-yellow-600 text-white ring-2 ring-yellow-400 hover:bg-yellow-700 hover:ring-yellow-700 focus:outline-none focus:ring-4" %>
         </li>
       <% else %>
-        <!-- Login -->
+        <!-- Sign In -->
         <% unless current_page?(new_user_session_path) %>
           <li>
-            <%= link_to "Login", new_user_session_path, class: "btn-nav bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4" %>
+            <%= link_to "Sign In", new_user_session_path, class: "btn-nav bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4" %>
           </li>
         <% end %>
 

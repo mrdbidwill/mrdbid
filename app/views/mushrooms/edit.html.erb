@@ -139,7 +139,7 @@
     </details>
   </div>
 
-  <!-- Entered characters -->
+  <!-- Entered Characters -->
   <% existing_rows = @mushroom.mr_character_mushrooms.includes(mr_character: [:part, :display_option, :source_data]).order('parts.name ASC, mr_characters.name ASC') %>
   <% color_rows = existing_rows.select { |rc| (rc.mr_character&.display_option&.name&.downcase == "color") || rc.mr_character&.display_option_id == 6 } %>
   <% non_color_rows = existing_rows - color_rows %>
@@ -147,7 +147,7 @@
 
   <details class="mt-8" open>
     <summary class="text-2xl font-semibold mb-3 cursor-pointer">
-      Entered characters (<%= existing_rows.size %>)
+      Entered Characters (<%= existing_rows.size %>)
     </summary>
 
     <% entered_character_pairs = existing_rows.map do |rc|
@@ -176,7 +176,7 @@
     <% entered_character_text = entered_character_pairs.join(", ") %>
 
     <details class="bg-white border rounded-md p-3 mb-3">
-      <summary class="font-semibold cursor-pointer">Copy characters</summary>
+      <summary class="font-semibold cursor-pointer">Copy Entered Characters</summary>
       <div class="mt-2" data-copy-characters>
         <% if entered_character_text.present? %>
           <p class="text-xs text-gray-600 mb-2">Copy these entries to paste into iNaturalist comments or elsewhere.</p>
@@ -484,7 +484,7 @@
     }
   </script>
 
-  <!-- Copy entered characters -->
+  <!-- Copy Entered Characters -->
   <script>
     function copyEnteredCharacters(button) {
       const container = button.closest('[data-copy-characters]');

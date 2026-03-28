@@ -127,6 +127,10 @@
               class: "block px-3 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium transition" %>
           <%= link_to "🔍 iNaturalist Fields", inaturalist_observation_fields_path,
               class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition" %>
+          <%= link_to "DNA County PDFs", "https://dna.mrdbid.com/",
+              class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition" %>
+          <%= link_to "All Projects DNA List", "https://dna.mrdbid.com/catalog",
+              class: "block px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition" %>
         </div>
       </div>
 
@@ -150,7 +154,7 @@
         <!-- Admin -->
         <%= link_to "Admin Dashboard", admin_root_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
 
-        <%= link_to "Characters", admin_mr_characters_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
+        <%= link_to "Mushroom Characters", admin_mr_characters_path, class: "block px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition" %>
 
         <div class="my-2 border-t border-gray-400"></div>
       <% end %>
@@ -172,7 +176,7 @@
 
       <%= link_to "Sign In", new_user_session_path, class: "block px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition" %>
 
-      <%= link_to "Create Account", new_user_registration_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition" %>
 
     <% end %>
   </nav>
