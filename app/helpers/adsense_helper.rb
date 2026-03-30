@@ -2,11 +2,7 @@
 
 module AdsenseHelper
   def adsense_enabled?
-    ENV["ADSENSE_ENABLED"].to_s == "true" && ENV["ADSENSE_CLIENT_ID"].to_s.strip.present?
-  end
-
-  def adsense_client_id
-    ENV["ADSENSE_CLIENT_ID"].to_s.strip
+    ENV["ADSENSE_ENABLED"].to_s == "true"
   end
 
   def render_adsense_script?
