@@ -51,3 +51,10 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - Admin dashboard includes `Sequence Core Characters` with drag-and-drop + save.
   - Core toggle routes directly to sequential single-character entry.
   - Sequential entry actions are explicit: `Save Character` stays put; `Save & Next` advances; `Done` exits to return page/edit.
+
+## 2026-03-30
+- Shared-host runtime defaults aligned with portfolio policy:
+  - `config/puma.rb` now enforces integer parsing for thread count.
+  - `config/puma.rb` now keeps single-process mode by default and only enables Puma workers when `WEB_CONCURRENCY>1`.
+  - `.env.example` now includes baseline `RAILS_MAX_THREADS=3` and `WEB_CONCURRENCY=1`.
+- Intent: preserve predictable low footprint for `mrdbid.com` while allowing off-peak capacity to prioritize heavy PDF workloads on the same VPS.

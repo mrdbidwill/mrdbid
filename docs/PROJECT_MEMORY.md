@@ -35,6 +35,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Turbo confirm:** Use `data: { turbo_confirm: "..." }` for destructive/confirm actions (no rails-ujs).
 - **Button audit coverage:** System test `test/system/button_ux_audit_test.rb` validates core button flows (create/edit/delete, image upload, export buttons).
 - **Coverage baseline (2026-03-14):** 80.75% line, 56.29% branch; continue raising toward 80%/60%.
+- **Shared-VPS baseline runtime (2026-03-30):** prefer `RAILS_MAX_THREADS=3` and `WEB_CONCURRENCY=1` unless metrics justify increasing concurrency.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 
