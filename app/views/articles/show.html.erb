@@ -1,4 +1,9 @@
 <% content_for :title, @article.title %>
+<% content_for :meta_description do %>
+  <%= @article.summary.presence || truncate(strip_tags(@article.body.to_s), length: 155) %>
+<% end %>
+<% content_for :canonical_url, article_url(@article) %>
+<% content_for :og_type, "article" %>
 
 <div class="flex gap-2 m-6">
   <%= link_to "Back to articles", articles_path, class: "rounded-md px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-medium" %>

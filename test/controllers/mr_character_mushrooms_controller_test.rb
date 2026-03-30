@@ -60,6 +60,8 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should normalize boolean strings" do
+    @mr_character.update!(display_option: display_options(:boolean_yes_no))
+
     ['true', 'yes', 'present', '1', 'on', 'checked'].each do |value|
       post mr_character_mushrooms_url, params: {
         mushroom_id: @mushroom.id,
@@ -74,6 +76,7 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
 
       # Will be normalized based on display option type
       assert_not_nil rcm
+      assert_equal "true", rcm.character_value
     end
   end
 
@@ -210,5 +213,94 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
 
     # Should redirect back with error
     assert_redirected_to edit_mushroom_path(@mushroom)
+  end
+
+  test "should clear persisted color character when no color values are provided" do
+    color_character = MrCharacter.create!(
+      name: "Test Color Character #{SecureRandom.hex(4)}",
+      part: parts(:one),
+      observation_method: observation_methods(:one),
+      display_option: display_options(:color_picker),
+      source_data: source_data(:one)
+    )
+
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: color_character.id,
+      color_ids: [colors(:one).id]
+    }
+    assert_not_nil MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: color_character.id)
+
+    assert_difference("MrCharacterMushroom.where(mushroom_id: @mushroom.id, mr_character_id: color_character.id).count", -1) do
+      post mr_character_mushrooms_url, params: {
+        mushroom_id: @mushroom.id,
+        mr_character_id: color_character.id
+      }
+    end
+
+    assert_redirected_to edit_mushroom_path(@mushroom)
+    assert_equal "Character cleared.", flash[:notice]
+  end
+
+  test "should use next_url when save_next is present" do
+    post mr_character_mushrooms_url, params: {
+      mushroom_id: @mushroom.id,
+      mr_character_id: @mr_character.id,
+      character_value: "queued save",
+      save_next: "1",
+      next_url: mushrooms_path
+    }
+
+    assert_redirected_to mushrooms_path
+    assert_equal "Character saved.", flash[:notice]
+  end
+
+  test "bulk update should reject empty update list" do
+    post bulk_update_mr_character_mushrooms_path, params: {
+      mushroom_id: @mushroom.id,
+      updates: {},
+      redirect_to: mushrooms_path
+    }
+
+    assert_redirected_to mushrooms_path
+    assert_equal "No updates provided.", flash[:alert]
+  end
+
+  test "bulk update should save multiple characters" do
+    second_character = mr_characters(:two)
+
+    post bulk_update_mr_character_mushrooms_path, params: {
+      mushroom_id: @mushroom.id,
+      updates: {
+        "0" => { mr_character_id: @mr_character.id, character_value: "bulk value one" },
+        "1" => { mr_character_id: second_character.id, character_value: "bulk value two" }
+      },
+      redirect_to: mushrooms_path
+    }
+
+    assert_redirected_to mushrooms_path
+    assert_equal "Successfully saved 2 characters.", flash[:notice]
+
+    first = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)
+    second = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: second_character.id)
+    assert_equal "bulk value one", first.character_value
+    assert_equal "bulk value two", second.character_value
+  end
+
+  test "bulk update should report partial errors and keep successful updates" do
+    post bulk_update_mr_character_mushrooms_path, params: {
+      mushroom_id: @mushroom.id,
+      updates: {
+        "0" => { mr_character_id: @mr_character.id, character_value: "ok value" },
+        "1" => { mr_character_id: 999_999, character_value: "bad value" }
+      },
+      redirect_to: mushrooms_path
+    }
+
+    assert_redirected_to mushrooms_path
+    assert_match(/Saved 1 characters\. Errors:/, flash[:alert])
+
+    valid_row = MrCharacterMushroom.find_by(mushroom_id: @mushroom.id, mr_character_id: @mr_character.id)
+    assert_equal "ok value", valid_row.character_value
   end
 end

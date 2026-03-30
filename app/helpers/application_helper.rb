@@ -2,8 +2,56 @@
 
 # app/helpers/application_helper.rb
 module ApplicationHelper
+  DEFAULT_SEO_DESCRIPTION = "MRDBID is a mushroom field research notebook for documenting specimens, photos, and identification data.".freeze
+  DEFAULT_OG_IMAGE = "mrdbid_facebook.png".freeze
+
   # Include Pundit methods for use in views
   include Pundit::Authorization
+
+  def seo_site_name
+    "MRDBID"
+  end
+
+  def seo_title
+    raw_title = content_for?(:title) ? content_for(:title).to_s.strip : ""
+    return seo_site_name if raw_title.blank?
+    return raw_title if raw_title.downcase.include?(seo_site_name.downcase)
+
+    "#{raw_title} | #{seo_site_name}"
+  end
+
+  def seo_description
+    raw = content_for?(:meta_description) ? content_for(:meta_description).to_s : ""
+    description = strip_tags(raw).squish
+    description = DEFAULT_SEO_DESCRIPTION if description.blank?
+    truncate(description, length: 160)
+  end
+
+  def seo_canonical_url
+    return content_for(:canonical_url).to_s if content_for?(:canonical_url)
+
+    "#{request.base_url}#{request.path}"
+  end
+
+  def seo_robots
+    return content_for(:robots).to_s if content_for?(:robots)
+
+    noindex = controller_path.start_with?("admin/") ||
+      action_name.in?(%w[new edit]) ||
+      controller_path.start_with?("users/")
+
+    noindex ? "noindex, nofollow" : "index, follow"
+  end
+
+  def seo_og_type
+    content_for?(:og_type) ? content_for(:og_type).to_s : "website"
+  end
+
+  def seo_og_image
+    return content_for(:og_image).to_s if content_for?(:og_image)
+
+    image_url(DEFAULT_OG_IMAGE)
+  end
 
   # Returns the list of rendered templates/partials collected for this request
   def rendered_views_debug

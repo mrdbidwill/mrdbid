@@ -12,10 +12,25 @@
         body{margin:0}
     </style>
 
-    <title><%= content_for(:title) || "MRDBID" %></title>
+    <title><%= seo_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= seo_description %>">
+    <meta name="robots" content="<%= seo_robots %>">
+    <link rel="canonical" href="<%= seo_canonical_url %>">
+
+    <meta property="og:site_name" content="<%= seo_site_name %>">
+    <meta property="og:type" content="<%= seo_og_type %>">
+    <meta property="og:title" content="<%= seo_title %>">
+    <meta property="og:description" content="<%= seo_description %>">
+    <meta property="og:url" content="<%= seo_canonical_url %>">
+    <meta property="og:image" content="<%= seo_og_image %>">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= seo_title %>">
+    <meta name="twitter:description" content="<%= seo_description %>">
+    <meta name="twitter:image" content="<%= seo_og_image %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -23,18 +38,8 @@
 
     <% if render_adsense_script? %>
       <script async
-              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= adsense_client_id %>"
+              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8323362126637830"
               crossorigin="anonymous"></script>
-    <% end %>
-
-    <%# SEO: Add noindex for non-public pages %>
-    <% if controller_path.start_with?('admin/') || action_name.in?(['edit', 'new']) || controller_path.start_with?('users/') %>
-      <meta name="robots" content="noindex, nofollow">
-    <% end %>
-
-    <%# SEO: Canonical URL %>
-    <% if content_for?(:canonical_url) %>
-      <link rel="canonical" href="<%= yield(:canonical_url) %>">
     <% end %>
 
     <%# PWA manifest for installable progressive web app %>

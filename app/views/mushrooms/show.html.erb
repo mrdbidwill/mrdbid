@@ -1,4 +1,8 @@
-<% content_for :title, "Showing mushroom" %>
+<% page_title = @mushroom.name.presence || "Mushroom Specimen" %>
+<% content_for :title, page_title %>
+<% content_for :meta_description do %>
+  <%= @mushroom.description.presence || "View mushroom specimen details, photos, location notes, and entered identification characters." %>
+<% end %>
 <% content_for :canonical_url, mushroom_url(@mushroom) %>
 <div class="md:w-full w-full">
 
