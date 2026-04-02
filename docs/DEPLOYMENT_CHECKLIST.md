@@ -33,6 +33,19 @@ Verify `/opt/mrdbid/shared/.env` includes:
 - `R2_BUCKET`, `R2_ENDPOINT`, `R2_REGION`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_PUBLIC_BASE_URL`
 - `ADSENSE_ENABLED`, `ADSENSE_CLIENT_ID`, and `ADSENSE_SLOT_ID` (public-only ads)
 
+## AdSense Verification Checklist
+
+After deploy or env changes, verify ad rendering end-to-end:
+
+1. Visit `https://mrdbid.com` while signed out (guest session).
+2. Disable browser/site-level ad blocking for this test (Firefox ETP shield, ad blocker extensions, DNS filters).
+3. In DevTools Network, confirm `adsbygoogle.js` loads from `pagead2.googlesyndication.com` (usually `200` or `304`).
+4. In page source/Elements, confirm both are present on public pages:
+   - `<script ... adsbygoogle.js?client=ca-pub-...>`
+   - `<ins class="adsbygoogle" ... data-ad-slot="...">`
+5. Sign in and confirm ad script/slot markup is not rendered on authenticated pages.
+6. If markup exists but no visible ad appears, wait for AdSense serving/review propagation and recheck later.
+
 ## Manual Restart (If Needed)
 
 If you need to manually restart services:
