@@ -37,18 +37,17 @@ class MushroomAuthorizationTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", mushroom_path(@mushroom), count: 0
   end
 
-  test "guest user does not see protected links" do
+  test "guest user can view observations but not protected actions" do
     # Simulate a guest (not signed in)
     get mushrooms_path
     assert_response :success
 
-    # Guests can see the "Add New Mushroom" link (it appears twice in the current design)
-    # but authentication will redirect them when they try to access it
-    # The link presence is OK - authorization happens at controller level
+    # Guests can browse all observation cards.
+    assert_select "a[href=?]", mushroom_path(@mushroom), minimum: 1
+    assert_select "a[href=?]", mushroom_path(@other_mushroom), minimum: 1
 
-    # Guests should not see mushroom cards since the controller scopes to current_user's mushrooms
-    # and guest has no current_user
-    assert_select "a[href=?]", mushroom_path(@mushroom), count: 0
+    # Protected actions remain unavailable to guests from the index.
+    assert_select "a[href=?]", edit_mushroom_path(@mushroom), count: 0
   end
 
   private

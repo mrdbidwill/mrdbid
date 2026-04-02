@@ -38,14 +38,14 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show image without authentication" do
-    get image_mushroom_url(@demo_image)
+    get image_mushroom_url(@image_mushroom)
     assert_response :success
     assert_not_includes response.body, "Internal Server Error"
   end
 
-  test "should not show non-demo image without authentication" do
-    get image_mushroom_url(@image_mushroom)
-    assert_response :redirect
+  test "should show image from any owner without authentication" do
+    get image_mushroom_url(@demo_image)
+    assert_response :success
   end
 
   test "authenticated user should get new" do

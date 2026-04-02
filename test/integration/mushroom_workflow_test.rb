@@ -159,12 +159,13 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{mushroom_path(@other_mushroom)}']", count: 0
   end
 
-  test "guest can view mushroom index showing demo mushrooms" do
+  test "guest can view mushroom index showing all observations" do
     # Not signed in
     get mushrooms_path
 
     assert_response :success
-    # Should show user_id 1's mushrooms as demo
+    assert_select "a[href='#{mushroom_path(@mushroom)}']"
+    assert_select "a[href='#{mushroom_path(@other_mushroom)}']"
   end
 
   test "mushroom index supports pagination" do

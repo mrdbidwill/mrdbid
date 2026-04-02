@@ -182,7 +182,7 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "user is redirected to login page when accessing protected resources" do
     get mushrooms_path
 
-    # Since index allows guests to see demo mushrooms, try edit instead
+    # Index is public-read; edit remains protected.
     mushroom = mushrooms(:one)
     get edit_mushroom_path(mushroom)
 

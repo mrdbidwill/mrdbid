@@ -92,28 +92,27 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   test "public can access show without authentication" do
     sign_out @user
 
-    get mushroom_path(@demo_mushroom)
+    get mushroom_path(@mushroom)
     assert_response :success, "Public users should be able to view individual mushrooms"
     assert_not_includes response.body, "Internal Server Error"
     # Should not raise Pundit::NotAuthorizedError
   end
 
-  test "public cannot access non-demo mushrooms without authentication" do
+  test "public can access mushrooms from other owners without authentication" do
     sign_out @user
 
-    get mushroom_path(@mushroom)
-    assert_response :redirect
+    get mushroom_path(mushrooms(:two))
+    assert_response :success
   end
 
-  test "public sees demo user mushrooms on index" do
+  test "public sees mushrooms from multiple owners on index" do
     sign_out @user
 
-    # Public should see user_id 1's mushrooms as demo
     get mushrooms_path
     assert_response :success
 
-    # The response should contain mushrooms (from user_id 1 demo account)
-    # but we can't make specific assertions without knowing fixture data
+    assert_select "a[href='#{mushroom_path(@demo_mushroom)}']"
+    assert_select "a[href='#{mushroom_path(@mushroom)}']"
   end
 
   test "public cannot access new without authentication" do

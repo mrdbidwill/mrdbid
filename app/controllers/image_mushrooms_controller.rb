@@ -11,8 +11,7 @@ class ImageMushroomsController < ApplicationController
     if user_signed_in?
       @image_mushrooms = policy_scope(ImageMushroom).includes(:mushroom, :part)
     else
-      # Public visitors see demo user's images (user_id 1)
-      @image_mushrooms = ImageMushroom.joins(:mushroom).where(mushrooms: { user_id: 1 }).includes(:mushroom, :part)
+      @image_mushrooms = ImageMushroom.includes(:mushroom, :part)
     end
   end
 

@@ -58,3 +58,11 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - `config/puma.rb` now keeps single-process mode by default and only enables Puma workers when `WEB_CONCURRENCY>1`.
   - `.env.example` now includes baseline `RAILS_MAX_THREADS=3` and `WEB_CONCURRENCY=1`.
 - Intent: preserve predictable low footprint for `mrdbid.com` while allowing off-peak capacity to prioritize heavy PDF workloads on the same VPS.
+
+## 2026-04-02
+- Public-read access expanded for observations:
+  - Guests can now view all mushroom observations (index/show), regardless of owner.
+  - Image show pages are publicly viewable to match observation browsing flow.
+  - Create/update/delete remains restricted to authenticated users with ownership or elevated admin permissions.
+- Home page messaging updated:
+  - Removed sample-collection/preview framing and replaced it with the six-goal MRDBID roadmap section.

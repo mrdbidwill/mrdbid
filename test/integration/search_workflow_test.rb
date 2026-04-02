@@ -476,23 +476,18 @@ class SearchWorkflowTest < ActionDispatch::IntegrationTest
   # GUEST SEARCH TESTS
   # ==============================================================================
 
-  test "guest can search demo mushrooms" do
-    # Not signed in - should see user_id 1's mushrooms
+  test "guest can search mushrooms" do
     get mushrooms_path(q: @mushroom.name)
 
     assert_response :success
-    # Should be able to search, but only sees demo mushrooms
+    assert_select "a[href='#{mushroom_path(@mushroom)}']"
   end
 
-  test "guest search does not expose other users' mushrooms" do
-    # Create mushroom for user other than demo user (id 1)
-    if @user.id != 1
-      get mushrooms_path(q: @searchable_mushroom.name)
+  test "guest search includes mushrooms owned by other users" do
+    get mushrooms_path(q: @searchable_mushroom.name)
 
-      assert_response :success
-      # Should not see non-demo user's mushrooms
-      assert_select "a[href='#{mushroom_path(@searchable_mushroom)}']", count: 0
-    end
+    assert_response :success
+    assert_select "a[href='#{mushroom_path(@searchable_mushroom)}']"
   end
 
   # ==============================================================================

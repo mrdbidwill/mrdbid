@@ -27,6 +27,8 @@ class MushroomPolicyTest < ActiveSupport::TestCase
     assert Pundit.policy(@user, @mushroom).show?
     # Any signed-in user can view any mushroom (public viewing)
     assert Pundit.policy(@other_user, @mushroom).show?
+    # Public visitors can view all mushrooms
+    assert Pundit.policy(nil, @mushroom).show?
   end
 
   def test_create

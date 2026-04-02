@@ -23,7 +23,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Memory ack required:** Run `script/ack_project_memory.sh` before any changes, then use `bin/with_project_memory <command>` for guarded commands.
 - **Core sequencing model:** Core character ordering is per fungus type via `core_character_sequences` (not `mr_characters.core_sequence`).
 - **Core entry UX:** Core mode routes to one-character-at-a-time sequential entry with `Save Character`, `Save & Next`, `Back`, and `Done`.
-- **Public demo boundary:** Unauthenticated users can only read demo content (`user_id == 1`). Public show endpoints must enforce this via Pundit.
+- **Public read boundary:** Unauthenticated users can read all mushroom observations and image show pages. Mutation endpoints remain authenticated and ownership-protected.
 - **AdSense gating:** AdSense scripts may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true` + `ADSENSE_CLIENT_ID`).
 - **Active Storage:** Production image storage uses Cloudflare R2 (`ACTIVE_STORAGE_SERVICE=r2`).
 - **R2 public base URL:** `R2_PUBLIC_BASE_URL` must be set when R2 is enabled (used for public asset URLs).
@@ -62,7 +62,7 @@ These requirements apply to any AI-assisted changes in this repo:
 - **Owner**: The user who created a record (e.g., `mushrooms.user_id`).
 - **Elevated Admin**: `permission_id` 1 or 2 (Owner/Admin). Implemented via `User#elevated_admin?`.
 - **Regular User**: Any signed-in user who is not an Elevated Admin.
-- **Public/Demo**: Visitors who are not signed in. They can only read limited public data (e.g., user_id 1 demo).
+- **Public**: Visitors who are not signed in. They are read-only and can view observation pages, but cannot mutate data.
 
 ### Core Rules (Must Always Hold)
 
@@ -71,11 +71,10 @@ These requirements apply to any AI-assisted changes in this repo:
    - This includes genus/species/trees/plants/characters, images, clusters, groups, and projects.
 3. **Non-admin users can never mutate another user’s records or associations.**
 4. **Elevated Admins may override ownership rules** for operational/admin tasks.
-5. **Public (not signed in) users are read-only**, with access limited to demo/public data only.
+5. **Public (not signed in) users are read-only**, and may view mushroom observations while remaining blocked from mutations.
 
 ### Exceptions and Caveats
 
-- **Public demo mushrooms**: `user_id == 1` is visible publicly (read-only).
 - **Universal projects**: `projects.user_id == nil` are attachable by any signed-in user to their own mushrooms.
 - **Admin UI**: Admin namespace is restricted to Elevated Admins.
 

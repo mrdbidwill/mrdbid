@@ -30,14 +30,14 @@ class MushroomPolicy < ApplicationPolicy
 
 
 
-  # Allow index for all signed-in users
+  # Allow index for all users
   def index?
-    user.present?
+    true
   end
 
-  # Allow any signed-in user to view any mushroom, OR allow public to view user_id=1 (demo) mushrooms
+  # Allow all users to view all mushrooms
   def show?
-    user.present? || record.user_id == 1
+    true
   end
 
   def edit?

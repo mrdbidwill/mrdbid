@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   skip_after_action :verify_authorized, raise: false
 
   def home
-    # Fetch all mushrooms for public preview (non-authenticated users)
+    # Fetch all mushrooms for public viewing (non-authenticated users)
     # Optimized query with eager loading to prevent N+1 queries
     # Only load essential associations for display
     @mushrooms = Mushroom.all

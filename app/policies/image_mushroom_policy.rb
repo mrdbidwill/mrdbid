@@ -8,10 +8,7 @@ class ImageMushroomPolicy < ApplicationPolicy
 
   def index?;   user&.admin?; end
   def show?
-    return true if user.present?
-
-    # Public visitors only see demo user's images (mushroom user_id == 1)
-    record.mushroom&.user_id == 1
+    true
   end
   def new?;     owner_or_admin?; end
   def create?;  owner_or_admin?; end

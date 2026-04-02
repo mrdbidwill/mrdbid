@@ -12,6 +12,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-04-02
+- Decision: Expand guest read access from demo-only content to all mushroom observations and image show pages, while keeping all mutation endpoints ownership-protected.
+- Rationale: Product direction now requires public visibility of all observations; only create/update/delete and other mutations remain restricted to authenticated owner/admin users.
+- Consequences: Guest users can browse all observation records and linked image pages; authorization for create/update/delete remains unchanged and enforced by existing controller and policy guardrails.
+- Alternatives Considered: Keep demo-only guest reads (`user_id == 1`); rejected because it conflicts with current public-access goals.
+
 - Date: 2026-03-20
 - Decision: Replace legacy `mr_characters.core_sequence` ordering with per-fungus-type sequencing stored in `core_character_sequences`.
 - Rationale: Core order must be configurable by fungus type and reusable across core-only entry/search/display flows.
@@ -37,7 +43,7 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 - Alternatives Considered: Reintroduce rails-ujs; rejected to keep the JS stack minimal.
 
 - Date: 2026-03-14
-- Decision: Enforce demo-only access for public mushroom/image show pages and require Pundit authorization on show actions.
+- Decision: Enforce demo-only access for public mushroom/image show pages and require Pundit authorization on show actions. (Superseded by 2026-04-02 public-read decision.)
 - Rationale: Align runtime behavior with the documented public/demo boundary and prevent unintended data exposure.
 - Consequences: Guest requests to non-demo show pages now redirect with authorization messaging.
 - Alternatives Considered: Leave show pages open to public; rejected due to privacy and policy drift.

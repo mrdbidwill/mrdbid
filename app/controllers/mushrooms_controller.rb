@@ -9,7 +9,7 @@ class MushroomsController < ApplicationController
   # - Uses Devise for authentication (authenticate_user!)
   # - Uses Pundit for authorization (see app/policies/mushroom_policy.rb)
   # - Users can only edit/delete their own mushrooms (or admin override)
-  # - Signed-in users can view any mushrooms; public users only see demo content
+  # - Signed-in and public users can view all mushrooms
   #
   # PERFORMANCE NOTES:
   # - Uses eager loading to prevent N+1 queries
@@ -25,7 +25,7 @@ class MushroomsController < ApplicationController
   # Pundit setup
   include Pundit::Authorization
 
-  before_action :authenticate_user!, except: [:index, :show] # Allow public to view index and show for demo
+  before_action :authenticate_user!, except: [:index, :show] # Allow public read access for index/show
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
   before_action :authorize_mushroom, except: %i[index show new create clone_characters toggle_view_mode export_all_pdf]
 
@@ -89,8 +89,7 @@ class MushroomsController < ApplicationController
                      .page(params[:page])
                      .per(12)
     else
-      # Show user_id 1's mushrooms to public visitors to demonstrate the site
-      @mushrooms = Mushroom.where(user_id: 1)
+      @mushrooms = Mushroom.all
 
       # Search by name, description, comments, city, genus (minimum 3 characters)
       if params[:q].present? && params[:q].strip.length >= 3

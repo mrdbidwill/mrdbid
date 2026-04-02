@@ -1,20 +1,32 @@
 <% content_for :title, "Mushroom Field Notebook and Identification Database" %>
-<% content_for :meta_description, "Browse public mushroom specimen previews and track identification data, photos, and field notes with MRDBID." %>
+<% content_for :meta_description, "Browse mushroom specimen observations and track identification data, photos, and field notes with MRDBID." %>
 
 <h1>Welcome to MRDBID!</h1>
 
 <h3 class="text-xl font-bold text-green-600 mb-4">A personal mushroom storage notebook and much more...</h3>
 
-<% unless user_signed_in? %>
-  <%= render "shared/sample_collections_cta" %>
-<% end %>
+<div class="group-box mb-4" style="border: 2px solid #16a34a;">
+  <div class="group-header" style="background-color: #dcfce7;">
+    <h2 class="text-lg font-bold text-gray-900">MRDBID has evolved into several goals for mushroom enthusiasts.</h2>
+  </div>
+  <div class="px-4 py-4">
+    <ol class="list-decimal pl-5 space-y-2">
+      <li>Mushroom collection organizer and notebook.</li>
+      <li>Mushroom character list tools for the creation, modification, and use of characters in online form.</li>
+      <li>PDF creation tools to link DNA sequence results to the county level (Alabama).</li>
+      <li>Searchable database of iNaturalist Observation Fields.</li>
+      <li>Mycowriter - Rails gem to autocomplete genus species names.</li>
+      <li>Auto-Glossary - Rails gem to highlight mycology terms in text linked to Wikipedia's Glossary of Mycology.</li>
+    </ol>
+  </div>
+</div>
 
 <!-- Pagination Top -->
 <div class="mb-1">
   <%= render "shared/pagination", collection: @mushrooms %>
 </div>
 
-<!-- Mushroom Preview Cards -->
+<!-- Mushroom Observation Cards -->
 <% if @mushrooms&.any? %>
   <% grouped = @mushrooms.group_by { |m| m.fungus_type&.name.to_s.presence || "Uncategorized" } %>
   <% grouped.keys.sort.each do |ft_name| %>
@@ -24,16 +36,10 @@
         <%= ft_name %>
       </h2>
 
-      <!-- 4-column grid of mushrooms (NON-CLICKABLE) -->
+      <!-- 4-column grid of mushrooms -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <% grouped[ft_name].each do |mushroom| %>
-          <!-- Non-clickable preview card -->
-          <div class="block border-2 border-gray-400 rounded-lg overflow-hidden bg-white relative">
-            <!-- "Preview Only" Badge -->
-            <div class="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
-              Preview Only
-            </div>
-
+          <%= link_to mushroom_path(mushroom), class: "block border-2 border-gray-400 rounded-lg overflow-hidden bg-white hover:shadow-lg transition" do %>
             <!-- Image -->
             <% images = mushroom.image_mushrooms.select { |im| im.image_file.attached? } %>
             <% if images.any? %>
@@ -92,20 +98,13 @@
                 </p>
               <% end %>
             </div>
-
-            <!-- Sign up overlay hint -->
-            <div class="px-3 pb-3 pt-0">
-              <div class="text-center text-xs text-gray-500 italic border-t pt-2">
-                Sign up to view full details
-              </div>
-            </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
   <% end %>
 <% else %>
-  <p class="text-center text-gray-600 my-8">No mushrooms available for preview.</p>
+  <p class="text-center text-gray-600 my-8">No mushrooms available.</p>
 <% end %>
 
 <!-- Pagination Bottom -->
