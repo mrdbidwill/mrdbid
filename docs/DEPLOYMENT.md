@@ -122,6 +122,7 @@ R2_PUBLIC_BASE_URL=https://images.mrdbid.com
 
 ADSENSE_ENABLED=false
 ADSENSE_CLIENT_ID=ca-pub-...
+ADSENSE_SLOT_ID=your_ad_unit_slot_id
 ```
 
 ### Systemd Safeguards (Required)

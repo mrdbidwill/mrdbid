@@ -31,7 +31,7 @@ This automatically:
 Verify `/opt/mrdbid/shared/.env` includes:
 - `ACTIVE_STORAGE_SERVICE=r2`
 - `R2_BUCKET`, `R2_ENDPOINT`, `R2_REGION`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_PUBLIC_BASE_URL`
-- `ADSENSE_ENABLED` and `ADSENSE_CLIENT_ID` (public-only ads)
+- `ADSENSE_ENABLED`, `ADSENSE_CLIENT_ID`, and `ADSENSE_SLOT_ID` (public-only ads)
 
 ## Manual Restart (If Needed)
 

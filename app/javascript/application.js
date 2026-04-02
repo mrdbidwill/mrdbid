@@ -15,3 +15,18 @@ document.addEventListener('turbo:load', () => {
     }, 5000);
   });
 });
+
+// Initialize AdSense ad units on first page load and Turbo navigations.
+document.addEventListener('turbo:load', () => {
+  const adSlots = document.querySelectorAll('ins.adsbygoogle:not([data-adsense-initialized])');
+  if (!adSlots.length) return;
+
+  adSlots.forEach((slot) => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      slot.setAttribute('data-adsense-initialized', 'true');
+    } catch (_) {
+      // Ignore if the ad script is still loading or blocked by browser settings.
+    }
+  });
+});

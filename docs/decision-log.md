@@ -13,6 +13,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-04-02
+- Decision: Add manual AdSense ad-slot rendering to public pages, initialized on `turbo:load`, with slot id supplied via `ADSENSE_SLOT_ID`.
+- Rationale: Loading the AdSense script alone does not guarantee visible ads; manual ad units provide deterministic placement and testability.
+- Consequences: Public pages render `<ins class="adsbygoogle">` only when `ADSENSE_SLOT_ID` is configured; authenticated pages continue to suppress both script and slot markup.
+- Alternatives Considered: Rely on script-only Auto Ads; rejected due to inconsistent/absent visible placements during testing.
+
+- Date: 2026-04-02
 - Decision: Enable AdSense in production by setting `ADSENSE_ENABLED=true`, while keeping script rendering restricted to unauthenticated sessions.
 - Rationale: Ads were intentionally gated for public sessions only and the project requested activation after gating verification.
 - Consequences: Public pages can now load AdSense script markup; authenticated sessions continue to suppress ad script rendering.

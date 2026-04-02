@@ -69,3 +69,4 @@ Purpose: continuity log for monetization and storage migration planning when dir
 - AdSense was activated in production:
   - `ADSENSE_ENABLED` was set to `true` in `/opt/mrdbid/shared/.env`.
   - Public homepage response now includes AdSense script markup for `ca-pub-8323362126637830`.
+  - Manual ad unit rendering now expects `ADSENSE_SLOT_ID` to be set in `/opt/mrdbid/shared/.env`.
