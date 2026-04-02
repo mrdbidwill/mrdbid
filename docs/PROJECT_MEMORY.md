@@ -25,6 +25,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Core entry UX:** Core mode routes to one-character-at-a-time sequential entry with `Save Character`, `Save & Next`, `Back`, and `Done`.
 - **Public read boundary:** Unauthenticated users can read all mushroom observations and image show pages. Mutation endpoints remain authenticated and ownership-protected.
 - **AdSense gating:** AdSense scripts/slots may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true`; client from `ADSENSE_CLIENT_ID`; manual units require `ADSENSE_SLOT_ID`).
+- **AdSense production status (2026-04-02):** Manual slot rendering is active in production with `ADSENSE_ENABLED=true` and a configured `ADSENSE_SLOT_ID`.
 - **Active Storage:** Production image storage uses Cloudflare R2 (`ACTIVE_STORAGE_SERVICE=r2`).
 - **R2 public base URL:** `R2_PUBLIC_BASE_URL` must be set when R2 is enabled (used for public asset URLs).
 - **R2 uploads:** Cloudflare R2 does not support ACLs; ActiveStorage uploads must not send ACL headers.

@@ -13,6 +13,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-04-02
+- Decision: Configure production `ADSENSE_SLOT_ID` and activate manual AdSense ad-unit rendering on public pages.
+- Rationale: Script-only integration was insufficient for deterministic visible ad testing; configuring a real ad unit completes manual slot activation.
+- Consequences: Production public pages now emit both the AdSense loader and an `<ins class="adsbygoogle">` unit initialized on `turbo:load`.
+- Alternatives Considered: Leave slot id unset and rely only on Auto Ads; rejected due to inconsistent test visibility.
+
+- Date: 2026-04-02
 - Decision: Add manual AdSense ad-slot rendering to public pages, initialized on `turbo:load`, with slot id supplied via `ADSENSE_SLOT_ID`.
 - Rationale: Loading the AdSense script alone does not guarantee visible ads; manual ad units provide deterministic placement and testability.
 - Consequences: Public pages render `<ins class="adsbygoogle">` only when `ADSENSE_SLOT_ID` is configured; authenticated pages continue to suppress both script and slot markup.
