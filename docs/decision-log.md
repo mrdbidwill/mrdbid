@@ -13,6 +13,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-04-02
+- Decision: Enable AdSense in production by setting `ADSENSE_ENABLED=true`, while keeping script rendering restricted to unauthenticated sessions.
+- Rationale: Ads were intentionally gated for public sessions only and the project requested activation after gating verification.
+- Consequences: Public pages can now load AdSense script markup; authenticated sessions continue to suppress ad script rendering.
+- Alternatives Considered: Keep AdSense disabled in production; rejected because monetization was explicitly requested.
+
+- Date: 2026-04-02
 - Decision: Expand guest read access from demo-only content to all mushroom observations and image show pages, while keeping all mutation endpoints ownership-protected.
 - Rationale: Product direction now requires public visibility of all observations; only create/update/delete and other mutations remain restricted to authenticated owner/admin users.
 - Consequences: Guest users can browse all observation records and linked image pages; authorization for create/update/delete remains unchanged and enforced by existing controller and policy guardrails.

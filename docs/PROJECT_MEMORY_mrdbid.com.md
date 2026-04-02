@@ -66,3 +66,6 @@ Purpose: continuity log for monetization and storage migration planning when dir
   - Create/update/delete remains restricted to authenticated users with ownership or elevated admin permissions.
 - Home page messaging updated:
   - Removed sample-collection/preview framing and replaced it with the six-goal MRDBID roadmap section.
+- AdSense was activated in production:
+  - `ADSENSE_ENABLED` was set to `true` in `/opt/mrdbid/shared/.env`.
+  - Public homepage response now includes AdSense script markup for `ca-pub-8323362126637830`.
