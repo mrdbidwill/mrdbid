@@ -13,6 +13,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 ## Entries
 
 - Date: 2026-04-02
+- Decision: Add `public/ads.txt` with the Google seller declaration for `pub-8323362126637830`.
+- Rationale: AdSense warned about missing ads.txt and serving can be limited without publisher authorization file at the site root.
+- Consequences: `https://mrdbid.com/ads.txt` now resolves and returns the expected Google seller record.
+- Alternatives Considered: Leave ads.txt absent; rejected because it can reduce demand and trigger AdSense warnings.
+
+- Date: 2026-04-02
 - Decision: Configure production `ADSENSE_SLOT_ID` and activate manual AdSense ad-unit rendering on public pages.
 - Rationale: Script-only integration was insufficient for deterministic visible ad testing; configuring a real ad unit completes manual slot activation.
 - Consequences: Production public pages now emit both the AdSense loader and an `<ins class="adsbygoogle">` unit initialized on `turbo:load`.
