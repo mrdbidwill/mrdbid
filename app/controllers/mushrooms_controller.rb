@@ -25,13 +25,13 @@ class MushroomsController < ApplicationController
   # Pundit setup
   include Pundit::Authorization
 
-  before_action :authenticate_user!, except: [:index, :show] # Allow public read access for index/show
+  before_action :authenticate_user!, except: [:index, :show, :sighting_schedule] # Allow public read access for index/show/schedule
   before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
-  before_action :authorize_mushroom, except: %i[index show new create clone_characters toggle_view_mode export_all_pdf]
+  before_action :authorize_mushroom, except: %i[index show sighting_schedule new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
   # and actions where authorization is handled by service objects
-  skip_after_action :verify_authorized, only: [:create, :clone_characters, :toggle_view_mode, :export_all_pdf], raise: false
+  skip_after_action :verify_authorized, only: [:create, :clone_characters, :toggle_view_mode, :export_all_pdf, :sighting_schedule], raise: false
   skip_after_action :verify_policy_scoped, only: [:index], if: -> { !user_signed_in? }, raise: false
 
   # GET /mushrooms
@@ -136,6 +136,36 @@ class MushroomsController < ApplicationController
   def export_all_pdf
     redirect_to new_users_pdf_export_path,
                 notice: "PDF export now runs in the background. You'll be taken to the export status page."
+  end
+
+  # GET /mushrooms/sighting_schedule
+  def sighting_schedule
+    if user_signed_in?
+      if session[:view_all_mushrooms] == true
+        @mushrooms = Mushroom.all
+        @viewing_all = true
+      else
+        @mushrooms = policy_scope(Mushroom)
+        @viewing_all = false
+      end
+    else
+      @mushrooms = Mushroom.all
+    end
+
+    @mushrooms = @mushrooms
+                   .includes(:state, :genera, :species)
+                   .left_joins(:state)
+                   .where.not(collection_date: nil)
+                   .order(
+                     Arel.sql("MONTH(mushrooms.collection_date)"),
+                     Arel.sql("states.name IS NULL"),
+                     "states.name",
+                     Arel.sql("mushrooms.city IS NULL"),
+                     "mushrooms.city",
+                     "mushrooms.name"
+                   )
+                   .page(params[:page])
+                   .per(100)
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json

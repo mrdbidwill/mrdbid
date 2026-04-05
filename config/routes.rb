@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     collection do
       post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
       get 'export_all_pdf', to: 'mushrooms#export_all_pdf'
+      get 'sighting_schedule', to: 'mushrooms#sighting_schedule'
     end
   end
 

@@ -33,14 +33,11 @@
       <%= form_with url: mushrooms_path, method: :get, local: true, class: "w-full sm:max-w-sm" do %>
         <%= hidden_field_tag :q, params[:q] if params[:q].present? %>
         <label for="fungus_type_id" class="form-label">Go Direct to Fungus Type</label>
-        <div class="relative">
-          <%= select_tag :fungus_type_id,
-                         options_for_select([["All Fungus Types", ""]] + @fungus_types.map { |ft| [ft.name, ft.id] }, @selected_fungus_type_id),
-                         class: "form-input shadow-md pr-10 cursor-pointer bg-white",
-                         style: "box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 8px 18px rgba(0,0,0,0.14);",
-                         onchange: "this.form.requestSubmit()" %>
-          <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600 text-sm" aria-hidden="true">▼</span>
-        </div>
+        <%= select_tag :fungus_type_id,
+                       options_for_select([["All Fungus Types", ""]] + @fungus_types.map { |ft| [ft.name, ft.id] }, @selected_fungus_type_id),
+                       class: "form-input shadow-md cursor-pointer bg-white",
+                       style: "box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 8px 18px rgba(0,0,0,0.14);",
+                       onchange: "this.form.requestSubmit()" %>
       <% end %>
     </div>
   </div>

@@ -101,6 +101,9 @@
       <%= link_to(viewing_all ? "All Mushrooms" : "Your Mushrooms",
                   mushrooms_path,
                   class: "block px-3 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition") %>
+      <%= link_to "Fungus Sighting Schedule",
+                  sighting_schedule_mushrooms_path,
+                  class: "block px-3 py-2 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition" %>
 
       <!-- View Mode Toggle -->
       <% if viewing_all %>
