@@ -112,6 +112,8 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
   has_many :trusted_devices, dependent: :destroy
+  has_many :user_recent_observations, dependent: :destroy
+  has_many :recent_observation_mushrooms, through: :user_recent_observations, source: :mushroom
   has_many :articles, dependent: :nullify
   has_many :source_data, class_name: 'SourceData', dependent: :nullify
 

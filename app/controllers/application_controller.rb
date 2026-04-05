@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :set_view_debug_identifier, if: -> { Rails.env.development? || Rails.env.test? }  # see file name on each page
   before_action :_debug_views_reset, if: -> { Rails.env.development? || Rails.env.test? }
   before_action :check_temporary_admin_expiration, if: :user_signed_in?
+  before_action :set_recent_observations, if: :user_signed_in?
+  after_action :track_recent_observation, if: :user_signed_in?
   helper_method :rendered_views_debug
 
   include Pundit::Authorization # Updated inclusion for Pundit
@@ -190,5 +192,48 @@ class ApplicationController < ActionController::Base
   # Helper used by the layout to read the collected list at render time
   def rendered_views_debug
     Array(Thread.current[:rendered_views]).uniq
+  end
+
+  def set_recent_observations
+    @recent_observations = current_user.user_recent_observations
+                                       .recent_first
+                                       .includes(mushroom: :fungus_type)
+                                       .limit(8)
+  end
+
+  def track_recent_observation
+    return unless request.get?
+    return unless request.format.html?
+
+    mushroom_id = extract_recent_mushroom_id
+    return if mushroom_id.blank?
+
+    recent = current_user.user_recent_observations.find_or_initialize_by(mushroom_id: mushroom_id)
+    recent.last_viewed_at = Time.current
+    recent.view_count = recent.persisted? ? recent.view_count.to_i + 1 : 1
+    recent.save!
+
+    overflow_ids = current_user.user_recent_observations
+                               .recent_first
+                               .offset(10)
+                               .pluck(:id)
+    UserRecentObservation.where(id: overflow_ids).delete_all if overflow_ids.any?
+  rescue ActiveRecord::RecordNotFound, ActiveRecord::InvalidForeignKey
+    # Ignore deleted or invalid mushroom references.
+    nil
+  rescue StandardError => e
+    Rails.logger.warn("Recent observation tracking failed: #{e.class} - #{e.message}")
+  end
+
+  def extract_recent_mushroom_id
+    return @mushroom.id if defined?(@mushroom) && @mushroom.respond_to?(:id) && @mushroom.id.present?
+    return @image_mushroom.mushroom_id if defined?(@image_mushroom) && @image_mushroom.respond_to?(:mushroom_id) && @image_mushroom.mushroom_id.present?
+    return params[:mushroom_id] if params[:mushroom_id].present?
+
+    if controller_name == "mushrooms" && %w[show edit edit_characters].include?(action_name) && params[:id].present?
+      return params[:id]
+    end
+
+    nil
   end
 end

@@ -36,6 +36,9 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms
   def index
+    @fungus_types = FungusType.order(:name)
+    @selected_fungus_type_id = params[:fungus_type_id].presence
+
     if user_signed_in?
       # ============================================================================
       # EAGER LOADING - CRITICAL FOR RAILS 8 STRICT_LOADING
@@ -79,6 +82,10 @@ class MushroomsController < ApplicationController
         end
       end
 
+      if @selected_fungus_type_id.present?
+        @mushrooms = @mushrooms.where(fungus_type_id: @selected_fungus_type_id)
+      end
+
       @mushrooms = @mushrooms
                      .includes(:user, :fungus_type, :country, :state, :genera, { species: :genus },
                                :clusters, :all_groups, :projects,
@@ -108,6 +115,10 @@ class MushroomsController < ApplicationController
             )
             .distinct
         end
+      end
+
+      if @selected_fungus_type_id.present?
+        @mushrooms = @mushrooms.where(fungus_type_id: @selected_fungus_type_id)
       end
 
       @mushrooms = @mushrooms

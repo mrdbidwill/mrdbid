@@ -73,6 +73,26 @@
     <hr class="my-4 border-gray-300">
   <% end %>
 
+  <% if user_signed_in? && @recent_observations.present? %>
+    <div class="mb-4 p-3 bg-amber-50 border border-amber-300 rounded">
+      <div class="text-xs font-semibold text-amber-900 mb-2">Recent Observations</div>
+      <div class="space-y-1">
+        <% @recent_observations.each do |recent| %>
+          <% mushroom = recent.mushroom %>
+          <% next unless mushroom %>
+          <%= link_to mushroom_path(mushroom), class: "block px-2 py-1.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs transition" do %>
+            <div class="font-medium truncate"><%= mushroom.name.presence || "Unnamed ##{mushroom.id}" %></div>
+            <div class="text-xs text-amber-800">
+              <%= mushroom.fungus_type&.name || "Uncategorized" %> • <%= time_ago_in_words(recent.last_viewed_at) %> ago
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <hr class="my-4 border-gray-300">
+  <% end %>
+
   <!-- Navigation Links -->
   <nav class="space-y-1">
     <% if user_signed_in? %>

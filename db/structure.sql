@@ -1134,6 +1134,26 @@ CREATE TABLE `trusted_devices` (
   CONSTRAINT `fk_rails_96c1dacf00` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_recent_observations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_recent_observations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `mushroom_id` bigint NOT NULL,
+  `last_viewed_at` datetime(6) NOT NULL,
+  `view_count` int NOT NULL DEFAULT '1',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_recent_obs_on_user_and_mushroom` (`user_id`,`mushroom_id`),
+  KEY `index_user_recent_observations_on_user_id` (`user_id`),
+  KEY `index_user_recent_observations_on_mushroom_id` (`mushroom_id`),
+  KEY `index_recent_obs_on_user_and_last_viewed` (`user_id`,`last_viewed_at`),
+  CONSTRAINT `fk_rails_963d16e603` FOREIGN KEY (`mushroom_id`) REFERENCES `mushrooms` (`id`),
+  CONSTRAINT `fk_rails_bc3ead7937` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -1227,6 +1247,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260405104500'),
 ('20260320150000'),
 ('20260320120000'),
 ('20260319160000'),
@@ -1328,4 +1349,3 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20250814000002'),
 ('20250814000001'),
 ('20250813000001');
-

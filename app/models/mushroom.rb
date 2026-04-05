@@ -43,6 +43,7 @@ class Mushroom < ApplicationRecord
 
   has_many :mushroom_comparisons, dependent: :destroy
   has_many :compared_mushrooms, through: :mushroom_comparisons
+  has_many :user_recent_observations, dependent: :destroy
 
   # Scopes
   scope :with_minimum_characters, ->(min_count = 10) {
