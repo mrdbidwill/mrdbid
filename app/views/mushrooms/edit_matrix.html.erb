@@ -1,0 +1,325 @@
+<% content_for :title, "Edit #{@mushroom.name}" %>
+<% content_for :hide_sidebar, "1" %>
+
+<% core_only = @core_only %>
+
+<% image_preview_urls = {} %>
+<% image_view_paths = {} %>
+<% image_edit_paths = {} %>
+<% @images.each do |image| %>
+  <% image_preview_urls[image.id] = url_for(
+       image.image_file.variant(
+         resize_to_limit: [900, 900],
+         saver: { strip: true, quality: 74, optimize_coding: true }
+       ).processed
+     ) %>
+  <% image_view_paths[image.id] = image_mushroom_path(image) %>
+  <% image_edit_paths[image.id] = edit_mushroom_image_mushroom_path(@mushroom, image, return_to: request.fullpath) %>
+<% end %>
+
+<div class="w-full">
+  <div class="mb-4">
+    <%= link_to mushroom_path(@mushroom), class: "inline-flex items-center gap-2 text-blue-700 hover:underline font-medium" do %>
+      <span>← Return to Mushroom</span>
+    <% end %>
+  </div>
+
+  <div class="mb-5">
+    <h1 class="text-3xl font-bold text-gray-900"><%= @mushroom.name %></h1>
+    <p class="text-sm text-gray-600 mt-1">Desktop/Tablet Edit View</p>
+  </div>
+
+  <div class="border border-gray-300 rounded-lg p-3 bg-white mb-4">
+    <div class="flex flex-wrap gap-2">
+      <% @observation_tabs.each do |tab| %>
+        <%= link_to tab[:label],
+                    edit_matrix_mushroom_path(@mushroom, observation_tab: tab[:key], core_only: core_only),
+                    class: "px-3 py-1.5 rounded-md text-sm font-medium #{tab[:key] == @active_tab_key ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}" %>
+      <% end %>
+    </div>
+    <p class="text-xs text-gray-600 mt-2">
+      Observation tab controls which method's characters are shown in each row.
+    </p>
+  </div>
+
+  <div class="border border-gray-300 rounded-lg p-3 bg-white mb-5">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-sm font-semibold text-gray-800">Character set:</span>
+      <div class="inline-flex rounded-md border border-gray-300 overflow-hidden">
+        <%= link_to "Core (Default)",
+                    edit_matrix_mushroom_path(@mushroom, observation_tab: @active_tab_key, core_only: true),
+                    class: "px-3 py-1.5 text-sm font-medium #{ core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }" %>
+        <%= link_to "All",
+                    edit_matrix_mushroom_path(@mushroom, observation_tab: @active_tab_key, core_only: false),
+                    class: "px-3 py-1.5 text-sm font-medium #{ !core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }" %>
+      </div>
+      <% if core_only && @core_fallback %>
+        <span class="text-xs text-amber-700 bg-amber-50 border border-amber-300 rounded px-2 py-1">
+          No core characters found for this mushroom type. Showing all.
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-5 p-3 bg-blue-50 border border-blue-200 rounded-md">
+    <p class="text-sm text-blue-900">
+      Choose from your uploaded images in the center column.
+      If you need more images, use
+      <%= link_to "Upload Image", new_mushroom_image_mushroom_path(@mushroom), class: "font-semibold underline hover:no-underline" %>.
+    </p>
+  </div>
+
+  <div class="space-y-5">
+    <% @matrix_rows.each do |row| %>
+      <% entries = row[:entries] %>
+      <% split_index = (entries.length / 2.0).ceil %>
+      <% left_entries = entries.first(split_index) %>
+      <% right_entries = entries.drop(split_index) %>
+      <% row_images = if row[:other_row]
+                        @images
+                      else
+                        part_images = @images_by_part_id[row[:part_ids].first] || []
+                        part_images.presence || @images
+                      end %>
+      <% initial_image = row_images.first %>
+      <% row_storage_key = "matrix-image-#{@mushroom.id}-#{@active_tab_key}-#{row[:key]}" %>
+      <% row_redirect_path = edit_matrix_mushroom_path(@mushroom, observation_tab: @active_tab_key, core_only: core_only, anchor: "row-#{row[:key]}") %>
+
+      <section id="row-<%= row[:key] %>" class="border border-gray-300 rounded-xl p-4 bg-gray-50">
+        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900"><%= row[:title] %></h2>
+            <p class="text-xs text-gray-600"><%= row[:subtitle] %></p>
+          </div>
+          <span class="inline-flex items-center rounded-full bg-gray-200 text-gray-800 px-3 py-1 text-xs font-semibold">
+            <%= entries.count %> character<%= entries.count == 1 ? "" : "s" %>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="space-y-2">
+            <% if left_entries.empty? %>
+              <p class="text-sm text-gray-500">No characters for this row in the current tab.</p>
+            <% else %>
+              <% last_group = nil %>
+              <% left_entries.each do |entry| %>
+                <% group_label = entry[:group_label].presence %>
+                <% if group_label && group_label != last_group %>
+                  <div class="text-xs font-semibold uppercase tracking-wide text-indigo-700 border-b border-indigo-200 pb-1 mt-2">
+                    <%= group_label %>
+                  </div>
+                <% end %>
+                <% last_group = group_label || last_group %>
+                <%= render partial: "mushrooms/edit_matrix_character_card",
+                           locals: {
+                             mushroom: @mushroom,
+                             entry: entry,
+                             entered_row: @entered_character_rows[entry[:character].id],
+                             redirect_path: row_redirect_path
+                           } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="border border-blue-200 rounded-lg p-3 bg-white"
+               data-matrix-image-panel
+               data-storage-key="<%= row_storage_key %>">
+            <h3 class="text-sm font-semibold text-blue-900 mb-2">Selected Image</h3>
+
+            <% if row_images.any? %>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Choose from uploaded images</label>
+              <select class="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+                      data-role="select">
+                <option value="">No image selected</option>
+                <% row_images.each_with_index do |image, index| %>
+                  <option value="<%= image.id %>"
+                          data-preview-url="<%= image_preview_urls[image.id] %>"
+                          data-view-url="<%= image_view_paths[image.id] %>"
+                          data-edit-url="<%= image_edit_paths[image.id] %>"
+                          data-label="<%= (image.image_name.presence || "Image ##{image.id}") %>"
+                          <%= "selected" if index.zero? %>>
+                    <%= image.image_name.presence || "Image ##{image.id}" %>
+                    <% if image.part&.name.present? %>
+                      (<%= image.part.name %>)
+                    <% end %>
+                  </option>
+                <% end %>
+              </select>
+
+              <div class="mt-3">
+                <% if initial_image.present? %>
+                  <%= image_tag image_preview_urls[initial_image.id],
+                                data: { role: "preview-image" },
+                                class: "w-full h-56 object-contain rounded border border-gray-200 bg-gray-100",
+                                loading: "eager",
+                                decoding: "async",
+                                fetchpriority: "high",
+                                alt: initial_image.image_name.presence || "Selected mushroom image" %>
+                <% else %>
+                  <div data-role="preview-image"
+                       class="w-full h-56 rounded border border-dashed border-gray-300 bg-gray-100 flex items-center justify-center text-sm text-gray-500">
+                    No image selected
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <%= link_to "View Selected",
+                            initial_image.present? ? image_view_paths[initial_image.id] : "#",
+                            class: "inline-flex items-center px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium",
+                            data: { role: "view-link" } %>
+                <%= link_to "Edit Selected",
+                            initial_image.present? ? image_edit_paths[initial_image.id] : "#",
+                            class: "inline-flex items-center px-3 py-1.5 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium",
+                            data: { role: "edit-link" } %>
+                <button type="button"
+                        class="inline-flex items-center px-3 py-1.5 rounded bg-gray-300 hover:bg-gray-400 text-gray-900 text-xs font-medium"
+                        data-role="clear-button">
+                  Remove from This Row
+                </button>
+              </div>
+            <% else %>
+              <p class="text-sm text-gray-600 mb-2">No uploaded images available for this row yet.</p>
+              <%= link_to "Upload Image",
+                          new_mushroom_image_mushroom_path(@mushroom),
+                          class: "inline-flex items-center px-3 py-1.5 rounded bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium" %>
+            <% end %>
+          </div>
+
+          <div class="space-y-2">
+            <% if right_entries.empty? %>
+              <p class="text-sm text-gray-500">No additional characters in this row.</p>
+            <% else %>
+              <% last_group = nil %>
+              <% right_entries.each do |entry| %>
+                <% group_label = entry[:group_label].presence %>
+                <% if group_label && group_label != last_group %>
+                  <div class="text-xs font-semibold uppercase tracking-wide text-indigo-700 border-b border-indigo-200 pb-1 mt-2">
+                    <%= group_label %>
+                  </div>
+                <% end %>
+                <% last_group = group_label || last_group %>
+                <%= render partial: "mushrooms/edit_matrix_character_card",
+                           locals: {
+                             mushroom: @mushroom,
+                             entry: entry,
+                             entered_row: @entered_character_rows[entry[:character].id],
+                             redirect_path: row_redirect_path
+                           } %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function redirectMatrixEditOnSmallScreens() {
+    if (!window.matchMedia || !window.matchMedia("(max-width: 767px)").matches) {
+      return false;
+    }
+
+    window.location.replace("<%= edit_mushroom_path(@mushroom, core_only: core_only) %>");
+    return true;
+  }
+
+  function applyMatrixImageSelection(panel, selectedId) {
+    const select = panel.querySelector('[data-role="select"]');
+    const preview = panel.querySelector('[data-role="preview-image"]');
+    const viewLink = panel.querySelector('[data-role="view-link"]');
+    const editLink = panel.querySelector('[data-role="edit-link"]');
+    if (!select || !preview || !viewLink || !editLink) return;
+
+    const selectedOption = Array.from(select.options).find((option) => option.value === selectedId);
+
+    if (!selectedOption || !selectedOption.dataset.previewUrl) {
+      if (preview.tagName === "IMG") {
+        const placeholder = document.createElement("div");
+        placeholder.dataset.role = "preview-image";
+        placeholder.className = "w-full h-56 rounded border border-dashed border-gray-300 bg-gray-100 flex items-center justify-center text-sm text-gray-500";
+        placeholder.textContent = "No image selected";
+        preview.replaceWith(placeholder);
+      } else {
+        preview.textContent = "No image selected";
+      }
+      viewLink.href = "#";
+      editLink.href = "#";
+      return;
+    }
+
+    if (preview.tagName === "IMG") {
+      preview.src = selectedOption.dataset.previewUrl;
+      preview.alt = selectedOption.dataset.label || "Selected mushroom image";
+    } else {
+      preview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = selectedOption.dataset.previewUrl;
+      img.alt = selectedOption.dataset.label || "Selected mushroom image";
+      img.className = "w-full h-56 object-contain rounded border border-gray-200 bg-gray-100";
+      img.loading = "eager";
+      img.decoding = "async";
+      preview.replaceWith(img);
+      img.dataset.role = "preview-image";
+    }
+
+    viewLink.href = selectedOption.dataset.viewUrl;
+    editLink.href = selectedOption.dataset.editUrl;
+  }
+
+  function initializeMatrixImagePanels() {
+    document.querySelectorAll("[data-matrix-image-panel]").forEach((panel) => {
+      const select = panel.querySelector('[data-role="select"]');
+      const clearButton = panel.querySelector('[data-role="clear-button"]');
+      if (!select) return;
+
+      const storageKey = panel.dataset.storageKey;
+      let selectedId = "";
+      try {
+        selectedId = window.localStorage.getItem(storageKey) || "";
+      } catch (_) {
+        selectedId = "";
+      }
+
+      if (selectedId && Array.from(select.options).some((option) => option.value === selectedId)) {
+        select.value = selectedId;
+      } else if (!select.value) {
+        const firstImageOption = Array.from(select.options).find((option) => option.value);
+        if (firstImageOption) select.value = firstImageOption.value;
+      }
+
+      applyMatrixImageSelection(panel, select.value);
+
+      select.addEventListener("change", () => {
+        try {
+          if (select.value) {
+            window.localStorage.setItem(storageKey, select.value);
+          } else {
+            window.localStorage.removeItem(storageKey);
+          }
+        } catch (_) {
+          // Ignore storage failures.
+        }
+        applyMatrixImageSelection(panel, select.value);
+      });
+
+      if (clearButton) {
+        clearButton.addEventListener("click", () => {
+          select.value = "";
+          try {
+            window.localStorage.removeItem(storageKey);
+          } catch (_) {
+            // Ignore storage failures.
+          }
+          applyMatrixImageSelection(panel, "");
+        });
+      }
+    });
+  }
+
+  document.addEventListener("turbo:load", () => {
+    if (redirectMatrixEditOnSmallScreens()) return;
+    initializeMatrixImagePanels();
+  });
+</script>

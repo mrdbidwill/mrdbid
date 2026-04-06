@@ -131,6 +131,26 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
+  test "authenticated user should get desktop matrix edit view" do
+    get edit_matrix_mushroom_path(@mushroom), headers: { "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4)" }
+    assert_response :success
+    assert_select "a[href='#{mushroom_path(@mushroom)}']", text: /Return to Mushroom/
+  end
+
+  test "phone user-agent should redirect matrix edit to legacy edit" do
+    get edit_matrix_mushroom_path(@mushroom),
+        headers: { "User-Agent" => "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36" }
+    assert_redirected_to edit_mushroom_path(@mushroom)
+  end
+
+  test "public cannot access matrix edit without authentication" do
+    sign_out @user
+
+    get edit_matrix_mushroom_path(@mushroom)
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
   test "public cannot create mushrooms without authentication" do
     sign_out @user
 

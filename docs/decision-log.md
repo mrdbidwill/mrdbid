@@ -12,6 +12,18 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-04-06
+- Decision: Add a separate mushroom matrix edit route (`/mushrooms/:id/edit_matrix`) for desktop/tablet use, keep legacy edit active, and redirect phone user agents from matrix edit to legacy edit.
+- Rationale: The matrix layout (tabs + six part rows + center image selection) is optimized for larger screens and would degrade usability on phones; preserving legacy edit avoids risky replacement while rollout is validated.
+- Consequences: Primary "Edit - Add Characters" navigation now targets matrix edit, while the existing `edit` view remains available and unchanged for small screens; matrix page intentionally hides the global sidebar and shows a focused "Return to Mushroom" link.
+- Alternatives Considered: Replace legacy edit entirely; rejected to reduce migration risk and keep a stable fallback for small devices.
+
+- Date: 2026-04-06
+- Decision: Matrix edit center column uses only already-uploaded images, with per-row image selection and `return_to` support in image edit/delete flows.
+- Rationale: Character entry should stay focused in one workspace while still allowing users to switch among existing images by part/observation tab context without forcing new uploads inside the matrix page.
+- Consequences: Users can select different existing images per row/tab context, and image editing operations can return directly to matrix edit state.
+- Alternatives Considered: Add direct upload controls to matrix edit; rejected to keep matrix interactions focused and reduce complexity in the first release.
+
 - Date: 2026-04-02
 - Decision: Add `public/ads.txt` with the Google seller declaration for `pub-8323362126637830`.
 - Rationale: AdSense warned about missing ads.txt and serving can be limited without publisher authorization file at the site root.

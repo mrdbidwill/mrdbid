@@ -50,8 +50,8 @@
       <div class="space-y-1">
         <!-- Edit/View toggle -->
         <% if current_page?(controller: 'mushrooms', action: 'show', id: @mushroom.id) %>
-          <%= link_to "Edit - Add Characters", edit_mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-green-600 hover:bg-green-700 text-white font-medium transition text-center" %>
-        <% elsif current_page?(controller: 'mushrooms', action: 'edit', id: @mushroom.id) %>
+          <%= link_to "Edit - Add Characters", edit_matrix_mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-green-600 hover:bg-green-700 text-white font-medium transition text-center" %>
+        <% elsif current_page?(controller: 'mushrooms', action: 'edit', id: @mushroom.id) || current_page?(controller: 'mushrooms', action: 'edit_matrix', id: @mushroom.id) %>
           <%= link_to "View Mushroom", mushroom_path(@mushroom), class: "block px-2 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-700 text-white font-medium transition text-center" %>
         <% end %>
 

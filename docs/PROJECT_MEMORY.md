@@ -23,6 +23,8 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Memory ack required:** Run `script/ack_project_memory.sh` before any changes, then use `bin/with_project_memory <command>` for guarded commands.
 - **Core sequencing model:** Core character ordering is per fungus type via `core_character_sequences` (not `mr_characters.core_sequence`).
 - **Core entry UX:** Core mode routes to one-character-at-a-time sequential entry with `Save Character`, `Save & Next`, `Back`, and `Done`.
+- **Matrix edit UX (2026-04-06):** `edit_matrix_mushroom_path` is the desktop/tablet mushroom editor (no global sidebar, includes `Return to Mushroom` link); phone user agents are redirected to legacy `edit_mushroom_path`.
+- **Matrix image selection (2026-04-06):** Matrix edit center-column images come from already-uploaded mushroom images only; image edit/delete flows may include `return_to` so users return to matrix context after image changes.
 - **Public read boundary:** Unauthenticated users can read all mushroom observations and image show pages. Mutation endpoints remain authenticated and ownership-protected.
 - **AdSense gating:** AdSense scripts/slots may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true`; client from `ADSENSE_CLIENT_ID`; manual units require `ADSENSE_SLOT_ID`).
 - **AdSense production status (2026-04-02):** Manual slot rendering is active in production with `ADSENSE_ENABLED=true` and a configured `ADSENSE_SLOT_ID`.

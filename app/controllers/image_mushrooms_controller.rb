@@ -94,7 +94,7 @@ class ImageMushroomsController < ApplicationController
     begin
       if @image_mushroom.update(image_mushroom_params)
         mushroom = Mushroom.find(@image_mushroom.mushroom_id)
-        redirect_to edit_mushroom_path(mushroom), notice: 'Image was successfully updated.'
+        redirect_to(safe_return_to_path || edit_mushroom_path(mushroom), notice: 'Image was successfully updated.')
       else
         @mushrooms = current_user&.elevated_admin? ? Mushroom.all : Mushroom.where(user_id: current_user.id)
         @parts = Part.all
@@ -117,7 +117,7 @@ class ImageMushroomsController < ApplicationController
     parent_id = @image_mushroom.mushroom_id
     @image_mushroom.destroy
 
-    redirect_path = parent_id ? mushroom_path(parent_id) : image_mushrooms_path
+    redirect_path = safe_return_to_path || (parent_id ? mushroom_path(parent_id) : image_mushrooms_path)
     redirect_to redirect_path, notice: 'Image was successfully deleted.', status: :see_other
   end
 
@@ -150,5 +150,14 @@ class ImageMushroomsController < ApplicationController
       :lens_id,
       :date_taken
     )
+  end
+
+  def safe_return_to_path
+    candidate = params[:return_to].presence
+    return nil unless candidate.is_a?(String)
+    return nil unless candidate.start_with?("/")
+    return nil if candidate.start_with?("//")
+
+    candidate
   end
 end

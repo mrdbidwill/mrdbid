@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
     member do
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
+      get 'edit_matrix', to: 'mushrooms#edit_matrix', as: :edit_matrix
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
     resource :core_character_entry, only: [:show]

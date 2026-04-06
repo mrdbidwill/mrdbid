@@ -1,0 +1,85 @@
+<% character = entry[:character] %>
+<% return unless character %>
+
+<% current_value = entered_row&.character_value %>
+<% is_color = (character.display_option&.name&.downcase == "color") || character.display_option_id == 6 %>
+
+<div class="border border-gray-300 rounded-md p-3 bg-white shadow-sm">
+  <div class="flex items-start justify-between gap-2">
+    <h4 class="text-sm font-semibold text-gray-900 break-words">
+      <%= character.name.to_s.tr("_", " ") %>
+      <% if respond_to?(:admin_user?) && admin_user? %>
+        <%= link_to edit_admin_mr_character_path(character, return_to: request.fullpath),
+                    class: "inline-block ml-1 text-blue-600 hover:text-blue-800 opacity-70 hover:opacity-100 transition",
+                    title: "Edit character definition (Admin)" do %>
+          <span class="text-xs">⚙️</span>
+        <% end %>
+      <% end %>
+    </h4>
+    <span class="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+      <%= entered_row.present? ? "Entered" : "Not Entered" %>
+    </span>
+  </div>
+
+  <% if character.description.present? %>
+    <p class="mt-1 text-xs text-gray-600"><%= truncate(character.description, length: 110) %></p>
+  <% end %>
+
+  <% if entered_row.present? %>
+    <div class="mt-2">
+      <% if is_color %>
+        <% colors = entered_row.ordered_colors %>
+        <% if colors.any? %>
+          <div class="flex flex-wrap gap-2">
+            <% colors.each do |color| %>
+              <span class="inline-flex items-center gap-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1">
+                <% if color.is_simplified? %>
+                  <span class="w-3 h-3 rounded border border-gray-300 inline-block" style="background-color: <%= color.hex %>"></span>
+                <% else %>
+                  <%= image_tag "AMS_colors/banner_50x50/banner_#{color.id}.jpg",
+                                alt: color.common_name,
+                                class: "w-3 h-3 rounded border border-gray-300" %>
+                <% end %>
+                <span><%= color.common_name %></span>
+              </span>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-xs text-gray-600">No colors selected.</p>
+        <% end %>
+      <% else %>
+        <% key = display_option_key(character) %>
+        <% display_value = current_value %>
+        <% if key == "radio" || key == "drop-down" || key == "9" || key == "10" %>
+          <% lookup_item = LookupItem.find_by(id: current_value) %>
+          <% display_value = lookup_item&.name || current_value %>
+        <% end %>
+        <p class="text-xs text-gray-600">
+          Current value:
+          <span class="font-medium text-gray-900"><%= display_value.presence || "None" %></span>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mt-3">
+    <% if is_color %>
+      <%= render "shared/color_picker_modal",
+                 character: character,
+                 mushroom_id: mushroom.id,
+                 current_color_id: current_value,
+                 redirect_path: redirect_path %>
+    <% else %>
+      <%= form_with url: mr_character_mushrooms_path, method: :post, data: { turbo: true }, html: { class: "space-y-2" } do |f| %>
+        <%= hidden_field_tag :mushroom_id, mushroom.id %>
+        <%= hidden_field_tag :mr_character_id, character.id %>
+        <%= hidden_field_tag :redirect_to, redirect_path %>
+
+        <%= render partial: "mushrooms/character_input", locals: { f: f, character: character, current_value: current_value } %>
+
+        <%= f.submit entered_row.present? ? "Update" : "Add",
+                     class: "rounded px-3 py-1.5 text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium transition" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

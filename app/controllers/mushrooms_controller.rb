@@ -25,8 +25,11 @@ class MushroomsController < ApplicationController
   # Pundit setup
   include Pundit::Authorization
 
+  PRIMARY_EDIT_PART_IDS = [3, 4, 5, 6, 8].freeze
+  PRIMARY_EDIT_OBSERVATION_METHOD_IDS = [1, 4, 8, 3].freeze
+
   before_action :authenticate_user!, except: [:index, :show, :sighting_schedule] # Allow public read access for index/show/schedule
-  before_action :set_mushroom, only: %i[show edit update destroy edit_characters clone_characters]
+  before_action :set_mushroom, only: %i[show edit edit_matrix update destroy edit_characters clone_characters]
   before_action :authorize_mushroom, except: %i[index show sighting_schedule new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
@@ -218,26 +221,68 @@ class MushroomsController < ApplicationController
 
   # GET /mushrooms/1/edit
   def edit
-    # set_mushroom before_action already loads the mushroom with basic associations
-    # authorize_mushroom before_action already checks authorization
-    # Reload with additional associations needed for edit view
-    # CRITICAL: species must include genus association for ranked_identifications display
-    @mushroom = Mushroom
-                  .includes(:genera, { species: :genus }, :trees, :plants, :fungus_type,
-                            :clusters, :all_groups, :projects,
-                            :cluster_mushrooms, :all_group_mushrooms, :mushroom_projects,
-                            image_mushrooms: [:part, { image_file_attachment: :blob }],
-                            mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
-                  .find(params[:id])
-
-    # Check if fungus_type exists (data integrity check)
-    if @mushroom.fungus_type.nil?
-      Rails.logger.error("Mushroom #{@mushroom.id} has invalid fungus_type_id: #{@mushroom.fungus_type_id}")
-      redirect_to mushrooms_path, alert: "Cannot edit mushroom: invalid fungus type. Please contact an administrator."
-      return
-    end
+    @mushroom = reload_mushroom_for_edit!(params[:id])
+    return if performed?
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
+
+  # GET /mushrooms/1/edit_matrix
+  # New desktop/tablet-focused edit UI. Phones are redirected to the legacy edit view.
+  def edit_matrix
+    if small_phone_user_agent?
+      legacy_params = {}
+      legacy_params[:core_only] = params[:core_only] if params.key?(:core_only)
+      redirect_to edit_mushroom_path(@mushroom, legacy_params), status: :see_other
+      return
+    end
+
+    @mushroom = reload_mushroom_for_edit!(params[:id])
+    return if performed?
+
+    @core_only = params[:core_only].to_s != "false"
+    @part_name_by_id = Part.order(:name).pluck(:id, :name).to_h
+    @observation_method_name_by_id = ObservationMethod.order(:name).pluck(:id, :name).to_h
+
+    @observation_tabs = build_edit_matrix_observation_tabs
+    @active_tab_key = resolve_edit_matrix_tab_key
+    @active_tab = @observation_tabs.find { |tab| tab[:key] == @active_tab_key } || @observation_tabs.first
+
+    characters = filtered_matrix_characters
+    @core_fallback = false
+    if @core_only
+      core_chars = characters.select(&:core?)
+      if core_chars.any?
+        characters = MrCharacter.sort_for_core_display(
+          core_chars,
+          keep_part_order: false,
+          fungus_type_id: @mushroom.fungus_type_id
+        )
+      else
+        @core_fallback = true
+      end
+    end
+
+    @part_rows = build_edit_matrix_part_rows
+    @matrix_rows = @part_rows.map do |row|
+      {
+        key: row[:key],
+        title: row[:title],
+        subtitle: row[:subtitle],
+        part_ids: row[:part_ids],
+        other_row: row[:other_row],
+        entries: build_matrix_entries_for_row(characters, row, @active_tab)
+      }
+    end
+
+    @entered_character_rows = @mushroom.mr_character_mushrooms
+                                      .includes(mr_character: [:part, :display_option, :source_data])
+                                      .index_by(&:mr_character_id)
+
+    @images = @mushroom.image_mushrooms.select { |image| image.image_file.attached? }
+    @images_by_part_id = @images.group_by(&:part_id)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mushrooms_path, alert: "Mushroom not found."
   end
 
   # GET /mushrooms/1/edit_characters?observation_method_id=X&part_id=Y
@@ -408,5 +453,132 @@ class MushroomsController < ApplicationController
   # ============================================================================
   def authorize_mushroom
     authorize @mushroom
+  end
+
+  def reload_mushroom_for_edit!(mushroom_id)
+    # CRITICAL: species must include genus association for ranked_identifications display
+    mushroom = Mushroom
+               .includes(:genera, { species: :genus }, :trees, :plants, :fungus_type,
+                         :clusters, :all_groups, :projects,
+                         :cluster_mushrooms, :all_group_mushrooms, :mushroom_projects,
+                         image_mushrooms: [:part, { image_file_attachment: :blob }],
+                         mr_character_mushrooms: { mr_character: [:part, :display_option, :source_data] })
+               .find(mushroom_id)
+
+    if mushroom.fungus_type.nil?
+      Rails.logger.error("Mushroom #{mushroom.id} has invalid fungus_type_id: #{mushroom.fungus_type_id}")
+      redirect_to mushrooms_path, alert: "Cannot edit mushroom: invalid fungus type. Please contact an administrator."
+      return
+    end
+
+    mushroom
+  end
+
+  def filtered_matrix_characters
+    base_chars = if @mushroom.fungus_type_id.present?
+                   MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id)
+                 else
+                   MrCharacter.cached_all_with_associations
+                 end
+
+    base_chars.reject do |character|
+      do_not_display = character.display_option_id == 1 || character.display_option&.name&.downcase == "do not display"
+      do_not_display || character.part_id == 1 || character.observation_method_id == 9
+    end
+  end
+
+  def build_edit_matrix_observation_tabs
+    tabs = [
+      { key: "macro", label: @observation_method_name_by_id[1] || "Macro", method_ids: [1], other_tab: false },
+      { key: "micro", label: @observation_method_name_by_id[4] || "Micro", method_ids: [4], other_tab: false },
+      { key: "dna", label: @observation_method_name_by_id[8] || "DNA", method_ids: [8], other_tab: false },
+      { key: "chemical", label: @observation_method_name_by_id[3] || "Chemical", method_ids: [3], other_tab: false }
+    ]
+
+    tabs.select! { |tab| tab[:method_ids].all? { |method_id| @observation_method_name_by_id.key?(method_id) } }
+
+    other_ids = @observation_method_name_by_id
+                  .keys
+                  .reject { |method_id| PRIMARY_EDIT_OBSERVATION_METHOD_IDS.include?(method_id) || method_id == 9 }
+                  .sort_by { |method_id| @observation_method_name_by_id[method_id].to_s.downcase }
+
+    tabs << { key: "other_methods", label: "All Others", method_ids: other_ids, other_tab: true }
+    tabs
+  end
+
+  def resolve_edit_matrix_tab_key
+    requested = params[:observation_tab].to_s
+    valid_keys = @observation_tabs.map { |tab| tab[:key] }
+    valid_keys.include?(requested) ? requested : @observation_tabs.first[:key]
+  end
+
+  def build_edit_matrix_part_rows
+    rows = [
+      { key: "cap", title: @part_name_by_id[3] || "Cap", subtitle: "Part ID 3", part_ids: [3], other_row: false },
+      { key: "gills", title: @part_name_by_id[4] || "Gills", subtitle: "Part ID 4", part_ids: [4], other_row: false },
+      { key: "stem", title: @part_name_by_id[5] || "Stem", subtitle: "Part ID 5", part_ids: [5], other_row: false },
+      { key: "veil", title: @part_name_by_id[6] || "Veil", subtitle: "Part ID 6", part_ids: [6], other_row: false },
+      { key: "spores", title: @part_name_by_id[8] || "Spores", subtitle: "Part ID 8", part_ids: [8], other_row: false }
+    ]
+
+    rows.select! { |row| row[:part_ids].all? { |part_id| @part_name_by_id.key?(part_id) } }
+
+    other_ids = @part_name_by_id
+                  .keys
+                  .reject { |part_id| PRIMARY_EDIT_PART_IDS.include?(part_id) || part_id == 1 }
+                  .sort_by { |part_id| @part_name_by_id[part_id].to_s.downcase }
+
+    rows << {
+      key: "other_parts",
+      title: "All Other Parts",
+      subtitle: "Grouped by remaining part/method",
+      part_ids: other_ids,
+      other_row: true
+    }
+
+    rows
+  end
+
+  def build_matrix_entries_for_row(characters, row, active_tab)
+    filtered = characters.select do |character|
+      row[:part_ids].include?(character.part_id) && active_tab[:method_ids].include?(character.observation_method_id)
+    end
+
+    filtered.map do |character|
+      {
+        character: character,
+        group_label: matrix_group_label(row, active_tab, character)
+      }
+    end.sort_by do |entry|
+      [
+        entry[:group_label].to_s.downcase,
+        entry[:character].name.to_s.downcase
+      ]
+    end
+  end
+
+  def matrix_group_label(row, active_tab, character)
+    return nil unless row[:other_row] || active_tab[:other_tab]
+
+    part_name = @part_name_by_id[character.part_id] || "Unknown Part"
+    method_name = @observation_method_name_by_id[character.observation_method_id] || "Unknown Method"
+
+    if row[:other_row] && active_tab[:other_tab]
+      "#{part_name} / #{method_name}"
+    elsif row[:other_row]
+      part_name
+    else
+      method_name
+    end
+  end
+
+  def small_phone_user_agent?
+    ua = request.user_agent.to_s.downcase
+    return false if ua.blank?
+
+    mobile = ua.match?(/iphone|ipod|android.*mobile|windows phone|blackberry|opera mini|mobile/)
+    tablet = ua.match?(/ipad|tablet|kindle|silk|android(?!.*mobile)/)
+
+    mobile && !tablet
   end
 end
