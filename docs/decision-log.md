@@ -12,6 +12,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-04-07
+- Decision: Add owner-only quick-edit controls for basic mushroom fields inside matrix edit, and support safe `return_to` redirects on mushroom update.
+- Rationale: Matrix edit needed one-click updates for core specimen metadata without leaving the matrix workflow, while preserving authorization boundaries and restoring user context after save.
+- Consequences: Owners can directly edit `name`, `fungus_type`, `collection_date`, `description`, `comments`, and `personal_notes` from matrix edit; non-owners (including admins viewing other users' mushrooms) see read-only values. `MushroomsController#update` now redirects to validated local `return_to` paths for both success and validation errors.
+- Alternatives Considered: Send users to legacy full edit form for basic fields; rejected because it adds extra navigation steps and loses row/tab context.
+
 - Date: 2026-04-06
 - Decision: Add a separate mushroom matrix edit route (`/mushrooms/:id/edit_matrix`) for desktop/tablet use, keep legacy edit active, and redirect phone user agents from matrix edit to legacy edit.
 - Rationale: The matrix layout (tabs + six part rows + center image selection) is optimized for larger screens and would degrade usability on phones; preserving legacy edit avoids risky replacement while rollout is validated.
