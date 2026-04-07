@@ -64,6 +64,31 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Date.today, @mushroom.collection_date
   end
 
+  test "should redirect back to return_to after successful update" do
+    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", core_only: true, anchor: "basic-info")
+
+    patch mushroom_path(@mushroom), params: {
+      mushroom: { name: "Updated From Matrix" },
+      return_to: return_to
+    }
+
+    assert_redirected_to return_to
+    @mushroom.reload
+    assert_equal "Updated From Matrix", @mushroom.name
+  end
+
+  test "should redirect back to return_to with alert when update fails" do
+    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", core_only: true, anchor: "basic-info")
+
+    patch mushroom_path(@mushroom), params: {
+      mushroom: { name: "" },
+      return_to: return_to
+    }
+
+    assert_redirected_to return_to
+    assert_match(/Name/, flash[:alert].to_s)
+  end
+
   test "should destroy mushroom and associated image_mushrooms" do
     associated_image_mushrooms = @mushroom.image_mushrooms.count
     assert_difference("Mushroom.where(user_id: @user.id).count", -1) do
@@ -135,6 +160,16 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     get edit_matrix_mushroom_path(@mushroom), headers: { "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4)" }
     assert_response :success
     assert_select "a[href='#{mushroom_path(@mushroom)}']", text: /Return to Mushroom/
+    assert_match "Owner Quick Edit", response.body
+  end
+
+  test "matrix edit hides owner quick edit for admin viewing another users mushroom" do
+    sign_out @user
+    sign_in users(:three)
+
+    get edit_matrix_mushroom_path(mushrooms(:two)), headers: { "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4)" }
+    assert_response :success
+    assert_no_match "Owner Quick Edit", response.body
   end
 
   test "phone user-agent should redirect matrix edit to legacy edit" do

@@ -281,6 +281,9 @@ class MushroomsController < ApplicationController
 
     @images = @mushroom.image_mushrooms.select { |image| image.image_file.attached? }
     @images_by_part_id = @images.group_by(&:part_id)
+    @owner_can_quick_edit_basic = user_signed_in? && current_user.id == @mushroom.user_id
+    @editing_basic_field = params[:edit_basic_field].to_s
+    @fungus_types = FungusType.order(:name) if @owner_can_quick_edit_basic
   rescue ActiveRecord::RecordNotFound
     redirect_to mushrooms_path, alert: "Mushroom not found."
   end
@@ -326,6 +329,8 @@ class MushroomsController < ApplicationController
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
   def update
+    return_to_path = safe_return_to_path
+
     result = Mushrooms::Updater.call(
       user: current_user,
       mushroom: @mushroom,
@@ -333,8 +338,13 @@ class MushroomsController < ApplicationController
     )
 
     if result.success?
-      redirect_to result.data, notice: "Mushroom was successfully updated.", status: :see_other
+      redirect_to(return_to_path || result.data, notice: "Mushroom was successfully updated.", status: :see_other)
     else
+      if return_to_path
+        redirect_to(return_to_path, alert: result.error, status: :see_other)
+        return
+      end
+
       # Reload with eager loading for edit form associations
       @mushroom = Mushroom.includes(
         :image_mushrooms,
@@ -453,6 +463,15 @@ class MushroomsController < ApplicationController
   # ============================================================================
   def authorize_mushroom
     authorize @mushroom
+  end
+
+  def safe_return_to_path
+    candidate = params[:return_to].presence
+    return nil unless candidate.is_a?(String)
+    return nil unless candidate.start_with?("/")
+    return nil if candidate.start_with?("//")
+
+    candidate
   end
 
   def reload_mushroom_for_edit!(mushroom_id)

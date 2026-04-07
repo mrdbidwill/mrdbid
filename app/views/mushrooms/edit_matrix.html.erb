@@ -29,6 +29,108 @@
     <p class="text-sm text-gray-600 mt-1">Desktop/Tablet Edit View</p>
   </div>
 
+  <% matrix_state_params = { observation_tab: @active_tab_key, core_only: core_only } %>
+  <% basic_info_anchor_path = edit_matrix_mushroom_path(@mushroom, matrix_state_params.merge(anchor: "basic-info")) %>
+  <% basic_fields = [
+       { key: "name", label: "Name", value: @mushroom.name },
+       { key: "fungus_type_id", label: "Fungus Type", value: @mushroom.fungus_type&.name },
+       { key: "collection_date", label: "Collection Date", value: @mushroom.collection_date&.strftime("%Y-%m-%d") },
+       { key: "description", label: "Description", value: @mushroom.description },
+       { key: "comments", label: "Comments", value: @mushroom.comments },
+       { key: "personal_notes", label: "Personal Notes (private)", value: @mushroom.personal_notes }
+     ] %>
+  <section id="basic-info" class="border border-gray-300 rounded-lg bg-white p-4 mb-5">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <h2 class="text-lg font-semibold text-gray-900">Basic Information</h2>
+      <% if @owner_can_quick_edit_basic %>
+        <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">Owner Quick Edit</span>
+      <% end %>
+    </div>
+    <p class="text-xs text-gray-600 mb-3">
+      Quick one-click editing for name, fungus type, collection date, description, comments, and personal notes.
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm border border-gray-200 rounded">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="text-left p-2 font-semibold text-gray-700 w-44">Field</th>
+            <th class="text-left p-2 font-semibold text-gray-700">Current Value</th>
+            <th class="text-left p-2 font-semibold text-gray-700 w-24">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% basic_fields.each do |field| %>
+            <% is_editing = @editing_basic_field == field[:key] %>
+            <tr class="border-t border-gray-200">
+              <td class="p-2 align-top font-medium text-gray-800"><%= field[:label] %></td>
+              <td class="p-2 align-top">
+                <% if field[:value].present? %>
+                  <div class="whitespace-pre-wrap text-gray-800"><%= field[:value] %></div>
+                <% else %>
+                  <span class="italic text-gray-500">Not set</span>
+                <% end %>
+              </td>
+              <td class="p-2 align-top">
+                <% if @owner_can_quick_edit_basic %>
+                  <%= link_to(is_editing ? "Close" : "Edit",
+                              edit_matrix_mushroom_path(
+                                @mushroom,
+                                matrix_state_params.merge(
+                                  anchor: "basic-info",
+                                  edit_basic_field: (is_editing ? nil : field[:key])
+                                )
+                              ),
+                              class: "inline-flex items-center px-2 py-1 rounded text-xs font-medium #{is_editing ? 'bg-gray-300 text-gray-900 hover:bg-gray-400' : 'bg-blue-600 text-white hover:bg-blue-700'}") %>
+                <% else %>
+                  <span class="text-xs text-gray-500">View only</span>
+                <% end %>
+              </td>
+            </tr>
+
+            <% if is_editing && @owner_can_quick_edit_basic %>
+              <tr class="border-t border-gray-100 bg-blue-50">
+                <td colspan="3" class="p-3">
+                  <%= form_with url: mushroom_path(@mushroom), method: :patch, data: { turbo: true }, html: { class: "space-y-2" } do |f| %>
+                    <%= hidden_field_tag :return_to, basic_info_anchor_path %>
+
+                    <% case field[:key] %>
+                    <% when "name" %>
+                      <%= text_field_tag "mushroom[name]", @mushroom.name, class: "w-full md:w-2/3 border border-gray-300 rounded px-3 py-2" %>
+                    <% when "fungus_type_id" %>
+                      <%= select_tag "mushroom[fungus_type_id]",
+                                     options_from_collection_for_select(@fungus_types, :id, :name, @mushroom.fungus_type_id),
+                                     include_blank: "Select a fungus type",
+                                     class: "w-full md:w-2/3 border border-gray-300 rounded px-3 py-2" %>
+                    <% when "collection_date" %>
+                      <%= date_field_tag "mushroom[collection_date]",
+                                         @mushroom.collection_date,
+                                         max: Date.current,
+                                         class: "w-full md:w-2/3 border border-gray-300 rounded px-3 py-2" %>
+                    <% when "description" %>
+                      <%= text_area_tag "mushroom[description]", @mushroom.description, rows: 4, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+                    <% when "comments" %>
+                      <%= text_area_tag "mushroom[comments]", @mushroom.comments, rows: 4, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+                    <% when "personal_notes" %>
+                      <%= text_area_tag "mushroom[personal_notes]", @mushroom.personal_notes, rows: 4, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+                    <% end %>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                      <%= f.submit "Save #{field[:label]}", class: "inline-flex items-center px-3 py-1.5 rounded bg-green-600 hover:bg-green-700 text-white text-xs font-medium" %>
+                      <%= link_to "Cancel",
+                                  edit_matrix_mushroom_path(@mushroom, matrix_state_params.merge(anchor: "basic-info")),
+                                  class: "inline-flex items-center px-3 py-1.5 rounded bg-gray-300 hover:bg-gray-400 text-gray-900 text-xs font-medium" %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <div class="border border-gray-300 rounded-lg p-3 bg-white mb-4">
     <div class="flex flex-wrap gap-2">
       <% @observation_tabs.each do |tab| %>
