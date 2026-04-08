@@ -156,7 +156,7 @@ class MushroomsController < ApplicationController
     end
 
     @mushrooms = @mushrooms
-                   .includes(:state, :genera, :species)
+                   .includes(:state, :genera, :species, image_mushrooms: { image_file_attachment: :blob })
                    .left_joins(:state)
                    .where.not(collection_date: nil)
                    .order(
