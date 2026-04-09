@@ -145,30 +145,40 @@ class MushroomsController < ApplicationController
   def sighting_schedule
     if user_signed_in?
       if session[:view_all_mushrooms] == true
-        @mushrooms = Mushroom.all
+        scope = Mushroom.all
         @viewing_all = true
       else
-        @mushrooms = policy_scope(Mushroom)
+        scope = policy_scope(Mushroom)
         @viewing_all = false
       end
     else
-      @mushrooms = Mushroom.all
+      scope = Mushroom.all
     end
 
-    @mushrooms = @mushrooms
-                   .includes(:state, :genera, :species, image_mushrooms: { image_file_attachment: :blob })
-                   .left_joins(:state)
-                   .where.not(collection_date: nil)
-                   .order(
-                     Arel.sql("MONTH(mushrooms.collection_date)"),
-                     Arel.sql("states.name IS NULL"),
-                     "states.name",
-                     Arel.sql("mushrooms.city IS NULL"),
-                     "mushrooms.city",
-                     "mushrooms.name"
-                   )
-                   .page(params[:page])
-                   .per(100)
+    schedule_scope = scope.where.not(collection_date: nil)
+    @month_counts = schedule_scope.group(Arel.sql("MONTH(mushrooms.collection_date)")).count
+
+    @selected_month = params[:month].to_i
+    @selected_month = nil unless (1..12).cover?(@selected_month)
+
+    @mushrooms =
+      if @selected_month
+        schedule_scope
+          .includes(:state, :genera, :species, image_mushrooms: { image_file_attachment: :blob })
+          .left_joins(:state)
+          .where("MONTH(mushrooms.collection_date) = ?", @selected_month)
+          .order(
+            Arel.sql("states.name IS NULL"),
+            "states.name",
+            Arel.sql("mushrooms.city IS NULL"),
+            "mushrooms.city",
+            "mushrooms.name"
+          )
+          .page(params[:page])
+          .per(25)
+      else
+        Mushroom.none.page(params[:page]).per(25)
+      end
   end
 
   # GET /mushrooms/1 or /mushrooms/1.json
