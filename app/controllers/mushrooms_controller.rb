@@ -17,7 +17,8 @@ class MushroomsController < ApplicationController
   # - All queries include necessary associations to avoid multiple DB calls
   #
   # ⚠️  CRITICAL AUTHORIZATION FLOW:
-  # 1. authenticate_user! runs first (except index - allows public viewing of empty list)
+  # 1. authenticate_user! runs first for protected actions
+  #    (public actions: index, show, sighting_schedule)
   # 2. set_mushroom loads the record for show/edit/update/destroy
   # 3. authorize_mushroom checks Pundit policy (user must own the mushroom)
   # ============================================================================

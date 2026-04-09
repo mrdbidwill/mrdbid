@@ -40,6 +40,26 @@ class Users::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert session[:otp_user_id]
   end
 
+  test "otp-pending user cannot access authenticated routes" do
+    @user.update!(
+      otp_required_for_login: true,
+      otp_secret: User.generate_otp_secret
+    )
+
+    post user_session_url, params: {
+      user: {
+        email: @user.email,
+        password: "password"
+      }
+    }
+
+    assert_redirected_to user_two_factor_authentication_path
+    assert session[:otp_user_id]
+
+    get tools_url
+    assert_redirected_to new_user_session_path
+  end
+
   test "should skip 2FA with trusted device" do
     @user.update!(
       otp_required_for_login: true,

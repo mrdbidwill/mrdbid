@@ -2,7 +2,8 @@
 class Users::SessionsController < Devise::SessionsController
   # Customize the actions as needed. For example:
   def create
-    self.resource = warden.authenticate!(auth_options)
+    # Do not persist a logged-in session until OTP is verified or trusted-device checks pass.
+    self.resource = warden.authenticate!(auth_options.merge(store: false))
     if resource.otp_required_for_login
       # Check if this device is trusted
       if trusted_device_valid?(resource)
@@ -10,7 +11,8 @@ class Users::SessionsController < Devise::SessionsController
         sign_in(resource_name, resource)
         redirect_to mushrooms_path, notice: 'Signed in successfully.'
       else
-        # Redirect user to OTP flow if enabled
+        # Ensure no authenticated session exists before OTP verification completes.
+        warden.logout(resource_name)
         session[:otp_user_id] = resource.id
         redirect_to user_two_factor_authentication_path
       end
