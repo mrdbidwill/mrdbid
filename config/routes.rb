@@ -78,6 +78,8 @@ Rails.application.routes.draw do
   # Expose public ImageMushrooms index/show to match controller
   resources :image_mushrooms
 
+  delete "recent_observations/reset", to: "user_recent_observations#reset", as: :reset_recent_observations
+
 
   # Guest session magic link route
   resource :guest_session, only: [:create]
