@@ -5,6 +5,8 @@ SitemapGenerator::Sitemap.create do
   # Root path is added automatically
 
   # Static pages
+  add '/about', priority: 0.6, changefreq: 'monthly'
+  add '/privacy', priority: 0.5, changefreq: 'monthly'
   add '/terms', priority: 0.5, changefreq: 'monthly'
   add '/glossary', priority: 0.7, changefreq: 'weekly'
   add '/contact', priority: 0.5, changefreq: 'monthly'
@@ -17,7 +19,7 @@ SitemapGenerator::Sitemap.create do
   add articles_path, priority: 0.7, changefreq: 'weekly'
 
   # Individual articles
-  Article.find_each do |article|
+  Article.published.excluding_homepage_short.find_each do |article|
     add article_path(article), lastmod: article.updated_at, priority: 0.6, changefreq: 'monthly'
   end
 

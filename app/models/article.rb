@@ -1,6 +1,15 @@
 class Article < ApplicationRecord
   belongs_to :user, optional: true
 
+  HOMEPAGE_SHORT_ARTICLE_SLUGS = [
+    "how-to-participate",
+    "ainsworth-bisby-others",
+    "single-word-summary",
+    "pileus-shape-form-scates-vs-exd",
+    "qr-code-ams-foray",
+    "ams-mushroom-foray-station-x"
+  ].freeze
+
   # Predefined subjects to prevent taxonomy sprawl
   SUBJECTS = [
     "Mycology",
@@ -22,6 +31,7 @@ class Article < ApplicationRecord
   before_validation :normalize_slug
 
   scope :published, -> { where(published: true).where("published_at IS NULL OR published_at <= ?", Time.current) }
+  scope :excluding_homepage_short, -> { where.not(slug: HOMEPAGE_SHORT_ARTICLE_SLUGS) }
   scope :by_subject, ->(s) { where(subject: s) if s.present? }
   scope :recent, -> { order(published_at: :desc, created_at: :desc) }
 

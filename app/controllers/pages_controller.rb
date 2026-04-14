@@ -14,9 +14,18 @@ class PagesController < ApplicationController
                    .order(Arel.sql('fungus_types.name IS NULL'), 'fungus_types.name', 'mushrooms.name')
                    .page(params[:page])
                    .per(10)
+
+    short_articles = Article.published.where(slug: Article::HOMEPAGE_SHORT_ARTICLE_SLUGS).index_by(&:slug)
+    @home_short_articles = Article::HOMEPAGE_SHORT_ARTICLE_SLUGS.filter_map { |slug| short_articles[slug] }
   end
 
   def contact
+  end
+
+  def about
+  end
+
+  def privacy
   end
 
   def trees_of_blakeley_signs

@@ -4,9 +4,10 @@ class ArticlesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: [:index], raise: false
 
   def index
-    @subjects = Article.distinct.order(:subject).pluck(:subject).compact
+    index_scope = Article.published.excluding_homepage_short
+    @subjects = index_scope.distinct.order(:subject).pluck(:subject).compact
     @subject  = params[:subject].presence
-    @articles = Article.published.by_subject(@subject).recent.page(params[:page]).per(10)
+    @articles = index_scope.by_subject(@subject).recent.page(params[:page]).per(10)
   end
 
   def show

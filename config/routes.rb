@@ -150,6 +150,8 @@ Rails.application.routes.draw do
     root to: 'mushrooms#index', as: :authenticated_root
   end
   root 'pages#home'
+  get 'about', to: 'pages#about'
+  get 'privacy', to: 'pages#privacy'
   get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
   get 'terms', to: 'pages#terms'
 
