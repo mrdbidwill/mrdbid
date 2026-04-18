@@ -1,0 +1,13 @@
+<% taxonomy_params = { anchor: "identification-section", open_panel: "true" } %>
+<% taxonomy_params[:core_only] = core_only if local_assigns.key?(:core_only) %>
+
+<div class="my-4 border border-purple-300 rounded-lg bg-purple-50 p-3">
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <p class="text-sm text-purple-900 font-medium">
+      Need to set or update taxonomic candidates?
+    </p>
+    <%= link_to "Set/Edit Genera + Species",
+                edit_mushroom_path(mushroom, taxonomy_params),
+                class: "inline-flex items-center px-3 py-1.5 rounded bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold" %>
+  </div>
+</div>

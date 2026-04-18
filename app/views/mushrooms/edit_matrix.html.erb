@@ -29,6 +29,8 @@
     <p class="text-sm text-gray-600 mt-1">Desktop/Tablet Edit View</p>
   </div>
 
+  <%= render "mushrooms/taxonomy_quick_link", mushroom: @mushroom, core_only: core_only %>
+
   <% matrix_state_params = { observation_tab: @active_tab_key, core_only: core_only } %>
   <% basic_info_anchor_path = edit_matrix_mushroom_path(@mushroom, matrix_state_params.merge(anchor: "basic-info")) %>
   <% basic_fields = [
