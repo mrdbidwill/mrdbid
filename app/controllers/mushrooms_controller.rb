@@ -558,13 +558,16 @@ class MushroomsController < ApplicationController
                   .reject { |part_id| PRIMARY_EDIT_PART_IDS.include?(part_id) || part_id == 1 }
                   .sort_by { |part_id| @part_name_by_id[part_id].to_s.downcase }
 
-    rows << {
-      key: "other_parts",
-      title: "All Other Parts",
-      subtitle: "Grouped by remaining part/method",
-      part_ids: other_ids,
-      other_row: true
-    }
+    other_ids.each do |part_id|
+      part_name = @part_name_by_id[part_id] || "Part #{part_id}"
+      rows << {
+        key: "part_#{part_id}",
+        title: part_name,
+        subtitle: "Part ID #{part_id}",
+        part_ids: [part_id],
+        other_row: false
+      }
+    end
 
     rows
   end
