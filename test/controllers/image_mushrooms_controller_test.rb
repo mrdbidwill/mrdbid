@@ -109,7 +109,7 @@ class ImageMushroomsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to edit_mushroom_path(@mushroom)
+    assert_redirected_to edit_flow_mushroom_path(@mushroom)
     assert_equal "Image was successfully updated.", flash[:notice]
   end
 

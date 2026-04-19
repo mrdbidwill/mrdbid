@@ -28,9 +28,10 @@ class MushroomsController < ApplicationController
 
   PRIMARY_EDIT_PART_IDS = [3, 4, 5, 6, 8].freeze
   PRIMARY_EDIT_OBSERVATION_METHOD_IDS = [1, 4, 8, 3].freeze
+  EDIT_FLOW_STEPS = %w[basic taxonomy images characters organization review].freeze
 
   before_action :authenticate_user!, except: [:index, :show, :sighting_schedule] # Allow public read access for index/show/schedule
-  before_action :set_mushroom, only: %i[show edit edit_matrix update destroy edit_characters clone_characters]
+  before_action :set_mushroom, only: %i[show edit edit_flow edit_matrix update destroy edit_characters clone_characters]
   before_action :authorize_mushroom, except: %i[index show sighting_schedule new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
@@ -236,6 +237,31 @@ class MushroomsController < ApplicationController
     return if performed?
   rescue ActiveRecord::RecordNotFound
       redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
+
+  # GET /mushrooms/1/edit_flow
+  # Guided step-by-step editing workflow.
+  def edit_flow
+    @mushroom = reload_mushroom_for_edit!(params[:id])
+    return if performed?
+
+    @core_only = params[:core_only].to_s != "false"
+    @edit_flow_steps = EDIT_FLOW_STEPS
+    @active_step = params[:step].to_s
+    @active_step = "basic" unless @edit_flow_steps.include?(@active_step)
+    @flow_base_params = { core_only: @core_only }
+    @current_step_path = edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: @active_step))
+
+    @fungus_types = FungusType.order(:name)
+    @countries = Country.order(:name)
+    @states_for_country = @mushroom.country_id.present? ? Country.find(@mushroom.country_id).states.order(:name) : State.none
+    @images = @mushroom.image_mushrooms.select { |image| image.image_file.attached? }
+    @part_observation_methods = build_edit_flow_part_observation_methods(@core_only)
+    @all_groups = current_user.all_groups.order(:name)
+    @clusters = current_user.clusters.order(:name)
+    @projects = Project.available_to(current_user)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mushrooms_path, alert: "Mushroom not found."
   end
 
   # GET /mushrooms/1/edit_matrix
@@ -602,6 +628,44 @@ class MushroomsController < ApplicationController
       part_name
     else
       method_name
+    end
+  end
+
+  def build_edit_flow_part_observation_methods(core_only)
+    all_chars = if @mushroom.fungus_type_id.present?
+                  MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id)
+                else
+                  MrCharacter.cached_all_with_associations
+                end
+
+    filtered_chars = all_chars.reject do |character|
+      do_not_display = character.display_option_id == 1 || character.display_option&.name&.downcase == "do not display"
+      do_not_display || character.part_id == 1 || character.observation_method_id == 9
+    end
+
+    if core_only
+      core_chars = filtered_chars.select(&:core?)
+      filtered_chars = core_chars if core_chars.any?
+    end
+
+    counts = Hash.new { |hash, key| hash[key] = Hash.new(0) }
+    filtered_chars.each do |character|
+      counts[character.part_id][character.observation_method_id] += 1
+    end
+
+    parts = Part.order(:name).to_a
+    observation_methods = ObservationMethod.order(:name).to_a
+
+    parts.filter_map do |part|
+      observation_methods_with_counts = observation_methods.filter_map do |observation_method|
+        count = counts.dig(part.id, observation_method.id).to_i
+        next if count.zero?
+
+        { observation_method: observation_method, count: count }
+      end
+      next if observation_methods_with_counts.empty?
+
+      { part: part, observation_methods: observation_methods_with_counts }
     end
   end
 

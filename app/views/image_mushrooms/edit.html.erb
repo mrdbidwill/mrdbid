@@ -20,13 +20,13 @@
   <div class="mt-6 pt-4 border-t">
     <p class="text-sm text-gray-600 mb-2">Quick navigation:</p>
     <div class="flex flex-wrap gap-3">
-      <% back_to_characters_path = params[:return_to].presence || edit_matrix_mushroom_path(@image_mushroom.mushroom) %>
+      <% back_to_characters_path = params[:return_to].presence || edit_flow_mushroom_path(@image_mushroom.mushroom) %>
       <%= link_to back_to_characters_path,
                   class: "inline-flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition" do %>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        <span>Back to Character Grid</span>
+        <span>Back to Edit Workflow</span>
       <% end %>
 
       <%= link_to "← Back to Mushroom",

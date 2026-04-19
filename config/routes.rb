@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :genus_mushrooms, only: [:index, :new, :create, :destroy]
     resources :comparisons, controller: 'mushroom_comparisons', only: [:index, :create], as: 'mushroom_comparisons'
     member do
+      get 'edit_flow', to: 'mushrooms#edit_flow', as: :edit_flow
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
       get 'edit_matrix', to: 'mushrooms#edit_matrix', as: :edit_matrix
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters

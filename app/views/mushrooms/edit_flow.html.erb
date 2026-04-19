@@ -1,0 +1,247 @@
+<% content_for :title, "Guided Edit #{@mushroom.name}" %>
+
+<% step_labels = {
+  "basic" => "Basic Info",
+  "taxonomy" => "Taxonomy",
+  "images" => "Images",
+  "characters" => "Characters",
+  "organization" => "Organization",
+  "review" => "Review"
+} %>
+<% current_step_index = @edit_flow_steps.index(@active_step) || 0 %>
+<% previous_step = current_step_index.positive? ? @edit_flow_steps[current_step_index - 1] : nil %>
+<% next_step = current_step_index < (@edit_flow_steps.length - 1) ? @edit_flow_steps[current_step_index + 1] : nil %>
+
+<div class="w-full space-y-5">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900"><%= @mushroom.name %></h1>
+      <p class="text-sm text-gray-600 mt-1">Guided editing workflow</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <%= link_to "View Mushroom", mushroom_path(@mushroom), class: "inline-flex items-center px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium" %>
+      <%= link_to "Open Matrix", edit_matrix_mushroom_path(@mushroom, core_only: @core_only), class: "inline-flex items-center px-3 py-1.5 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium" %>
+    </div>
+  </div>
+
+  <div class="border border-gray-300 rounded-lg p-3 bg-white">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
+      <% @edit_flow_steps.each_with_index do |step_key, index| %>
+        <% active = step_key == @active_step %>
+        <%= link_to edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: step_key)),
+                    class: "px-3 py-2 rounded text-sm font-medium text-center #{active ? 'bg-green-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}" do %>
+          <span class="block text-xs opacity-80">Step <%= index + 1 %></span>
+          <span><%= step_labels[step_key] %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% case @active_step %>
+  <% when "basic" %>
+    <section class="border border-gray-300 rounded-lg p-4 bg-white">
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">Basic Mushroom Information</h2>
+      <%= form_with model: @mushroom, url: mushroom_path(@mushroom), method: :patch do |form| %>
+        <%= hidden_field_tag :return_to, @current_step_path %>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+          </div>
+
+          <div>
+            <%= form.label :fungus_type_id, "Fungus Type", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.collection_select :fungus_type_id, @fungus_types, :id, :name, { include_blank: "Select fungus type" }, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+          </div>
+
+          <div>
+            <%= form.label :collection_date, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.date_field :collection_date, max: Date.current, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4" data-controller="country-select" data-country-select-url-value="<%= states_path %>">
+          <div>
+            <%= form.label :country_id, "Country", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.collection_select :country_id, @countries, :id, :name, { include_blank: "Select country" },
+                                       class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2",
+                                       data: { action: "change->country-select#change", "country-select-target": "countrySelect" } %>
+          </div>
+          <div>
+            <%= form.label :state_id, "State/Province", class: "block text-sm font-medium text-gray-700" %>
+            <select name="mushroom[state_id]"
+                    id="mushroom_state_id"
+                    class="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+                    data-country-select-target="stateSelect"
+                    <%= @mushroom.country_id.present? ? "" : "disabled" %>>
+              <% if @mushroom.country_id.present? %>
+                <% @states_for_country.each do |state| %>
+                  <option value="<%= state.id %>" <%= "selected" if state.id == @mushroom.state_id %>><%= state.name %></option>
+                <% end %>
+              <% else %>
+                <option value="">Select country first</option>
+              <% end %>
+            </select>
+          </div>
+          <div>
+            <%= form.label :city, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :city, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+          </div>
+          <div>
+            <%= form.label :county, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :county, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_area :description, rows: 3, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+        </div>
+        <div class="mt-4">
+          <%= form.label :comments, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_area :comments, rows: 3, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+        </div>
+        <div class="mt-4">
+          <%= form.label :personal_notes, "Personal Notes (private)", class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_area :personal_notes, rows: 3, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2" %>
+        </div>
+
+        <div class="mt-4">
+          <%= form.submit "Save Basic Info", class: "inline-flex items-center px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white font-medium" %>
+        </div>
+      <% end %>
+    </section>
+
+  <% when "taxonomy" %>
+    <section id="identification-section" class="border border-purple-300 rounded-lg p-4 bg-white">
+      <h2 class="text-lg font-semibold text-purple-900 mb-2">Taxonomy Candidates</h2>
+      <p class="text-xs text-gray-600 mb-3">Set candidate genera/species and refine your primary identification.</p>
+      <%= render "mushrooms/taxonomy_candidates_panel", mushroom: @mushroom %>
+    </section>
+
+  <% when "images" %>
+    <section class="border border-blue-300 rounded-lg p-4 bg-white">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <h2 class="text-lg font-semibold text-blue-900">Images</h2>
+        <%= link_to "Upload Image",
+                    new_mushroom_image_mushroom_path(@mushroom, return_to: @current_step_path),
+                    class: "inline-flex items-center px-3 py-1.5 rounded bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium" %>
+      </div>
+      <% if @images.any? %>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <% @images.each do |image| %>
+            <div class="border border-gray-300 rounded bg-gray-50 p-2">
+              <%= link_to image_mushroom_path(image), class: "block" do %>
+                <%= image_tag image.image_file.variant(resize_to_fill: [240, 240]).processed,
+                              class: "w-full h-36 object-cover rounded border border-gray-200",
+                              alt: image.image_name.presence || @mushroom.name %>
+              <% end %>
+              <div class="mt-2 text-xs text-gray-700"><%= image.part&.name || "Part not set" %></div>
+              <%= link_to "Edit",
+                          edit_mushroom_image_mushroom_path(@mushroom, image, return_to: @current_step_path),
+                          class: "mt-2 inline-flex items-center px-2 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium" %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-600">No images uploaded yet.</p>
+      <% end %>
+    </section>
+
+  <% when "characters" %>
+    <section class="border border-indigo-300 rounded-lg p-4 bg-white">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <h2 class="text-lg font-semibold text-indigo-900">Characters by Category</h2>
+        <div class="inline-flex rounded-md border border-indigo-300 overflow-hidden text-sm">
+          <%= link_to "Core",
+                      edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: "characters", core_only: true)),
+                      class: "px-3 py-1.5 font-medium #{ @core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-indigo-50' }" %>
+          <%= link_to "All",
+                      edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: "characters", core_only: false)),
+                      class: "px-3 py-1.5 font-medium #{ !@core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-indigo-50' }" %>
+        </div>
+      </div>
+
+      <% if @part_observation_methods.any? %>
+        <div class="space-y-2">
+          <% @part_observation_methods.each do |data| %>
+            <div class="border border-gray-200 rounded p-2 bg-gray-50">
+              <div class="font-medium text-gray-800 mb-1"><%= data[:part].name %></div>
+              <div class="flex flex-wrap gap-2">
+                <% data[:observation_methods].each do |observation_data| %>
+                  <% observation_method = observation_data[:observation_method] %>
+                  <%= link_to edit_characters_mushroom_path(
+                                @mushroom,
+                                observation_method_id: observation_method.id,
+                                part_id: data[:part].id,
+                                core_only: @core_only,
+                                return_to: @current_step_path
+                              ),
+                              class: "inline-flex items-center gap-1 px-3 py-1.5 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium" do %>
+                    <span><%= observation_method.name %></span>
+                    <span class="bg-white/20 rounded-full px-2 py-0.5 text-xs"><%= observation_data[:count] %></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-600">No character groups available for this mushroom.</p>
+      <% end %>
+    </section>
+
+  <% when "organization" %>
+    <section class="border border-gray-300 rounded-lg p-4 bg-white">
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">Organization</h2>
+      <%= render "mushrooms/organization_editor",
+                 mushroom: @mushroom,
+                 clusters: @clusters,
+                 all_groups: @all_groups,
+                 projects: @projects %>
+    </section>
+
+  <% when "review" %>
+    <section class="border border-green-300 rounded-lg p-4 bg-white">
+      <h2 class="text-lg font-semibold text-green-900 mb-3">Review</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div class="border border-gray-200 rounded p-3">
+          <h3 class="font-semibold text-gray-800 mb-2">Basic</h3>
+          <p><strong>Name:</strong> <%= @mushroom.name %></p>
+          <p><strong>Fungus Type:</strong> <%= @mushroom.fungus_type&.name || "Not set" %></p>
+          <p><strong>Collection Date:</strong> <%= @mushroom.collection_date || "Not set" %></p>
+        </div>
+        <div class="border border-gray-200 rounded p-3">
+          <h3 class="font-semibold text-gray-800 mb-2">Counts</h3>
+          <p><strong>Images:</strong> <%= @mushroom.image_mushrooms.count %></p>
+          <p><strong>Identifications:</strong> <%= @mushroom.ranked_identifications.count %></p>
+          <p><strong>Entered Characters:</strong> <%= @mushroom.mr_character_mushrooms.count %></p>
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <%= link_to "View Mushroom", mushroom_path(@mushroom), class: "inline-flex items-center px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium" %>
+        <%= link_to "Continue Editing in Matrix", edit_matrix_mushroom_path(@mushroom, core_only: @core_only), class: "inline-flex items-center px-3 py-1.5 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium" %>
+      </div>
+    </section>
+  <% end %>
+
+  <div class="border border-gray-300 rounded-lg p-3 bg-gray-50 flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <% if previous_step.present? %>
+        <%= link_to "← Previous: #{step_labels[previous_step]}",
+                    edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: previous_step)),
+                    class: "inline-flex items-center px-3 py-1.5 rounded bg-gray-300 hover:bg-gray-400 text-gray-900 text-sm font-medium" %>
+      <% end %>
+    </div>
+    <div>
+      <% if next_step.present? %>
+        <%= link_to "Next: #{step_labels[next_step]} →",
+                    edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: next_step)),
+                    class: "inline-flex items-center px-3 py-1.5 rounded bg-green-600 hover:bg-green-700 text-white text-sm font-medium" %>
+      <% else %>
+        <span class="inline-flex items-center px-3 py-1.5 rounded bg-green-100 text-green-800 text-sm font-medium">Workflow complete</span>
+      <% end %>
+    </div>
+  </div>
+</div>

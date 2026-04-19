@@ -67,7 +67,7 @@ class ImageMushroomsController < ApplicationController
     end
 
     if @image_mushroom.save
-      redirect_to mushroom_path(@image_mushroom.mushroom_id), notice: "Image successfully uploaded."
+      redirect_to(safe_return_to_path || mushroom_path(@image_mushroom.mushroom_id), notice: "Image successfully uploaded.")
     else
       @parts = Part.all.order(:name)
       render :new, status: :unprocessable_entity
@@ -94,7 +94,7 @@ class ImageMushroomsController < ApplicationController
     begin
       if @image_mushroom.update(image_mushroom_params)
         mushroom = Mushroom.find(@image_mushroom.mushroom_id)
-        redirect_to(safe_return_to_path || edit_mushroom_path(mushroom), notice: 'Image was successfully updated.')
+        redirect_to(safe_return_to_path || edit_flow_mushroom_path(mushroom), notice: 'Image was successfully updated.')
       else
         @mushrooms = current_user&.elevated_admin? ? Mushroom.all : Mushroom.where(user_id: current_user.id)
         @parts = Part.all

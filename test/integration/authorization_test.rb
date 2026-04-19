@@ -244,7 +244,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     patch image_mushroom_path(image), params: {
       image_mushroom: { comments: 'Admin updated comments' }
     }
-    assert_redirected_to edit_mushroom_path(test_mushroom)
+    assert_redirected_to edit_flow_mushroom_path(test_mushroom)
     image.reload
     assert_equal 'Admin updated comments', image.comments
 

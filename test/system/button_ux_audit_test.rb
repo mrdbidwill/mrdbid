@@ -35,10 +35,11 @@ class ButtonUxAuditTest < ApplicationSystemTestCase
 
     click_on "Edit - Add Characters"
     fill_in "Name", with: "Audit Button Mushroom Updated"
-    click_button "Update name"
+    click_button "Save Basic Info"
     assert_text "Mushroom was successfully updated."
 
     click_on "Edit - Add Characters"
+    click_on "Images"
     click_on "Edit Image", match: :first
     assert_button "Update Image"
 
@@ -47,6 +48,7 @@ class ButtonUxAuditTest < ApplicationSystemTestCase
     end
     assert_text "Image was successfully deleted."
 
+    click_on "View Mushroom"
     accept_confirm do
       click_button "Delete Mushroom"
     end

@@ -1,0 +1,105 @@
+<% panel_dom_id = local_assigns.fetch(:panel_dom_id, "candidate-panel") %>
+<% panel_hidden = local_assigns.fetch(:panel_hidden, false) %>
+
+<div id="<%= panel_dom_id %>" class="<%= panel_hidden ? 'hidden ' : '' %>border border-blue-200 rounded p-4 bg-blue-50">
+  <% identifications = mushroom.ranked_identifications %>
+  <div class="mb-3">
+    <h3 class="text-sm font-semibold text-blue-900">Candidate Genera + Species</h3>
+    <% if identifications.any? %>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <% identifications.each_with_index do |identification, index| %>
+          <% genus_name = identification[:genus]&.name || identification[:species]&.genus&.name || "?" %>
+          <span class="inline-flex items-center gap-1 bg-white border border-blue-300 rounded px-2 py-1 text-xs">
+            <span class="font-mono text-blue-700"><%= index + 1 %>.</span>
+            <em class="text-gray-800"><%= genus_name.capitalize %> <%= identification[:species]&.name || "?" %></em>
+            <% if identification[:fully_primary] %>
+              <span class="text-green-700 font-semibold">PRIMARY</span>
+            <% end %>
+          </span>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-xs text-gray-600 mt-2">No identifications selected yet.</p>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <label class="block text-xs font-semibold text-gray-700">1. Add Genera</label>
+    <p class="text-xs text-gray-600 mb-1">Type at least 3 letters and select a genus.</p>
+    <div data-controller="tokens"
+         data-tokens-url-value="<%= genera_autocomplete_path(format: :json) %>"
+         data-tokens-min-value="3"
+         data-tokens-mushroom-id-value="<%= mushroom.id %>"
+         data-tokens-kind-value="genera"
+         class="border rounded p-2 bg-white">
+      <div class="mb-2 flex items-center gap-2">
+        <div class="relative w-full">
+          <input type="text"
+                 placeholder="Type genus name..."
+                 class="w-full border rounded px-2 py-1"
+                 data-tokens-target="input"
+                 minlength="3"
+                 autocomplete="off">
+          <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+            <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+          </div>
+          <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto shadow-lg"
+              data-tokens-target="dropdown"
+              style="position: absolute; z-index: 40;"></ul>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-1" data-tokens-target="list">
+        <% mushroom.genera.order(:name).each do |genus| %>
+          <span class="inline-flex items-center bg-blue-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= genus.id %>">
+            <%= genus.name %>
+            <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= genus.id %>">&times;</button>
+          </span>
+        <% end %>
+      </div>
+      <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.genera.pluck(:id).join(',') %>">
+    </div>
+  </div>
+
+  <div>
+    <label class="block text-xs font-semibold text-gray-700">2. Add Species</label>
+    <p class="text-xs text-gray-600 mb-1">Type at least 3 letters and select a species from selected genera.</p>
+    <div data-controller="tokens"
+         data-tokens-url-value="<%= species_autocomplete_path(format: :json) %>"
+         data-tokens-min-value="3"
+         data-tokens-mushroom-id-value="<%= mushroom.id %>"
+         data-tokens-kind-value="species"
+         class="border rounded p-2 bg-white">
+      <div class="mb-2 flex items-center gap-2">
+        <div class="relative w-full">
+          <input type="text"
+                 placeholder="Type species epithet..."
+                 class="w-full border rounded px-2 py-1"
+                 data-tokens-target="input"
+                 minlength="3"
+                 autocomplete="off">
+          <div data-tokens-target="loader" class="hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+            <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+          </div>
+          <ul class="hidden border rounded mt-1 bg-white max-h-52 overflow-auto shadow-lg"
+              data-tokens-target="dropdown"
+              style="position: absolute; z-index: 40;"></ul>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-1" data-tokens-target="list">
+        <% mushroom.species.includes(:genus).order("genera.name, species.name").each do |species| %>
+          <span class="inline-flex items-center bg-yellow-200 rounded px-2 py-0.5 text-sm mr-1 mb-1" data-token-id="<%= species.id %>">
+            <%= [species.genus&.name, species.name].compact.join(" ") %>
+            <button type="button" class="ml-1 text-red-600 hover:text-red-700 font-bold" aria-label="Remove" data-action="tokens#removeToken" data-id="<%= species.id %>">&times;</button>
+          </span>
+        <% end %>
+      </div>
+      <input type="hidden" data-tokens-target="hiddenIds" value="<%= mushroom.species.pluck(:id).join(',') %>">
+    </div>
+  </div>
+</div>

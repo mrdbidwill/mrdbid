@@ -50,7 +50,7 @@
               </ol>
               <% if user_signed_in? && current_user.id == mushroom.user_id %>
                 <p class="text-xs text-gray-500 mt-2 italic">
-                  <%= link_to "Edit genus species", edit_mushroom_path(mushroom, anchor: 'identification-section', open_panel: 'true'), class: "text-blue-600 hover:underline font-medium" %> to remove invalid identifications.
+                  <%= link_to "Edit genus species", edit_flow_mushroom_path(mushroom, step: "taxonomy"), class: "text-blue-600 hover:underline font-medium" %> to remove invalid identifications.
                 </p>
               <% end %>
             <% else %>
