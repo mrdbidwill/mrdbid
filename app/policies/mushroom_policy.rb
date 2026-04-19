@@ -48,6 +48,14 @@ class MushroomPolicy < ApplicationPolicy
     owner_or_admin?
   end
 
+  def edit_flow?
+    owner_or_admin?
+  end
+
+  def edit_split?
+    owner_or_admin?
+  end
+
   # Allow editing characters if the mushroom is owned by the current user or user is admin
   def edit_characters?
     owner_or_admin?
