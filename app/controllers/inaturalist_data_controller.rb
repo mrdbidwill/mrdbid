@@ -1,4 +1,5 @@
 class InaturalistDataController < ApplicationController
+  skip_before_action :authenticate_user!
   skip_after_action :verify_policy_scoped, only: [:index], raise: false
   skip_after_action :verify_authorized, only: [:download_csv, :download_json], raise: false
 

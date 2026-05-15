@@ -159,6 +159,9 @@ Rails.application.routes.draw do
   # Tools page
   get 'tools', to: 'tools#index', as: :tools
 
+  # Public mushroom characters catalog (read-only, no login required)
+  get 'characters', to: 'mr_characters#index', as: :mr_characters
+
   # iNaturalist data routes
   get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
   get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv
