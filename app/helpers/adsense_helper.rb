@@ -4,7 +4,7 @@ module AdsenseHelper
   DEFAULT_ADSENSE_CLIENT_ID = "ca-pub-8323362126637830"
 
   def adsense_enabled?
-    ENV["ADSENSE_ENABLED"].to_s == "true"
+    false # Disabled; restore to ENV["ADSENSE_ENABLED"].to_s == "true" to re-enable
   end
 
   def adsense_client_id
