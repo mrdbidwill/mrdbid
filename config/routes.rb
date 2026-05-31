@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'edit_flow', to: 'mushrooms#edit_flow', as: :edit_flow
       get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
       get 'edit_matrix', to: 'mushrooms#edit_matrix', as: :edit_matrix
+      get 'edit_guide', to: 'mushrooms#edit_guide', as: :edit_guide
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
     resource :core_character_entry, only: [:show]

@@ -30,8 +30,19 @@ class MushroomsController < ApplicationController
   PRIMARY_EDIT_OBSERVATION_METHOD_IDS = [1, 4, 8, 3].freeze
   EDIT_FLOW_STEPS = %w[basic taxonomy images characters organization review].freeze
 
+  # Field guide display order — parts arranged as a mycologist encounters them in the field.
+  # Parts: 3=Cap, 4=Gills, 5=Stem, 6=Veil, 2=Whole Fungus, 8=Spores, 7=Mycelium,
+  #        12=Rhizomorph, 18=Primordia, 19=Chemosystematics
+  FIELD_GUIDE_PART_ORDER = { 3 => 1, 4 => 2, 5 => 3, 6 => 4, 2 => 5, 8 => 6,
+                              7 => 7, 12 => 8, 18 => 9, 19 => 10 }.freeze
+
+  # Observation methods within each part section: Macro first, then chemical, then micro, then DNA.
+  # Methods: 1=Macro, 25=Common, 23=Field Chemical, 3=Lab Chemical, 2=Low Magnification,
+  #          4=Micro, 8=DNA, 6=Mating Compatibility
+  FIELD_GUIDE_METHOD_ORDER = { 1 => 1, 25 => 2, 23 => 3, 3 => 4, 2 => 5, 4 => 6, 8 => 7, 6 => 8 }.freeze
+
   before_action :authenticate_user!, except: [:index, :show, :sighting_schedule] # Allow public read access for index/show/schedule
-  before_action :set_mushroom, only: %i[show edit edit_flow edit_matrix update destroy edit_characters clone_characters]
+  before_action :set_mushroom, only: %i[show edit edit_flow edit_matrix update destroy edit_characters clone_characters edit_guide]
   before_action :authorize_mushroom, except: %i[index show sighting_schedule new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
@@ -363,6 +374,74 @@ class MushroomsController < ApplicationController
     redirect_to edit_mushroom_path(@mushroom), alert: "#{e.message}"
   end
 
+
+  # GET /mushrooms/1/edit_guide
+  # Field-guide-style single-page character editor.
+  # Characters are grouped by anatomical part in the order a mycologist encounters them
+  # in the field (Cap → Gills → Stem → Veil → Whole Fungus → Spores → Microscopy …).
+  # Within each section, observation methods are further grouped (Macro first, then
+  # chemical tests, then microscopy, then DNA).  Sections with already-entered data
+  # are expanded by default; empty sections start collapsed.
+  def edit_guide
+    @mushroom = reload_mushroom_for_edit!(params[:id])
+    return if performed?
+
+    @core_only = params[:core_only].to_s != "false"
+
+    all_chars = if @mushroom.fungus_type_id.present?
+                  MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id)
+                else
+                  MrCharacter.cached_all_with_associations
+                end
+
+    filtered_chars = all_chars.reject do |character|
+      do_not_display = character.display_option_id == 1 || character.display_option&.name&.downcase == "do not display"
+      do_not_display || character.part_id == 1 || character.observation_method_id == 9
+    end
+
+    if @core_only
+      core_chars = filtered_chars.select(&:core?)
+      if core_chars.any?
+        filtered_chars = core_chars
+      else
+        @core_fallback = true
+      end
+    end
+
+    @all_chars_count     = filtered_chars.size
+    @core_chars_count    = filtered_chars.count(&:core?)
+
+    # Index entered characters by mr_character_id for O(1) lookup in the view.
+    @entered_chars_by_id = @mushroom.mr_character_mushrooms.index_by(&:mr_character_id)
+
+    # Load parts and observation methods needed for headings.
+    part_ids   = filtered_chars.map(&:part_id).uniq
+    method_ids = filtered_chars.map(&:observation_method_id).uniq
+    parts_by_id   = Part.where(id: part_ids).index_by(&:id)
+    methods_by_id = ObservationMethod.where(id: method_ids).index_by(&:id)
+
+    # Build sections in field-guide order.
+    @guide_sections = filtered_chars
+      .group_by(&:part_id)
+      .sort_by { |part_id, _| FIELD_GUIDE_PART_ORDER.fetch(part_id, 99) }
+      .map do |part_id, chars|
+        sorted = chars.sort_by do |c|
+          [FIELD_GUIDE_METHOD_ORDER.fetch(c.observation_method_id, 99), c.name.to_s.downcase]
+        end
+
+        method_groups = sorted
+          .group_by(&:observation_method_id)
+          .sort_by { |m_id, _| FIELD_GUIDE_METHOD_ORDER.fetch(m_id, 99) }
+          .map { |m_id, m_chars| { method: methods_by_id[m_id], characters: m_chars } }
+
+        entered_count = chars.count { |c| @entered_chars_by_id.key?(c.id) }
+
+        { part: parts_by_id[part_id], method_groups: method_groups,
+          total_count: chars.size, entered_count: entered_count }
+      end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
 
   # PATCH/PUT /mushrooms/1 or /mushrooms/1.json
   def update
