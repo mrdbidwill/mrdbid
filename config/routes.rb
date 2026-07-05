@@ -158,6 +158,10 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  constraints(host: "dna.mrdbid.com") do
+    root to: "dna/observation_lists#index", as: :dna_subdomain_root
+  end
+
   # Static pages
   authenticated :user do
     root to: 'mushrooms#index', as: :authenticated_root
@@ -178,10 +182,6 @@ Rails.application.routes.draw do
   get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
   get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv
   get 'inaturalist/observation_fields/download/json', to: 'inaturalist_data#download_json', as: :download_inaturalist_json
-
-  constraints(host: "dna.mrdbid.com") do
-    root to: "dna/observation_lists#index", as: :dna_subdomain_root
-  end
 
   namespace :dna do
     root to: "observation_lists#index"
