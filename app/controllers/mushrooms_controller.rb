@@ -42,7 +42,7 @@ class MushroomsController < ApplicationController
   FIELD_GUIDE_METHOD_ORDER = { 1 => 1, 25 => 2, 23 => 3, 3 => 4, 2 => 5, 4 => 6, 8 => 7, 6 => 8 }.freeze
 
   before_action :authenticate_user!, except: [:index, :show, :sighting_schedule] # Allow public read access for index/show/schedule
-  before_action :set_mushroom, only: %i[show edit edit_flow edit_matrix update destroy edit_characters clone_characters edit_guide]
+  before_action :set_mushroom, only: %i[show edit edit_flow edit_matrix update destroy identify edit_characters clone_characters edit_guide]
   before_action :authorize_mushroom, except: %i[index show sighting_schedule new create clone_characters toggle_view_mode export_all_pdf]
 
   # Skip Pundit verification for public actions (index when not logged in, and show)
@@ -334,6 +334,44 @@ class MushroomsController < ApplicationController
     @fungus_types = FungusType.order(:name) if @owner_can_quick_edit_basic
   rescue ActiveRecord::RecordNotFound
     redirect_to mushrooms_path, alert: "Mushroom not found."
+  end
+
+  # GET /mushrooms/1/identify
+  # Single-input character entry screen. Users search for a character, select it,
+  # and then fill only the input control appropriate for that character.
+  def identify
+    @core_only = params[:core_only].to_s != "false"
+    @return_to = params[:return_to].presence
+    @identify_path = identify_mushroom_path(@mushroom, core_only: @core_only, return_to: @return_to)
+
+    all_chars = if @mushroom.fungus_type_id.present?
+                  MrCharacter.cached_for_fungus_type(@mushroom.fungus_type_id)
+                else
+                  MrCharacter.cached_all_with_associations
+                end
+
+    displayable_chars = all_chars.reject do |character|
+      character.display_option_id == 1 || character.display_option&.name&.downcase == "do not display"
+    end
+    selectable_chars = displayable_chars
+
+    if @core_only
+      core_chars = displayable_chars.select(&:core?)
+      if core_chars.any?
+        displayable_chars = MrCharacter.sort_for_core_display(core_chars, fungus_type_id: @mushroom.fungus_type_id)
+      else
+        @core_fallback = true
+      end
+    end
+
+    @characters = displayable_chars
+    @selected_character = selectable_chars.find { |character| character.id.to_s == params[:mr_character_id].to_s }
+    @selected_character_row = @selected_character && @mushroom.mr_character_mushrooms.find_by(mr_character_id: @selected_character.id)
+    @entered_character_rows = @mushroom.mr_character_mushrooms
+                                      .includes(:colors, mr_character: [:part, :observation_method, :display_option, :source_data])
+                                      .sort_by { |row| [row.mr_character&.part&.name.to_s, row.mr_character&.name.to_s.downcase] }
+
+    authorize @mushroom
   end
 
   # GET /mushrooms/1/edit_characters?observation_method_id=X&part_id=Y

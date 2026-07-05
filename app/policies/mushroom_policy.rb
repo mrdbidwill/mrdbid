@@ -52,6 +52,10 @@ class MushroomPolicy < ApplicationPolicy
     owner_or_admin?
   end
 
+  def identify?
+    owner_or_admin?
+  end
+
   def edit_split?
     owner_or_admin?
   end

@@ -60,7 +60,7 @@ class MrCharacter < ApplicationRecord
   def self.cached_all_with_associations
     cache_key = ['mr_characters', 'all_with_associations', maximum(:updated_at)&.to_i || 0]
     Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      includes(:part, :display_option, :source_data, :fungus_type)
+      includes(:part, :observation_method, :display_option, :source_data, :fungus_type)
         .joins(:part)
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a
@@ -72,7 +72,7 @@ class MrCharacter < ApplicationRecord
     cache_key = ['mr_characters', 'fungus_type', fungus_type_id, maximum(:updated_at)&.to_i || 0]
     Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       for_fungus_type(fungus_type_id)
-        .includes(:part, :display_option, :source_data, :fungus_type)
+        .includes(:part, :observation_method, :display_option, :source_data, :fungus_type)
         .joins(:part)
         .order('parts.name ASC, mr_characters.name ASC')
         .to_a

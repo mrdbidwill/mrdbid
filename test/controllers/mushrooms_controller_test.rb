@@ -163,6 +163,31 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_match "Owner Quick Edit", response.body
   end
 
+  test "authenticated user should get quick identification screen" do
+    get identify_mushroom_path(@mushroom)
+
+    assert_response :success
+    assert_select "input#quick-character-search"
+    assert_match "Completed Characters", response.body
+  end
+
+  test "quick identification screen renders selected character input" do
+    character = MrCharacter.create!(
+      name: "Quick Entry Test Character",
+      part: parts(:one),
+      observation_method: observation_methods(:one),
+      display_option: display_options(:text),
+      source_data: source_data(:one)
+    )
+
+    get identify_mushroom_path(@mushroom, mr_character_id: character.id, core_only: false)
+
+    assert_response :success
+    assert_match "Quick Entry Test Character", response.body
+    assert_select "input[name='mr_character_id'][value='#{character.id}']"
+    assert_select "input[name='character_value']"
+  end
+
   test "matrix edit hides owner quick edit for admin viewing another users mushroom" do
     sign_out @user
     sign_in users(:three)
