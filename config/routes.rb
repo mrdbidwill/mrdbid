@@ -179,6 +179,10 @@ Rails.application.routes.draw do
   get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv
   get 'inaturalist/observation_fields/download/json', to: 'inaturalist_data#download_json', as: :download_inaturalist_json
 
+  constraints(host: "dna.mrdbid.com") do
+    root to: "dna/observation_lists#index", as: :dna_subdomain_root
+  end
+
   namespace :dna do
     root to: "observation_lists#index"
     resources :observation_lists, only: [:index, :show] do

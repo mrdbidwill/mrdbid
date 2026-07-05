@@ -6,7 +6,7 @@ This document is the durable handoff for the Rails conversion of the former Pyth
 
 The port lives inside the Rails app under the `Dna` namespace:
 
-- Public downloads: `/dna`
+- Public downloads: `/dna`; `https://dna.mrdbid.com/` should route to the same Rails surface after nginx is switched from the legacy FastAPI service to `puma-mrdbid`.
 - Admin controls: `/admin/dna/observation_lists`
 - Models: `Dna::ObservationList`, `Dna::Observation`, `Dna::ExportArtifact`
 - Services: `app/services/dna/*`
