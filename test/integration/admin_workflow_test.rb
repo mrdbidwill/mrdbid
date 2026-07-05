@@ -47,6 +47,25 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     # Page loads successfully - specific HTML structure not tested
   end
 
+  test "admin dashboard links to DNA PDF exports" do
+    sign_in @admin_user
+
+    get admin_root_path
+
+    assert_response :success
+    assert_select "a[href='#{admin_dna_observation_lists_path}']", text: /DNA Observation Lists/
+  end
+
+  test "admin can access DNA observation lists page" do
+    sign_in @admin_user
+
+    get admin_dna_observation_lists_path
+
+    assert_response :success
+    assert_select "form[action='#{admin_dna_observation_lists_path}']"
+    assert_select "h1", text: /DNA Observation Lists/
+  end
+
   # ==============================================================================
   # GENERA MANAGEMENT TESTS
   # ==============================================================================

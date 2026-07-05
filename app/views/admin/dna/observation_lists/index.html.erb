@@ -19,7 +19,10 @@
     <section class="lg:col-span-1 border border-gray-200 rounded-lg bg-white p-5">
       <h2 class="text-lg font-semibold text-gray-900 mb-4">Create List</h2>
 
-      <%= form_with model: [:admin, :dna, @observation_list], local: true do |form| %>
+      <%= form_with model: @observation_list,
+                    url: admin_dna_observation_lists_path,
+                    scope: :dna_observation_list,
+                    local: true do |form| %>
         <% if @observation_list.errors.any? %>
           <div class="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
             <%= @observation_list.errors.full_messages.to_sentence %>
