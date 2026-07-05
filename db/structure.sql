@@ -320,6 +320,79 @@ CREATE TABLE `display_options` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dna_export_artifacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dna_export_artifacts` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `observation_list_id` bigint NOT NULL,
+  `kind` varchar(255) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `relative_path` varchar(255) NOT NULL,
+  `size_bytes` bigint NOT NULL DEFAULT '0',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_dna_export_artifacts_on_observation_list_id` (`observation_list_id`),
+  KEY `index_dna_export_artifacts_on_kind` (`kind`),
+  KEY `index_dna_export_artifacts_on_created_at` (`created_at`),
+  CONSTRAINT `fk_rails_631943b593` FOREIGN KEY (`observation_list_id`) REFERENCES `dna_observation_lists` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dna_observation_lists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dna_observation_lists` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text,
+  `product_type` varchar(255) NOT NULL DEFAULT 'county',
+  `export_mode` varchar(255) NOT NULL DEFAULT 'full',
+  `state_code` varchar(2) DEFAULT NULL,
+  `county_name` varchar(255) DEFAULT NULL,
+  `inat_place_id` int DEFAULT NULL,
+  `place_query` varchar(255) DEFAULT NULL,
+  `inat_project_id` varchar(255) DEFAULT NULL,
+  `public_download` tinyint(1) NOT NULL DEFAULT '1',
+  `last_sync_at` datetime(6) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_dna_observation_lists_on_product_type` (`product_type`),
+  KEY `index_dna_observation_lists_on_export_mode` (`export_mode`),
+  KEY `index_dna_observation_lists_on_public_download` (`public_download`),
+  KEY `index_dna_observation_lists_on_inat_place_id` (`inat_place_id`),
+  KEY `index_dna_observation_lists_on_inat_project_id` (`inat_project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dna_observations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dna_observations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `observation_list_id` bigint NOT NULL,
+  `inat_observation_id` int NOT NULL,
+  `taxon_name` varchar(255) DEFAULT NULL,
+  `species_guess` varchar(255) DEFAULT NULL,
+  `scientific_name` varchar(255) DEFAULT NULL,
+  `common_name` varchar(255) DEFAULT NULL,
+  `observation_taxon_name` varchar(255) DEFAULT NULL,
+  `community_taxon_name` varchar(255) DEFAULT NULL,
+  `user_name` varchar(255) DEFAULT NULL,
+  `observed_at` datetime(6) DEFAULT NULL,
+  `inat_url` varchar(255) NOT NULL,
+  `dna_field_value` text,
+  `barcode_inferred_species_or_name` text,
+  `raw_payload` text,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_dna_observations_list_inat_unique` (`observation_list_id`,`inat_observation_id`),
+  KEY `index_dna_observations_on_observation_list_id` (`observation_list_id`),
+  KEY `index_dna_observations_on_inat_observation_id` (`inat_observation_id`),
+  CONSTRAINT `fk_rails_95182c44c5` FOREIGN KEY (`observation_list_id`) REFERENCES `dna_observation_lists` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dna_sequences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -1247,6 +1320,9 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260705152200'),
+('20260705152100'),
+('20260705152000'),
 ('20260405104500'),
 ('20260320150000'),
 ('20260320120000'),

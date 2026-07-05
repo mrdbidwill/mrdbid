@@ -35,7 +35,6 @@ module Dna
       path = export_dir.join(filename)
 
       Prawn::Document.generate(path.to_s, page_size: "LETTER", margin: 40) do |pdf|
-        metadata(pdf, "DNA-Confirmed Observations Index")
         pdf.text "DNA-Confirmed Observations Index", size: 16, style: :bold
         pdf.move_down 8
         pdf.text "List: #{safe(@observation_list.title)}", size: 10
@@ -68,8 +67,6 @@ module Dna
       path = export_dir.join(filename)
 
       Prawn::Document.generate(path.to_s, page_size: "LETTER", margin: 40) do |pdf|
-        metadata(pdf, "County Guide")
-
         if observations.empty?
           pdf.text "County Guide", size: 16, style: :bold
           pdf.move_down 8
@@ -108,13 +105,6 @@ module Dna
         relative_path: path.relative_path_from(Rails.root).to_s,
         size_bytes: File.size(path)
       )
-    end
-
-    def metadata(pdf, subject)
-      pdf.info[:Title] = "#{@observation_list.title} - #{subject}"
-      pdf.info[:Author] = "myDNAobv Rails"
-      pdf.info[:Creator] = "myDNAobv Rails"
-      pdf.info[:Subject] = subject
     end
 
     def link(pdf, label, url)

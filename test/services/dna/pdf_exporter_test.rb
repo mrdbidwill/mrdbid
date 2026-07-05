@@ -31,9 +31,10 @@ module Dna
       result = Dna::PdfExporter.call(observation_list: observation_list)
 
       assert result.success?, result.error
-      assert_equal [ "genera_count", "observations_index_pdf" ], observation_list.export_artifacts.pluck(:kind).sort
-      assert observation_list.export_artifacts.all? { |artifact| File.file?(artifact.absolute_path) }
-      assert_not_includes observation_list.export_artifacts.pluck(:kind), "county_guide_pdf"
+      artifacts = Dna::ExportArtifact.where(observation_list: observation_list).to_a
+      assert_equal [ "genera_count", "observations_index_pdf" ], artifacts.map(&:kind).sort
+      assert artifacts.all? { |artifact| File.file?(artifact.absolute_path) }
+      assert_not_includes artifacts.map(&:kind), "county_guide_pdf"
       assert_empty Dir.glob(@export_root.join("**", "*.{jpg,jpeg,png,webp}"))
     end
 
@@ -54,7 +55,7 @@ module Dna
       result = Dna::PdfExporter.call(observation_list: observation_list)
 
       assert result.success?, result.error
-      assert_includes observation_list.export_artifacts.pluck(:kind), "county_guide_pdf"
+      assert_includes Dna::ExportArtifact.where(observation_list: observation_list).pluck(:kind), "county_guide_pdf"
     end
   end
 end
