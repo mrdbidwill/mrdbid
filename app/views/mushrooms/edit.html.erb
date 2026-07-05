@@ -122,6 +122,20 @@
   <!-- Clone Characters Panel -->
   <%= render 'clone_characters_panel', mushroom: @mushroom %>
 
+  <section class="my-4 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <h2 class="text-lg font-semibold text-indigo-900">Character Search</h2>
+        <p class="text-sm text-indigo-800 mt-1">
+          Use the single-input character screen to add or edit specimen characters.
+        </p>
+      </div>
+      <%= link_to "Open Character Search",
+                  identify_mushroom_path(@mushroom, core_only: core_only, return_to: request.fullpath),
+                  class: "inline-flex justify-center px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold" %>
+    </div>
+  </section>
+
   <!-- Organization Display (Toggle) -->
   <details class="my-4 border border-gray-200 rounded-lg p-3 bg-gray-50">
     <summary class="text-sm font-semibold text-gray-800 cursor-pointer">📁 Organization</summary>
@@ -222,7 +236,7 @@
                 </div>
                 <div class="flex-shrink-0">
                   <%= link_to "Edit Colors",
-                              edit_characters_mushroom_path(@mushroom, part_id: c.part_id, observation_method_id: c.observation_method_id, core_only: core_only),
+                              identify_mushroom_path(@mushroom, core_only: core_only, mr_character_id: c.id, return_to: request.fullpath),
                               class: "inline-flex items-center px-2 py-1 border border-blue-600 text-xs font-medium rounded text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-blue-500" %>
                 </div>
               </div>

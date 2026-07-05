@@ -17,27 +17,30 @@
 <div id="character-grid" class=" bg-blue-50 lg:bg-blue-100 border border-blue-200 rounded-lg p-4 my-6">
   <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
     <h2 class="text-2xl font-bold text-gray-900">
-      <%= (core_only && core_has_chars) ? "Core Character Entry" : "Character Entry by Category" %>
+      Character Entry
     </h2>
     <div class="inline-flex rounded-md border border-blue-300 overflow-hidden text-sm">
       <%= link_to "Core (Default)",
-                  (core_has_chars ? mushroom_core_character_entry_path(@mushroom, index: 0, core_only: true) : edit_mushroom_path(@mushroom, core_only: true, show_part: params[:show_part], show_character_id: params[:show_character_id], anchor: "character-grid")),
+                  identify_mushroom_path(@mushroom, core_only: true, return_to: request.fullpath),
                   class: "px-3 py-1.5 font-medium #{ core_only ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-50' }" %>
       <%= link_to "All",
-                  edit_mushroom_path(@mushroom, core_only: false, show_part: params[:show_part], show_character_id: params[:show_character_id], anchor: "character-grid"),
+                  identify_mushroom_path(@mushroom, core_only: false, return_to: request.fullpath),
                   class: "px-3 py-1.5 font-medium #{ !core_only ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-50' }" %>
     </div>
   </div>
   <p class="text-sm text-gray-600 mb-2">
-    <% if core_only && core_has_chars %>
-      Step through core characters in sequence.
-    <% else %>
-      Click on a part to add/edit characters for that category. Each link takes you to a focused editing page.
-    <% end %>
+    Use Character Search for the main add/edit workflow, or open a category below for the older grouped editor.
   </p>
 
+  <div class="bg-white border border-indigo-200 rounded-lg p-4 shadow-sm mb-3">
+    <%= link_to "Open Character Search",
+                identify_mushroom_path(@mushroom, core_only: core_only, return_to: request.fullpath),
+                class: "inline-flex items-center px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold" %>
+  </div>
+
   <% if core_only && core_has_chars %>
-    <div class="bg-white border border-purple-200 rounded-lg p-4 shadow-sm">
+    <details class="bg-white border border-purple-200 rounded-lg p-4 shadow-sm">
+      <summary class="cursor-pointer text-sm font-semibold text-purple-900">Core sequence editor</summary>
       <h3 class="text-lg font-semibold text-purple-900 mb-2">Core Character Sequence</h3>
       <p class="text-sm text-gray-600 mb-3">
         Step through each core character in the saved order. Use Back/Next to move through the list.
@@ -45,7 +48,7 @@
       <%= link_to "Start Core Entry",
                   mushroom_core_character_entry_path(@mushroom, index: 0, core_only: true),
                   class: "inline-flex items-center px-4 py-2 rounded-md bg-purple-600 hover:bg-purple-700 text-white font-semibold" %>
-    </div>
+    </details>
   <% else %>
     <%
       # Build the grid data: parts with their associated observation_methods
