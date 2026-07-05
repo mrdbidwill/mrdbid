@@ -11,7 +11,9 @@ module Dna
     end
 
     def show
-      @observation_list = Dna::ObservationList.public_downloads.find(params[:id])
+      @observation_list = Dna::ObservationList.public_downloads
+                                             .includes(:observations, :export_artifacts)
+                                             .find(params[:id])
       @observations = Dna::GeneraCounter.sorted_observations(@observation_list.observations.to_a)
       @artifacts = @observation_list.export_artifacts.latest_first
     end
