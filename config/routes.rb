@@ -89,6 +89,17 @@ Rails.application.routes.draw do
   # Admin-specific routes
   namespace :admin do
     root to: "dashboard#index"
+    namespace :dna do
+      resources :observation_lists, only: [:index, :create] do
+        member do
+          post :sync
+          post :export
+        end
+        collection do
+          post :prune
+        end
+      end
+    end
     get 'database/export', to: 'database_exports#export', as: :database_export
     resources :core_character_sequences, only: [:index] do
       collection do
@@ -167,6 +178,13 @@ Rails.application.routes.draw do
   get 'inaturalist/observation_fields', to: 'inaturalist_data#index', as: :inaturalist_observation_fields
   get 'inaturalist/observation_fields/download/csv', to: 'inaturalist_data#download_csv', as: :download_inaturalist_csv
   get 'inaturalist/observation_fields/download/json', to: 'inaturalist_data#download_json', as: :download_inaturalist_json
+
+  namespace :dna do
+    root to: "observation_lists#index"
+    resources :observation_lists, only: [:index, :show] do
+      get "artifacts/:artifact_id/download", to: "observation_lists#download", as: :artifact_download
+    end
+  end
 
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check

@@ -12,6 +12,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-07-05
+- Decision: Port the former Python `myDNAobv` app into Rails under the `Dna` namespace instead of creating a separate PHP or Python runtime.
+- Rationale: The repository and IDE are Rails-first, and keeping the DNA PDF workflow in Rails reduces deployment surface area while reusing existing Prawn/Pundit patterns.
+- Consequences: Public DNA downloads live at `/dna`; admin controls live at `/admin/dna/observation_lists`; generated artifacts are local, ignored under `storage/dna_exports`, and prunable. AMS Sequenced Specimens remains index-only and does not download/store iNaturalist image files.
+- Alternatives Considered: Copy the Python app as-is or build a PHP port; rejected because Python recent history included storage/worker pressure and PHP was based on a corrected instruction mistake.
+
 - Date: 2026-04-07
 - Decision: Add owner-only quick-edit controls for basic mushroom fields inside matrix edit, and support safe `return_to` redirects on mushroom update.
 - Rationale: Matrix edit needed one-click updates for core specimen metadata without leaving the matrix workflow, while preserving authorization boundaries and restoring user context after save.

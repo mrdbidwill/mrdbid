@@ -59,6 +59,15 @@ These standards were created after recurring bugs that wasted significant develo
 - `app/views/mushrooms/_form.html.erb` (candidate summary section)
 - `app/views/mushrooms/_mushroom.html.erb` (identification display - lines 40, 45)
 
+### 5. myDNAobv Rails Port Storage and Inclusion Rules
+**File:** `MYDNAOBV_RAILS_PORT.md`
+**Status:** MANDATORY
+**Created:** 2026-07-05
+
+**Summary:** DNA county/project PDF behavior lives under Rails `Dna::*`. County products must require county/place scope, configured AMS project membership, and `DNA Barcode ITS`. AMS Sequenced Specimens must remain `index_only` and must not download or store iNaturalist image files.
+
+**Why:** The previous Python project accumulated storage/worker complexity and Hostinger warnings. The Rails port must keep generated artifacts small, local, prunable, and documented.
+
 ## Code Review Checklist
 
 Before merging any PR, verify:

@@ -40,6 +40,7 @@ This index is the canonical entry point for project documentation.
 
 **Features & Integrations**
 - `COMPARISON_FEATURE.md`
+- `MYDNAOBV_RAILS_PORT.md`
 - `CAMERA_INTEGRATION_COMPLETE.md`
 - `CAMERA_EQUIPMENT_SUMMARY.md`
 - `MYCOWRITER_GEM_INTEGRATION.md`

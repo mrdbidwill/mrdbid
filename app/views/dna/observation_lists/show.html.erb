@@ -1,0 +1,69 @@
+<% content_for :title, @observation_list.title %>
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <%= link_to "DNA downloads", dna_root_path, class: "text-sm text-blue-700 hover:underline" %>
+    <h1 class="mt-2 text-3xl font-bold text-gray-900"><%= @observation_list.title %></h1>
+    <% if @observation_list.description.present? %>
+      <p class="mt-2 text-gray-700"><%= @observation_list.description %></p>
+    <% end %>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-3 mb-6">
+    <div class="border border-gray-200 rounded-lg p-4 bg-white">
+      <div class="text-sm text-gray-500">Observations</div>
+      <div class="text-2xl font-semibold text-gray-900"><%= @observations.size %></div>
+    </div>
+    <div class="border border-gray-200 rounded-lg p-4 bg-white">
+      <div class="text-sm text-gray-500">Mode</div>
+      <div class="text-lg font-semibold text-gray-900"><%= @observation_list.export_mode.humanize %></div>
+    </div>
+    <div class="border border-gray-200 rounded-lg p-4 bg-white">
+      <div class="text-sm text-gray-500">Last Sync</div>
+      <div class="text-lg font-semibold text-gray-900"><%= @observation_list.last_sync_at&.to_date&.iso8601 || "Not synced" %></div>
+    </div>
+  </div>
+
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold text-gray-900 mb-3">Downloads</h2>
+    <% if @artifacts.any? %>
+      <div class="space-y-2">
+        <% @artifacts.each do |artifact| %>
+          <div class="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-lg bg-white p-4">
+            <div>
+              <div class="font-medium text-gray-900"><%= artifact.filename %></div>
+              <div class="text-sm text-gray-600"><%= artifact.kind.humanize %> · <%= number_to_human_size(artifact.size_bytes) %></div>
+            </div>
+            <%= link_to "Download",
+                        dna_observation_list_artifact_download_path(@observation_list, artifact),
+                        class: "inline-flex items-center rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-700">No generated files are available yet.</p>
+    <% end %>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold text-gray-900 mb-3">Observation Preview</h2>
+    <% if @observations.any? %>
+      <ol class="space-y-3">
+        <% @observations.first(50).each_with_index do |observation, index| %>
+          <li class="border border-gray-200 rounded-lg bg-white p-4">
+            <div class="font-medium text-gray-900">
+              <%= index + 1 %>. <%= Dna::GeneraCounter.preferred_title(observation) %>
+            </div>
+            <div class="text-sm text-gray-700">
+              <%= observation.observed_at&.to_date&.iso8601 || "Unknown date" %>
+              · <%= observation.user_name.presence || "Unknown observer" %>
+            </div>
+            <%= link_to observation.inat_url, observation.inat_url, class: "text-sm text-blue-700 hover:underline" %>
+          </li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="text-gray-700">No cached observations are available yet.</p>
+    <% end %>
+  </section>
+</div>

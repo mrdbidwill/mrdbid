@@ -1,0 +1,54 @@
+<% content_for :title, "DNA County PDFs" %>
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">DNA County PDFs</h1>
+    <p class="mt-2 text-gray-700">
+      DNA-confirmed iNaturalist observation indexes and county guide files.
+    </p>
+  </div>
+
+  <% if @observation_lists.any? %>
+    <div class="overflow-x-auto bg-white border border-gray-200 rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">List</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Type</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Last Sync</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Files</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @observation_lists.each do |observation_list| %>
+            <tr>
+              <td class="px-4 py-3">
+                <%= link_to observation_list.title, dna_observation_list_path(observation_list),
+                            class: "font-medium text-blue-700 hover:underline" %>
+                <% if observation_list.description.present? %>
+                  <div class="text-sm text-gray-600"><%= observation_list.description %></div>
+                <% end %>
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-700">
+                <%= observation_list.product_type.titleize %>
+                <% if observation_list.index_only? %>
+                  <span class="ml-2 rounded bg-amber-100 px-2 py-1 text-xs text-amber-900">Index only</span>
+                <% end %>
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-700">
+                <%= observation_list.last_sync_at&.to_date&.iso8601 || "Not synced" %>
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-700">
+                <%= observation_list.export_artifacts.count %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="rounded border border-gray-200 bg-white p-6 text-gray-700">
+      No public DNA downloads are available yet.
+    </div>
+  <% end %>
+</div>

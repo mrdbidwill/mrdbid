@@ -1,0 +1,140 @@
+<% content_for :title, "DNA Observation Lists" %>
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">DNA Observation Lists</h1>
+      <p class="mt-2 text-gray-700">
+        Rails-managed iNaturalist DNA products. AMS Sequenced Specimens should remain index-only.
+      </p>
+    </div>
+    <%= button_to "Prune Old Artifacts",
+                  prune_admin_dna_observation_lists_path,
+                  method: :post,
+                  class: "rounded bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900",
+                  data: { turbo_confirm: "Delete expired DNA export artifacts from local storage?" } %>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-3">
+    <section class="lg:col-span-1 border border-gray-200 rounded-lg bg-white p-5">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Create List</h2>
+
+      <%= form_with model: [:admin, :dna, @observation_list], local: true do |form| %>
+        <% if @observation_list.errors.any? %>
+          <div class="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            <%= @observation_list.errors.full_messages.to_sentence %>
+          </div>
+        <% end %>
+
+        <div class="space-y-4">
+          <div>
+            <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :title, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_area :description, rows: 3, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :product_type, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :product_type, [["Project", "project"], ["County", "county"]], {}, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :export_mode, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :export_mode, [["Index only", "index_only"], ["Full county guide", "full"]], {}, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :inat_project_id, "iNaturalist project ID", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :inat_project_id, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :place_query, "County/place query", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :place_query, placeholder: "Winston County, Alabama, US", class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div>
+            <%= form.label :inat_place_id, "iNaturalist place ID", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.number_field :inat_place_id, class: "mt-1 block w-full rounded border-gray-300" %>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <%= form.check_box :public_download, checked: true, class: "rounded border-gray-300" %>
+            <%= form.label :public_download, "Show on public DNA downloads", class: "text-sm text-gray-700" %>
+          </div>
+
+          <%= form.submit "Create List", class: "w-full rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800" %>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="lg:col-span-2">
+      <% if @observation_lists.any? %>
+        <div class="overflow-x-auto border border-gray-200 rounded-lg bg-white">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">List</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Scope</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Counts</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <% @observation_lists.each do |observation_list| %>
+                <tr>
+                  <td class="px-4 py-3 align-top">
+                    <div class="font-medium text-gray-900"><%= observation_list.title %></div>
+                    <div class="text-sm text-gray-600"><%= observation_list.export_mode.humanize %></div>
+                    <% if observation_list.index_only? && observation_list.inat_project_id.to_s == ENV.fetch("DNA_AMS_PROJECT_ID", Dna::InaturalistClient::DEFAULT_AMS_PROJECT_ID) %>
+                      <div class="mt-1 text-xs font-medium text-amber-800">AMS index-only: no iNaturalist image storage</div>
+                    <% end %>
+                  </td>
+                  <td class="px-4 py-3 align-top text-sm text-gray-700">
+                    <div><%= observation_list.product_type.titleize %></div>
+                    <% if observation_list.county? %>
+                      <div><%= observation_list.place_query.presence || "Place ID #{observation_list.inat_place_id}" %></div>
+                    <% else %>
+                      <div>Project <%= observation_list.inat_project_id.presence || ENV.fetch("DNA_AMS_PROJECT_ID", Dna::InaturalistClient::DEFAULT_AMS_PROJECT_ID) %></div>
+                    <% end %>
+                  </td>
+                  <td class="px-4 py-3 align-top text-sm text-gray-700">
+                    <div><%= observation_list.observations.count %> observations</div>
+                    <div><%= observation_list.export_artifacts.count %> files</div>
+                    <div>Last sync: <%= observation_list.last_sync_at&.to_date&.iso8601 || "never" %></div>
+                  </td>
+                  <td class="px-4 py-3 align-top">
+                    <div class="flex flex-wrap gap-2">
+                      <%= button_to "Sync",
+                                    sync_admin_dna_observation_list_path(observation_list),
+                                    method: :post,
+                                    class: "rounded bg-blue-700 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-800",
+                                    data: { turbo_confirm: "Sync from iNaturalist now?" } %>
+                      <%= button_to "Export",
+                                    export_admin_dna_observation_list_path(observation_list),
+                                    method: :post,
+                                    class: "rounded bg-green-700 px-3 py-2 text-sm font-semibold text-white hover:bg-green-800" %>
+                      <% if observation_list.public_download? %>
+                        <%= link_to "Public",
+                                    dna_observation_list_path(observation_list),
+                                    class: "rounded border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50" %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="rounded border border-gray-200 bg-white p-6 text-gray-700">
+          No DNA observation lists have been created.
+        </div>
+      <% end %>
+    </section>
+  </div>
+</div>
