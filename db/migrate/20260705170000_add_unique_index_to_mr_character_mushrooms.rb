@@ -3,8 +3,51 @@
 class AddUniqueIndexToMrCharacterMushrooms < ActiveRecord::Migration[8.0]
   def up
     execute <<~SQL.squish
+      DELETE mr_character_mushroom_colors
+      FROM mr_character_mushroom_colors
+      INNER JOIN mr_character_mushrooms
+        ON mr_character_mushrooms.id = mr_character_mushroom_colors.mr_character_mushroom_id
+      WHERE mr_character_mushrooms.mushroom_id IS NULL
+         OR mr_character_mushrooms.mr_character_id IS NULL
+    SQL
+
+    execute <<~SQL.squish
       DELETE FROM mr_character_mushrooms
       WHERE mushroom_id IS NULL OR mr_character_id IS NULL
+    SQL
+
+    execute <<~SQL.squish
+      INSERT INTO mr_character_mushroom_colors
+        (mr_character_mushroom_id, color_id, display_order, created_at, updated_at)
+      SELECT
+        keeper.id,
+        duplicate_colors.color_id,
+        MIN(duplicate_colors.display_order),
+        MIN(duplicate_colors.created_at),
+        MAX(duplicate_colors.updated_at)
+      FROM mr_character_mushroom_colors duplicate_colors
+      INNER JOIN mr_character_mushrooms duplicate_rows
+        ON duplicate_rows.id = duplicate_colors.mr_character_mushroom_id
+      INNER JOIN mr_character_mushrooms keeper
+        ON keeper.mushroom_id = duplicate_rows.mushroom_id
+       AND keeper.mr_character_id = duplicate_rows.mr_character_id
+       AND keeper.id < duplicate_rows.id
+      LEFT JOIN mr_character_mushroom_colors keeper_colors
+        ON keeper_colors.mr_character_mushroom_id = keeper.id
+       AND keeper_colors.color_id = duplicate_colors.color_id
+      WHERE keeper_colors.id IS NULL
+      GROUP BY keeper.id, duplicate_colors.color_id
+    SQL
+
+    execute <<~SQL.squish
+      DELETE duplicate_colors
+      FROM mr_character_mushroom_colors duplicate_colors
+      INNER JOIN mr_character_mushrooms duplicate_rows
+        ON duplicate_rows.id = duplicate_colors.mr_character_mushroom_id
+      INNER JOIN mr_character_mushrooms keeper
+        ON keeper.mushroom_id = duplicate_rows.mushroom_id
+       AND keeper.mr_character_id = duplicate_rows.mr_character_id
+       AND keeper.id < duplicate_rows.id
     SQL
 
     execute <<~SQL.squish
