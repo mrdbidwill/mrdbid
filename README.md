@@ -128,10 +128,6 @@ R2_ACCESS_KEY_ID=your_access_key
 R2_SECRET_ACCESS_KEY=your_secret_key
 R2_PUBLIC_BASE_URL=https://images.mrdbid.com
 
-# AdSense (public pages only)
-ADSENSE_ENABLED=false
-ADSENSE_CLIENT_ID=ca-pub-...
-
 # Google Analytics (GA4, public pages only)
 GA_ENABLED=false
 GA_MEASUREMENT_ID=G-XXXXXXXXXX
@@ -144,7 +140,6 @@ bundle exec rails secret
 
 Database configuration lives in `config/database.yml` and is driven by environment variables.
 
-AdSense is gated to public/anonymous sessions only; authenticated sessions never render the AdSense script.
 Google Analytics is also gated to public/anonymous non-user/admin pages only when `GA_ENABLED=true` and `GA_MEASUREMENT_ID` is set.
 
 ## Database Setup

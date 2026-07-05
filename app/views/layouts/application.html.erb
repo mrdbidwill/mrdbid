@@ -36,12 +36,6 @@
 
     <%= yield :head %>
 
-    <% if render_adsense_script? %>
-      <script async
-              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= adsense_client_id %>"
-              crossorigin="anonymous"></script>
-    <% end %>
-
     <% if render_ga_script? %>
       <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga_measurement_id %>"></script>
       <script>
@@ -120,8 +114,6 @@
 
     <!-- Main Content Area - add left margin on mobile to avoid hamburger button -->
     <main class="<%= content_for?(:main_content_classes) ? yield(:main_content_classes) : default_main_classes %>">
-      <%= render "shared/adsense_slot" %>
-
       <%# Temporary admin expiration banner %>
       <% if user_signed_in? && current_user.temporary_admin? && !current_user.admin_expired? %>
         <div class="bg-gradient-to-r from-orange-50 to-amber-50 border-l-4 border-orange-500 px-4 py-3 rounded mb-4 shadow-sm">

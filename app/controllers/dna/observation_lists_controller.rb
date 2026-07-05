@@ -3,8 +3,8 @@
 module Dna
   class ObservationListsController < ApplicationController
     skip_before_action :authenticate_user!, raise: false
-    skip_after_action :verify_authorized
-    skip_after_action :verify_policy_scoped
+    skip_after_action :verify_authorized, raise: false
+    skip_after_action :verify_policy_scoped, raise: false
 
     def index
       @observation_lists = Dna::ObservationList.public_downloads.ordered.includes(:export_artifacts)

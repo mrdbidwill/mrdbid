@@ -16,6 +16,27 @@ class LookupItemTest < ActiveSupport::TestCase
     assert_includes lookup_item.errors[:name], "Name cannot be blank."
   end
 
+  test "should require unique names within a character" do
+    duplicate = LookupItem.new(
+      name: @lookup_item.name,
+      mr_character: @lookup_item.mr_character,
+      source_data: @lookup_item.source_data
+    )
+
+    assert_not duplicate.valid?
+    assert_includes duplicate.errors[:name], "has already been taken"
+  end
+
+  test "should allow the same name for different characters" do
+    lookup_item = LookupItem.new(
+      name: @lookup_item.name,
+      mr_character: mr_characters(:two),
+      source_data: @lookup_item.source_data
+    )
+
+    assert lookup_item.valid?
+  end
+
   test "should have paper_trail versioning" do
     assert_respond_to @lookup_item, :versions
   end

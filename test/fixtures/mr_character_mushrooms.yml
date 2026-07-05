@@ -15,85 +15,85 @@ two:
 # Additional characters for mushroom one (Button) - total 12
 mush_one_char_3:
   mushroom: one
-  mr_character: one
+  mr_character: three
   character_value: "brown"
 mush_one_char_4:
   mushroom: one
-  mr_character: two
+  mr_character: four
   character_value: "convex"
 mush_one_char_5:
   mushroom: one
-  mr_character: one
+  mr_character: five
   character_value: "attached"
 mush_one_char_6:
   mushroom: one
-  mr_character: two
+  mr_character: six
   character_value: "forest"
 mush_one_char_7:
   mushroom: one
-  mr_character: one
+  mr_character: seven
   character_value: "medium"
 mush_one_char_8:
   mushroom: one
-  mr_character: two
+  mr_character: eight
   character_value: "smooth"
 mush_one_char_9:
   mushroom: one
-  mr_character: one
+  mr_character: nine
   character_value: "white"
 mush_one_char_10:
   mushroom: one
-  mr_character: two
+  mr_character: ten
   character_value: "fall"
 mush_one_char_11:
   mushroom: one
-  mr_character: one
+  mr_character: eleven
   character_value: "yes"
 mush_one_char_12:
   mushroom: one
-  mr_character: two
+  mr_character: twelve
   character_value: "partial"
 
 # Additional characters for mushroom two (Shiitake) - total 12
 mush_two_char_3:
   mushroom: two
-  mr_character: one
+  mr_character: three
   character_value: "brown"
 mush_two_char_4:
   mushroom: two
-  mr_character: two
+  mr_character: four
   character_value: "convex"
 mush_two_char_5:
   mushroom: two
-  mr_character: one
+  mr_character: five
   character_value: "free"
 mush_two_char_6:
   mushroom: two
-  mr_character: two
+  mr_character: six
   character_value: "forest"
 mush_two_char_7:
   mushroom: two
-  mr_character: one
+  mr_character: seven
   character_value: "large"
 mush_two_char_8:
   mushroom: two
-  mr_character: two
+  mr_character: eight
   character_value: "scaly"
 mush_two_char_9:
   mushroom: two
-  mr_character: one
+  mr_character: nine
   character_value: "white"
 mush_two_char_10:
   mushroom: two
-  mr_character: two
+  mr_character: ten
   character_value: "fall"
 mush_two_char_11:
   mushroom: two
-  mr_character: one
+  mr_character: eleven
   character_value: "no"
 mush_two_char_12:
   mushroom: two
-  mr_character: two
+  mr_character: twelve
   character_value: "none"
 
 # Characters for mushroom three (Portobello) - 5 characters (below minimum)
@@ -107,13 +107,13 @@ mush_three_char_2:
   character_value: "flat"
 mush_three_char_3:
   mushroom: three
-  mr_character: one
+  mr_character: three
   character_value: "free"
 mush_three_char_4:
   mushroom: three
-  mr_character: two
+  mr_character: four
   character_value: "grassland"
 mush_three_char_5:
   mushroom: three
-  mr_character: one
+  mr_character: five
   character_value: "large"

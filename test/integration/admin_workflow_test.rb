@@ -501,7 +501,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     assert_difference("LookupItem.count", 1) do
       post admin_lookup_items_path, params: {
         lookup_item: {
-          name: "Test Lookup Item",
+          name: "Workflow Lookup Item",
           mr_character_id: character.id,
           source_data_id: source_data.id
         }

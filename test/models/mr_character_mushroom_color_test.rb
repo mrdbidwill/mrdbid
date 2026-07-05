@@ -4,9 +4,21 @@ require "test_helper"
 
 class MrCharacterMushroomColorTest < ActiveSupport::TestCase
   setup do
-    @mushroom = mushrooms(:one)
-    @mr_character = mr_characters(:one)
-    @mr_character.update!(display_option: display_options(:color_picker))
+    @mushroom = Mushroom.create!(
+      name: "Color Join Test Mushroom",
+      user: users(:one),
+      country: countries(:one),
+      state: states(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.current
+    )
+    @mr_character = MrCharacter.create!(
+      name: "Color Join Test Character",
+      part: parts(:one),
+      observation_method: observation_methods(:one),
+      display_option: display_options(:color_picker),
+      source_data: source_data(:one)
+    )
     @mr_character_mushroom = MrCharacterMushroom.new(
       mushroom: @mushroom,
       mr_character: @mr_character

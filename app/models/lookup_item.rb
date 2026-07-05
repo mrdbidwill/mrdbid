@@ -8,8 +8,8 @@
    belongs_to :source_data
    belongs_to :mr_character
 
-   # Ensure the name and parent combination is unique
-   validates :name, presence: true, uniqueness: { scope: :id }
+   # Ensure option labels are unique within a character's option set.
+   validates :name, presence: true, uniqueness: { scope: :mr_character_id, case_sensitive: false }
    validates :mr_character_id, presence: true
    validates :source_data_id, presence: true
 

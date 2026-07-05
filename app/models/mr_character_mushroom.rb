@@ -9,6 +9,7 @@ class MrCharacterMushroom < ApplicationRecord
   after_destroy :invalidate_mushroom_comparisons
 
   validates :character_value, presence: true, unless: :color_character?
+  validates :mr_character_id, uniqueness: { scope: :mushroom_id, message: "has already been entered for this mushroom" }
 
   validate :validate_color_presence
 
@@ -96,4 +97,3 @@ class MrCharacterMushroom < ApplicationRecord
     MushroomComparison.involving_mushroom(mushroom_id).destroy_all
   end
 end
-

@@ -107,7 +107,7 @@ This automatically restarts:
 1. `puma-mrdbid.service`
 2. `solid-queue-mrdbid.service` (if installed)
 
-## Production Env Flags (R2 + AdSense)
+## Production Env Flags (R2)
 
 Ensure these are set in `/opt/mrdbid/shared/.env` before deploying:
 
@@ -119,10 +119,6 @@ R2_REGION=auto
 R2_ACCESS_KEY_ID=your_access_key
 R2_SECRET_ACCESS_KEY=your_secret_key
 R2_PUBLIC_BASE_URL=https://images.mrdbid.com
-
-ADSENSE_ENABLED=false
-ADSENSE_CLIENT_ID=ca-pub-...
-ADSENSE_SLOT_ID=your_ad_unit_slot_id
 ```
 
 ### Systemd Safeguards (Required)

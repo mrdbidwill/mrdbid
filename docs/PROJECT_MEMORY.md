@@ -27,9 +27,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Matrix image selection (2026-04-06):** Matrix edit center-column images come from already-uploaded mushroom images only; image edit/delete flows may include `return_to` so users return to matrix context after image changes.
 - **Matrix basic quick edit (2026-04-07):** Matrix edit includes owner-only one-click editing for basic fields (`name`, `fungus_type`, `collection_date`, `description`, `comments`, `personal_notes`) with save/cancel returning to the `#basic-info` section via safe `return_to`.
 - **Public read boundary:** Unauthenticated users can read all mushroom observations and image show pages. Mutation endpoints remain authenticated and ownership-protected.
-- **AdSense gating:** AdSense scripts/slots may render **only** for unauthenticated sessions (`ADSENSE_ENABLED=true`; client from `ADSENSE_CLIENT_ID`; manual units require `ADSENSE_SLOT_ID`).
-- **AdSense production status (2026-04-02):** Manual slot rendering is active in production with `ADSENSE_ENABLED=true` and a configured `ADSENSE_SLOT_ID`.
-- **AdSense ads.txt status (2026-04-02):** `public/ads.txt` is present and serves the Google seller record for `pub-8323362126637830`.
+- **Advertising status (2026-07-05):** The site has no active advertising integration; setup/deployment docs should not require advertising env flags.
 - **Active Storage:** Production image storage uses Cloudflare R2 (`ACTIVE_STORAGE_SERVICE=r2`).
 - **R2 public base URL:** `R2_PUBLIC_BASE_URL` must be set when R2 is enabled (used for public asset URLs).
 - **R2 uploads:** Cloudflare R2 does not support ACLs; ActiveStorage uploads must not send ACL headers.

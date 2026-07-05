@@ -18,6 +18,17 @@ class MrCharacterMushroomTest < ActiveSupport::TestCase
     assert_includes mcm.errors[:character_value], "Character value cannot be blank."
   end
 
+  test "should allow only one row per mushroom and character" do
+    duplicate = MrCharacterMushroom.new(
+      mr_character: @mr_character_mushroom.mr_character,
+      mushroom: @mr_character_mushroom.mushroom,
+      character_value: "duplicate"
+    )
+
+    assert_not duplicate.valid?
+    assert_includes duplicate.errors[:mr_character_id], "has already been entered for this mushroom"
+  end
+
   test "should belong to mr_character" do
     assert_respond_to @mr_character_mushroom, :mr_character
   end
@@ -125,8 +136,15 @@ class MrCharacterMushroomTest < ActiveSupport::TestCase
 
   test "should validate presence of colors for color_character" do
     @mr_character.update!(display_option: display_options(:color_picker))
+    mushroom = Mushroom.create!(
+      name: "Color Validation Mushroom",
+      user: users(:one),
+      country: countries(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.today
+    )
     mcm = MrCharacterMushroom.new(
-      mushroom: @mushroom,
+      mushroom: mushroom,
       mr_character: @mr_character
     )
 
@@ -136,8 +154,15 @@ class MrCharacterMushroomTest < ActiveSupport::TestCase
 
   test "should not require character_value for color_character" do
     @mr_character.update!(display_option: display_options(:color_picker))
+    mushroom = Mushroom.create!(
+      name: "Color Value Mushroom",
+      user: users(:one),
+      country: countries(:one),
+      fungus_type: fungus_types(:one),
+      collection_date: Date.today
+    )
     mcm = MrCharacterMushroom.new(
-      mushroom: @mushroom,
+      mushroom: mushroom,
       mr_character: @mr_character,
       character_value: nil
     )

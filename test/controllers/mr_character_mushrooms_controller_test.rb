@@ -26,12 +26,11 @@ class MrCharacterMushroomsControllerTest < ActionDispatch::IntegrationTest
     # Need to load mr_character with display_option to avoid strict_loading violations
     @mr_character = MrCharacter.includes(:display_option).find(@mr_character.id)
 
-    # Create initial record
-    rcm = MrCharacterMushroom.create!(
+    # Use the existing row if the fixture already entered this character.
+    rcm = MrCharacterMushroom.find_or_create_by!(
       mushroom: @mushroom,
-      mr_character: @mr_character,
-      character_value: "initial value"
-    )
+      mr_character: @mr_character
+    ) { |row| row.character_value = "initial value" }
 
     post mr_character_mushrooms_url, params: {
       mushroom_id: @mushroom.id,

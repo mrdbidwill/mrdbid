@@ -28,8 +28,7 @@ class AutocompleteControllerTest < ActionDispatch::IntegrationTest
     mushroom = mushrooms(:one)
     character = mr_characters(:one)
 
-    # Add character to mushroom
-    MrCharacterMushroom.create!(mushroom: mushroom, mr_character: character, character_value: "test")
+    assert MrCharacterMushroom.exists?(mushroom: mushroom, mr_character: character)
 
     # Search for this character
     get mr_characters_autocomplete_path, params: { q: character.name[0..4], mushroom_id: mushroom.id }, as: :json

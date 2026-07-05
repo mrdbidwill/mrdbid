@@ -16,3 +16,93 @@ two:
   source_data: two
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+
+three:
+  name: "Cap Texture"
+  part: one
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+four:
+  name: "Gill Attachment"
+  part: two
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+five:
+  name: "Habitat"
+  part: one
+  observation_method: two
+  display_option: two
+  source_data: two
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+six:
+  name: "Cap Size"
+  part: two
+  observation_method: two
+  display_option: two
+  source_data: two
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+seven:
+  name: "Stem Texture"
+  part: one
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+eight:
+  name: "Spore Color"
+  part: two
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+nine:
+  name: "Season"
+  part: one
+  observation_method: two
+  display_option: two
+  source_data: two
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+ten:
+  name: "Edibility"
+  part: two
+  observation_method: two
+  display_option: two
+  source_data: two
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+eleven:
+  name: "Veil Type"
+  part: one
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+twelve:
+  name: "Odor"
+  part: two
+  observation_method: one
+  display_option: one
+  source_data: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

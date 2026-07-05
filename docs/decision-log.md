@@ -36,6 +36,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 - Consequences: Users can select different existing images per row/tab context, and image editing operations can return directly to matrix edit state.
 - Alternatives Considered: Add direct upload controls to matrix edit; rejected to keep matrix interactions focused and reduce complexity in the first release.
 
+- Date: 2026-07-05
+- Decision: Remove the advertising integration from the application and current deployment documentation.
+- Rationale: The project no longer intends to use site advertising, and retaining inactive runtime code/configuration creates maintenance surface and stale operational instructions.
+- Consequences: Public pages no longer render advertising scripts or slots, seller authorization files are removed, and setup/deployment docs no longer require advertising environment variables.
+- Alternatives Considered: Keep the disabled integration behind environment flags; rejected because the project direction is now no advertising and the dormant code was no longer useful.
+
 - Date: 2026-04-02
 - Decision: Add `public/ads.txt` with the Google seller declaration for `pub-8323362126637830`.
 - Rationale: AdSense warned about missing ads.txt and serving can be limited without publisher authorization file at the site root.
