@@ -1,12 +1,14 @@
 <% content_for :title, "Identify #{@mushroom.name}" %>
-<% back_path = @return_to || edit_flow_mushroom_path(@mushroom, step: "characters") %>
+<% character_step_path = edit_flow_mushroom_path(@mushroom, step: "characters") %>
+<% back_path = @return_to.presence %>
+<% back_path = mushroom_path(@mushroom) if back_path.blank? || back_path == character_step_path %>
 <% selected_value = @selected_character ? "#{@selected_character.part&.name} / #{@selected_character.observation_method&.name}: #{@selected_character.name.to_s.tr("_", " ")}" : "" %>
 
 <div class="w-full auto-margins">
   <div class="mb-4">
     <%= link_to back_path,
                 class: "inline-flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition" do %>
-      <span>Back to Characters</span>
+      <span>Back</span>
     <% end %>
   </div>
 

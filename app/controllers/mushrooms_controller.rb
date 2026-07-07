@@ -251,6 +251,11 @@ class MushroomsController < ApplicationController
     @flow_base_params = {}
     @current_step_path = edit_flow_mushroom_path(@mushroom, @flow_base_params.merge(step: @active_step))
 
+    if @active_step == "characters"
+      redirect_to identify_mushroom_path(@mushroom, return_to: @current_step_path), status: :see_other
+      return
+    end
+
     @fungus_types = FungusType.order(:name)
     @countries = Country.order(:name)
     @states_for_country = @mushroom.country_id.present? ? Country.find(@mushroom.country_id).states.order(:name) : State.none

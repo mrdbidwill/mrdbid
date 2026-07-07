@@ -171,6 +171,15 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_match "Completed Characters", response.body
   end
 
+  test "character edit flow step redirects to quick identification screen" do
+    get edit_flow_mushroom_path(@mushroom, step: "characters")
+
+    assert_redirected_to identify_mushroom_path(
+      @mushroom,
+      return_to: edit_flow_mushroom_path(@mushroom, step: "characters")
+    )
+  end
+
   test "quick identification screen renders selected character input" do
     character = MrCharacter.create!(
       name: "Quick Entry Test Character",
