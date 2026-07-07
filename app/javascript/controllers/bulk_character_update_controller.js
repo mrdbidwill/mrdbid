@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Manages bulk character updates for edit_characters page
+// Manages bulk character updates for matrix-style character forms
 // Allows users to modify multiple character fields and save all at once
 // while retaining individual update buttons for single-field updates
 export default class extends Controller {

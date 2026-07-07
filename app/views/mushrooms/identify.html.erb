@@ -1,7 +1,5 @@
 <% content_for :title, "Identify #{@mushroom.name}" %>
-<% back_path = @return_to || edit_flow_mushroom_path(@mushroom, step: "characters", core_only: @core_only) %>
-<% core_path = identify_mushroom_path(@mushroom, core_only: true, return_to: @return_to) %>
-<% all_path = identify_mushroom_path(@mushroom, core_only: false, return_to: @return_to) %>
+<% back_path = @return_to || edit_flow_mushroom_path(@mushroom, step: "characters") %>
 <% selected_value = @selected_character ? "#{@selected_character.part&.name} / #{@selected_character.observation_method&.name}: #{@selected_character.name.to_s.tr("_", " ")}" : "" %>
 
 <div class="w-full auto-margins">
@@ -12,7 +10,7 @@
     <% end %>
   </div>
 
-  <%= render "mushrooms/taxonomy_quick_link", mushroom: @mushroom, core_only: @core_only %>
+  <%= render "mushrooms/taxonomy_quick_link", mushroom: @mushroom %>
 
   <section class="bg-white border border-gray-200 rounded-lg p-4 mb-5 shadow-sm">
     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -22,21 +20,7 @@
           <span><strong class="text-green-700"><%= @entered_character_rows.size %></strong> completed</span>
           <span class="text-gray-400">|</span>
           <span><strong><%= @characters.size %></strong> searchable characters</span>
-          <% if @core_only && @core_fallback %>
-            <span class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1">
-              No core characters defined. Showing all.
-            </span>
-          <% end %>
         </div>
-      </div>
-
-      <div class="inline-flex rounded-md border border-gray-300 overflow-hidden text-sm self-start">
-        <%= link_to "Core",
-                    core_path,
-                    class: "px-3 py-1.5 font-medium #{ @core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }" %>
-        <%= link_to "All",
-                    all_path,
-                    class: "px-3 py-1.5 font-medium #{ !@core_only ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }" %>
       </div>
     </div>
   </section>
@@ -62,7 +46,7 @@
         <% @characters.each do |character| %>
           <% label = "#{character.part&.name} / #{character.observation_method&.name}: #{character.name.to_s.tr("_", " ")}" %>
           <% row = @entered_character_rows.find { |entered| entered.mr_character_id == character.id } %>
-          <%= link_to identify_mushroom_path(@mushroom, core_only: @core_only, return_to: @return_to, mr_character_id: character.id),
+          <%= link_to identify_mushroom_path(@mushroom, return_to: @return_to, mr_character_id: character.id),
                       class: "block px-4 py-3 border-b border-gray-100 hover:bg-indigo-50 focus:bg-indigo-50 focus:outline-none",
                       data: {
                         quick_character_entry_target: "option",
@@ -144,7 +128,7 @@
         <% @entered_character_rows.each do |row| %>
           <% character = row.mr_character %>
           <% next unless character %>
-          <%= link_to identify_mushroom_path(@mushroom, core_only: @core_only, return_to: @return_to, mr_character_id: character.id),
+          <%= link_to identify_mushroom_path(@mushroom, return_to: @return_to, mr_character_id: character.id),
                       class: "block py-3 hover:bg-green-50 px-2 rounded" do %>
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
               <div>

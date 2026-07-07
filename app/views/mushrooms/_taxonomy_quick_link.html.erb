@@ -1,8 +1,6 @@
 <% target_path = local_assigns[:target_path] %>
 <% if target_path.blank? %>
-  <% flow_params = { step: "taxonomy" } %>
-  <% flow_params[:core_only] = core_only if local_assigns.key?(:core_only) %>
-  <% target_path = edit_flow_mushroom_path(mushroom, flow_params) %>
+  <% target_path = edit_flow_mushroom_path(mushroom, step: "taxonomy") %>
 <% end %>
 
 <div class="my-4 border border-purple-300 rounded-lg bg-purple-50 p-3">

@@ -42,12 +42,9 @@ Rails.application.routes.draw do
     member do
       get 'edit_flow', to: 'mushrooms#edit_flow', as: :edit_flow
       get 'identify', to: 'mushrooms#identify', as: :identify
-      get 'edit_characters', to: 'mushrooms#edit_characters', as: :edit_characters
       get 'edit_matrix', to: 'mushrooms#edit_matrix', as: :edit_matrix
-      get 'edit_guide', to: 'mushrooms#edit_guide', as: :edit_guide
       post 'clone_characters', to: 'mushrooms#clone_characters', as: :clone_characters
     end
-    resource :core_character_entry, only: [:show]
     collection do
       post 'toggle_view_mode', to: 'mushrooms#toggle_view_mode', as: :toggle_view_mode
       get 'export_all_pdf', to: 'mushrooms#export_all_pdf'

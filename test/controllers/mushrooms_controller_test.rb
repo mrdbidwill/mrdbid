@@ -65,7 +65,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect back to return_to after successful update" do
-    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", core_only: true, anchor: "basic-info")
+    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", anchor: "basic-info")
 
     patch mushroom_path(@mushroom), params: {
       mushroom: { name: "Updated From Matrix" },
@@ -78,7 +78,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect back to return_to with alert when update fails" do
-    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", core_only: true, anchor: "basic-info")
+    return_to = edit_matrix_mushroom_path(@mushroom, observation_tab: "macro", anchor: "basic-info")
 
     patch mushroom_path(@mushroom), params: {
       mushroom: { name: "" },
@@ -180,7 +180,7 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
       source_data: source_data(:one)
     )
 
-    get identify_mushroom_path(@mushroom, mr_character_id: character.id, core_only: false)
+    get identify_mushroom_path(@mushroom, mr_character_id: character.id)
 
     assert_response :success
     assert_match "Quick Entry Test Character", response.body

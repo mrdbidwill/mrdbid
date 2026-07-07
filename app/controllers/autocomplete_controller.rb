@@ -75,7 +75,6 @@ class AutocompleteController < ApplicationController
   def mr_characters
     query = params[:q].to_s.strip.downcase
     mushroom_id = params[:mushroom_id]
-    core_only = params[:core_only].to_s != "false"
 
     results = if query.length >= 3
                 # Get mushroom's fungus_type to filter characters
@@ -97,13 +96,6 @@ class AutocompleteController < ApplicationController
                   all_chars = all_chars.reject { |c| entered_ids.include?(c.id) }
                 end
 
-                # Filter to core characters by default if any exist
-                core_chars = nil
-                if core_only
-                  core_chars = all_chars.select(&:core?)
-                  all_chars = core_chars if core_chars.any?
-                end
-
                 # Search by name (case-insensitive)
                 # Exclude "do not display" characters
                 matches = all_chars
@@ -111,10 +103,6 @@ class AutocompleteController < ApplicationController
                     c.name.downcase.include?(query) &&
                     c.display_option_id != 1 # exclude "do not display"
                   }
-
-                if core_only && core_chars&.any?
-                  matches = MrCharacter.sort_for_core_display(matches, keep_part_order: false, fungus_type_id: mushroom&.fungus_type_id)
-                end
 
                 matches
                   .first(20)

@@ -444,19 +444,13 @@ class MushroomWorkflowTest < ActionDispatch::IntegrationTest
     assert_select ".alert", text: /permission/i
   end
 
-  test "user can edit characters by observation method and part" do
+  test "user can open single character entry" do
     sign_in @user
 
-    observation_method = observation_methods(:one) if ObservationMethod.exists?
-    part = parts(:one) if Part.exists?
-
-    skip "No observation method or part fixtures" unless observation_method && part
-
-    get edit_characters_mushroom_path(@mushroom, observation_method_id: observation_method.id, part_id: part.id)
+    get identify_mushroom_path(@mushroom)
 
     assert_response :success
-    # Should show character editing form for this observation method and part
-    assert_select "form"
+    assert_select "input#quick-character-search"
   end
 
   # ==============================================================================

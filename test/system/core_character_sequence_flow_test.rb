@@ -33,46 +33,6 @@ class CoreCharacterSequenceFlowTest < ApplicationSystemTestCase
                  CoreCharacterSequence.where(fungus_type: @fungus_type).order(:sequence).pluck(:mr_character_id)
   end
 
-  test "core toggle opens sequential flow and save next follows configured order" do
-    sign_in @owner
-
-    char_a = create_core_character("core_seq_flow_a_#{SecureRandom.hex(4)}")
-    char_b = create_core_character("core_seq_flow_b_#{SecureRandom.hex(4)}")
-
-    CoreCharacterSequence.create!(fungus_type: @fungus_type, mr_character: char_b, sequence: 1)
-    CoreCharacterSequence.create!(fungus_type: @fungus_type, mr_character: char_a, sequence: 2)
-
-    visit edit_mushroom_path(@mushroom)
-
-    within("#character-grid") do
-      click_link "Core (Default)", match: :first
-    end
-
-    assert_current_path mushroom_core_character_entry_path(@mushroom), ignore_query: true
-    assert_text char_b.name.tr("_", " ")
-
-    fill_in "character_value", with: "first core value"
-    click_button "Save Character"
-
-    assert_text "Character saved."
-    assert_text char_b.name.tr("_", " ")
-    assert_equal "first core value",
-                 MrCharacterMushroom.find_by(mushroom: @mushroom, mr_character: char_b)&.character_value
-
-    click_button "Save & Next"
-
-    assert_text char_a.name.tr("_", " ")
-    click_link "Done"
-    assert_current_path edit_mushroom_path(@mushroom, core_only: true)
-
-    within("#character-grid") do
-      click_link "Core (Default)", match: :first
-    end
-
-    click_link "Back"
-    assert_text char_b.name.tr("_", " ")
-  end
-
   private
 
   def create_core_character(name)

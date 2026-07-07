@@ -5,8 +5,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
     static targets = ["input", "dropdown", "loader"]
     static values = {
-        mushroomId: String,
-        coreOnly: Boolean
+        mushroomId: String
     }
 
     connect() {
@@ -61,10 +60,6 @@ export default class extends Controller {
         if(this.hasMushroomIdValue) {
             url.searchParams.append("mushroom_id", this.mushroomIdValue)
         }
-        if(this.hasCoreOnlyValue) {
-            url.searchParams.append("core_only", this.coreOnlyValue)
-        }
-
         fetch(url, { headers: {"Accept": "application/json"} })
             .then(r => r.json())
             .then(items => {
@@ -127,16 +122,6 @@ export default class extends Controller {
         // Close dropdown and clear input
         this.hideDropdown()
         this.inputTarget.value = ""
-
-        if(this.hasCoreOnlyValue && this.coreOnlyValue) {
-            const coreEntryUrl = this.element.dataset.coreEntryUrl
-            if(coreEntryUrl) {
-                const url = new URL(coreEntryUrl, window.location.origin)
-                url.searchParams.set("focus_character_id", characterId)
-                window.location.href = url.toString()
-                return
-            }
-        }
 
         // Build URL to load this part
         const url = new URL(window.location.href)

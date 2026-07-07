@@ -230,7 +230,7 @@ class ApplicationController < ActionController::Base
     return @image_mushroom.mushroom_id if defined?(@image_mushroom) && @image_mushroom.respond_to?(:mushroom_id) && @image_mushroom.mushroom_id.present?
     return params[:mushroom_id] if params[:mushroom_id].present?
 
-    if controller_name == "mushrooms" && %w[show edit identify edit_characters].include?(action_name) && params[:id].present?
+    if controller_name == "mushrooms" && %w[show edit identify].include?(action_name) && params[:id].present?
       return params[:id]
     end
 
