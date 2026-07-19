@@ -29,6 +29,44 @@ class DnaPublicDownloadsTest < ActionDispatch::IntegrationTest
     assert_select "section", text: /County Indexes.*#{county.title}/m
   end
 
+  test "public DNA index counts only latest artifacts per kind" do
+    county = Dna::ObservationList.create!(
+      title: "Baldwin County-AL",
+      product_type: "county",
+      export_mode: "index_only",
+      public_download: true,
+      county_name: "Baldwin County"
+    )
+    2.times do |index|
+      timestamp = (2 - index).hours.ago
+      county.export_artifacts.create!(
+        kind: "genera_count",
+        filename: "genera_count.txt",
+        relative_path: "storage/dna_exports/test/genera_count_#{index}.txt",
+        size_bytes: 12,
+        created_at: timestamp,
+        updated_at: timestamp
+      )
+      county.export_artifacts.create!(
+        kind: "observations_index_pdf",
+        filename: "observations_index.pdf",
+        relative_path: "storage/dna_exports/test/observations_index_#{index}.pdf",
+        size_bytes: 12,
+        created_at: timestamp,
+        updated_at: timestamp
+      )
+    end
+
+    get dna_root_path
+
+    assert_response :success
+    assert_select "tr", text: /Baldwin County-AL/ do |rows|
+      assert_equal 1, rows.size
+      assert_select "td", text: /\A\s*2\s*\z/, count: 1
+      assert_select "td", text: /\A\s*4\s*\z/, count: 0
+    end
+  end
+
   test "public DNA show page renders cached observations under strict loading" do
     observation_list = Dna::ObservationList.create!(
       title: "AMS Sequenced Specimens",
