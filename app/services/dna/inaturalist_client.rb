@@ -7,6 +7,7 @@ module Dna
   class InaturalistClient
     DEFAULT_COUNTY_PROJECT_IDS = %w[124358 184305 132913 251751].freeze
     DEFAULT_AMS_PROJECT_ID = "132913"
+    MAX_RETRIES = 3
 
     def initialize(
       base_url: ENV.fetch("DNA_INAT_BASE_URL", "https://api.inaturalist.org/v1"),
@@ -18,6 +19,7 @@ module Dna
       @user_agent = user_agent
       @delay = [ delay, 0 ].max
       @timeout = [ timeout, 5 ].max
+      @last_request_at = nil
     end
 
     def fetch_for_list(observation_list)
@@ -111,15 +113,44 @@ module Dna
       request["User-Agent"] = user_agent
       request["Accept"] = "application/json"
 
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https",
-                                                       open_timeout: timeout,
-                                                       read_timeout: timeout) do |http|
-        http.request(request)
+      retries = 0
+      response = nil
+
+      loop do
+        throttle_request
+        response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https",
+                                                         open_timeout: timeout,
+                                                         read_timeout: timeout) do |http|
+          http.request(request)
+        end
+
+        break unless response.code.to_i == 429 && retries < MAX_RETRIES
+
+        retries += 1
+        sleep retry_delay(response, retries)
       end
 
       raise "iNaturalist HTTP #{response.code}: #{response.body.to_s.truncate(200)}" unless response.is_a?(Net::HTTPSuccess)
 
       JSON.parse(response.body)
+    end
+
+    def throttle_request
+      return unless delay.positive?
+
+      now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      if @last_request_at
+        elapsed = now - @last_request_at
+        sleep(delay - elapsed) if elapsed < delay
+      end
+      @last_request_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    end
+
+    def retry_delay(response, retries)
+      retry_after = response["Retry-After"].to_i
+      return retry_after if retry_after.positive?
+
+      [ delay * (retries + 1) * 10, 5 ].max
     end
 
     def flatten_observation(row)
