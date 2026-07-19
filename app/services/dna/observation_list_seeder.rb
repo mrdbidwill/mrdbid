@@ -136,7 +136,7 @@ module Dna
           "Place: #{county_name}, US, AL.",
           "Queries all AMS projects for DNA Barcode ITS observations."
         ].join(" "),
-        export_mode: "full",
+        export_mode: "index_only",
         public_download: true,
         place_query: "#{county_name}, US, AL",
         inat_project_id: nil

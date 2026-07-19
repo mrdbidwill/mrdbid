@@ -18,7 +18,7 @@ module Dna
       baldwin = Dna::ObservationList.find_by!(title: "Baldwin County-AL")
       assert_equal "Baldwin County", baldwin.county_name
       assert_equal "Baldwin County, US, AL", baldwin.place_query
-      assert_equal "full", baldwin.export_mode
+      assert_equal "index_only", baldwin.export_mode
       assert_predicate baldwin, :public_download?
 
       ams = Dna::ObservationList.find_by!(inat_project_id: "132913")
@@ -37,6 +37,8 @@ module Dna
 
       ams = Dna::ObservationList.find_by!(inat_project_id: "132913")
       ams.update!(public_download: false, export_mode: "full", title: "Changed")
+      county = Dna::ObservationList.find_by!(title: "Baldwin County-AL")
+      county.update!(export_mode: "full")
 
       result = Dna::ObservationListSeeder.call
 
@@ -50,6 +52,9 @@ module Dna
       assert_equal "AMS Sequenced Specimens", ams.title
       assert_equal "index_only", ams.export_mode
       assert_predicate ams, :public_download?
+
+      county.reload
+      assert_equal "index_only", county.export_mode
     end
   end
 end

@@ -3,6 +3,32 @@
 require "test_helper"
 
 class DnaPublicDownloadsTest < ActionDispatch::IntegrationTest
+  test "public DNA index separates project downloads from county indexes" do
+    ams = Dna::ObservationList.create!(
+      title: "AMS Sequenced Specimens",
+      product_type: "project",
+      export_mode: "index_only",
+      public_download: true,
+      inat_project_id: "132913"
+    )
+    county = Dna::ObservationList.create!(
+      title: "Baldwin County-AL",
+      product_type: "county",
+      export_mode: "index_only",
+      public_download: true,
+      county_name: "Baldwin County"
+    )
+
+    get dna_root_path
+
+    assert_response :success
+    assert_select "h1", "DNA Downloads"
+    assert_select "h2", "Project Downloads"
+    assert_select "h2", "County Indexes"
+    assert_select "section", text: /Project Downloads.*#{ams.title}/m
+    assert_select "section", text: /County Indexes.*#{county.title}/m
+  end
+
   test "public DNA show page renders cached observations under strict loading" do
     observation_list = Dna::ObservationList.create!(
       title: "AMS Sequenced Specimens",

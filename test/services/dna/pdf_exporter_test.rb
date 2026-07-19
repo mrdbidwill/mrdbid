@@ -13,7 +13,7 @@ module Dna
       FileUtils.rm_rf(@export_root)
     end
 
-    test "index only export creates index and genera files without county guide" do
+    test "export creates index and genera files without county guide" do
       observation_list = Dna::ObservationList.create!(
         title: "AMS Sequenced Specimens",
         product_type: "project",
@@ -38,7 +38,7 @@ module Dna
       assert_empty Dir.glob(@export_root.join("**", "*.{jpg,jpeg,png,webp}"))
     end
 
-    test "full county export preserves guide artifact" do
+    test "county export uses the same index artifacts" do
       observation_list = Dna::ObservationList.create!(
         title: "Winston County",
         product_type: "county",
@@ -55,7 +55,9 @@ module Dna
       result = Dna::PdfExporter.call(observation_list: observation_list)
 
       assert result.success?, result.error
-      assert_includes Dna::ExportArtifact.where(observation_list: observation_list).pluck(:kind), "county_guide_pdf"
+      artifacts = Dna::ExportArtifact.where(observation_list: observation_list).to_a
+      assert_equal [ "genera_count", "observations_index_pdf" ], artifacts.map(&:kind).sort
+      assert_equal "index_only", observation_list.reload.export_mode
     end
   end
 end

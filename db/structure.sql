@@ -347,7 +347,7 @@ CREATE TABLE `dna_observation_lists` (
   `title` varchar(255) NOT NULL,
   `description` text,
   `product_type` varchar(255) NOT NULL DEFAULT 'county',
-  `export_mode` varchar(255) NOT NULL DEFAULT 'full',
+  `export_mode` varchar(255) NOT NULL DEFAULT 'index_only',
   `state_code` varchar(2) DEFAULT NULL,
   `county_name` varchar(255) DEFAULT NULL,
   `inat_place_id` int DEFAULT NULL,
@@ -1322,6 +1322,7 @@ CREATE TABLE `versions` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20260719110000'),
 ('20260705175640'),
 ('20260705170100'),
 ('20260705170000'),

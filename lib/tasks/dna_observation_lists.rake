@@ -44,4 +44,34 @@ namespace :dna do
     puts "synced_observations: #{sync_result.data[:count]}"
     puts "created_artifacts: #{export_result.data[:artifacts].size}"
   end
+
+  desc "Seed, sync, and export every public DNA index"
+  task build_public_indexes: :environment do
+    seed_result = Dna::ObservationListSeeder.call
+    unless seed_result.success?
+      warn "DNA observation list seed failed: #{seed_result.error}"
+      exit 1
+    end
+
+    lists = Dna::ObservationList.public_downloads.ordered
+    puts "public_lists: #{lists.count}"
+
+    lists.each do |observation_list|
+      puts "syncing: #{observation_list.title}"
+      sync_result = Dna::ObservationSyncer.call(observation_list: observation_list)
+      unless sync_result.success?
+        warn "Sync failed for #{observation_list.title}: #{sync_result.error}"
+        exit 1
+      end
+
+      export_result = Dna::PdfExporter.call(observation_list: observation_list)
+      unless export_result.success?
+        warn "Export failed for #{observation_list.title}: #{export_result.error}"
+        exit 1
+      end
+
+      puts "synced_observations: #{sync_result.data[:count]}"
+      puts "created_artifacts: #{export_result.data[:artifacts].size}"
+    end
+  end
 end

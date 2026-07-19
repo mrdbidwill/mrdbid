@@ -21,7 +21,6 @@ module Dna
       artifacts = []
       artifacts << write_index_pdf(export_dir, observations)
       artifacts << write_genera_count(export_dir, observations)
-      artifacts << write_county_guide_pdf(export_dir, observations) unless @observation_list.index_only?
 
       Result.success(artifacts: artifacts.compact)
     rescue StandardError => e
@@ -46,49 +45,11 @@ module Dna
         end
 
         observations.each.with_index(1) do |observation, index|
-          pdf.start_new_page if pdf.cursor < 150
-          pdf.text "#{index}. #{safe(Dna::GeneraCounter.preferred_title(observation))}", size: 12, style: :bold
-          pdf.text "iNaturalist taxon: #{safe(observation.taxon_name.presence || "Not available")}", size: 10
-          pdf.text "Observation taxon: #{safe(observation.observation_taxon_name.presence || observation.scientific_name.presence || "Not available")}", size: 10
-          pdf.text "Community taxon: #{safe(observation.community_taxon_name.presence || "Not available")}", size: 10
-          pdf.text "Barcode Inferred Species or Name: #{safe(observation.barcode_inferred_species_or_name.presence || "No set")}", size: 10
-          pdf.text "Observed: #{date_label(observation.observed_at)} | Observer: #{safe(observation.user_name.presence || "Unknown observer")}", size: 10
-          pdf.text "Common name: #{safe(observation.common_name.presence || "Not provided")}", size: 10
-          link(pdf, "iNaturalist", observation.inat_url)
-          pdf.move_down 8
+          write_observation_entry(pdf, observation, index)
         end
       end
 
       record_artifact("observations_index_pdf", filename, path)
-    end
-
-    def write_county_guide_pdf(export_dir, observations)
-      filename = "county_guide.pdf"
-      path = export_dir.join(filename)
-
-      Prawn::Document.generate(path.to_s, page_size: "LETTER", margin: 40) do |pdf|
-        if observations.empty?
-          pdf.text "County Guide", size: 16, style: :bold
-          pdf.move_down 8
-          pdf.text "No DNA-confirmed observations were cached at build time.", size: 10
-        end
-
-        observations.each.with_index(1) do |observation, index|
-          pdf.start_new_page if index > 1
-          pdf.text "#{index}. #{safe(Dna::GeneraCounter.preferred_title(observation))}", size: 14, style: :bold
-          pdf.move_down 8
-          pdf.text "This Rails conversion preserves county guide/index parity. If source images are needed, use the iNaturalist link; this exporter does not create a persistent iNaturalist image cache.", size: 10
-          pdf.move_down 8
-          pdf.text "iNaturalist taxon: #{safe(observation.taxon_name.presence || "Not available")}", size: 10
-          pdf.text "Observation taxon: #{safe(observation.observation_taxon_name.presence || observation.scientific_name.presence || "Not available")}", size: 10
-          pdf.text "Community taxon: #{safe(observation.community_taxon_name.presence || "Not available")}", size: 10
-          pdf.text "Barcode Inferred Species or Name: #{safe(observation.barcode_inferred_species_or_name.presence || "No set")}", size: 10
-          pdf.text "Observed: #{date_label(observation.observed_at)} | Observer: #{safe(observation.user_name.presence || "Unknown observer")}", size: 10
-          link(pdf, "iNaturalist", observation.inat_url)
-        end
-      end
-
-      record_artifact("county_guide_pdf", filename, path)
     end
 
     def write_genera_count(export_dir, observations)
@@ -105,6 +66,19 @@ module Dna
         relative_path: path.relative_path_from(Rails.root).to_s,
         size_bytes: File.size(path)
       )
+    end
+
+    def write_observation_entry(pdf, observation, index)
+      pdf.start_new_page if pdf.cursor < 90
+      pdf.text "#{index}. #{safe(Dna::GeneraCounter.preferred_title(observation))}", size: 12, style: :bold
+      pdf.text "iNaturalist taxon: #{safe(observation.taxon_name.presence || "Not available")}", size: 10
+      pdf.text "Observation taxon: #{safe(observation.observation_taxon_name.presence || observation.scientific_name.presence || "Not available")}", size: 10
+      pdf.text "Community taxon: #{safe(observation.community_taxon_name.presence || "Not available")}", size: 10
+      pdf.text "Barcode Inferred Species or Name: #{safe(observation.barcode_inferred_species_or_name.presence || "No set")}", size: 10
+      pdf.text "Observed: #{date_label(observation.observed_at)} | Observer: #{safe(observation.user_name.presence || "Unknown observer")}", size: 10
+      pdf.text "Common name: #{safe(observation.common_name.presence || "Not provided")}", size: 10
+      link(pdf, "iNaturalist", observation.inat_url)
+      pdf.move_down 8
     end
 
     def link(pdf, label, url)

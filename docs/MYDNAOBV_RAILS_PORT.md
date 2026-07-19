@@ -18,6 +18,7 @@ County products must preserve the original inclusion rule:
 - observation is inside the county/place scope
 - observation belongs to one of `DNA_COUNTY_PROJECT_IDS`
 - observation has `DNA Barcode ITS`
+- create only an observation index PDF with iNaturalist links and a genera count text file
 
 AMS Sequenced Specimens must stay `index_only`:
 
@@ -55,5 +56,5 @@ DNA_EXPORT_RETENTION_HOURS=168
 
 - Admin sync currently runs from the admin action and respects page caps and request delay.
 - Export generation uses Prawn and creates small metadata/link PDFs.
-- County guide pages intentionally preserve observation/index parity without creating a persistent iNaturalist image cache.
+- County products intentionally use the same small index-only artifact set as AMS Sequenced Specimens.
 - If background jobs are added later, keep one active sync/export per list and do not add R2/versioned backup behavior unless explicitly required.

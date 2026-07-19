@@ -13,9 +13,11 @@ module Dna
              dependent: :destroy,
              inverse_of: :observation_list
 
+    before_validation :force_index_only_export_mode
+
     validates :title, presence: true
     validates :product_type, presence: true, inclusion: { in: %w[county project] }
-    validates :export_mode, presence: true, inclusion: { in: %w[full index_only] }
+    validates :export_mode, presence: true, inclusion: { in: %w[index_only] }
 
     scope :public_downloads, -> { where(public_download: true) }
     scope :ordered, -> { order(:title, :id) }
@@ -30,6 +32,12 @@ module Dna
 
     def project?
       product_type == "project"
+    end
+
+    private
+
+    def force_index_only_export_mode
+      self.export_mode = "index_only"
     end
   end
 end

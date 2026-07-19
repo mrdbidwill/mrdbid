@@ -47,7 +47,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     # Page loads successfully - specific HTML structure not tested
   end
 
-  test "admin dashboard links to DNA PDF exports" do
+  test "admin dashboard links to DNA index exports" do
     sign_in @admin_user
 
     get admin_root_path

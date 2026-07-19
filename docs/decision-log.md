@@ -12,6 +12,12 @@ Short, durable records of decisions that affect architecture, behavior, or long-
 
 ## Entries
 
+- Date: 2026-07-19
+- Decision: Standardize all Rails DNA county/project exports on index-only artifacts.
+- Rationale: County products should match AMS Sequenced Specimens by producing a genera count and an observation index PDF with iNaturalist links, without image-heavy or county-guide PDFs.
+- Consequences: Existing `full` DNA list rows are migrated to `index_only`; admin creation no longer offers a full county guide mode; public DNA downloads are grouped into project downloads and county indexes.
+- Alternatives Considered: Keep a separate county guide artifact without images; rejected because it preserved an obsolete product distinction and confused the public download page.
+
 - Date: 2026-07-05
 - Decision: Port the former Python `myDNAobv` app into Rails under the `Dna` namespace instead of creating a separate PHP or Python runtime.
 - Rationale: The repository and IDE are Rails-first, and keeping the DNA PDF workflow in Rails reduces deployment surface area while reusing existing Prawn/Pundit patterns.

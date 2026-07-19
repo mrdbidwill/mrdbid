@@ -5,7 +5,7 @@
     <div>
       <h1 class="text-3xl font-bold text-gray-900">DNA Observation Lists</h1>
       <p class="mt-2 text-gray-700">
-        Rails-managed iNaturalist DNA products. AMS Sequenced Specimens should remain index-only.
+        Rails-managed iNaturalist DNA products. All exports are index PDFs plus genera counts.
       </p>
     </div>
     <%= button_to "Prune Old Artifacts",
@@ -45,10 +45,7 @@
             <%= form.select :product_type, [["Project", "project"], ["County", "county"]], {}, class: "mt-1 block w-full rounded border-gray-300" %>
           </div>
 
-          <div>
-            <%= form.label :export_mode, class: "block text-sm font-medium text-gray-700" %>
-            <%= form.select :export_mode, [["Index only", "index_only"], ["Full county guide", "full"]], {}, class: "mt-1 block w-full rounded border-gray-300" %>
-          </div>
+          <%= form.hidden_field :export_mode, value: "index_only" %>
 
           <div>
             <%= form.label :inat_project_id, "iNaturalist project ID", class: "block text-sm font-medium text-gray-700" %>
@@ -92,10 +89,8 @@
                 <tr>
                   <td class="px-4 py-3 align-top">
                     <div class="font-medium text-gray-900"><%= observation_list.title %></div>
-                    <div class="text-sm text-gray-600"><%= observation_list.export_mode.humanize %></div>
-                    <% if observation_list.index_only? && observation_list.inat_project_id.to_s == ENV.fetch("DNA_AMS_PROJECT_ID", Dna::InaturalistClient::DEFAULT_AMS_PROJECT_ID) %>
-                      <div class="mt-1 text-xs font-medium text-amber-800">AMS index-only: no iNaturalist image storage</div>
-                    <% end %>
+                    <div class="text-sm text-gray-600">Index PDF + genera count</div>
+                    <div class="mt-1 text-xs font-medium text-amber-800">No iNaturalist image storage</div>
                   </td>
                   <td class="px-4 py-3 align-top text-sm text-gray-700">
                     <div><%= observation_list.product_type.titleize %></div>

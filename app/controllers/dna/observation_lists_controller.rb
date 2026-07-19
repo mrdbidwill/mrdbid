@@ -7,7 +7,14 @@ module Dna
     skip_after_action :verify_policy_scoped, raise: false
 
     def index
-      @observation_lists = Dna::ObservationList.public_downloads.ordered.includes(:export_artifacts)
+      @project_lists = Dna::ObservationList.public_downloads
+                                              .where(product_type: "project")
+                                              .ordered
+                                              .includes(:export_artifacts)
+      @county_lists = Dna::ObservationList.public_downloads
+                                             .where(product_type: "county")
+                                             .ordered
+                                             .includes(:export_artifacts)
     end
 
     def show

@@ -39,7 +39,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Button audit coverage:** System test `test/system/button_ux_audit_test.rb` validates core button flows (create/edit/delete, image upload, export buttons).
 - **Coverage baseline (2026-03-14):** 80.75% line, 56.29% branch; continue raising toward 80%/60%.
 - **Shared-VPS baseline runtime (2026-03-30):** prefer `RAILS_MAX_THREADS=3` and `WEB_CONCURRENCY=1` unless metrics justify increasing concurrency.
-- **myDNAobv Rails port (2026-07-05):** DNA county/project PDFs now live under Rails `Dna::*`; AMS Sequenced Specimens must remain `index_only` and must not download/store iNaturalist images.
+- **myDNAobv Rails port (2026-07-19):** DNA county/project exports live under Rails `Dna::*`; all public DNA products are index-only and must not download/store iNaturalist images.
 - **DNA county inclusion rule:** county DNA outputs must require county/place scope + configured AMS project membership (`DNA_COUNTY_PROJECT_IDS`) + `DNA Barcode ITS`.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
