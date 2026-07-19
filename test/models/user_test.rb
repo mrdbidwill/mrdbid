@@ -223,6 +223,32 @@ class UserTest < ActiveSupport::TestCase
     assert_not_predicate @user, :shared_guest_account?
   end
 
+  test "should not allow a second owner user" do
+    second_owner = User.new(
+      email: "second-owner@example.com",
+      password: "password123",
+      password_confirmation: "password123",
+      permission_id: 1,
+      confirmed_at: Time.current
+    )
+
+    assert_not second_owner.valid?
+    assert_includes second_owner.errors[:permission_id], "can only be assigned to one owner"
+  end
+
+  test "should allow existing owner user to remain owner" do
+    @admin_user.email = "owner-renamed@example.com"
+
+    assert @admin_user.valid?
+  end
+
+  test "should not allow promoting another user to owner" do
+    @member_user.permission_id = 1
+
+    assert_not @member_user.valid?
+    assert_includes @member_user.errors[:permission_id], "can only be assigned to one owner"
+  end
+
   test "should save timestamps" do
     user = User.create!(email: "timestamp@example.com", password: "password", confirmed_at: Time.current)
     assert_not_nil user.created_at

@@ -174,12 +174,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   private
 
   def shared_guest_admin
-    User.create!(
-      email: "guest@example.com",
-      password: "password123456",
-      password_confirmation: "password123456",
-      permission_id: 1,
-      confirmed_at: Time.current
-    )
+    @user.update_columns(email: "guest@example.com", display_name: "")
+    @user.reload
   end
 end

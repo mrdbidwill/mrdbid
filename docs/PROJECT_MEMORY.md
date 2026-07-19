@@ -42,6 +42,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **myDNAobv Rails port (2026-07-19):** DNA county/project exports live under Rails `Dna::*`; all public DNA products are index-only and must not download/store iNaturalist images.
 - **DNA county inclusion rule:** county DNA outputs must require county/place scope + configured AMS project membership (`DNA_COUNTY_PROJECT_IDS`) + `DNA Barcode ITS`.
 - **Shared guest account boundary (2026-07-19):** `guest@example.com` may be granted admin-level access for selected reviewers, but it must not mutate `users` records through admin user management or Devise account update/delete flows.
+- **Owner account limit (2026-07-19):** Only one `users.permission_id == 1` Owner account is allowed at this time; use Admin (`permission_id == 2`) for other elevated users.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 

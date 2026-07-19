@@ -22,6 +22,8 @@ class User < ApplicationRecord
   # Add methods to generate OTP secret and provisioning URI
   # Skip OTP generation for temporary admins
   before_create :generate_otp_secret, unless: :temporary_admin?
+  validate :only_one_owner_allowed
+
   def generate_otp_secret
     self.otp_secret ||= User.generate_otp_secret
   end
@@ -106,6 +108,14 @@ class User < ApplicationRecord
     else
       "#{minutes}m"
     end
+  end
+
+  def only_one_owner_allowed
+    return unless permission_id.to_i == 1
+
+    owner_scope = self.class.where(permission_id: 1)
+    owner_scope = owner_scope.where.not(id: id) if persisted?
+    errors.add(:permission_id, "can only be assigned to one owner") if owner_scope.exists?
   end
 
   # Association with mushrooms
