@@ -91,4 +91,69 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get admin_users_url
     assert_redirected_to new_user_session_path
   end
+
+  test "shared guest admin cannot create users" do
+    sign_out @user
+    sign_in shared_guest_admin
+
+    assert_no_difference("User.count") do
+      post admin_users_url, params: {
+        user: {
+          email: "blocked-create@example.com",
+          password: "password123456",
+          password_confirmation: "password123456"
+        }
+      }
+    end
+
+    assert_redirected_to admin_users_url
+    assert_equal "The shared guest account cannot change users.", flash[:alert]
+  end
+
+  test "shared guest admin cannot update users" do
+    sign_out @user
+    target = users(:two)
+    original_display_name = target.display_name
+    sign_in shared_guest_admin
+
+    patch admin_user_url(target), params: {
+      user: {
+        display_name: "Blocked Update"
+      }
+    }
+
+    assert_redirected_to admin_users_url
+    assert_equal original_display_name, target.reload.display_name
+    assert_equal "The shared guest account cannot change users.", flash[:alert]
+  end
+
+  test "shared guest admin cannot destroy users" do
+    sign_out @user
+    target = User.create!(
+      email: "blocked-delete@example.com",
+      password: "password123456",
+      password_confirmation: "password123456"
+    )
+    sign_in shared_guest_admin
+
+    assert_no_difference("User.count") do
+      delete admin_user_url(target)
+    end
+
+    assert_redirected_to admin_users_url
+    assert User.exists?(target.id)
+    assert_equal "The shared guest account cannot change users.", flash[:alert]
+  end
+
+  private
+
+  def shared_guest_admin
+    User.create!(
+      email: "guest@example.com",
+      password: "password123456",
+      password_confirmation: "password123456",
+      permission_id: 1,
+      confirmed_at: Time.current
+    )
+  end
 end

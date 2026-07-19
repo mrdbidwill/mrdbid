@@ -41,6 +41,7 @@ This document is the living memory for MRDBID. It captures the rules, decisions,
 - **Shared-VPS baseline runtime (2026-03-30):** prefer `RAILS_MAX_THREADS=3` and `WEB_CONCURRENCY=1` unless metrics justify increasing concurrency.
 - **myDNAobv Rails port (2026-07-19):** DNA county/project exports live under Rails `Dna::*`; all public DNA products are index-only and must not download/store iNaturalist images.
 - **DNA county inclusion rule:** county DNA outputs must require county/place scope + configured AMS project membership (`DNA_COUNTY_PROJECT_IDS`) + `DNA Barcode ITS`.
+- **Shared guest account boundary (2026-07-19):** `guest@example.com` may be granted admin-level access for selected reviewers, but it must not mutate `users` records through admin user management or Devise account update/delete flows.
 
 ## Authorization & Ownership Rules (Non-Negotiable)
 

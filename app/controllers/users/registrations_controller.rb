@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   before_action :check_honeypot, only: [:create]
+  before_action :block_shared_guest_account_changes!, only: %i[update destroy]
 
   # Override create to ensure proper redirect
   def create
@@ -76,5 +77,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Rails.logger.warn "Bot registration attempt detected: #{params[:user][:email]}"
       redirect_to new_user_registration_path, alert: "Registration failed. Please try again."
     end
+  end
+
+  def block_shared_guest_account_changes!
+    return unless current_user&.shared_guest_account?
+
+    redirect_to edit_user_registration_path, alert: "The shared guest account cannot change user records."
   end
 end

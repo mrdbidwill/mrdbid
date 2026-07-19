@@ -215,6 +215,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.admin?
   end
 
+  test "shared_guest_account? detects guest email case insensitively" do
+    @user.email = "Guest@Example.com"
+    assert_predicate @user, :shared_guest_account?
+
+    @user.email = "other@example.com"
+    assert_not_predicate @user, :shared_guest_account?
+  end
+
   test "should save timestamps" do
     user = User.create!(email: "timestamp@example.com", password: "password", confirmed_at: Time.current)
     assert_not_nil user.created_at

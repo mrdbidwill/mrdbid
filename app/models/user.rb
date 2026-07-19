@@ -68,6 +68,10 @@ class User < ApplicationRecord
     permission_id.present? && permission_id == 1  # Owner-1
   end
 
+  def shared_guest_account?
+    email.to_s.casecmp?("guest@example.com")
+  end
+
   def temporary_admin?
     temporary_admin == true
   end

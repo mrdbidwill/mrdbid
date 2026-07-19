@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_admin!, unless: -> { Rails.env.test? }  # Skip admin check in tests for now
+  before_action :require_admin!
+  before_action :block_shared_guest_user_management!, only: %i[new create edit update destroy]
   before_action :set_user, only: %i[show edit update destroy]
 
   # Skip Pundit verification - authorization handled via require_admin! check
@@ -57,6 +58,12 @@ class UsersController < ApplicationController
       flash[:alert] = "Admin access required."
       redirect_to root_path
     end
+  end
+
+  def block_shared_guest_user_management!
+    return unless current_user&.shared_guest_account?
+
+    redirect_to admin_users_path, alert: "The shared guest account cannot change users."
   end
 
   # Use callbacks to share common setup or constraints between actions.

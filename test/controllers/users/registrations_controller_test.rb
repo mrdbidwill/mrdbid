@@ -141,4 +141,45 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     get edit_user_registration_url
     assert_redirected_to new_user_session_path
   end
+
+  test "shared guest cannot update its own account" do
+    guest = shared_guest_admin
+    sign_in guest
+
+    patch user_registration_url, params: {
+      user: {
+        display_name: "Blocked Name",
+        email: guest.email
+      }
+    }
+
+    assert_redirected_to edit_user_registration_path
+    assert_not_equal "Blocked Name", guest.reload.display_name
+    assert_equal "The shared guest account cannot change user records.", flash[:alert]
+  end
+
+  test "shared guest cannot delete its own account" do
+    guest = shared_guest_admin
+    sign_in guest
+
+    assert_no_difference("User.count") do
+      delete user_registration_url
+    end
+
+    assert_redirected_to edit_user_registration_path
+    assert User.exists?(guest.id)
+    assert_equal "The shared guest account cannot change user records.", flash[:alert]
+  end
+
+  private
+
+  def shared_guest_admin
+    User.create!(
+      email: "guest@example.com",
+      password: "password123456",
+      password_confirmation: "password123456",
+      permission_id: 1,
+      confirmed_at: Time.current
+    )
+  end
 end
