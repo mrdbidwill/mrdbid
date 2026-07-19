@@ -22,7 +22,7 @@ module Dna
                                              .includes(:observations, :export_artifacts)
                                              .find(params[:id])
       @observations = Dna::GeneraCounter.sorted_observations(@observation_list.observations.to_a)
-      @artifacts = @observation_list.export_artifacts.latest_first
+      @artifacts = @observation_list.export_artifacts.latest_per_kind
     end
 
     def download

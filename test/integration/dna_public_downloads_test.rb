@@ -57,4 +57,55 @@ class DnaPublicDownloadsTest < ActionDispatch::IntegrationTest
     assert_select "li", /Amanita muscaria/
     assert_select "div", /genera_count.txt/
   end
+
+  test "public DNA show page renders only the latest artifact for each kind" do
+    observation_list = Dna::ObservationList.create!(
+      title: "Baldwin County-AL",
+      product_type: "county",
+      export_mode: "index_only",
+      public_download: true
+    )
+    older = 2.days.ago
+    newer = 1.hour.ago
+
+    observation_list.export_artifacts.create!(
+      kind: "genera_count",
+      filename: "genera_count.txt",
+      relative_path: "storage/dna_exports/test/older_genera_count.txt",
+      size_bytes: 12,
+      created_at: older,
+      updated_at: older
+    )
+    observation_list.export_artifacts.create!(
+      kind: "observations_index_pdf",
+      filename: "observations_index.pdf",
+      relative_path: "storage/dna_exports/test/older_observations_index.pdf",
+      size_bytes: 12,
+      created_at: older,
+      updated_at: older
+    )
+    observation_list.export_artifacts.create!(
+      kind: "genera_count",
+      filename: "genera_count.txt",
+      relative_path: "storage/dna_exports/test/newer_genera_count.txt",
+      size_bytes: 34,
+      created_at: newer,
+      updated_at: newer
+    )
+    observation_list.export_artifacts.create!(
+      kind: "observations_index_pdf",
+      filename: "observations_index.pdf",
+      relative_path: "storage/dna_exports/test/newer_observations_index.pdf",
+      size_bytes: 56,
+      created_at: newer,
+      updated_at: newer
+    )
+
+    get dna_observation_list_path(observation_list)
+
+    assert_response :success
+    assert_select "div.font-medium", text: "genera_count.txt", count: 1
+    assert_select "div.font-medium", text: "observations_index.pdf", count: 1
+    assert_select "a", text: "Download", count: 2
+  end
 end

@@ -12,6 +12,10 @@ module Dna
 
     scope :latest_first, -> { order(created_at: :desc, id: :desc) }
 
+    def self.latest_per_kind
+      latest_first.to_a.uniq(&:kind)
+    end
+
     def absolute_path
       Rails.root.join(relative_path)
     end
