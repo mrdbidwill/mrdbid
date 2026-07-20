@@ -45,24 +45,24 @@ class InaturalistObservationFieldTest < ActiveSupport::TestCase
     assert_includes results, field
   end
 
-  test "search scope should find by description" do
+  test "search scope should not find by description" do
     field = InaturalistObservationField.create!(
       inaturalist_id: 1002,
       name: "Test Field",
       description: "This field is for mushroom spore prints"
     )
     results = InaturalistObservationField.search("spore")
-    assert_includes results, field
+    assert_not_includes results, field
   end
 
-  test "search scope should find by allowed_values" do
+  test "search scope should not find by allowed_values" do
     field = InaturalistObservationField.create!(
       inaturalist_id: 1003,
       name: "Test Field",
       allowed_values: "red|white|brown|yellow"
     )
     results = InaturalistObservationField.search("brown")
-    assert_includes results, field
+    assert_not_includes results, field
   end
 
   test "search scope should return all when query is blank" do

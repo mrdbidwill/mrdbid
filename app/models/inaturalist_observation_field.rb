@@ -9,8 +9,7 @@ class InaturalistObservationField < ApplicationRecord
     return all if query.blank?
 
     search_term = "%#{query}%"
-    where("name LIKE ? OR description LIKE ? OR allowed_values LIKE ?",
-          search_term, search_term, search_term)
+    where("name LIKE ?", search_term)
   }
 
   scope :canonical, -> { where(name: "DNA Barcode ITS", datatype: "dna") }

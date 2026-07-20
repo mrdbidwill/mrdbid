@@ -17,6 +17,13 @@ class InaturalistDataControllerTest < ActionDispatch::IntegrationTest
       description: "Color of spore print",
       allowed_values: "white|brown|black"
     )
+    @field3 = InaturalistObservationField.create!(
+      inaturalist_id: 3,
+      name: "Gill Count",
+      datatype: "text",
+      description: "Spore count notes",
+      allowed_values: "few|many"
+    )
   end
 
   test "should get index" do
@@ -30,6 +37,7 @@ class InaturalistDataControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match @field1.name, response.body
     assert_match @field2.name, response.body
+    assert_match @field3.name, response.body
   end
 
   test "index should search by query" do
@@ -39,11 +47,12 @@ class InaturalistDataControllerTest < ActionDispatch::IntegrationTest
     assert_no_match @field2.name, response.body
   end
 
-  test "index should search by description" do
+  test "index should search by name only" do
     get inaturalist_observation_fields_path, params: { q: "spore" }
     assert_response :success
     assert_match @field2.name, response.body
     assert_no_match @field1.name, response.body
+    assert_no_match @field3.name, response.body
   end
 
   test "should download CSV" do
