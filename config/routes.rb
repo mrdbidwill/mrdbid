@@ -169,6 +169,7 @@ Rails.application.routes.draw do
   end
   root 'pages#home'
   get 'about', to: 'pages#about'
+  get 'demo', to: 'pages#demo', as: :demo
   get 'privacy', to: 'pages#privacy'
   get 'trees_of_blakeley_signs', to: 'pages#trees_of_blakeley_signs'
   get 'terms', to: 'pages#terms'

@@ -1,0 +1,342 @@
+<% content_for :title, "MRDBID Mushroom Identification Process Demo" %>
+<% content_for :meta_description, "See a public demonstration of the MRDBID mushroom identification word list process, downloadable tables, and editor forms." %>
+
+<% github_repo_url = "https://github.com/mrdbidwill/mrdbid" %>
+
+<div class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+  <section class="border border-green-300 bg-green-50 rounded-lg p-6">
+    <p class="text-sm font-semibold uppercase tracking-wide text-green-800 mb-2">Public demo</p>
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">A Universal Mushroom Identification Word List</h1>
+    <div class="max-w-4xl space-y-4 text-gray-800 leading-relaxed">
+      <p>
+        MRDBID is intended to promote a common process for recording mushroom identification data.
+        The central idea is simple: use a searchable word list of mushroom characters, store values in structured tables,
+        and keep the character list editable as better mycological knowledge is contributed.
+      </p>
+      <p>
+        This page separates the two workflows: the end user entering data for their own mushrooms, and the editor/admin
+        maintaining the database tables that make the forms accurate and useful.
+      </p>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <%= link_to "Browse Character Catalog", mr_characters_path,
+          class: "inline-flex items-center justify-center rounded-md bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800" %>
+      <%= link_to "Download Free Files", "#downloads",
+          class: "inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800" %>
+      <%= link_to "View GitHub Repository", github_repo_url,
+          target: "_blank",
+          rel: "noopener",
+          class: "inline-flex items-center justify-center rounded-md bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900" %>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="border border-blue-200 rounded-lg bg-blue-50 p-5">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">1. Simple Search-Style Input</h2>
+      <p class="text-gray-700">
+        A Google-style character search lets users type what they observed, then select a standardized field such as cap width,
+        gill attachment, stem surface, or spore print color.
+      </p>
+    </div>
+    <div class="border border-green-200 rounded-lg bg-green-50 p-5">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">2. Existing Downloadable Tables</h2>
+      <p class="text-gray-700">
+        The character lists, supporting source tables, and guide spreadsheets already exist and can be downloaded for review,
+        reuse, correction, or extension.
+      </p>
+    </div>
+    <div class="border border-amber-200 rounded-lg bg-amber-50 p-5">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">3. Forms to Keep It Current</h2>
+      <p class="text-gray-700">
+        User-friendly forms already exist for entering mushroom data and for editors/admins to add, correct, and reorganize the
+        underlying tables.
+      </p>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="border border-gray-200 rounded-lg bg-white overflow-hidden">
+      <div class="bg-blue-100 px-5 py-4 border-b border-blue-200">
+        <p class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-1">End user example</p>
+        <h2 class="text-2xl font-bold text-gray-900">Input Data for My Mushroom</h2>
+      </div>
+      <div class="p-5 space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Search mushroom characters</label>
+          <div class="flex rounded-md border border-gray-300 bg-white shadow-sm overflow-hidden">
+            <div class="flex-1 px-4 py-3 text-gray-500">cap width</div>
+            <div class="bg-blue-700 text-white px-4 py-3 text-sm font-semibold">Search</div>
+          </div>
+          <p class="mt-2 text-sm text-gray-600">
+            The user starts with familiar words. The application connects those words to standardized character rows.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900">Selected character</div>
+          <div class="p-4 space-y-3">
+            <div>
+              <div class="text-sm text-gray-500">Character</div>
+              <div class="font-medium text-gray-900">cap_width_mm</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-500">Value entered</div>
+              <div class="font-medium text-gray-900">42 mm</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-500">Stored result</div>
+              <div class="font-mono text-sm text-gray-900 bg-gray-100 rounded px-3 py-2">mushroom_id + mr_character_id + value</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-2">What the end user gets</h3>
+          <ul class="list-disc pl-5 space-y-1 text-gray-700">
+            <li>A simple input process for their own observations.</li>
+            <li>Consistent character names instead of ad hoc notes.</li>
+            <li>Structured data that can later be searched, compared, copied, or exported.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border border-gray-200 rounded-lg bg-white overflow-hidden">
+      <div class="bg-amber-100 px-5 py-4 border-b border-amber-200">
+        <p class="text-sm font-semibold text-amber-800 uppercase tracking-wide mb-1">Editor/admin example</p>
+        <h2 class="text-2xl font-bold text-gray-900">Maintain the Tables Behind the Form</h2>
+      </div>
+      <div class="p-5 space-y-5">
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900">Character table form</div>
+          <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div>
+              <div class="text-gray-500">Name</div>
+              <div class="font-medium text-gray-900">cap_surface_texture</div>
+            </div>
+            <div>
+              <div class="text-gray-500">Part</div>
+              <div class="font-medium text-gray-900">Cap</div>
+            </div>
+            <div>
+              <div class="text-gray-500">Observation method</div>
+              <div class="font-medium text-gray-900">Macro</div>
+            </div>
+            <div>
+              <div class="text-gray-500">Input type</div>
+              <div class="font-medium text-gray-900">Radio list</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900">Lookup value form</div>
+          <div class="p-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded bg-blue-50 px-2 py-1 text-sm text-blue-800">glabrous</span>
+              <span class="rounded bg-blue-50 px-2 py-1 text-sm text-blue-800">fibrillose</span>
+              <span class="rounded bg-blue-50 px-2 py-1 text-sm text-blue-800">squamose</span>
+              <span class="rounded bg-blue-50 px-2 py-1 text-sm text-blue-800">tomentose</span>
+            </div>
+            <p class="mt-3 text-sm text-gray-600">
+              Editors/admins can add, edit, and source the values that appear in end-user forms.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-2">What editors/admins maintain</h3>
+          <ul class="list-disc pl-5 space-y-1 text-gray-700">
+            <li>Character names and definitions.</li>
+            <li>Parts, observation methods, input types, and source data.</li>
+            <li>Allowed values and lookup lists used by the end-user forms.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border border-gray-200 rounded-lg bg-white overflow-hidden">
+    <div class="bg-gray-100 px-5 py-4 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900">Read-Only Demo Output</h2>
+      <p class="text-gray-600 mt-1">Example of how entered data becomes a consistent mushroom character record.</p>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Part</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Character</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">User Value</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Table/Form Source</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr>
+            <td class="px-4 py-3 text-sm text-gray-700">Cap</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">cap_width_mm</td>
+            <td class="px-4 py-3 text-sm text-gray-700">42 mm</td>
+            <td class="px-4 py-3 text-sm text-gray-600">Numeric character definition</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 text-sm text-gray-700">Cap</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">cap_surface_texture</td>
+            <td class="px-4 py-3 text-sm text-gray-700">fibrillose</td>
+            <td class="px-4 py-3 text-sm text-gray-600">Lookup values maintained by editor/admin forms</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 text-sm text-gray-700">Gills</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">gill_attachment</td>
+            <td class="px-4 py-3 text-sm text-gray-700">adnate</td>
+            <td class="px-4 py-3 text-sm text-gray-600">Standard value list</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 text-sm text-gray-700">Spores</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">spore_print_color</td>
+            <td class="px-4 py-3 text-sm text-gray-700">white</td>
+            <td class="px-4 py-3 text-sm text-gray-600">Reusable character and lookup table rows</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="border border-gray-200 rounded-lg bg-white p-5">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Live Reference Data</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+        <div class="bg-gray-50 border border-gray-200 rounded p-3">
+          <div class="text-2xl font-bold text-gray-900"><%= number_with_delimiter(@character_count) %></div>
+          <div class="text-xs text-gray-600">characters</div>
+        </div>
+        <div class="bg-gray-50 border border-gray-200 rounded p-3">
+          <div class="text-2xl font-bold text-gray-900"><%= number_with_delimiter(@lookup_item_count) %></div>
+          <div class="text-xs text-gray-600">lookup values</div>
+        </div>
+        <div class="bg-gray-50 border border-gray-200 rounded p-3">
+          <div class="text-2xl font-bold text-gray-900"><%= number_with_delimiter(@inaturalist_field_count) %></div>
+          <div class="text-xs text-gray-600">iNaturalist fields</div>
+        </div>
+      </div>
+
+      <% if @sample_characters.any? %>
+        <div class="space-y-3">
+          <% @sample_characters.each do |character| %>
+            <div class="border border-gray-200 rounded p-3">
+              <div class="font-semibold text-gray-900"><%= character.name %></div>
+              <div class="text-sm text-gray-600">
+                <%= character.part&.name || "Part not set" %> /
+                <%= character.observation_method&.name || "Method not set" %> /
+                <%= character.display_option&.name || "Input type not set" %>
+              </div>
+              <% if character.lookup_items.any? %>
+                <div class="mt-2 flex flex-wrap gap-1">
+                  <% character.lookup_items.first(6).each do |item| %>
+                    <span class="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-800"><%= item.name %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-600">
+          The public catalog is available even when these exact demo character names are not present.
+        </p>
+      <% end %>
+    </div>
+
+    <div class="border border-gray-200 rounded-lg bg-white p-5">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Video Overview</h2>
+      <div class="aspect-video w-full rounded bg-gray-900 flex items-center justify-center text-center px-6">
+        <div>
+          <div class="text-white text-lg font-semibold">YouTube video placeholder</div>
+          <p class="text-gray-300 text-sm mt-2">
+            Embed the short overview here when the video is ready.
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 space-y-3 text-gray-700">
+        <p>
+          A short video can show both sides of the process: end users entering mushroom data, and editors/admins maintaining
+          the tables that make the form reliable.
+        </p>
+        <p>
+          Suggested length: two to four minutes. Show the search-style input, the pre-existing tables, and the forms used to
+          keep the word list correct.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="downloads" class="border border-green-300 bg-green-50 rounded-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">Free Downloads Available Now</h2>
+    <p class="text-gray-800 mb-5">
+      The database guides, source files, and application code are available now for free download. The CSV files can be opened
+      in Excel and used as spreadsheet guides for reviewing and improving the <code class="bg-white px-1 rounded">mr_characters</code>
+      table and related source data.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <%= link_to "/docs/mr_characters_source_ORIGINAL.csv",
+          class: "block border border-green-200 bg-white rounded-lg p-4 hover:bg-green-50" do %>
+        <div class="font-semibold text-green-800">Download mr_characters guide</div>
+        <div class="text-sm text-gray-600">Original Excel-compatible CSV guide for the character list.</div>
+      <% end %>
+
+      <%= link_to "/docs/mr_characters_source_parts.csv",
+          class: "block border border-green-200 bg-white rounded-lg p-4 hover:bg-green-50" do %>
+        <div class="font-semibold text-green-800">Download character parts guide</div>
+        <div class="text-sm text-gray-600">Spreadsheet guide connecting characters to mushroom parts.</div>
+      <% end %>
+
+      <%= link_to "/docs/parts.csv",
+          class: "block border border-green-200 bg-white rounded-lg p-4 hover:bg-green-50" do %>
+        <div class="font-semibold text-green-800">Download parts table</div>
+        <div class="text-sm text-gray-600">Excel-compatible CSV for the parts table.</div>
+      <% end %>
+
+      <%= link_to "/docs/types.csv",
+          class: "block border border-green-200 bg-white rounded-lg p-4 hover:bg-green-50" do %>
+        <div class="font-semibold text-green-800">Download types table</div>
+        <div class="text-sm text-gray-600">Excel-compatible CSV for type/source reference data.</div>
+      <% end %>
+
+      <%= link_to inaturalist_observation_fields_path,
+          class: "block border border-blue-200 bg-white rounded-lg p-4 hover:bg-blue-50" do %>
+        <div class="font-semibold text-blue-800">Browse and download iNaturalist fields</div>
+        <div class="text-sm text-gray-600">Public searchable field database with CSV and JSON download options.</div>
+      <% end %>
+
+      <%= link_to github_repo_url,
+          target: "_blank",
+          rel: "noopener",
+          class: "block border border-gray-300 bg-white rounded-lg p-4 hover:bg-gray-50" do %>
+        <div class="font-semibold text-gray-900">View all code and data on GitHub</div>
+        <div class="text-sm text-gray-600">The application repository is public for review and download.</div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="border border-blue-200 bg-blue-50 rounded-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">How Visitors Can Help</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-800">
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-1">Review the word list</h3>
+        <p class="text-sm">Find missing characters, unclear names, duplicate ideas, or better option sets.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-1">Test the workflow idea</h3>
+        <p class="text-sm">Decide whether this process could fit Mushroom Observer, iNaturalist, MycoMap, or another site.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-1">Suggest improvements</h3>
+        <p class="text-sm">Use the contact page to send corrections, sources, and practical workflow feedback.</p>
+      </div>
+    </div>
+    <div class="mt-5">
+      <%= link_to "Contact MRDBID", contact_path,
+          class: "inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800" %>
+    </div>
+  </section>
+</div>
