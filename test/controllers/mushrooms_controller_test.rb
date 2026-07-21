@@ -40,6 +40,13 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "current mushroom sidebar links to character input" do
+    get mushroom_path(@mushroom)
+
+    assert_response :success
+    assert_select "a[href='#{identify_mushroom_path(@mushroom, core_only: false, return_to: mushroom_path(@mushroom))}']", text: "Character Input"
+  end
+
   test "should allow any user to view mushroom owned by another user" do
     # mushroom two belongs to user two
     other_mushroom = mushrooms(:two)
@@ -169,6 +176,21 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "input#quick-character-search"
     assert_match "Completed Characters", response.body
+  end
+
+  test "quick identification search keys only use lowercased mr_character name" do
+    character = MrCharacter.create!(
+      name: "Name Only Search Character",
+      part: parts(:one),
+      observation_method: observation_methods(:one),
+      display_option: display_options(:text),
+      source_data: source_data(:one)
+    )
+
+    get identify_mushroom_path(@mushroom, core_only: false)
+
+    assert_response :success
+    assert_select "a[data-character-id='#{character.id}'][data-search-text='name only search character']"
   end
 
   test "quick identification screen renders selected character input" do

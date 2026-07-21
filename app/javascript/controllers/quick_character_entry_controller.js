@@ -22,7 +22,7 @@ export default class extends Controller {
 
     let shown = 0
     this.optionTargets.forEach((option) => {
-      const matches = option.dataset.searchText?.includes(query)
+      const matches = option.dataset.searchText?.toLowerCase().includes(query)
       if (matches && shown < 20) {
         option.classList.remove("hidden")
         shown += 1
