@@ -8,9 +8,10 @@ namespace :r2 do
     abort "Set CONFIRM=yes to permanently delete non-mushroom R2 objects" unless ENV["CONFIRM"] == "yes"
 
     R2Client.validate_env!
+    retained_record_types = [ "ImageMushroom", "ActiveStorage::VariantRecord" ]
     kept_keys = ActiveStorage::Blob
       .joins(:attachments)
-      .where(active_storage_attachments: { record_type: "ImageMushroom", name: "image_file" })
+      .where(active_storage_attachments: { record_type: retained_record_types })
       .distinct
       .pluck(:key)
       .to_set
@@ -25,7 +26,7 @@ namespace :r2 do
     end
     client.delete_objects(keys: obsolete_keys)
 
-    non_mushroom_attachments = ActiveStorage::Attachment.where.not(record_type: "ImageMushroom")
+    non_mushroom_attachments = ActiveStorage::Attachment.where.not(record_type: retained_record_types)
     non_mushroom_attachments.delete_all
 
     orphaned_blob_ids = ActiveStorage::Blob
@@ -35,7 +36,7 @@ namespace :r2 do
     ActiveStorage::VariantRecord.where(blob_id: orphaned_blob_ids).delete_all
     ActiveStorage::Blob.where(id: orphaned_blob_ids).delete_all
 
-    puts "Deleted #{obsolete_keys.size} non-mushroom R2 objects; retained #{kept_keys.size} mushroom image originals plus their variants."
+    puts "Deleted #{obsolete_keys.size} non-mushroom R2 objects; retained #{kept_keys.size} mushroom originals and tracked variants."
   end
 
   desc "Smoke test R2 connectivity (put/get/delete)"
