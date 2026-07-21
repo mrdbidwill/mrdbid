@@ -16,12 +16,6 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get demo without authentication" do
-    get demo_url
-    assert_response :success
-    assert_match "A Universal Mushroom Identification Word List", response.body
-  end
-
   test "authenticated user should access home" do
     sign_in users(:one)
     get root_url
@@ -37,12 +31,6 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test "authenticated user should access trees_of_blakeley_signs" do
     sign_in users(:one)
     get trees_of_blakeley_signs_url
-    assert_response :success
-  end
-
-  test "authenticated user should access demo" do
-    sign_in users(:one)
-    get demo_url
     assert_response :success
   end
 end

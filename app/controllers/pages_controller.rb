@@ -25,26 +25,6 @@ class PagesController < ApplicationController
   def about
   end
 
-  def demo
-    @character_count = MrCharacter.count
-    @lookup_item_count = LookupItem.count
-    @inaturalist_field_count = InaturalistObservationField.count
-
-    sample_names = %w[
-      cap_width_mm
-      cap_color
-      cap_surface_texture
-      gill_attachment
-      stem_length_mm
-      spore_print_color
-    ]
-
-    @sample_characters = MrCharacter
-                           .includes(:part, :observation_method, :display_option, :lookup_items)
-                           .where(name: sample_names)
-                           .order(:name)
-  end
-
   def privacy
   end
 

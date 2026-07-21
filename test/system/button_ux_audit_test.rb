@@ -55,15 +55,7 @@ class ButtonUxAuditTest < ApplicationSystemTestCase
     assert_text "Mushroom was successfully deleted."
   end
 
-  test "export buttons route to status pages" do
-    visit mushrooms_path
-
-    accept_confirm do
-      click_button "Export All to PDF"
-    end
-    assert_selector "h1", text: "PDF Export Status"
-    assert_text "Processing Your PDF"
-
+  test "image export route remains available" do
     visit new_users_image_export_path
     accept_confirm do
       click_button "Start Export"

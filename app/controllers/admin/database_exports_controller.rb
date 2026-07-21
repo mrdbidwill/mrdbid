@@ -56,22 +56,21 @@ module Admin
     'user_recent_observations'
   ].freeze
 
-  SAMPLE_MUSHROOM_ID_SQL = '(SELECT id FROM (SELECT id FROM mushrooms ORDER BY id LIMIT 1) AS sample_mushroom)'.freeze
+  def self.sample_mushroom_exports(sample_id:, character_ids:)
+    sample_id = Integer(sample_id)
+    character_ids = character_ids.map { |id| Integer(id) }
+    color_filter = character_ids.any? ? "mr_character_mushroom_id IN (#{character_ids.join(',')})" : '0 = 1'
 
-  SAMPLE_MUSHROOM_EXPORTS = {
-    'mushrooms' => '1 ORDER BY id LIMIT 1',
-    'genus_mushrooms' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
-    'mushroom_species' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
-    'mushroom_trees' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
-    'mushroom_plants' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
-    'mr_character_mushrooms' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
-    'mr_character_mushroom_colors' => <<~SQL.squish
-      mr_character_mushroom_id IN (
-        SELECT id FROM mr_character_mushrooms
-        WHERE mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}
-      )
-    SQL
-  }.freeze
+    {
+      'mushrooms' => "id = #{sample_id}",
+      'genus_mushrooms' => "mushroom_id = #{sample_id}",
+      'mushroom_species' => "mushroom_id = #{sample_id}",
+      'mushroom_trees' => "mushroom_id = #{sample_id}",
+      'mushroom_plants' => "mushroom_id = #{sample_id}",
+      'mr_character_mushrooms' => "mushroom_id = #{sample_id}",
+      'mr_character_mushroom_colors' => color_filter
+    }
+  end
 
   def export
     authorize :database_export, :export?
@@ -161,8 +160,11 @@ module Admin
       end
 
       if include_sample_mushroom
-        Rails.logger.info "Appending one sample mushroom and related lightweight rows"
-        SAMPLE_MUSHROOM_EXPORTS.each do |table, where_clause|
+        sample_id = Mushroom.order(:id).pick(:id)
+        character_ids = sample_id ? MrCharacterMushroom.where(mushroom_id: sample_id).pluck(:id) : []
+        sample_exports = sample_id ? self.class.sample_mushroom_exports(sample_id: sample_id, character_ids: character_ids) : {}
+        Rails.logger.info "Appending sample mushroom #{sample_id} and related lightweight rows"
+        sample_exports.each do |table, where_clause|
           commands << [
             'mysqldump',
             "--defaults-file=#{config_file.path}",

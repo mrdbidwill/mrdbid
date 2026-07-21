@@ -64,13 +64,28 @@ class Admin::DatabaseExportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "lookup exports append exactly one sample mushroom and lightweight associations" do
-    sample_exports = Admin::DatabaseExportsController::SAMPLE_MUSHROOM_EXPORTS
+    sample_exports = Admin::DatabaseExportsController.sample_mushroom_exports(
+      sample_id: 42,
+      character_ids: [ 101, 102 ]
+    )
 
-    assert_equal "1 ORDER BY id LIMIT 1", sample_exports.fetch('mushrooms')
+    assert_equal "id = 42", sample_exports.fetch('mushrooms')
+    assert_equal "mushroom_id = 42", sample_exports.fetch('genus_mushrooms')
+    assert_equal "mr_character_mushroom_id IN (101,102)", sample_exports.fetch('mr_character_mushroom_colors')
     assert_includes sample_exports.keys, 'mr_character_mushrooms'
     assert_includes sample_exports.keys, 'mr_character_mushroom_colors'
     assert_not_includes sample_exports.keys, 'image_mushrooms'
     assert_not_includes sample_exports.keys, 'users'
+  end
+
+  test "sample export avoids cross-table queries when there are no character colors" do
+    sample_exports = Admin::DatabaseExportsController.sample_mushroom_exports(
+      sample_id: 42,
+      character_ids: []
+    )
+
+    assert_equal "0 = 1", sample_exports.fetch('mr_character_mushroom_colors')
+    assert sample_exports.values.none? { |where_clause| where_clause.match?(/SELECT/i) }
   end
 
   test "should configure mblist_only to include only mb_lists table" do
