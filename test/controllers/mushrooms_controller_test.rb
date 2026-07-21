@@ -44,7 +44,8 @@ class MushroomsControllerTest < ActionDispatch::IntegrationTest
     get mushroom_path(@mushroom)
 
     assert_response :success
-    assert_select "a[href='#{identify_mushroom_path(@mushroom, core_only: false, return_to: mushroom_path(@mushroom))}']", text: "Character Input"
+    assert_select "a[href='#{identify_mushroom_path(@mushroom, core_only: false, return_to: mushroom_path(@mushroom))}']",
+                  text: "Character Input — Google-Style Search"
   end
 
   test "should allow any user to view mushroom owned by another user" do
