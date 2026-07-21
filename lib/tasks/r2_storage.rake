@@ -26,8 +26,14 @@ namespace :r2 do
     client.delete_objects(keys: obsolete_keys)
 
     non_mushroom_attachments = ActiveStorage::Attachment.where.not(record_type: "ImageMushroom")
-    non_mushroom_attachments.find_each(&:destroy!)
-    ActiveStorage::Blob.left_joins(:attachments).where(active_storage_attachments: { id: nil }).find_each(&:purge)
+    non_mushroom_attachments.delete_all
+
+    orphaned_blob_ids = ActiveStorage::Blob
+      .left_joins(:attachments)
+      .where(active_storage_attachments: { id: nil })
+      .pluck(:id)
+    ActiveStorage::VariantRecord.where(blob_id: orphaned_blob_ids).delete_all
+    ActiveStorage::Blob.where(id: orphaned_blob_ids).delete_all
 
     puts "Deleted #{obsolete_keys.size} non-mushroom R2 objects; retained #{kept_keys.size} mushroom image originals plus their variants."
   end
