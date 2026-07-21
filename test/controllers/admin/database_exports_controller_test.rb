@@ -40,59 +40,37 @@ class Admin::DatabaseExportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should configure correct exclusions for lookup_tables" do
-    controller = Admin::DatabaseExportsController.new
+    expected_exclusions =
+      Admin::DatabaseExportsController::BASE_EXCLUDED_TABLES +
+      Admin::DatabaseExportsController::USER_OWNED_TABLES +
+      Admin::DatabaseExportsController::MUSHROOM_DATA_TABLES
 
-    # Simulate the export_type logic
-    export_type = 'lookup_tables'
-
-    base_excluded_tables = [
-      'users', 'trusted_devices', 'user_roles', 'roles', 'role_permissions',
-      'permissions', 'versions', 'active_storage_attachments',
-      'active_storage_blobs', 'active_storage_variant_records',
-      'solid_queue_blocked_executions', 'solid_queue_claimed_executions',
-      'solid_queue_failed_executions', 'solid_queue_jobs',
-      'solid_queue_pauses', 'solid_queue_processes',
-      'solid_queue_ready_executions', 'solid_queue_recurring_executions',
-      'solid_queue_scheduled_executions', 'solid_queue_semaphores',
-      'schema_migrations', 'ar_internal_metadata'
-    ]
-
-    user_input_tables = [
-      'all_group_mushrooms', 'articles', 'cluster_mushrooms',
-      'image_mushrooms', 'mushroom_projects', 'mushrooms'
-    ]
-
-    expected_exclusions = base_excluded_tables + user_input_tables
-
-    assert_equal 28, expected_exclusions.length
     assert_includes expected_exclusions, 'users'
     assert_includes expected_exclusions, 'mushrooms'
     assert_includes expected_exclusions, 'articles'
+    assert_includes expected_exclusions, 'active_storage_blobs'
+    assert_includes expected_exclusions, 'invitation_tokens'
   end
 
   test "should configure correct exclusions for lookup_no_mblist" do
-    base_excluded_tables = [
-      'users', 'trusted_devices', 'user_roles', 'roles', 'role_permissions',
-      'permissions', 'versions', 'active_storage_attachments',
-      'active_storage_blobs', 'active_storage_variant_records',
-      'solid_queue_blocked_executions', 'solid_queue_claimed_executions',
-      'solid_queue_failed_executions', 'solid_queue_jobs',
-      'solid_queue_pauses', 'solid_queue_processes',
-      'solid_queue_ready_executions', 'solid_queue_recurring_executions',
-      'solid_queue_scheduled_executions', 'solid_queue_semaphores',
-      'schema_migrations', 'ar_internal_metadata'
-    ]
+    expected_exclusions =
+      Admin::DatabaseExportsController::BASE_EXCLUDED_TABLES +
+      Admin::DatabaseExportsController::USER_OWNED_TABLES +
+      Admin::DatabaseExportsController::MUSHROOM_DATA_TABLES +
+      ['mb_lists']
 
-    user_input_tables = [
-      'all_group_mushrooms', 'articles', 'cluster_mushrooms',
-      'image_mushrooms', 'mushroom_projects', 'mushrooms'
-    ]
-
-    expected_exclusions = base_excluded_tables + user_input_tables + ['mb_lists']
-
-    assert_equal 29, expected_exclusions.length
     assert_includes expected_exclusions, 'mb_lists'
     assert_includes expected_exclusions, 'mushrooms'
+  end
+
+  test "lookup exports append exactly one sample mushroom and lightweight associations" do
+    sample_exports = Admin::DatabaseExportsController::SAMPLE_MUSHROOM_EXPORTS
+
+    assert_equal "1 ORDER BY id LIMIT 1", sample_exports.fetch('mushrooms')
+    assert_includes sample_exports.keys, 'mr_character_mushrooms'
+    assert_includes sample_exports.keys, 'mr_character_mushroom_colors'
+    assert_not_includes sample_exports.keys, 'image_mushrooms'
+    assert_not_includes sample_exports.keys, 'users'
   end
 
   test "should configure mblist_only to include only mb_lists table" do

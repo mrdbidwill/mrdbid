@@ -47,6 +47,14 @@ class R2Client
     client.delete_object(bucket: bucket, key: key)
   end
 
+  def each_object
+    return enum_for(:each_object) unless block_given?
+
+    client.list_objects_v2(bucket: bucket).each_page do |page|
+      page.contents.each { |object| yield object }
+    end
+  end
+
   def object_exists?(key:)
     client.head_object(bucket: bucket, key: key)
     true

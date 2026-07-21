@@ -20,7 +20,7 @@
           <!-- Option 1: Lookup Tables with MBList -->
           <div>
             <span id="db-export-link-1">
-              <%= link_to "1. Lookup Tables (includes MBList)", admin_database_export_path(export_type: 'lookup_tables'),
+              <%= link_to "1. Lookup Tables + Sample Mushroom (includes MBList)", admin_database_export_path(export_type: 'lookup_tables'),
                   data: { turbo: false },
                   onclick: "return confirm('⚠️ This file is approximately 400MB and may take 10-30 seconds to download. Continue?');",
                   class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
@@ -31,7 +31,7 @@
             <br>
             <small class="text-gray-600" style="font-size: 0.85em;">
               <span id="db-export-desktop-warning-1">
-                Complete lookup/reference tables ready for data entry. Excludes all user input data.<br/>
+                Complete lookup/reference tables ready for data entry, plus one sample mushroom so specimen pages are not empty. Excludes user accounts, security tables, images, and the rest of the mushroom data.<br/>
                 ⚠️ Large file (~400MB). Download may take 10-30 seconds.
               </span>
               <span id="db-export-mobile-msg-1" style="display: none; color: #d97706;">
@@ -43,7 +43,7 @@
           <!-- Option 2: Lookup Tables without MBList -->
           <div>
             <span id="db-export-link-2">
-              <%= link_to "2. Lookup Tables (excludes MBList)", admin_database_export_path(export_type: 'lookup_no_mblist'), data: { turbo: false }, class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
+              <%= link_to "2. Lookup Tables + Sample Mushroom (excludes MBList)", admin_database_export_path(export_type: 'lookup_no_mblist'), data: { turbo: false }, class: "text-blue-600 hover:text-blue-800 hover:underline font-medium" %>
             </span>
             <span id="db-export-mobile-warning-2" style="display: none;">
               <strong>2. Lookup Tables without MBList (Desktop Only)</strong>
@@ -51,7 +51,7 @@
             <br>
             <small class="text-gray-600" style="font-size: 0.85em;">
               <span id="db-export-desktop-warning-2">
-                All lookup/reference tables except the large MBList taxonomy table. Excludes all user input data.<br/>
+                All lookup/reference tables except the large MBList taxonomy table, plus one sample mushroom. Excludes user accounts, security tables, images, and the rest of the mushroom data.<br/>
                 ⚠️ Smaller file (~20MB). Faster download.
               </span>
               <span id="db-export-mobile-msg-2" style="display: none; color: #d97706;">
@@ -84,7 +84,7 @@
           </div>
         </div>
         <small class="text-gray-600 mt-2 block" style="font-size: 0.85em;">
-          ℹ️ All options exclude user data and security tables. Use these to populate a fresh installation.
+          ℹ️ All options exclude user accounts and security tables. Lookup downloads include only one sample mushroom to keep the file useful but small.
         </small>
         <script>
           // Detect if user is on mobile device

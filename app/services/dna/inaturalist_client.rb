@@ -174,8 +174,7 @@ module Dna
         observed_at: parsed_time(row["time_observed_at"].presence || row["observed_on"].presence),
         inat_url: url,
         dna_field_value: field_value(row, dna_field_id),
-        barcode_inferred_species_or_name: field_value(row, barcode_inferred_field_id),
-        raw_payload: JSON.generate(row)
+        barcode_inferred_species_or_name: field_value(row, barcode_inferred_field_id)
       }
     end
 

@@ -59,5 +59,19 @@ module Dna
       assert_equal [ "genera_count", "observations_index_pdf" ], artifacts.map(&:kind).sort
       assert_equal "index_only", observation_list.reload.export_mode
     end
+
+    test "export replaces prior artifacts instead of retaining backups" do
+      observation_list = Dna::ObservationList.create!(
+        title: "Winston County", product_type: "county", inat_place_id: 1
+      )
+
+      first = Dna::PdfExporter.call(observation_list: observation_list)
+      old_paths = first.data.fetch(:artifacts).map { |artifact| artifact.absolute_path.to_s }
+      second = Dna::PdfExporter.call(observation_list: observation_list)
+
+      assert second.success?, second.error
+      assert_equal 2, observation_list.export_artifacts.count
+      assert old_paths.none? { |path| File.exist?(path) }
+    end
   end
 end

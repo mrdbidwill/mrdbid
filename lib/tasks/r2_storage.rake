@@ -3,6 +3,35 @@
 require "active_storage/service/disk_service"
 
 namespace :r2 do
+  desc "Delete every R2 object that is not an attached mushroom image (requires CONFIRM=yes)"
+  task cleanup_non_mushroom_objects: :environment do
+    abort "Set CONFIRM=yes to permanently delete non-mushroom R2 objects" unless ENV["CONFIRM"] == "yes"
+
+    R2Client.validate_env!
+    kept_keys = ActiveStorage::Blob
+      .joins(:attachments)
+      .where(active_storage_attachments: { record_type: "ImageMushroom", name: "image_file" })
+      .distinct
+      .pluck(:key)
+      .to_set
+
+    client = R2Client.new
+    deleted = 0
+    client.each_object do |object|
+      mushroom_variant = kept_keys.any? { |key| object.key.start_with?("variants/#{key}/") }
+      next if kept_keys.include?(object.key) || mushroom_variant
+
+      client.delete_object(key: object.key)
+      deleted += 1
+    end
+
+    non_mushroom_attachments = ActiveStorage::Attachment.where.not(record_type: "ImageMushroom")
+    non_mushroom_attachments.find_each(&:destroy!)
+    ActiveStorage::Blob.left_joins(:attachments).where(active_storage_attachments: { id: nil }).find_each(&:purge)
+
+    puts "Deleted #{deleted} non-mushroom R2 objects; retained #{kept_keys.size} mushroom image objects."
+  end
+
   desc "Smoke test R2 connectivity (put/get/delete)"
   task smoke: :environment do
     R2Client.validate_env!

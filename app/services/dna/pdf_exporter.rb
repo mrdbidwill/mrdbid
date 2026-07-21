@@ -21,6 +21,7 @@ module Dna
       artifacts = []
       artifacts << write_index_pdf(export_dir, observations)
       artifacts << write_genera_count(export_dir, observations)
+      remove_superseded_artifacts(artifacts)
 
       Result.success(artifacts: artifacts.compact)
     rescue StandardError => e
@@ -66,6 +67,21 @@ module Dna
         relative_path: path.relative_path_from(Rails.root).to_s,
         size_bytes: File.size(path)
       )
+    end
+
+    def remove_superseded_artifacts(current_artifacts)
+      current_ids = current_artifacts.map(&:id)
+      obsolete = @observation_list.export_artifacts.where.not(id: current_ids).to_a
+
+      obsolete.each do |artifact|
+        File.delete(artifact.absolute_path) if File.file?(artifact.absolute_path)
+        artifact.destroy!
+      end
+
+      list_root = EXPORT_ROOT.join("list_#{@observation_list.id}")
+      Dir.glob(list_root.join("*")).select { |path| File.directory?(path) && Dir.empty?(path) }.each do |path|
+        Dir.rmdir(path)
+      end
     end
 
     def write_observation_entry(pdf, observation, index)

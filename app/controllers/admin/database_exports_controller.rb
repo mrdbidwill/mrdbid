@@ -5,6 +5,74 @@ module Admin
   class DatabaseExportsController < Admin::ApplicationController
   skip_after_action :verify_policy_scoped, only: :export, raise: false
 
+  BASE_EXCLUDED_TABLES = [
+    'users',
+    'trusted_devices',
+    'user_roles',
+    'roles',
+    'role_permissions',
+    'permissions',
+    'invitation_tokens',
+    'versions',
+    'active_storage_attachments',
+    'active_storage_blobs',
+    'active_storage_variant_records',
+    'solid_queue_blocked_executions',
+    'solid_queue_claimed_executions',
+    'solid_queue_failed_executions',
+    'solid_queue_jobs',
+    'solid_queue_pauses',
+    'solid_queue_processes',
+    'solid_queue_ready_executions',
+    'solid_queue_recurring_executions',
+    'solid_queue_recurring_tasks',
+    'solid_queue_scheduled_executions',
+    'solid_queue_semaphores',
+    'schema_migrations',
+    'ar_internal_metadata'
+  ].freeze
+
+  USER_OWNED_TABLES = [
+    'admin_todos',
+    'all_groups',
+    'articles',
+    'clusters',
+    'comments'
+  ].freeze
+
+  MUSHROOM_DATA_TABLES = [
+    'all_group_mushrooms',
+    'cluster_mushrooms',
+    'genus_mushrooms',
+    'image_mushrooms',
+    'mr_character_mushroom_colors',
+    'mr_character_mushrooms',
+    'mushroom_comparisons',
+    'mushroom_plants',
+    'mushroom_projects',
+    'mushroom_species',
+    'mushroom_trees',
+    'mushrooms',
+    'user_recent_observations'
+  ].freeze
+
+  SAMPLE_MUSHROOM_ID_SQL = '(SELECT id FROM (SELECT id FROM mushrooms ORDER BY id LIMIT 1) AS sample_mushroom)'.freeze
+
+  SAMPLE_MUSHROOM_EXPORTS = {
+    'mushrooms' => '1 ORDER BY id LIMIT 1',
+    'genus_mushrooms' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
+    'mushroom_species' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
+    'mushroom_trees' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
+    'mushroom_plants' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
+    'mr_character_mushrooms' => "mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}",
+    'mr_character_mushroom_colors' => <<~SQL.squish
+      mr_character_mushroom_id IN (
+        SELECT id FROM mr_character_mushrooms
+        WHERE mushroom_id = #{SAMPLE_MUSHROOM_ID_SQL}
+      )
+    SQL
+  }.freeze
+
   def export
     authorize :database_export, :export?
 
@@ -12,59 +80,26 @@ module Admin
 
     Rails.logger.info "Database export started by user #{current_user.id} - type: #{export_type}"
 
-    # Base tables to always exclude for security reasons
-    base_excluded_tables = [
-      'users',
-      'trusted_devices',
-      'user_roles',
-      'roles',
-      'role_permissions',
-      'permissions',
-      'versions',
-      'active_storage_attachments',
-      'active_storage_blobs',
-      'active_storage_variant_records',
-      'solid_queue_blocked_executions',
-      'solid_queue_claimed_executions',
-      'solid_queue_failed_executions',
-      'solid_queue_jobs',
-      'solid_queue_pauses',
-      'solid_queue_processes',
-      'solid_queue_ready_executions',
-      'solid_queue_recurring_executions',
-      'solid_queue_scheduled_executions',
-      'solid_queue_semaphores',
-      'schema_migrations',
-      'ar_internal_metadata'
-    ]
-
-    # User input tables to exclude for lookup table exports
-    user_input_tables = [
-      'all_group_mushrooms',
-      'articles',
-      'cluster_mushrooms',
-      'image_mushrooms',
-      'mushroom_projects',
-      'mushrooms'
-    ]
-
     # Configure export based on type
     case export_type
     when 'lookup_tables'
-      # Option 1: Lookup tables only (exclude user data and user input)
-      excluded_tables = base_excluded_tables + user_input_tables
+      # Option 1: Lookup/reference tables plus one sample mushroom.
+      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES
       include_only_tables = nil
       filename_prefix = 'mrdbid_lookup_tables'
+      include_sample_mushroom = true
     when 'lookup_no_mblist'
-      # Option 2: Lookup tables without the large mb_lists table
-      excluded_tables = base_excluded_tables + user_input_tables + ['mb_lists']
+      # Option 2: Lookup/reference tables without the large mb_lists table, plus one sample mushroom.
+      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES + ['mb_lists']
       include_only_tables = nil
       filename_prefix = 'mrdbid_lookup_no_mblist'
+      include_sample_mushroom = true
     when 'mblist_only'
       # Option 3: Only the mb_lists table
       excluded_tables = []
       include_only_tables = ['mb_lists']
       filename_prefix = 'mrdbid_mblist_only'
+      include_sample_mushroom = false
     else
       raise "Invalid export_type: #{export_type}"
     end
@@ -81,12 +116,9 @@ module Admin
     # Build mysqldump command options based on export type
     if include_only_tables
       # For mblist_only: only export specified tables
-      table_options = include_only_tables.join(' ')
       Rails.logger.info "Including only tables: #{include_only_tables.join(', ')}"
     else
       # For other exports: exclude specified tables
-      ignore_tables = excluded_tables.map { |table| "--ignore-table=#{database}.#{table}" }.join(' ')
-      table_options = ignore_tables
       Rails.logger.info "Excluding #{excluded_tables.length} tables"
     end
 
@@ -111,31 +143,55 @@ module Admin
       # Build mysqldump command using config file
       if include_only_tables
         # For include_only: specify tables directly after database name
-        command = [
+        commands = [[
           'mysqldump',
           "--defaults-file=#{config_file.path}",
           database,
           *include_only_tables
-        ]
+        ]]
       else
         # For exclusions: use --ignore-table options
-        command = [
+        ignore_tables = excluded_tables.map { |table| "--ignore-table=#{database}.#{table}" }
+        commands = [[
           'mysqldump',
           "--defaults-file=#{config_file.path}",
-          *table_options.split(' '),
+          *ignore_tables,
           database
-        ]
+        ]]
+      end
+
+      if include_sample_mushroom
+        Rails.logger.info "Appending one sample mushroom and related lightweight rows"
+        SAMPLE_MUSHROOM_EXPORTS.each do |table, where_clause|
+          commands << [
+            'mysqldump',
+            "--defaults-file=#{config_file.path}",
+            '--no-create-info',
+            '--skip-triggers',
+            "--where=#{where_clause}",
+            database,
+            table
+          ]
+        end
       end
 
       Rails.logger.info "Executing mysqldump command for export type: #{export_type}"
 
       # Execute mysqldump and capture output
-      stdout, stderr, status = Open3.capture3(*command)
+      stdout = +"#{export_instructions_header(export_type)}\n"
+      stderr = +""
+      commands.each_with_index do |command, index|
+        command_stdout, command_stderr, status = Open3.capture3(*command)
 
-      unless status.success?
-        error_msg = "mysqldump failed with exit code #{status.exitstatus}: #{stderr}"
-        Rails.logger.error error_msg
-        raise error_msg
+        unless status.success?
+          error_msg = "mysqldump failed with exit code #{status.exitstatus}: #{command_stderr}"
+          Rails.logger.error error_msg
+          raise error_msg
+        end
+
+        stdout << "\n\n-- MRDBID sample mushroom data\n" if include_sample_mushroom && index == 1
+        stdout << command_stdout
+        stderr << command_stderr
       end
 
       # Write output to temp file
@@ -190,6 +246,39 @@ module Admin
         Rails.logger.error "Error cleaning up temp files: #{cleanup_error.message}"
       end
     end
+  end
+
+  private
+
+  def export_instructions_header(export_type)
+    sample_note =
+      if export_type == 'mblist_only'
+        'This MBList-only export does not include users or sample mushroom data.'
+      else
+        'This lookup export includes one sample mushroom so public pages are not empty, while avoiding a large, irrelevant specimen-data dump.'
+      end
+
+    <<~SQL
+      -- MRDBID public database export
+      -- Export type: #{export_type}
+      --
+      -- Security note:
+      -- This file intentionally does not include real users, passwords, trusted devices,
+      -- roles, permissions, invitation tokens, or other security tables.
+      --
+      -- After importing this SQL file into a fresh MRDBID installation, create your own
+      -- login accounts with this Rails task. Replace the email addresses and passwords:
+      --
+      --   RAILS_ENV=production \\
+      --   ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD='change-this-admin-password' \\
+      --   REGULAR_EMAIL=user@example.com REGULAR_PASSWORD='change-this-user-password' \\
+      --   bin/rails mrdbid:setup_users
+      --
+      -- Passwords must be at least 12 characters. Do not reuse these example values.
+      -- If you create only an admin account, omit REGULAR_EMAIL and REGULAR_PASSWORD.
+      --
+      -- #{sample_note}
+    SQL
   end
   end
 end
