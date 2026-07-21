@@ -56,6 +56,12 @@ module Admin
     'user_recent_observations'
   ].freeze
 
+  DNA_STRUCTURE_ONLY_TABLES = [
+    'dna_observation_lists',
+    'dna_observations',
+    'dna_export_artifacts'
+  ].freeze
+
   def self.sample_mushroom_exports(sample_id:, character_ids:)
     sample_id = Integer(sample_id)
     character_ids = character_ids.map { |id| Integer(id) }
@@ -83,13 +89,13 @@ module Admin
     case export_type
     when 'lookup_tables'
       # Option 1: Lookup/reference tables plus one sample mushroom.
-      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES
+      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES + DNA_STRUCTURE_ONLY_TABLES
       include_only_tables = nil
       filename_prefix = 'mrdbid_lookup_tables'
       include_sample_mushroom = true
     when 'lookup_no_mblist'
       # Option 2: Lookup/reference tables without the large mb_lists table, plus one sample mushroom.
-      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES + ['mb_lists']
+      excluded_tables = BASE_EXCLUDED_TABLES + USER_OWNED_TABLES + MUSHROOM_DATA_TABLES + DNA_STRUCTURE_ONLY_TABLES + ['mb_lists']
       include_only_tables = nil
       filename_prefix = 'mrdbid_lookup_no_mblist'
       include_sample_mushroom = true
@@ -160,6 +166,18 @@ module Admin
       end
 
       if include_sample_mushroom
+        commands << [
+          'mysqldump',
+          "--defaults-file=#{config_file.path}",
+          '--no-data',
+          '--skip-triggers',
+          database,
+          *DNA_STRUCTURE_ONLY_TABLES
+        ]
+      end
+
+      sample_command_start = commands.length
+      if include_sample_mushroom
         sample_id = Mushroom.order(:id).pick(:id)
         character_ids = sample_id ? MrCharacterMushroom.where(mushroom_id: sample_id).pluck(:id) : []
         sample_exports = sample_id ? self.class.sample_mushroom_exports(sample_id: sample_id, character_ids: character_ids) : {}
@@ -191,7 +209,7 @@ module Admin
           raise error_msg
         end
 
-        stdout << "\n\n-- MRDBID sample mushroom data\n" if include_sample_mushroom && index == 1
+        stdout << "\n\n-- MRDBID sample mushroom data\n" if include_sample_mushroom && index == sample_command_start
         stdout << command_stdout
         stderr << command_stderr
       end
@@ -257,7 +275,7 @@ module Admin
       if export_type == 'mblist_only'
         'This MBList-only export does not include users or sample mushroom data.'
       else
-        'This lookup export includes one sample mushroom so public pages are not empty, while avoiding a large, irrelevant specimen-data dump.'
+        'This lookup export includes one sample mushroom so public pages are not empty. DNA list, observation, and export-artifact tables are included as empty structures so each installation can create its own data.'
       end
 
     <<~SQL

@@ -43,13 +43,17 @@ class Admin::DatabaseExportsControllerTest < ActionDispatch::IntegrationTest
     expected_exclusions =
       Admin::DatabaseExportsController::BASE_EXCLUDED_TABLES +
       Admin::DatabaseExportsController::USER_OWNED_TABLES +
-      Admin::DatabaseExportsController::MUSHROOM_DATA_TABLES
+      Admin::DatabaseExportsController::MUSHROOM_DATA_TABLES +
+      Admin::DatabaseExportsController::DNA_STRUCTURE_ONLY_TABLES
 
     assert_includes expected_exclusions, 'users'
     assert_includes expected_exclusions, 'mushrooms'
     assert_includes expected_exclusions, 'articles'
     assert_includes expected_exclusions, 'active_storage_blobs'
     assert_includes expected_exclusions, 'invitation_tokens'
+    assert_includes expected_exclusions, 'dna_observation_lists'
+    assert_includes expected_exclusions, 'dna_observations'
+    assert_includes expected_exclusions, 'dna_export_artifacts'
   end
 
   test "should configure correct exclusions for lookup_no_mblist" do
@@ -57,6 +61,7 @@ class Admin::DatabaseExportsControllerTest < ActionDispatch::IntegrationTest
       Admin::DatabaseExportsController::BASE_EXCLUDED_TABLES +
       Admin::DatabaseExportsController::USER_OWNED_TABLES +
       Admin::DatabaseExportsController::MUSHROOM_DATA_TABLES +
+      Admin::DatabaseExportsController::DNA_STRUCTURE_ONLY_TABLES +
       ['mb_lists']
 
     assert_includes expected_exclusions, 'mb_lists'
