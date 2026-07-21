@@ -40,4 +40,13 @@ class R2ClientTest < ActiveSupport::TestCase
   test "builds public url from base" do
     assert_equal "https://images.example.com/path/to/file.jpg", @r2.public_url("path/to/file.jpg")
   end
+
+  test "bulk delete splits requests into Cloudflare-sized batches" do
+    keys = 1_001.times.map { |index| "obsolete/#{index}" }
+
+    @r2.delete_objects(keys: keys)
+
+    requests = @client.api_requests.select { |request| request[:operation_name] == :delete_objects }
+    assert_equal [ 1_000, 1 ], requests.map { |request| request.dig(:params, :delete, :objects).size }
+  end
 end

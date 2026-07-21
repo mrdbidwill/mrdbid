@@ -16,20 +16,20 @@ namespace :r2 do
       .to_set
 
     client = R2Client.new
-    deleted = 0
+    obsolete_keys = []
     client.each_object do |object|
       mushroom_variant = kept_keys.any? { |key| object.key.start_with?("variants/#{key}/") }
       next if kept_keys.include?(object.key) || mushroom_variant
 
-      client.delete_object(key: object.key)
-      deleted += 1
+      obsolete_keys << object.key
     end
+    client.delete_objects(keys: obsolete_keys)
 
     non_mushroom_attachments = ActiveStorage::Attachment.where.not(record_type: "ImageMushroom")
     non_mushroom_attachments.find_each(&:destroy!)
     ActiveStorage::Blob.left_joins(:attachments).where(active_storage_attachments: { id: nil }).find_each(&:purge)
 
-    puts "Deleted #{deleted} non-mushroom R2 objects; retained #{kept_keys.size} mushroom image objects."
+    puts "Deleted #{obsolete_keys.size} non-mushroom R2 objects; retained #{kept_keys.size} mushroom image originals plus their variants."
   end
 
   desc "Smoke test R2 connectivity (put/get/delete)"

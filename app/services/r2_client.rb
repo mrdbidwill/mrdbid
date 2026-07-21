@@ -47,6 +47,15 @@ class R2Client
     client.delete_object(bucket: bucket, key: key)
   end
 
+  def delete_objects(keys:)
+    keys.each_slice(1_000) do |batch|
+      client.delete_objects(
+        bucket: bucket,
+        delete: { objects: batch.map { |key| { key: key } }, quiet: true }
+      )
+    end
+  end
+
   def each_object
     return enum_for(:each_object) unless block_given?
 
